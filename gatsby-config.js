@@ -6,7 +6,6 @@ const cssnano = require('cssnano')
 const postCSSMixins = require('postcss-mixins')
 
 module.exports = {
-  pathPrefix: '/blog',
   siteMetadata: {
     title: `Mike Bifulco`,
     description: `A simple starter for Gatsby. That's it.`,
