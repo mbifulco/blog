@@ -136,7 +136,7 @@ module.exports = {
         // Any additional create only fields (optional)
         sampleRate: 5,
         siteSpeedSampleRate: 10,
-        cookieDomain: 'biful.co',
+        cookieDomain: 'mike.biful.co',
       },
     },
   ],
