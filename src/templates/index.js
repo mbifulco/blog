@@ -55,16 +55,15 @@ Index.propTypes = {
 }
 
 export const postsQuery = graphql`
-  #query($limit: Int!, $skip: Int!) {
-  query {
+  query($limit: Int!, $skip: Int!) {
     allMarkdownRemark(
       filter: {
         fileAbsolutePath: { regex: "//posts//" }
         frontmatter: { placeholder: { ne: true } }
       }
-      # limit: $limit
-      # skip: $skip
       sort: { fields: [frontmatter___date], order: DESC }
+      limit: $limit
+      skip: $skip
     ) {
       edges {
         node {
