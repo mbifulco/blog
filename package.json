@@ -1,8 +1,8 @@
 {
-  "name": "gatsby-starter-hello-friend",
-  "description": "A simple starter for Gatsby. That's it.",
-  "version": "0.2.0",
-  "author": "Radek Kozieł <radoslaw.koziel@gmail.com>",
+  "name": "mike-bifulco-blog",
+  "description": "Just a place for me to put it all out into the world",
+  "version": "0.1.0",
+  "author": "Mike Bifulco <mbifulco@live..com>",
   "keywords": [
     "gatsby",
     "minimal",
@@ -56,6 +56,8 @@
     "eslint-plugin-react": "^7.12.3",
     "gatsby-remark-embed-video": "^1.7.0",
     "gh-pages": "^2.0.1",
+    "husky": "^1.3.1",
+    "lint-staged": "^8.1.4",
     "postcss-import": "^12.0.1",
     "postcss-loader": "^3.0.0",
     "postcss-mixins": "^6.2.1",
@@ -66,9 +68,20 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/panr/gatsby-starter-hello-friend"
+    "url": "https://github.com/mbifulco/blog"
   },
   "bugs": {
-    "url": "https://github.com/panr/gatsby-starter-hello-friend/issues"
+    "url": "https://github.com/mbifulco/blog/issues"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,css,md}": [
+      "prettier --write",
+      "git add"
+    ]
   }
 }
