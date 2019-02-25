@@ -5,6 +5,7 @@ import Img from 'gatsby-image'
 import Navigation from './navigation'
 
 import style from '../styles/post.module.css'
+import Kofi from './kofi'
 
 const Post = ({
   title,
@@ -47,6 +48,7 @@ const Post = ({
         ) : (
           <>
             <div dangerouslySetInnerHTML={{ __html: html }} />
+            <Kofi />
             <Navigation
               previousPath={previousPath}
               previousLabel={previousLabel}
