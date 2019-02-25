@@ -59,7 +59,7 @@ const SEO = ({ description, lang, meta, keywords, title, ogType, image }) => {
         },
         {
           property: `og:type`,
-          content: `website`,
+          content: ogType || `website`,
         },
         {
           name: `twitter:card`,
@@ -83,14 +83,6 @@ const SEO = ({ description, lang, meta, keywords, title, ogType, image }) => {
             ? {
                 name: `keywords`,
                 content: keywords.join(`, `),
-              }
-            : []
-        )
-        .concat(
-          ogType
-            ? {
-                name: 'og:type',
-                content: ogType,
               }
             : []
         )
