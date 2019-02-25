@@ -19,7 +19,8 @@
     "dev": "gatsby clean && gatsby develop",
     "format": "prettier --write \"src/**/*.js\"",
     "test": "echo \"Write tests! -> https://gatsby.app/unit-testing\"",
-    "deploy": "gatsby build --prefix-paths && gh-pages -d public"
+    "deploy": "gatsby build --prefix-paths && gh-pages -d public",
+    "eslint-check": "eslint --print-config . | eslint-config-prettier-check"
   },
   "dependencies": {
     "gatsby": "^2.1.18",
@@ -51,6 +52,7 @@
     "eslint-config-prettier": "^4.0.0",
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-jsx-a11y": "^6.1.2",
+    "eslint-plugin-prettier": "^3.0.1",
     "eslint-plugin-react": "^7.12.3",
     "gatsby-remark-embed-video": "^1.7.0",
     "gh-pages": "^2.0.1",

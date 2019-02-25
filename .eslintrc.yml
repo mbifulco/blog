@@ -12,24 +12,24 @@ parser: babel-eslint
 extends:
   - airbnb
   - prettier
+  - prettier/react
+
+plugins: 
+  - prettier
+  - react
+
+parserOptions:
+  ecmaFeatures: 
+    jsx: true
 
 rules:
   # best practices
-  arrow-parens:
-    - 2
-    - as-needed
   camelcase:
     - 0
   max-len:
     - 2
     - code: 100
-  semi:
-    - 2
-    - never
   class-methods-use-this: 0
-  comma-dangle:
-    - 2
-    - always-multiline
   no-console:
     - 2
   no-unused-expressions: 0
@@ -39,10 +39,6 @@ rules:
   no-useless-escape: 0
   no-restricted-globals: 0
   func-names: 0
-  quotes:
-    - 2
-    - single
-    - allowTemplateLiterals: true
   no-underscore-dangle: 0
   import/no-unresolved: 0
   import/extensions: 0
