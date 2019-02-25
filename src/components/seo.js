@@ -132,7 +132,7 @@ SEO.defaultProps = {
 SEO.propTypes = {
   description: PropTypes.string,
   lang: PropTypes.string,
-  location: PropTypes.shape,
+  location: PropTypes.shape({}),
   image: PropTypes.string,
   meta: PropTypes.array,
   ogType: PropTypes.string,
