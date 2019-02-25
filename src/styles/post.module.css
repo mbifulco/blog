@@ -18,7 +18,7 @@
   }
 
   h1 {
-    margin: 0 0 10px;
+    margin: 0;
   }
 
   img {
@@ -40,7 +40,8 @@
 
 .meta {
   font-size: 1rem;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
+  color: #555555;
 }
 
 .readMore {
