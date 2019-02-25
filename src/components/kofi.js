@@ -1,11 +1,12 @@
 import React from 'react'
+import { OutboundLink } from 'gatsby-plugin-google-analytics'
 
 import classes from '../styles/kofi.module.css'
 
 const Kofi = () => (
   <>
     <span className={classes.helpful}>Did you find this post helpful?</span>
-    <a
+    <OutboundLink
       href="https://ko-fi.com/N4N8N10N"
       target="_blank"
       rel="noopener noreferrer"
@@ -17,7 +18,7 @@ const Kofi = () => (
         height="36"
         border="0"
       />
-    </a>
+    </OutboundLink>
   </>
 )
 
