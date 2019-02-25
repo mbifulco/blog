@@ -6,7 +6,7 @@ import SEO from '../components/seo'
 import Layout from '../components/layout'
 import Post from '../components/post'
 
-const BlogPostTemplate = ({ data, pageContext }) => {
+const BlogPostTemplate = ({ data, pageContext, location }) => {
   const {
     frontmatter: { title, date, path, author, coverImage, excerpt },
     excerpt: autoExcerpt,
@@ -22,6 +22,7 @@ const BlogPostTemplate = ({ data, pageContext }) => {
         description={excerpt || autoExcerpt}
         image={coverImage ? coverImage.childImageSharp.fluid.src : undefined}
         ogType="article"
+        location={location}
       />
       <Post
         key={id}
@@ -46,6 +47,7 @@ BlogPostTemplate.propTypes = {
     next: PropTypes.object,
     previous: PropTypes.object,
   }),
+  location: PropTypes.shape({}),
 }
 
 export const pageQuery = graphql`
