@@ -7,9 +7,9 @@ const postCSSMixins = require('postcss-mixins')
 
 module.exports = {
   siteMetadata: {
-    title: `Mike Bifulco`,
-    description: `A simple starter for Gatsby. That's it.`,
-    author: `@irreverentmike`,
+    title: `Mike Bifulco - designer, developer, podcaster, creator`,
+    description: `Resources for modern software designers and developers.  Tips and walkthroughs on using developer tools like React, node, and javascript.  Design thoughts and theory, and tips for tools like sketchapp and figma.  Let's talk about it all!`,
+    author: `Mike Bifulco (@irreverentmike)`,
     logo: {
       src: '',
       alt: '',
