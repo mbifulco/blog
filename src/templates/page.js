@@ -21,6 +21,7 @@ const BlogPostTemplate = ({ data, pageContext }) => {
         title={title}
         description={excerpt || autoExcerpt}
         image={coverImage ? coverImage.childImageSharp.fluid.src : undefined}
+        ogType="article"
       />
       <Post
         key={id}
@@ -32,7 +33,6 @@ const BlogPostTemplate = ({ data, pageContext }) => {
         html={html}
         previousPost={previous}
         nextPost={next}
-        ogType="article"
       />
     </Layout>
   )
