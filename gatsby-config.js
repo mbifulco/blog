@@ -8,6 +8,7 @@ const postCSSMixins = require('postcss-mixins')
 module.exports = {
   siteMetadata: {
     title: `Mike Bifulco - designer, developer, podcaster, creator`,
+    // eslint-disable-next-line max-len
     description: `Resources for modern software designers and developers.  Tips and walkthroughs on using developer tools like React, node, and javascript.  Design thoughts and theory, and tips for tools like sketchapp and figma.`,
     author: `Mike Bifulco (@irreverentmike)`,
     logo: {
