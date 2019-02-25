@@ -7,9 +7,29 @@ const Footer = () => (
         © 2019 Mike Bifulco
       </span>
       <span className="footerCopyrights">
-        <a href="https://github.com/mbifulco">GitHub</a>
+        <a
+          href="https://github.com/mbifulco"
+          target="_blank"
+          rel="noreferrer noopener"
+        >
+          GitHub
+        </a>
         {' '}
-        <a href="https://twitter.com/irreverentmike">Twitter</a>
+        <a
+          href="https://twitter.com/irreverentmike"
+          target="_blank"
+          rel="noreferrer noopener"
+        >
+          Twitter
+        </a>
+        {' '}
+        <a
+          href="https://twitch.tv/irreverentmike"
+          target="_blank"
+          rel="noreferrer noopener"
+        >
+          Twitch
+        </a>
       </span>
     </div>
     <div className="credit">
