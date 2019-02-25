@@ -51,7 +51,7 @@ const SEO = ({ description, lang, meta, keywords, title, image }) => {
         },
         {
           property: `og:title`,
-          content: metaTitle,
+          content: title ? `${title} | ${siteTitle}` : siteTitle,
         },
         {
           property: `og:description`,
