@@ -23,16 +23,17 @@ const SEO = ({ description, lang, meta, keywords, title, image }) => {
   const metaTitle = title || siteTitle
   const metaDescription = description || siteDescription
 
+  const imageUrl = `https://mike.biful.co${image}`
   const ogImage = image
     ? {
         property: `og:image`,
-        content: image,
+        content: imageUrl,
       }
     : null
   const ogImageUrl = image
     ? {
         property: `og:image:url`,
-        content: image,
+        content: imageUrl,
       }
     : null
 
