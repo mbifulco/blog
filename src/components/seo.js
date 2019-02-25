@@ -70,6 +70,10 @@ const SEO = ({ description, lang, meta, keywords, title, ogType, image }) => {
           content: metaTitle,
         },
         {
+          name: `twitter:creator`,
+          content: `@irreverentmike`,
+        },
+        {
           name: `twitter:description`,
           content: metaDescription,
         },
