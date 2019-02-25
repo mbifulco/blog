@@ -32,6 +32,7 @@ const BlogPostTemplate = ({ data, pageContext }) => {
         html={html}
         previousPost={previous}
         nextPost={next}
+        ogType="article"
       />
     </Layout>
   )
