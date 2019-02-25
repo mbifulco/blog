@@ -4,7 +4,7 @@ import React from 'react'
 const TwitchIcon = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    xmlnsLink="http://www.w3.org/1999/xlink"
+    xmlnslink="http://www.w3.org/1999/xlink"
     viewBox="0 0 28 28"
     xmlSpace="preserve"
     fill="currentColor"
