@@ -17,7 +17,11 @@ const BlogPostTemplate = ({ data, pageContext }) => {
 
   return (
     <Layout>
-      <SEO title={title} description={excerpt || autoExcerpt} />
+      <SEO
+        title={title}
+        description={excerpt || autoExcerpt}
+        image={coverImage ? coverImage.childImageSharp.fluid.src : undefined}
+      />
       <Post
         key={id}
         title={title}
