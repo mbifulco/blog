@@ -1,0 +1,16 @@
+---
+title: "About"
+path: "/about"
+coverImage: "./cover.png"
+---
+
+I'm Mike Bifulco.  I'm a technologist, a designer, and a creator of things.  I started this as a place to put together my thoughts on things that I think deserve a bigger voice than [twitter](https://twitter.com/irreverentmike) or [GitHub](https://github.com/mbifulco).
+
+My beliefs are always changing - but here's some things that are important to me:
+
+- I believe in the power of critical thought, and the scientific process.
+- I believe _all_ people deserve fair and equitable access to all things.  🏳️‍🌈
+- I know that my knowledge is imperfect, and I can be blind to my privilege.  I'm always willing to listen.
+- There is opportunity for design and technology to impact and benefit all facets of our life.
+
+That's really about it.  I'd love to hear your thoughts on my thoughts - don't be shy!
