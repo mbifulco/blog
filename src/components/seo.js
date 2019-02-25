@@ -32,7 +32,11 @@ const SEO = ({
   const metaTitle = title || siteTitle
   const metaDescription = description || siteDescription
 
-  const imageUrl = `${location.origin}${image}`
+  let imageUrl
+  if (location && location.origin && image) {
+    imageUrl = `${location.origin}${image}`
+  }
+
   const ogImage = image
     ? {
         property: `og:image`,

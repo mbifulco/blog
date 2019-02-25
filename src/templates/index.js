@@ -6,14 +6,18 @@ import Layout from '../components/layout'
 import Post from '../components/post'
 import Navigation from '../components/navigation'
 
-const Index = ({ data, pageContext: { nextPagePath, previousPagePath } }) => {
+const Index = ({
+  data,
+  location,
+  pageContext: { nextPagePath, previousPagePath },
+}) => {
   const {
     allMarkdownRemark: { edges: posts },
   } = data
 
   return (
     <>
-      <SEO />
+      <SEO location={location} />
       <Layout>
         {posts.map(({ node }) => {
           const {
@@ -48,6 +52,7 @@ const Index = ({ data, pageContext: { nextPagePath, previousPagePath } }) => {
 
 Index.propTypes = {
   data: PropTypes.object.isRequired,
+  location: PropTypes.shape({}),
   pageContext: PropTypes.shape({
     nextPagePath: PropTypes.string,
     previousPagePath: PropTypes.string,
