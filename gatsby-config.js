@@ -76,6 +76,7 @@ module.exports = {
       resolve: `gatsby-transformer-remark`,
       options: {
         plugins: [
+          `@weknow/gatsby-remark-twitter`,
           {
             resolve: 'gatsby-remark-embed-video',
             options: {
