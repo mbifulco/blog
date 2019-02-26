@@ -31,6 +31,7 @@
     "gatsby-plugin-offline": "^2.0.16",
     "gatsby-plugin-postcss": "^2.0.2",
     "gatsby-plugin-react-helmet": "^3.0.7",
+    "gatsby-plugin-segment-js": "^3.0.1",
     "gatsby-plugin-sharp": "^2.0.17",
     "gatsby-remark-images": "^3.0.1",
     "gatsby-remark-prismjs": "^3.2.0",
