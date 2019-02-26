@@ -142,5 +142,6 @@ module.exports = {
         trackPage: true,
       },
     },
+    `gatsby-plugin-netlify`,
   ],
 }
