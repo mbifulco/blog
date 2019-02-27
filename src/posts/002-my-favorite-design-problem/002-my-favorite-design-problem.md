@@ -16,12 +16,12 @@ Funny enough, there is one other yelly-screamy article about [if you're going to
 
 Check this out:
 ![this is how you should use the yeti](./img-001-how-to-yeti.png)
-_Excerpt from the user manual on [Blue's website](https://www.bluedesigns.com/pdf/manuals/yeti/Blue_Yeti_QuickStartGuide-EN.pdf)_
+<em>Excerpt from the user manual on [Blue's website](https://www.bluedesigns.com/pdf/manuals/yeti/Blue_Yeti_QuickStartGuide-EN.pdf).</em>
 
 Most peoples' exposures to microphones are limited to weddings and bar mitzvahs, and the occasional rock concert or other public event. They're used to seeing folks using a handheld mic, and speaking into the top of it -
 
 ![A performer singing into a handheld microphone](./ana-paes-1220738-unsplash.jpg)
-_Photo of a performer singing into a handheld microphone by [Ana Paes](https://unsplash.com/photos/ieFTeJUgubw?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText) on [Unsplash](https://unsplash.com/search/photos/blue-yeti?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText)_
+<em>Photo of a performer singing into a handheld microphone by [Ana Paes](https://unsplash.com/photos/ieFTeJUgubw?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText) on [Unsplash](https://unsplash.com/search/photos/blue-yeti?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText).</em>
 
 If you take apart a Yeti, underneath that chic metal-grate dome, you'll actually find 3 microphone capsules - none of them pointed upwards. There is no combination of settings on the Yeti that will yield great audio if you're speaking into the top of the device.
 
