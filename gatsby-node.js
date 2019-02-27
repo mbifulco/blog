@@ -73,7 +73,11 @@ exports.createPages = ({ actions, graphql }) => {
 
     paginate({
       createPage,
-      items: posts,
+      items: posts.filter(
+        // make sure to only return posts that contain markdown entries
+        // other entries here are [other files] returned from the AllFile() query above
+        post => post && post.node && post.node.childMarkdownRemark !== null
+      ),
       component: indexTemplate,
       itemsPerPage: siteMetadata.postsPerPage,
       pathPrefix: '/',
