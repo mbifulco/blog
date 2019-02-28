@@ -3,6 +3,7 @@ title: 'Embracing Prettier'
 tags: ['javascript', 'react', 'dev']
 path: '/embracing-prettier'
 date: '2019-02-25'
+published: true
 coverImage: './cover.png'
 excerpt: "VSCode's format-on-save function was parsing my jsx React components like normal JavaScript. Maddening - yes, but the fix was simple."
 ---
