@@ -1,5 +1,6 @@
 ---
 title: 'Embracing Prettier'
+tags: ['javascript', 'react', 'dev']
 path: '/embracing-prettier'
 date: '2019-02-25'
 coverImage: './cover.png'
