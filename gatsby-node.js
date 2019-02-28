@@ -7,7 +7,7 @@ exports.createPages = ({ actions, graphql }) => {
 
   // import each of the page types to be rendered on the site
   const pageTemplate = path.resolve(`./src/templates/page.js`)
-  const tagTemplate = path.resolve('./src/templates/tags.js')
+  const tagPageTemplate = path.resolve('./src/templates/tagPage.js')
   const indexTemplate = path.resolve(`./src/templates/index.js`)
 
   return graphql(`
@@ -124,7 +124,7 @@ exports.createPages = ({ actions, graphql }) => {
     forEach(tags, tag => {
       createPage({
         path: `/tags/${kebabCase(tag)}`,
-        component: tagTemplate,
+        component: tagPageTemplate,
         context: {
           tag,
         },

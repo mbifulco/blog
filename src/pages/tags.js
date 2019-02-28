@@ -12,7 +12,7 @@ import Tag from '../components/tag'
 import Layout from '../components/layout'
 
 import classes from '../styles/post.module.css'
-import tagsClasses from '../styles/tagsIndex.module.css'
+import tagsClasses from '../styles/tagsPage.module.css'
 
 const TagsPage = ({
   data: {
