@@ -8,7 +8,11 @@ import { kebabCase } from 'lodash'
 import { Helmet } from 'react-helmet'
 import { Link, graphql } from 'gatsby'
 
+import Tag from '../components/tag'
 import Layout from '../components/layout'
+
+import classes from '../styles/post.module.css'
+import tagsClasses from '../styles/tagsIndex.module.css'
 
 const TagsPage = ({
   data: {
@@ -20,17 +24,21 @@ const TagsPage = ({
 }) => (
   <Layout>
     <Helmet title={title} />
-    <div>
-      <h1>Tags</h1>
-      <ul>
-        {group.map(tag => (
-          <li key={tag.fieldValue}>
-            <Link to={`/tags/${kebabCase(tag.fieldValue)}/`}>
-              {tag.fieldValue} ({tag.totalCount})
-            </Link>
-          </li>
-        ))}
-      </ul>
+    <div className={classes.post}>
+      <div className={classes.postContent}>
+        <h1>Tags</h1>
+        <ul className={tagsClasses.list}>
+          {group.map(tag => (
+            <li key={tag.fieldValue} className={tagsClasses.listItem}>
+              <Link to={`/tags/${kebabCase(tag.fieldValue)}/`}>
+                <Tag>
+                  {tag.fieldValue} ({tag.totalCount})
+                </Tag>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   </Layout>
 )
