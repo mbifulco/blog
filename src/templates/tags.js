@@ -1,35 +1,54 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import Pluralize from 'pluralize'
 
 import { Link, graphql } from 'gatsby'
 
-import Pluralize from 'pluralize'
+import Tag from '../components/tag'
+import Post from '../components/post'
+import Layout from '../components/layout'
+import classes from '../styles/post.module.css'
 
 const Tags = ({ pageContext, data }) => {
   const { tag } = pageContext
   const { edges, totalCount } = data.allMarkdownRemark
 
-  const tagHeader = `${totalCount} ${Pluralize(
-    'post',
-    totalCount
-  )} tagged with "${tag}"`
+  const tagHeader = (
+    <span>
+      <Tag>{tag}:</Tag> {totalCount} {Pluralize('post', totalCount)}
+    </span>
+  )
 
   return (
-    <div>
-      <h1>{tagHeader}</h1>
-      <ul>
-        {edges.map(({ node }) => {
-          const { path, title } = node.frontmatter
-          return (
-            <li key={path}>
-              <Link to={path}>{title}</Link>
-            </li>
-          )
-        })}
-      </ul>
+    <Layout>
+      <div className={classes.post}>
+        <div className={classes.postContent}>
+          <h1 className={classes.title}>{tagHeader}</h1>
 
-      <Link to="/tags">All tags</Link>
-    </div>
+          {edges.map(({ node }) => {
+            const {
+              id,
+              excerpt: autoExcerpt,
+              frontmatter: { title, date, path, author, coverImage, excerpt },
+            } = node
+
+            return (
+              <Post
+                key={id}
+                title={title}
+                date={date}
+                path={path}
+                author={author}
+                coverImage={coverImage}
+                excerpt={excerpt || autoExcerpt}
+              />
+            )
+          })}
+
+          <Link to="/tags">All tags</Link>
+        </div>
+      </div>
+    </Layout>
   )
 }
 
@@ -66,9 +85,21 @@ export const pageQuery = graphql`
       totalCount
       edges {
         node {
+          id
+          excerpt
           frontmatter {
             title
+            date(formatString: "DD MMMM YYYY")
             path
+            author
+            excerpt
+            coverImage {
+              childImageSharp {
+                fluid(maxWidth: 800) {
+                  ...GatsbyImageSharpFluid
+                }
+              }
+            }
           }
         }
       }
