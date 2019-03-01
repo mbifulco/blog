@@ -1,3 +1,8 @@
+.container {
+  margin-top: 2rem;
+  font-size: smaller;
+}
+
 .header {
   font-weight: bold;
 }

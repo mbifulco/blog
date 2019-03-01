@@ -12,13 +12,11 @@ const TagsSummary = ({ tags }) => {
   if (!tags || tags.length <= 0) return null
 
   return (
-    <div>
+    <div className={classes.container}>
       <header className={classes.header}>Tagged with</header>
-      <small>
-        {map(tags, tag => (
-          <Tag url={`/tags/${tag}`}>{tag}</Tag>
-        ))}
-      </small>
+      {map(tags, tag => (
+        <Tag url={`/tags/${tag}`}>{tag}</Tag>
+      ))}
     </div>
   )
 }

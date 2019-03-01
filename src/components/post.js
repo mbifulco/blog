@@ -51,8 +51,8 @@ const Post = ({
           <>
             <div dangerouslySetInnerHTML={{ __html: html }} />
 
-            <TagsSummary tags={tags} />
             <Kofi />
+            <TagsSummary tags={tags} />
             <Navigation
               previousPath={previousPath}
               previousLabel={previousLabel}
