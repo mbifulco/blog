@@ -1,5 +1,6 @@
 ---
 title: 'My favorite design problem: Microphones 🎙️'
+tags: ['design']
 path: '/my-favorite-design-problem-microphones'
 date: '2019-02-28'
 coverImage: './cover.png'
