@@ -8,7 +8,7 @@ import Post from '../components/post'
 
 const BlogPostTemplate = ({ data, pageContext, location }) => {
   const {
-    frontmatter: { title, date, path, author, coverImage, excerpt },
+    frontmatter: { title, date, path, author, coverImage, excerpt, tags },
     excerpt: autoExcerpt,
     id,
     html,
@@ -34,6 +34,7 @@ const BlogPostTemplate = ({ data, pageContext, location }) => {
         html={html}
         previousPost={previous}
         nextPost={next}
+        tags={tags}
       />
     </Layout>
   )
@@ -66,6 +67,7 @@ export const pageQuery = graphql`
             }
           }
         }
+        tags
       }
       id
       html

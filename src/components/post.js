@@ -2,12 +2,14 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'gatsby'
 import Img from 'gatsby-image'
-import Navigation from './navigation'
 
+import TagsSummary from './tagsSummary'
+import Navigation from './navigation'
 import style from '../styles/post.module.css'
 import Kofi from './kofi'
 
 const Post = ({
+  tags,
   title,
   date,
   path,
@@ -48,7 +50,9 @@ const Post = ({
         ) : (
           <>
             <div dangerouslySetInnerHTML={{ __html: html }} />
+
             <Kofi />
+            <TagsSummary tags={tags} />
             <Navigation
               previousPath={previousPath}
               previousLabel={previousLabel}
@@ -63,6 +67,7 @@ const Post = ({
 }
 
 Post.propTypes = {
+  tags: PropTypes.arrayOf(PropTypes.string),
   title: PropTypes.string,
   date: PropTypes.string,
   path: PropTypes.string,

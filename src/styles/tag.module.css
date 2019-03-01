@@ -1,0 +1,15 @@
+.container {
+  padding: 0.5rem 1rem;
+  display: inline-block;
+  border-radius: 0.5rem;
+  background-image: linear-gradient(to top, #e26015, #fe5186);
+  margin: 0.5rem 0.5rem 0.5rem 0;
+  color: white;
+  font-weight: bold;
+}
+
+.link {
+  &:hover span {
+    text-decoration: underline;
+  }
+}

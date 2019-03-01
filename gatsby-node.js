@@ -1,10 +1,13 @@
 const { paginate } = require('gatsby-awesome-pagination')
 const path = require('path')
+const { forEach, get, kebabCase, uniq } = require('lodash')
 
 exports.createPages = ({ actions, graphql }) => {
   const { createPage } = actions
 
+  // import each of the page types to be rendered on the site
   const pageTemplate = path.resolve(`./src/templates/page.js`)
+  const tagPageTemplate = path.resolve('./src/templates/tagPage.js')
   const indexTemplate = path.resolve(`./src/templates/index.js`)
 
   return graphql(`
@@ -35,6 +38,7 @@ exports.createPages = ({ actions, graphql }) => {
             childMarkdownRemark {
               frontmatter {
                 title
+                tags
               }
             }
           }
@@ -71,13 +75,15 @@ exports.createPages = ({ actions, graphql }) => {
       return Promise.reject(result.errors)
     }
 
+    const filteredPosts = posts.filter(
+      // make sure to only return posts that contain markdown entries
+      // other entries here are [other files] returned from the AllFile() query above
+      post => post && post.node && post.node.childMarkdownRemark !== null
+    )
+
     paginate({
       createPage,
-      items: posts.filter(
-        // make sure to only return posts that contain markdown entries
-        // other entries here are [other files] returned from the AllFile() query above
-        post => post && post.node && post.node.childMarkdownRemark !== null
-      ),
+      items: filteredPosts,
       component: indexTemplate,
       itemsPerPage: siteMetadata.postsPerPage,
       pathPrefix: '/',
@@ -101,6 +107,26 @@ exports.createPages = ({ actions, graphql }) => {
           type: getType(node),
           next: isNextSameType ? next : null,
           previous: isPreviousSameType ? previous : null,
+        },
+      })
+    })
+
+    // tag pages
+    let tags = []
+    forEach(filteredPosts, edge => {
+      if (get(edge, 'node.childMarkdownRemark.frontmatter.tags')) {
+        tags = tags.concat(edge.node.childMarkdownRemark.frontmatter.tags)
+      }
+    })
+
+    tags = uniq(tags)
+
+    forEach(tags, tag => {
+      createPage({
+        path: `/tags/${kebabCase(tag)}`,
+        component: tagPageTemplate,
+        context: {
+          tag,
         },
       })
     })
