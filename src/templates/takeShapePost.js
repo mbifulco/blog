@@ -37,7 +37,7 @@ const TakeShapePostTemplate = ({ data, pageContext, location }) => {
         html={html}
         previousPost={previous}
         nextPost={next}
-        tags={tags}
+        tags={tags.map(tag => tag.name)}
       />
     </Layout>
   )
@@ -58,6 +58,9 @@ export const pageQuery = graphql`
   query($id: ID!) {
     takeshape {
       post: getPost(_id: $id) {
+        tags {
+          name
+        }
         title
         path
         deck
