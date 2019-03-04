@@ -14,6 +14,8 @@ const Post = ({
   date,
   path,
   coverImage,
+  coverImageAlt,
+  coverImageUrl,
   author,
   excerpt,
   html,
@@ -25,6 +27,24 @@ const Post = ({
   const nextPath = nextPost && nextPost.frontmatter.path
   const nextLabel = nextPost && nextPost.frontmatter.title
 
+  let coverImageContainer
+  if (coverImage && coverImage.childImageSharp) {
+    coverImageContainer = (
+      <Img
+        fluid={coverImage.childImageSharp.fluid}
+        className={style.coverImage}
+      />
+    )
+  } else if (coverImageUrl) {
+    coverImageContainer = (
+      <img
+        src={coverImageUrl}
+        className={style.coverImage}
+        alt={coverImageAlt}
+      />
+    )
+  }
+
   return (
     <div className={style.post}>
       <div className={style.postContent}>
@@ -34,12 +54,8 @@ const Post = ({
         <div className={style.meta}>
           {date} {author && <>— Written by {author}</>}
         </div>
-        {coverImage && (
-          <Img
-            fluid={coverImage.childImageSharp.fluid}
-            className={style.coverImage}
-          />
-        )}
+        {coverImageContainer}
+
         {excerpt ? (
           <>
             <p>{excerpt}</p>
@@ -72,6 +88,8 @@ Post.propTypes = {
   date: PropTypes.string,
   path: PropTypes.string,
   coverImage: PropTypes.object,
+  coverImageAlt: PropTypes.string,
+  coverImageUrl: PropTypes.string,
   author: PropTypes.string,
   excerpt: PropTypes.string,
   html: PropTypes.string,

@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { graphql } from 'gatsby'
+import { getImageUrl } from 'takeshape-routing'
 
 import SEO from '../components/seo'
 import Layout from '../components/layout'
@@ -8,6 +9,7 @@ import Post from '../components/post'
 
 const TakeShapePostTemplate = ({ data, pageContext, location }) => {
   const {
+    featureImage,
     title,
     date,
     path,
@@ -33,7 +35,7 @@ const TakeShapePostTemplate = ({ data, pageContext, location }) => {
         title={title}
         date={date}
         path={path}
-        // coverImage={coverImage}
+        coverImageUrl={getImageUrl(featureImage.path)}
         html={html}
         previousPost={previous}
         nextPost={next}
@@ -60,6 +62,10 @@ export const pageQuery = graphql`
       post: getPost(_id: $id) {
         tags {
           name
+        }
+        featureImage {
+          path
+          description
         }
         title
         path
