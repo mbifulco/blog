@@ -13,9 +13,8 @@ const TakeShapePostTemplate = ({ data, pageContext, location }) => {
     title,
     date,
     path,
-    deck,
+    excerpt,
     tags,
-    excerpt: autoExcerpt,
     id,
     bodyHtml: html,
   } = data.takeshape.post
@@ -25,7 +24,7 @@ const TakeShapePostTemplate = ({ data, pageContext, location }) => {
     <Layout>
       <SEO
         title={title}
-        description={deck || autoExcerpt}
+        description={excerpt}
         // image={coverImage ? coverImage.childImageSharp.fluid.src : undefined}
         ogType="article"
         location={location}
@@ -36,6 +35,7 @@ const TakeShapePostTemplate = ({ data, pageContext, location }) => {
         date={date}
         path={path}
         coverImageUrl={getImageUrl(featureImage.path)}
+        coverImageAlt={featureImage.description}
         html={html}
         previousPost={previous}
         nextPost={next}
@@ -69,7 +69,7 @@ export const pageQuery = graphql`
         }
         title
         path
-        deck
+        excerpt
         body
         bodyHtml
         _createdAt
