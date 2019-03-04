@@ -9,6 +9,7 @@ exports.createPages = ({ actions, graphql }) => {
   const pageTemplate = path.resolve(`./src/templates/page.js`)
   const tagPageTemplate = path.resolve('./src/templates/tagPage.js')
   const indexTemplate = path.resolve(`./src/templates/index.js`)
+  const takeShapePostTemplate = path.resolve('./src/templates/takeShapePost.js')
 
   return graphql(`
     {
@@ -49,12 +50,22 @@ exports.createPages = ({ actions, graphql }) => {
           postsPerPage
         }
       }
+      takeshape {
+        posts: getPostList {
+          items {
+            _id
+            title
+            path
+          }
+        }
+      }
     }
   `).then(result => {
     const {
       allMarkdownRemark: { edges: markdownPages },
       posts: { edges: posts },
       site: { siteMetadata },
+      takeshape,
     } = result.data
     const sortedPages = markdownPages.sort(
       (
@@ -74,6 +85,17 @@ exports.createPages = ({ actions, graphql }) => {
     if (result.errors) {
       return Promise.reject(result.errors)
     }
+
+    takeshape.posts.items.forEach(takeShapePost => {
+      createPage({
+        path: takeShapePost.path,
+        component: takeShapePostTemplate,
+        context: {
+          id: takeShapePost._id,
+          type: 'takeshapePost',
+        },
+      })
+    })
 
     const filteredPosts = posts.filter(
       // make sure to only return posts that contain markdown entries
