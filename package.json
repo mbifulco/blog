@@ -48,7 +48,8 @@
     "prop-types": "^15.6.2",
     "react": "^16.8.0",
     "react-dom": "^16.8.0",
-    "react-helmet": "^5.2.0"
+    "react-helmet": "^5.2.0",
+    "takeshape-routing": "^4.64.0"
   },
   "devDependencies": {
     "babel-eslint": "^10.0.1",

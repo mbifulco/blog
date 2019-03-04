@@ -9847,6 +9847,14 @@ qs@6.5.2, qs@~6.5.2:
   resolved "https://registry.yarnpkg.com/qs/-/qs-6.5.2.tgz#cb3ae806e8740444584ef154ce8ee98d403f3e36"
   integrity sha512-N5ZAX4/LxJmF+7wN74pUD6qAh9/wnvdQcjq9TZjevvXzSUo7bfmw91saqMjzGS2xq91/odN2dW/WOl7qQHNDGA==
 
+query-string@^4.2.3:
+  version "4.3.4"
+  resolved "https://registry.yarnpkg.com/query-string/-/query-string-4.3.4.tgz#bbb693b9ca915c232515b228b1a02b609043dbeb"
+  integrity sha1-u7aTucqRXCMlFbIosaArYJBD2+s=
+  dependencies:
+    object-assign "^4.1.0"
+    strict-uri-encode "^1.0.0"
+
 query-string@^5.0.1:
   version "5.1.1"
   resolved "https://registry.yarnpkg.com/query-string/-/query-string-5.1.1.tgz#a78c012b71c17e05f2e3fa2319dd330682efb3cb"
@@ -10886,6 +10894,11 @@ slice-ansi@^2.1.0:
     astral-regex "^1.0.0"
     is-fullwidth-code-point "^2.0.0"
 
+slugg@^1.1.0:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/slugg/-/slugg-1.2.1.tgz#e752af2241af3f2714463c5de225cea47608740a"
+  integrity sha1-51KvIkGvPycURjxd4iXOpHYIdAo=
+
 snapdragon-node@^2.0.1:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/snapdragon-node/-/snapdragon-node-2.1.1.tgz#6c175f86ff14bdb0724563e8f3c1b021a286853b"
@@ -11543,6 +11556,14 @@ table@^5.2.3:
     lodash "^4.17.11"
     slice-ansi "^2.1.0"
     string-width "^3.0.0"
+
+takeshape-routing@^4.64.0:
+  version "4.64.0"
+  resolved "https://registry.yarnpkg.com/takeshape-routing/-/takeshape-routing-4.64.0.tgz#d4317a7acf824fac5b23b1e56669ac1fa941fa33"
+  integrity sha512-FzO9c0bgSFyfLRncm2tAPwXDxVbVvi3KMuKP0sKBGYcXRQAjavQL8Ej7I4LtAsqaOmtBgt9XCgfJ9AHvimu8Qw==
+  dependencies:
+    query-string "^4.2.3"
+    slugg "^1.1.0"
 
 tapable@^1.0.0, tapable@^1.1.0:
   version "1.1.1"
