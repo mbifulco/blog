@@ -48,7 +48,7 @@ exports.createPages = ({ actions, graphql }) => {
         context: {
           id: takeShapePost._id,
           type: 'takeshapePost',
-          next: idx === posts.items.length - 1 ? null : posts.items[idx - 1],
+          next: idx === posts.items.length - 1 ? null : posts.items[idx + 1],
           previous: idx === 0 ? null : posts.items[idx - 1],
         },
       })
