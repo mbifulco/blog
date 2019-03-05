@@ -70,7 +70,7 @@ Index.propTypes = {
 export const postsQuery = graphql`
   {
     takeshape {
-      posts: getPostList {
+      posts: getPostList(sort: [{ field: "_enabledAt", order: "DESC" }]) {
         items {
           body
           bodyHtml
