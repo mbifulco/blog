@@ -42,6 +42,13 @@ const Footer = () => (
         <OutboundLink href="https://www.gatsbyjs.org">Gatsby</OutboundLink>.
       </span>{' '}
       <span>
+        CMS by{' '}
+        <OutboundLink href="https://https://takeshape.io">
+          Takeshape
+        </OutboundLink>
+        .
+      </span>{' '}
+      <span>
         Starter created by the brilliant{' '}
         <OutboundLink
           href="https://radoslawkoziel.pl"
