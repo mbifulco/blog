@@ -30,7 +30,7 @@ const TagsPage = ({ data }) => {
                 <li key={`tag-${tag._id}`} className={tagsClasses.listItem}>
                   <Link to={`/tags/${kebabCase(tag.name)}/`}>
                     <Tag>
-                      {tag.name} ({tag.totalCount})
+                      {tag.name} ({tag.posts.total})
                     </Tag>
                   </Link>
                 </li>
@@ -64,6 +64,9 @@ export const pageQuery = graphql`
         items {
           _id
           name
+          posts: postSet {
+            total
+          }
         }
       }
       siteMetadata: getSiteSettings {
