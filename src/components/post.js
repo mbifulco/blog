@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'gatsby'
 import Img from 'gatsby-image'
+import moment from 'moment'
 
 import TagsSummary from './tagsSummary'
 import Navigation from './navigation'
@@ -14,16 +15,38 @@ const Post = ({
   date,
   path,
   coverImage,
+  coverImageAlt,
+  coverImageUrl,
   author,
   excerpt,
   html,
   previousPost,
   nextPost,
 }) => {
-  const previousPath = previousPost && previousPost.frontmatter.path
-  const previousLabel = previousPost && previousPost.frontmatter.title
-  const nextPath = nextPost && nextPost.frontmatter.path
-  const nextLabel = nextPost && nextPost.frontmatter.title
+  const previousPath = previousPost && previousPost.path
+  const previousLabel = previousPost && previousPost.title
+  const nextPath = nextPost && nextPost.path
+  const nextLabel = nextPost && nextPost.title
+
+  let coverImageContainer
+  if (coverImage && coverImage.childImageSharp) {
+    coverImageContainer = (
+      <Img
+        fluid={coverImage.childImageSharp.fluid}
+        className={style.coverImage}
+      />
+    )
+  } else if (coverImageUrl) {
+    coverImageContainer = (
+      <img
+        src={coverImageUrl}
+        className={style.coverImage}
+        alt={coverImageAlt}
+      />
+    )
+  }
+
+  const formattedDate = moment(new Date(date)).format('DD MMMM YYYY')
 
   return (
     <div className={style.post}>
@@ -32,14 +55,10 @@ const Post = ({
           {excerpt ? <Link to={path}>{title}</Link> : title}
         </h1>
         <div className={style.meta}>
-          {date} {author && <>— Written by {author}</>}
+          {formattedDate} {author && <>— Written by {author}</>}
         </div>
-        {coverImage && (
-          <Img
-            fluid={coverImage.childImageSharp.fluid}
-            className={style.coverImage}
-          />
-        )}
+        {coverImageContainer}
+
         {excerpt ? (
           <>
             <p>{excerpt}</p>
@@ -72,6 +91,8 @@ Post.propTypes = {
   date: PropTypes.string,
   path: PropTypes.string,
   coverImage: PropTypes.object,
+  coverImageAlt: PropTypes.string,
+  coverImageUrl: PropTypes.string,
   author: PropTypes.string,
   excerpt: PropTypes.string,
   html: PropTypes.string,

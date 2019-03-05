@@ -1,26 +1,31 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { graphql } from 'gatsby'
+import { getImageUrl } from 'takeshape-routing'
 
 import SEO from '../components/seo'
 import Layout from '../components/layout'
 import Post from '../components/post'
 
-const BlogPostTemplate = ({ data, pageContext, location }) => {
+const TakeShapePostTemplate = ({ data, pageContext, location }) => {
   const {
-    frontmatter: { title, date, path, author, coverImage, excerpt, tags },
-    excerpt: autoExcerpt,
+    featureImage,
+    title,
+    _enabledAt: date,
+    path,
+    excerpt,
+    tags,
     id,
-    html,
-  } = data.markdownRemark
+    bodyHtml: html,
+  } = data.takeshape.post
   const { next, previous } = pageContext
 
   return (
     <Layout>
       <SEO
         title={title}
-        description={excerpt || autoExcerpt}
-        image={coverImage ? coverImage.childImageSharp.fluid.src : undefined}
+        description={excerpt}
+        image={getImageUrl(featureImage.path)}
         ogType="article"
         location={location}
       />
@@ -29,20 +34,20 @@ const BlogPostTemplate = ({ data, pageContext, location }) => {
         title={title}
         date={date}
         path={path}
-        author={author}
-        coverImage={coverImage}
+        coverImageUrl={getImageUrl(featureImage.path)}
+        coverImageAlt={featureImage.description}
         html={html}
         previousPost={previous}
         nextPost={next}
-        tags={tags}
+        tags={tags.map(tag => tag.name)}
       />
     </Layout>
   )
 }
 
-export default BlogPostTemplate
+export default TakeShapePostTemplate
 
-BlogPostTemplate.propTypes = {
+TakeShapePostTemplate.propTypes = {
   data: PropTypes.object.isRequired,
   pageContext: PropTypes.shape({
     next: PropTypes.object,
@@ -52,26 +57,27 @@ BlogPostTemplate.propTypes = {
 }
 
 export const pageQuery = graphql`
-  query($path: String) {
-    markdownRemark(frontmatter: { path: { eq: $path } }) {
-      frontmatter {
-        title
-        date(formatString: "DD MMMM YYYY")
-        path
-        author
-        excerpt
-        coverImage {
-          childImageSharp {
-            fluid(maxWidth: 800) {
-              ...GatsbyImageSharpFluid
-            }
-          }
+  query($id: ID!) {
+    takeshape {
+      post: getPost(_id: $id) {
+        tags {
+          name
         }
-        tags
+        featureImage {
+          path
+          description
+        }
+        title
+        path
+        excerpt
+        body
+        bodyHtml
+        _createdAt
+        _updatedAt
+        _enabled
+        _enabledAt
+        searchSummary
       }
-      id
-      html
-      excerpt
     }
   }
 `

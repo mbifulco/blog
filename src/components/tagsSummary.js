@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Link } from 'gatsby'
 
 import { map } from 'lodash'
 
@@ -14,8 +13,10 @@ const TagsSummary = ({ tags }) => {
   return (
     <div className={classes.container}>
       <header className={classes.header}>Tagged with</header>
-      {map(tags, tag => (
-        <Tag url={`/tags/${tag}`}>{tag}</Tag>
+      {map(tags, (tag, id) => (
+        <Tag key={`tag-${id}`} url={`/tags/${tag}`}>
+          {tag}
+        </Tag>
       ))}
     </div>
   )

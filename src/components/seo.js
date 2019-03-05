@@ -32,21 +32,16 @@ const SEO = ({
   const metaTitle = title || siteTitle
   const metaDescription = description || siteDescription
 
-  let imageUrl
-  if (location && location.origin && image) {
-    imageUrl = `${location.origin}${image}`
-  }
-
   const ogImage = image
     ? {
         property: `og:image`,
-        content: imageUrl,
+        content: image,
       }
     : null
   const ogImageUrl = image
     ? {
         property: `og:image:url`,
-        content: imageUrl,
+        content: image,
       }
     : null
 
@@ -76,7 +71,7 @@ const SEO = ({
         },
         {
           name: `twitter:card`,
-          content: imageUrl ? `summary_large_image` : `summary`,
+          content: image ? `summary_large_image` : `summary`,
         },
         {
           name: `twitter:title`,

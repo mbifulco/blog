@@ -16,6 +16,7 @@
   "license": "MIT",
   "scripts": {
     "build": "gatsby build",
+    "clean": "gatsby clean",
     "dev": "gatsby clean && gatsby develop",
     "format": "prettier --write \"src/**/*.js\"",
     "test": "echo \"Write tests! -> https://gatsby.app/unit-testing\"",
@@ -23,6 +24,7 @@
   },
   "dependencies": {
     "@weknow/gatsby-remark-twitter": "^0.2.0",
+    "dotenv": "^6.2.0",
     "gatsby": "^2.1.18",
     "gatsby-awesome-pagination": "^0.3.3",
     "gatsby-image": "^2.0.30",
@@ -38,15 +40,18 @@
     "gatsby-remark-images": "^3.0.1",
     "gatsby-remark-prismjs": "^3.2.0",
     "gatsby-source-filesystem": "^2.0.23",
+    "gatsby-source-graphql": "^2.0.11",
     "gatsby-transformer-remark": "^2.3.0",
     "gatsby-transformer-sharp": "^2.1.8",
     "lodash": "^4.17.11",
+    "moment": "^2.24.0",
     "pluralize": "^7.0.0",
     "prismjs": "^1.15.0",
     "prop-types": "^15.6.2",
     "react": "^16.8.0",
     "react-dom": "^16.8.0",
-    "react-helmet": "^5.2.0"
+    "react-helmet": "^5.2.0",
+    "takeshape-routing": "^4.64.0"
   },
   "devDependencies": {
     "babel-eslint": "^10.0.1",

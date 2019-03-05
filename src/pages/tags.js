@@ -14,48 +14,42 @@ import Layout from '../components/layout'
 import classes from '../styles/post.module.css'
 import tagsClasses from '../styles/tagsPage.module.css'
 
-const TagsPage = ({
-  data: {
-    allMarkdownRemark: { group },
-    site: {
-      siteMetadata: { title },
-    },
-  },
-}) => (
-  <Layout>
-    <Helmet title={title} />
-    <div className={classes.post}>
-      <div className={classes.postContent}>
-        <h1>Tags</h1>
-        <ul className={tagsClasses.list}>
-          {group.map(tag => (
-            <li key={tag.fieldValue} className={tagsClasses.listItem}>
-              <Link to={`/tags/${kebabCase(tag.fieldValue)}/`}>
-                <Tag>
-                  {tag.fieldValue} ({tag.totalCount})
-                </Tag>
-              </Link>
-            </li>
-          ))}
-        </ul>
+const TagsPage = ({ data }) => {
+  const { takeshape } = data
+  const { siteMetadata, tags } = takeshape
+
+  return (
+    <Layout>
+      <Helmet title={siteMetadata.siteTitle} />
+      <div className={classes.post}>
+        <div className={classes.postContent}>
+          <h1>Tags</h1>
+          <ul className={tagsClasses.list}>
+            {tags.items.map(tag => {
+              return (
+                <li key={`tag-${tag._id}`} className={tagsClasses.listItem}>
+                  <Link to={`/tags/${kebabCase(tag.name)}/`}>
+                    <Tag>
+                      {tag.name} ({tag.posts.total})
+                    </Tag>
+                  </Link>
+                </li>
+              )
+            })}
+          </ul>
+        </div>
       </div>
-    </div>
-  </Layout>
-)
+    </Layout>
+  )
+}
 
 TagsPage.propTypes = {
   data: PropTypes.shape({
-    allMarkdownRemark: PropTypes.shape({
-      group: PropTypes.arrayOf(
-        PropTypes.shape({
-          fieldValue: PropTypes.string.isRequired,
-          totalCount: PropTypes.number.isRequired,
-        }).isRequired
-      ),
-    }),
-    site: PropTypes.shape({
-      siteMetadata: PropTypes.shape({
-        title: PropTypes.string.isRequired,
+    takeshape: PropTypes.shape({
+      site: PropTypes.shape({
+        siteMetadata: PropTypes.shape({
+          siteTitle: PropTypes.string.isRequired,
+        }),
       }),
     }),
   }),
@@ -65,18 +59,18 @@ export default TagsPage
 
 export const pageQuery = graphql`
   query {
-    site {
-      siteMetadata {
-        title
+    takeshape {
+      tags: getTagList {
+        items {
+          _id
+          name
+          posts: postSet {
+            total
+          }
+        }
       }
-    }
-    allMarkdownRemark(
-      limit: 2000
-      filter: { frontmatter: { published: { ne: false } } }
-    ) {
-      group(field: frontmatter___tags) {
-        fieldValue
-        totalCount
+      siteMetadata: getSiteSettings {
+        siteTitle
       }
     }
   }

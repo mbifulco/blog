@@ -1,3 +1,6 @@
+// import configuration bits from .env files
+require('dotenv').config()
+
 const postCssPresetEnv = require(`postcss-preset-env`)
 const postCSSNested = require('postcss-nested')
 const postCSSUrl = require('postcss-url')
@@ -30,27 +33,6 @@ module.exports = {
   plugins: [
     `babel-preset-gatsby`,
     `gatsby-plugin-react-helmet`,
-    {
-      resolve: `gatsby-source-filesystem`,
-      options: {
-        name: `images`,
-        path: `${__dirname}/src/images`,
-      },
-    },
-    {
-      resolve: `gatsby-source-filesystem`,
-      options: {
-        name: `posts`,
-        path: `${__dirname}/src/posts`,
-      },
-    },
-    {
-      resolve: `gatsby-source-filesystem`,
-      options: {
-        name: `pages`,
-        path: `${__dirname}/src/pages`,
-      },
-    },
     {
       resolve: `gatsby-plugin-postcss`,
       options: {
@@ -141,6 +123,24 @@ module.exports = {
         // to include analytics.page() automatically
         // if false, see below on how to track pageviews manually
         trackPage: true,
+      },
+    },
+    {
+      resolve: 'gatsby-source-graphql',
+      options: {
+        typeName: 'TS',
+        fieldName: 'takeshape',
+        // Url to query from
+        url: `https://api.takeshape.io/project/${
+          process.env.TAKESHAPE_PROJECT
+        }/graphql`,
+        // HTTP headers
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${process.env.TAKESHAPE_TOKEN}`,
+        },
+        // Additional options to pass to node-fetch
+        fetchOptions: {},
       },
     },
     `gatsby-plugin-netlify`,
