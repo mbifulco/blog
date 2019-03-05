@@ -1,8 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Pluralize from 'pluralize'
-
 import { Link, graphql } from 'gatsby'
+
+import { getImageUrl } from 'takeshape-routing'
 
 import Tag from '../components/tag'
 import Post from '../components/post'
@@ -11,11 +12,12 @@ import classes from '../styles/post.module.css'
 
 const Tags = ({ pageContext, data }) => {
   const { tag } = pageContext
-  const { edges, totalCount } = data.allMarkdownRemark
+  const { takeshape } = data
+  const { total, items: posts } = takeshape.tags.posts
 
   const tagHeader = (
     <span>
-      <Tag>{tag}:</Tag> {totalCount} {Pluralize('post', totalCount)}
+      <Tag>{tag}:</Tag> {total} {Pluralize('post', total)}
     </span>
   )
 
@@ -25,12 +27,16 @@ const Tags = ({ pageContext, data }) => {
         <div className={classes.postContent}>
           <h1 className={classes.title}>{tagHeader}</h1>
 
-          {edges.map(({ node }) => {
+          {posts.map(post => {
             const {
-              id,
-              excerpt: autoExcerpt,
-              frontmatter: { title, date, path, author, coverImage, excerpt },
-            } = node
+              _enabledAt: date,
+              _id: id,
+              title,
+              path,
+              author,
+              featureImage,
+              excerpt,
+            } = post
 
             return (
               <Post
@@ -39,8 +45,9 @@ const Tags = ({ pageContext, data }) => {
                 date={date}
                 path={path}
                 author={author}
-                coverImage={coverImage}
-                excerpt={excerpt || autoExcerpt}
+                coverImageUrl={getImageUrl(featureImage.path)}
+                coverImageAlt={featureImage.description}
+                excerpt={excerpt}
               />
             )
           })}
@@ -55,14 +62,34 @@ const Tags = ({ pageContext, data }) => {
 Tags.propTypes = {
   pageContext: PropTypes.shape({
     tag: PropTypes.string.isRequired,
+    tagId: PropTypes.string,
   }),
   data: PropTypes.shape({}),
 }
 
 export default Tags
 
-// export const pageQuery = graphql`
-//   query($tag: String) {
-
-//   }
-// `
+export const pageQuery = graphql`
+  query($tagId: ID!) {
+    takeshape {
+      tags: getTag(_id: $tagId) {
+        _id
+        name
+        posts: postSet {
+          total
+          items {
+            _enabledAt
+            _id
+            excerpt
+            featureImage {
+              description
+              path
+            }
+            path
+            title
+          }
+        }
+      }
+    }
+  }
+`

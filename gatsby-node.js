@@ -69,6 +69,7 @@ exports.createPages = ({ actions, graphql }) => {
         component: tagPageTemplate,
         context: {
           tag: tag.name,
+          tagId: tag._id,
         },
       })
     })
