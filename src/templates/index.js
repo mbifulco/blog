@@ -1,40 +1,48 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { graphql } from 'gatsby'
+import { getImageUrl } from 'takeshape-routing'
+
 import SEO from '../components/seo'
 import Layout from '../components/layout'
 import Post from '../components/post'
 import Navigation from '../components/navigation'
 
-const Index = ({
-  data,
-  location,
-  pageContext: { nextPagePath, previousPagePath },
-}) => {
+const Index = props => {
   const {
-    allMarkdownRemark: { edges: posts },
-  } = data
+    data,
+    location,
+    pageContext: { nextPagePath, previousPagePath },
+  } = props
+
+  const { takeshape } = data
+  const { posts } = takeshape
 
   return (
     <>
       <SEO location={location} />
       <Layout>
-        {posts.map(({ node }) => {
+        {posts.items.map(post => {
           const {
-            id,
-            excerpt: autoExcerpt,
-            frontmatter: { title, date, path, author, coverImage, excerpt },
-          } = node
+            _id,
+            excerpt,
+            title,
+            _enabledAt: date,
+            path,
+            author,
+            featureImage,
+          } = post
 
           return (
             <Post
-              key={id}
+              key={_id}
               title={title}
               date={date}
               path={path}
               author={author}
-              coverImage={coverImage}
-              excerpt={excerpt || autoExcerpt}
+              coverImageUrl={getImageUrl(featureImage.path)}
+              coverImageAlt={featureImage.description}
+              excerpt={excerpt}
             />
           )
         })}
@@ -60,34 +68,28 @@ Index.propTypes = {
 }
 
 export const postsQuery = graphql`
-  query($limit: Int!, $skip: Int!) {
-    allMarkdownRemark(
-      filter: {
-        fileAbsolutePath: { regex: "//posts//" }
-        frontmatter: { placeholder: { ne: true } }
-      }
-      sort: { fields: [frontmatter___date], order: DESC }
-      limit: $limit
-      skip: $skip
-    ) {
-      edges {
-        node {
-          id
+  {
+    takeshape {
+      posts: getPostList {
+        items {
+          body
+          bodyHtml
           excerpt
-          frontmatter {
-            title
-            date(formatString: "DD MMMM YYYY")
+          path
+          title
+          featureImage {
             path
-            author
-            excerpt
-            coverImage {
-              childImageSharp {
-                fluid(maxWidth: 800) {
-                  ...GatsbyImageSharpFluid
-                }
-              }
-            }
+            description
           }
+          _id
+          _version
+          _contentTypeId
+          _contentTypeName
+          _createdAt
+          _updatedAt
+          _enabled
+          _enabledAt
+          searchSummary
         }
       }
     }

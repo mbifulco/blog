@@ -22,10 +22,10 @@ const Post = ({
   previousPost,
   nextPost,
 }) => {
-  const previousPath = previousPost && previousPost.frontmatter.path
-  const previousLabel = previousPost && previousPost.frontmatter.title
-  const nextPath = nextPost && nextPost.frontmatter.path
-  const nextLabel = nextPost && nextPost.frontmatter.title
+  const previousPath = previousPost && previousPost.path
+  const previousLabel = previousPost && previousPost.title
+  const nextPath = nextPost && nextPost.path
+  const nextLabel = nextPost && nextPost.title
 
   let coverImageContainer
   if (coverImage && coverImage.childImageSharp) {
