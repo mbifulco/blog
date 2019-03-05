@@ -51,7 +51,7 @@ const Footer = () => (
       <span>
         CMS by{' '}
         <OutboundLink
-          href="https://takeshape.io"
+          href="https://www.takeshape.io"
           target="_blank"
           rel="noreferrer noopener"
         >
