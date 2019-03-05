@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'gatsby'
 import Img from 'gatsby-image'
+import moment from 'moment'
 
 import TagsSummary from './tagsSummary'
 import Navigation from './navigation'
@@ -45,6 +46,8 @@ const Post = ({
     )
   }
 
+  const formattedDate = moment(new Date(date)).format('DD MMMM YYYY')
+
   return (
     <div className={style.post}>
       <div className={style.postContent}>
@@ -52,7 +55,7 @@ const Post = ({
           {excerpt ? <Link to={path}>{title}</Link> : title}
         </h1>
         <div className={style.meta}>
-          {date} {author && <>— Written by {author}</>}
+          {formattedDate} {author && <>— Written by {author}</>}
         </div>
         {coverImageContainer}
 
