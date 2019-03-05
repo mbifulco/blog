@@ -6,13 +6,20 @@ exports.createPages = ({ actions, graphql }) => {
   const { createPage } = actions
 
   // import each of the page types to be rendered on the site
-  const tagPageTemplate = path.resolve('./src/templates/tagPage.js')
-  const indexTemplate = path.resolve(`./src/templates/index.js`)
+  const indexTemplate = path.resolve('./src/templates/index.js')
   const postTemplate = path.resolve('./src/templates/post.js')
+  const singlePageTemplate = path.resolve('./src/templates/singlePage.js')
+  const tagPageTemplate = path.resolve('./src/templates/tagPage.js')
 
   return graphql(`
     {
       takeshape {
+        about: getAbout {
+          _id
+          bodyHtml
+          title: _contentTypeName
+          path: _contentTypeName
+        }
         tags: getTagList {
           items {
             _id
@@ -41,13 +48,27 @@ exports.createPages = ({ actions, graphql }) => {
       return Promise.reject(result.errors)
     }
 
+    const pages = [takeshape.about]
+    forEach(pages, page => {
+      createPage({
+        path: page.path,
+        component: singlePageTemplate,
+        context: {
+          id: page._id,
+          type: 'staticPage',
+          bodyHtml: page.bodyHtml,
+          title: page.title,
+        },
+      })
+    })
+
     posts.items.forEach((takeShapePost, idx) => {
       createPage({
         path: takeShapePost.path,
         component: postTemplate,
         context: {
           id: takeShapePost._id,
-          type: 'takeshapePost',
+          type: 'post',
           next: idx === posts.items.length - 1 ? null : posts.items[idx + 1],
           previous: idx === 0 ? null : posts.items[idx - 1],
         },
