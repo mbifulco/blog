@@ -39,11 +39,22 @@ const Footer = () => (
     <div className="credit">
       <span>
         Built with{' '}
-        <OutboundLink href="https://www.gatsbyjs.org">Gatsby</OutboundLink>.
+        <OutboundLink
+          href="https://www.gatsbyjs.org"
+          target="_blank"
+          rel="noreferrer noopener"
+        >
+          Gatsby
+        </OutboundLink>
+        .
       </span>{' '}
       <span>
         CMS by{' '}
-        <OutboundLink href="https://https://takeshape.io">
+        <OutboundLink
+          href="https://takeshape.io"
+          target="_blank"
+          rel="noreferrer noopener"
+        >
           Takeshape
         </OutboundLink>
         .
