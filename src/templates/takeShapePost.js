@@ -25,7 +25,7 @@ const TakeShapePostTemplate = ({ data, pageContext, location }) => {
       <SEO
         title={title}
         description={excerpt}
-        // image={coverImage ? coverImage.childImageSharp.fluid.src : undefined}
+        image={featureImage.path}
         ogType="article"
         location={location}
       />
