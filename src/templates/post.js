@@ -11,7 +11,7 @@ const TakeShapePostTemplate = ({ data, pageContext, location }) => {
   const {
     featureImage,
     title,
-    date,
+    _enabledAt: date,
     path,
     excerpt,
     tags,
