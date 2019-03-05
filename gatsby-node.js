@@ -1,6 +1,6 @@
 const { paginate } = require('gatsby-awesome-pagination')
 const path = require('path')
-const { forEach, get, kebabCase, uniq } = require('lodash')
+const { forEach, kebabCase } = require('lodash')
 
 exports.createPages = ({ actions, graphql }) => {
   const { createPage } = actions
