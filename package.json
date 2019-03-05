@@ -44,6 +44,7 @@
     "gatsby-transformer-remark": "^2.3.0",
     "gatsby-transformer-sharp": "^2.1.8",
     "lodash": "^4.17.11",
+    "moment": "^2.24.0",
     "pluralize": "^7.0.0",
     "prismjs": "^1.15.0",
     "prop-types": "^15.6.2",
