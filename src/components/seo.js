@@ -71,7 +71,7 @@ const SEO = ({
         },
         {
           name: `twitter:card`,
-          content: imageUrl ? `summary_large_image` : `summary`,
+          content: image ? `summary_large_image` : `summary`,
         },
         {
           name: `twitter:title`,
