@@ -18,7 +18,7 @@ const SinglePage = ({ pageContext, location }) => {
       <SEO
         title={formattedTitle}
         // description={excerpt}
-        // image={featureImage.path}
+        // image={getImageUrl(featureImage.path)}
         ogType="article"
         location={location}
       />
