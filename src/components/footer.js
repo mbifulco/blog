@@ -1,7 +1,7 @@
 import React from 'react'
 import { OutboundLink } from 'gatsby-plugin-google-analytics'
 
-import { GitHubIcon, TwitterIcon, TwitchIcon } from './icons'
+import { GitHubIcon, TwitterIcon, TwitchIcon, RssIcon } from './icons'
 
 import classes from '../styles/footer.module.css'
 
@@ -10,6 +10,9 @@ const Footer = () => (
     <div>
       <span className="footerCopyrights">© 2019 Mike Bifulco</span>
       <span className="footerCopyrights">
+        <OutboundLink href="/rss.xml" target="blank" rel="noopener noreferrer">
+          <RssIcon />
+        </OutboundLink>{' '}
         <OutboundLink
           className={classes.gitHubLink}
           href="https://github.com/mbifulco"
