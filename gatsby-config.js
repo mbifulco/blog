@@ -19,6 +19,7 @@ module.exports = {
       src: '',
       alt: '',
     },
+    image_url: 'https://mike.biful.co/icons/icon-512x512.png', // used for RSS feed image
     logoText: 'Mike Bifulco',
     defaultTheme: 'light',
     postsPerPage: 5,
@@ -156,6 +157,7 @@ module.exports = {
                 description
                 siteUrl
                 site_url: siteUrl
+                image_url
               }
             }
           }
