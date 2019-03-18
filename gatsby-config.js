@@ -7,6 +7,7 @@ const postCSSUrl = require('postcss-url')
 const postCSSImports = require('postcss-import')
 const cssnano = require('cssnano')
 const postCSSMixins = require('postcss-mixins')
+const { map } = require('lodash')
 
 module.exports = {
   siteMetadata: {
@@ -29,6 +30,7 @@ module.exports = {
         path: '/about',
       },
     ],
+    siteUrl: 'https://mike.biful.co',
   },
   plugins: [
     `babel-preset-gatsby`,
@@ -143,6 +145,74 @@ module.exports = {
         fetchOptions: {},
       },
     },
+    {
+      resolve: 'gatsby-plugin-feed',
+      options: {
+        query: `
+          {
+            site {
+              siteMetadata {
+                title
+                description
+                siteUrl
+                site_url: siteUrl
+              }
+            }
+          }
+        `,
+        feeds: [
+          {
+            output: '/rss.xml',
+            title: 'mike.biful.co RSS Feed',
+            serialize: ({ query }) => {
+              const { takeshape } = query
+              return takeshape.posts.items.map(post => {
+                const {
+                  _id,
+                  author,
+                  excerpt,
+                  path,
+                  tags: tagList,
+                  title,
+                } = post
+
+                const tags = map(tagList, tag => tag.name)
+
+                return {
+                  title,
+                  description: excerpt,
+                  url: `https://mike.biful.co/${path}`,
+                  guid: _id,
+                  categories: tags,
+                  author: author.name,
+                }
+              })
+            },
+            query: ` 
+              {
+                takeshape {
+                  posts: getPostList(sort: [{ field: "_enabledAt", order: "DESC" }]) {
+                    items {
+                      _id
+                      author {
+                        name
+                      }
+                      excerpt
+                      path
+                      tags {
+                        name
+                      }
+                      title
+                    }
+                  }
+                }
+              }
+            `,
+          },
+        ],
+      },
+    },
+    // leave netlify as the last plugin
     `gatsby-plugin-netlify`,
   ],
 }
