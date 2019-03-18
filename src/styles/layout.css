@@ -317,8 +317,8 @@ footer {
 
   .footerCopyrights {
     &:not(:first-of-type) {
-      margin-left: 20px;
-      padding-left: 20px;
+      margin-left: 10px;
+      padding-left: 10px;
       border-left: 1px solid;
 
       @media (--phone) {
