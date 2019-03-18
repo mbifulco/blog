@@ -68,6 +68,18 @@ const Footer = () => (
         .
       </span>{' '}
       <span>
+        Source code on{' '}
+        <OutboundLink
+          href="https://github.com/mbifulco/blog"
+          target="_blank"
+          rel="noreferrer noopener"
+        >
+          GitHub
+        </OutboundLink>
+        .
+      </span>
+      <br />
+      <span>
         Starter created by the brilliant{' '}
         <OutboundLink
           href="https://radoslawkoziel.pl"
@@ -77,7 +89,7 @@ const Footer = () => (
           panr
         </OutboundLink>
         .
-      </span>
+      </span>{' '}
     </div>
   </footer>
 )
