@@ -10,7 +10,12 @@ const Footer = () => (
     <div>
       <span className="footerCopyrights">© 2019 Mike Bifulco</span>
       <span className="footerCopyrights">
-        <OutboundLink href="/rss.xml" target="blank" rel="noopener noreferrer">
+        <OutboundLink
+          className={classes.rssLink}
+          href="/rss.xml"
+          target="blank"
+          rel="noopener noreferrer"
+        >
           <RssIcon />
         </OutboundLink>{' '}
         <OutboundLink
