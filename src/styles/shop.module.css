@@ -1,0 +1,39 @@
+.content {
+  width: 100%;
+  max-width: 800px;
+  text-align: left;
+  padding: 20px;
+  margin: 0 auto 20px;
+
+  @media (--tablet) {
+    max-width: 660px;
+  }
+
+  h1 {
+    justify-content: center;
+  }
+}
+
+article {
+  max-width: 45%;
+  background-color: #eee;
+  border-radius: 0.25rem;
+  padding: 0.5rem 0.5rem 1rem 0.5rem;
+
+  h2,
+  p {
+    margin: 0;
+  }
+
+  img {
+    margin: 1rem 0 2rem 0;
+  }
+
+  form {
+    text-align: center;
+  }
+
+  .pixel {
+    display: none;
+  }
+}
