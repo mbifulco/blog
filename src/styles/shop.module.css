@@ -20,6 +20,10 @@ article {
   border-radius: 0.25rem;
   padding: 0.5rem 0.5rem 1rem 0.5rem;
 
+  @media (--tablet) {
+    max-width: 100%;
+  }
+
   h2,
   p {
     margin: 0;
