@@ -5,7 +5,7 @@ import { useStaticQuery, graphql } from 'gatsby'
 import Header from './header'
 import Footer from './footer'
 
-import '../styles/layout.css'
+import classes from '../styles/layout.module.css'
 
 const Layout = ({ children }) => {
   const data = useStaticQuery(graphql`
@@ -40,7 +40,7 @@ const Layout = ({ children }) => {
   } = data.site.siteMetadata
 
   return (
-    <div className="container">
+    <div className={classes.container}>
       <Header
         siteTitle={title}
         siteLogo={logo}
@@ -50,7 +50,7 @@ const Layout = ({ children }) => {
         mainMenuItems={showMenuItems}
         menuMoreText={menuMoreText}
       />
-      <div className="content">{children}</div>
+      <div className={classes.content}>{children}</div>
       <Footer />
     </div>
   )
