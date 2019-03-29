@@ -9,6 +9,8 @@ const cssnano = require('cssnano')
 const postCSSMixins = require('postcss-mixins')
 const { map } = require('lodash')
 
+const BASE_SITE_URL = 'https://mike.biful.co'
+
 module.exports = {
   siteMetadata: {
     title: `Mike Bifulco - designer, developer, podcaster, maker`,
@@ -19,7 +21,7 @@ module.exports = {
       src: '',
       alt: '',
     },
-    image_url: 'https://mike.biful.co/icons/icon-512x512.png', // used for RSS feed image
+    image_url: `${BASE_SITE_URL}/icons/icon-512x512.png`, // used for RSS feed image
     logoText: 'Mike Bifulco',
     defaultTheme: 'light',
     postsPerPage: 5,
@@ -35,7 +37,7 @@ module.exports = {
         path: '/about',
       },
     ],
-    siteUrl: 'https://mike.biful.co',
+    siteUrl: BASE_SITE_URL,
   },
   plugins: [
     `babel-preset-gatsby`,
@@ -187,7 +189,7 @@ module.exports = {
                 return {
                   title,
                   description: excerpt,
-                  url: `https://mike.biful.co/${path}`,
+                  url: `${BASE_SITE_URL}/${path}`,
                   guid: _id,
                   categories: tags,
                   author: author.name,
@@ -216,6 +218,12 @@ module.exports = {
             `,
           },
         ],
+      },
+    },
+    {
+      resolve: `gatsby-plugin-canonical-urls`,
+      options: {
+        siteUrl: BASE_SITE_URL,
       },
     },
     // leave netlify as the last plugin
