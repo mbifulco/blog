@@ -99,15 +99,13 @@ const successfulPromises = results.filter(p => p.status === 'fulfilled')
 
 That's it! Super easy to use.
 
-## Using `Promise.All()` now
+## Using `Promise.allSettled()` now
 
-Ok, here's the thing - that's the tricky part. I wrote this post thinking it'd be as easy as telling you to use a `stage-3` preset in the `.babelrc` config on your project. As it turns out, as of v7, Babel has [stopped publishing stage presets](https://babeljs.io/blog/2018/07/27/removing-babels-stage-presets)! If that means anything to you, you ought to read their post.
+Install the [`core-js`](https://github.com/zloirock/core-js) package and include this somewhere in your codebase:
 
-The answer right now is that it's _not_ yet a great idea to use `Promise.allSettled()`, because it isn't widely supported. To boot, as far as I can tell, there's not a babel config extension which will add support to your projects. At the moment, the best you'll get is a polyfill or an alternative library which implements `allSettled()`.
-
-I know that can be disappointing - be sure that I've got a dozen problems that would be well-served with this new bit of syntax. What I want you to focus on, though, is how amazing it is that JavaScript is continuing to grow. It's exciting and really freaking cool to see that these additions to the language are also being worked on [in public](https://github.com/tc39/proposal-promise-allSettled). Open Source is such a beautiful thing!
-
-If you're really motivated to use `Promise.All()` in your code, you'd do well to contribute to the process in some way. This may be something as small as writing your own polyfill, or giving feedback to the folks involved with tc39, or one of the alternative libraries to use.
+```javascript
+import 'core-js/proposals/promise-all-settled'
+```
 
 ### Footnote
 
