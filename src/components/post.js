@@ -3,36 +3,37 @@ import PropTypes from 'prop-types'
 import { Link } from 'gatsby'
 import Img from 'gatsby-image'
 import moment from 'moment'
+import { getImageUrl } from 'takeshape-routing'
 
 import TagsSummary from './tagsSummary'
 import Navigation from './navigation'
 import style from '../styles/post.module.css'
 import Kofi from './kofi'
 
-const Post = ({
-  tags,
-  title,
-  date,
-  path,
-  coverImage,
-  coverImageAlt,
-  coverImageUrl,
-  author,
-  excerpt,
-  html,
-  previousPost,
-  nextPost,
-}) => {
-  const previousPath = previousPost && previousPost.path
-  const previousLabel = previousPost && previousPost.title
-  const nextPath = nextPost && nextPost.path
-  const nextLabel = nextPost && nextPost.title
+const Post = ({ summary, post, previous, next }) => {
+  const {
+    author,
+    _enabledAt: date,
+    excerpt,
+    featureImage,
+    bodyHtml: html,
+    path,
+    tags,
+    title,
+  } = post
+  const previousPath = previous && previous.path
+  const previousLabel = previous && previous.title
+  const nextPath = next && next.path
+  const nextLabel = next && next.title
+
+  const coverImageUrl = featureImage && getImageUrl(featureImage.path)
+  const coverImageAlt = featureImage && featureImage.description
 
   let coverImageContainer
-  if (coverImage && coverImage.childImageSharp) {
+  if (featureImage && featureImage.childImageSharp) {
     coverImageContainer = (
       <Img
-        fluid={coverImage.childImageSharp.fluid}
+        fluid={featureImage.childImageSharp.fluid}
         className={style.coverImage}
       />
     )
@@ -52,14 +53,14 @@ const Post = ({
     <div className={style.post}>
       <div className={style.postContent}>
         <h1 className={style.title}>
-          {excerpt ? <Link to={path}>{title}</Link> : title}
+          {summary ? <Link to={path}>{title}</Link> : title}
         </h1>
         <div className={style.meta}>
           {formattedDate} {author && <>— Written by {author}</>}
         </div>
         {coverImageContainer}
 
-        {excerpt ? (
+        {summary ? (
           <>
             <p>{excerpt}</p>
             <Link to={path} className={style.readMore}>
@@ -86,18 +87,22 @@ const Post = ({
 }
 
 Post.propTypes = {
-  tags: PropTypes.arrayOf(PropTypes.string),
-  title: PropTypes.string,
-  date: PropTypes.string,
-  path: PropTypes.string,
-  coverImage: PropTypes.object,
-  coverImageAlt: PropTypes.string,
-  coverImageUrl: PropTypes.string,
-  author: PropTypes.string,
-  excerpt: PropTypes.string,
-  html: PropTypes.string,
-  previousPost: PropTypes.object,
-  nextPost: PropTypes.object,
+  post: PropTypes.shape({
+    tags: PropTypes.arrayOf(PropTypes.string),
+    title: PropTypes.string,
+    date: PropTypes.string,
+    path: PropTypes.string,
+    coverImage: PropTypes.object,
+    coverImageAlt: PropTypes.string,
+    coverImageUrl: PropTypes.string,
+    author: PropTypes.string,
+    excerpt: PropTypes.string,
+    html: PropTypes.string,
+    id: PropTypes.string,
+  }),
+  summary: PropTypes.bool,
+  previous: PropTypes.object,
+  next: PropTypes.object,
 }
 
 export default Post

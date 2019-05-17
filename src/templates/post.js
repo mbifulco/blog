@@ -8,16 +8,7 @@ import Layout from '../components/layout'
 import Post from '../components/post'
 
 const TakeShapePostTemplate = ({ data, pageContext, location }) => {
-  const {
-    featureImage,
-    title,
-    _enabledAt: date,
-    path,
-    excerpt,
-    tags,
-    id,
-    bodyHtml: html,
-  } = data.takeshape.post
+  const { featureImage, title, excerpt, id } = data.takeshape.post
   const { next, previous } = pageContext
 
   return (
@@ -31,15 +22,9 @@ const TakeShapePostTemplate = ({ data, pageContext, location }) => {
       />
       <Post
         key={id}
-        title={title}
-        date={date}
-        path={path}
-        coverImageUrl={getImageUrl(featureImage.path)}
-        coverImageAlt={featureImage.description}
-        html={html}
-        previousPost={previous}
-        nextPost={next}
-        tags={tags.map(tag => tag.name)}
+        post={data.takeshape.post}
+        previous={previous}
+        next={next}
       />
     </Layout>
   )

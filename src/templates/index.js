@@ -23,28 +23,9 @@ const Index = props => {
       <SEO location={location} />
       <Layout>
         {posts.items.map(post => {
-          const {
-            _id,
-            excerpt,
-            title,
-            _enabledAt: date,
-            path,
-            author,
-            featureImage,
-          } = post
+          const { _id: id } = post
 
-          return (
-            <Post
-              key={_id}
-              title={title}
-              date={date}
-              path={path}
-              author={author}
-              coverImageUrl={getImageUrl(featureImage.path)}
-              coverImageAlt={featureImage.description}
-              excerpt={excerpt}
-            />
-          )
+          return <Post post={post} key={id} summary />
         })}
 
         <Navigation
