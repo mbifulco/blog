@@ -1,0 +1,82 @@
+---
+title: 'UX Chat: Design chiefs cheerfully champion chopping chatter to charge CSS with cheery charm'
+published: true
+description: This one weird trick will have you chuffed to bits
+tags: showdev, javascript, es6, react, node
+---
+
+CLICKBAIT TITLE ALERT: This is an article about CSS and usability. You're gonna love it.
+
+I often joke that to learn about design is to doom yourself to be lightly annoyed by everything. After some repetition, you'll start to internalize some of the basic rules of industrial design, or print design, or fashion design, or mechanical design, or whatever it is that gets you excited. You'll start to find design quirks in the world which were once hidden to you. After all, every single thing in the built environment has been put there by someone who took their time to bring it to life. The downside, of course, is that you'll also start to see designs that downright suck. I find that it's helpful to think of it as finding _opportunity for improvement_.
+
+Today's opportunity for improvement is brought to you by [Wikipedia](https://en.wikipedia.org/wiki/Ralph_Waldo_Emerson), which had me going cross-eyed as I read through an article in the early hours of this morning.
+
+![image-20190509122357049 "A fullscreen desktop view of wikipedia on my 4k monitor."](/Users/mike/Library/Application Support/typora-user-images/image-20190509122357049.png)
+
+# What is a ch, and why you should c(h)are
+
+It's simple, actually - `ch` is a CSS unit which represents the width of a **ch**aracter! If you're using a proportional font (where not all characters are the same width), `1ch` is the width of the `0` character in the typeface you're using. This is particularly helpful for usability as it relates to reading long passages of text.
+
+## Line length and reading usability - err, readability
+
+Limiting the line width for text in long passages is a great tool for making things more readable. [Studies have shown](https://baymard.com/blog/line-length-readability) that for optimal reading, text should be limited to somewhere around 60 characters per line. Think about it - this is why paperback books are generally smaller than an A4 page. This is why people love reading on their kindle. This is why Barnes and Noble sells Nooks like hotca — well, it's why the Nook is shaped like it is, at least.
+
+In practice, what does this look like? Let's take that same wikipedia article and limit its paragraphs to 60 characters:
+
+```css
+p {
+  max-width: 60ch;
+}
+```
+
+Here's what it looks like:
+
+![image-20190509123749726](/Users/mike/Library/Application Support/typora-user-images/image-20190509123749726.png)
+
+Okay, so that's not a fully-baked design update, but with a few tweaks we can make it a little nicer by bumping up the font size, and adjusting the layout of the right-hand colmn (side note: wikipedia uses `float: right` on that column, surprisingly!)
+
+![image-20190509124115121](/Users/mike/Library/Application Support/typora-user-images/image-20190509124115121.png)
+
+That's not bad at all! One of the nice things about using a character **count** for setting the width of that section is that it scales nicely for folks who use the browser's zoom functionality. You can also put your text passages inside of pixel-size-limited divs to make them work in responsive layouts at smaller sizes:
+
+```html
+<style>
+  @media screen and (min-width: 800px) {
+    .blogpost {
+      max-width: 400px;
+    }
+  }
+  .blogpost p {
+    max-width: 60ch;
+  }
+</style>
+
+<div class="blogpost">
+  <p>
+    Fo ipsum dolor tellivizzle amet, my shizz adipiscing shizzle my nizzle
+    crocodizzle. Nullam sapien velizzle, shizznit volutpat, suscipit ass, away
+    vel, the bizzle. Dizzle fo shizzle tortizzle. Sizzle erizzle. Fusce izzle
+    dolizzle dapibus fizzle tempus dope. Maurizzle pellentesque hizzle et
+    turpis. Shiznit check out this fo shizzle. Pellentesque eleifend rhoncizzle
+    shiznit. In hac habitasse platea dictumst. Donec dapibizzle. Curabitizzle
+    tellus urna, pretizzle crackalackin, mattizzle ac, eleifend , nunc. Nizzle
+    suscipizzle. Integizzle rizzle you son of a bizzle sizzle mofo.
+  </p>
+  <p>
+    Dizzle ut dolizzle. Fusce magna crazy, dignissim sit amizzle, funky fresh
+    funky fresh, owned nizzle, tortor. Maecenas a nisi. Tellivizzle ghetto neque
+    izzle get down get down. Shut the shizzle up stuff. Cras aliquet tristique
+    turpizzle. Suspendisse gizzle ultricizzle dope. Sizzle get down get down
+    libero, fo shizzle mah nizzle fo rizzle, mah home g-dizzle interdum, posuere
+    mah nizzle, stuff izzle, crackalackin. Da bomb mofo tellizzle. Boom
+    shackalack aliquizzle gangster sizzle amet dolor. For sure dapibizzle sheezy
+    id mah nizzle. Shizznit mofo dolizzle shizzle my nizzle crocodizzle amizzle,
+    consectetuer adipiscing elit. Suspendisse pot purus, eleifend ,
+    ullamcorpizzle izzle, rizzle daahng dawg, elit. Nizzle porta rutrum nunc.
+  </p>
+</div>
+```
+
+I dropped this stuff in a [codepen](https://codepen.io/mbifulco/pen/rgxryB) if you'd like to play around with it. You'll see a green background when the media query activates.
+
+_Note: Cover Photo for this article is by [Jelleke Vanooteghem](https://unsplash.com/photos/2OCh8tuNsBo?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText) on [Unsplash](https://unsplash.com). Thank you for your work!_
