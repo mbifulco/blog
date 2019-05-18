@@ -28,28 +28,9 @@ const Tags = ({ pageContext, data }) => {
           <h1 className={classes.title}>{tagHeader}</h1>
 
           {posts.map(post => {
-            const {
-              _enabledAt: date,
-              _id: id,
-              title,
-              path,
-              author,
-              featureImage,
-              excerpt,
-            } = post
+            const { _id: id } = post
 
-            return (
-              <Post
-                key={id}
-                title={title}
-                date={date}
-                path={path}
-                author={author}
-                coverImageUrl={getImageUrl(featureImage.path)}
-                coverImageAlt={featureImage.description}
-                excerpt={excerpt}
-              />
-            )
+            return <Post post={post} key={id} summary />
           })}
 
           <Link to="/tags">All tags</Link>
