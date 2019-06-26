@@ -5179,10 +5179,10 @@ gatsby-plugin-netlify@^2.0.17:
     lodash "^4.17.10"
     webpack-assets-manifest "^3.0.2"
 
-gatsby-plugin-offline@^2.1.1:
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/gatsby-plugin-offline/-/gatsby-plugin-offline-2.1.1.tgz#8009b4f61189aa6a8fc9949d1e0020b91bf2a4f7"
-  integrity sha512-osw4aw0GL/npby8kpOfWSFlkyn/QEvMdB0aoftJZQsLBtF5XEZKsigGodcN33Xey7aI6u4zhpJ7kUFY2PYAGdA==
+gatsby-plugin-offline@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/gatsby-plugin-offline/-/gatsby-plugin-offline-2.2.0.tgz#b0ee8d3b7801df4c4ef1a6e8371d688d7776070f"
+  integrity sha512-CIRA2J0ZStBvJQAxbxC8d7w6TMi4QhA/60idfKAKLyR6zQWnvr9CElrr1JJBEEOzXziNRerFoFNftB6VJQ2mFA==
   dependencies:
     "@babel/runtime" "^7.0.0"
     cheerio "^1.0.0-rc.2"
