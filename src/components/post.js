@@ -69,6 +69,7 @@ const Post = ({ summary, post, previous, next }) => {
           </>
         ) : (
           <>
+            {/* eslint-disable-next-line react/no-danger */}
             <div dangerouslySetInnerHTML={{ __html: html }} />
 
             <Kofi />
