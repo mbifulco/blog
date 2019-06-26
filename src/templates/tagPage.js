@@ -3,8 +3,6 @@ import PropTypes from 'prop-types'
 import Pluralize from 'pluralize'
 import { Link, graphql } from 'gatsby'
 
-import { getImageUrl } from 'takeshape-routing'
-
 import Tag from '../components/tag'
 import Post from '../components/post'
 import Layout from '../components/layout'
