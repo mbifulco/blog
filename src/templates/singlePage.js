@@ -27,6 +27,7 @@ const SinglePage = ({ pageContext, location }) => {
         <div className={style.postContent}>
           <h1 className={style.title}>{formattedTitle}</h1>
 
+          {/* eslint-disable-next-line react/no-danger */}
           <div dangerouslySetInnerHTML={{ __html: bodyHtml }} />
         </div>
       </div>
