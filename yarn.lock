@@ -5215,10 +5215,10 @@ gatsby-plugin-segment-js@^3.0.1:
   resolved "https://registry.yarnpkg.com/gatsby-plugin-segment-js/-/gatsby-plugin-segment-js-3.0.1.tgz#a31380515c97af2f7e7bf4be7aea071b6222f9a5"
   integrity sha512-pDGx0kE36FDd2aQAwMr4mrY93CedlIuotprvdRQKBuBrWfvQ7DMCQxwpDYPWrwatVJhdf5idnl4Xct0I4WkKRg==
 
-gatsby-plugin-sharp@^2.1.5:
-  version "2.1.5"
-  resolved "https://registry.yarnpkg.com/gatsby-plugin-sharp/-/gatsby-plugin-sharp-2.1.5.tgz#f032cd6e1a42980685cbb386a58420a168002060"
-  integrity sha512-qHW0HJ3PK/HrTxg9wEqh8oHPv4R2SThn9z2n5m7pkrHOK9ZLHTkUaXtSNqcKzTap9cd7K4sjgw3EXaM5G7Jc8A==
+gatsby-plugin-sharp@^2.2.1:
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/gatsby-plugin-sharp/-/gatsby-plugin-sharp-2.2.1.tgz#a2c91e39cf33a958c108f44b71cc01a3a506c63b"
+  integrity sha512-NoAf3HK9xT9YdTd8rHf9SoBJoq9uZ+qLxTVe9xdAeOusGrnPIndbZIbPKzzBrhJZ94kihEf7ehEfGCwsh6c1Sw==
   dependencies:
     "@babel/runtime" "^7.0.0"
     async "^2.1.2"
@@ -5232,7 +5232,7 @@ gatsby-plugin-sharp@^2.1.5:
     mini-svg-data-uri "^1.0.0"
     potrace "^2.1.1"
     probe-image-size "^4.0.0"
-    progress "^1.1.8"
+    progress "^2.0.3"
     semver "^5.6.0"
     sharp "^0.22.1"
     svgo "^1.2.0"
@@ -10163,7 +10163,7 @@ progress@^1.1.8:
   resolved "https://registry.yarnpkg.com/progress/-/progress-1.1.8.tgz#e260c78f6161cdd9b0e56cc3e0a85de17c7a57be"
   integrity sha1-4mDHj2Fhzdmw5WzD4Khd4Xx6V74=
 
-progress@^2.0.0:
+progress@^2.0.0, progress@^2.0.3:
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/progress/-/progress-2.0.3.tgz#7e8cf8d8f5b8f239c1bc68beb4eb78567d572ef8"
   integrity sha512-7PiHtLll5LdnKIMw100I+8xJXR5gW2QwWYkT6iJva0bXitZKa/XMrSbdmg3r2Xnaidz9Qumd0VPaMrZlF9V9sA==
