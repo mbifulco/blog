@@ -7789,10 +7789,10 @@ loglevel@^1.4.1:
   resolved "https://registry.yarnpkg.com/loglevel/-/loglevel-1.6.1.tgz#e0fc95133b6ef276cdc8887cdaf24aa6f156f8fa"
   integrity sha1-4PyVEztu8nbNyIh82vJKpvFW+Po=
 
-logrocket@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/logrocket/-/logrocket-1.0.0.tgz#978238fa621702e963c86644006c9b4580eaf4f2"
-  integrity sha512-Y7xtbfuK9Ixpk63m3DvzcUNa5LTe82dqaf/vhlxFOgZCSFld8uxYrxqn59zd7v87FmD5SLa9VrMArli+h/YNCg==
+logrocket@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/logrocket/-/logrocket-1.0.2.tgz#6ac569abadfc853268495888a85d214febdd5078"
+  integrity sha512-Ol9pjIY09oiFVupZf6SwD2+QpTV4T6e5d0Xb7Yya3P90R+P7eMafnVTix8nIX0SKumKksuhc0R1zednzAzLoTA==
 
 longest-streak@^2.0.1:
   version "2.0.2"
