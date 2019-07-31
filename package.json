@@ -50,7 +50,7 @@
     "logrocket": "^1.0.3",
     "moment": "^2.24.0",
     "pluralize": "^8.0.0",
-    "prismjs": "^1.16.0",
+    "prismjs": "^1.17.1",
     "prop-types": "^15.6.2",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
