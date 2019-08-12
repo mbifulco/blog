@@ -46,9 +46,12 @@ const TagsPage = ({ data }) => {
 TagsPage.propTypes = {
   data: PropTypes.shape({
     takeshape: PropTypes.shape({
-      site: PropTypes.shape({
-        siteMetadata: PropTypes.shape({
-          siteTitle: PropTypes.string.isRequired,
+      siteMetadata: PropTypes.shape({
+        siteTitle: PropTypes.string.isRequired,
+      }),
+      tags: PropTypes.shape({
+        items: PropTypes.shape({
+          map: PropTypes.func,
         }),
       }),
     }),

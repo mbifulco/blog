@@ -89,9 +89,16 @@ const Post = ({ summary, post, previous, next }) => {
 
 Post.propTypes = {
   post: PropTypes.shape({
+    bodyHtml: PropTypes.object,
     tags: PropTypes.arrayOf(PropTypes.string),
     title: PropTypes.string,
     date: PropTypes.string,
+    _enabledAt: PropTypes.string,
+    featureImage: PropTypes.shape({
+      childImageSharp: PropTypes.object,
+      description: PropTypes.string,
+      path: PropTypes.string,
+    }),
     path: PropTypes.string,
     coverImage: PropTypes.object,
     coverImageAlt: PropTypes.string,
