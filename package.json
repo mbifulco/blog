@@ -24,7 +24,7 @@
     "eslint-check": "eslint --print-config . | eslint-config-prettier-check"
   },
   "dependencies": {
-    "@weknow/gatsby-remark-twitter": "^0.2.1",
+    "@weknow/gatsby-remark-twitter": "^0.2.3",
     "dotenv": "^8.0.0",
     "gatsby": "^2.13.60",
     "gatsby-awesome-pagination": "^0.3.4",
