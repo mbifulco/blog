@@ -39,11 +39,20 @@ const Tags = ({ pageContext, data }) => {
 }
 
 Tags.propTypes = {
+  data: PropTypes.shape({
+    takeshape: PropTypes.shape({
+      tags: PropTypes.shape({
+        posts: PropTypes.shape({
+          total: PropTypes.number,
+          items: PropTypes.array,
+        }),
+      }),
+    }),
+  }),
   pageContext: PropTypes.shape({
     tag: PropTypes.string.isRequired,
     tagId: PropTypes.string,
   }),
-  data: PropTypes.shape({}),
 }
 
 export default Tags
