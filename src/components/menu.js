@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/control-has-associated-label */
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'gatsby'
@@ -30,12 +31,12 @@ const SubMenu = ({ mainMenu, mainMenuItems, onToggleSubMenu }) => {
   return (
     <>
       {items}
-      {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events */}
       <div
         className={style.subMenuOverlay}
         role="button"
         tabIndex={0}
         onClick={onToggleSubMenu}
+        onKeyPress={onToggleSubMenu}
       />
     </>
   )
@@ -130,7 +131,7 @@ Menu.propTypes = {
     PropTypes.shape({
       title: PropTypes.string,
       path: PropTypes.string,
-    }),
+    })
   ),
   mainMenuItems: PropTypes.number,
   menuMoreText: PropTypes.string,
@@ -146,7 +147,7 @@ SubMenu.propTypes = {
     PropTypes.shape({
       title: PropTypes.string,
       path: PropTypes.string,
-    }),
+    })
   ),
   mainMenuItems: PropTypes.number,
   onToggleSubMenu: PropTypes.func,
