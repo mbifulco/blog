@@ -5551,12 +5551,12 @@ gatsby-page-utils@^0.0.23:
     micromatch "^3.1.10"
     slash "^3.0.0"
 
-gatsby-plugin-canonical-urls@^2.1.7:
-  version "2.1.7"
-  resolved "https://registry.yarnpkg.com/gatsby-plugin-canonical-urls/-/gatsby-plugin-canonical-urls-2.1.7.tgz#3d19e7bea11722bfb6ea4e17870377daf1f28714"
-  integrity sha512-X6GryQvA8X3aVYH8yB97g1xmIaLYXa2ccjzqj/FGi/TcQY8ljl96zkhwTXBC3/GMIubTvIwcub7t8WFOZc4gYA==
+gatsby-plugin-canonical-urls@^2.1.11:
+  version "2.1.11"
+  resolved "https://registry.yarnpkg.com/gatsby-plugin-canonical-urls/-/gatsby-plugin-canonical-urls-2.1.11.tgz#338bec25523d948d70ecc1690bffa6b621742454"
+  integrity sha512-LkQCPj6llUW7N8eMJxuAFNEsWjwLHT6l7dV4w93p2VW90sUmNDqnUtzTrKIBebfdsWX1mi/cr1vRUsLiSga3+A==
   dependencies:
-    "@babel/runtime" "^7.6.0"
+    "@babel/runtime" "^7.6.3"
 
 gatsby-plugin-feed@^2.3.13:
   version "2.3.13"
