@@ -27,7 +27,7 @@
     "@weknow/gatsby-remark-twitter": "^0.2.3",
     "dotenv": "^8.2.0",
     "gatsby": "^2.17.6",
-    "gatsby-awesome-pagination": "^0.3.4",
+    "gatsby-awesome-pagination": "^0.3.5",
     "gatsby-image": "^2.2.30",
     "gatsby-plugin-canonical-urls": "^2.1.13",
     "gatsby-plugin-feed": "^2.3.20",
