@@ -5605,12 +5605,12 @@ gatsby-plugin-canonical-urls@^2.1.13:
   dependencies:
     "@babel/runtime" "^7.6.3"
 
-gatsby-plugin-feed@^2.3.13:
-  version "2.3.13"
-  resolved "https://registry.yarnpkg.com/gatsby-plugin-feed/-/gatsby-plugin-feed-2.3.13.tgz#0c1d38bfc23edaf389911d7b39f6dc94672223b4"
-  integrity sha512-i6cEYbyHlE6IOLQyzK6xn1BuV2V61rvjw5BPWRmF1KanxBSHa7L0og+5ER5/apYWW0l/ggTqC4trNvek4B8rCQ==
+gatsby-plugin-feed@^2.3.20:
+  version "2.3.20"
+  resolved "https://registry.yarnpkg.com/gatsby-plugin-feed/-/gatsby-plugin-feed-2.3.20.tgz#c5e8e646da839fb843c97730a7687e4d2aa75a05"
+  integrity sha512-dn8IbVSkuYLc9YGoMxTLM9XW1sxZ72PPdWXl9VpXGEagGqmPjZhkb95IF5MMiIAQThjojK451sGzX1EUY5imQg==
   dependencies:
-    "@babel/runtime" "^7.6.0"
+    "@babel/runtime" "^7.7.2"
     "@hapi/joi" "^15.1.1"
     fs-extra "^8.1.0"
     lodash.merge "^4.6.2"
