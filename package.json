@@ -41,7 +41,7 @@
     "gatsby-plugin-segment-js": "^3.0.1",
     "gatsby-plugin-sharp": "^2.2.37",
     "gatsby-remark-images": "^3.1.28",
-    "gatsby-remark-prismjs": "^3.3.20",
+    "gatsby-remark-prismjs": "^3.3.23",
     "gatsby-source-filesystem": "^2.1.36",
     "gatsby-source-graphql": "^2.1.22",
     "gatsby-transformer-remark": "^2.6.33",
