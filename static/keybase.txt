@@ -1,0 +1,68 @@
+==================================================================
+https://keybase.io/mbifulco
+--------------------------------------------------------------------
+
+I hereby claim:
+
+  * I am an admin of https://mike.biful.co
+  * I am mbifulco (https://keybase.io/mbifulco) on keybase.
+  * I have a public key with fingerprint 40EB C3BB 6337 D003 49CC  B054 FFA1 FACC 2DDF 8CF4
+
+To do so, I am signing this object:
+
+{
+  "body": {
+    "key": {
+      "eldest_kid": "010105a91cc846d25507f8a585d4489e436505971fe230540a3e439161e757ae4cc10a",
+      "fingerprint": "40ebc3bb6337d00349ccb054ffa1facc2ddf8cf4",
+      "host": "keybase.io",
+      "key_id": "ffa1facc2ddf8cf4",
+      "kid": "010105a91cc846d25507f8a585d4489e436505971fe230540a3e439161e757ae4cc10a",
+      "uid": "a330de0f78ed9e82c1a72b5da022be19",
+      "username": "mbifulco"
+    },
+    "service": {
+      "hostname": "mike.biful.co",
+      "protocol": "https:"
+    },
+    "type": "web_service_binding",
+    "version": 1
+  },
+  "ctime": 1574340073,
+  "expire_in": 157680000,
+  "prev": "1a3cd3295fe806cec0985041059df3cfeca3b47304add8e08abfcf348c7e5017",
+  "seqno": 43,
+  "tag": "signature"
+}
+
+which yields the signature:
+
+-----BEGIN PGP MESSAGE-----
+Version: Keybase OpenPGP v2.1.3
+Comment: https://keybase.io/crypto
+
+yMIjAnicrVJbSBVBGD7mJT3QPdJuBFsGltjsmd2zuyeILoYUSFEYRMVhduYfXS+7
+x7N7TklZZEXZjcq0NHqJKKQwi7CIggwhKspK6i2xwsDAsLCoCGn2UG89NvMw/N98
+3/df+HsmpAeCac3a7azS0rbKtCfdrYnAttcHhnZKpsPqpMhOqQpSD1QzcL1olcWk
+iIRkcVViyJTqSpiFVBVpXCeqrjJF0Q1QcFhFqqHJHEIYqQoiWGCGHJZBUzUCCqUy
+IlKhxC27HOKxuGV7wlZBYFJsmmGMNYYQVgxKTSHnnMicUBpijOuUK0JY4bi+QhRn
+EheKLEdgIoimyvsH/z/XnUjZEYwRA8Q1HZgBeojKRAuZKiMoFDJBNnyiC3Gb1IBg
+15gWT1RTR6ovlASatCj4g/U7+cuwqqAoxSqifkOxuOM51KkWXxWeF3MjvtSri/nc
+7WBG/7hETctmYpBCkYS4azm2FJEFk3qWbyurmoIVhDRcKMGOmBWHqGWn4LCOxPHz
+QFJYygRThkOGykFHYQoUGbqKFDExg3FMOVCCTUXDSCGM6YB0YnLKsaJTDVQka5Lf
+V63tSBFFpPJIufB0rXKbeIk4SPUP7m/NCKQFA1mZ4/wNCwRzJv/duxcLswNtn5KB
+/XPWjh8KZmy3V+95Xzy3pDL75euGKxfnt5j5tSdWjDaeu7ul+kLLm85LAxUdGfrF
+KSdHvrP+0z/yfvLsyKqBOe0jkeP2h1X3Lj8f3Xhz6pfs+e2tmz/fqkMz7yy61zBt
+UnteItrd0dM5dOjNhn1XS/GVeUtvjKxFw629TbsajyzOX7l39rouKDtU0LtyoKbs
+a/PE85kNTR9HFzwqaWqZPuCmryn+tnBXmdMJ79a33IaCRWV0SXLW2WU5M94mSFd/
+fqe7/MxwQ0lfm4Xr6wcP736lHh3KfbrNuZ4ZD/Jf0zZ17S8+NqYfPDxly6lnkPW4
+ubv22hg91tg18+EJdzCzL/c3130/SQ==
+=Pcgc
+-----END PGP MESSAGE-----
+
+And finally, I am proving ownership of this host by posting or
+appending to this document.
+
+View my publicly-auditable identity here: https://keybase.io/mbifulco
+
+==================================================================
