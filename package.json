@@ -46,7 +46,7 @@
     "gatsby-source-filesystem": "^2.1.36",
     "gatsby-source-graphql": "^2.1.22",
     "gatsby-transformer-remark": "^2.6.33",
-    "gatsby-transformer-sharp": "^2.3.3",
+    "gatsby-transformer-sharp": "^2.3.5",
     "lodash": "^4.17.15",
     "logrocket": "^1.0.3",
     "moment": "^2.24.0",
