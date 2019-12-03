@@ -16,7 +16,9 @@ body {
   margin: 0;
   padding: 0;
   font-family: 'Inter UI', -apple-system, BlinkMacSystemFont, 'Roboto',
-    'Segoe UI', Helvetica, Arial, sans-serif;
+    'Segoe UI', Helvetica, Arial, sans-serif, 'apple color emoji',
+    'segoe ui emoji', 'android emoji', 'emojisymbols', 'emojione mozilla',
+    'twemoji mozilla', 'segoe ui symbol', 'noto color emoji';
   font-size: 1rem;
   font-weight: 600;
   line-height: 1.54;
