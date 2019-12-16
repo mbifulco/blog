@@ -41,7 +41,7 @@
     "gatsby-plugin-react-helmet": "^3.1.13",
     "gatsby-plugin-segment-js": "^3.0.1",
     "gatsby-plugin-sharp": "^2.2.37",
-    "gatsby-remark-images": "^3.1.32",
+    "gatsby-remark-images": "^3.1.38",
     "gatsby-remark-prismjs": "^3.3.24",
     "gatsby-source-filesystem": "^2.1.38",
     "gatsby-source-graphql": "^2.1.24",
