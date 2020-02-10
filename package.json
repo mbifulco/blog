@@ -36,7 +36,7 @@
     "gatsby-plugin-google-tagmanager": "^2.1.23",
     "gatsby-plugin-manifest": "^2.2.37",
     "gatsby-plugin-netlify": "^2.1.31",
-    "gatsby-plugin-offline": "^3.0.31",
+    "gatsby-plugin-offline": "^3.0.34",
     "gatsby-plugin-postcss": "^2.1.19",
     "gatsby-plugin-react-helmet": "^3.1.21",
     "gatsby-plugin-segment-js": "^3.1.0",
