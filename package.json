@@ -29,7 +29,7 @@
     "dotenv": "^8.2.0",
     "gatsby": "^2.18.21",
     "gatsby-awesome-pagination": "^0.3.5",
-    "gatsby-image": "^2.2.38",
+    "gatsby-image": "^2.2.40",
     "gatsby-plugin-canonical-urls": "^2.1.19",
     "gatsby-plugin-feed": "^2.3.26",
     "gatsby-plugin-google-analytics": "^2.1.32",
