@@ -8,12 +8,13 @@ import Layout from '../components/layout'
 import Post from '../components/post'
 
 const TakeShapePostTemplate = ({ data, pageContext, location }) => {
-  const { featureImage, title, excerpt, id } = data.takeshape.post
+  const { canonical, featureImage, title, excerpt, id } = data.takeshape.post
   const { next, previous } = pageContext
 
   return (
     <Layout>
       <SEO
+        canonical={canonical}
         title={title}
         description={excerpt}
         image={getImageUrl(featureImage.path)}
@@ -45,6 +46,7 @@ export const pageQuery = graphql`
   query($id: ID!) {
     takeshape {
       post: getPost(_id: $id) {
+        canonical
         tags {
           name
         }
