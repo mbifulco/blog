@@ -140,9 +140,7 @@ module.exports = {
         typeName: 'TS',
         fieldName: 'takeshape',
         // Url to query from
-        url: `https://api.takeshape.io/project/${
-          process.env.TAKESHAPE_PROJECT
-        }/graphql`,
+        url: `https://api.takeshape.io/project/${process.env.TAKESHAPE_PROJECT}/graphql`,
         // HTTP headers
         headers: {
           'Content-Type': 'application/json',
@@ -221,7 +219,7 @@ module.exports = {
       },
     },
     {
-      resolve: `gatsby-plugin-canonical-urls`,
+      resolve: `gatsby-plugin-react-helmet-canonical-urls`,
       options: {
         siteUrl: BASE_SITE_URL,
       },
