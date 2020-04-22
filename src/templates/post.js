@@ -8,8 +8,17 @@ import Layout from '../components/layout'
 import Post from '../components/post'
 
 const TakeShapePostTemplate = ({ data, pageContext, location }) => {
-  const { canonical, featureImage, title, excerpt, id } = data.takeshape.post
+  const {
+    canonical,
+    featureImage,
+    title,
+    excerpt,
+    id,
+    summary,
+  } = data.takeshape.post
   const { next, previous } = pageContext
+
+  const coverImageUrl = featureImage && getImageUrl(featureImage.path)
 
   return (
     <Layout>
@@ -21,6 +30,26 @@ const TakeShapePostTemplate = ({ data, pageContext, location }) => {
         ogType="article"
         location={location}
       />
+      <div
+        style={{
+          display: 'none',
+        }}
+      >
+        <article className="h-card">
+          <header>
+            {coverImageUrl && (
+              <img className="u-photo" src={coverImageUrl} alt="Hero" />
+            )}
+            <h1 className="p-name">{title}</h1>
+          </header>
+          <p className="p-summary e-content">{summary}</p>
+          <footer>
+            <a className="u-url p-name" href={location.href}>
+              The author
+            </a>
+          </footer>
+        </article>
+      </div>
       <Post
         key={id}
         post={data.takeshape.post}
@@ -39,7 +68,9 @@ TakeShapePostTemplate.propTypes = {
     next: PropTypes.object,
     previous: PropTypes.object,
   }),
-  location: PropTypes.shape({}),
+  location: PropTypes.shape({
+    href: PropTypes.string,
+  }),
 }
 
 export const pageQuery = graphql`
