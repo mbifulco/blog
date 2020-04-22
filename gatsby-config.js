@@ -172,7 +172,7 @@ module.exports = {
             title: 'mike.biful.co RSS Feed',
             serialize: ({ query }) => {
               const { takeshape } = query
-              return takeshape.posts.items.map(post => {
+              return takeshape.posts.items.map((post) => {
                 const {
                   _id,
                   author,
@@ -182,7 +182,7 @@ module.exports = {
                   title,
                 } = post
 
-                const tags = map(tagList, tag => tag.name)
+                const tags = map(tagList, (tag) => tag.name)
 
                 return {
                   title,
@@ -190,7 +190,7 @@ module.exports = {
                   url: `${BASE_SITE_URL}/${path}`,
                   guid: _id,
                   categories: tags,
-                  author: author.name,
+                  author: author && author.name,
                 }
               })
             },
