@@ -5,12 +5,13 @@ import Img from 'gatsby-image'
 import moment from 'moment'
 import { getImageUrl } from 'takeshape-routing'
 
+import MentionsSummary from './mentionsSummary'
 import TagsSummary from './tagsSummary'
 import Navigation from './navigation'
 import style from '../styles/post.module.css'
 import Kofi from './kofi'
 
-const Post = ({ summary, post, previous, next }) => {
+const Post = ({ summary, mentions, post, previous, next }) => {
   const {
     author,
     _enabledAt: date,
@@ -74,6 +75,9 @@ const Post = ({ summary, post, previous, next }) => {
 
             <Kofi />
             <TagsSummary tags={tags} />
+
+            <MentionsSummary mentions={mentions} />
+
             <Navigation
               previousPath={previousPath}
               previousLabel={previousLabel}
@@ -88,9 +92,10 @@ const Post = ({ summary, post, previous, next }) => {
 }
 
 Post.propTypes = {
+  mentions: PropTypes.arrayOf(PropTypes.shape({})),
   post: PropTypes.shape({
-    bodyHtml: PropTypes.object,
-    tags: PropTypes.arrayOf(PropTypes.string),
+    bodyHtml: PropTypes.string,
+    tags: PropTypes.arrayOf(PropTypes.object),
     title: PropTypes.string,
     date: PropTypes.string,
     _enabledAt: PropTypes.string,

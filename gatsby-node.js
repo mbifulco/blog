@@ -40,7 +40,7 @@ exports.createPages = ({ actions, graphql }) => {
         }
       }
     }
-  `).then(result => {
+  `).then((result) => {
     const { takeshape } = result.data
     const { posts, siteMetadata, tags } = takeshape
 
@@ -49,7 +49,7 @@ exports.createPages = ({ actions, graphql }) => {
     }
 
     const pages = [takeshape.about]
-    forEach(pages, page => {
+    forEach(pages, (page) => {
       createPage({
         path: page.path,
         component: singlePageTemplate,
@@ -71,6 +71,7 @@ exports.createPages = ({ actions, graphql }) => {
           type: 'post',
           next: idx === posts.items.length - 1 ? null : posts.items[idx + 1],
           previous: idx === 0 ? null : posts.items[idx - 1],
+          permalink: `https://mike.biful.co/${takeShapePost.path}/`,
         },
       })
     })
@@ -84,7 +85,7 @@ exports.createPages = ({ actions, graphql }) => {
     })
 
     // tag pages
-    forEach(tags.items, tag => {
+    forEach(tags.items, (tag) => {
       createPage({
         path: `/tags/${kebabCase(tag.name)}`,
         component: tagPageTemplate,

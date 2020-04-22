@@ -9,6 +9,7 @@ import Post from '../components/post'
 
 const TakeShapePostTemplate = ({ data, pageContext, location }) => {
   const {
+    author,
     canonical,
     featureImage,
     title,
@@ -17,6 +18,7 @@ const TakeShapePostTemplate = ({ data, pageContext, location }) => {
     summary,
     _enabledAt: publishedAt,
   } = data.takeshape.post
+  const { mentions } = data
   const { next, previous } = pageContext
 
   const coverImageUrl = featureImage && getImageUrl(featureImage.path)
@@ -45,16 +47,18 @@ const TakeShapePostTemplate = ({ data, pageContext, location }) => {
           </header>
           <p className="p-summary e-content">{summary}</p>
           <footer>
-            <a className="u-url p-name" href={location.href}>
-              The author
-            </a>
+            {author && (
+              <a className="u-url p-name" href={location.href}>
+                {author}
+              </a>
+            )}
           </footer>
           <time
-            className={'dt-published'}
-            itemprop="datepublished"
-            datetime={publishedAt}
+            className="dt-published"
+            itemProp="datepublished"
+            dateTime={publishedAt}
           >
-            {new Date(publishedAt).toISOString().replace('Z', '') + '+01:00'}
+            {`${new Date(publishedAt).toISOString().replace('Z', '')}+01:00`}
           </time>
         </article>
       </div>
@@ -63,6 +67,7 @@ const TakeShapePostTemplate = ({ data, pageContext, location }) => {
         post={data.takeshape.post}
         previous={previous}
         next={next}
+        mentions={mentions && mentions.nodes}
       />
     </Layout>
   )
@@ -82,7 +87,7 @@ TakeShapePostTemplate.propTypes = {
 }
 
 export const pageQuery = graphql`
-  query($id: ID!) {
+  query($id: ID!, $permalink: String!) {
     takeshape {
       post: getPost(_id: $id) {
         canonical
@@ -103,6 +108,26 @@ export const pageQuery = graphql`
         _enabled
         _enabledAt
         searchSummary
+      }
+    }
+    mentions: allWebMentionEntry(filter: { wmTarget: { eq: $permalink } }) {
+      nodes {
+        wmTarget
+        wmSource
+        wmProperty
+        wmId
+        type
+        url
+        likeOf
+        author {
+          url
+          type
+          photo
+          name
+        }
+        content {
+          text
+        }
       }
     }
   }
