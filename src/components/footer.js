@@ -22,7 +22,7 @@ const Footer = () => (
           className={classes.gitHubLink}
           href="https://github.com/mbifulco"
           target="_blank"
-          rel="noreferrer noopener"
+          rel="noreferrer noopener me"
         >
           <GitHubIcon />
         </OutboundLink>{' '}

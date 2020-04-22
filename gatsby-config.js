@@ -219,6 +219,20 @@ module.exports = {
       },
     },
     {
+      resolve: `gatsby-plugin-webmention`,
+      options: {
+        username: 'mike.biful.co', // webmention.io username
+        identity: {
+          github: 'mbifulco',
+          twitter: 'irreverentmike', // no @
+        },
+        mentions: true,
+        pingbacks: true,
+        domain: 'mike.biful.co',
+        token: process.env.WEBMENTIONS_TOKEN,
+      },
+    },
+    {
       resolve: `gatsby-plugin-react-helmet-canonical-urls`,
       options: {
         siteUrl: BASE_SITE_URL,
