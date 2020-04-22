@@ -15,6 +15,7 @@ const TakeShapePostTemplate = ({ data, pageContext, location }) => {
     excerpt,
     id,
     summary,
+    _enabledAt: publishedAt,
   } = data.takeshape.post
   const { next, previous } = pageContext
 
@@ -48,6 +49,13 @@ const TakeShapePostTemplate = ({ data, pageContext, location }) => {
               The author
             </a>
           </footer>
+          <time
+            className={'dt-published'}
+            itemprop="datepublished"
+            datetime={publishedAt}
+          >
+            {new Date(publishedAt).toISOString().replace('Z', '') + '+01:00'}
+          </time>
         </article>
       </div>
       <Post

@@ -41,6 +41,7 @@
     "gatsby-plugin-react-helmet-canonical-urls": "^1.4.0",
     "gatsby-plugin-segment-js": "^3.1.0",
     "gatsby-plugin-sharp": "^2.5.6",
+    "gatsby-plugin-webmention": "^0.2.0",
     "gatsby-remark-images": "^3.2.5",
     "gatsby-remark-prismjs": "^3.4.4",
     "gatsby-source-filesystem": "^2.2.4",
