@@ -30,7 +30,7 @@ const Footer = () => (
           className={classes.twitterLink}
           href="https://twitter.com/irreverentmike"
           target="_blank"
-          rel="noreferrer noopener"
+          rel="noreferrer noopener me"
         >
           <TwitterIcon />
         </OutboundLink>{' '}
