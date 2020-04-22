@@ -53,11 +53,11 @@ const TakeShapePostTemplate = ({ data, pageContext, location }) => {
             )}
           </footer>
           <time
-            className={'dt-published'}
-            itemprop="datepublished"
-            datetime={publishedAt}
+            className="dt-published"
+            itemProp="datepublished"
+            dateTime={publishedAt}
           >
-            {new Date(publishedAt).toISOString().replace('Z', '') + '+01:00'}
+            {`${new Date(publishedAt).toISOString().replace('Z', '')}+01:00`}
           </time>
         </article>
       </div>
