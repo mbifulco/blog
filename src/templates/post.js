@@ -9,6 +9,7 @@ import Post from '../components/post'
 
 const TakeShapePostTemplate = ({ data, pageContext, location }) => {
   const {
+    author,
     canonical,
     featureImage,
     title,
@@ -45,9 +46,11 @@ const TakeShapePostTemplate = ({ data, pageContext, location }) => {
           </header>
           <p className="p-summary e-content">{summary}</p>
           <footer>
-            <a className="u-url p-name" href={location.href}>
-              The author
-            </a>
+            {author && (
+              <a className="u-url p-name" href={location.href}>
+                {author}
+              </a>
+            )}
           </footer>
           <time
             className={'dt-published'}
