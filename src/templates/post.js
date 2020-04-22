@@ -18,6 +18,7 @@ const TakeShapePostTemplate = ({ data, pageContext, location }) => {
     summary,
     _enabledAt: publishedAt,
   } = data.takeshape.post
+  const { mentions } = data
   const { next, previous } = pageContext
 
   const coverImageUrl = featureImage && getImageUrl(featureImage.path)
@@ -66,6 +67,7 @@ const TakeShapePostTemplate = ({ data, pageContext, location }) => {
         post={data.takeshape.post}
         previous={previous}
         next={next}
+        mentions={mentions && mentions.nodes}
       />
     </Layout>
   )
@@ -85,7 +87,7 @@ TakeShapePostTemplate.propTypes = {
 }
 
 export const pageQuery = graphql`
-  query($id: ID!) {
+  query($id: ID!, $permalink: String!) {
     takeshape {
       post: getPost(_id: $id) {
         canonical
@@ -106,6 +108,26 @@ export const pageQuery = graphql`
         _enabled
         _enabledAt
         searchSummary
+      }
+    }
+    mentions: allWebMentionEntry(filter: { wmTarget: { eq: $permalink } }) {
+      nodes {
+        wmTarget
+        wmSource
+        wmProperty
+        wmId
+        type
+        url
+        likeOf
+        author {
+          url
+          type
+          photo
+          name
+        }
+        content {
+          text
+        }
       }
     }
   }

@@ -23,7 +23,7 @@ const TagsSummary = ({ tags }) => {
 }
 
 TagsSummary.propTypes = {
-  tags: PropTypes.arrayOf(PropTypes.string),
+  tags: PropTypes.arrayOf(PropTypes.object),
 }
 
 export default TagsSummary
