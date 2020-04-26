@@ -219,6 +219,15 @@ module.exports = {
       },
     },
     {
+      resolve: `gatsby-plugin-remarketer`,
+      options: {
+        twitter: {
+          siteId: 'o3mdu',
+        },
+        debug: false, // optional; true fires events in 'development'
+      },
+    },
+    {
       resolve: `gatsby-plugin-webmention`,
       options: {
         username: 'mike.biful.co', // webmention.io username
