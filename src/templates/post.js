@@ -6,6 +6,7 @@ import { getImageUrl } from 'takeshape-routing'
 import SEO from '../components/seo'
 import Layout from '../components/layout'
 import Post from '../components/post'
+import { NewsletterSignup } from '../components/NewsletterSignup'
 
 const TakeShapePostTemplate = ({ data, pageContext, location }) => {
   const {
