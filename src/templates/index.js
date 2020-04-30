@@ -7,7 +7,7 @@ import Layout from '../components/layout'
 import Post from '../components/post'
 import Navigation from '../components/navigation'
 
-const Index = props => {
+const Index = (props) => {
   const {
     data,
     location,
@@ -21,7 +21,7 @@ const Index = props => {
     <>
       <SEO location={location} />
       <Layout>
-        {posts.items.map(post => {
+        {posts.items.map((post) => {
           const { _id: id } = post
 
           return <Post post={post} key={id} summary />

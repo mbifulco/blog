@@ -9,7 +9,6 @@ import MentionsSummary from './mentionsSummary'
 import TagsSummary from './tagsSummary'
 import Navigation from './navigation'
 import style from '../styles/post.module.css'
-import Kofi from './kofi'
 
 const Post = ({ summary, mentions, post, previous, next }) => {
   const {
@@ -73,7 +72,6 @@ const Post = ({ summary, mentions, post, previous, next }) => {
             {/* eslint-disable-next-line react/no-danger */}
             <div dangerouslySetInnerHTML={{ __html: html }} />
 
-            <Kofi />
             <TagsSummary tags={tags} />
 
             <MentionsSummary mentions={mentions} />

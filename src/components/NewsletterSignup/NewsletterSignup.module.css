@@ -1,0 +1,6 @@
+iframe {
+  border: 1px solid #ddd;
+  background: white;
+  z-index: 11;
+  max-width: 100vw;
+}
