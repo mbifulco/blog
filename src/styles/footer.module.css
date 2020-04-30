@@ -42,8 +42,8 @@
   position: absolute;
   color: black;
   margin-top: 0rem;
-  width: 100%;
   position: relative;
+  overflow-x: hidden;
 }
 
 .content iframe {

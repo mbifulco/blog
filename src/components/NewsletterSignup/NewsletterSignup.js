@@ -1,5 +1,5 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+
 import classes from './NewsletterSignup.module.css'
 
 const NewsletterSignup = () => {
@@ -14,10 +14,6 @@ const NewsletterSignup = () => {
       scrolling="no"
     />
   )
-}
-
-NewsletterSignup.propTypes = {
-  children: PropTypes.node,
 }
 
 export default NewsletterSignup
