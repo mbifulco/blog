@@ -11,7 +11,9 @@ const Footer = () => (
   <footer className={classes.container}>
     <div className={classes.skewed} />
     <div className={classes.content}>
-      <NewsletterSignup />
+      <div id="#newsletter">
+        <NewsletterSignup />
+      </div>
       <div className={classes.meta}>
         <span className="footerCopyrights">© 2019 Mike Bifulco</span>
         <span className="footerCopyrights">

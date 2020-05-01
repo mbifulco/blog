@@ -3,10 +3,15 @@
   max-width: 800px;
   text-align: left;
   padding: 20px;
-  margin: 0 auto 20px;
+  margin: 0 auto 10px;
 
   @media (--tablet) {
     max-width: 660px;
+    padding: 20px 10px;
+  }
+
+  @media (--phone) {
+    padding: 20px 10px;
   }
 
   h1 {
@@ -14,7 +19,11 @@
   }
 
   img {
-    border-radius: 8px;
+    max-width: calc(100vw-10px);
+  }
+
+  * {
+    overflow-wrap: anywhere;
   }
 }
 
@@ -32,7 +41,6 @@
 
 .meta {
   font-size: 1rem;
-  margin-bottom: 10px;
   color: #555555;
 }
 
