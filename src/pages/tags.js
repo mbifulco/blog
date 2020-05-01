@@ -25,7 +25,7 @@ const TagsPage = ({ data }) => {
         <div className={classes.postContent}>
           <h1>Tags</h1>
           <ul className={tagsClasses.list}>
-            {tags.items.map(tag => {
+            {tags.items.map((tag) => {
               return (
                 <li key={`tag-${tag._id}`} className={tagsClasses.listItem}>
                   <Link to={`/tags/${kebabCase(tag.name)}/`}>

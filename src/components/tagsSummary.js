@@ -12,7 +12,6 @@ const TagsSummary = ({ tags }) => {
 
   return (
     <div className={classes.container}>
-      <header className={classes.header}>Tagged with</header>
       {map(tags, (tag, id) => (
         <Tag key={`tag-${id}`} url={`/tags/${tag.name}`}>
           {tag.name}
