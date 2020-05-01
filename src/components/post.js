@@ -58,6 +58,7 @@ const Post = ({ summary, mentions, post, previous, next }) => {
         <div className={style.meta}>
           {formattedDate} {author && <>— Written by {author}</>}
         </div>
+        <TagsSummary tags={tags} />
         {coverImageContainer}
 
         {summary ? (
@@ -71,8 +72,6 @@ const Post = ({ summary, mentions, post, previous, next }) => {
           <>
             {/* eslint-disable-next-line react/no-danger */}
             <div dangerouslySetInnerHTML={{ __html: html }} />
-
-            <TagsSummary tags={tags} />
 
             <MentionsSummary mentions={mentions} />
 

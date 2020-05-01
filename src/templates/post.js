@@ -66,8 +66,6 @@ const TakeShapePostTemplate = ({ data, pageContext, location }) => {
       <Post
         key={id}
         post={data.takeshape.post}
-        previous={previous}
-        next={next}
         mentions={mentions && mentions.nodes}
       />
     </Layout>
