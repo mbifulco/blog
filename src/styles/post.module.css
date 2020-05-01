@@ -19,7 +19,7 @@
   }
 
   img {
-    max-width: calc(100vw-10px);
+    max-width: 100%;
   }
 
   * {
