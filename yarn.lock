@@ -6375,11 +6375,6 @@ gatsby-plugin-remarketer@^0.0.3:
   resolved "https://registry.yarnpkg.com/gatsby-plugin-remarketer/-/gatsby-plugin-remarketer-0.0.3.tgz#53e325eb0d90307775417d201f58b662c32043c3"
   integrity sha512-kO666E9ezjNxYiO5ws5c3DVgPfeg57Xbq3OHGiuq2wKD0m7lLuRrNKoFASijOAVqsQDuybmYx4ZChPxrFTcTRg==
 
-gatsby-plugin-segment-js@^3.2.2:
-  version "3.2.2"
-  resolved "https://registry.yarnpkg.com/gatsby-plugin-segment-js/-/gatsby-plugin-segment-js-3.2.2.tgz#f2510a3a1c89c019d23face2fb9ff081dd509cae"
-  integrity sha512-+hi98uqMTqb2wVlZBxA3tA65p6rOQ/SHU12VhPVXgmGnj5rWGSkNqYxGjUQEwltKaqjnqXAmJOZGkah+OBU7Dw==
-
 gatsby-plugin-sharp@^2.6.0:
   version "2.6.0"
   resolved "https://registry.yarnpkg.com/gatsby-plugin-sharp/-/gatsby-plugin-sharp-2.6.0.tgz#0f438d9e3bb3ac76c0a61921537a69eafad5d893"

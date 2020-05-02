@@ -26,13 +26,24 @@ const Post = ({ summary, mentions, post, previous, next }) => {
   const nextPath = next && next.path
   const nextLabel = next && next.title
 
-  const coverImageUrl = featureImage && getImageUrl(featureImage.path)
+  const postPath = `/${path}`
+
+  const coverImageUrl =
+    featureImage &&
+    getImageUrl(featureImage.path, {
+      auto: 'format',
+      fit: 'max',
+      w: 760,
+      h: 535,
+      q: 80,
+    })
   const coverImageAlt = featureImage && featureImage.description
 
   let coverImageContainer
   if (featureImage && featureImage.childImageSharp) {
     coverImageContainer = (
       <Img
+        loading="lazy"
         fluid={featureImage.childImageSharp.fluid}
         className={style.coverImage}
       />
@@ -40,6 +51,7 @@ const Post = ({ summary, mentions, post, previous, next }) => {
   } else if (coverImageUrl) {
     coverImageContainer = (
       <img
+        loading="lazy"
         src={coverImageUrl}
         className={style.coverImage}
         alt={coverImageAlt}
@@ -53,7 +65,7 @@ const Post = ({ summary, mentions, post, previous, next }) => {
     <div className={style.post}>
       <div className={style.postContent}>
         <h1 className={style.title}>
-          {summary ? <Link to={path}>{title}</Link> : title}
+          {summary ? <Link to={postPath}>{title}</Link> : title}
         </h1>
         <div className={style.meta}>
           {formattedDate} {author && <>— Written by {author}</>}
@@ -64,7 +76,7 @@ const Post = ({ summary, mentions, post, previous, next }) => {
         {summary ? (
           <>
             <p>{excerpt}</p>
-            <Link to={path} className={style.readMore}>
+            <Link to={postPath} className={style.readMore}>
               Read more →
             </Link>
           </>
