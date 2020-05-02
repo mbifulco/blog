@@ -29,10 +29,6 @@ module.exports = {
     menuMoreText: 'Show more',
     mainMenu: [
       {
-        title: 'Shop',
-        path: '/shop',
-      },
-      {
         title: 'About',
         path: '/about',
       },
@@ -113,25 +109,6 @@ module.exports = {
         id: 'GTM-PZRPQ5H',
         // set this to true to make GTM work in dev environment (for testing/debug)
         includeInDevelopment: false,
-      },
-    },
-    {
-      resolve: `gatsby-plugin-segment-js`,
-      options: {
-        // your segment write key for your production environment
-        // when process.env.NODE_ENV === 'production'
-        // required; non-empty string
-        prodKey: `WBg2ungfDr2xc9rzrZelCY8ZM1NFEUD2`,
-
-        // if you have a development env for your segment account, paste that key here
-        // when process.env.NODE_ENV === 'development'
-        // optional; non-empty string
-        devKey: `7p42YvCTx6buTZ6AIoHAOS8AjwxhRacW`,
-
-        // boolean (defaults to false) on whether you want
-        // to include analytics.page() automatically
-        // if false, see below on how to track pageviews manually
-        trackPage: true,
       },
     },
     {
