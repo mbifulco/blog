@@ -12,6 +12,7 @@ const NewsletterSignup = () => {
       className={classes.iframe}
       frameBorder={0}
       scrolling="no"
+      loading="lazy"
     />
   )
 }
