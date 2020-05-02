@@ -26,6 +26,8 @@ const Post = ({ summary, mentions, post, previous, next }) => {
   const nextPath = next && next.path
   const nextLabel = next && next.title
 
+  const postPath = `/${path}`
+
   const coverImageUrl =
     featureImage &&
     getImageUrl(featureImage.path, {
@@ -63,7 +65,7 @@ const Post = ({ summary, mentions, post, previous, next }) => {
     <div className={style.post}>
       <div className={style.postContent}>
         <h1 className={style.title}>
-          {summary ? <Link to={path}>{title}</Link> : title}
+          {summary ? <Link to={postPath}>{title}</Link> : title}
         </h1>
         <div className={style.meta}>
           {formattedDate} {author && <>— Written by {author}</>}
@@ -74,7 +76,7 @@ const Post = ({ summary, mentions, post, previous, next }) => {
         {summary ? (
           <>
             <p>{excerpt}</p>
-            <Link to={path} className={style.readMore}>
+            <Link to={postPath} className={style.readMore}>
               Read more →
             </Link>
           </>
