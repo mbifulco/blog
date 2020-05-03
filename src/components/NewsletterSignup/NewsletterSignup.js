@@ -1,6 +1,6 @@
-import React from 'react'
+import React from 'react';
 
-import classes from './NewsletterSignup.module.css'
+import classes from './NewsletterSignup.module.css';
 
 const NewsletterSignup = () => {
   return (
@@ -14,7 +14,7 @@ const NewsletterSignup = () => {
       scrolling="no"
       loading="lazy"
     />
-  )
-}
+  );
+};
 
-export default NewsletterSignup
+export default NewsletterSignup;

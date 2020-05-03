@@ -1,18 +1,18 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import React from 'react';
+import PropTypes from 'prop-types';
 
-import SEO from '../components/seo'
-import Layout from '../components/layout'
-import style from '../styles/post.module.css'
+import SEO from '../components/seo';
+import Layout from '../components/layout';
+import style from '../styles/post.module.css';
 
-const capitalizeFirstLetter = string => {
-  return string.charAt(0).toUpperCase() + string.slice(1)
-}
+const capitalizeFirstLetter = (string) => {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+};
 
 const SinglePage = ({ pageContext, location }) => {
-  const { title, bodyHtml } = pageContext
+  const { title, bodyHtml } = pageContext;
 
-  const formattedTitle = capitalizeFirstLetter(title)
+  const formattedTitle = capitalizeFirstLetter(title);
   return (
     <Layout>
       <SEO
@@ -32,8 +32,8 @@ const SinglePage = ({ pageContext, location }) => {
         </div>
       </div>
     </Layout>
-  )
-}
+  );
+};
 
 SinglePage.propTypes = {
   pageContext: PropTypes.shape({
@@ -41,6 +41,6 @@ SinglePage.propTypes = {
     title: PropTypes.string,
   }),
   location: PropTypes.shape({}),
-}
+};
 
-export default SinglePage
+export default SinglePage;

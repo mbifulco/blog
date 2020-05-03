@@ -1,21 +1,21 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { OutboundLink } from 'gatsby-plugin-google-analytics'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { OutboundLink } from 'gatsby-plugin-google-analytics';
 
-import pluralize from 'pluralize'
+import pluralize from 'pluralize';
 
-import Avatar from '@material-ui/core/Avatar'
-import AvatarGroup from '@material-ui/lab/AvatarGroup'
+import Avatar from '@material-ui/core/Avatar';
+import AvatarGroup from '@material-ui/lab/AvatarGroup';
 
-import classes from '../styles/mentions.module.css'
+import classes from '../styles/mentions.module.css';
 
 const MentionsSummary = ({ mentions }) => {
-  if (!mentions || mentions.length === 0) return null
+  if (!mentions || mentions.length === 0) return null;
 
-  const likes = mentions.filter((mention) => mention.wmProperty === 'like-of')
+  const likes = mentions.filter((mention) => mention.wmProperty === 'like-of');
   const likeAuthors = likes.map(
     (mention) => mention.author && { wmId: mention.wmId, ...mention.author }
-  )
+  );
 
   return (
     <>
@@ -45,7 +45,7 @@ const MentionsSummary = ({ mentions }) => {
         {mentions
           .filter((mention) => mention.wmProperty !== 'like-of')
           .map((mention) => {
-            const { author } = mention
+            const { author } = mention;
             return (
               <div className={classes.mention} key={mention.wmId}>
                 <OutboundLink
@@ -73,15 +73,15 @@ const MentionsSummary = ({ mentions }) => {
                   </small>
                 </span>
               </div>
-            )
+            );
           })}
       </div>
     </>
-  )
-}
+  );
+};
 
 MentionsSummary.propTypes = {
   mentions: PropTypes.arrayOf(PropTypes.shape({})),
-}
+};
 
-export default MentionsSummary
+export default MentionsSummary;

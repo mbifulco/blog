@@ -1,6 +1,6 @@
-import React from 'react'
-import { graphql, useStaticQuery } from 'gatsby'
-import Img from 'gatsby-image'
+import React from 'react';
+import { graphql, useStaticQuery } from 'gatsby';
+import Img from 'gatsby-image';
 
 const Headshot = ({ className }) => {
   const data = useStaticQuery(graphql`
@@ -14,13 +14,13 @@ const Headshot = ({ className }) => {
         }
       }
     }
-  `)
+  `);
   return (
     <Img
       className={`headshot ${className}`}
       fixed={data.file.childImageSharp.fixed}
     />
-  )
-}
+  );
+};
 
-export default Headshot
+export default Headshot;

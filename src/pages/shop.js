@@ -1,11 +1,11 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import React from 'react';
+import PropTypes from 'prop-types';
 
-import Layout from '../components/layout'
-import SEO from '../components/seo'
+import Layout from '../components/layout';
+import SEO from '../components/seo';
 
-import classes from '../styles/shop.module.css'
-import SoldOut from '../components/soldOut'
+import classes from '../styles/shop.module.css';
+import SoldOut from '../components/soldOut';
 
 const Shop = ({ location }) => {
   return (
@@ -31,11 +31,11 @@ const Shop = ({ location }) => {
         </article>
       </main>
     </Layout>
-  )
-}
+  );
+};
 
 Shop.propTypes = {
   location: PropTypes.shape({}),
-}
+};
 
-export default Shop
+export default Shop;

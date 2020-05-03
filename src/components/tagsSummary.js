@@ -1,14 +1,14 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import React from 'react';
+import PropTypes from 'prop-types';
 
-import { map } from 'lodash'
+import { map } from 'lodash';
 
-import Tag from './tag'
+import Tag from './tag';
 
-import classes from '../styles/tagsSummary.module.css'
+import classes from '../styles/tagsSummary.module.css';
 
 const TagsSummary = ({ tags }) => {
-  if (!tags || tags.length <= 0) return null
+  if (!tags || tags.length <= 0) return null;
 
   return (
     <div className={classes.container}>
@@ -18,11 +18,11 @@ const TagsSummary = ({ tags }) => {
         </Tag>
       ))}
     </div>
-  )
-}
+  );
+};
 
 TagsSummary.propTypes = {
   tags: PropTypes.arrayOf(PropTypes.object),
-}
+};
 
-export default TagsSummary
+export default TagsSummary;

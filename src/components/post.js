@@ -1,14 +1,14 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { Link } from 'gatsby'
-import Img from 'gatsby-image'
-import moment from 'moment'
-import { getImageUrl } from 'takeshape-routing'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Link } from 'gatsby';
+import Img from 'gatsby-image';
+import moment from 'moment';
+import { getImageUrl } from 'takeshape-routing';
 
-import MentionsSummary from './mentionsSummary'
-import TagsSummary from './tagsSummary'
-import Navigation from './navigation'
-import style from '../styles/post.module.css'
+import MentionsSummary from './mentionsSummary';
+import TagsSummary from './tagsSummary';
+import Navigation from './navigation';
+import style from '../styles/post.module.css';
 
 const Post = ({ summary, mentions, post, previous, next }) => {
   const {
@@ -20,13 +20,13 @@ const Post = ({ summary, mentions, post, previous, next }) => {
     path,
     tags,
     title,
-  } = post
-  const previousPath = previous && previous.path
-  const previousLabel = previous && previous.title
-  const nextPath = next && next.path
-  const nextLabel = next && next.title
+  } = post;
+  const previousPath = previous && previous.path;
+  const previousLabel = previous && previous.title;
+  const nextPath = next && next.path;
+  const nextLabel = next && next.title;
 
-  const postPath = `/${path}`
+  const postPath = `/${path}`;
 
   const coverImageUrl =
     featureImage &&
@@ -36,10 +36,10 @@ const Post = ({ summary, mentions, post, previous, next }) => {
       w: 760,
       h: 535,
       q: 80,
-    })
-  const coverImageAlt = featureImage && featureImage.description
+    });
+  const coverImageAlt = featureImage && featureImage.description;
 
-  let coverImageContainer
+  let coverImageContainer;
   if (featureImage && featureImage.childImageSharp) {
     coverImageContainer = (
       <Img
@@ -47,7 +47,7 @@ const Post = ({ summary, mentions, post, previous, next }) => {
         fluid={featureImage.childImageSharp.fluid}
         className={style.coverImage}
       />
-    )
+    );
   } else if (coverImageUrl) {
     coverImageContainer = (
       <img
@@ -56,10 +56,10 @@ const Post = ({ summary, mentions, post, previous, next }) => {
         className={style.coverImage}
         alt={coverImageAlt}
       />
-    )
+    );
   }
 
-  const formattedDate = moment(new Date(date)).format('DD MMMM YYYY')
+  const formattedDate = moment(new Date(date)).format('DD MMMM YYYY');
 
   return (
     <div className={style.post}>
@@ -97,8 +97,8 @@ const Post = ({ summary, mentions, post, previous, next }) => {
         )}
       </div>
     </div>
-  )
-}
+  );
+};
 
 Post.propTypes = {
   mentions: PropTypes.arrayOf(PropTypes.shape({})),
@@ -125,6 +125,6 @@ Post.propTypes = {
   summary: PropTypes.bool,
   previous: PropTypes.object,
   next: PropTypes.object,
-}
+};
 
-export default Post
+export default Post;

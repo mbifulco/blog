@@ -1,7 +1,7 @@
-import React from 'react'
-import { OutboundLink } from 'gatsby-plugin-google-analytics'
+import React from 'react';
+import { OutboundLink } from 'gatsby-plugin-google-analytics';
 
-import classes from '../styles/kofi.module.css'
+import classes from '../styles/kofi.module.css';
 
 const Kofi = () => (
   <>
@@ -20,6 +20,6 @@ const Kofi = () => (
       />
     </OutboundLink>
   </>
-)
+);
 
-export default Kofi
+export default Kofi;
