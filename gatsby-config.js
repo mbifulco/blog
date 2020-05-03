@@ -57,6 +57,13 @@ module.exports = {
         ],
       },
     },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `images`,
+        path: `${__dirname}/src/images/`,
+      },
+    },
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
     {
@@ -101,6 +108,17 @@ module.exports = {
         theme_color: `#292a2d`,
         display: `standalone`,
         icon: `src/images/hello-icon.png`,
+      },
+    },
+    {
+      resolve: 'gatsby-plugin-fathom',
+      options: {
+        // Fathom server URL. Defaults to `cdn.usefathom.com`
+        trackingUrl: 'https://fathom-for-mike.herokuapp.com/',
+        // Unique site id
+        siteId: 'DCAAK',
+        // Domain whitelist
+        whitelistHostnames: ['mike.biful.co'],
       },
     },
     {
