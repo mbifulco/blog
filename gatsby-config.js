@@ -113,10 +113,8 @@ module.exports = {
     {
       resolve: 'gatsby-plugin-fathom',
       options: {
-        // Fathom server URL. Defaults to `cdn.usefathom.com`
-        trackingUrl: 'https://fathom-for-mike.herokuapp.com/',
         // Unique site id
-        siteId: 'DCAAK',
+        siteId: 'PAVJGIYJ',
         // Domain whitelist
         whitelistHostnames: [
           'mike.biful.co',
