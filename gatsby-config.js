@@ -125,14 +125,6 @@ module.exports = {
       },
     },
     {
-      resolve: 'gatsby-plugin-google-tagmanager',
-      options: {
-        id: 'GTM-PZRPQ5H',
-        // set this to true to make GTM work in dev environment (for testing/debug)
-        includeInDevelopment: false,
-      },
-    },
-    {
       resolve: 'gatsby-source-graphql',
       options: {
         typeName: 'TS',
