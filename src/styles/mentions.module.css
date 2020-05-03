@@ -1,11 +1,15 @@
 .title {
-  margin-bottom: 1rem;
+  margin-bottom: 0rem;
 }
 
 .mention {
-  background-color: #eee;
-  padding: 1rem;
-  margin-bottom: 1rem;
+  background-color: rgba(255, 230, 230, 0.4);
+  padding: 0.5rem 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.mention p {
+  margin-top: 0.25rem;
 }
 
 .mention:last-child {
@@ -21,11 +25,23 @@
   color: darkorchid;
 }
 
+.likesHeader {
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+.likesHeader > * {
+  margin-right: 0.25rem;
+}
+
 .authorContainer {
   width: 100%;
-  display: flex;
+  display: inline-flex;
   flex-direction: row;
-  align-items: flex-end;
+  align-items: center;
   text-decoration: none;
   color: darkorchid;
 }
@@ -37,7 +53,13 @@
 }
 
 .authorContainer span {
-  font-size: 1.5rem;
+  font-size: 1rem;
   margin: 0;
   padding: 0;
+}
+
+.avatarLink img,
+img.avatarLink,
+.avatarLink {
+  border-radius: 100%;
 }
