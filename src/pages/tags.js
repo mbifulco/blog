@@ -1,22 +1,22 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import React from 'react';
+import PropTypes from 'prop-types';
 
 // Utilities
-import { kebabCase } from 'lodash'
+import { kebabCase } from 'lodash';
 
 // Components
-import { Helmet } from 'react-helmet'
-import { Link, graphql } from 'gatsby'
+import { Helmet } from 'react-helmet';
+import { Link, graphql } from 'gatsby';
 
-import Tag from '../components/tag'
-import Layout from '../components/layout'
+import Tag from '../components/tag';
+import Layout from '../components/layout';
 
-import classes from '../styles/post.module.css'
-import tagsClasses from '../styles/tagsPage.module.css'
+import classes from '../styles/post.module.css';
+import tagsClasses from '../styles/tagsPage.module.css';
 
 const TagsPage = ({ data }) => {
-  const { takeshape } = data
-  const { siteMetadata, tags } = takeshape
+  const { takeshape } = data;
+  const { siteMetadata, tags } = takeshape;
 
   return (
     <Layout>
@@ -34,14 +34,14 @@ const TagsPage = ({ data }) => {
                     </Tag>
                   </Link>
                 </li>
-              )
+              );
             })}
           </ul>
         </div>
       </div>
     </Layout>
-  )
-}
+  );
+};
 
 TagsPage.propTypes = {
   data: PropTypes.shape({
@@ -56,9 +56,9 @@ TagsPage.propTypes = {
       }),
     }),
   }),
-}
+};
 
-export default TagsPage
+export default TagsPage;
 
 export const pageQuery = graphql`
   query {
@@ -77,4 +77,4 @@ export const pageQuery = graphql`
       }
     }
   }
-`
+`;

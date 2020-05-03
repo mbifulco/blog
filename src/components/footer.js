@@ -1,11 +1,11 @@
-import React from 'react'
-import { OutboundLink } from 'gatsby-plugin-google-analytics'
+import React from 'react';
+import { OutboundLink } from 'gatsby-plugin-google-analytics';
 
-import { NewsletterSignup } from './NewsletterSignup'
+import { NewsletterSignup } from './NewsletterSignup';
 
-import { GitHubIcon, TwitterIcon, TwitchIcon, RssIcon } from './icons'
+import { GitHubIcon, TwitterIcon, TwitchIcon, RssIcon } from './icons';
 
-import classes from '../styles/footer.module.css'
+import classes from '../styles/footer.module.css';
 
 const Footer = () => (
   <footer className={classes.container}>
@@ -100,6 +100,6 @@ const Footer = () => (
       </div>
     </div>
   </footer>
-)
+);
 
-export default Footer
+export default Footer;

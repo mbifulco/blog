@@ -1,30 +1,30 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { graphql } from 'gatsby'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { graphql } from 'gatsby';
 
-import SEO from '../components/seo'
-import Layout from '../components/layout'
-import Post from '../components/post'
-import Navigation from '../components/navigation'
+import SEO from '../components/seo';
+import Layout from '../components/layout';
+import Post from '../components/post';
+import Navigation from '../components/navigation';
 
 const Index = (props) => {
   const {
     data,
     location,
     pageContext: { nextPagePath, previousPagePath },
-  } = props
+  } = props;
 
-  const { takeshape } = data
-  const { posts } = takeshape
+  const { takeshape } = data;
+  const { posts } = takeshape;
 
   return (
     <>
       <SEO location={location} />
       <Layout>
         {posts.items.map((post) => {
-          const { _id: id } = post
+          const { _id: id } = post;
 
-          return <Post post={post} key={id} summary />
+          return <Post post={post} key={id} summary />;
         })}
 
         <Navigation
@@ -35,8 +35,8 @@ const Index = (props) => {
         />
       </Layout>
     </>
-  )
-}
+  );
+};
 
 Index.propTypes = {
   data: PropTypes.object.isRequired,
@@ -45,7 +45,7 @@ Index.propTypes = {
     nextPagePath: PropTypes.string,
     previousPagePath: PropTypes.string,
   }),
-}
+};
 
 export const postsQuery = graphql`
   {
@@ -74,6 +74,6 @@ export const postsQuery = graphql`
       }
     }
   }
-`
+`;
 
-export default Index
+export default Index;

@@ -1,8 +1,8 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { Link } from 'gatsby'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Link } from 'gatsby';
 
-import style from '../styles/navigation.module.css'
+import style from '../styles/navigation.module.css';
 
 const Navigation = ({ nextPath, previousPath, nextLabel, previousLabel }) =>
   previousPath || nextPath ? (
@@ -24,13 +24,13 @@ const Navigation = ({ nextPath, previousPath, nextLabel, previousLabel }) =>
         </span>
       )}
     </div>
-  ) : null
+  ) : null;
 
 Navigation.propTypes = {
   nextPath: PropTypes.string,
   previousPath: PropTypes.string,
   nextLabel: PropTypes.string,
   previousLabel: PropTypes.string,
-}
+};
 
-export default Navigation
+export default Navigation;
