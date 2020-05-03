@@ -113,6 +113,8 @@ module.exports = {
     {
       resolve: 'gatsby-plugin-fathom',
       options: {
+        // Fathom server URL. Defaults to `cdn.usefathom.com`
+        trackingUrl: 'chicken.biful.co',
         // Unique site id
         siteId: 'PAVJGIYJ',
         // Domain whitelist
