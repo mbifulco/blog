@@ -118,7 +118,12 @@ module.exports = {
         // Unique site id
         siteId: 'DCAAK',
         // Domain whitelist
-        whitelistHostnames: ['mike.biful.co'],
+        whitelistHostnames: [
+          'mike.biful.co',
+          'biful.co',
+          'irreverentmike.com',
+          'mikebifulco.com',
+        ],
       },
     },
     {
