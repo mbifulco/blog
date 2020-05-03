@@ -1,13 +1,13 @@
-import React, { useState } from 'react'
-import PropTypes from 'prop-types'
-import { Link } from 'gatsby'
-import { Helmet } from 'react-helmet'
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
+import { Link } from 'gatsby';
+import { Helmet } from 'react-helmet';
 
-import Menu from './menu'
+import Menu from './menu';
 
-import style from '../styles/header.module.css'
+import style from '../styles/header.module.css';
 
-const Header = props => {
+const Header = (props) => {
   const {
     siteLogo,
     logoText,
@@ -15,24 +15,24 @@ const Header = props => {
     mainMenuItems,
     menuMoreText,
     defaultTheme,
-  } = props
+  } = props;
   const defaultThemeState =
     (typeof window !== 'undefined' && window.localStorage.getItem('theme')) ||
-    null
-  const [userTheme, changeTheme] = useState(defaultThemeState)
-  const [isMobileMenuVisible, toggleMobileMenu] = useState(false)
-  const [isSubMenuVisible, toggleSubMenu] = useState(false)
+    null;
+  const [userTheme, changeTheme] = useState(defaultThemeState);
+  const [isMobileMenuVisible, toggleMobileMenu] = useState(false);
+  const [isSubMenuVisible, toggleSubMenu] = useState(false);
   const onChangeTheme = () => {
     const opositeTheme =
-      (userTheme || defaultTheme) === 'light' ? 'dark' : 'light'
+      (userTheme || defaultTheme) === 'light' ? 'dark' : 'light';
 
-    changeTheme(opositeTheme)
+    changeTheme(opositeTheme);
 
     typeof window !== 'undefined' &&
-      window.localStorage.setItem('theme', opositeTheme)
-  }
-  const onToggleMobileMenu = () => toggleMobileMenu(!isMobileMenuVisible)
-  const onToggleSubMenu = () => toggleSubMenu(!isSubMenuVisible)
+      window.localStorage.setItem('theme', opositeTheme);
+  };
+  const onToggleMobileMenu = () => toggleMobileMenu(!isMobileMenuVisible);
+  const onToggleSubMenu = () => toggleSubMenu(!isSubMenuVisible);
 
   return (
     <>
@@ -75,8 +75,8 @@ const Header = props => {
         </div>
       </header>
     </>
-  )
-}
+  );
+};
 
 Header.propTypes = {
   siteLogo: PropTypes.object,
@@ -86,10 +86,10 @@ Header.propTypes = {
     PropTypes.shape({
       title: PropTypes.string,
       path: PropTypes.string,
-    }),
+    })
   ),
   mainMenuItems: PropTypes.number,
   menuMoreText: PropTypes.string,
-}
+};
 
-export default Header
+export default Header;

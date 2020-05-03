@@ -1,11 +1,11 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { OutboundLink } from 'gatsby-plugin-google-analytics'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { OutboundLink } from 'gatsby-plugin-google-analytics';
 
-import classes from '../styles/mentions.module.css'
+import classes from '../styles/mentions.module.css';
 
 const MentionsSummary = ({ mentions }) => {
-  if (!mentions || mentions.length === 0) return null
+  if (!mentions || mentions.length === 0) return null;
   return (
     <>
       <h4 className={classes.title}>
@@ -17,7 +17,7 @@ const MentionsSummary = ({ mentions }) => {
       </h4>
       <div className={classes.mentionsContainer}>
         {mentions.map((mention) => {
-          const { author } = mention
+          const { author } = mention;
           return (
             <div className={classes.mention} key={mention.wmId}>
               <OutboundLink
@@ -49,15 +49,15 @@ const MentionsSummary = ({ mentions }) => {
                 </small>
               </p>
             </div>
-          )
+          );
         })}
       </div>
     </>
-  )
-}
+  );
+};
 
 MentionsSummary.propTypes = {
   mentions: PropTypes.arrayOf(PropTypes.shape({})),
-}
+};
 
-export default MentionsSummary
+export default MentionsSummary;

@@ -1,5 +1,5 @@
 /* eslint-disable max-len */
-import React from 'react'
+import React from 'react';
 
 const RssIcon = () => (
   <svg
@@ -25,6 +25,6 @@ const RssIcon = () => (
       </g>
     </g>
   </svg>
-)
+);
 
-export default RssIcon
+export default RssIcon;

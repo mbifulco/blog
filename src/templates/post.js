@@ -1,12 +1,12 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { graphql } from 'gatsby'
-import { getImageUrl } from 'takeshape-routing'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { graphql } from 'gatsby';
+import { getImageUrl } from 'takeshape-routing';
 
-import SEO from '../components/seo'
-import Layout from '../components/layout'
-import Post from '../components/post'
-import { NewsletterSignup } from '../components/NewsletterSignup'
+import SEO from '../components/seo';
+import Layout from '../components/layout';
+import Post from '../components/post';
+import { NewsletterSignup } from '../components/NewsletterSignup';
 
 const TakeShapePostTemplate = ({ data, pageContext, location }) => {
   const {
@@ -18,11 +18,11 @@ const TakeShapePostTemplate = ({ data, pageContext, location }) => {
     id,
     summary,
     _enabledAt: publishedAt,
-  } = data.takeshape.post
-  const { mentions } = data
-  const { next, previous } = pageContext
+  } = data.takeshape.post;
+  const { mentions } = data;
+  const { next, previous } = pageContext;
 
-  const coverImageUrl = featureImage && getImageUrl(featureImage.path)
+  const coverImageUrl = featureImage && getImageUrl(featureImage.path);
 
   return (
     <Layout>
@@ -69,10 +69,10 @@ const TakeShapePostTemplate = ({ data, pageContext, location }) => {
         mentions={mentions && mentions.nodes}
       />
     </Layout>
-  )
-}
+  );
+};
 
-export default TakeShapePostTemplate
+export default TakeShapePostTemplate;
 
 TakeShapePostTemplate.propTypes = {
   data: PropTypes.object.isRequired,
@@ -83,7 +83,7 @@ TakeShapePostTemplate.propTypes = {
   location: PropTypes.shape({
     href: PropTypes.string,
   }),
-}
+};
 
 export const pageQuery = graphql`
   query($id: ID!, $permalink: String!) {
@@ -130,4 +130,4 @@ export const pageQuery = graphql`
       }
     }
   }
-`
+`;
