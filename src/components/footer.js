@@ -1,7 +1,7 @@
 import React from 'react';
 import { OutboundLink } from 'gatsby-plugin-google-analytics';
 
-import { NewsletterSignup } from '../components/NewsletterSignup';
+import { NewsletterSignup } from './NewsletterSignup';
 
 import { GitHubIcon, TwitterIcon, TwitchIcon, RssIcon } from './icons';
 
