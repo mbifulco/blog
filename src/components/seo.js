@@ -93,6 +93,10 @@ const SEO = ({
           name: `twitter:creator`,
           content: author,
         },
+        {
+          name: 'monetization',
+          content: '$twitter.xrptipbot.com/irreverentmike',
+        },
       ]
         .concat(
           keywords.length > 0
