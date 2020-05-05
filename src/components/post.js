@@ -5,6 +5,7 @@ import Img from 'gatsby-image';
 import moment from 'moment';
 import { getImageUrl } from 'takeshape-routing';
 
+import { NewsletterSignup } from './NewsletterSignup';
 import MentionsSummary from './mentionsSummary';
 import TagsSummary from './tagsSummary';
 import Navigation from './navigation';
@@ -62,41 +63,44 @@ const Post = ({ summary, mentions, post, previous, next }) => {
   const formattedDate = moment(new Date(date)).format('DD MMMM YYYY');
 
   return (
-    <div className={style.post}>
-      <div className={style.postContent}>
-        <h1 className={style.title}>
-          {summary ? <Link to={postPath}>{title}</Link> : title}
-        </h1>
-        <div className={style.meta}>
-          {formattedDate} {author && <>— Written by {author}</>}
+    <>
+      <div className={style.post}>
+        <div className={style.postContent}>
+          <h1 className={style.title}>
+            {summary ? <Link to={postPath}>{title}</Link> : title}
+          </h1>
+          <div className={style.meta}>
+            {formattedDate} {author && <>— Written by {author}</>}
+          </div>
+          <TagsSummary tags={tags} />
+          {coverImageContainer}
+
+          {summary ? (
+            <>
+              <p>{excerpt}</p>
+              <Link to={postPath} className={style.readMore}>
+                Read more →
+              </Link>
+            </>
+          ) : (
+            <>
+              {/* eslint-disable-next-line react/no-danger */}
+              <div dangerouslySetInnerHTML={{ __html: html }} />
+
+              <MentionsSummary mentions={mentions} />
+
+              <Navigation
+                previousPath={previousPath}
+                previousLabel={previousLabel}
+                nextPath={nextPath}
+                nextLabel={nextLabel}
+              />
+            </>
+          )}
         </div>
-        <TagsSummary tags={tags} />
-        {coverImageContainer}
-
-        {summary ? (
-          <>
-            <p>{excerpt}</p>
-            <Link to={postPath} className={style.readMore}>
-              Read more →
-            </Link>
-          </>
-        ) : (
-          <>
-            {/* eslint-disable-next-line react/no-danger */}
-            <div dangerouslySetInnerHTML={{ __html: html }} />
-
-            <MentionsSummary mentions={mentions} />
-
-            <Navigation
-              previousPath={previousPath}
-              previousLabel={previousLabel}
-              nextPath={nextPath}
-              nextLabel={nextLabel}
-            />
-          </>
-        )}
       </div>
-    </div>
+      {!summary && <NewsletterSignup />}
+    </>
   );
 };
 

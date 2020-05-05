@@ -1,20 +1,36 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
+import { Headshot } from '../Headshot';
 import classes from './NewsletterSignup.module.css';
+import { SubscriptionForm } from '../SubscriptionForm';
+import { PageDivider } from '../PageDivider';
 
-const NewsletterSignup = () => {
+const NewsletterSignup = ({ tags }) => {
   return (
-    <iframe
-      title="newsletter signup"
-      src="https://irreverentmike.substack.com/embed"
-      width={480}
-      height={320}
-      className={classes.iframe}
-      frameBorder={0}
-      scrolling="no"
-      loading="lazy"
-    />
+    <>
+      <PageDivider />
+      <div className={classes.container}>
+        <div className={classes.content} id="newsletter">
+          <Headshot className={classes.avatar} />
+          <h3>Get content for developers, designers, and entrepreneurs</h3>
+          <p>
+            Subscribe to get my updates delivered to your inbox. Typically 1-2
+            emails a month, straight from me to you.{' '}
+            <span role="img" aria-label="kissy face">
+              😘
+            </span>{' '}
+            Unsubscribe anytime.
+          </p>
+          <SubscriptionForm tags={tags} />
+        </div>
+      </div>
+    </>
   );
+};
+
+NewsletterSignup.propTypes = {
+  tags: PropTypes.arrayOf(PropTypes.shape({})),
 };
 
 export default NewsletterSignup;
