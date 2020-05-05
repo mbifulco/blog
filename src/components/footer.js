@@ -2,6 +2,7 @@ import React from 'react';
 import { OutboundLink } from 'gatsby-plugin-google-analytics';
 
 import { NewsletterSignup } from './NewsletterSignup';
+import { SubscriptionForm } from './SubscriptionForm';
 
 import { GitHubIcon, TwitterIcon, TwitchIcon, RssIcon } from './icons';
 
@@ -12,6 +13,7 @@ const Footer = () => (
     <div className={classes.skewed} />
     <div className={classes.content}>
       <div id="#newsletter">
+        <SubscriptionForm />
         <NewsletterSignup />
       </div>
       <div className={classes.meta}>

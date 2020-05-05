@@ -1,15 +1,24 @@
-const { paginate } = require('gatsby-awesome-pagination')
-const path = require('path')
-const { forEach, kebabCase } = require('lodash')
+const { paginate } = require('gatsby-awesome-pagination');
+const path = require('path');
+const { forEach, kebabCase } = require('lodash');
+
+exports.sourceNodes = ({ actions }) => {
+  actions.createTypes(`
+    type ConvertkitTagYaml implements Node @dontInfer {
+      id: ID!
+      name: String!
+    }
+  `);
+};
 
 exports.createPages = ({ actions, graphql }) => {
-  const { createPage } = actions
+  const { createPage } = actions;
 
   // import each of the page types to be rendered on the site
-  const indexTemplate = path.resolve('./src/templates/index.js')
-  const postTemplate = path.resolve('./src/templates/post.js')
-  const singlePageTemplate = path.resolve('./src/templates/singlePage.js')
-  const tagPageTemplate = path.resolve('./src/templates/tagPage.js')
+  const indexTemplate = path.resolve('./src/templates/index.js');
+  const postTemplate = path.resolve('./src/templates/post.js');
+  const singlePageTemplate = path.resolve('./src/templates/singlePage.js');
+  const tagPageTemplate = path.resolve('./src/templates/tagPage.js');
 
   return graphql(`
     {
@@ -41,14 +50,14 @@ exports.createPages = ({ actions, graphql }) => {
       }
     }
   `).then((result) => {
-    const { takeshape } = result.data
-    const { posts, siteMetadata, tags } = takeshape
+    const { takeshape } = result.data;
+    const { posts, siteMetadata, tags } = takeshape;
 
     if (result.errors) {
-      return Promise.reject(result.errors)
+      return Promise.reject(result.errors);
     }
 
-    const pages = [takeshape.about]
+    const pages = [takeshape.about];
     forEach(pages, (page) => {
       createPage({
         path: page.path,
@@ -59,8 +68,8 @@ exports.createPages = ({ actions, graphql }) => {
           bodyHtml: page.bodyHtml,
           title: page.title,
         },
-      })
-    })
+      });
+    });
 
     posts.items.forEach((takeShapePost, idx) => {
       createPage({
@@ -73,8 +82,8 @@ exports.createPages = ({ actions, graphql }) => {
           previous: idx === 0 ? null : posts.items[idx - 1],
           permalink: `https://mike.biful.co/${takeShapePost.path}/`,
         },
-      })
-    })
+      });
+    });
 
     paginate({
       createPage,
@@ -82,7 +91,7 @@ exports.createPages = ({ actions, graphql }) => {
       component: indexTemplate,
       itemsPerPage: siteMetadata.postsPerPage,
       pathPrefix: '/',
-    })
+    });
 
     // tag pages
     forEach(tags.items, (tag) => {
@@ -93,9 +102,9 @@ exports.createPages = ({ actions, graphql }) => {
           tag: tag.name,
           tagId: tag._id,
         },
-      })
-    })
+      });
+    });
 
-    return posts.items
-  })
-}
+    return posts.items;
+  });
+};
