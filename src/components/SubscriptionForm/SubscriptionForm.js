@@ -2,9 +2,14 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useStaticQuery, graphql } from 'gatsby';
 
+import { useAnalytics } from '../../utils/analytics';
+import ACTIONS from '../../utils/analytics-actions';
+
 import classes from './SubscriptionForm.module.css';
 
 const SubscriptionForm = ({ tags }) => {
+  const trackAction = useAnalytics();
+
   const [status, setStatus] = useState(null);
   const FORM_ID = '1368838';
   const SUBFORM_ID = '8939';
@@ -27,19 +32,15 @@ const SubscriptionForm = ({ tags }) => {
     return result;
   }, {});
 
-  const STATUS = {
-    SUCCESS: 'success',
-    ERROR: 'error',
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const data = new FormData(e.target);
+    const formData = new FormData(e.target);
 
     try {
+      trackAction(ACTIONS.NEWSLETTER_SUBSCRIPTION);
       const response = await fetch(FORM_URL, {
         method: 'post',
-        body: data,
+        body: formData,
         headers: {
           accept: 'application/json',
         },
