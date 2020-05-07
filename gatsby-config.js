@@ -119,20 +119,6 @@ module.exports = {
       },
     },
     {
-      resolve: 'gatsby-plugin-fathom',
-      options: {
-        // Unique site id
-        siteId: 'PAVJGIYJ',
-        // Domain whitelist
-        whitelistHostnames: [
-          'mike.biful.co',
-          'biful.co',
-          'irreverentmike.com',
-          'mikebifulco.com',
-        ],
-      },
-    },
-    {
       resolve: 'gatsby-source-graphql',
       options: {
         typeName: 'TS',

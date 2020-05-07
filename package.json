@@ -32,7 +32,6 @@
     "gatsby": "^2.21.11",
     "gatsby-awesome-pagination": "^0.3.5",
     "gatsby-image": "^2.4.0",
-    "gatsby-plugin-fathom": "^1.2.0",
     "gatsby-plugin-feed": "^2.5.0",
     "gatsby-plugin-google-analytics": "^2.3.0",
     "gatsby-plugin-manifest": "^2.4.1",
