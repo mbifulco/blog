@@ -1,3 +1,5 @@
+/* eslint-disable react/jsx-props-no-spreading */
+/* eslint-disable jsx-a11y/html-has-lang */
 import React from 'react';
 import PropTypes from 'prop-types';
 
@@ -16,8 +18,9 @@ export default function HTML(props) {
       <body {...props.bodyAttributes}>
         {props.preBodyComponents}
         <div
-          key={`body`}
+          key="body"
           id="___gatsby"
+          // eslint-disable-next-line react/no-danger
           dangerouslySetInnerHTML={{ __html: props.body }}
         />
         {props.postBodyComponents}
@@ -28,7 +31,6 @@ export default function HTML(props) {
           spa="auto"
           site="PAVJGIYJ"
         />
-        {/* Fathom  */}
       </body>
     </html>
   );
