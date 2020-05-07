@@ -27,7 +27,7 @@ export default function HTML(props) {
           src="https://cdn.usefathom.com/script.js"
           spa="auto"
           site="PAVJGIYJ"
-        ></script>
+        />
         {/* Fathom  */}
       </body>
     </html>
