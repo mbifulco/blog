@@ -5,3 +5,9 @@
  */
 
 // You can delete this file if you're not using it
+const React = require('react');
+const { AnalyticsProvider } = require('./src/utils/analytics');
+
+exports.wrapPageElement = ({ element, props }) => {
+  return <AnalyticsProvider>{element}</AnalyticsProvider>;
+};

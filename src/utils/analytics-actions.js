@@ -1,0 +1,3 @@
+export default {
+  NEWSLETTER_SUBSCRIPTION: 'NVAE7IVO',
+};

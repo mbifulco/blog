@@ -1,15 +1,15 @@
 // import configuration bits from .env files
-require('dotenv').config()
+require('dotenv').config();
 
-const postCssPresetEnv = require(`postcss-preset-env`)
-const postCSSNested = require('postcss-nested')
-const postCSSUrl = require('postcss-url')
-const postCSSImports = require('postcss-import')
-const cssnano = require('cssnano')
-const postCSSMixins = require('postcss-mixins')
-const { map } = require('lodash')
+const postCssPresetEnv = require(`postcss-preset-env`);
+const postCSSNested = require('postcss-nested');
+const postCSSUrl = require('postcss-url');
+const postCSSImports = require('postcss-import');
+const cssnano = require('cssnano');
+const postCSSMixins = require('postcss-mixins');
+const { map } = require('lodash');
 
-const BASE_SITE_URL = 'https://mike.biful.co'
+const BASE_SITE_URL = 'https://mike.biful.co';
 
 module.exports = {
   siteMetadata: {
@@ -55,6 +55,14 @@ module.exports = {
             preset: 'default',
           }),
         ],
+      },
+    },
+    `gatsby-transformer-yaml`,
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        type: 'convertkitType',
+        path: `./src/data/`,
       },
     },
     {
@@ -111,20 +119,6 @@ module.exports = {
       },
     },
     {
-      resolve: 'gatsby-plugin-fathom',
-      options: {
-        // Unique site id
-        siteId: 'PAVJGIYJ',
-        // Domain whitelist
-        whitelistHostnames: [
-          'mike.biful.co',
-          'biful.co',
-          'irreverentmike.com',
-          'mikebifulco.com',
-        ],
-      },
-    },
-    {
       resolve: 'gatsby-source-graphql',
       options: {
         typeName: 'TS',
@@ -161,7 +155,7 @@ module.exports = {
             output: '/rss.xml',
             title: 'mike.biful.co RSS Feed',
             serialize: ({ query }) => {
-              const { takeshape } = query
+              const { takeshape } = query;
               return takeshape.posts.items.map((post) => {
                 const {
                   _id,
@@ -170,9 +164,9 @@ module.exports = {
                   path,
                   tags: tagList,
                   title,
-                } = post
+                } = post;
 
-                const tags = map(tagList, (tag) => tag.name)
+                const tags = map(tagList, (tag) => tag.name);
 
                 return {
                   title,
@@ -181,8 +175,8 @@ module.exports = {
                   guid: _id,
                   categories: tags,
                   author: author && author.name,
-                }
-              })
+                };
+              });
             },
             query: ` 
               {
@@ -240,4 +234,4 @@ module.exports = {
     // leave netlify as the last plugin
     `gatsby-plugin-netlify`,
   ],
-}
+};
