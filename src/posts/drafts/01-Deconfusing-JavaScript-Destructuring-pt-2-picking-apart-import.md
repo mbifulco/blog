@@ -1,16 +1,16 @@
 # Picking apart JavaScript import syntax
 
-Note: this is a follow-up to my [first post](https://mike.biful.co/deconfusing-javascript-destructuring-syntax) on destructuring. Import syntax uses destructuring pretty liberally, and it can be really confusing for folks who are new to using it. Give my other article a read first if this all seems confusing!
+Note: this is a follow-up to my [first post](https://mikebifulco.com/deconfusing-javascript-destructuring-syntax) on destructuring. Import syntax uses destructuring pretty liberally, and it can be really confusing for folks who are new to using it. Give my other article a read first if this all seems confusing!
 
 Let's talk about importing dependencies into your node projects. As your work gets more complex, you will inevitably come across syntax like this:
 
 ```javascript
-import React, { useState, useEffect } from 'react'
-import { Link } from 'gatsby'
-import Button from '@material-ui/core/Button'
-import moment from 'moment'
+import React, { useState, useEffect } from 'react';
+import { Link } from 'gatsby';
+import Button from '@material-ui/core/Button';
+import moment from 'moment';
 
-import { Layout } from '../components'
+import { Layout } from '../components';
 ```
 
 At first glance, it's pretty straightforward. We're importing a handful of bits to use in a React component. As you might imagine, though, I've selected these four lines of code because each one is unique. In fact, during my journey as a blossoming Node/React developer, I've found ways to mess up _every single one_ of these.
@@ -22,7 +22,7 @@ We're going to look through each one of these, in order of complexity, and I'll 
 ## Straightforward import syntax - the easiest case
 
 ```javascript
-import moment from 'moment'
+import moment from 'moment';
 ```
 
 If you've worked in .Net languages, or Python, or Ruby, or one of many other languages under the sun, this should be second nature to you. I'm calling it out here specifically because some of us may never have seen it before.
@@ -34,8 +34,8 @@ Well, it turns out it's pretty easy. [moment](https://www.npmjs.com/package/mome
 This line of code creates a reference to everything made available in the `moment` library, and puts it into what is effectively a variable that we can use to access it. the `'moment'` bit (in quotes) is what tells the compiler which library to get. The other one, `moment` (_not_ in quotes) is the variable. So from here in, we can access moment just like any other variable in this file:
 
 ```javascript
-import moment from 'moment'
-console.log(moment().get('year'))
+import moment from 'moment';
+console.log(moment().get('year'));
 // 2019
 ```
 
@@ -46,8 +46,8 @@ Behind the scenes, this is just taking everything that is made available by the 
 It may be confusing, but you absolutely could do this, if the this name made more sense to you:
 
 ```javascript
-import ThatReallyUsefulDateLibrary from 'moment'
-console.log(ThatReallyUsefulDateLibrary().get('year'))
+import ThatReallyUsefulDateLibrary from 'moment';
+console.log(ThatReallyUsefulDateLibrary().get('year'));
 // 2019
 ```
 
@@ -56,7 +56,7 @@ console.log(ThatReallyUsefulDateLibrary().get('year'))
 Next up - this slightly more complex beast:
 
 ```javascript
-import Button from '@material-ui/core/Button'
+import Button from '@material-ui/core/Button';
 ```
 
 Here we're grabbing the `<Button />` component from the [@`material-ui` library](<[https://material-ui.com](https://material-ui.com/)>). Again, this is fairly straightforward - but it may be helpful to think of this in terms of the structure of the material-ui project. Material-ui exports _loads_ of great stuff, and it's all organized into logical groupings. Think of it a bit like this:
@@ -69,7 +69,7 @@ const muiExports = {
     TextField: () => {}, // another useful component
     // and loads more
   },
-}
+};
 ```
 
 With the import syntax for `Button` above, we're telling the compiler to give us a reference to the exported thing called `Button`, which is found in the `@material-ui` library under `/core/Button`. The compiler essentially treats this like the JSON object in the snippet above.
@@ -77,13 +77,13 @@ With the import syntax for `Button` above, we're telling the compiler to give us
 Here's the thing - that _also_ means we can destructure it! 😁. This syntax would also work to import `Button`:
 
 ```javascript
-import { Button } from '@material-ui/core'
+import { Button } from '@material-ui/core';
 ```
 
 That also means we can import _multiple things_ from `/core` in a single line!
 
 ```javascript
-import { Button, TextField } from '@material-ui/core'
+import { Button, TextField } from '@material-ui/core';
 ```
 
 Cool, huh? I know this can be confusing, but try to stick with it. It'll all start to make sense to you before long. This brings us to our next example:
@@ -91,7 +91,7 @@ Cool, huh? I know this can be confusing, but try to stick with it. It'll all sta
 ### Importing a subset of a library by way of destructuring
 
 ```javascript
-import { Link } from 'gatsby'
+import { Link } from 'gatsby';
 ```
 
 Boom! This should be easy by now. One of the things that `Gatsby` makes available is their [`link`](https://www.gatsbyjs.org/docs/gatsby-link/) component. We're importing _just that component_ to use here.
@@ -101,7 +101,7 @@ Boom! This should be easy by now. One of the things that `Gatsby` makes availabl
 But what if we already have a component called `Link` in our project? Or, what if we're making a Legend of Zelda fan-site, and `Link` is already defined in a component or variable that we can't rename? Well, it turns out renaming something in an import is as easy as renaming something in a destructured statement. We can rename the same component from `gatsby` like this:
 
 ```javascript
-import { Link as GatsbyWebLink } from 'gatsby'
+import { Link as GatsbyWebLink } from 'gatsby';
 ```
 
 We can also rename _one or many destructured imports_ in a single statement:
@@ -111,7 +111,7 @@ import {
   Link as GatsbyWebLink,
   graphql as graphqlQuery,
   useStaticQuery,
-} from 'gatsby'
+} from 'gatsby';
 ```
 
 Piece of cake! 🍰
@@ -121,13 +121,13 @@ Piece of cake! 🍰
 One more quick thing - the compiler knows to look for something _you_ exported if you use a _relative path_ in your import location string:
 
 ```javascript
-import { Layout } from '../components'
+import { Layout } from '../components';
 ```
 
 Just like anywhere else, you can combine and rename things to your heart's content here:
 
 ```javascript
-import { Layout, Button as SuperButton } from '../components'
+import { Layout, Button as SuperButton } from '../components';
 ```
 
 ## Putting it all together
@@ -135,7 +135,7 @@ import { Layout, Button as SuperButton } from '../components'
 The best isn't alway last, but this is certainly the last example I've got to share today:
 
 ```javascript
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react';
 ```
 
 If you've been playing along at home, this should all be familiar now - we're grabbing the default export from `react`, which we've put into the variable `react`. We also destructured `useState` and `useEffect` from _the same library_. If you're asking yourself "Well couldn't we also access `useState` as a child of `React`"? The answer is - well, actually, yeah!
@@ -143,13 +143,13 @@ If you've been playing along at home, this should all be familiar now - we're gr
 This is perfectly valid
 
 ```javascript
-const [loading, setLoading] = React.useState(false)
+const [loading, setLoading] = React.useState(false);
 ```
 
 … but it's not as nice to type or to read as
 
 ```javascript
-const [loading, setLoading] = useState(false)
+const [loading, setLoading] = useState(false);
 ```
 
 They're both equally functional from an execution standpoint, but the latter is used by convention.
