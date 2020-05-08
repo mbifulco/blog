@@ -6,6 +6,7 @@ import SEO from '../components/seo';
 import Layout from '../components/layout';
 import Post from '../components/post';
 import Navigation from '../components/navigation';
+import { NewsletterSignup } from '../components/NewsletterSignup';
 
 const Index = (props) => {
   const {
@@ -21,10 +22,21 @@ const Index = (props) => {
     <>
       <SEO location={location} />
       <Layout>
-        {posts.items.map((post) => {
+        {posts.items.map((post, idx) => {
           const { _id: id } = post;
 
-          return <Post post={post} key={id} summary />;
+          const postElement = <Post post={post} key={id} summary />;
+
+          if (idx === 0) {
+            return (
+              <>
+                {postElement}
+                <NewsletterSignup hideStripe />
+              </>
+            );
+          }
+
+          return postElement;
         })}
 
         <Navigation

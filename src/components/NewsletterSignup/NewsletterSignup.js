@@ -6,10 +6,10 @@ import classes from './NewsletterSignup.module.css';
 import { SubscriptionForm } from '../SubscriptionForm';
 import { PageDivider } from '../PageDivider';
 
-const NewsletterSignup = ({ tags }) => {
+const NewsletterSignup = ({ tags, hideStripe }) => {
   return (
     <>
-      <PageDivider />
+      {!hideStripe && <PageDivider />}
       <div className={classes.container}>
         <div className={classes.content} id="newsletter">
           <Headshot className={classes.avatar} />
@@ -27,6 +27,10 @@ const NewsletterSignup = ({ tags }) => {
       </div>
     </>
   );
+};
+
+NewsletterSignup.propTypes = {
+  hideStripe: PropTypes.bool,
 };
 
 NewsletterSignup.propTypes = {

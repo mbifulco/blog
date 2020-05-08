@@ -80,7 +80,7 @@ exports.createPages = ({ actions, graphql }) => {
           type: 'post',
           next: idx === posts.items.length - 1 ? null : posts.items[idx + 1],
           previous: idx === 0 ? null : posts.items[idx - 1],
-          permalink: `https://mike.biful.co/${takeShapePost.path}/`,
+          permalink: `https://mikebifulco.com/${takeShapePost.path}/`,
         },
       });
     });

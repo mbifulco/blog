@@ -9,7 +9,7 @@ const cssnano = require('cssnano');
 const postCSSMixins = require('postcss-mixins');
 const { map } = require('lodash');
 
-const BASE_SITE_URL = 'https://mike.biful.co';
+const BASE_SITE_URL = 'https://mikebifulco.com';
 
 module.exports = {
   siteMetadata: {
@@ -110,7 +110,7 @@ module.exports = {
       resolve: `gatsby-plugin-manifest`,
       options: {
         name: `Mike Bifulco`,
-        short_name: `mike.biful.co`,
+        short_name: `mikebifulco.com`,
         start_url: `/`,
         background_color: `#292a2d`,
         theme_color: `#292a2d`,
@@ -153,7 +153,7 @@ module.exports = {
         feeds: [
           {
             output: '/rss.xml',
-            title: 'mike.biful.co RSS Feed',
+            title: 'mikebifulco.com RSS Feed',
             serialize: ({ query }) => {
               const { takeshape } = query;
               return takeshape.posts.items.map((post) => {
@@ -214,14 +214,14 @@ module.exports = {
     {
       resolve: `gatsby-plugin-webmention`,
       options: {
-        username: 'mike.biful.co', // webmention.io username
+        username: 'mikebifulco.com', // webmention.io username
         identity: {
           github: 'mbifulco',
           twitter: 'irreverentmike', // no @
         },
         mentions: true,
         pingbacks: true,
-        domain: 'mike.biful.co',
+        domain: 'mikebifulco.com',
         token: process.env.WEBMENTIONS_TOKEN,
       },
     },

@@ -2,7 +2,7 @@
 
 ## Compilers hate him! This one wierd trick will get you all settled right now!
 
-This is a follow-up to my [first post](https://mike.biful.co/solve-all-your-problems-with-promise-allsettled) on the upcoming `Promise.allSettled()` function coming soon to a node application near you.
+This is a follow-up to my [first post](https://mikebifulco.comm/solve-all-your-problems-with-promise-allsettled) on the upcoming `Promise.allSettled()` function coming soon to a node application near you.
 
 Earlier today I was greeted by a [Pull Request](https://github.com/mbifulco/blog/pull/14) on my first post from GitHub user `@j-f1`.
 
@@ -41,13 +41,13 @@ First, add the dependency to your project
 Then, at your app's entry point (usually something like `index.js`, or `app.js` in the root of your project):
 
 ```javascript
-import 'core-js'
+import 'core-js';
 ```
 
 or, if you want to include _just_ the `Promise.allSettled()` polyfill, and nothing else, use:
 
 ```javascript
-import 'core-js/proposals/promise-all-settled'
+import 'core-js/proposals/promise-all-settled';
 ```
 
 That's it! :beers:
