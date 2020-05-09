@@ -27,9 +27,10 @@ export default function HTML(props) {
 
         {/* Fathom - beautiful, simple website analytics */}
         <script
-          src="https://cdn.usefathom.com/script.js"
+          src="https://chickadee.mikebifulco.com/script.js"
           spa="auto"
           site="PAVJGIYJ"
+          defer
         />
       </body>
     </html>
