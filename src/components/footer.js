@@ -9,7 +9,7 @@ const Footer = () => (
   <footer className={classes.container}>
     <div className={classes.content}>
       <div className={classes.meta}>
-        <span className="footerCopyrights">© 2019 Mike Bifulco</span>
+        <span className="footerCopyrights">© 2020 Mike Bifulco</span>
         <span className="footerCopyrights">
           <OutboundLink
             className={classes.rssLink}
