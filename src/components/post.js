@@ -99,7 +99,7 @@ const Post = ({ summary, mentions, post, previous, next }) => {
           )}
         </div>
       </div>
-      {!summary && <NewsletterSignup />}
+      {!summary && <NewsletterSignup tags={tags} />}
     </>
   );
 };
