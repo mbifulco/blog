@@ -47,7 +47,8 @@ h4,
 h5,
 h6 {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
+  text-align: left;
   line-height: 1.3;
 }
 
