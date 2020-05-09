@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { graphql, useStaticQuery } from 'gatsby';
 import Img from 'gatsby-image';
 
@@ -21,6 +22,10 @@ const Headshot = ({ className }) => {
       fixed={data.file.childImageSharp.fixed}
     />
   );
+};
+
+Headshot.propTypes = {
+  className: PropTypes.string,
 };
 
 export default Headshot;

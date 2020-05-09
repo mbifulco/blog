@@ -6,29 +6,23 @@ import Layout from '../components/layout';
 import style from '../styles/post.module.css';
 
 const capitalizeFirstLetter = (string) => {
+  if (!string) return null;
   return string.charAt(0).toUpperCase() + string.slice(1);
 };
 
-const SinglePage = ({ pageContext, location }) => {
-  const { title, bodyHtml } = pageContext;
+const SinglePage = ({ children, pageContext, location }) => {
+  const { title } = pageContext.frontmatter;
 
+  debugger;
   const formattedTitle = capitalizeFirstLetter(title);
   return (
     <Layout>
-      <SEO
-        title={formattedTitle}
-        // description={excerpt}
-        // image={getImageUrl(featureImage.path)}
-        ogType="article"
-        location={location}
-      />
+      <SEO title={formattedTitle} ogType="article" location={location} />
 
       <div className={style.post}>
         <div className={style.postContent}>
           <h1 className={style.title}>{formattedTitle}</h1>
-
-          {/* eslint-disable-next-line react/no-danger */}
-          <div dangerouslySetInnerHTML={{ __html: bodyHtml }} />
+          {children}
         </div>
       </div>
     </Layout>
@@ -36,9 +30,11 @@ const SinglePage = ({ pageContext, location }) => {
 };
 
 SinglePage.propTypes = {
+  children: PropTypes.node,
   pageContext: PropTypes.shape({
-    bodyHtml: PropTypes.shape({}),
-    title: PropTypes.string,
+    frontmatter: PropTypes.shape({
+      title: PropTypes.string,
+    }),
   }),
   location: PropTypes.shape({}),
 };

@@ -27,6 +27,8 @@
   "dependencies": {
     "@material-ui/core": "^4.9.13",
     "@material-ui/lab": "^4.0.0-alpha.52",
+    "@mdx-js/mdx": "^1.6.1",
+    "@mdx-js/react": "^1.6.1",
     "@weknow/gatsby-remark-twitter": "^0.2.3",
     "dotenv": "^8.2.0",
     "gatsby": "^2.21.21",
@@ -35,6 +37,7 @@
     "gatsby-plugin-feed": "^2.5.1",
     "gatsby-plugin-google-analytics": "^2.3.1",
     "gatsby-plugin-manifest": "^2.4.2",
+    "gatsby-plugin-mdx": "^1.2.6",
     "gatsby-plugin-netlify": "^2.3.2",
     "gatsby-plugin-offline": "^3.2.1",
     "gatsby-plugin-postcss": "^2.3.1",

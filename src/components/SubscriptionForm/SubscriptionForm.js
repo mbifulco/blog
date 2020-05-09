@@ -82,17 +82,25 @@ const SubscriptionForm = ({ tags }) => {
       />
 
       {tags &&
-        tags.map((tagName) => (
-          <input
-            key={tagMap[tagName]}
-            id={`tag-${SUBFORM_ID}-${tagMap[tagName]}`}
-            type="checkbox"
-            style={{ display: 'none' }}
-            checked
-            name="tags[]"
-            value={tagMap[tagName]}
-          />
-        ))}
+        tags.map((tag) => {
+          const tagName = tag.name || tag;
+
+          // if we don't have this tag in convertkit, do nothing
+          if (!tagMap[tagName]) return null;
+
+          return (
+            <input
+              data-tag-name={tagName}
+              key={tagMap[tagName]}
+              id={`tag-${SUBFORM_ID}-${tagMap[tagName]}`}
+              type="checkbox"
+              style={{ display: 'none' }}
+              checked
+              name="tags[]"
+              value={tagMap[tagName]}
+            />
+          );
+        })}
 
       <button type="submit">I'm in!</button>
       {status === 'SUCCESS' && (
