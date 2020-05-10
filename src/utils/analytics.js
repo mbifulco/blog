@@ -8,7 +8,7 @@ const AnalyticsContext = createContext({});
 export const AnalyticsProvider = ({ children }) => {
   useEffect(() => {
     if (typeof fathom === 'undefined') {
-      window.fathom = (x, y, z) => {
+      fathom = (x, y, z) => {
         // eslint-disable-next-line no-console
         console.log(`I'm a fake Fathom`, x, y, z);
       };
@@ -16,7 +16,9 @@ export const AnalyticsProvider = ({ children }) => {
   }, []);
 
   const logClicks = (goalId, valueInCents = 0) => {
-    fathom.trackGoal(goalId, valueInCents);
+    if (fathom && fathom.trackGoal) {
+      fathom.trackGoal(goalId, valueInCents);
+    }
   };
 
   return (
