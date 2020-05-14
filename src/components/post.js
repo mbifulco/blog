@@ -14,7 +14,6 @@ import style from '../styles/post.module.css';
 const Post = ({ summary, mentions, post, previous, next }) => {
   const {
     author,
-    _enabledAt: date,
     excerpt,
     featureImage,
     bodyHtml: html,
@@ -22,6 +21,9 @@ const Post = ({ summary, mentions, post, previous, next }) => {
     tags,
     title,
   } = post;
+
+  const date = post._enabledAt || post.date;
+
   const previousPath = previous && previous.path;
   const previousLabel = previous && previous.title;
   const nextPath = next && next.path;
