@@ -13,8 +13,8 @@ const TagsSummary = ({ tags }) => {
   return (
     <div className={classes.container}>
       {map(tags, (tag, id) => (
-        <Tag key={`tag-${id}`} url={`/tags/${tag.name}`}>
-          {tag.name}
+        <Tag key={`tag-${id}`} url={`/tags/${tag.name || tag}`}>
+          {tag.name || tag}
         </Tag>
       ))}
     </div>
