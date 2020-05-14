@@ -82,8 +82,16 @@ module.exports = {
     {
       resolve: `gatsby-source-filesystem`,
       options: {
-        name: `posts`,
-        path: `${__dirname}/src/posts/`,
+        name: `mdx-posts`,
+        type: 'mdx-posts',
+        path: `${__dirname}/src/data/posts/`,
+      },
+    },
+    {
+      resolve: 'gatsby-plugin-page-creator',
+      options: {
+        type: 'mdx-posts',
+        path: `${__dirname}/src/data/posts`,
       },
     },
     `gatsby-remark-images`,
