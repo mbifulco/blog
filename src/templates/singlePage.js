@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import SEO from '../components/seo';
 import Layout from '../components/layout';
+import TagsSummary from '../components/tagsSummary';
 import style from '../styles/post.module.css';
 
 const capitalizeFirstLetter = (string) => {
@@ -11,9 +12,8 @@ const capitalizeFirstLetter = (string) => {
 };
 
 const SinglePage = ({ children, pageContext, location }) => {
-  const { title } = pageContext.frontmatter;
+  const { title, tags } = pageContext.frontmatter;
 
-  debugger;
   const formattedTitle = capitalizeFirstLetter(title);
   return (
     <Layout>
@@ -22,6 +22,7 @@ const SinglePage = ({ children, pageContext, location }) => {
       <div className={style.post}>
         <div className={style.postContent}>
           <h1 className={style.title}>{formattedTitle}</h1>
+          <TagsSummary tags={tags} />
           {children}
         </div>
       </div>
@@ -34,6 +35,7 @@ SinglePage.propTypes = {
   pageContext: PropTypes.shape({
     frontmatter: PropTypes.shape({
       title: PropTypes.string,
+      tags: PropTypes.arrayOf(PropTypes.string),
     }),
   }),
   location: PropTypes.shape({}),
