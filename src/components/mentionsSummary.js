@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { OutboundLink } from 'gatsby-plugin-google-analytics';
 
 import pluralize from 'pluralize';
 
@@ -12,9 +11,9 @@ import classes from '../styles/mentions.module.css';
 const MentionsSummary = ({ mentions }) => {
   if (!mentions || mentions.length === 0) return null;
 
-  const likes = mentions.filter((mention) => mention.wmProperty === 'like-of');
+  const likes = mentions.filter(mention => mention.wmProperty === 'like-of');
   const likeAuthors = likes.map(
-    (mention) => mention.author && { wmId: mention.wmId, ...mention.author }
+    mention => mention.author && { wmId: mention.wmId, ...mention.author }
   );
 
   return (
@@ -23,7 +22,7 @@ const MentionsSummary = ({ mentions }) => {
         <div className={classes.likesContainer}>
           <div className={classes.likesHeader}>
             <AvatarGroup max={15}>
-              {likeAuthors.map((author) => (
+              {likeAuthors.map(author => (
                 <a
                   href={author.url}
                   key={author.wmId}
@@ -43,12 +42,12 @@ const MentionsSummary = ({ mentions }) => {
       <div className={classes.mentionsContainer}>
         <h3 className={classes.title}>Mentions</h3>
         {mentions
-          .filter((mention) => mention.wmProperty !== 'like-of')
-          .map((mention) => {
+          .filter(mention => mention.wmProperty !== 'like-of')
+          .map(mention => {
             const { author } = mention;
             return (
               <div className={classes.mention} key={mention.wmId}>
-                <OutboundLink
+                <a
                   href={author.url}
                   className={`${classes.authorContainer} ${classes.avatarLink}`}
                 >
@@ -58,17 +57,14 @@ const MentionsSummary = ({ mentions }) => {
                     key={author.wmId}
                   />
                   <span>{author.name}</span>
-                </OutboundLink>
+                </a>
                 <span>
                   {mention.content && mention.content.text}
                   <small>
                     {`  (`}
-                    <OutboundLink
-                      className={classes.mentionLink}
-                      href={mention.url}
-                    >
+                    <a className={classes.mentionLink} href={mention.url}>
                       Link
-                    </OutboundLink>
+                    </a>
                     )
                   </small>
                 </span>
