@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 
 import SEO from '../components/seo';
 import Layout from '../components/layout';
+import MentionsSummary from '../components/mentionsSummary';
+import { NewsletterSignup } from '../components/NewsletterSignup';
 import TagsSummary from '../components/tagsSummary';
 import style from '../styles/post.module.css';
 
@@ -13,6 +15,7 @@ const capitalizeFirstLetter = (string) => {
 
 const SinglePage = ({ children, pageContext, location }) => {
   const { title, tags } = pageContext.frontmatter;
+  const { mentions } = pageContext;
 
   const formattedTitle = capitalizeFirstLetter(title);
   return (
@@ -24,8 +27,10 @@ const SinglePage = ({ children, pageContext, location }) => {
           <h1 className={style.title}>{formattedTitle}</h1>
           <TagsSummary tags={tags} />
           {children}
+          <MentionsSummary mentions={mentions} />
         </div>
       </div>
+      <NewsletterSignup tags={tags} />
     </Layout>
   );
 };
