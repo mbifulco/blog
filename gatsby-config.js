@@ -87,13 +87,6 @@ module.exports = {
         path: `${__dirname}/src/data/posts/`,
       },
     },
-    {
-      resolve: 'gatsby-plugin-page-creator',
-      options: {
-        type: 'mdx-posts',
-        path: `${__dirname}/src/data/posts`,
-      },
-    },
     `gatsby-remark-images`,
     {
       resolve: `gatsby-plugin-mdx`,
