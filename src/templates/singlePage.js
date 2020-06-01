@@ -6,26 +6,43 @@ import Layout from '../components/layout';
 import MentionsSummary from '../components/mentionsSummary';
 import { NewsletterSignup } from '../components/NewsletterSignup';
 import TagsSummary from '../components/tagsSummary';
+import WebmentionMetadata from '../components/webmentionMetadata';
+
 import style from '../styles/post.module.css';
 
-const capitalizeFirstLetter = (string) => {
-  if (!string) return null;
-  return string.charAt(0).toUpperCase() + string.slice(1);
-};
-
 const SinglePage = ({ children, pageContext, location }) => {
-  const { title, tags } = pageContext.frontmatter;
   const { mentions } = pageContext;
+  const {
+    author,
+    coverImageUrl,
+    excerpt,
+    publishedAt,
+    title,
+    tags,
+  } = pageContext.frontmatter;
 
-  const formattedTitle = capitalizeFirstLetter(title);
   return (
     <Layout>
-      <SEO title={formattedTitle} ogType="article" location={location} />
+      <SEO
+        canonical={location.href}
+        title={title}
+        description={excerpt}
+        image={coverImageUrl && coverImageUrl}
+        ogType="article"
+        location={location}
+      />
 
       <div className={style.post}>
         <div className={style.postContent}>
-          <h1 className={style.title}>{formattedTitle}</h1>
+          <h1 className={style.title}>{title}</h1>
           <TagsSummary tags={tags} />
+          <WebmentionMetadata
+            location={location}
+            coverImageUrl={coverImageUrl}
+            summary={excerpt && excerpt}
+            author={author && author}
+            publishedAt={publishedAt && publishedAt}
+          />
           {children}
           <MentionsSummary mentions={mentions} />
         </div>
@@ -39,11 +56,18 @@ SinglePage.propTypes = {
   children: PropTypes.node,
   pageContext: PropTypes.shape({
     frontmatter: PropTypes.shape({
+      author: PropTypes.string,
+      coverImageUrl: PropTypes.string,
+      excerpt: PropTypes.string,
+      publishedAt: PropTypes.string,
       title: PropTypes.string,
       tags: PropTypes.arrayOf(PropTypes.string),
     }),
+    mentions: PropTypes.arrayOf(PropTypes.shape({})),
   }),
-  location: PropTypes.shape({}),
+  location: PropTypes.shape({
+    href: PropTypes.string,
+  }),
 };
 
 export default SinglePage;

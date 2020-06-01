@@ -4,8 +4,8 @@ import { Link } from 'gatsby';
 import Img from 'gatsby-image';
 import moment from 'moment';
 import { getImageUrl } from 'takeshape-routing';
+import { MDXRenderer } from 'gatsby-plugin-mdx';
 
-import { NewsletterSignup } from './NewsletterSignup';
 import MentionsSummary from './mentionsSummary';
 import TagsSummary from './tagsSummary';
 import Navigation from './navigation';
@@ -17,6 +17,7 @@ const Post = ({ summary, mentions, post, previous, next }) => {
     excerpt,
     featureImage,
     bodyHtml: html,
+    bodyMdx,
     path,
     tags,
     title,
@@ -29,7 +30,7 @@ const Post = ({ summary, mentions, post, previous, next }) => {
   const nextPath = next && next.path;
   const nextLabel = next && next.title;
 
-  const postPath = `/${path}`;
+  const postPath = `/posts/${path}`;
 
   const coverImageUrl =
     featureImage &&
@@ -89,6 +90,8 @@ const Post = ({ summary, mentions, post, previous, next }) => {
               {/* eslint-disable-next-line react/no-danger */}
               <div dangerouslySetInnerHTML={{ __html: html }} />
 
+              {bodyMdx && <MDXRenderer>{bodyMdx}</MDXRenderer>}
+
               <MentionsSummary mentions={mentions} />
 
               <Navigation
@@ -101,7 +104,6 @@ const Post = ({ summary, mentions, post, previous, next }) => {
           )}
         </div>
       </div>
-      {!summary && <NewsletterSignup tags={tags} />}
     </>
   );
 };
@@ -110,6 +112,7 @@ Post.propTypes = {
   mentions: PropTypes.arrayOf(PropTypes.shape({})),
   post: PropTypes.shape({
     bodyHtml: PropTypes.string,
+    bodyMdx: PropTypes.shape({}),
     tags: PropTypes.arrayOf(PropTypes.object),
     title: PropTypes.string,
     date: PropTypes.string,

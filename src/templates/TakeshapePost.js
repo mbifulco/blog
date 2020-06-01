@@ -5,10 +5,11 @@ import { getImageUrl } from 'takeshape-routing';
 
 import SEO from '../components/seo';
 import Layout from '../components/layout';
-import Post from '../components/post';
 import { NewsletterSignup } from '../components/NewsletterSignup';
+import Post from '../components/post';
+import WebmentionMetadata from '../components/webmentionMetadata';
 
-const TakeShapePostTemplate = ({ data, pageContext, location }) => {
+const TakeShapePostTemplate = ({ data, /* pageContext, */ location }) => {
   const {
     author,
     canonical,
@@ -17,10 +18,11 @@ const TakeShapePostTemplate = ({ data, pageContext, location }) => {
     excerpt,
     id,
     summary,
+    tags,
     _enabledAt: publishedAt,
   } = data.takeshape.post;
   const { mentions } = data;
-  const { next, previous } = pageContext;
+  // const { next, previous } = pageContext;
 
   const coverImageUrl = featureImage && getImageUrl(featureImage.path);
 
@@ -34,40 +36,19 @@ const TakeShapePostTemplate = ({ data, pageContext, location }) => {
         ogType="article"
         location={location}
       />
-      <div
-        style={{
-          display: 'none',
-        }}
-      >
-        <article className="h-card">
-          <header>
-            {coverImageUrl && (
-              <img className="u-photo" src={coverImageUrl} alt="Hero" />
-            )}
-            <h1 className="p-name">{title}</h1>
-          </header>
-          <p className="p-summary e-content">{summary}</p>
-          <footer>
-            {author && (
-              <a className="u-url p-name" href={location.href}>
-                {author}
-              </a>
-            )}
-          </footer>
-          <time
-            className="dt-published"
-            itemProp="datepublished"
-            dateTime={publishedAt}
-          >
-            {`${new Date(publishedAt).toISOString().replace('Z', '')}+01:00`}
-          </time>
-        </article>
-      </div>
+      <WebmentionMetadata
+        location={location}
+        coverImageUrl={coverImageUrl}
+        summary={summary}
+        author={author}
+        publishedAt={publishedAt}
+      />
       <Post
         key={id}
         post={data.takeshape.post}
         mentions={mentions && mentions.nodes}
       />
+      <NewsletterSignup tags={tags} />
     </Layout>
   );
 };

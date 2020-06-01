@@ -101,7 +101,7 @@ module.exports = {
           },
         ],
         defaultLayouts: {
-          posts: require.resolve('./src/templates/post'),
+          posts: require.resolve('./src/templates/MdxPost'),
           default: require.resolve('./src/templates/singlePage'),
         },
       },

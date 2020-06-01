@@ -96,6 +96,7 @@ const SubscriptionForm = ({ tags }) => {
               type="checkbox"
               style={{ display: 'none' }}
               checked
+              readOnly
               name="tags[]"
               value={tagMap[tagName]}
             />
