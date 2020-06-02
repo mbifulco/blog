@@ -50,6 +50,7 @@
     "gatsby-remark-prismjs": "^3.5.3",
     "gatsby-source-filesystem": "^2.3.10",
     "gatsby-source-graphql": "^2.5.3",
+    "gatsby-transformer-cloudinary": "^0.3.5",
     "gatsby-transformer-remark": "^2.8.14",
     "gatsby-transformer-sharp": "^2.5.4",
     "gatsby-transformer-yaml": "^2.4.3",

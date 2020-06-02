@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { OutboundLink } from 'gatsby-plugin-google-analytics';
 
 import pluralize from 'pluralize';
 
@@ -48,7 +47,7 @@ const MentionsSummary = ({ mentions }) => {
             const { author } = mention;
             return (
               <div className={classes.mention} key={mention.wmId}>
-                <OutboundLink
+                <a
                   href={author.url}
                   className={`${classes.authorContainer} ${classes.avatarLink}`}
                 >
@@ -58,17 +57,14 @@ const MentionsSummary = ({ mentions }) => {
                     key={author.wmId}
                   />
                   <span>{author.name}</span>
-                </OutboundLink>
+                </a>
                 <span>
                   {mention.content && mention.content.text}
                   <small>
                     {`  (`}
-                    <OutboundLink
-                      className={classes.mentionLink}
-                      href={mention.url}
-                    >
+                    <a className={classes.mentionLink} href={mention.url}>
                       Link
-                    </OutboundLink>
+                    </a>
                     )
                   </small>
                 </span>

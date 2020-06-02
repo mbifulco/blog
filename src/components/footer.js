@@ -1,5 +1,4 @@
 import React from 'react';
-import { OutboundLink } from 'gatsby-plugin-google-analytics';
 
 import { GitHubIcon, TwitterIcon, TwitchIcon, RssIcon } from './icons';
 
@@ -11,84 +10,84 @@ const Footer = () => (
       <div className={classes.meta}>
         <span className="footerCopyrights">© 2020 Mike Bifulco</span>
         <span className="footerCopyrights">
-          <OutboundLink
+          <a
             className={classes.rssLink}
             href="/rss.xml"
             target="blank"
             rel="noopener noreferrer"
           >
             <RssIcon />
-          </OutboundLink>{' '}
-          <OutboundLink
+          </a>{' '}
+          <a
             className={classes.gitHubLink}
             href="https://github.com/mbifulco"
             target="_blank"
             rel="noreferrer noopener me"
           >
             <GitHubIcon />
-          </OutboundLink>{' '}
-          <OutboundLink
+          </a>{' '}
+          <a
             className={classes.twitterLink}
             href="https://twitter.com/irreverentmike"
             target="_blank"
             rel="noreferrer noopener me"
           >
             <TwitterIcon />
-          </OutboundLink>{' '}
-          <OutboundLink
+          </a>{' '}
+          <a
             className={classes.twitchLink}
             href="https://twitch.tv/irreverentmike"
             target="_blank"
             rel="noreferrer noopener"
           >
             <TwitchIcon />
-          </OutboundLink>
+          </a>
         </span>
       </div>
       <div className="credit">
         <span>
           Built with{' '}
-          <OutboundLink
+          <a
             href="https://www.gatsbyjs.org"
             target="_blank"
             rel="noreferrer noopener"
           >
             Gatsby
-          </OutboundLink>
+          </a>
           .
         </span>{' '}
         <span>
           CMS by{' '}
-          <OutboundLink
+          <a
             href="https://www.takeshape.io"
             target="_blank"
             rel="noreferrer noopener"
           >
             Takeshape
-          </OutboundLink>
+          </a>
           .
         </span>{' '}
         <span>
           Source code on{' '}
-          <OutboundLink
+          <a
             href="https://github.com/mbifulco/blog"
             target="_blank"
             rel="noreferrer noopener"
           >
             GitHub
-          </OutboundLink>
+          </a>
           .
         </span>
         <br />
         <span>
           Starter created by the brilliant{' '}
-          <OutboundLink
+          <a
             href="https://radoslawkoziel.pl"
             target="_blank"
             rel="noreferrer noopener"
           >
             panr
-          </OutboundLink>
+          </a>
           .
         </span>{' '}
       </div>
