@@ -13,7 +13,10 @@ const TagsSummary = ({ tags }) => {
   return (
     <div className={classes.container}>
       {map(tags, (tag, id) => (
-        <Tag key={`tag-${id}`} url={`/tags/${tag.name || tag}`}>
+        <Tag
+          key={`tag-${id || tag.name || tag}`}
+          url={`/tags/${tag.name || tag}`}
+        >
           {tag.name || tag}
         </Tag>
       ))}
@@ -22,7 +25,9 @@ const TagsSummary = ({ tags }) => {
 };
 
 TagsSummary.propTypes = {
-  tags: PropTypes.arrayOf(PropTypes.object),
+  tags: PropTypes.arrayOf(
+    PropTypes.oneOfType([PropTypes.shape({}), PropTypes.string])
+  ),
 };
 
 export default TagsSummary;

@@ -34,7 +34,9 @@ NewsletterSignup.propTypes = {
 };
 
 NewsletterSignup.propTypes = {
-  tags: PropTypes.arrayOf(PropTypes.shape({})),
+  tags: PropTypes.arrayOf(
+    PropTypes.oneOfType([PropTypes.shape({}), PropTypes.string])
+  ),
 };
 
 export default NewsletterSignup;

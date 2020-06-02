@@ -11,8 +11,10 @@ import WebmentionMetadata from '../components/webmentionMetadata';
 const MdxPostTemplate = ({ data, pageContext, location }) => {
   const { body, excerpt, frontmatter } = data.post;
 
-  const { date, path, tags, title } = frontmatter;
+  const { published, date, path, tags, title } = frontmatter;
   const { mentions } = data;
+
+  if (!published && process.env.NODE_ENV === 'production') return null;
 
   return (
     <Layout>
@@ -30,9 +32,15 @@ const MdxPostTemplate = ({ data, pageContext, location }) => {
         summary={excerpt}
         publishedAt={date}
       />
+      {!published && process.env.NODE_ENV !== 'production' && (
+        <div>
+          <em>Note:</em> this is a draft post
+        </div>
+      )}
       <Post
         key={pageContext.id}
         post={{
+          date,
           tags,
           title,
           path,

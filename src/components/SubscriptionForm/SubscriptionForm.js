@@ -113,7 +113,9 @@ const SubscriptionForm = ({ tags }) => {
 };
 
 SubscriptionForm.propTypes = {
-  tags: PropTypes.arrayOf(PropTypes.shape({})),
+  tags: PropTypes.arrayOf(
+    PropTypes.oneOfType([PropTypes.shape({}), PropTypes.string])
+  ),
 };
 
 export default SubscriptionForm;

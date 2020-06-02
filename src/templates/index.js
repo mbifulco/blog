@@ -60,10 +60,10 @@ const Index = (props) => {
 
           if (idx === 0) {
             return (
-              <>
+              <div key="firstpost">
                 {post}
                 <NewsletterSignup hideStripe />
-              </>
+              </div>
             );
           }
 

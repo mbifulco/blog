@@ -112,8 +112,10 @@ Post.propTypes = {
   mentions: PropTypes.arrayOf(PropTypes.shape({})),
   post: PropTypes.shape({
     bodyHtml: PropTypes.string,
-    bodyMdx: PropTypes.shape({}),
-    tags: PropTypes.arrayOf(PropTypes.object),
+    bodyMdx: PropTypes.string,
+    tags: PropTypes.arrayOf(
+      PropTypes.oneOfType([PropTypes.shape({}), PropTypes.string])
+    ),
     title: PropTypes.string,
     date: PropTypes.string,
     _enabledAt: PropTypes.string,
