@@ -14,8 +14,12 @@ export default function HTML(props) {
           content="width=device-width, initial-scale=1, shrink-to-fit=no"
         />
         {props.headComponents}
+
+        {/* include the i-stand header for #BlackLivesMatter */}
+        <script src="https://unpkg.com/i-stand/black-lives.js" type="module" />
       </head>
       <body {...props.bodyAttributes}>
+        <black-lives />
         {props.preBodyComponents}
         <div
           key="body"
