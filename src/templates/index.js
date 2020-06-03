@@ -1,50 +1,75 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { graphql } from 'gatsby';
+import moment from 'moment';
+
+import union from 'lodash/union';
+import sortBy from 'lodash/sortBy';
 
 import SEO from '../components/seo';
 import Layout from '../components/layout';
 import Post from '../components/post';
-import Navigation from '../components/navigation';
 import { NewsletterSignup } from '../components/NewsletterSignup';
 
 const Index = (props) => {
-  const {
-    data,
-    location,
-    pageContext: { nextPagePath, previousPagePath },
-  } = props;
+  const { data, location } = props;
 
-  const { takeshape } = data;
+  const { takeshape, mdxPosts } = data;
   const { posts } = takeshape;
+
+  const takeshapePostElements = posts.items.map((post) => {
+    const { _id: id } = post;
+    const postElement = <Post post={post} key={id} summary />;
+
+    return {
+      date: moment(post._enabledAt),
+      post: postElement,
+      id,
+    };
+  });
+
+  const mdxPostElements = mdxPosts.nodes.map((post) => {
+    const postElement = (
+      <Post
+        post={{
+          ...post,
+          ...post.frontmatter,
+        }}
+        key={post.id}
+        summary
+      />
+    );
+
+    return {
+      date: moment(post.frontmatter.date),
+      post: postElement,
+      id: post.id,
+    };
+  });
+
+  const allPostsInOrder = sortBy(
+    union(takeshapePostElements, mdxPostElements),
+    (a) => -a.date.valueOf()
+  );
 
   return (
     <>
       <SEO location={location} />
       <Layout>
-        {posts.items.map((post, idx) => {
-          const { _id: id } = post;
-
-          const postElement = <Post post={post} key={id} summary />;
+        {allPostsInOrder.map((postElement, idx) => {
+          const { post } = postElement;
 
           if (idx === 0) {
             return (
-              <>
-                {postElement}
+              <div key="firstpost">
+                {post}
                 <NewsletterSignup hideStripe />
-              </>
+              </div>
             );
           }
 
-          return postElement;
+          return post;
         })}
-
-        <Navigation
-          previousPath={previousPagePath}
-          previousLabel="Newer posts"
-          nextPath={nextPagePath}
-          nextLabel="Older posts"
-        />
       </Layout>
     </>
   );
@@ -61,6 +86,23 @@ Index.propTypes = {
 
 export const postsQuery = graphql`
   {
+    mdxPosts: allMdx(
+      filter: { frontmatter: { type: { in: "post" }, published: { eq: true } } }
+    ) {
+      nodes {
+        id
+        frontmatter {
+          date
+          published
+          tags
+          title
+          type
+          path
+        }
+        excerpt(truncate: true)
+        timeToRead
+      }
+    }
     takeshape {
       posts: getPostList(sort: [{ field: "_enabledAt", order: "DESC" }]) {
         items {

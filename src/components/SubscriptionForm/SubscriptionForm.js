@@ -96,6 +96,7 @@ const SubscriptionForm = ({ tags }) => {
               type="checkbox"
               style={{ display: 'none' }}
               checked
+              readOnly
               name="tags[]"
               value={tagMap[tagName]}
             />
@@ -112,7 +113,9 @@ const SubscriptionForm = ({ tags }) => {
 };
 
 SubscriptionForm.propTypes = {
-  tags: PropTypes.arrayOf(PropTypes.shape({})),
+  tags: PropTypes.arrayOf(
+    PropTypes.oneOfType([PropTypes.shape({}), PropTypes.string])
+  ),
 };
 
 export default SubscriptionForm;

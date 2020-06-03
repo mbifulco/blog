@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 const LogRocket = require('logrocket');
 
 // prismjs color theme
@@ -9,6 +10,6 @@ LogRocket.init('mike-bifulco/mikebifulco');
 const React = require('react');
 const { AnalyticsProvider } = require('./src/utils/analytics');
 
-exports.wrapPageElement = ({ element, props }) => {
+exports.wrapPageElement = ({ element }) => {
   return <AnalyticsProvider>{element}</AnalyticsProvider>;
 };

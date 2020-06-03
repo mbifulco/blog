@@ -82,8 +82,9 @@ module.exports = {
     {
       resolve: `gatsby-source-filesystem`,
       options: {
-        name: `posts`,
-        path: `${__dirname}/src/posts/`,
+        name: `mdx-posts`,
+        type: 'mdx-posts',
+        path: `${__dirname}/src/data/posts/`,
       },
     },
     `gatsby-remark-images`,
@@ -100,7 +101,7 @@ module.exports = {
           },
         ],
         defaultLayouts: {
-          posts: require.resolve('./src/templates/post'),
+          posts: require.resolve('./src/templates/MdxPost'),
           default: require.resolve('./src/templates/singlePage'),
         },
       },
