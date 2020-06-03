@@ -39,6 +39,11 @@ const Index = (props) => {
         summary
       />
     );
+
+    if (process.env.NODE_ENV !== 'development') {
+      if (post.frontmatter.published !== true) return null;
+    }
+
     return {
       date: moment(post.frontmatter.date),
       post: postElement,
