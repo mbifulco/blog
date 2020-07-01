@@ -38,25 +38,7 @@ module.exports = {
   plugins: [
     `babel-preset-gatsby`,
     `gatsby-plugin-react-helmet`,
-    {
-      resolve: `gatsby-plugin-postcss`,
-      options: {
-        postCssPlugins: [
-          postCSSUrl(),
-          postCSSImports(),
-          postCSSMixins(),
-          postCSSNested(),
-          postCssPresetEnv({
-            importFrom: 'src/styles/variables.css',
-            stage: 1,
-            preserve: false,
-          }),
-          cssnano({
-            preset: 'default',
-          }),
-        ],
-      },
-    },
+    'gatsby-plugin-chakra-ui',
     `gatsby-transformer-yaml`,
     {
       resolve: `gatsby-source-filesystem`,
@@ -106,15 +88,15 @@ module.exports = {
         },
       },
     },
-    {
-      resolve: 'gatsby-transformer-cloudinary',
-      options: {
-        cloudName: process.env.CLOUDINARY_CLOUD_NAME,
-        apiKey: process.env.CLOUDINARY_API_KEY,
-        apiSecret: process.env.CLOUDINARY_API_SECRET,
-        uploadFolder: 'gatsby-cloudinary',
-      },
-    },
+    // {
+    //   resolve: 'gatsby-transformer-cloudinary',
+    //   options: {
+    //     cloudName: process.env.CLOUDINARY_CLOUD_NAME,
+    //     apiKey: process.env.CLOUDINARY_API_KEY,
+    //     apiSecret: process.env.CLOUDINARY_API_SECRET,
+    //     uploadFolder: 'gatsby-cloudinary',
+    //   },
+    // },
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
     {
