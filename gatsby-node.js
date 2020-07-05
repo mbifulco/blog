@@ -100,14 +100,6 @@ const createPagesFromTakeShape = ({ actions, graphql }) => {
       items: posts.items,
       component: indexTemplate,
       itemsPerPage: siteMetadata.postsPerPage,
-      pathPrefix: '/',
-    });
-
-    paginate({
-      createPage,
-      items: posts.items,
-      component: indexTemplate,
-      itemsPerPage: siteMetadata.postsPerPage,
       pathPrefix: '/posts',
     });
 
