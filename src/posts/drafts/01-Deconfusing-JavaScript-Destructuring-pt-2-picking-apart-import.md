@@ -29,7 +29,7 @@ If you've worked in .Net languages, or Python, or Ruby, or one of many other lan
 
 ### What's going on here?
 
-Well, it turns out it's pretty easy. [moment](https://www.npmjs.com/package/moment) is a JavaScript library, which has been included in our node project's `package.json` file's `dependencies` or `devDependencies`. If you're new to node and are unfamilar with `package.json`, read more about it [here](https://nodesource.com/blog/the-basics-of-package-json-in-node-js-and-npm/).
+Well, it turns out it's pretty doable. [moment](https://www.npmjs.com/package/moment) is a JavaScript library, which has been included in our node project's `package.json` file's `dependencies` or `devDependencies`. If you're new to node and are unfamilar with `package.json`, read more about it [here](https://nodesource.com/blog/the-basics-of-package-json-in-node-js-and-npm/).
 
 This line of code creates a reference to everything made available in the `moment` library, and puts it into what is effectively a variable that we can use to access it. the `'moment'` bit (in quotes) is what tells the compiler which library to get. The other one, `moment` (_not_ in quotes) is the variable. So from here in, we can access moment just like any other variable in this file:
 
