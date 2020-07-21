@@ -32,7 +32,7 @@ function Image(props) {
         */
       },
     });
-  });
+  }, [publicId, height, width, transformations]);
 
   // status can either be "success", "loading", or "error"
   if (status === 'loading') return <p>Loading...</p>;
@@ -43,7 +43,7 @@ function Image(props) {
   return (
     <Img
       // eslint-disable-next-line react/jsx-props-no-spreading
-      // {...props}
+      {...props}
       // we also have changed `data` to `url` to better describe what `generateUrl` gives us back and makes more sense to pass to `src`
       styles={{
         width,

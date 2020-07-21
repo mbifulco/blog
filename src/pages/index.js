@@ -1,6 +1,16 @@
 import React from 'react';
 
-import { Box, Grid, Link, Stack, Text, useTheme } from '@chakra-ui/core';
+import { Link as InternalLink } from 'gatsby';
+
+import {
+  Box,
+  Grid,
+  Link,
+  Stack,
+  Text,
+  useTheme,
+  SimpleGrid,
+} from '@chakra-ui/core';
 
 import { Image, NewsletterSignup, SEO } from '../components';
 
@@ -17,14 +27,28 @@ const HomePage = () => {
         borderStyle="solid"
         padding="3rem"
       >
-        <Grid
-          gridTemplateAreas={`
-            "topleft topright"
-            "midleft midright"
-        `}
-        >
-          <Stack gridArea="topleft">
+        <Stack>
+          <Stack maxHeight="40rem" overflowY="hidden" alignItems="flex-start">
             <Text fontSize="6xl">Mike Bifulco</Text>
+            <Stack direction="row">
+              <Link as={InternalLink} to="/posts">
+                Blog
+              </Link>
+              <Link as={InternalLink} to="/about">
+                About
+              </Link>
+              <Link as={InternalLink} to="/newsletter">
+                Newsletter
+              </Link>
+            </Stack>
+            <Image
+              publicId="bike-in-woods"
+              objectFit="contain"
+              objectPosition="bottom"
+            />
+          </Stack>
+
+          <Stack maxWidth={['100%']}>
             <Link href="https://github.com/mbifulco">@mbifulco</Link>
             <Link href="https://twitter.com/irreverentmike">
               @irreverentmike
@@ -33,20 +57,10 @@ const HomePage = () => {
               @irreverentmike
             </Link>
             <Link href="https://linkedin.com/in/mbifulco">/in/mbifulco</Link>
-          </Stack>
 
-          <Stack gridArea="topright">
-            <Image
-              publicId="bike-in-woods"
-              maxHeight="30vh"
-              objectFit="cover"
-            />
-          </Stack>
-
-          <Box gridArea="midleft">
             <NewsletterSignup hideStripe />
-          </Box>
-        </Grid>
+          </Stack>
+        </Stack>
       </Box>
     </>
   );

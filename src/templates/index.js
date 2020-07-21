@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { graphql } from 'gatsby';
 import moment from 'moment';
 
+import { Box } from '@chakra-ui/core';
+
 import union from 'lodash/union';
 import sortBy from 'lodash/sortBy';
 
@@ -63,7 +65,10 @@ const Index = (props) => {
             return (
               <div key="firstpost">
                 {post}
-                <NewsletterSignup hideStripe />
+
+                <Box display="flex" justifyContent="center">
+                  <NewsletterSignup hideStripe />
+                </Box>
               </div>
             );
           }

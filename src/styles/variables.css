@@ -20,3 +20,11 @@
 
 @custom-media --phone (width < 684px);
 @custom-media --tablet (width < 900px);
+
+a {
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
