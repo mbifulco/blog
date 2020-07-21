@@ -2,15 +2,7 @@ import React from 'react';
 
 import { Link as InternalLink } from 'gatsby';
 
-import {
-  Box,
-  Grid,
-  Link,
-  Stack,
-  Text,
-  useTheme,
-  SimpleGrid,
-} from '@chakra-ui/core';
+import { Box, Link, Stack, Text, useTheme } from '@chakra-ui/core';
 
 import { Image, NewsletterSignup, SEO } from '../components';
 
