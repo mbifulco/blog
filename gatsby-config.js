@@ -38,7 +38,12 @@ module.exports = {
   plugins: [
     `babel-preset-gatsby`,
     `gatsby-plugin-react-helmet`,
-    'gatsby-plugin-chakra-ui',
+    {
+      resolve: 'gatsby-plugin-chakra-ui',
+      options: {
+        isResettingCSS: false,
+      },
+    },
     `gatsby-transformer-yaml`,
     {
       resolve: `gatsby-source-filesystem`,
