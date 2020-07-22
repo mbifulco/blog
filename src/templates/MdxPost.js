@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { graphql } from 'gatsby';
 
+import { Flex } from '@chakra-ui/core';
+
 import { DefaultLayout } from '../components/Layouts';
 
 import SEO from '../components/seo';
@@ -51,7 +53,9 @@ const MdxPostTemplate = ({ data, pageContext, location }) => {
         }}
         mentions={mentions && mentions.nodes}
       />
-      <NewsletterSignup tags={tags} />
+      <Flex direction="row" justifyContent="center" marginTop="3rem">
+        <NewsletterSignup tags={tags} />
+      </Flex>
     </DefaultLayout>
   );
 };

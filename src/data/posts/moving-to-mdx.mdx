@@ -1,0 +1,34 @@
+---
+title: 'MDX - I should have done this sooner.'
+date: 07-22-2020
+published: true
+tags: [productivity, dev]
+---
+
+As of _this very post,_ I've added support for [MDX](https://www.gatsbyjs.org/docs/mdx/plugins/) to my site. It should make writing new content _much_ easier for me. By removing lots of process that has proven unnecessary, I'll be able to get back to writing more here, an I'm very excited about that.
+
+And it works great! Here's an example of a custom shortcode I wrote, called `Aside`:
+
+<Aside>These can be used to highlight important things.</Aside>
+
+And the relevant code for Aside:
+
+```jsx
+const Aside = (props) => {
+  const theme = useTheme();
+  return (
+    <Box
+      borderLeft="8px solid"
+      padding="1rem 0 1rem 2rem"
+      borderColor={theme.colors.pink[400]}
+      backgroundColor={theme.colors.pink[50]}
+      margin="2rem 0 2rem -2rem"
+      {...props}
+    />
+  );
+};
+```
+
+# h/t
+
+This is on the heels of last night's [Reactadelphia Meetup](https://www.meetup.com/Reactadelphia/), where a very talented developer named [Prince](https://prince.dev/) gave a fantastic talk on MDX. I found it particularly inspiring -- it was that rare talk which had substance _and_ motivation. I already had a pretty good grasp of what one might use MDX for in practice, but Prince made some great points about why MDX is such a game changer.

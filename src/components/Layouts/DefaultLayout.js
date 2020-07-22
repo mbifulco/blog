@@ -7,6 +7,7 @@ import { useLocation } from '@reach/router';
 import { Box, Link, Stack, Text, useTheme } from '@chakra-ui/core';
 
 import { Footer, SEO, SocialLinks } from '..';
+import MDXProviderWrapper from '../../utils/MDXProviderWrapper';
 
 import './DefaultLayout.css';
 
@@ -22,7 +23,7 @@ const DefaultLayout = ({ children }) => {
   }, [location.pathname]);
 
   return (
-    <>
+    <MDXProviderWrapper>
       <SEO />
       <Box
         borderColor={theme.colors.pink[400]}
@@ -42,6 +43,7 @@ const DefaultLayout = ({ children }) => {
             shouldWrapChildren
             direction={isHomePage ? 'column' : 'row'}
             justifyContent={isHomePage ? 'flex-start' : 'space-between'}
+            paddingBottom={isHomePage ? '0' : '1.5rem'}
           >
             <Text
               transition="all 5s ease"
@@ -89,7 +91,7 @@ const DefaultLayout = ({ children }) => {
           </Box>
         </Stack>
       </Box>
-    </>
+    </MDXProviderWrapper>
   );
 };
 
