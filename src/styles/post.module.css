@@ -11,12 +11,8 @@
   overflow-wrap: anywhere;
 }
 
-.post h1 {
-  margin: 0;
-}
-
 .post img {
-  width: 100%;
+  max-width: 100%;
 }
 
 .post a {
@@ -30,6 +26,30 @@
 
 .post p {
   margin-bottom: 1rem;
+}
+
+.post pre {
+  background-color: #1a1a1d;
+  font-size: small;
+  border-radius: 0.25rem;
+  padding: 1.5rem;
+  color: #ccc;
+}
+
+.post figure img {
+  margin: 0 auto;
+}
+.post figure figcaption {
+  font-size: 1rem;
+  border-left: 10px solid #ef0247;
+  padding-left: 0.5rem;
+  margin-top: 1rem;
+  font-style: italic;
+  transition: all 0.1s;
+}
+
+.post figure figcaption:hover {
+  border-left-width: 5px;
 }
 
 .post h1,
@@ -50,6 +70,11 @@
 .post h5 a,
 .post h6 a {
   color: #222;
+}
+
+.post h1 {
+  font-size: 2.625rem;
+  margin: 0;
 }
 
 .title a {

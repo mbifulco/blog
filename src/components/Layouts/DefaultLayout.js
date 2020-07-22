@@ -9,6 +9,8 @@ import { Box, Link, Stack, Text, useTheme } from '@chakra-ui/core';
 import { Footer, SEO, SocialLinks } from '..';
 import MDXProviderWrapper from '../../utils/MDXProviderWrapper';
 
+import '../../styles/variables.css';
+import '../../styles/prism.css';
 import './DefaultLayout.css';
 
 const DefaultLayout = ({ children }) => {
