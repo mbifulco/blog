@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Layout from '../components/layout';
+import { DefaultLayout as Layout } from '../components/Layouts';
 import SEO from '../components/seo';
 
 import classes from '../styles/shop.module.css';

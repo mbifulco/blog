@@ -1,73 +1,45 @@
 import React from 'react';
+import { Box, Link, Text } from '@chakra-ui/core';
 
-import { Link as InternalLink } from 'gatsby';
-
-import { Box, Link, Stack, Text, useTheme } from '@chakra-ui/core';
-
-import {
-  Footer,
-  Image,
-  NewsletterSignup,
-  SEO,
-  SocialLinks,
-} from '../components';
+import { DefaultLayout } from '../components/Layouts';
+import { Image } from '../components';
 
 const HomePage = () => {
-  const theme = useTheme();
   return (
-    <>
-      <SEO title="Home" />
+    <DefaultLayout>
       <Box
-        minWidth="calc(100vw - 3rem)"
-        minHeight="100vh"
-        borderColor={theme.colors.pink[400]}
-        borderWidth="1.25rem"
-        borderStyle="solid"
-        padding="2rem 3rem"
+        display={{ md: 'flex' }}
+        margin="1rem 0 2rem 0"
+        spacing={4}
+        alignItems="flex-start"
       >
-        <Stack>
-          <Stack overflowY="hidden" alignItems="flex-start">
-            <Text
-              as="h1"
-              fontSize="6xl"
-              lineHeight="5rem"
-              margin="0"
-              padding="0"
-            >
-              Mike Bifulco
-            </Text>
-            <Stack direction="row">
-              <Link as={InternalLink} to="/posts">
-                Blog
-              </Link>
-              <Link as={InternalLink} to="/about">
-                About
-              </Link>
-              <Link as={InternalLink} to="/newsletter">
-                Newsletter
-              </Link>
-              <SocialLinks
-                color={theme.colors.gray[600]}
-                spacing={2}
-                marginLeft="2"
-              />
-            </Stack>
-            <Image
-              publicId="mike-headshot-square"
-              objectFit="contain"
-              objectPosition="bottom"
-              maxHeight="40vh"
-            />
-          </Stack>
-
-          <Stack maxWidth={['100%']}>
-            <NewsletterSignup hideStripe />
-          </Stack>
-
-          <Footer />
-        </Stack>
+        <Image
+          publicId="mike-headshot-square"
+          objectFit="contain"
+          objectPosition="bottom"
+          height="250"
+          marginRight={[0, 0, '1rem']}
+        />
+        <Box maxWidth="50ch">
+          <Text
+            as="h2"
+            fontSize="4xl"
+            margin="0"
+            lineHeight="1"
+            marginBottom="0.5rem"
+          >
+            Oh, hello
+          </Text>
+          <Text fontSize="xl" fontWeight="normal" margin="0">
+            I'm a technologist, a designer, and a creator of things. I started
+            this as a place to put together my thoughts on things that I think
+            deserve a bigger stage than my{' '}
+            <Link href="https://twitter.com/irreverentmike">twitter</Link> or{' '}
+            <Link href="https://github.com/mbifulco">GitHub</Link>.
+          </Text>
+        </Box>
       </Box>
-    </>
+    </DefaultLayout>
   );
 };
 

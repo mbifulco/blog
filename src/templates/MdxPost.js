@@ -2,8 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { graphql } from 'gatsby';
 
+import { DefaultLayout } from '../components/Layouts';
+
 import SEO from '../components/seo';
-import Layout from '../components/layout';
+
 import { NewsletterSignup } from '../components/NewsletterSignup';
 import Post from '../components/post';
 import WebmentionMetadata from '../components/webmentionMetadata';
@@ -17,7 +19,7 @@ const MdxPostTemplate = ({ data, pageContext, location }) => {
   if (!published && process.env.NODE_ENV === 'production') return null;
 
   return (
-    <Layout>
+    <DefaultLayout>
       <SEO
         canonical={location.href}
         title={title}
@@ -50,7 +52,7 @@ const MdxPostTemplate = ({ data, pageContext, location }) => {
         mentions={mentions && mentions.nodes}
       />
       <NewsletterSignup tags={tags} />
-    </Layout>
+    </DefaultLayout>
   );
 };
 

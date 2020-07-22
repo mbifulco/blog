@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Box, Stack } from '@chakra-ui/core';
 
-import { SocialLinks } from '.';
+import { SocialLinks } from './SocialLinks';
 
 const Footer = () => (
   <Box as="footer" position="relative" fontSize="small">
@@ -43,18 +43,6 @@ const Footer = () => (
           </a>
           .
         </span>
-        <br />
-        <span>
-          Starter created by the brilliant{' '}
-          <a
-            href="https://radoslawkoziel.pl"
-            target="_blank"
-            rel="noreferrer noopener"
-          >
-            panr
-          </a>
-          .
-        </span>{' '}
       </div>
     </Stack>
   </Box>

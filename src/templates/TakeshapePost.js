@@ -4,7 +4,7 @@ import { graphql } from 'gatsby';
 import { getImageUrl } from 'takeshape-routing';
 
 import SEO from '../components/seo';
-import Layout from '../components/layout';
+import { DefaultLayout as Layout } from '../components/Layouts';
 import { NewsletterSignup } from '../components/NewsletterSignup';
 import Post from '../components/post';
 import WebmentionMetadata from '../components/webmentionMetadata';

@@ -1,6 +1,8 @@
 import React from 'react';
 
-import Layout from '../../components/layout';
+import { Heading } from '@chakra-ui/core';
+
+import { DefaultLayout as Layout } from '../../components/Layouts';
 import { NewsletterSignup } from '../../components/NewsletterSignup';
 
 import classes from './NewsletterPage.module.css';
@@ -9,7 +11,7 @@ const NewsletterPage = () => {
   return (
     <Layout>
       <div className={classes.container}>
-        <h1>Join the newsletter</h1>
+        <Heading as="h1">Join the newsletter</Heading>
       </div>
       <NewsletterSignup />
     </Layout>

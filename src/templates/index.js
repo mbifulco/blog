@@ -9,11 +9,12 @@ import union from 'lodash/union';
 import sortBy from 'lodash/sortBy';
 
 import SEO from '../components/seo';
-import Layout from '../components/layout';
 import Post from '../components/post';
+
+import { DefaultLayout } from '../components/Layouts';
 import { NewsletterSignup } from '../components/NewsletterSignup';
 
-const Index = (props) => {
+const PostsPage = (props) => {
   const { data, location } = props;
 
   const { takeshape, mdxPosts } = data;
@@ -57,7 +58,7 @@ const Index = (props) => {
   return (
     <>
       <SEO location={location} />
-      <Layout>
+      <DefaultLayout>
         {allPostsInOrder.map((postElement, idx) => {
           const { post } = postElement;
 
@@ -67,7 +68,7 @@ const Index = (props) => {
                 {post}
 
                 <Box display="flex" justifyContent="center">
-                  <NewsletterSignup hideStripe />
+                  <NewsletterSignup />
                 </Box>
               </div>
             );
@@ -75,12 +76,12 @@ const Index = (props) => {
 
           return post;
         })}
-      </Layout>
+      </DefaultLayout>
     </>
   );
 };
 
-Index.propTypes = {
+PostsPage.propTypes = {
   data: PropTypes.object.isRequired,
   location: PropTypes.shape({}),
   pageContext: PropTypes.shape({
@@ -135,4 +136,4 @@ export const postsQuery = graphql`
   }
 `;
 
-export default Index;
+export default PostsPage;

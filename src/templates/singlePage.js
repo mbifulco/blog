@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import SEO from '../components/seo';
-import Layout from '../components/layout';
+import { DefaultLayout as Layout } from '../components/Layouts';
 import MentionsSummary from '../components/mentionsSummary';
 import { NewsletterSignup } from '../components/NewsletterSignup';
 import TagsSummary from '../components/tagsSummary';

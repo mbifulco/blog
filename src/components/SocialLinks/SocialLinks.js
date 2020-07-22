@@ -6,8 +6,19 @@ import { Link, Stack } from '@chakra-ui/core';
 
 import { GitHubIcon, TwitterIcon, TwitchIcon, RssIcon } from '../icons';
 
-const SocialLinks = ({ color, direction = 'row', spacing = 3, ...rest }) => (
-  <Stack direction={direction} spacing={spacing} {...rest}>
+const SocialLinks = ({
+  color,
+  direction = 'row',
+  spacing = 3,
+  alignItems = 'center',
+  ...rest
+}) => (
+  <Stack
+    direction={direction}
+    spacing={spacing}
+    alignItems={alignItems}
+    {...rest}
+  >
     <Link
       color={color || '#6e5494'}
       href="https://github.com/mbifulco"
@@ -44,6 +55,7 @@ const SocialLinks = ({ color, direction = 'row', spacing = 3, ...rest }) => (
 );
 
 SocialLinks.propTypes = {
+  alignItems: PropTypes.string,
   color: PropTypes.string,
   direction: PropTypes.oneOf(['row', 'column']),
   spacing: PropTypes.number,

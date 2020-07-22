@@ -3,15 +3,15 @@ import PropTypes from 'prop-types';
 
 import { map } from 'lodash';
 
-import Tag from './tag';
+import { Flex } from '@chakra-ui/core';
 
-import classes from '../styles/tagsSummary.module.css';
+import Tag from './tag';
 
 const TagsSummary = ({ tags }) => {
   if (!tags || tags.length <= 0) return null;
 
   return (
-    <div className={classes.container}>
+    <Flex fontSize="small" direction="row">
       {map(tags, (tag, id) => (
         <Tag
           key={`tag-${id || tag.name || tag}`}
@@ -20,7 +20,7 @@ const TagsSummary = ({ tags }) => {
           {tag.name || tag}
         </Tag>
       ))}
-    </div>
+    </Flex>
   );
 };
 

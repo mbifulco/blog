@@ -4,12 +4,10 @@ import PropTypes from 'prop-types';
 import { Headshot } from '../Headshot';
 import classes from './NewsletterSignup.module.css';
 import { SubscriptionForm } from '../SubscriptionForm';
-import { PageDivider } from '../PageDivider';
 
-const NewsletterSignup = ({ tags, hideStripe }) => {
+const NewsletterSignup = ({ tags }) => {
   return (
     <>
-      {!hideStripe && <PageDivider />}
       <div className={classes.container}>
         <div className={classes.content} id="newsletter">
           <Headshot className={classes.avatar} />
@@ -27,10 +25,6 @@ const NewsletterSignup = ({ tags, hideStripe }) => {
       </div>
     </>
   );
-};
-
-NewsletterSignup.propTypes = {
-  hideStripe: PropTypes.bool,
 };
 
 NewsletterSignup.propTypes = {

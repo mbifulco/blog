@@ -6,6 +6,8 @@ import moment from 'moment';
 import { getImageUrl } from 'takeshape-routing';
 import { MDXRenderer } from 'gatsby-plugin-mdx';
 
+import { Heading } from '@chakra-ui/core';
+
 import MentionsSummary from './mentionsSummary';
 import TagsSummary from './tagsSummary';
 import Navigation from './navigation';
@@ -66,45 +68,43 @@ const Post = ({ summary, mentions, post, previous, next }) => {
   const formattedDate = moment(new Date(date)).format('DD MMMM YYYY');
 
   return (
-    <>
-      <div className={style.post}>
-        <div className={style.postContent}>
-          <h1 className={style.title}>
-            {summary ? <Link to={postPath}>{title}</Link> : title}
-          </h1>
-          <div className={style.meta}>
-            {formattedDate} {author && <>— Written by {author}</>}
-          </div>
-          <TagsSummary tags={tags} />
-          {coverImageContainer}
-
-          {summary ? (
-            <>
-              <p>{excerpt}</p>
-              <Link to={postPath} className={style.readMore}>
-                Read more →
-              </Link>
-            </>
-          ) : (
-            <>
-              {/* eslint-disable-next-line react/no-danger */}
-              <div dangerouslySetInnerHTML={{ __html: html }} />
-
-              {bodyMdx && <MDXRenderer>{bodyMdx}</MDXRenderer>}
-
-              <MentionsSummary mentions={mentions} />
-
-              <Navigation
-                previousPath={previousPath}
-                previousLabel={previousLabel}
-                nextPath={nextPath}
-                nextLabel={nextLabel}
-              />
-            </>
-          )}
+    <div className={style.post}>
+      <div className={style.postContent}>
+        <Heading as="h1" className={style.title}>
+          {summary ? <Link to={postPath}>{title}</Link> : title}
+        </Heading>
+        <div className={style.meta}>
+          {formattedDate} {author && <>— Written by {author}</>}
         </div>
+        <TagsSummary tags={tags} />
+        {coverImageContainer}
+
+        {summary ? (
+          <>
+            <p>{excerpt}</p>
+            <Link to={postPath} className={style.readMore}>
+              Read more →
+            </Link>
+          </>
+        ) : (
+          <>
+            {/* eslint-disable-next-line react/no-danger */}
+            <div dangerouslySetInnerHTML={{ __html: html }} />
+
+            {bodyMdx && <MDXRenderer>{bodyMdx}</MDXRenderer>}
+
+            <MentionsSummary mentions={mentions} />
+
+            <Navigation
+              previousPath={previousPath}
+              previousLabel={previousLabel}
+              nextPath={nextPath}
+              nextLabel={nextLabel}
+            />
+          </>
+        )}
       </div>
-    </>
+    </div>
   );
 };
 
