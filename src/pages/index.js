@@ -1,10 +1,12 @@
 import React from 'react';
-import { Box, Link, Text } from '@chakra-ui/core';
+import { Box, Link, Text, useTheme } from '@chakra-ui/core';
 
 import { DefaultLayout } from '../components/Layouts';
 import { Image, PostFeed } from '../components';
 
 const HomePage = () => {
+  const theme = useTheme();
+  const pink = theme.colors.pink[400];
   return (
     <DefaultLayout>
       <Box
@@ -39,7 +41,10 @@ const HomePage = () => {
           </Text>
         </Box>
       </Box>
-      <Box>
+      <Box marginTop="1.5rem">
+        <Text color={pink} fontWeight={400}>
+          LATEST POSTS
+        </Text>
         <PostFeed />
       </Box>
     </DefaultLayout>
