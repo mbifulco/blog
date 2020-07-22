@@ -8,6 +8,8 @@ import { Box, Link, Stack, Text, useTheme } from '@chakra-ui/core';
 
 import { Footer, SEO, SocialLinks } from '..';
 
+import './DefaultLayout.css';
+
 const DefaultLayout = ({ children }) => {
   const theme = useTheme();
 

@@ -1,6 +1,12 @@
 // import configuration bits from .env files
 require('dotenv').config();
 
+const postCssPresetEnv = require(`postcss-preset-env`);
+const postCSSNested = require('postcss-nested');
+const postCSSUrl = require('postcss-url');
+const postCSSImports = require('postcss-import');
+const cssnano = require('cssnano');
+const postCSSMixins = require('postcss-mixins');
 const { map } = require('lodash');
 
 const BASE_SITE_URL = 'https://mikebifulco.com';
@@ -32,6 +38,25 @@ module.exports = {
   plugins: [
     `babel-preset-gatsby`,
     `gatsby-plugin-react-helmet`,
+    {
+      resolve: `gatsby-plugin-postcss`,
+      options: {
+        postCssPlugins: [
+          postCSSUrl(),
+          postCSSImports(),
+          postCSSMixins(),
+          postCSSNested(),
+          postCssPresetEnv({
+            importFrom: 'src/styles/variables.css',
+            stage: 1,
+            preserve: false,
+          }),
+          cssnano({
+            preset: 'default',
+          }),
+        ],
+      },
+    },
     {
       resolve: 'gatsby-plugin-chakra-ui',
       options: {

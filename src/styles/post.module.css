@@ -53,3 +53,8 @@
 .postContent {
   position: relative;
 }
+
+p {
+  max-width: 70ch;
+  font-size: 16pt;
+}
