@@ -8,7 +8,7 @@ import { useImage } from 'use-cloudinary';
 function Image(props) {
   const { publicId, transformations, width, height, alt } = props;
   const { generateUrl, url, status, error } = useImage({
-    cloudName: process.env.CLOUDINARY_CLOUD_NAME,
+    cloudName: process.env.GATSBY_CLOUDINARY_CLOUD_NAME,
   });
 
   React.useEffect(() => {
