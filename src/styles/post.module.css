@@ -2,33 +2,58 @@
   width: 100%;
   text-align: left;
   margin: 0 auto 10px;
-
-  @media (--tablet) {
-    max-width: 660px;
-    padding: 20px 10px;
-  }
-
-  @media (--phone) {
-    padding: 20px 10px;
-  }
-
-  h1 {
-    margin: 0;
-  }
-
-  img {
-    max-width: 100%;
-  }
-
-  * {
-    overflow-wrap: anywhere;
-  }
+  font-weight: normal;
+  font-size: larger;
+  font-family: var(--font-stack);
 }
 
-.title {
-  a {
-    text-decoration: none;
-  }
+.post * {
+  overflow-wrap: anywhere;
+}
+
+.post h1 {
+  margin: 0;
+}
+
+.post img {
+  width: 100%;
+}
+
+.post a {
+  color: #ef0247;
+  text-decoration: underline;
+}
+
+.post a:hover {
+  text-decoration: none;
+}
+
+.post p {
+  margin-bottom: 1rem;
+}
+
+.post h1,
+.post h2,
+.post h3,
+.post h4,
+.post h5,
+.post h6 {
+  margin: 1rem 0;
+  font-weight: bold;
+  font-size: larger;
+}
+
+.post h1 a,
+.post h2 a,
+.post h3 a,
+.post h4 a,
+.post h5 a,
+.post h6 a {
+  color: #222;
+}
+
+.title a {
+  text-decoration: none;
 }
 
 .coverImage {

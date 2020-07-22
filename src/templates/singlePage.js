@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { Flex } from '@chakra-ui/core';
+
 import SEO from '../components/seo';
 import { DefaultLayout as Layout } from '../components/Layouts';
 import MentionsSummary from '../components/mentionsSummary';
@@ -47,7 +49,9 @@ const SinglePage = ({ children, pageContext, location }) => {
           <MentionsSummary mentions={mentions} />
         </div>
       </div>
-      <NewsletterSignup tags={tags} />
+      <Flex direction="row" justifyContent="center">
+        <NewsletterSignup tags={tags} />
+      </Flex>
     </Layout>
   );
 };

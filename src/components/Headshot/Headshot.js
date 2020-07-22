@@ -18,6 +18,7 @@ const Headshot = ({ className }) => {
   `);
   return (
     <Img
+      style={{ borderRadius: '12px' }}
       className={`headshot ${className}`}
       fixed={data.file.childImageSharp.fixed}
     />
