@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useStaticQuery, graphql } from 'gatsby';
 
+import { Flex } from '@chakra-ui/core';
+
 import Header from './header';
 import Footer from './footer';
 
@@ -52,6 +54,7 @@ const Layout = ({ children }) => {
         menuMoreText={menuMoreText}
       />
       <div className={classes.content}>{children}</div>
+
       <Footer />
     </div>
   );

@@ -1,49 +1,14 @@
 import React from 'react';
 
-import { GitHubIcon, TwitterIcon, TwitchIcon, RssIcon } from './icons';
+import { Box, Stack } from '@chakra-ui/core';
 
-import classes from '../styles/footer.module.css';
+import { SocialLinks } from '.';
 
 const Footer = () => (
-  <footer className={classes.container}>
-    <div className={classes.content}>
-      <div className={classes.meta}>
-        <span className="footerCopyrights">© 2020 Mike Bifulco</span>
-        <span className="footerCopyrights">
-          <a
-            className={classes.rssLink}
-            href="/rss.xml"
-            target="blank"
-            rel="noopener noreferrer"
-          >
-            <RssIcon />
-          </a>{' '}
-          <a
-            className={classes.gitHubLink}
-            href="https://github.com/mbifulco"
-            target="_blank"
-            rel="noreferrer noopener me"
-          >
-            <GitHubIcon />
-          </a>{' '}
-          <a
-            className={classes.twitterLink}
-            href="https://twitter.com/irreverentmike"
-            target="_blank"
-            rel="noreferrer noopener me"
-          >
-            <TwitterIcon />
-          </a>{' '}
-          <a
-            className={classes.twitchLink}
-            href="https://twitch.tv/irreverentmike"
-            target="_blank"
-            rel="noreferrer noopener"
-          >
-            <TwitchIcon />
-          </a>
-        </span>
-      </div>
+  <Box as="footer" position="relative" fontSize="small">
+    <Stack zIndex={10} position="absolute">
+      <span>© 2020 Mike Bifulco</span>
+      <SocialLinks />
       <div className="credit">
         <span>
           Built with{' '}
@@ -91,8 +56,8 @@ const Footer = () => (
           .
         </span>{' '}
       </div>
-    </div>
-  </footer>
+    </Stack>
+  </Box>
 );
 
 export default Footer;

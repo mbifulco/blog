@@ -8,7 +8,7 @@ const RssIcon = () => (
     height="1em"
     width="1em"
     viewBox="0 0 40 40"
-    style={{ verticalAlign: 'text-top' }}
+    style={{ verticalAlign: 'middle' }}
   >
     <g
       id="Page-1"

@@ -4,7 +4,13 @@ import { Link as InternalLink } from 'gatsby';
 
 import { Box, Link, Stack, Text, useTheme } from '@chakra-ui/core';
 
-import { Image, NewsletterSignup, SEO } from '../components';
+import {
+  Footer,
+  Image,
+  NewsletterSignup,
+  SEO,
+  SocialLinks,
+} from '../components';
 
 const HomePage = () => {
   const theme = useTheme();
@@ -12,16 +18,24 @@ const HomePage = () => {
     <>
       <SEO title="Home" />
       <Box
-        minWidth="100vw"
+        minWidth="calc(100vw - 3rem)"
         minHeight="100vh"
         borderColor={theme.colors.pink[400]}
         borderWidth="1.25rem"
         borderStyle="solid"
-        padding="3rem"
+        padding="2rem 3rem"
       >
         <Stack>
-          <Stack maxHeight="40rem" overflowY="hidden" alignItems="flex-start">
-            <Text fontSize="6xl">Mike Bifulco</Text>
+          <Stack overflowY="hidden" alignItems="flex-start">
+            <Text
+              as="h1"
+              fontSize="6xl"
+              lineHeight="5rem"
+              margin="0"
+              padding="0"
+            >
+              Mike Bifulco
+            </Text>
             <Stack direction="row">
               <Link as={InternalLink} to="/posts">
                 Blog
@@ -32,26 +46,25 @@ const HomePage = () => {
               <Link as={InternalLink} to="/newsletter">
                 Newsletter
               </Link>
+              <SocialLinks
+                color={theme.colors.gray[600]}
+                spacing={2}
+                marginLeft="2"
+              />
             </Stack>
             <Image
-              publicId="bike-in-woods"
+              publicId="mike-headshot-square"
               objectFit="contain"
               objectPosition="bottom"
+              maxHeight="40vh"
             />
           </Stack>
 
           <Stack maxWidth={['100%']}>
-            <Link href="https://github.com/mbifulco">@mbifulco</Link>
-            <Link href="https://twitter.com/irreverentmike">
-              @irreverentmike
-            </Link>
-            <Link href="https://instagram.com/irreverentmike">
-              @irreverentmike
-            </Link>
-            <Link href="https://linkedin.com/in/mbifulco">/in/mbifulco</Link>
-
             <NewsletterSignup hideStripe />
           </Stack>
+
+          <Footer />
         </Stack>
       </Box>
     </>
