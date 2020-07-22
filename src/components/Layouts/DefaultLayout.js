@@ -28,9 +28,14 @@ const DefaultLayout = ({ children }) => {
         borderColor={theme.colors.pink[400]}
         borderWidth="1.25rem 0 0 0"
         borderStyle="solid"
-        paddingTop="2rem"
+        paddingTop={['1rem', '1rem', '2rem']}
+        width="100%"
       >
-        <Stack width={['100%', 1 / 2, '100ch']} margin="0 auto">
+        <Stack
+          width={['100%', '100%', '50rem']}
+          margin="0 auto"
+          padding={['0 1rem', '0 1rem', '0 1rem', 0]}
+        >
           <Stack
             overflowY="hidden"
             alignItems={isHomePage ? 'flex-start' : 'center'}
