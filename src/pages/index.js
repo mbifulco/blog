@@ -36,8 +36,14 @@ const HomePage = () => {
             I'm a technologist, a designer, and a creator of things. I started
             this as a place to put together my thoughts on things that I think
             deserve a bigger stage than my{' '}
-            <Link href="https://twitter.com/irreverentmike">twitter</Link> or{' '}
-            <Link href="https://github.com/mbifulco">GitHub</Link>.
+            <Link color={pink} href="https://twitter.com/irreverentmike">
+              twitter
+            </Link>{' '}
+            or{' '}
+            <Link color={pink} href="https://github.com/mbifulco">
+              GitHub
+            </Link>
+            .
           </Text>
         </Box>
       </Box>
