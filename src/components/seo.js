@@ -2,18 +2,19 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
 import { useStaticQuery, graphql } from 'gatsby';
+import { useLocation } from '@reach/router';
 
 const SEO = ({
   canonical,
   description,
   lang,
-  location,
   meta,
   keywords,
   title,
   ogType,
   image,
 }) => {
+  const location = useLocation();
   const data = useStaticQuery(graphql`
     query DefaultSEOQuery {
       site {

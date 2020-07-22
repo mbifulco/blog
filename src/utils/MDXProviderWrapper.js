@@ -3,7 +3,7 @@
 import React from 'react';
 import { MDXProvider } from '@mdx-js/react';
 
-import { Box, Heading, useTheme } from '@chakra-ui/core';
+import { Code, Box, Heading, useTheme } from '@chakra-ui/core';
 import Highlight, { defaultProps } from 'prism-react-renderer';
 import prismTheme from 'prism-react-renderer/themes/nightOwl';
 
@@ -28,37 +28,55 @@ const Aside = (props) => {
   );
 };
 
+const InlineCode = (props) => (
+  <Code
+    color="rgb(214, 222, 235)"
+    whiteSpace="pre"
+    backgroundColor="#1a1a1d"
+    borderRadius=".3em"
+    padding="0.1ch 1ch"
+    {...props}
+  />
+);
+
 const Pre = (props) => {
   const classNames = props.children.props.className || '';
   const matches = classNames.match(/language-(?<lang>.*)/);
   return (
-    <Highlight
-      {...defaultProps}
-      theme={prismTheme}
-      code={props.children.props.children}
-      language={
-        matches && matches.groups && matches.groups.lang
-          ? matches.groups.lang
-          : ''
-      }
-    >
-      {({ className, style, tokens, getLineProps, getTokenProps }) => (
-        <pre className={className} style={style}>
-          {tokens.map((line, i) => (
-            <div {...getLineProps({ line, key: i })}>
-              {line.map((token, key) => (
-                <span {...getTokenProps({ token, key })} />
-              ))}
-            </div>
-          ))}
-        </pre>
-      )}
-    </Highlight>
+    <Box marginBottom="2rem">
+      <Highlight
+        {...defaultProps}
+        theme={prismTheme}
+        code={props.children.props.children}
+        language={
+          matches && matches.groups && matches.groups.lang
+            ? matches.groups.lang
+            : ''
+        }
+      >
+        {({ className, style, tokens, getLineProps, getTokenProps }) => (
+          <pre className={className} style={style}>
+            {tokens.map((line, i) => {
+              // TODO: why is this needed though?
+              if (i === tokens.length - 1) return null;
+              return (
+                <div {...getLineProps({ line, key: i })}>
+                  {line.map((token, key) => (
+                    <span {...getTokenProps({ token, key })} />
+                  ))}
+                </div>
+              );
+            })}
+          </pre>
+        )}
+      </Highlight>
+    </Box>
   );
 };
 
 const components = {
   Aside,
+  inlineCode: InlineCode,
   h1: H1,
   h2: H2,
   h3: H3,

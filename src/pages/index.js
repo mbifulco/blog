@@ -2,7 +2,7 @@ import React from 'react';
 import { Box, Link, Text } from '@chakra-ui/core';
 
 import { DefaultLayout } from '../components/Layouts';
-import { Image } from '../components';
+import { Image, PostFeed } from '../components';
 
 const HomePage = () => {
   return (
@@ -38,6 +38,9 @@ const HomePage = () => {
             <Link href="https://github.com/mbifulco">GitHub</Link>.
           </Text>
         </Box>
+      </Box>
+      <Box>
+        <PostFeed />
       </Box>
     </DefaultLayout>
   );
