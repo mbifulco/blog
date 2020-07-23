@@ -47,7 +47,8 @@ const HomePage = () => {
           </Text>
         </Box>
       </Box>
-      <Box marginTop="1.5rem">
+
+      <Box>
         <Text color={pink} fontWeight={400}>
           LATEST POSTS
         </Text>

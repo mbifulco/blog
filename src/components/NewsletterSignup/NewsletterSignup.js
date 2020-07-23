@@ -8,7 +8,7 @@ import { SubscriptionForm } from '../SubscriptionForm';
 
 const NewsletterSignup = ({ tags }) => {
   return (
-    <Flex direction="row" justifyContent="center">
+    <Flex direction="row" justifyContent="center" marginBottom="1rem">
       <Flex
         border="1px solid #ddd"
         background="white"
