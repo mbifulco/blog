@@ -4,7 +4,14 @@ import { Link as InternalLink } from 'gatsby';
 
 import { useLocation } from '@reach/router';
 
-import { Box, Link, Stack, Text, useTheme } from '@chakra-ui/core';
+import {
+  Box,
+  Link,
+  Stack,
+  Text,
+  useColorMode,
+  useTheme,
+} from '@chakra-ui/core';
 
 import { Footer, SEO, SocialLinks } from '..';
 import MDXProviderWrapper from '../../utils/MDXProviderWrapper';
@@ -15,6 +22,12 @@ import './DefaultLayout.css';
 
 const DefaultLayout = ({ children }) => {
   const theme = useTheme();
+  const { colorMode } = useColorMode();
+
+  const titleColors = {
+    light: 'gray.800',
+    dark: 'pink.400',
+  };
 
   const location = useLocation();
 
@@ -47,24 +60,24 @@ const DefaultLayout = ({ children }) => {
             justifyContent={isHomePage ? 'flex-start' : 'space-between'}
             paddingBottom={isHomePage ? '0' : '1.5rem'}
           >
-            <Text
-              transition="all 5s ease"
-              fontSize={isHomePage ? '6xl' : 'lg'}
-              lineHeight="1"
-              fontWeight="700"
-              margin="0"
-              padding="0"
+            <InternalLink
+              style={{
+                textDecoration: 'none',
+              }}
+              to="/"
             >
-              <InternalLink
-                style={{
-                  color: theme.colors.gray[800],
-                  textDecoration: 'none',
-                }}
-                to="/"
+              <Text
+                transition="all 5s ease"
+                fontSize={isHomePage ? '6xl' : 'lg'}
+                lineHeight="1"
+                fontWeight="700"
+                margin="0"
+                padding="0"
+                color={titleColors[colorMode]}
               >
                 Mike Bifulco
-              </InternalLink>
-            </Text>
+              </Text>
+            </InternalLink>
 
             <Stack direction="row">
               <Link as={InternalLink} to="/posts">

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Flex } from '@chakra-ui/core';
+import { Flex, Heading, useTheme, useColorMode } from '@chakra-ui/core';
 
 import SEO from '../components/seo';
 import { DefaultLayout as Layout } from '../components/Layouts';
@@ -23,6 +23,14 @@ const SinglePage = ({ children, pageContext, location }) => {
     tags,
   } = pageContext.frontmatter;
 
+  const theme = useTheme();
+  const { colorMode } = useColorMode();
+
+  const headerColors = {
+    dark: theme.colors.gray[200],
+    light: theme.colors.gray[900],
+  };
+
   return (
     <Layout>
       <SEO
@@ -36,7 +44,9 @@ const SinglePage = ({ children, pageContext, location }) => {
 
       <div className={style.post}>
         <div className={style.postContent}>
-          <h1 className={style.title}>{title}</h1>
+          <Heading as="h1" color={headerColors[colorMode]}>
+            {title}
+          </Heading>
           <TagsSummary tags={tags} />
           <WebmentionMetadata
             location={location}

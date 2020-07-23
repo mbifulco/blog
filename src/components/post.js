@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'gatsby';
+import { Link as GatsbyLink } from 'gatsby';
 import Img from 'gatsby-image';
 import moment from 'moment';
 import { getImageUrl } from 'takeshape-routing';
 import { MDXRenderer } from 'gatsby-plugin-mdx';
 
-import { Heading } from '@chakra-ui/core';
+import { Heading, Link, Text, useColorMode, useTheme } from '@chakra-ui/core';
 
 import MentionsSummary from './mentionsSummary';
 import TagsSummary from './tagsSummary';
@@ -24,6 +24,19 @@ const Post = ({ summary, mentions, post, previous, next }) => {
     tags,
     title,
   } = post;
+
+  const theme = useTheme();
+  const { colorMode } = useColorMode();
+
+  const headerColors = {
+    dark: theme.colors.gray[200],
+    light: theme.colors.gray[900],
+  };
+
+  const dateColors = {
+    dark: theme.colors.gray[400],
+    light: '#555555',
+  };
 
   const date = post._enabledAt || post.date;
 
@@ -70,12 +83,29 @@ const Post = ({ summary, mentions, post, previous, next }) => {
   return (
     <div className={style.post}>
       <div className={style.postContent}>
-        <Heading as="h1" className={style.title}>
-          {summary ? <Link to={postPath}>{title}</Link> : title}
+        <Heading as="h1" color={headerColors[colorMode]}>
+          {summary ? (
+            <Link
+              as={GatsbyLink}
+              style={{
+                color: headerColors[colorMode],
+                textDecoration: 'none',
+              }}
+              to={postPath}
+            >
+              {title}
+            </Link>
+          ) : (
+            title
+          )}
         </Heading>
-        <div className={style.meta}>
+        <Text
+          className={style.meta}
+          fontSize="1rem"
+          color={dateColors[colorMode]}
+        >
           {formattedDate} {author && <>— Written by {author}</>}
-        </div>
+        </Text>
         <TagsSummary tags={tags} />
         {coverImageContainer}
 

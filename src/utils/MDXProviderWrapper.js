@@ -23,6 +23,7 @@ const Aside = (props) => {
       borderColor={theme.colors.pink[400]}
       backgroundColor={theme.colors.pink[50]}
       margin="2rem 0 2rem -2rem"
+      color={theme.colors.gray[900]}
       {...props}
     />
   );

@@ -63,12 +63,12 @@
   font-size: larger;
 }
 
-.post h1 a,
-.post h2 a,
-.post h3 a,
-.post h4 a,
-.post h5 a,
-.post h6 a {
+body.dark-mode .post h1 a,
+body.dark-mode .post h2 a,
+body.dark-mode .post h3 a,
+body.dark-mode .post h4 a,
+body.dark-mode .post h5 a,
+body.dark-mode .post h6 a {
   color: #222;
 }
 
@@ -77,19 +77,10 @@
   margin: 0;
 }
 
-.title a {
-  text-decoration: none;
-}
-
 .coverImage {
   border-radius: 8px;
   margin-bottom: 15px;
   box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-}
-
-.meta {
-  font-size: 1rem;
-  color: #555555;
 }
 
 .readMore {
