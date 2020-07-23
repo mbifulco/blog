@@ -12,7 +12,7 @@ const NewsletterSignup = ({ tags }) => {
       <Flex
         border="1px solid #ddd"
         background="white"
-        width="525px"
+        maxWidth="525px"
         padding="12px"
         margin="0 auto"
         display="flex"
