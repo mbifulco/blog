@@ -57,6 +57,13 @@ module.exports = {
         ],
       },
     },
+    {
+      resolve: 'gatsby-plugin-chakra-ui',
+      options: {
+        isResettingCSS: true,
+        isUsingColorMode: false,
+      },
+    },
     `gatsby-transformer-yaml`,
     {
       resolve: `gatsby-source-filesystem`,
@@ -82,8 +89,9 @@ module.exports = {
     {
       resolve: `gatsby-source-filesystem`,
       options: {
-        name: `posts`,
-        path: `${__dirname}/src/posts/`,
+        name: `mdx-posts`,
+        type: 'mdx-posts',
+        path: `${__dirname}/src/data/posts/`,
       },
     },
     `gatsby-remark-images`,
@@ -100,20 +108,20 @@ module.exports = {
           },
         ],
         defaultLayouts: {
-          posts: require.resolve('./src/templates/post'),
+          posts: require.resolve('./src/templates/MdxPost'),
           default: require.resolve('./src/templates/singlePage'),
         },
       },
     },
-    {
-      resolve: 'gatsby-transformer-cloudinary',
-      options: {
-        cloudName: process.env.CLOUDINARY_CLOUD_NAME,
-        apiKey: process.env.CLOUDINARY_API_KEY,
-        apiSecret: process.env.CLOUDINARY_API_SECRET,
-        uploadFolder: 'gatsby-cloudinary',
-      },
-    },
+    // {
+    //   resolve: 'gatsby-transformer-cloudinary',
+    //   options: {
+    //     cloudName: process.env.CLOUDINARY_CLOUD_NAME,
+    //     apiKey: process.env.CLOUDINARY_API_KEY,
+    //     apiSecret: process.env.CLOUDINARY_API_SECRET,
+    //     uploadFolder: 'gatsby-cloudinary',
+    //   },
+    // },
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
     {
@@ -133,16 +141,6 @@ module.exports = {
             options: {
               maxWidth: 800,
               quality: 100,
-            },
-          },
-          {
-            resolve: `gatsby-remark-prismjs`,
-            options: {
-              classPrefix: 'language-',
-              inlineCodeMarker: null,
-              aliases: {},
-              showLineNumbers: false,
-              noInlineHighlight: false,
             },
           },
         ],

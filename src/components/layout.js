@@ -52,6 +52,7 @@ const Layout = ({ children }) => {
         menuMoreText={menuMoreText}
       />
       <div className={classes.content}>{children}</div>
+
       <Footer />
     </div>
   );

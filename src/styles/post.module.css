@@ -1,47 +1,86 @@
 .post {
   width: 100%;
-  max-width: 800px;
   text-align: left;
-  padding: 20px;
   margin: 0 auto 10px;
-
-  @media (--tablet) {
-    max-width: 660px;
-    padding: 20px 10px;
-  }
-
-  @media (--phone) {
-    padding: 20px 10px;
-  }
-
-  h1 {
-    margin: 0;
-  }
-
-  img {
-    max-width: 100%;
-  }
-
-  * {
-    overflow-wrap: anywhere;
-  }
+  font-weight: normal;
+  font-size: larger;
+  font-family: var(--font-stack);
 }
 
-.title {
-  a {
-    text-decoration: none;
-  }
+.post * {
+  overflow-wrap: anywhere;
+}
+
+.post img {
+  max-width: 100%;
+}
+
+.post a {
+  color: #ef0247;
+  text-decoration: underline;
+}
+
+.post a:hover {
+  text-decoration: none;
+}
+
+.post p {
+  margin-bottom: 1rem;
+}
+
+.post pre {
+  background-color: #1a1a1d;
+  font-size: small;
+  border-radius: 0.25rem;
+  padding: 1.5rem;
+  color: #ccc;
+}
+
+.post figure img {
+  margin: 0 auto;
+}
+.post figure figcaption {
+  font-size: 1rem;
+  border-left: 10px solid #ef0247;
+  padding-left: 0.5rem;
+  margin-top: 1rem;
+  font-style: italic;
+  transition: all 0.1s;
+}
+
+.post figure figcaption:hover {
+  border-left-width: 5px;
+}
+
+.post h1,
+.post h2,
+.post h3,
+.post h4,
+.post h5,
+.post h6 {
+  margin: 1rem 0;
+  font-weight: bold;
+  font-size: larger;
+}
+
+body.dark-mode .post h1 a,
+body.dark-mode .post h2 a,
+body.dark-mode .post h3 a,
+body.dark-mode .post h4 a,
+body.dark-mode .post h5 a,
+body.dark-mode .post h6 a {
+  color: #222;
+}
+
+.post h1 {
+  font-size: 2.625rem;
+  margin: 0;
 }
 
 .coverImage {
   border-radius: 8px;
   margin-bottom: 15px;
   box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-}
-
-.meta {
-  font-size: 1rem;
-  color: #555555;
 }
 
 .readMore {
@@ -54,4 +93,8 @@
 
 .postContent {
   position: relative;
+}
+
+p {
+  max-width: 70ch;
 }

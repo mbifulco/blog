@@ -1,16 +1,16 @@
 import React from 'react';
 
-import Layout from '../../components/layout';
-import { NewsletterSignup } from '../../components/NewsletterSignup';
+import { Heading } from '@chakra-ui/core';
 
-import classes from './NewsletterPage.module.css';
+import { DefaultLayout as Layout } from '../../components/Layouts';
+import { NewsletterSignup } from '../../components/NewsletterSignup';
 
 const NewsletterPage = () => {
   return (
     <Layout>
-      <div className={classes.container}>
-        <h1>Join the newsletter</h1>
-      </div>
+      <Heading as="h1" marginBottom="2rem">
+        Join the newsletter
+      </Heading>
       <NewsletterSignup />
     </Layout>
   );

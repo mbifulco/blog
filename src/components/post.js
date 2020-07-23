@@ -1,11 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'gatsby';
+import { Link as GatsbyLink } from 'gatsby';
 import Img from 'gatsby-image';
 import moment from 'moment';
 import { getImageUrl } from 'takeshape-routing';
+import { MDXRenderer } from 'gatsby-plugin-mdx';
 
-import { NewsletterSignup } from './NewsletterSignup';
+import { Heading, Link, Text, useColorMode, useTheme } from '@chakra-ui/core';
+
 import MentionsSummary from './mentionsSummary';
 import TagsSummary from './tagsSummary';
 import Navigation from './navigation';
@@ -14,20 +16,36 @@ import style from '../styles/post.module.css';
 const Post = ({ summary, mentions, post, previous, next }) => {
   const {
     author,
-    _enabledAt: date,
     excerpt,
     featureImage,
     bodyHtml: html,
+    bodyMdx,
     path,
     tags,
     title,
   } = post;
+
+  const theme = useTheme();
+  const { colorMode } = useColorMode();
+
+  const headerColors = {
+    dark: theme.colors.gray[200],
+    light: theme.colors.gray[900],
+  };
+
+  const dateColors = {
+    dark: theme.colors.gray[400],
+    light: '#555555',
+  };
+
+  const date = post._enabledAt || post.date;
+
   const previousPath = previous && previous.path;
   const previousLabel = previous && previous.title;
   const nextPath = next && next.path;
   const nextLabel = next && next.title;
 
-  const postPath = `/${path}`;
+  const postPath = `/posts/${path}`;
 
   const coverImageUrl =
     featureImage &&
@@ -63,44 +81,60 @@ const Post = ({ summary, mentions, post, previous, next }) => {
   const formattedDate = moment(new Date(date)).format('DD MMMM YYYY');
 
   return (
-    <>
-      <div className={style.post}>
-        <div className={style.postContent}>
-          <h1 className={style.title}>
-            {summary ? <Link to={postPath}>{title}</Link> : title}
-          </h1>
-          <div className={style.meta}>
-            {formattedDate} {author && <>— Written by {author}</>}
-          </div>
-          <TagsSummary tags={tags} />
-          {coverImageContainer}
-
+    <div className={style.post}>
+      <div className={style.postContent}>
+        <Heading as="h1" color={headerColors[colorMode]}>
           {summary ? (
-            <>
-              <p>{excerpt}</p>
-              <Link to={postPath} className={style.readMore}>
-                Read more →
-              </Link>
-            </>
+            <Link
+              as={GatsbyLink}
+              style={{
+                color: headerColors[colorMode],
+                textDecoration: 'none',
+              }}
+              to={postPath}
+            >
+              {title}
+            </Link>
           ) : (
-            <>
-              {/* eslint-disable-next-line react/no-danger */}
-              <div dangerouslySetInnerHTML={{ __html: html }} />
-
-              <MentionsSummary mentions={mentions} />
-
-              <Navigation
-                previousPath={previousPath}
-                previousLabel={previousLabel}
-                nextPath={nextPath}
-                nextLabel={nextLabel}
-              />
-            </>
+            title
           )}
-        </div>
+        </Heading>
+        <Text
+          className={style.meta}
+          fontSize="1rem"
+          color={dateColors[colorMode]}
+        >
+          {formattedDate} {author && <>— Written by {author}</>}
+        </Text>
+        <TagsSummary tags={tags} />
+        {coverImageContainer}
+
+        {summary ? (
+          <>
+            <p>{excerpt}</p>
+            <Link to={postPath} className={style.readMore}>
+              Read more →
+            </Link>
+          </>
+        ) : (
+          <>
+            {/* eslint-disable-next-line react/no-danger */}
+            <div dangerouslySetInnerHTML={{ __html: html }} />
+
+            {bodyMdx && <MDXRenderer>{bodyMdx}</MDXRenderer>}
+
+            <MentionsSummary mentions={mentions} />
+
+            <Navigation
+              previousPath={previousPath}
+              previousLabel={previousLabel}
+              nextPath={nextPath}
+              nextLabel={nextLabel}
+            />
+          </>
+        )}
       </div>
-      {!summary && <NewsletterSignup tags={tags} />}
-    </>
+    </div>
   );
 };
 
@@ -108,7 +142,10 @@ Post.propTypes = {
   mentions: PropTypes.arrayOf(PropTypes.shape({})),
   post: PropTypes.shape({
     bodyHtml: PropTypes.string,
-    tags: PropTypes.arrayOf(PropTypes.object),
+    bodyMdx: PropTypes.string,
+    tags: PropTypes.arrayOf(
+      PropTypes.oneOfType([PropTypes.shape({}), PropTypes.string])
+    ),
     title: PropTypes.string,
     date: PropTypes.string,
     _enabledAt: PropTypes.string,

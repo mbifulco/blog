@@ -1,91 +1,16 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { graphql } from 'gatsby';
 
-import SEO from '../components/seo';
-import Layout from '../components/layout';
-import Post from '../components/post';
-import Navigation from '../components/navigation';
-import { NewsletterSignup } from '../components/NewsletterSignup';
+import { SEO, PostFeed } from '../components';
 
-const Index = (props) => {
-  const {
-    data,
-    location,
-    pageContext: { nextPagePath, previousPagePath },
-  } = props;
+import { DefaultLayout } from '../components/Layouts';
 
-  const { takeshape } = data;
-  const { posts } = takeshape;
-
+const PostsPage = () => {
   return (
-    <>
-      <SEO location={location} />
-      <Layout>
-        {posts.items.map((post, idx) => {
-          const { _id: id } = post;
-
-          const postElement = <Post post={post} key={id} summary />;
-
-          if (idx === 0) {
-            return (
-              <>
-                {postElement}
-                <NewsletterSignup hideStripe />
-              </>
-            );
-          }
-
-          return postElement;
-        })}
-
-        <Navigation
-          previousPath={previousPagePath}
-          previousLabel="Newer posts"
-          nextPath={nextPagePath}
-          nextLabel="Older posts"
-        />
-      </Layout>
-    </>
+    <DefaultLayout>
+      <SEO title="All posts" />
+      <PostFeed />
+    </DefaultLayout>
   );
 };
 
-Index.propTypes = {
-  data: PropTypes.object.isRequired,
-  location: PropTypes.shape({}),
-  pageContext: PropTypes.shape({
-    nextPagePath: PropTypes.string,
-    previousPagePath: PropTypes.string,
-  }),
-};
-
-export const postsQuery = graphql`
-  {
-    takeshape {
-      posts: getPostList(sort: [{ field: "_enabledAt", order: "DESC" }]) {
-        items {
-          body
-          bodyHtml
-          excerpt
-          path
-          title
-          featureImage {
-            path
-            description
-          }
-          _id
-          _version
-          _contentTypeId
-          _contentTypeName
-          _createdAt
-          _updatedAt
-          _enabled
-          _enabledAt
-          searchSummary
-        }
-      }
-    }
-  }
-`;
-
-export default Index;
+export default PostsPage;

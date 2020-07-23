@@ -13,9 +13,16 @@
   --dark-color-secondary: #73747b;
   --dark-border-color: #4a4b50;
 
+  --pink: #fd1e60;
+
   /* variables for js, must be the same as these in @custom-media queries */
   --phoneWidth: (max-width: 684px);
   --tabletWidth: (max-width: 900px);
+
+  --font-stack: 'Inter UI', -apple-system, BlinkMacSystemFont, 'Roboto',
+    'Segoe UI', Helvetica, Arial, sans-serif, 'apple color emoji',
+    'segoe ui emoji', 'android emoji', 'emojisymbols', 'emojione mozilla',
+    'twemoji mozilla', 'segoe ui symbol', 'noto color emoji';
 }
 
 @custom-media --phone (width < 684px);

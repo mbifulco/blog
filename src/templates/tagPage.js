@@ -5,7 +5,7 @@ import { Link, graphql } from 'gatsby';
 
 import Tag from '../components/tag';
 import Post from '../components/post';
-import Layout from '../components/layout';
+import { DefaultLayout as Layout } from '../components/Layouts';
 import classes from '../styles/post.module.css';
 
 const Tags = ({ pageContext, data }) => {

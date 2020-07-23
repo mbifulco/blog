@@ -11,7 +11,7 @@ const TwitchIcon = () => (
     height="1em"
     width="1em"
     preserveAspectRatio="xMidYMid meet"
-    style={{ verticalAlign: 'text-top', height: '1em', width: '1em' }}
+    style={{ verticalAlign: 'middle', height: '1em', width: '1em' }}
   >
     <g>
       <path d="M11.5,11.7c-0.8,0-1.4,0.7-1.4,1.6s0.6,1.6,1.4,1.6c0.8,0,1.4-0.7,1.4-1.6 C12.9,12.4,12.3,11.7,11.5,11.7L11.5,11.7z M16.6,11.7c-0.8,0-1.4,0.7-1.4,1.6s0.6,1.6,1.4,1.6c0.8,0,1.4-0.7,1.4-1.6 S17.4,11.7,16.6,11.7L16.6,11.7z" />

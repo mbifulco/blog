@@ -9,7 +9,7 @@ import { Helmet } from 'react-helmet';
 import { Link, graphql } from 'gatsby';
 
 import Tag from '../components/tag';
-import Layout from '../components/layout';
+import { DefaultLayout as Layout } from '../components/Layouts';
 
 import classes from '../styles/post.module.css';
 import tagsClasses from '../styles/tagsPage.module.css';

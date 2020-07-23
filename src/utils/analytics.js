@@ -1,6 +1,6 @@
 /* global fathom */
 
-import React, { createContext, useContext, useEffect } from 'react';
+import React, { createContext, useContext } from 'react';
 import PropTypes from 'prop-types';
 
 const AnalyticsContext = createContext({});
