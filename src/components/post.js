@@ -112,7 +112,11 @@ const Post = ({ summary, mentions, post, previous, next }) => {
         {summary ? (
           <>
             <p>{excerpt}</p>
-            <Link to={postPath} className={style.readMore}>
+            <Link
+              as={GatsbyLink}
+              to={postPath}
+              className={style.readMore}
+            >
               Read more →
             </Link>
           </>
