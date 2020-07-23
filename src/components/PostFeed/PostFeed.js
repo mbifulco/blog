@@ -11,6 +11,7 @@ const PostFeed = () => {
     switch (entry.type) {
       case 'takeshape': {
         postEl = <Post post={entry.post} key={entry.id} summary />;
+        break;
       }
       case 'mdx': {
         postEl = (
@@ -23,17 +24,22 @@ const PostFeed = () => {
             summary
           />
         );
+        break;
       }
       default:
         break;
     }
 
-    return (
-      <>
-        {idx === 1 && <NewsletterSignup />}
-        {postEl}
-      </>
-    );
+    if (idx === 1) {
+      return (
+        <div key="double-whammy">
+          {idx === 1 && <NewsletterSignup key="newsletter" />}
+          {postEl}
+        </div>
+      );
+    }
+
+    return postEl;
   });
 };
 
