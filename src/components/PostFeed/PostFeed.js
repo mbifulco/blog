@@ -1,18 +1,19 @@
 import React from 'react';
 
-import { Post } from '..';
+import { NewsletterSignup, Post } from '..';
 import { useRecentPosts } from '../../utils/recentPostsQuery';
 
 const PostFeed = () => {
   const recentPosts = useRecentPosts();
 
-  return recentPosts.map((entry) => {
+  return recentPosts.map((entry, idx) => {
+    let postEl = null;
     switch (entry.type) {
       case 'takeshape': {
-        return <Post post={entry.post} key={entry.id} summary />;
+        postEl = <Post post={entry.post} key={entry.id} summary />;
       }
       case 'mdx': {
-        return (
+        postEl = (
           <Post
             post={{
               ...entry.post,
@@ -24,8 +25,15 @@ const PostFeed = () => {
         );
       }
       default:
-        return null;
+        break;
     }
+
+    return (
+      <>
+        {idx === 1 && <NewsletterSignup />}
+        {postEl}
+      </>
+    );
   });
 };
 

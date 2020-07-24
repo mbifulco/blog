@@ -99,7 +99,7 @@ const DefaultLayout = ({ children }) => {
             </Stack>
           </Stack>
 
-          <Box>{children}</Box>
+          <Stack spacing={8}>{children}</Stack>
 
           <Box minHeight="5rem" marginTop="1rem">
             <Footer />
