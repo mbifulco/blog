@@ -13,6 +13,7 @@ const NewsletterSignup = ({ tags }) => {
         border="1px solid #ddd"
         background="white"
         width="525px"
+        maxWidth="100%"
         padding="12px"
         margin="0 auto"
         display="flex"
