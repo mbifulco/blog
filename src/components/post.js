@@ -12,11 +12,13 @@ import MentionsSummary from './mentionsSummary';
 import TagsSummary from './tagsSummary';
 import Navigation from './navigation';
 import style from '../styles/post.module.css';
+import { Image } from '.';
 
 const Post = ({ summary, mentions, post, previous, next }) => {
   const {
     author,
     excerpt,
+    coverImagePublicId,
     featureImage,
     bodyHtml: html,
     bodyMdx,
@@ -76,6 +78,10 @@ const Post = ({ summary, mentions, post, previous, next }) => {
         alt={coverImageAlt}
       />
     );
+  } else if (coverImagePublicId) {
+    coverImageContainer = (
+      <Image marginBottom="2em" publicId={coverImagePublicId} />
+    );
   }
 
   const formattedDate = moment(new Date(date)).format('DD MMMM YYYY');
@@ -112,11 +118,7 @@ const Post = ({ summary, mentions, post, previous, next }) => {
         {summary ? (
           <>
             <p>{excerpt}</p>
-            <Link
-              as={GatsbyLink}
-              to={postPath}
-              className={style.readMore}
-            >
+            <Link as={GatsbyLink} to={postPath} className={style.readMore}>
               Read more →
             </Link>
           </>
@@ -153,6 +155,7 @@ Post.propTypes = {
     title: PropTypes.string,
     date: PropTypes.string,
     _enabledAt: PropTypes.string,
+    coverImagePublicId: PropTypes.string,
     featureImage: PropTypes.shape({
       childImageSharp: PropTypes.object,
       description: PropTypes.string,

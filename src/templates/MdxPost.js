@@ -15,7 +15,14 @@ import WebmentionMetadata from '../components/webmentionMetadata';
 const MdxPostTemplate = ({ data, pageContext, location }) => {
   const { body, excerpt, frontmatter } = data.post;
 
-  const { published, date, path, tags, title } = frontmatter;
+  const {
+    published,
+    date,
+    path,
+    tags,
+    title,
+    coverImagePublicId,
+  } = frontmatter;
   const { mentions } = data;
 
   if (!published && process.env.NODE_ENV === 'production') return null;
@@ -44,6 +51,7 @@ const MdxPostTemplate = ({ data, pageContext, location }) => {
       <Post
         key={pageContext.id}
         post={{
+          coverImagePublicId,
           date,
           tags,
           title,
@@ -98,6 +106,7 @@ export const pageQuery = graphql`
       body
       excerpt
       frontmatter {
+        coverImagePublicId
         date
         path
         published

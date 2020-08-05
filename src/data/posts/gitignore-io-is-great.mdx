@@ -1,0 +1,90 @@
+---
+title: gitignore.io is great
+type: post
+date: 08-05-2020
+coverImagePublicId: gitignore-io-cover
+published: true
+path: gitignore-io-is-great
+tags: [developer, tools, productivity]
+---
+
+Put simply, [gitignore.io](https://gitignore.io) is a that is so profoundly helpful that I've _forgotten what life was like without it._
+
+Its purpose is simple: for any project you're working on, it'll generate a valid [`.gitignore`](https://docs.github.com/en/rest/reference/gitignore) file for you. All you need to do is use the autocomplete box provided to describe the type of project you're working on:
+
+<Image
+  publicId="gitignore-fill-in-the-blanks"
+  border="2px solid #888"
+  borderRadius="1rem"
+/>
+
+<Aside type="note">
+  A <em>.gitignore</em> file is used to tell git to <em>exclude</em> files from
+  being added to a given repo. Each line of the file represents a filename,
+  directory, or pattern. When git looks for changes in your working directory,
+  it will automatically ignore any file that matches an entry in your .gitignore
+  file.
+</Aside>
+
+From there, you'll hit the `Create` button, which will bring you to a page that displays nothing but the raw text which you'll need to add to your project's `.gitignore`. If you selected just `react`, for example this is what you'd see on the next page:
+
+```bash
+# Created by https://www.toptal.com/developers/gitignore/api/react
+# Edit at https://www.toptal.com/developers/gitignore?templates=react
+
+### react ###
+.DS_*
+*.log
+logs
+**/*.backup.*
+**/*.back.*
+
+node_modules
+bower_components
+
+*.sublime*
+
+psd
+thumb
+sketch
+
+# End of https://www.toptal.com/developers/gitignore/api/react
+```
+
+That's all there is to it, too! I use it on the vast majority of projects I work on, new and old, and as far as I can tell, it hasn't let me down in any meaningful way.
+
+## It's Open Source!
+
+One of the reasons I like this tool so much is that it gets better the more people use it. Is it missing support for a project type that you work with? Go ahead and submit a [Pull Request](https://github.com/toptal/gitignore.io), and it may be integrated into the product one day. Or, if you're not quite comfortable with a full-on PR, you can start the discussion in an issue on the repo. Maybe something isn't working like you'd expect -- and it's worth pitching in your two cents in the discussion on an open issue. _All of that_ is contributing to Open Source -- don't forget!
+
+As I understand it, it was created by [@joeblau](https://twitter.com/joeblau), and quickly gained momentum with developers. As I write this post, there are [**135** contributors](https://github.com/toptal/gitignore.io/graphs/contributors) on the project.
+
+[Gitignore.io](https://gitignore.io) is a great example of a successful Open Source tool born out of the desire for an improved developer workflow. It currently appears to be operated by [TopTal](https://www.toptal.com/), a company that helps freelancers find work.
+
+<Aside type="info">
+  <small>
+    (note for transparency: I have no connection to TopTal, and this is not a
+    sponsored post. I do work for{' '}
+    <a
+      href="https://aquent.com?utm_campaign=mikebifulco&utm_source=mikebifulco.com&utm_content=gitignore-io-is-great"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      Aquent
+    </a>
+    , which is a creative staffing agency. If you're looking for work, give us a
+    look!).
+  </small>
+</Aside>
+
+## There's a CLI
+
+If you prefer it, there's a [CLI](https://docs.gitignore.io/install/command-line) which will help you generate gitignore files, powered by this same project. I can't say I've used it, but I know some of you will want to give it a go, so it's worth mentioning
+
+## There's other options, too
+
+If you don't find gitignore.io particularly appealing, there's always other ways to cretae your `.gitignore` file. You can write it by hand, or grab one from another project you work on. [GitHub also maintains a repo](https://github.com/github/gitignore) of popular gitignore files, which seems to be updated quite frequently as well.
+
+### Was this helpful?
+
+If you found this useful, I'd love it if you subscribed to my mailing list. Details are below!
