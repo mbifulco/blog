@@ -14,6 +14,7 @@ export const useRecentPosts = () => {
           nodes {
             id
             frontmatter {
+              coverImagePublicId
               date
               published
               tags

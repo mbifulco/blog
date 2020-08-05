@@ -79,7 +79,9 @@ const Post = ({ summary, mentions, post, previous, next }) => {
       />
     );
   } else if (coverImagePublicId) {
-    <Image publicId={coverImagePublicId} />;
+    coverImageContainer = (
+      <Image marginBottom="2em" publicId={coverImagePublicId} />
+    );
   }
 
   const formattedDate = moment(new Date(date)).format('DD MMMM YYYY');
