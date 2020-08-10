@@ -12,14 +12,13 @@ const NewsletterSignup = ({ tags }) => {
       <Flex
         border="1px solid #ddd"
         background="white"
-        width="525px"
-        maxWidth="100%"
-        padding="12px"
+        maxWidth="525px"
+        padding="1rem 2rem"
         margin="0 auto"
         display="flex"
         justifyContent="center"
       >
-        <Box maxWidth="420px" margin="2rem 0">
+        <Box maxWidth="calc(100vw - 2rem)" margin="2rem 0">
           <Flex direction="row" justifyContent="center" marginBottom="0.5rem">
             <Headshot />
           </Flex>
