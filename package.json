@@ -33,6 +33,7 @@
     "@material-ui/lab": "^4.0.0-alpha.56",
     "@mdx-js/mdx": "^1.6.16",
     "@mdx-js/react": "^1.6.16",
+    "@pauliescanlon/gatsby-mdx-embed": "^0.0.25",
     "@weknow/gatsby-remark-twitter": "^0.2.3",
     "dotenv": "^8.2.0",
     "emotion-theming": "^10.0.27",
