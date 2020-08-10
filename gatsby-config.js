@@ -113,6 +113,7 @@ module.exports = {
         },
       },
     },
+    '@pauliescanlon/gatsby-mdx-embed',
     // {
     //   resolve: 'gatsby-transformer-cloudinary',
     //   options: {

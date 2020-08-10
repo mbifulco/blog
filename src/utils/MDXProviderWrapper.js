@@ -2,6 +2,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
 import { MDXProvider } from '@mdx-js/react';
+import { MdxEmbedProvider } from '@pauliescanlon/gatsby-mdx-embed';
 
 import { Code, Box, Heading, useTheme } from '@chakra-ui/core';
 import Highlight, { defaultProps } from 'prism-react-renderer';
@@ -108,7 +109,9 @@ const components = {
 
 // eslint-disable-next-line react/prop-types
 const MDXProviderWrapper = ({ children }) => (
-  <MDXProvider components={components}>{children}</MDXProvider>
+  <MdxEmbedProvider>
+    <MDXProvider components={components}>{children}</MDXProvider>
+  </MdxEmbedProvider>
 );
 
 export default MDXProviderWrapper;
