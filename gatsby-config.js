@@ -109,7 +109,7 @@ module.exports = {
     {
       resolve: 'gatsby-transformer-cloudinary',
       options: {
-        cloudName: process.env.CLOUDINARY_CLOUD_NAME,
+        cloudName: process.env.GATSBY_CLOUDINARY_CLOUD_NAME,
         apiKey: process.env.CLOUDINARY_API_KEY,
         apiSecret: process.env.CLOUDINARY_API_SECRET,
         uploadFolder: 'gatsby-cloudinary',
