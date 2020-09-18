@@ -2592,6 +2592,15 @@
   dependencies:
     defer-to-connect "^1.0.1"
 
+"@takeshape/routing@^5.28.0":
+  version "5.28.0"
+  resolved "https://registry.yarnpkg.com/@takeshape/routing/-/routing-5.28.0.tgz#a560f713b49895d6c2c6a5edba3db4b72f58a92d"
+  integrity sha512-KlJq/u/x2Ym9piepbapaHZFxxI52iA8sHT+t3Kk4H7J71sKu5Aix0vES0I3LqD9pA5jhabAhEMMyQ05jZ5SFGw==
+  dependencies:
+    lodash "^4.17.15"
+    query-string "^6.5.0"
+    slugg "^1.1.0"
+
 "@turist/fetch@^7.1.6":
   version "7.1.6"
   resolved "https://registry.yarnpkg.com/@turist/fetch/-/fetch-7.1.6.tgz#85eb342e8dee82fe9c7e2fbfa2773abd776f0b62"
@@ -16123,14 +16132,6 @@ table@^5.2.3:
     lodash "^4.17.14"
     slice-ansi "^2.1.0"
     string-width "^3.0.0"
-
-takeshape-routing@^5.0.4:
-  version "5.0.4"
-  resolved "https://registry.yarnpkg.com/takeshape-routing/-/takeshape-routing-5.0.4.tgz#ac7b4ea10596612bb21163fb5ba4c25c18cb5c7f"
-  integrity sha512-ll6Utg03DI5izlEME8ZEJg3R1Uub6H7NAy+MAdOqNG33nZWy6Biwv6UaT2EL1MOzqv2byqLuK67vBA87rhQzCQ==
-  dependencies:
-    query-string "^6.5.0"
-    slugg "^1.1.0"
 
 tapable@^1.0.0, tapable@^1.1.3:
   version "1.1.3"

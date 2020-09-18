@@ -34,6 +34,7 @@
     "@mdx-js/mdx": "^1.6.16",
     "@mdx-js/react": "^1.6.16",
     "@pauliescanlon/gatsby-mdx-embed": "^0.0.28",
+    "@takeshape/routing": "^5.28.0",
     "@weknow/gatsby-remark-twitter": "^0.2.3",
     "dotenv": "^8.2.0",
     "emotion-theming": "^10.0.27",
@@ -70,7 +71,6 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-helmet": "^6.1.0",
-    "takeshape-routing": "^5.0.4",
     "use-cloudinary": "^3.1.6"
   },
   "devDependencies": {
