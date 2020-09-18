@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { graphql } from 'gatsby';
-import { getImageUrl } from 'takeshape-routing';
+import { getImageUrl } from '@takeshape/routing';
 
 import SEO from '../components/seo';
 import { DefaultLayout as Layout } from '../components/Layouts';
