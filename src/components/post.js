@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Link as GatsbyLink } from 'gatsby';
 import Img from 'gatsby-image';
 import moment from 'moment';
-import { getImageUrl } from 'takeshape-routing';
+import { getImageUrl } from '@takeshape/routing';
 import { MDXRenderer } from 'gatsby-plugin-mdx';
 
 import { Heading, Link, Text, useColorMode, useTheme } from '@chakra-ui/core';

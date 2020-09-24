@@ -6,7 +6,7 @@ import { Image as Img } from '@chakra-ui/core';
 import { useImage } from 'use-cloudinary';
 
 function Image(props) {
-  const { publicId, transformations, width, height, alt } = props;
+  const { publicId, transformations, width, height, alt, caption } = props;
   const { generateUrl, url, status, error } = useImage({
     cloudName: process.env.GATSBY_CLOUDINARY_CLOUD_NAME,
   });
@@ -42,21 +42,25 @@ function Image(props) {
   if (status === 'error') return <p>{error.message}</p>;
 
   return (
-    <Img
-      // eslint-disable-next-line react/jsx-props-no-spreading
-      {...props}
-      // we also have changed `data` to `url` to better describe what `generateUrl` gives us back and makes more sense to pass to `src`
-      styles={{
-        width,
-        height,
-      }}
-      src={url}
-      alt={alt}
-    />
+    <figure>
+      <Img
+        // eslint-disable-next-line react/jsx-props-no-spreading
+        {...props}
+        // we also have changed `data` to `url` to better describe what `generateUrl` gives us back and makes more sense to pass to `src`
+        styles={{
+          width,
+          height,
+        }}
+        src={url}
+        alt={alt}
+      />
+      {caption && <figcaption>{caption}</figcaption>}
+    </figure>
   );
 }
 
 Image.propTypes = {
+  caption: PropTypes.oneOf([PropTypes.string, PropTypes.node]),
   publicId: PropTypes.string,
   transformations: PropTypes.arrayOf(PropTypes.string),
   width: PropTypes.string,
