@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Box, Link, Stack, useTheme } from '@chakra-ui/core';
+import { Box, Link, Stack, useTheme } from '@chakra-ui/react';
 
 import { SocialLinks } from './SocialLinks';
 

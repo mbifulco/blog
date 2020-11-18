@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { map } from 'lodash';
 
-import { Flex } from '@chakra-ui/core';
+import { Flex } from '@chakra-ui/react';
 
 import Tag from './tag';
 

@@ -6,7 +6,7 @@ import moment from 'moment';
 import { getImageUrl } from '@takeshape/routing';
 import { MDXRenderer } from 'gatsby-plugin-mdx';
 
-import { Heading, Link, Text, useColorMode, useTheme } from '@chakra-ui/core';
+import { Heading, Link, Text, useColorMode, useTheme } from '@chakra-ui/react';
 
 import MentionsSummary from './mentionsSummary';
 import TagsSummary from './tagsSummary';

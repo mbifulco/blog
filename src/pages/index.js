@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Link, Text, useTheme } from '@chakra-ui/core';
+import { Box, Link, Text, useTheme } from '@chakra-ui/react';
 
 import { DefaultLayout } from '../components/Layouts';
 import { Image, PostFeed } from '../components';

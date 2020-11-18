@@ -2,7 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Link, Stack } from '@chakra-ui/core';
+import { Link, Stack } from '@chakra-ui/react';
 
 import { GitHubIcon, TwitterIcon, TwitchIcon, RssIcon } from '../icons';
 

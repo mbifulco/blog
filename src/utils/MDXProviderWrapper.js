@@ -4,7 +4,7 @@ import React from 'react';
 import { MDXProvider } from '@mdx-js/react';
 import { MdxEmbedProvider } from '@pauliescanlon/gatsby-mdx-embed';
 
-import { Code, Box, Heading, useTheme } from '@chakra-ui/core';
+import { Code, Box, Heading, useTheme } from '@chakra-ui/react';
 import Highlight, { defaultProps } from 'prism-react-renderer';
 import prismTheme from 'prism-react-renderer/themes/nightOwl';
 
