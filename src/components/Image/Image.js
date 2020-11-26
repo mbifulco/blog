@@ -2,7 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Image as Img } from '@chakra-ui/core';
+import { Image as Img } from '@chakra-ui/react';
 import { useImage } from 'use-cloudinary';
 
 function Image(props) {

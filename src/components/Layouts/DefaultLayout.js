@@ -11,7 +11,7 @@ import {
   Text,
   useColorMode,
   useTheme,
-} from '@chakra-ui/core';
+} from '@chakra-ui/react';
 
 import { Footer, SEO, SocialLinks } from '..';
 import MDXProviderWrapper from '../../utils/MDXProviderWrapper';

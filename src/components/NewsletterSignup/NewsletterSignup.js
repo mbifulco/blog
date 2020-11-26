@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Box, Flex, Heading, Text } from '@chakra-ui/core';
+import { Box, Flex, Heading, Text } from '@chakra-ui/react';
 
 import { Headshot } from '../Headshot';
 import { SubscriptionForm } from '../SubscriptionForm';

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Flex, Heading, useTheme, useColorMode } from '@chakra-ui/core';
+import { Flex, Heading, useTheme, useColorMode } from '@chakra-ui/react';
 
 import SEO from '../components/seo';
 import { DefaultLayout as Layout } from '../components/Layouts';
