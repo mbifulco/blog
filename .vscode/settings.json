@@ -1,5 +1,4 @@
 {
-  "editor.formatOnSave": true,
   "editor.formatOnPaste": true,
   "editor.formatOnType": true,
   "debug.node.autoAttach": "off",

@@ -19,7 +19,7 @@ const HomePage = () => {
           publicId="mike-headshot-square"
           objectFit="contain"
           objectPosition="bottom"
-          height="250"
+          height="250px"
           marginRight={[0, 0, '1rem']}
         />
         <Box maxWidth="50ch">
@@ -44,6 +44,10 @@ const HomePage = () => {
               GitHub
             </Link>
             .
+          </Text>
+          <Text fontSize="xl" fontWeight="normal" fontStyle="italic" margin="0">
+            I work at Google -- but the things I post here are my own, and don't
+            necessarily reflect Google's views or opinions.
           </Text>
         </Box>
       </Box>

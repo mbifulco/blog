@@ -4,8 +4,8 @@ import React from 'react';
 import { MDXProvider } from '@mdx-js/react';
 import { MdxEmbedProvider } from '@pauliescanlon/gatsby-mdx-embed';
 
-import { Code, Box, Heading, useTheme } from '@chakra-ui/react';
-import Highlight, { defaultProps } from 'prism-react-renderer';
+import { Code, Box, Heading, Text, useTheme } from '@chakra-ui/react';
+import PrismHighlight, { defaultProps } from 'prism-react-renderer';
 import prismTheme from 'prism-react-renderer/themes/nightOwl';
 
 import { Image } from '../components';
@@ -45,6 +45,10 @@ const Aside = (props) => {
   );
 };
 
+const Highlight = (props) => {
+  return <Text as="mark" {...props} />;
+};
+
 const InlineCode = (props) => (
   <Code
     color="rgb(214, 222, 235)"
@@ -61,7 +65,7 @@ const Pre = (props) => {
   const matches = classNames.match(/language-(?<lang>.*)/);
   return (
     <Box marginBottom="2rem" marginTop="2rem">
-      <Highlight
+      <PrismHighlight
         {...defaultProps}
         theme={prismTheme}
         code={props.children.props.children}
@@ -86,7 +90,7 @@ const Pre = (props) => {
             })}
           </pre>
         )}
-      </Highlight>
+      </PrismHighlight>
     </Box>
   );
 };
@@ -95,6 +99,7 @@ const ImageWrapper = (props) => <Image marginBottom="1rem" {...props} />;
 
 const components = {
   Aside,
+  Highlight,
   Image: ImageWrapper,
   inlineCode: InlineCode,
   h1: H1,

@@ -1,0 +1,157 @@
+---
+title: 'Book notes: Working In Public'
+type: post
+date: 11-30-2020
+coverImagePublicId: "posts/working-in-public/working-in-public"
+published: true
+path: working-in-public
+tags: [developer, tools, productivity, book]
+---
+
+I recently finished reading _Working in Public: The Making and Maintenance of Open Source Software_ by [Nadia Eghbal](https://nadiaeghbal.com/), thanks to a book club organized by [Chris Traganos](https://twitter.com/chris_trag) at [Stripe](https://press.stripe.com/). While I can't say this is a book I would have found my way to own my own, I found myself tearing through it far more quickly than I would have guessed. I'd fully recommend giving it a read - you can pick it up on [Amazon](https://smile.amazon.com/Working-Public-Making-Maintenance-Software/dp/0578675862).
+
+Below is a pretty raw copy/paste of my notes on _Working in Public_, which I take in Roam Research as I read. If you'd like to discuss any of this with me, drop me a line on [twitter @irreverentmike](https://twitter.com/irreverentmike).
+
+**Notes on _Working in Public_**
+
+# Part 1
+
+## Chapter 2: The Structure of an Open Source Project
+
+- &#8203;
+  <Highlight>
+    Developers don't contribute to open source for lack of technical ability, but rather due to fear of committing a faux pas
+  </Highlight>
+  - There's a huge hurdle to get over here, particularly for new contributors. Even
+  sending a very small PR or opening an issue has a mental tax associated with it
+  that can prevent progress, community from being built
+- &#8203;
+  <Highlight>
+    The process of getting a change approved depends, among other things, on the
+    **complexity** of the change (and the complexity of the project), as well as
+    one's **reputation** among those with the ability to approve the change.
+  </Highlight>
+  
+  - Reputation is a tricky currency, particularly when some folks build clout by
+  being funny / sarcastic to gain viral notoriety. This doesn't necessarily equate
+  to value to the community or trustworthiness, but often can be parlayed into exactly
+  that.
+- &#8203;
+  <Highlight>
+    If a project's contributor base is growing rapidly, and there is enough work
+    to hand off, maintainers may start to distribute work more widely. In a
+    **distributed** state, maintainers actively recruit more contributors to
+    pitch in, with the goal of retaining them in the project.
+  </Highlight>
+
+  - At some point, the success of a project causes a requirement for a shift in operations
+  - from building the thing to **supporting** it, and recruiting community members
+    to help get things done on either end of that. Teams' ability to make that pivot
+    is critical to success.
+
+- &#8203;
+  <Highlight>
+    Healthy open source (re: node.js contribution policy)
+  </Highlight>
+  
+  - Design a contribution policy and code of conduct which entices contributors **and** retains them. Based on my experience, this is the magic in getting something over the hump from being fledgling to more broadly successful.
+
+## Chapter 3: Roles, incentives, and relationships
+
+- Open source developers were frequently characterized as "hobby" devlopers
+  - Hm! TIL.
+- A theory of the commons
+  - In the last half of the 1900s, economist Elinor Ostrom came up with an 8-part theory to what makes up a successful "Commons", or resource that is owned, used, and managed by a community. These rules outline the basic tenets of what makes a successful commons, and apply directly to successful OSS in many ways.
+  - Making sure members are biased toward **working together** is a key to success. This may mean distributing knowledge and capability so that everyone has value and meaning, and no one person can hold up the process. Obviously encouraging collaboration is a valuable outcome here, too - so empowering folks to use each other as a resource is extremely helpful.
+- &#8203;
+  <Highlight>
+    Intrinsic motivation makes it easier for people to self-organize to achieve
+    the same outcome.
+  </Highlight>
+
+- The newcomer effect
+  - &#8203;
+    <Highlight>
+      "Because newcomers have not yet developed commitment to the group and have
+      not yet learned how the group operates, it is rational for established
+      group members to distrust them"
+    </Highlight>
+  - This happens all the time in OSS - many projects have core maintainers who
+    do all the work, and a significant amount of gatekeeping by way of bluntly shutting
+    down PRs or issues when they're disinterested in them. It's fair to say that
+    for the contributors getting shut down, a steady and consistent participation
+    in the project will help them get notice, but it can feel like an unfair hurdle,
+    too. What might be a more equitable solution to this? Not empowering code owners
+    as much? Adding an objective, third party moderator to make some decisions?
+- All Contributors
+  - https://allcontributors.org/
+  - Recognize All Contributors Including those that don't push code
+- On Contributors...
+  - Again, I'm reminded of the madness of Hacktoberfest 2020 - lots of garbage contributions from people just trying to get a free t-shirt does not make for good OSS, good community, or good contributions.
+  - &#8203;<Highlight>Bus Factor</Highlight> is the number of contributors in a project
+    who would need to be hit by a bus for it to be in jeopardy. lol
+
+# Part 2: How People Maintain
+
+## Chapter 4: The Work Required by Software
+
+- 
+  Software, once written is never really finished. Chasing the feeling of a "finished" app/program/site is something that took me FOREVER to get over. I never felt like I had done anything, because nothing ever got to the finish line. It turns out that the finish line doesn't exist, and a decade+ of building "incomplete" things was the catalyst that I needed to figure that out. As such, <Highlight>greenfield</Highlight> projects are "coveted" because they're a blank canvas, enabling us to chase that feeling of a fresh _starting line_ to point us to a goal that is always just past the horizon. It's a feeling of hope - and thankfully a beneficial one, as rebuilding software from scratch is often inherently beneficial. Neat.
+- &#8203;
+  <Highlight>Free as in speech, not as in beer</Highlight> vs <Highlight>free as in puppy</Highlight> is a brilliant analogy
+- &#8203;
+  <Highlight>
+    By focusing too much on iterating upon their incumbent product, companies
+    risk missing major opportunities for so-called "disruptive innovation,"
+    which eventually replaces existing products. - Clayton Christensen in Book: The Innovator's Dilemma
+  </Highlight>
+  
+
+- The anecdote about Sophie Alpert being offered $600 to **open a PR on someone's project** because it would draw positive attention is mind-blowing.
+  - "Is this what it feels like to be an influencer?" - Sophie
+- &#8203;
+  <Highlight>
+    We can think of a creator's reputation as a "battery," or store of value,
+    for attention. More followers mean more attention in the bank, but when
+    people follow a creator they do so because they expect to receive more
+    content. If creators don't produce anything new, their followers will
+    eventually get bored and leave. Reputation, like software, requires
+    maintenance over time.
+  </Highlight>
+
+## Chapter 5: Managing the Costs of Production
+
+-
+  Absolutely mind-blowing that at one point, cryptographic code was treated the same as munitions by the US government. Early developers of OpenSSL <Highlight>had to become licensed arms dealers to be able to write and "export" (i.e., distribute) their code.</Highlight>
+  - This is an implicit declaration that certain types of technical solutions can be weaponized, and perhaps just as importantly that sometime in the past, some of our legislators had a reasonable understanding of this. In the US, at least, it's apparent that this is no longer the case. Don't believe me? Pull up a congressional hearing with Tim Cook, Zuckerberg, etc
+  - Relatedly, it is asymptotically difficult for lawmakers to keep up with the changing pace of technology. There's a decent argument to be made for a citizen-run, or commons-run governing body for technical regulation, rather that trusting some crusty old white men from flyover states whose pre-government professional lives weren't the least bit technical.
+- 
+  &#8203;
+  <Highlight>
+    When software is in static state, **what if there is no free-rider
+    problem?** When code is non-rivalrous, it only has first-copy costs, which
+    the creator is intrinsically motivated to provide -- so the problem doesn't
+    seem to lie in how many people **consume** it. For this reason, I'm
+    skeptical of attempts to charge for access to information, whether it's
+    newspaper articles or open source software.
+  </Highlight>
+
+- This hints at one of the most fascinating things about content creators online. Virtually all of the really, truly successful creators are driven by an enjoyment of creating and sharing -- and might not typically start creating as a business. Often times it takes hundreds of youtube videos, or dozens of podcast episodes, blog posts, etc to get any kind of sizeable following. It's those with the fortitude and perseverance to continue without an audience that find success. Perhaps the audience is their reward, or perhaps the audience is a natural byproduct of the law of large numbers: create enough of something, and put it out into the world, and **some size** of audience will find you.
+- &#8203;
+  <Highlight>
+    At a high level, it's also possible that throwing away projects and starting
+    fresh is the most cos-effective approach: rebuilding the whole system, piece
+    by piece.
+  </Highlight>
+
+- There are many companies that operate like this - occasionally dropping an existing product for a **completely new** rewrite. This has been done with projects as small as weather apps and as large as Windows and MacOS, and is often a good decision. It strikes me that this is often only possible due to a luxury of funding, time, and resources. Imagine telling a scrappy startup that their best bet is to ditch their entire source library, and start anew. It wouldn't work! Many fledgling companies fall apart because of early and inflexible assumptions made, or technical debt built up to save time. The luckiest of them find success despite this debt, and carry on to be successful. I'd imagine this success often brings about an effort to rebuild the plane while it's flying, in a modern Ship of Theseus paradox.
+- Automation! This section rang true with me to the core. When building [smpl](https://smpl.io), our biggest superpower was automation. It made our engineering team of 2 feel much larger than it was, and helped us to execute successfully and dependably. To this day I think that process automation is the closest thing I have to a superpower.
+- It's interesting that a book about OSS has me thinking about work, content, and contributions outside of software so often. So much of what's discussed here has interesting implications politically, socially, and in content creation of any sort for public consumption (art, blogs, youtube, instagram, etc)
+- I didn't know about [dear-github](https://github.com/dear-github/dear-github) or its relatives [dear-github2](https://github.com/drop-ice/dear-github-2.0) and [isaacs/github](https://github.com/isaacs/github). It'll be interesting to give these a read. As of this writing, `dear-github2` has had activity as recently as 2 weeks ago
+
+### The role of Money in OSS
+
+- Companies pay for access, attention, and feature proposals. This can often have adverse effects: companies are essentially skipping the line to pay for attention, and as a result aren't vetted by the same processes as other OSS Contributors (particularly those who request fixes and features). This can be a governance nightmare, and can cause mistrust in a project if done incorrectly.
+- Advertising in OSS projects has real untapped potential, but often gets shot down. There was a product called Code Fund by Eric Berry which aimed to put ads into the readmes of OSS repos on github. It rose to $24k/mo revenue in 4 months before GitHub shut it down as a violation of their ToS.
+- Trivago appears as a sponsor on Webpack, and this has helped them to recruit JavaScript developers, who see them as a good company to work for as a result of their support.
+- An interesting difference in funding projects comes by way of GitHub's sponsors feature (and other services like Pateron), whose goals are more oriented towards having individuals back a **contributor** (rather than a project) on a monthly basis. The subscription is seen as a vote of confidence in the person, rather than slippery backing for a single project.
