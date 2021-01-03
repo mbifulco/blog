@@ -268,13 +268,18 @@ hr {
   padding-bottom: 56.25%;
   height: 0;
   overflow: hidden;
+}
 
-  iframe {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    border: 0;
-  }
+.embedVideo-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+/** hack to make highlighting work for whole paragraphs **/
+mark p {
+  display: contents;
 }

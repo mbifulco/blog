@@ -1,3 +1,8 @@
+li ol,
+li ul {
+  margin: 0.5rem 0 1rem 1rem;
+}
+
 .post {
   width: 100%;
   text-align: left;
@@ -96,5 +101,5 @@ body.dark-mode .post h6 a {
 }
 
 p {
-  max-width: 70ch;
+  max-width: 50remnata;
 }

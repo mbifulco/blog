@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Box, Link, Stack, useTheme } from '@chakra-ui/react';
+import { Box, Link, Stack, Text, useTheme } from '@chakra-ui/react';
 
 import { SocialLinks } from './SocialLinks';
 
@@ -51,6 +51,15 @@ const Footer = () => {
             .
           </span>
         </div>
+        <Text as="i" mt="1rem" mb="4rem" id="disclaimer">
+          Disclaimer:{' '}
+          <span role="img" aria-label="wave">
+            👋🏽
+          </span>{' '}
+          Hi there. I work as a Developer Advocate at Google. Content on this
+          site contains my own opinions, and does not necessarily reflect the
+          views of my employer.
+        </Text>
       </Stack>
     </Box>
   );
