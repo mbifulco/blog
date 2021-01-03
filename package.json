@@ -35,7 +35,7 @@
     "@mdx-js/mdx": "^2.0.0-next.8",
     "@mdx-js/react": "^2.0.0-next.8",
     "@pauliescanlon/gatsby-mdx-embed": "^0.0.29",
-    "@takeshape/routing": "^5.54.1",
+    "@takeshape/routing": "^6.8.0",
     "@weknow/gatsby-remark-twitter": "^0.2.3",
     "dotenv": "^8.2.0",
     "framer-motion": "^3.1.1",
@@ -58,7 +58,7 @@
     "gatsby-remark-images": "^3.8.1",
     "gatsby-source-filesystem": "^2.8.1",
     "gatsby-source-graphql": "^2.11.0",
-    "gatsby-transformer-cloudinary": "^1.1.3",
+    "gatsby-transformer-cloudinary": "^2.1.0",
     "gatsby-transformer-remark": "^2.13.1",
     "gatsby-transformer-sharp": "^2.9.0",
     "gatsby-transformer-yaml": "^2.8.0",
@@ -73,7 +73,7 @@
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-helmet": "^6.1.0",
-    "use-cloudinary": "^3.1.6"
+    "use-cloudinary": "^4.1.0"
   },
   "devDependencies": {
     "babel-eslint": "^10.1.0",

@@ -1004,7 +1004,7 @@
     core-js-pure "^3.0.0"
     regenerator-runtime "^0.13.4"
 
-"@babel/runtime@^7.0.0", "@babel/runtime@^7.10.0", "@babel/runtime@^7.10.2", "@babel/runtime@^7.11.2", "@babel/runtime@^7.12.5", "@babel/runtime@^7.3.1", "@babel/runtime@^7.3.4", "@babel/runtime@^7.4.4", "@babel/runtime@^7.5.5", "@babel/runtime@^7.7.2", "@babel/runtime@^7.8.3", "@babel/runtime@^7.8.4", "@babel/runtime@^7.8.7", "@babel/runtime@^7.9.2":
+"@babel/runtime@^7.0.0", "@babel/runtime@^7.10.0", "@babel/runtime@^7.10.2", "@babel/runtime@^7.11.2", "@babel/runtime@^7.12.5", "@babel/runtime@^7.3.1", "@babel/runtime@^7.3.4", "@babel/runtime@^7.4.4", "@babel/runtime@^7.5.5", "@babel/runtime@^7.7.2", "@babel/runtime@^7.8.3", "@babel/runtime@^7.8.4", "@babel/runtime@^7.8.7":
   version "7.12.5"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.12.5.tgz#410e7e487441e1b360c29be715d870d9b985882e"
   integrity sha512-plcc+hbExy3McchJCEQG3knOsuh3HH+Prx1P6cLIkET/0dLuQDEnrT+s27Axgc9bqfsmNUNHfscgMUdBpC9xfg==
@@ -2502,10 +2502,10 @@
   dependencies:
     defer-to-connect "^2.0.0"
 
-"@takeshape/routing@^5.54.1":
-  version "5.54.1"
-  resolved "https://registry.yarnpkg.com/@takeshape/routing/-/routing-5.54.1.tgz#dc2524b4f9703e40a91491e0be5af6c3121a5b5f"
-  integrity sha512-0imMMltdrkCj2ZreUp4F6otoywsots8xsKWuNTZJnit5+Wj1OZAojtSPjb4bgMDnmdbXyG22Zjc+mZ8d+0udlQ==
+"@takeshape/routing@^6.8.0":
+  version "6.8.0"
+  resolved "https://registry.yarnpkg.com/@takeshape/routing/-/routing-6.8.0.tgz#00441657e5033a13f5c6f7a169bfd9d9005de97d"
+  integrity sha512-FqLEzwV0pJ012zw1/JE5B5ABSQxyAv8mUVSOzDKdwGG3Kn7s5z3nP//Fe49Qm8Z/PUk+E5hLMhk0+aOy4iRxBg==
   dependencies:
     lodash "^4.17.15"
     query-string "^6.5.0"
@@ -4731,7 +4731,7 @@ clone-response@1.0.2, clone-response@^1.0.2:
   dependencies:
     mimic-response "^1.0.0"
 
-cloudinary-core@^2.10.2, cloudinary-core@^2.8.2:
+cloudinary-core@^2.10.2:
   version "2.11.3"
   resolved "https://registry.yarnpkg.com/cloudinary-core/-/cloudinary-core-2.11.3.tgz#1440f61c6280485094aac87021b7e10f746dc69e"
   integrity sha512-ZRnpjSgvx+LbSf+aEz5NKzxDB4Z0436aY/0BSDa90kAHiwAyd84VyEi95I74SE80e15Ri9t5S2xtksTXpzk9Xw==
@@ -8045,15 +8045,16 @@ gatsby-telemetry@^1.7.1:
     node-fetch "^2.6.1"
     uuid "3.4.0"
 
-gatsby-transformer-cloudinary@^1.1.3:
-  version "1.1.3"
-  resolved "https://registry.yarnpkg.com/gatsby-transformer-cloudinary/-/gatsby-transformer-cloudinary-1.1.3.tgz#683c47eea8eb1217ed46d7ed6a8773f06bd9d9eb"
-  integrity sha512-TcX2H7HeV88eQLdcfv5/x9gv0Yk+U+C/0keIVXIHTQNbVLSg1x5EQmLDk/zkrqd62luVhaXgzo51t1hySkkoFw==
+gatsby-transformer-cloudinary@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/gatsby-transformer-cloudinary/-/gatsby-transformer-cloudinary-2.1.0.tgz#61af302c35a7737ae71360c991af6a9002a5c078"
+  integrity sha512-059mjYSSuZ/+CvZ1lYjUZtVVYTJp5HisSs3oNalcRjW31GM/tXU6M6/JQAFeTu9V8kC8T8P8BtFJ6Pil421OFg==
   dependencies:
     axios "^0.19.2"
     cloudinary "^1.22.0"
     fast-json-stable-stringify "^2.1.0"
     fs-extra "^9.0.1"
+    lodash "^4.17.20"
 
 gatsby-transformer-remark@^2.13.1:
   version "2.13.1"
@@ -10102,14 +10103,6 @@ isobject@^3.0.0, isobject@^3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/isobject/-/isobject-3.0.1.tgz#4e431e92b11a9731636aa1f9c8d1ccbcfdab78df"
   integrity sha1-TkMekrEalzFjaqH5yNHMvP2reN8=
-
-isomorphic-unfetch@^3.0.0:
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/isomorphic-unfetch/-/isomorphic-unfetch-3.1.0.tgz#87341d5f4f7b63843d468438128cb087b7c3e98f"
-  integrity sha512-geDJjpoZ8N0kWexiwkX8F9NkTsXhetLPVbZFQ+JTW239QNOwvB0gniuR1Wc6f0AMTn7/mFGyXvHTifrCp/GH8Q==
-  dependencies:
-    node-fetch "^2.6.1"
-    unfetch "^4.2.0"
 
 isstream@~0.1.2:
   version "0.1.2"
@@ -13988,13 +13981,6 @@ react-lifecycles-compat@^3.0.4:
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
 
-react-query@^2.0.0:
-  version "2.26.2"
-  resolved "https://registry.yarnpkg.com/react-query/-/react-query-2.26.2.tgz#d6fb2dd0b54934f5d1f5cdd9f8d97808eb012eb7"
-  integrity sha512-tJ3oHifWtI3cwklOLx5jIIj1ZpmvuWpPBg5iaOoi3uuIe80l0t3QCDTEF+nXpE12pYxKMj29NQ5OkTsOOMdP4Q==
-  dependencies:
-    "@babel/runtime" "^7.5.5"
-
 react-refresh@^0.8.3:
   version "0.8.3"
   resolved "https://registry.yarnpkg.com/react-refresh/-/react-refresh-0.8.3.tgz#721d4657672d400c5e3c75d063c4a85fb2d5d68f"
@@ -16420,11 +16406,6 @@ underscore.string@^3.3.5:
     sprintf-js "^1.0.3"
     util-deprecate "^1.0.2"
 
-unfetch@^4.2.0:
-  version "4.2.0"
-  resolved "https://registry.yarnpkg.com/unfetch/-/unfetch-4.2.0.tgz#7e21b0ef7d363d8d9af0fb929a5555f6ef97a3be"
-  integrity sha512-F9p7yYCn6cIW9El1zi0HI6vqpeIvBsr3dSuRO6Xuppb1u5rXpCPmMvLSyECLhybr9isec8Ohl0hPekMVrEinDA==
-
 unherit@^1.0.4:
   version "1.1.3"
   resolved "https://registry.yarnpkg.com/unherit/-/unherit-1.1.3.tgz#6c9b503f2b41b262330c80e91c8614abdaa69c22"
@@ -16825,18 +16806,13 @@ use-callback-ref@^1.2.1, use-callback-ref@^1.2.3:
   resolved "https://registry.yarnpkg.com/use-callback-ref/-/use-callback-ref-1.2.4.tgz#d86d1577bfd0b955b6e04aaf5971025f406bea3c"
   integrity sha512-rXpsyvOnqdScyied4Uglsp14qzag1JIemLeTWGKbwpotWht57hbP78aNT+Q4wdFKQfQibbUX4fb6Qb4y11aVOQ==
 
-use-cloudinary@^3.1.6:
-  version "3.1.7"
-  resolved "https://registry.yarnpkg.com/use-cloudinary/-/use-cloudinary-3.1.7.tgz#eb7970ce64c46dc86489e0a2393570a839ec2ad3"
-  integrity sha512-Piu6eUsNr4wR8D+Peqc5uOA8edlgL1W949hEuyasQ9Iz28uqMBto5ocBW1wVzcL3/H4PrKkZ1AyYAO4xQLrSkg==
+use-cloudinary@^4.1.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/use-cloudinary/-/use-cloudinary-4.1.0.tgz#afe2db21783ef8903a5194cadc65ad1f4f9168c0"
+  integrity sha512-8qhq7Ud1/aaADp+Aa/YIxIzFoK9q4O4AoPazoBsw8C81r5gZfijdpNndzxxNYQM0f0skLvrbbJi1WlKOyn/BLQ==
   dependencies:
-    "@babel/runtime" "^7.9.2"
     "@charlietango/use-native-lazy-loading" "^1.7.1"
-    cloudinary-core "^2.8.2"
-    isomorphic-unfetch "^3.0.0"
-    lodash "^4.17.15"
     react-intersection-observer "^8.26.2"
-    react-query "^2.0.0"
 
 use-sidecar@^1.0.1:
   version "1.0.3"

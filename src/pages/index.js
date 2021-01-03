@@ -19,7 +19,7 @@ const HomePage = () => {
           publicId="mike-headshot-square"
           objectFit="contain"
           objectPosition="bottom"
-          height="250"
+          height="250px"
           marginRight={[0, 0, '1rem']}
         />
         <Box maxWidth="50ch">
