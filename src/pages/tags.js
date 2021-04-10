@@ -12,7 +12,7 @@ import Tag from '../components/tag';
 import { DefaultLayout as Layout } from '../components/Layouts';
 
 import * as classes from '../styles/post.module.css';
-import tagsClasses from '../styles/tagsPage.module.css';
+import * as tagsClasses from '../styles/tagsPage.module.css';
 
 const TagsPage = ({ data }) => {
   const { takeshape } = data;
@@ -26,7 +26,7 @@ const TagsPage = ({ data }) => {
           <h1>Tags</h1>
           <ul className={tagsClasses.list}>
             {tags.items.map((tag) => (
-                <li key={`tag-${tag._id}`} className={tagsClasses.listItem}>
+                <li key={`tag-${tag._id}`}>
                   <Link to={`/tags/${kebabCase(tag.name)}/`}>
                     <Tag>
                       {tag.name} ({tag.posts.total})

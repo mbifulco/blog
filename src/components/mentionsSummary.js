@@ -19,7 +19,6 @@ const MentionsSummary = ({ mentions }) => {
   return (
     <>
       {likes.length > 0 && (
-        <div className={classes.likesContainer}>
           <div className={classes.likesHeader}>
             <AvatarGroup max={15}>
               {likeAuthors.map((author) => (
@@ -37,9 +36,8 @@ const MentionsSummary = ({ mentions }) => {
             </span>
             {` ${likes.length} ${pluralize('like', likes.length)}`}
           </div>
-        </div>
       )}
-      <div className={classes.mentionsContainer}>
+      <div>
         <h3 className={classes.title}>Mentions</h3>
         {mentions
           .filter((mention) => mention.wmProperty !== 'like-of')

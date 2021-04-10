@@ -45,6 +45,7 @@
     "gatsby-plugin-chakra-ui": "^0.1.5",
     "gatsby-plugin-feed": "^3.2.0",
     "gatsby-plugin-google-analytics": "^3.2.0",
+    "gatsby-plugin-image": "^1.2.1",
     "gatsby-plugin-manifest": "^3.2.0",
     "gatsby-plugin-mdx": "^2.2.0",
     "gatsby-plugin-netlify": "^3.2.0",
