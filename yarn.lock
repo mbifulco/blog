@@ -10593,11 +10593,6 @@ loglevel@^1.6.8:
   resolved "https://registry.yarnpkg.com/loglevel/-/loglevel-1.7.0.tgz#728166855a740d59d38db01cf46f042caa041bb0"
   integrity sha512-i2sY04nal5jDcagM3FMfG++T69GEEM8CYuOfeOIvmXzOIcwE9a/CJPR0MFM97pYMj/u10lzz7/zd7+qwhrBTqQ==
 
-logrocket@^1.0.15:
-  version "1.0.15"
-  resolved "https://registry.yarnpkg.com/logrocket/-/logrocket-1.0.15.tgz#a3b59e9fb11637a2eddcd9cf882fb8fdc0296ba8"
-  integrity sha512-YRI0b3o+eLoATO6puoBolfSIRng6AwVFMTyUGCIJA7I9+1TXTO+SNzXaF1E3VVg1lcyxHsCvVfZy5Pmhu+xEQA==
-
 longest-streak@^2.0.1:
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/longest-streak/-/longest-streak-2.0.4.tgz#b8599957da5b5dab64dee3fe316fa774597d90e4"
@@ -12696,7 +12691,7 @@ postcss-loader@^4.1.0:
     schema-utils "^3.0.0"
     semver "^7.3.2"
 
-postcss-loader@^5.0.0, postcss-loader@^5.2.0:
+postcss-loader@^5.0.0:
   version "5.2.0"
   resolved "https://registry.yarnpkg.com/postcss-loader/-/postcss-loader-5.2.0.tgz#ccd6668a778902d653602289c765a8bc481986dc"
   integrity sha512-uSuCkENFeUaOYsKrXm0eNNgVIxc71z8RcckLMbVw473rGojFnrUeqEz6zBgXsH2q1EIzXnO/4pEz9RhALjlITA==
