@@ -5,7 +5,7 @@ import { useStaticQuery, graphql } from 'gatsby';
 import { useAnalytics } from '../../utils/analytics';
 import ACTIONS from '../../utils/analytics-actions';
 
-import classes from './SubscriptionForm.module.css';
+import * as classes from './SubscriptionForm.module.css';
 
 const SubscriptionForm = ({ tags }) => {
   const trackAction = useAnalytics();

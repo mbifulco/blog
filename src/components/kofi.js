@@ -1,6 +1,6 @@
 import React from 'react';
 
-import classes from '../styles/kofi.module.css';
+import * as classes from '../styles/kofi.module.css';
 
 const Kofi = () => (
   <>

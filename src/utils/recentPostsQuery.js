@@ -22,7 +22,7 @@ export const useRecentPosts = () => {
               type
               path
             }
-            excerpt(truncate: true)
+            excerpt
             timeToRead
           }
         }
@@ -67,14 +67,12 @@ export const useRecentPosts = () => {
     };
   });
 
-  const mdxPostElements = mdxPosts.nodes.map((post) => {
-    return {
+  const mdxPostElements = mdxPosts.nodes.map((post) => ({
       type: 'mdx',
       date: moment(post.frontmatter.date),
       post,
       id: post.id,
-    };
-  });
+    }));
 
   const allPostsInOrder = sortBy(
     union(takeshapePostElements, mdxPostElements),

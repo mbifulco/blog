@@ -11,7 +11,7 @@ import { Link, graphql } from 'gatsby';
 import Tag from '../components/tag';
 import { DefaultLayout as Layout } from '../components/Layouts';
 
-import classes from '../styles/post.module.css';
+import * as classes from '../styles/post.module.css';
 import tagsClasses from '../styles/tagsPage.module.css';
 
 const TagsPage = ({ data }) => {
@@ -25,8 +25,7 @@ const TagsPage = ({ data }) => {
         <div className={classes.postContent}>
           <h1>Tags</h1>
           <ul className={tagsClasses.list}>
-            {tags.items.map((tag) => {
-              return (
+            {tags.items.map((tag) => (
                 <li key={`tag-${tag._id}`} className={tagsClasses.listItem}>
                   <Link to={`/tags/${kebabCase(tag.name)}/`}>
                     <Tag>
@@ -34,8 +33,7 @@ const TagsPage = ({ data }) => {
                     </Tag>
                   </Link>
                 </li>
-              );
-            })}
+              ))}
           </ul>
         </div>
       </div>

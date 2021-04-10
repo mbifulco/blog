@@ -1,13 +1,11 @@
 import React from 'react';
 
-import classes from './PageDivider.module.css';
+import * as classes from './PageDivider.module.css';
 
-const PageDivider = () => {
-  return (
+const PageDivider = () => (
     <div className={classes.container}>
       <div className={classes.skewed} />
     </div>
   );
-};
 
 export default PageDivider;

@@ -11,7 +11,7 @@ import { Heading, Link, Text, useColorMode, useTheme } from '@chakra-ui/react';
 import MentionsSummary from './mentionsSummary';
 import TagsSummary from './tagsSummary';
 import Navigation from './navigation';
-import style from '../styles/post.module.css';
+import * as style from '../styles/post.module.css';
 import { Image } from '.';
 
 const Post = ({ summary, mentions, post, previous, next }) => {
