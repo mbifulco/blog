@@ -15,6 +15,7 @@ const Headshot = ({ className }) => {
 `);
   return (
     <GatsbyImage
+      alt="Mike Bifulco headshot"
       image={data.file.childImageSharp.gatsbyImageData}
       style={{ borderRadius: '12px' }}
       className={`headshot ${className}`} />
