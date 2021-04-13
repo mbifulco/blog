@@ -1,0 +1,58 @@
+---
+title: "Don't center align paragraph text"
+type: post
+date: 04-10-2021
+coverImagePublicId: "posts/center-align-text/center-align-text"
+published: true
+path: dont-center-paragraph-text
+tags: [design, dev, css, accessibility]
+---
+
+import CenteredTextDemo from '../../components/demos/CenteredTextDemo';
+
+<Aside type="note">
+
+  This is an experimental post, meant to demonstrate to you the topic we're discussing. I'd love to hear what you think about it.  [Drop me a line](https://twitter.com/irreverentmike) if you find this compelling - I'm hoping to create more like it!
+  
+</Aside>
+
+<CenteredTextDemo>
+
+This is -- without exception -- my biggest design-related pet peeve. You've probably come across it yourself from time to time, and if you're lucky, it's not something you noticed. Centering text on a web site, email, or flyer is an easy way to make it appear like a designer's spin has been put on a document. It's an easy change to make in most editors, and in many cases it's probably done without a second thought.
+
+I'll cut to the chase: _center-aligning text is really bad_ in most cases. From a young age, we're trained to read text by starting at the beginning of the line and moving our eyes across the page to the end of the line. From there, it's a relatively low-effort thing to move your eyes back to the beginning of the next line. That all changes when text is centered, since the start of each line is aligned inconsistently. It takes more effort to find the beginning of the next line, to make sure you've only moved down _one_ line, and to continue reading.
+
+## Three great reasons you shouldn't center-align text:
+
+1. A ragged leading-edge makes it harder to move your eyes to the next line of text
+2. People with dyslexia may find centered text challenging to read.
+3. Lists (like this one) become disorienting to read, and harder to scan
+
+The British Dyslexia Association provides a [dyslexia-friendly style guide] (https://www.bdadyslexia.org.uk/advice/employers/creating-a-dyslexia-friendly-workplace/dyslexia-friendly-style-guide), which calls out a simple rule for text:
+
+<Aside type="note">Left align text, without justification.</Aside>
+
+As a designer, this is _such_ an easy win. As a developer, it's often as easy as:
+
+```css
+
+/* change this */
+.some-style-rule {
+  text-align: center;
+}
+
+/* ...to this! */
+.some-style-rule {
+  text-align: initial;
+}
+
+```
+
+## When you _can_ use centered-text
+
+Generally speaking, if you're certain that your text will fit on _one line,_ it may be okay to center it.  This generally applies to page titles, captions on pictures, and things of that nature. 
+
+## Summary
+If you're working on a design that relies on centered text, consider other options. If you come across a big blob of centered text in your workplace, or out in the world somewhere, please feel free to use this post as a demo.
+
+</CenteredTextDemo>
