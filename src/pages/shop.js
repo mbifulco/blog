@@ -4,11 +4,10 @@ import PropTypes from 'prop-types';
 import { DefaultLayout as Layout } from '../components/Layouts';
 import SEO from '../components/seo';
 
-import classes from '../styles/shop.module.css';
+import * as classes from '../styles/shop.module.css';
 import SoldOut from '../components/soldOut';
 
-const Shop = ({ location }) => {
-  return (
+const Shop = ({ location }) => (
     <Layout>
       <SEO title="Shop" location={location} />
       <main className={classes.content}>
@@ -33,7 +32,6 @@ const Shop = ({ location }) => {
       </main>
     </Layout>
   );
-};
 
 Shop.propTypes = {
   location: PropTypes.shape({}),

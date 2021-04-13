@@ -4,7 +4,7 @@ import React from 'react';
 import { MDXProvider } from '@mdx-js/react';
 import { MdxEmbedProvider } from '@pauliescanlon/gatsby-mdx-embed';
 
-import { Code, Box, Heading, Text, useTheme } from '@chakra-ui/react';
+import { Button, Code, Box, Heading, Text, useTheme } from '@chakra-ui/react';
 import PrismHighlight, { defaultProps } from 'prism-react-renderer';
 import prismTheme from 'prism-react-renderer/themes/nightOwl';
 
@@ -17,7 +17,7 @@ const H4 = (props) => <Heading as="h4" {...props} />;
 const H5 = (props) => <Heading as="h5" {...props} />;
 const H6 = (props) => <Heading as="h6" {...props} />;
 const P = (props) => (
-  <Box as="p" margi marginTop="1rem" marginBottom="1rem" {...props} />
+  <Box as="p" marginTop="1rem" marginBottom="1rem" {...props} />
 );
 const Aside = (props) => {
   const theme = useTheme();
@@ -99,6 +99,7 @@ const ImageWrapper = (props) => <Image marginBottom="1rem" {...props} />;
 
 const components = {
   Aside,
+  Button,
   Highlight,
   Image: ImageWrapper,
   inlineCode: InlineCode,

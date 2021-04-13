@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link as GatsbyLink } from 'gatsby';
-import Img from 'gatsby-image';
+import { GatsbyImage } from "gatsby-plugin-image";
 import moment from 'moment';
 import { getImageUrl } from '@takeshape/routing';
 import { MDXRenderer } from 'gatsby-plugin-mdx';
@@ -11,7 +11,7 @@ import { Heading, Link, Text, useColorMode, useTheme } from '@chakra-ui/react';
 import MentionsSummary from './mentionsSummary';
 import TagsSummary from './tagsSummary';
 import Navigation from './navigation';
-import style from '../styles/post.module.css';
+import * as style from '../styles/post.module.css';
 import { Image } from '.';
 
 const Post = ({ summary, mentions, post, previous, next }) => {
@@ -63,11 +63,10 @@ const Post = ({ summary, mentions, post, previous, next }) => {
   let coverImageContainer;
   if (featureImage && featureImage.childImageSharp) {
     coverImageContainer = (
-      <Img
+      <GatsbyImage
+        image={featureImage.childImageSharp.gatsbyImageData}
         loading="lazy"
-        fluid={featureImage.childImageSharp.fluid}
-        className={style.coverImage}
-      />
+        className={style.coverImage} />
     );
   } else if (coverImageUrl) {
     coverImageContainer = (
@@ -106,7 +105,6 @@ const Post = ({ summary, mentions, post, previous, next }) => {
           )}
         </Heading>
         <Text
-          className={style.meta}
           fontSize="1rem"
           color={dateColors[colorMode]}
         >

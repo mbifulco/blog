@@ -6,7 +6,7 @@ import pluralize from 'pluralize';
 import Avatar from '@material-ui/core/Avatar';
 import AvatarGroup from '@material-ui/lab/AvatarGroup';
 
-import classes from '../styles/mentions.module.css';
+import * as classes from '../styles/mentions.module.css';
 
 const MentionsSummary = ({ mentions }) => {
   if (!mentions || mentions.length === 0) return null;
@@ -19,7 +19,6 @@ const MentionsSummary = ({ mentions }) => {
   return (
     <>
       {likes.length > 0 && (
-        <div className={classes.likesContainer}>
           <div className={classes.likesHeader}>
             <AvatarGroup max={15}>
               {likeAuthors.map((author) => (
@@ -37,9 +36,8 @@ const MentionsSummary = ({ mentions }) => {
             </span>
             {` ${likes.length} ${pluralize('like', likes.length)}`}
           </div>
-        </div>
       )}
-      <div className={classes.mentionsContainer}>
+      <div>
         <h3 className={classes.title}>Mentions</h3>
         {mentions
           .filter((mention) => mention.wmProperty !== 'like-of')

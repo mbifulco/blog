@@ -5,7 +5,7 @@ import { Link } from 'gatsby';
 
 import Icon from './icon';
 
-import style from '../styles/menu.module.css';
+import * as style from '../styles/menu.module.css';
 
 const MainMenu = ({ mainMenu, mainMenuItems, isMobileMenu }) => {
   const menu = mainMenu.slice(0);
@@ -99,7 +99,7 @@ const Menu = ({
                 aria-label="Menu"
               >
                 {menuMoreText || 'Menu'}{' '}
-                <span className={style.menuArrow}>></span>
+                <span className={style.menuArrow}>&gt;</span>
               </button>
               {isSubMenuVisible ? (
                 <ul className={style.subMenu}>
