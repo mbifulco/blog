@@ -60,8 +60,7 @@ module.exports = {
     {
       resolve: '@chakra-ui/gatsby-plugin',
       options: {
-        isResettingCSS: true,
-        isUsingColorMode: false,
+        resetCSS: true,
       },
     },
     `gatsby-transformer-yaml`,
@@ -113,7 +112,7 @@ module.exports = {
         },
       },
     },
-    '@pauliescanlon/gatsby-mdx-embed',
+    'gatsby-plugin-mdx-embed',
     // {
     //   resolve: 'gatsby-transformer-cloudinary',
     //   options: {

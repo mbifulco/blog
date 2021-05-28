@@ -4,6 +4,8 @@ import { graphql } from 'gatsby';
 
 import { Flex } from '@chakra-ui/react';
 
+import { useImage } from 'use-cloudinary';
+
 import { DefaultLayout } from '../components/Layouts';
 
 import SEO from '../components/seo';
@@ -25,6 +27,18 @@ const MdxPostTemplate = ({ data, pageContext, location }) => {
   } = frontmatter;
   const { mentions } = data;
 
+  const { generateImageUrl } = useImage(
+    process.env.GATSBY_CLOUDINARY_CLOUD_NAME
+  );
+
+  const cloudinaryConfig = {
+    delivery: {
+      publicId: coverImagePublicId,
+    },
+  };
+
+  const coverImageUrl = generateImageUrl(cloudinaryConfig);
+
   if (!published && process.env.NODE_ENV === 'production') return null;
 
   return (
@@ -33,13 +47,13 @@ const MdxPostTemplate = ({ data, pageContext, location }) => {
         canonical={location.href}
         title={title}
         description={excerpt}
-        // image={getImageUrl(featureImage.path)}
+        image={coverImageUrl}
         ogType="article"
         location={location}
       />
       <WebmentionMetadata
         location={location}
-        // coverImageUrl={coverImageUrl}
+        coverImageUrl={coverImageUrl}
         summary={excerpt}
         publishedAt={date}
       />
