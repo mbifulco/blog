@@ -2,14 +2,12 @@
 import remark from 'remark';
 import html from 'remark-html';
 import { getPostBySlug, getAllPosts } from '../../lib/blog';
+import markdownToHtml from '../../lib/markdown';
 import MdxPostTemplate from '../../templates/MdxPost';
 
 export async function getStaticProps({ params }) {
   const post = getPostBySlug(params.slug);
-  const markdown = await remark()
-    .use(html)
-    .process(post.content || '');
-  const content = markdown.toString();
+  const content = await markdownToHtml(post.content || '');
 
   return {
     props: {

@@ -78,13 +78,13 @@ const DefaultLayout = ({ children }) => {
 
             <Stack direction="row">
               <Link as={InternalLink} href="/posts">
-                Blog
+                <a>Blog</a>
               </Link>
               <Link as={InternalLink} href="/about">
-                About
+                <a>About</a>
               </Link>
               <Link as={InternalLink} href="/newsletter">
-                Newsletter
+                <a>Newsletter</a>
               </Link>
               {isHomePage && (
                 <SocialLinks
