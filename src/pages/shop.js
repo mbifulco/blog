@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { DefaultLayout as Layout } from '../components/Layouts';
 import SEO from '../components/seo';
 
-import * as classes from '../styles/shop.module.css';
+import * as classes from '../styles/shop.module.scss';
 import SoldOut from '../components/soldOut';
 
 const Shop = ({ location }) => (

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import * as classes from './PageDivider.module.css';
+import * as classes from './PageDivider.module.scss';
 
 const PageDivider = () => (
     <div className={classes.container}>

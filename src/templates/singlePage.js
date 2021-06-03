@@ -10,7 +10,7 @@ import { NewsletterSignup } from '../components/NewsletterSignup';
 import TagsSummary from '../components/tagsSummary';
 import WebmentionMetadata from '../components/webmentionMetadata';
 
-import * as style from '../styles/post.module.css';
+import * as style from '../styles/post.module.scss';
 
 const SinglePage = ({ children, pageContext, location }) => {
   const { mentions } = pageContext;

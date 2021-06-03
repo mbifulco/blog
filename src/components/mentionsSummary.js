@@ -6,7 +6,7 @@ import pluralize from 'pluralize';
 import Avatar from '@material-ui/core/Avatar';
 import AvatarGroup from '@material-ui/lab/AvatarGroup';
 
-import * as classes from '../styles/mentions.module.css';
+import * as classes from '../styles/mentions.module.scss';
 
 const MentionsSummary = ({ mentions }) => {
   if (!mentions || mentions.length === 0) return null;

@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { useStaticQuery, graphql } from 'gatsby';
 
 import { useAnalytics } from '../../utils/analytics';
 import ACTIONS from '../../utils/analytics-actions';
 
-import * as classes from './SubscriptionForm.module.css';
+import * as classes from './SubscriptionForm.module.scss';
+
+import convertKitTags from '../../data/ConvertKitTags';
 
 const SubscriptionForm = ({ tags }) => {
   const trackAction = useAnalytics();
@@ -15,19 +16,7 @@ const SubscriptionForm = ({ tags }) => {
   const SUBFORM_ID = '8939';
   const FORM_URL = `https://app.convertkit.com/forms/${FORM_ID}/subscriptions`;
 
-  const data = useStaticQuery(graphql`
-    query {
-      allConvertkitTagYaml {
-        nodes {
-          name
-          id
-        }
-      }
-    }
-  `);
-
-  const allTags = data.allConvertkitTagYaml.nodes;
-  const tagMap = allTags.reduce((result, tag) => {
+  const tagMap = convertKitTags.reduce((result, tag) => {
     result[tag.name] = tag.id;
     return result;
   }, {});

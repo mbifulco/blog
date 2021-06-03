@@ -1,11 +1,11 @@
 /* eslint-disable jsx-a11y/control-has-associated-label */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'gatsby';
+import Link from 'next/link';;
 
 import Icon from './icon';
 
-import * as style from '../styles/menu.module.css';
+import * as style from '../styles/menu.module.scss';
 
 const MainMenu = ({ mainMenu, mainMenuItems, isMobileMenu }) => {
   const menu = mainMenu.slice(0);
@@ -13,7 +13,7 @@ const MainMenu = ({ mainMenu, mainMenuItems, isMobileMenu }) => {
 
   return menu.map((menuItem, index) => (
     <li key={index}>
-      <Link to={menuItem.path}>{menuItem.title}</Link>
+      <Link href={menuItem.path}>{menuItem.title}</Link>
     </li>
   ));
 };
@@ -24,7 +24,7 @@ const SubMenu = ({ mainMenu, mainMenuItems, onToggleSubMenu }) => {
 
   const items = menu.map((menuItem, index) => (
     <li key={index}>
-      <Link to={menuItem.path}>{menuItem.title}</Link>
+      <Link href={menuItem.path}>{menuItem.title}</Link>
     </li>
   ));
 

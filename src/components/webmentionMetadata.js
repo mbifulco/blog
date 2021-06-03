@@ -24,7 +24,7 @@ const WebmentionMetadata = ({
         </header>
         <p className="p-summary e-content">{summary}</p>
         <footer>
-          <a className="u-url p-name" href={location.href}>
+          <a className="u-url p-name" href={location?.href || ""}>
             {author || 'Mike Bifulco'}
           </a>
         </footer>

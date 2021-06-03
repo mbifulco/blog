@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { graphql } from 'gatsby';
+import { useRouter } from 'next/router';
 
 import { Flex } from '@chakra-ui/react';
 
@@ -12,8 +12,8 @@ import { NewsletterSignup } from '../components/NewsletterSignup';
 import Post from '../components/post';
 import WebmentionMetadata from '../components/webmentionMetadata';
 
-const MdxPostTemplate = ({ data, pageContext, location }) => {
-  const { body, excerpt, frontmatter } = data.post;
+const MdxPostTemplate = ({ post, mentions, pageContext, location }) => {
+  const { body, excerpt, frontmatter } = post;
 
   const {
     published,
@@ -23,14 +23,16 @@ const MdxPostTemplate = ({ data, pageContext, location }) => {
     title,
     coverImagePublicId,
   } = frontmatter;
-  const { mentions } = data;
+
+  const router = useRouter();
+
 
   if (!published && process.env.NODE_ENV === 'production') return null;
 
   return (
     <DefaultLayout>
       <SEO
-        canonical={location.href}
+        canonical={router.asPath}
         title={title}
         description={excerpt}
         // image={getImageUrl(featureImage.path)}
@@ -49,16 +51,7 @@ const MdxPostTemplate = ({ data, pageContext, location }) => {
         </div>
       )}
       <Post
-        key={pageContext.id}
-        post={{
-          coverImagePublicId,
-          date,
-          tags,
-          title,
-          path,
-          bodyMdx: body,
-          excerpt,
-        }}
+        post={post}
         mentions={mentions && mentions.nodes}
       />
       <Flex direction="row" justifyContent="center" marginTop="3rem">
@@ -80,40 +73,3 @@ MdxPostTemplate.propTypes = {
   }),
 };
 
-export const pageQuery = graphql`
-  query($path: String!, $id: String!) {
-    mentions: allWebMentionEntry(filter: { wmTarget: { eq: $path } }) {
-      nodes {
-        wmTarget
-        wmSource
-        wmProperty
-        wmId
-        type
-        url
-        likeOf
-        author {
-          url
-          type
-          photo
-          name
-        }
-        content {
-          text
-        }
-      }
-    }
-    post: mdx(id: { eq: $id }) {
-      body
-      excerpt
-      frontmatter {
-        coverImagePublicId
-        date
-        path
-        published
-        tags
-        title
-        type
-      }
-    }
-  }
-`;

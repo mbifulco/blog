@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import * as style from '../styles/icon.module.css';
+import * as style from '../styles/icon.module.scss';
 
 const Icon = (props) => {
   const { d, size = '1em', label, style: styles } = props;

@@ -3,14 +3,14 @@
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url('../../../static/fonts/Inter-UI-Regular.woff') format('woff');
+  src: url('../../public/fonts/Inter-UI-Regular.woff') format('woff');
 }
 @font-face {
   font-family: 'Inter UI';
   font-style: italic;
   font-weight: 400;
   font-display: swap;
-  src: url('../../../static/fonts/Inter-UI-Italic.woff') format('woff');
+  src: url('../../public/fonts/Inter-UI-Italic.woff') format('woff');
 }
 
 @font-face {
@@ -18,14 +18,14 @@
   font-style: normal;
   font-weight: 600;
   font-display: swap;
-  src: url('../../../static/fonts/Inter-UI-Medium.woff') format('woff');
+  src: url('../../public/fonts/Inter-UI-Medium.woff') format('woff');
 }
 @font-face {
   font-family: 'Inter UI';
   font-style: italic;
   font-weight: 600;
   font-display: swap;
-  src: url('../../../static/fonts/Inter-UI-MediumItalic.woff') format('woff');
+  src: url('../../public/fonts/Inter-UI-MediumItalic.woff') format('woff');
 }
 
 @font-face {
@@ -33,14 +33,14 @@
   font-style: normal;
   font-weight: 800;
   font-display: swap;
-  src: url('../../../static/fonts/Inter-UI-Bold.woff') format('woff');
+  src: url('../../public/fonts/Inter-UI-Bold.woff') format('woff');
 }
 @font-face {
   font-family: 'Inter UI';
   font-style: italic;
   font-weight: 800;
   font-display: swap;
-  src: url('../../../static/fonts/Inter-UI-BoldItalic.woff') format('woff');
+  src: url('../../public/fonts/Inter-UI-BoldItalic.woff') format('woff');
 }
 
 body {

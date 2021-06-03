@@ -8,7 +8,7 @@ const PostsPage = () => {
   return (
     <DefaultLayout>
       <SEO title="All posts" />
-      <PostFeed />
+      {/* <PostFeed /> */}
     </DefaultLayout>
   );
 };

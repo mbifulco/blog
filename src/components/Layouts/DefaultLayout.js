@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Link as InternalLink } from 'gatsby';
+import InternalLink from 'next/link';
 
-import { useLocation } from '@reach/router';
+import { useRouter } from 'next/router';
 
 import {
   Box,
@@ -16,10 +16,6 @@ import {
 import { Footer, SEO, SocialLinks } from '..';
 import MDXProviderWrapper from '../../utils/MDXProviderWrapper';
 
-import '../../styles/variables.css';
-import '../../styles/prism.css';
-import './DefaultLayout.css';
-
 const DefaultLayout = ({ children }) => {
   const theme = useTheme();
   const { colorMode } = useColorMode();
@@ -29,13 +25,14 @@ const DefaultLayout = ({ children }) => {
     dark: 'pink.400',
   };
 
-  const location = useLocation();
+  const router = useRouter();
+  const { pathname } = router;
 
-  const [isHomePage, setIsHomePage] = useState(location.pathname === '/');
+  const [isHomePage, setIsHomePage] = useState(pathname === '/');
 
   useEffect(() => {
-    setIsHomePage(location.pathname === '/');
-  }, [location.pathname]);
+    setIsHomePage(pathname === '/');
+  }, [pathname]);
 
   return (
     <MDXProviderWrapper>
@@ -64,7 +61,7 @@ const DefaultLayout = ({ children }) => {
               style={{
                 textDecoration: 'none',
               }}
-              to="/"
+              href="/"
             >
               <Text
                 transition="all 5s ease"
@@ -80,13 +77,13 @@ const DefaultLayout = ({ children }) => {
             </InternalLink>
 
             <Stack direction="row">
-              <Link as={InternalLink} to="/posts">
+              <Link as={InternalLink} href="/posts">
                 Blog
               </Link>
-              <Link as={InternalLink} to="/about">
+              <Link as={InternalLink} href="/about">
                 About
               </Link>
-              <Link as={InternalLink} to="/newsletter">
+              <Link as={InternalLink} href="/newsletter">
                 Newsletter
               </Link>
               {isHomePage && (

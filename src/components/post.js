@@ -1,31 +1,34 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link as GatsbyLink } from 'gatsby';
-import { GatsbyImage } from "gatsby-plugin-image";
+import NextLink from 'next/link';
+import GatsbyImage from 'next/image';
 import moment from 'moment';
 import { getImageUrl } from '@takeshape/routing';
-import { MDXRenderer } from 'gatsby-plugin-mdx';
+// import { MDXRenderer } from 'gatsby-plugin-mdx';
 
 import { Heading, Link, Text, useColorMode, useTheme } from '@chakra-ui/react';
 
 import MentionsSummary from './mentionsSummary';
 import TagsSummary from './tagsSummary';
 import Navigation from './navigation';
-import * as style from '../styles/post.module.css';
+import * as style from '../styles/post.module.scss';
 import { Image } from '.';
 
 const Post = ({ summary, mentions, post, previous, next }) => {
   const {
-    author,
-    excerpt,
-    coverImagePublicId,
     featureImage,
-    bodyHtml: html,
-    bodyMdx,
+    content,
+  } = post;
+
+  const {
+    author,
+    coverImagePublicId,
+    date,
+    excerpt,
     path,
     tags,
     title,
-  } = post;
+  } = post.frontmatter;
 
   const theme = useTheme();
   const { colorMode } = useColorMode();
@@ -39,8 +42,6 @@ const Post = ({ summary, mentions, post, previous, next }) => {
     dark: theme.colors.gray[400],
     light: '#555555',
   };
-
-  const date = post._enabledAt || post.date;
 
   const previousPath = previous && previous.path;
   const previousLabel = previous && previous.title;
@@ -91,23 +92,20 @@ const Post = ({ summary, mentions, post, previous, next }) => {
         <Heading as="h1" color={headerColors[colorMode]}>
           {summary ? (
             <Link
-              as={GatsbyLink}
+              as={NextLink}
               style={{
                 color: headerColors[colorMode],
                 textDecoration: 'none',
               }}
-              to={postPath}
+              href={postPath}
             >
-              {title}
+              <a>{title}</a>
             </Link>
           ) : (
             title
           )}
         </Heading>
-        <Text
-          fontSize="1rem"
-          color={dateColors[colorMode]}
-        >
+        <Text fontSize="1rem" color={dateColors[colorMode]}>
           {formattedDate} {author && <>— Written by {author}</>}
         </Text>
         <TagsSummary tags={tags} />
@@ -116,16 +114,16 @@ const Post = ({ summary, mentions, post, previous, next }) => {
         {summary ? (
           <>
             <p>{excerpt}</p>
-            <Link as={GatsbyLink} to={postPath} className={style.readMore}>
+            <Link as={NextLink} href={postPath} className={style.readMore}>
               Read more →
             </Link>
           </>
         ) : (
           <>
-            {/* eslint-disable-next-line react/no-danger */}
-            <div dangerouslySetInnerHTML={{ __html: html }} />
-
-            {bodyMdx && <MDXRenderer>{bodyMdx}</MDXRenderer>}
+            <section
+              dangerouslySetInnerHTML={{ __html: content }}
+              itemProp="articleBody"
+            />
 
             <MentionsSummary mentions={mentions} />
 
@@ -145,7 +143,6 @@ const Post = ({ summary, mentions, post, previous, next }) => {
 Post.propTypes = {
   mentions: PropTypes.arrayOf(PropTypes.shape({})),
   post: PropTypes.shape({
-    bodyHtml: PropTypes.string,
     bodyMdx: PropTypes.string,
     tags: PropTypes.arrayOf(
       PropTypes.oneOfType([PropTypes.shape({}), PropTypes.string])
@@ -164,8 +161,6 @@ Post.propTypes = {
     coverImageAlt: PropTypes.string,
     coverImageUrl: PropTypes.string,
     author: PropTypes.string,
-    excerpt: PropTypes.string,
-    html: PropTypes.string,
     id: PropTypes.string,
   }),
   summary: PropTypes.bool,

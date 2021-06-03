@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'gatsby';
+import Link from 'next/link';
 import { Helmet } from 'react-helmet';
 
 import Menu from './menu';
 
-import * as style from '../styles/header.module.css';
+import * as style from '../styles/header.module.scss';
 
 const Header = (props) => {
   const {
@@ -47,7 +47,7 @@ const Header = (props) => {
       </Helmet>
       <header className={style.header}>
         <div className={style.inner}>
-          <Link to="/">
+          <Link href="/">
             <div className={style.logo}>
               {siteLogo.src ? (
                 <img src={siteLogo.src} alt={siteLogo.alt} />

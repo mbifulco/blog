@@ -6,7 +6,7 @@ import { Link, graphql } from 'gatsby';
 import Tag from '../components/tag';
 import Post from '../components/post';
 import { DefaultLayout as Layout } from '../components/Layouts';
-import * as classes from '../styles/post.module.css';
+import * as classes from '../styles/post.module.scss';
 
 const Tags = ({ pageContext, data }) => {
   const { tag } = pageContext;
@@ -31,7 +31,7 @@ const Tags = ({ pageContext, data }) => {
             return <Post post={post} key={id} summary />;
           })}
 
-          <Link to="/tags">All tags</Link>
+          <Link href="/tags">All tags</Link>
         </div>
       </div>
     </Layout>

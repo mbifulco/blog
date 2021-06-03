@@ -1,25 +1,29 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'gatsby';
+import Link from 'next/link';;
 
-import * as style from '../styles/navigation.module.css';
+import * as style from '../styles/navigation.module.scss';
 
 const Navigation = ({ nextPath, previousPath, nextLabel, previousLabel }) =>
   previousPath || nextPath ? (
     <div className={style.navigation}>
       {previousPath && (
         <span className={style.button}>
-          <Link to={previousPath}>
-            <span className={style.iconPrev}>←</span>
-            <span className={style.buttonText}>{previousLabel}</span>
+          <Link href={previousPath}>
+            <>
+              <span className={style.iconPrev}>←</span>
+              <span className={style.buttonText}>{previousLabel}</span>
+            </>
           </Link>
         </span>
       )}
       {nextPath && (
         <span className={style.button}>
-          <Link to={nextPath}>
-            <span className={style.buttonText}>{nextLabel}</span>
-            <span className={style.iconNext}>→</span>
+          <Link href={nextPath}>
+            <>
+              <span className={style.buttonText}>{nextLabel}</span>
+              <span className={style.iconNext}>→</span>
+            </>
           </Link>
         </span>
       )}

@@ -11,30 +11,18 @@ const Footer = () => {
   return (
     <Box as="footer" position="relative" fontSize="small">
       <Stack zIndex={10} position="absolute">
-        <span>© 2020 Mike Bifulco</span>
+        <span>© 2019-{new Date().getFullYear()} Mike Bifulco</span>
         <SocialLinks />
         <div className="credit">
           <span>
             Built with{' '}
             <Link
               color={pink}
-              href="https://www.gatsbyjs.org"
+              href="https://nextjs.org/"
               target="_blank"
               rel="noreferrer noopener"
             >
-              Gatsby
-            </Link>
-            .
-          </span>{' '}
-          <span>
-            CMS by{' '}
-            <Link
-              color={pink}
-              href="https://www.takeshape.io"
-              target="_blank"
-              rel="noreferrer noopener"
-            >
-              Takeshape
+              Next
             </Link>
             .
           </span>{' '}

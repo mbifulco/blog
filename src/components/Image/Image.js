@@ -16,7 +16,7 @@ function Image(props) {
     ...rest
   } = props;
   const { generateImageUrl } = useImage(
-    process.env.GATSBY_CLOUDINARY_CLOUD_NAME
+    process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME
   );
 
   const cloudinaryConfig = {

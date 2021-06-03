@@ -1,6 +1,6 @@
 import React from 'react';
 
-import * as classes from '../styles/soldout.module.css';
+import * as classes from '../styles/soldout.module.scss';
 
 const soldOut = () => (
   <figure className={classes.soldOut}>

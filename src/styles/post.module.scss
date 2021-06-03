@@ -1,12 +1,12 @@
-li ol,
-li ul {
+.post li ol,
+.post li ul {
   margin: 0.5rem 0 1rem 1rem;
 }
 
 .post {
   width: 100%;
   text-align: left;
-  margin: 0 auto 10px;
+  margin: 0 auto 3rem;
   font-weight: normal;
   font-size: larger;
   font-family: var(--font-stack);
@@ -100,6 +100,6 @@ body.dark-mode .post h6 a {
   position: relative;
 }
 
-p {
+.post p {
   max-width: 50remnata;
 }

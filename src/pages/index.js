@@ -2,13 +2,27 @@ import React from 'react';
 import { Box, Link, Text, useTheme } from '@chakra-ui/react';
 
 import { DefaultLayout } from '../components/Layouts';
-import { Image, PostFeed } from '../components';
+import { Image, PostFeed, SEO } from '../components';
 
-const HomePage = () => {
+import { getAllPosts } from '../lib/blog';
+
+
+export async function getStaticProps() {
+  const posts = getAllPosts();
+
+  return {
+    props: {
+      posts,
+    },
+  };
+}
+
+const HomePage = ({ posts }) => {
   const theme = useTheme();
   const pink = theme.colors.pink[400];
   return (
     <DefaultLayout>
+      <SEO title="Blog" />
       <Box
         display={{ md: 'flex' }}
         margin="1rem 0 2rem 0"
@@ -56,7 +70,7 @@ const HomePage = () => {
         <Text color={pink} fontWeight={400}>
           LATEST POSTS
         </Text>
-        <PostFeed />
+        <PostFeed posts={posts} />
       </Box>
     </DefaultLayout>
   );
