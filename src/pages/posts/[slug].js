@@ -1,18 +1,19 @@
-// Install remark and remark-html
-import remark from 'remark';
-import html from 'remark-html';
+import { mdx } from '@mdx-js/react';
+import { serialize } from 'next-mdx-remote/serialize';
+
 import { getPostBySlug, getAllPosts } from '../../lib/blog';
 import markdownToHtml from '../../lib/markdown';
 import MdxPostTemplate from '../../templates/MdxPost';
 
 export async function getStaticProps({ params }) {
   const post = getPostBySlug(params.slug);
-  const content = await markdownToHtml(post.content || '');
+
+  const mdxSource = await serialize(post.content);
 
   return {
     props: {
       ...post,
-      content,
+      source: mdxSource,
     },
   };
 }

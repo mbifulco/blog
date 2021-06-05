@@ -13,19 +13,16 @@ import Post from '../components/post';
 import WebmentionMetadata from '../components/webmentionMetadata';
 
 const MdxPostTemplate = ({ post, mentions, pageContext, location }) => {
-  const { body, excerpt, frontmatter } = post;
+  const { excerpt, frontmatter } = post;
 
   const {
     published,
     date,
-    path,
     tags,
     title,
-    coverImagePublicId,
   } = frontmatter;
 
   const router = useRouter();
-
 
   if (!published && process.env.NODE_ENV === 'production') return null;
 
@@ -50,10 +47,8 @@ const MdxPostTemplate = ({ post, mentions, pageContext, location }) => {
           <em>Note:</em> this is a draft post
         </div>
       )}
-      <Post
-        post={post}
-        mentions={mentions && mentions.nodes}
-      />
+
+      <Post post={post} mentions={mentions?.nodes} />
       <Flex direction="row" justifyContent="center" marginTop="3rem">
         <NewsletterSignup tags={tags} />
       </Flex>

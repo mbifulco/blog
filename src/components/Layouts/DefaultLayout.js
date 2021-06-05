@@ -71,13 +71,15 @@ const DefaultLayout = ({ children }) => {
                 margin="0"
                 padding="0"
                 color={titleColors[colorMode]}
+                cursor="pointer"
+                as="a"
               >
                 Mike Bifulco
               </Text>
             </InternalLink>
 
             <Stack direction="row">
-              <Link as={InternalLink} href="/posts">
+              <Link as={InternalLink} href="/">
                 <a>Blog</a>
               </Link>
               <Link as={InternalLink} href="/about">

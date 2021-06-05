@@ -2,7 +2,6 @@
 import remark from 'remark';
 import html from 'remark-html';
 import { getPostBySlug, getAllPosts } from '../lib/blog';
-import MdxPostTemplate from '../templates/MdxPost';
 
 export async function getStaticProps({ params }) {
   const post = getPostBySlug(params.slug);
@@ -33,8 +32,3 @@ export async function getStaticPaths() {
     fallback: false,
   };
 }
-
-
-const PageTemplate = post => <div>wobble</div>
-
-export default PageTemplate

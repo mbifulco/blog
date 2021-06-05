@@ -52,11 +52,11 @@ const Header = (props) => {
               {siteLogo.src ? (
                 <img src={siteLogo.src} alt={siteLogo.alt} />
               ) : (
-                <>
+                <a>
                   <span className={style.mark}>&gt;</span>
                   <span className={style.text}>{logoText}</span>
                   <span className={style.cursor} />
-                </>
+                </a>
               )}
             </div>
           </Link>

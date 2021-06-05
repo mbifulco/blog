@@ -4,7 +4,9 @@ import NextLink from 'next/link';
 import GatsbyImage from 'next/image';
 import moment from 'moment';
 import { getImageUrl } from '@takeshape/routing';
-// import { MDXRenderer } from 'gatsby-plugin-mdx';
+
+import { MDXRemote } from 'next-mdx-remote';
+
 
 import { Heading, Link, Text, useColorMode, useTheme } from '@chakra-ui/react';
 
@@ -120,10 +122,7 @@ const Post = ({ summary, mentions, post, previous, next }) => {
           </>
         ) : (
           <>
-            <section
-              dangerouslySetInnerHTML={{ __html: content }}
-              itemProp="articleBody"
-            />
+            <MDXRemote {...post.source} />
 
             <MentionsSummary mentions={mentions} />
 

@@ -41,6 +41,7 @@
     "mdx-embed": "^0.0.19",
     "moment": "2.29.1",
     "next": "^10.2.3",
+    "next-mdx-remote": "^3.0.2",
     "pluralize": "^8.0.0",
     "postcss": "^8.3.0",
     "prism-react-renderer": "^1.2.1",
