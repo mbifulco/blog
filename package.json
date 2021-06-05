@@ -1,17 +1,8 @@
 {
   "name": "mike-bifulco-blog",
-  "description": "Just a place for me to put it all out into the world",
+  "description": "Just a place for me to put it all out into the world - mikebifulco.com",
   "version": "0.1.0",
-  "author": "Mike Bifulco <mbifulco@live..com>",
-  "keywords": [
-    "minimal",
-    "starter",
-    "blog",
-    "theme",
-    "dark",
-    "light",
-    "personal site"
-  ],
+  "author": "Mike Bifulco <hello@mikebifulco.com>",
   "license": "MIT",
   "scripts": {
     "build": "next build",
