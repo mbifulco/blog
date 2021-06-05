@@ -108,9 +108,6 @@ SEO.propTypes = {
   author: PropTypes.string,
   canonical: PropTypes.string,
   description: PropTypes.string,
-  location: PropTypes.shape({
-    href: PropTypes.string,
-  }),
   image: PropTypes.string,
   meta: PropTypes.array,
   ogType: PropTypes.string,
