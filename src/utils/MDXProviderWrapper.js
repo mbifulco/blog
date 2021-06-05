@@ -10,6 +10,9 @@ import prismTheme from 'prism-react-renderer/themes/nightOwl';
 
 import { Image } from '../components';
 
+// one off component imports
+import CenteredTextDemo from '../components/demos/CenteredTextDemo';
+
 const H1 = (props) => <Heading as="h1" {...props} />;
 const H2 = (props) => <Heading as="h2" {...props} />;
 const H3 = (props) => <Heading as="h3" {...props} />;
@@ -113,10 +116,23 @@ const components = {
   pre: Pre,
 };
 
+/* 
+  NOTE: due to a quirk in the mdx strategy we're using currently, we are unable to `import` components within mdx files.
+        To support that, they need to be added here. I'm keeping them in a separate object to track for later use, on the off chance this gets fixed one day.
+        I also recommend continuing to add `import` lines to individual mdx files to reduce work later - they don't seem to break anything right now
+  
+  for more context, https://github.com/hashicorp/next-mdx-remote#import--export
+*/
+const oneOffComponentsUsedInPosts = {
+  CenteredTextDemo, // used in dont-center-paragraph-text.mdx
+};
+
 // eslint-disable-next-line react/prop-types
 const MDXProviderWrapper = ({ children }) => (
   <MDXEmbedProvider>
-    <MDXProvider components={components}>{children}</MDXProvider>
+    <MDXProvider components={{ ...components, ...oneOffComponentsUsedInPosts }}>
+      {children}
+    </MDXProvider>
   </MDXEmbedProvider>
 );
 

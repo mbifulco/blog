@@ -13,7 +13,7 @@ const Shop = ({ location }) => (
       <main className={classes.content}>
         <h1>Shop</h1>
 
-        <article>
+        <article className={classes.article}>
           <SoldOut />
           <h2 id="angry-little-egg">Angry little egg</h2>
           <p>

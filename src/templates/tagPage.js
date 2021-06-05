@@ -1,17 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Pluralize from 'pluralize';
-import { Link, graphql } from 'gatsby';
+import Link from 'next/link';
 
 import Tag from '../components/tag';
 import Post from '../components/post';
 import { DefaultLayout as Layout } from '../components/Layouts';
 import * as classes from '../styles/post.module.scss';
 
-const Tags = ({ pageContext, data }) => {
-  const { tag } = pageContext;
-  const { takeshape } = data;
-  const { total, items: posts } = takeshape.tags.posts;
+const Tags = ({ tag, total, posts }) => {
 
   const tagHeader = (
     <span>
@@ -31,7 +28,7 @@ const Tags = ({ pageContext, data }) => {
             return <Post post={post} key={id} summary />;
           })}
 
-          <Link href="/tags">All tags</Link>
+          <Link href="/tags"><a>All tags</a></Link>
         </div>
       </div>
     </Layout>
@@ -39,45 +36,6 @@ const Tags = ({ pageContext, data }) => {
 };
 
 Tags.propTypes = {
-  data: PropTypes.shape({
-    takeshape: PropTypes.shape({
-      tags: PropTypes.shape({
-        posts: PropTypes.shape({
-          total: PropTypes.number,
-          items: PropTypes.array,
-        }),
-      }),
-    }),
-  }),
-  pageContext: PropTypes.shape({
-    tag: PropTypes.string.isRequired,
-    tagId: PropTypes.string,
-  }),
 };
 
 export default Tags;
-
-export const pageQuery = graphql`
-  query($tagId: ID!) {
-    takeshape {
-      tags: getTag(_id: $tagId) {
-        _id
-        name
-        posts: postSet {
-          total
-          items {
-            _enabledAt
-            _id
-            excerpt
-            featureImage {
-              description
-              path
-            }
-            path
-            title
-          }
-        }
-      }
-    }
-  }
-`;

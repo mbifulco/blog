@@ -16,7 +16,6 @@ import * as tagsClasses from '../styles/tagsPage.module.scss';
 import { SEO } from '../components';
 
 const TagsPage = ({ tags }) => {
-
   return (
     <Layout>
       <SEO />
@@ -24,7 +23,7 @@ const TagsPage = ({ tags }) => {
         <div className={classes.postContent}>
           <h1>Tags</h1>
           <ul className={tagsClasses.list}>
-            {tags.map((tag) => (
+            {tags?.map((tag) => (
               <li key={`tag-${tag._id}`}>
                 <Link href={`/tags/${kebabCase(tag.name)}/`}>
                   <a>
