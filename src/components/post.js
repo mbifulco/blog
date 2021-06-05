@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import NextLink from 'next/link';
 import GatsbyImage from 'next/image';
 import moment from 'moment';
-import { getImageUrl } from '@takeshape/routing';
 
 import { MDXRemote } from 'next-mdx-remote';
 
@@ -18,7 +17,7 @@ import { Image } from '.';
 
 const Post = ({ summary, mentions, post, previous, next }) => {
   const {
-    featureImage,
+    frontmatter,
     content,
   } = post;
 
@@ -30,7 +29,7 @@ const Post = ({ summary, mentions, post, previous, next }) => {
     path,
     tags,
     title,
-  } = post.frontmatter;
+  } = frontmatter;
 
   const theme = useTheme();
   const { colorMode } = useColorMode();
@@ -52,35 +51,10 @@ const Post = ({ summary, mentions, post, previous, next }) => {
 
   const postPath = `/posts/${path}`;
 
-  const coverImageUrl =
-    featureImage &&
-    getImageUrl(featureImage.path, {
-      auto: 'format',
-      fit: 'max',
-      w: 760,
-      h: 535,
-      q: 80,
-    });
-  const coverImageAlt = featureImage && featureImage.description;
+  // TODO test cover image support
 
   let coverImageContainer;
-  if (featureImage && featureImage.childImageSharp) {
-    coverImageContainer = (
-      <GatsbyImage
-        image={featureImage.childImageSharp.gatsbyImageData}
-        loading="lazy"
-        className={style.coverImage} />
-    );
-  } else if (coverImageUrl) {
-    coverImageContainer = (
-      <img
-        loading="lazy"
-        src={coverImageUrl}
-        className={style.coverImage}
-        alt={coverImageAlt}
-      />
-    );
-  } else if (coverImagePublicId) {
+  if (coverImagePublicId) {
     coverImageContainer = (
       <Image marginBottom="2em" publicId={coverImagePublicId} />
     );
@@ -142,23 +116,13 @@ const Post = ({ summary, mentions, post, previous, next }) => {
 Post.propTypes = {
   mentions: PropTypes.arrayOf(PropTypes.shape({})),
   post: PropTypes.shape({
-    bodyMdx: PropTypes.string,
     tags: PropTypes.arrayOf(
       PropTypes.oneOfType([PropTypes.shape({}), PropTypes.string])
     ),
     title: PropTypes.string,
     date: PropTypes.string,
-    _enabledAt: PropTypes.string,
     coverImagePublicId: PropTypes.string,
-    featureImage: PropTypes.shape({
-      childImageSharp: PropTypes.object,
-      description: PropTypes.string,
-      path: PropTypes.string,
-    }),
     path: PropTypes.string,
-    coverImage: PropTypes.object,
-    coverImageAlt: PropTypes.string,
-    coverImageUrl: PropTypes.string,
     author: PropTypes.string,
     id: PropTypes.string,
   }),

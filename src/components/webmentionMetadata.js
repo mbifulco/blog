@@ -1,14 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useRouter } from 'next/router';
 
 const WebmentionMetadata = ({
   coverImageUrl,
   summary,
-  location,
   author,
   publishedAt,
   title,
 }) => {
+
+
+  const router = useRouter();
+  const location = router.asPath;
+
   return (
     <div
       style={{
@@ -24,7 +29,7 @@ const WebmentionMetadata = ({
         </header>
         <p className="p-summary e-content">{summary}</p>
         <footer>
-          <a className="u-url p-name" href={location?.href || ""}>
+          <a className="u-url p-name" href={location || ""}>
             {author || 'Mike Bifulco'}
           </a>
         </footer>
@@ -45,9 +50,6 @@ const WebmentionMetadata = ({
 WebmentionMetadata.propTypes = {
   coverImageUrl: PropTypes.string,
   summary: PropTypes.string,
-  location: PropTypes.shape({
-    href: PropTypes.string,
-  }),
   author: PropTypes.string,
   publishedAt: PropTypes.string,
   title: PropTypes.string,

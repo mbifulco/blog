@@ -39,7 +39,6 @@ const SinglePage = ({ children, pageContext, location }) => {
         description={excerpt}
         image={coverImageUrl && coverImageUrl}
         ogType="article"
-        location={location}
       />
 
       <div className={style.post}>
@@ -49,7 +48,6 @@ const SinglePage = ({ children, pageContext, location }) => {
           </Heading>
           <TagsSummary tags={tags} />
           <WebmentionMetadata
-            location={location}
             coverImageUrl={coverImageUrl}
             summary={excerpt && excerpt}
             author={author && author}

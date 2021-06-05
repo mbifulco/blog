@@ -31,7 +31,6 @@
     "@mdx-js/mdx": "^1.6.22",
     "@mdx-js/react": "^1.6.22",
     "@next/mdx": "^10.2.3",
-    "@takeshape/routing": "^7.38.2",
     "date-fns": "^2.22.1",
     "dotenv": "^10.0.0",
     "framer-motion": "^4",

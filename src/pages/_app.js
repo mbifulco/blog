@@ -1,3 +1,5 @@
+import { AnalyticsProvider } from '../utils/analytics';
+
 // prismjs color theme
 require('../styles/variables.css');
 require('../styles/prism.css');
@@ -9,9 +11,11 @@ const { ChakraProvider } = require('@chakra-ui/react');
 
 function MyApp({ Component, pageProps }) {
   return (
-    <ChakraProvider>
-      <Component {...pageProps} />
-    </ChakraProvider>
+    <AnalyticsProvider>
+      <ChakraProvider>
+        <Component {...pageProps} />
+      </ChakraProvider>
+    </AnalyticsProvider>
   );
 }
 
@@ -27,4 +31,4 @@ function MyApp({ Component, pageProps }) {
 //   return { ...appProps }
 // }
 
-export default MyApp
+export default MyApp;

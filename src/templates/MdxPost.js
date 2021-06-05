@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { useRouter } from 'next/router';
 
 import { Flex } from '@chakra-ui/react';
@@ -12,7 +11,7 @@ import { NewsletterSignup } from '../components/NewsletterSignup';
 import Post from '../components/post';
 import WebmentionMetadata from '../components/webmentionMetadata';
 
-const MdxPostTemplate = ({ post, mentions, pageContext, location }) => {
+const MdxPostTemplate = ({ post, mentions }) => {
   const { excerpt, frontmatter } = post;
 
   const {
@@ -23,21 +22,22 @@ const MdxPostTemplate = ({ post, mentions, pageContext, location }) => {
   } = frontmatter;
 
   const router = useRouter();
+  const location = router.asPath;
 
   if (!published && process.env.NODE_ENV === 'production') return null;
 
   return (
     <DefaultLayout>
+      {/* TODO image url to SEO */}
       <SEO
         canonical={router.asPath}
         title={title}
         description={excerpt}
         // image={getImageUrl(featureImage.path)}
         ogType="article"
-        location={location}
       />
+      {/* TODO cover image url in webmentions */}
       <WebmentionMetadata
-        location={location}
         // coverImageUrl={coverImageUrl}
         summary={excerpt}
         publishedAt={date}
@@ -58,13 +58,4 @@ const MdxPostTemplate = ({ post, mentions, pageContext, location }) => {
 
 export default MdxPostTemplate;
 
-MdxPostTemplate.propTypes = {
-  data: PropTypes.object.isRequired,
-  pageContext: PropTypes.shape({
-    id: PropTypes.string,
-  }),
-  location: PropTypes.shape({
-    href: PropTypes.string,
-  }),
-};
 

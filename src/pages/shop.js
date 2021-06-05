@@ -9,7 +9,7 @@ import SoldOut from '../components/soldOut';
 
 const Shop = ({ location }) => (
     <Layout>
-      <SEO title="Shop" location={location} />
+      <SEO title="Shop" />
       <main className={classes.content}>
         <h1>Shop</h1>
 
