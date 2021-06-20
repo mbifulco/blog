@@ -14,7 +14,7 @@ export function getPostBySlug(slug) {
   const { data, content } = matter(fileContents);
 
   // store date in frontmatter as milliseconds since epoch
-  const date = parse(data.date, 'mm-dd-yyyy', new Date()).getTime();
+  const date = parse(data.date, 'MM-dd-yyyy', new Date()).getTime();
 
   return {
     slug: realSlug,
@@ -34,4 +34,4 @@ export function getAllPosts() {
   posts.sort((a, b) => compareDesc(a.frontmatter.date, b.frontmatter.date));
 
   return posts;
-}
+} 
