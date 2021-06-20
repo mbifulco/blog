@@ -98,25 +98,12 @@ const Pre = (props) => {
   );
 };
 
-const ImageWrapper = (props) => {
-  console.log('shoobee')
-  console.dir(props);
-  return (
-    <figure>
-      <Image marginBottom="1rem" {...props} />
-      {props.alt && (
-        <figcaption>
-          <span className="caption"><p>{props.alt}</p></span>
-        </figcaption>
-      )}
-    </figure>);
-}
 
 const components = {
   Aside,
   Button,
   Highlight,
-  Image: ImageWrapper,
+  Image,
   inlineCode: InlineCode,
   h1: H1,
   h2: H2,

@@ -37,9 +37,9 @@ function Image(props) {
         height={height}
         width={width}
         src={url}
-        alt={alt}
+        alt={alt ? alt : caption}
       />
-      {caption && <figcaption>{caption}</figcaption>}
+      <figcaption>{caption? caption : alt}</figcaption>
     </figure>
   );
 }
