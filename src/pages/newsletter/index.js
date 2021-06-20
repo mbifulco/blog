@@ -5,15 +5,13 @@ import { Heading } from '@chakra-ui/react';
 import { DefaultLayout as Layout } from '../../components/Layouts';
 import { NewsletterSignup } from '../../components/NewsletterSignup';
 
-const NewsletterPage = () => {
-  return (
-    <Layout>
-      <Heading as="h1" marginBottom="2rem">
-        Join the newsletter
-      </Heading>
-      <NewsletterSignup />
-    </Layout>
-  );
-};
+const NewsletterPage = () => (
+  <Layout>
+    <Heading as="h1" marginBottom="2rem">
+      Join the newsletter
+    </Heading>
+    <NewsletterSignup />
+  </Layout>
+);
 
 export default NewsletterPage;

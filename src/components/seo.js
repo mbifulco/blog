@@ -2,8 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Head from 'next/head';
-import config from '../config';
 import { useRouter } from 'next/router';
+
+import config from '../config';
 
 const SEO = ({
   author,
@@ -25,19 +26,6 @@ const SEO = ({
 
   const metaTitle = title || siteTitle;
   const metaDescription = description || siteDescription;
-
-  const ogImage = image
-    ? {
-        property: `og:image`,
-        content: image,
-      }
-    : null;
-  const ogImageUrl = image
-    ? {
-        property: `og:image:url`,
-        content: image,
-      }
-    : null;
 
   return (
     <Head>

@@ -52,7 +52,8 @@ rules:
   react/no-array-index-key: 0
   react/no-unescaped-entities: 0
   react/destructuring-assignment: 0
-
+  # suppress errors for missing 'import React' in files
+  react/react-in-jsx-scope: 0
 globals:
   document: true
   requestAnimationFrame: true

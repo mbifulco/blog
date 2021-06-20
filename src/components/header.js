@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
@@ -51,7 +52,7 @@ const Header = (props) => {
             <div className={style.logo}>
               {siteLogo.src ? (
                 <img src={siteLogo.src} alt={siteLogo.alt} />
-              ) : (
+              ) : ( 
                 <a>
                   <span className={style.mark}>&gt;</span>
                   <span className={style.text}>{logoText}</span>

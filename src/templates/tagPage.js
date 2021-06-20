@@ -28,6 +28,7 @@ const Tags = ({ tag, total, posts }) => {
             return <Post post={post} key={id} summary />;
           })}
 
+          {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
           <Link href="/tags"><a>All tags</a></Link>
         </div>
       </div>
@@ -36,6 +37,9 @@ const Tags = ({ tag, total, posts }) => {
 };
 
 Tags.propTypes = {
+  posts: PropTypes.arrayOf(PropTypes.object()),
+  tag: PropTypes.string,
+  total: PropTypes.number,
 };
 
 export default Tags;

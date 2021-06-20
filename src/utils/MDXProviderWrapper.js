@@ -11,7 +11,7 @@ import prismTheme from 'prism-react-renderer/themes/nightOwl';
 import { Image } from '../components';
 
 // one off component imports
-import CenteredTextDemo from '../components/demos/CenteredTextDemo';
+import { CenteredTextDemo } from '../components/demos/CenteredTextDemo';
 
 const H1 = (props) => <Heading as="h1" {...props} />;
 const H2 = (props) => <Heading as="h2" {...props} />;
@@ -48,9 +48,7 @@ const Aside = (props) => {
   );
 };
 
-const Highlight = (props) => {
-  return <Text as="mark" {...props} />;
-};
+const Highlight = (props) => <Text as="mark" {...props} />;
 
 const InlineCode = (props) => (
   <Code
@@ -98,7 +96,6 @@ const Pre = (props) => {
   );
 };
 
-
 const components = {
   Aside,
   Button,
@@ -115,6 +112,7 @@ const components = {
   pre: Pre,
 };
 
+/* eslint-disable max-len */
 /* 
   NOTE: due to a quirk in the mdx strategy we're using currently, we are unable to `import` components within mdx files.
         To support that, they need to be added here. I'm keeping them in a separate object to track for later use, on the off chance this gets fixed one day.
@@ -125,6 +123,7 @@ const components = {
 const oneOffComponentsUsedInPosts = {
   CenteredTextDemo, // used in dont-center-paragraph-text.mdx
 };
+/* eslint-enable max-len */
 
 // eslint-disable-next-line react/prop-types
 const MDXProviderWrapper = ({ children }) => (

@@ -1,8 +1,7 @@
-import { mdx } from '@mdx-js/react';
+import React from 'react';
 import { serialize } from 'next-mdx-remote/serialize';
 
 import { getPostBySlug, getAllPosts } from '../../lib/blog';
-import markdownToHtml from '../../lib/markdown';
 import MdxPostTemplate from '../../templates/MdxPost';
 
 export async function getStaticProps({ params }) {
@@ -22,13 +21,12 @@ export async function getStaticPaths() {
   const posts = getAllPosts();
 
   return {
-    paths: posts.map((post) => {
-      return {
+    paths: posts.map((post) => ({
         params: {
           slug: post.slug,
         },
-      };
-    }),
+      })
+    ),
     fallback: false,
   };
 }

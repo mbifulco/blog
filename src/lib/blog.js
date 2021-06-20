@@ -28,9 +28,9 @@ export function getPostBySlug(slug) {
 
 export function getAllPosts() {
   const slugs = fs.readdirSync(postsDirectory);
-  let posts = slugs.map((slug) => getPostBySlug(slug));
+  const posts = slugs.map((slug) => getPostBySlug(slug));
 
-  //sort posts by date,  newest first
+  // sort posts by date,  newest first
   posts.sort((a, b) => compareDesc(a.frontmatter.date, b.frontmatter.date));
 
   return posts;

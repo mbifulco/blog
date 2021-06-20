@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { AnalyticsProvider } from '../utils/analytics';
 
 // prismjs color theme
@@ -13,6 +14,7 @@ function MyApp({ Component, pageProps }) {
   return (
     <AnalyticsProvider>
       <ChakraProvider>
+        {/* eslint-disable-next-line react/jsx-props-no-spreading */}
         <Component {...pageProps} />
       </ChakraProvider>
     </AnalyticsProvider>

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { useRouter } from 'next/router';
 
 import { Flex } from '@chakra-ui/react';
@@ -11,6 +12,8 @@ import { NewsletterSignup } from '../components/NewsletterSignup';
 import Post from '../components/post';
 import WebmentionMetadata from '../components/webmentionMetadata';
 
+import frontmatterType from '../types/frontmatter';
+
 const MdxPostTemplate = ({ post, mentions }) => {
   const { excerpt, frontmatter } = post;
 
@@ -22,7 +25,6 @@ const MdxPostTemplate = ({ post, mentions }) => {
   } = frontmatter;
 
   const router = useRouter();
-  const location = router.asPath;
 
   if (!published && process.env.NODE_ENV === 'production') return null;
 
@@ -55,6 +57,18 @@ const MdxPostTemplate = ({ post, mentions }) => {
     </DefaultLayout>
   );
 };
+
+MdxPostTemplate.propTypes = {
+  mentions: PropTypes.shape({
+    nodes: PropTypes.arrayOf(
+      PropTypes.shape({})
+    )
+  }),
+  post: PropTypes.shape({
+    excerpt: PropTypes.string,
+    frontmatter: frontmatterType
+  })
+}
 
 export default MdxPostTemplate;
 

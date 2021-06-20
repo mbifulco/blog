@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import NextLink from 'next/link';
-import GatsbyImage from 'next/image';
 import moment from 'moment';
 
 import { MDXRemote } from 'next-mdx-remote';
@@ -14,11 +13,11 @@ import TagsSummary from './tagsSummary';
 import Navigation from './navigation';
 import * as style from '../styles/post.module.scss';
 import { Image } from '.';
+import frontmatterType from '../types/frontmatter';
 
 const Post = ({ summary, mentions, post, previous, next }) => {
   const {
     frontmatter,
-    content,
   } = post;
 
   const {
@@ -75,6 +74,7 @@ const Post = ({ summary, mentions, post, previous, next }) => {
               }}
               href={postPath}
             >
+              {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
               <a>{title}</a>
             </Link>
           ) : (
@@ -96,6 +96,7 @@ const Post = ({ summary, mentions, post, previous, next }) => {
           </>
         ) : (
           <>
+              {/* eslint-disable-next-line react/jsx-props-no-spreading */}
             <MDXRemote {...post.source} />
 
             <MentionsSummary mentions={mentions} />
@@ -116,15 +117,8 @@ const Post = ({ summary, mentions, post, previous, next }) => {
 Post.propTypes = {
   mentions: PropTypes.arrayOf(PropTypes.shape({})),
   post: PropTypes.shape({
-    tags: PropTypes.arrayOf(
-      PropTypes.oneOfType([PropTypes.shape({}), PropTypes.string])
-    ),
-    title: PropTypes.string,
-    date: PropTypes.string,
-    coverImagePublicId: PropTypes.string,
-    path: PropTypes.string,
-    author: PropTypes.string,
-    id: PropTypes.string,
+    frontmatter: frontmatterType,
+    source: PropTypes.shape({}),
   }),
   summary: PropTypes.bool,
   previous: PropTypes.object,
