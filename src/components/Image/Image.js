@@ -45,7 +45,7 @@ function Image(props) {
 }
 
 Image.propTypes = {
-  caption: PropTypes.oneOf([PropTypes.string, PropTypes.node]),
+  caption: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   publicId: PropTypes.string,
   transformations: PropTypes.arrayOf(PropTypes.string),
   width: PropTypes.string,
