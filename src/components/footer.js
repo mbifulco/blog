@@ -7,12 +7,12 @@ import { SocialLinks } from './SocialLinks';
 const Footer = () => {
   const theme = useTheme();
 
-  const pink = theme.colors.pink[400];
+  const pink = theme.colors.pink[600]; // use dark pink for accessibility on small text
   return (
     <Box as="footer" position="relative" fontSize="small">
       <Stack zIndex={10} position="absolute">
-        <span>© 2019-{new Date().getFullYear()} Mike Bifulco</span>
         <SocialLinks />
+        <span>© 2019-{new Date().getFullYear()} Mike Bifulco</span>
         <div className="credit">
           <span>
             Built with{' '}
@@ -21,6 +21,7 @@ const Footer = () => {
               href="https://nextjs.org/"
               target="_blank"
               rel="noreferrer noopener"
+              name="Nextjs"
             >
               Next
             </Link>

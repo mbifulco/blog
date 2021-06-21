@@ -55,7 +55,12 @@ const Post = ({ summary, mentions, post, previous, next }) => {
   let coverImageContainer;
   if (coverImagePublicId) {
     coverImageContainer = (
-      <Image className={style.coverImage} marginBottom="2em" publicId={coverImagePublicId} />
+      <Image
+        className={style.coverImage}
+        marginBottom="2em"
+        publicId={coverImagePublicId}
+        alt={excerpt}
+      />
     );
   }
 

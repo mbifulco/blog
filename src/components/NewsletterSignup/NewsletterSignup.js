@@ -17,11 +17,11 @@ const NewsletterSignup = ({ tags }) => (
       display="flex"
       justifyContent="center"
     >
-      <Box maxWidth="calc(100vw - 2rem)" margin="2rem 0">
+      <Box as="section" maxWidth="calc(100vw - 2rem)" margin="2rem 0">
         <Flex direction="row" justifyContent="center" marginBottom="0.5rem">
           <Headshot />
         </Flex>
-        <Heading as="h6" fontSize="1.375rem" marginBottom="1rem">
+        <Heading as="h1" fontSize="1.375rem" marginBottom="1rem">
           Get content for developers, designers, and entrepreneurs
         </Heading>
         <Text as="p" marginBottom="0.5rem" color="#757575" fontSize="small">

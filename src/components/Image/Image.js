@@ -38,8 +38,9 @@ function Image(props) {
         width={width}
         src={url}
         alt={alt || caption}
+        loading="lazy"
       />
-      <figcaption>{caption || alt}</figcaption>
+      <figcaption>{caption}</figcaption>
     </figure>
   );
 }

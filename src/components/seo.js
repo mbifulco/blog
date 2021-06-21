@@ -10,6 +10,7 @@ const SEO = ({
   author,
   canonical,
   description,
+  lang,
   meta,
   keywords,
   title,
@@ -29,6 +30,7 @@ const SEO = ({
 
   return (
     <Head>
+      <html lang={lang || "en"} />
       {/* favicon */}
       <link
         rel="apple-touch-icon"
@@ -101,6 +103,7 @@ SEO.propTypes = {
   ogType: PropTypes.string,
   keywords: PropTypes.arrayOf(PropTypes.string),
   title: PropTypes.string,
+  lang: PropTypes.string,
 };
 
 export default SEO;
