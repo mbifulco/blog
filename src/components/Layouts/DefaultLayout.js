@@ -58,26 +58,34 @@ const DefaultLayout = ({ children }) => {
             justifyContent={isHomePage ? 'flex-start' : 'space-between'}
             paddingBottom={isHomePage ? '0' : '1.5rem'}
           >
-            <InternalLink
-              style={{
-                textDecoration: 'none',
-              }}
-              href="/"
-            >
-              <Text
-                transition="all 5s ease"
-                fontSize={isHomePage ? '6xl' : 'lg'}
-                lineHeight="1"
-                fontWeight="700"
-                margin="0"
-                padding="0"
-                color={titleColors[colorMode]}
-                cursor="pointer"
-                as="a"
+            <Stack direction="row" alignItems="center">
+              <InternalLink
+                style={{
+                  textDecoration: 'none',
+                }}
+                href="/"
               >
-                Mike Bifulco
-              </Text>
-            </InternalLink>
+                <Text
+                  transition="all 5s ease"
+                  fontSize={isHomePage ? '6xl' : 'lg'}
+                  lineHeight="1"
+                  fontWeight="700"
+                  margin="0"
+                  padding="0"
+                  color={titleColors[colorMode]}
+                  cursor="pointer"
+                  as="a"
+                >
+                  Mike Bifulco
+                </Text>
+              </InternalLink>
+              {isHomePage && (
+                <SocialLinks
+                  spacing={2}
+                  marginLeft="2"
+                />
+              )}
+            </Stack>
 
             <Stack direction="row">
               <Link as={InternalLink} href="/">
@@ -89,13 +97,6 @@ const DefaultLayout = ({ children }) => {
               <Link as={InternalLink} href="/newsletter">
                 <a>Newsletter</a>
               </Link>
-              {isHomePage && (
-                <SocialLinks
-                  color={theme.colors.gray[600]}
-                  spacing={2}
-                  marginLeft="2"
-                />
-              )}
             </Stack>
           </Stack>
 
