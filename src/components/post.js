@@ -5,7 +5,6 @@ import moment from 'moment';
 
 import { MDXRemote } from 'next-mdx-remote';
 
-
 import { Heading, Link, Text, useColorMode, useTheme } from '@chakra-ui/react';
 
 import MentionsSummary from './mentionsSummary';
@@ -16,19 +15,10 @@ import { Image } from '.';
 import frontmatterType from '../types/frontmatter';
 
 const Post = ({ summary, mentions, post, previous, next }) => {
-  const {
-    frontmatter,
-  } = post;
+  const { frontmatter } = post;
 
-  const {
-    author,
-    coverImagePublicId,
-    date,
-    excerpt,
-    path,
-    tags,
-    title,
-  } = frontmatter;
+  const { author, coverImagePublicId, date, excerpt, path, tags, title } =
+    frontmatter;
 
   const theme = useTheme();
   const { colorMode } = useColorMode();
@@ -52,17 +42,14 @@ const Post = ({ summary, mentions, post, previous, next }) => {
 
   // TODO test cover image support
 
-  let coverImageContainer;
-  if (coverImagePublicId) {
-    coverImageContainer = (
-      <Image
-        className={style.coverImage}
-        marginBottom="2em"
-        publicId={coverImagePublicId}
-        alt={excerpt}
-      />
-    );
-  }
+  const coverImageContainer = (
+    <Image
+      className={style.coverImage}
+      marginBottom="2em"
+      publicId={coverImagePublicId || `posts/${path}/cover`}
+      alt={excerpt}
+    />
+  );
 
   const formattedDate = moment(new Date(date)).format('DD MMMM YYYY');
 
@@ -101,7 +88,7 @@ const Post = ({ summary, mentions, post, previous, next }) => {
           </>
         ) : (
           <>
-              {/* eslint-disable-next-line react/jsx-props-no-spreading */}
+            {/* eslint-disable-next-line react/jsx-props-no-spreading */}
             <MDXRemote {...post.source} />
 
             <MentionsSummary mentions={mentions} />

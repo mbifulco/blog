@@ -1,0 +1,88 @@
+---
+title: I reclaimed 10GB of disk space from node_modules
+type: post
+date: 04-02-2019
+excerpt: "If you're not careful, your node projects can start to fill all the spare disk space on your computer. This one weird trick (lol) can help avoid that."
+published: true
+path: reclaimed-10gb-of-disk-space-from-node-modules
+tags: [javascript, dev, tools, productivity, npm]
+---
+
+## I really don't like my laptop.
+
+I've been using a 2017 Macbook Pro for the past couple years.  As I'm sure you've heard, it is a fiercely disappointing device largely due to its courageous lack of ports, flawed keyboard design, and astonishing sticker price.  My personal machine is a 13" version, with 16GB of memory, _no_ touchbar, and a 256GB SSD. When I bought it, upgrading to 16GB of memory seemed far more important splurging on processor speed or disk space.  That's probably still true - but I've found myself endlessly frustrated by the tiny capacity of the SSD in my day to day work.
+
+Roughly once every 6 weeks, my machine grinds to a halt as I run out of disk space, so I have to suffer through all the usual suspects for clearing up some room:
+
+*   empty the trash
+*   delete unused applications
+*   make sure all my photos are moved to my NAS, cloud storage, and offsite archives
+*   remove old virtualbox VM images
+
+## A new kind of purge
+
+Last week, however, I came across a surprising new way to free up some disk space: clearing out `node_modules` directories.  
+
+Curiosity hit me, and I searched my mac for folders named `node_modules`. This is what I found:
+
+*   My machine has `7,731` _total_  `node_modules` folders.  Wow!
+*   Under `~/src/**`, where I keep all of my dev projects, I had a grand total of 7,719 `node_modules`
+*   These folders contain _hundreds of thousands of files_ (which should be no surprise), and took up nearly **10GB** of disk space!
+
+## Turtles all the way down 🐢🐢🐢
+
+That last number was a bit of a revelation to me at first.  If you're unfamiliar, `node_modules` contains a copy of each of the [npm packages](https://npmjs.com) which you add to your project (with `npm install` or `yarn add`, etc) on projects which use node.  Each of them are pinned to a specific version, which is typically specified in `package.json`.  
+
+Somewhat logically, each of the dependencies in your project's `node_modules` directory may also have a `node_modules` directory, containing their dependencies, each pinned to a specific version (again, defined in the `package.json` file of that dependency).  
+
+This is where file and disk space bloat happen - the libraries you add to your project may each contain dozens of dependencies, each of which have dozens more, etc etc, all the way down to super basic node and C libraries which make up the fundamental building blocks of node.
+
+(Mind you - This is oversimplifying things a bit - depending on how you set up `npm` or `yarn` , there is _some_ optimization done here. If one version of a given npm module is required more than once by your dependency tree, it may only appear once.)
+
+## The fix
+
+Actually, this was pretty easy to fix.  I did a search for all of the `node_modules` folders under `~/src/**`, and deleted all of them, right from finder (sorry, terminal apologists).  I then emptied the trash on my mac, and I was 10GB richer.  
+
+<Image
+  publicId="posts/reclaimed-10gb-of-disk-space-from-node-modules/disk-space"
+  alt="Screenshot of MacOS folder info for a node_modules search"
+  caption="10 GB of space, just for node_modules!"
+/>
+
+## What did it break?
+
+It's been a week since I've done this. So far the only inkling of a downside is that when I revisit projects I'm actively working on, I need to run `yarn install` to recreate the `node_modules` directory there. I switch between a good handful of projects, and I'm back to a fair few directories, but at least these are just the ones I'm currently using. I'm good with that.
+
+<Image
+  publicId="posts/reclaimed-10gb-of-disk-space-from-node-modules/terminal"
+  alt="Terminal search for directories called node_modules"
+  caption="A week later, I'm back up to 1209 node\_modules directories"
+/>
+
+## Can we do better?
+
+There is an alternative to `npm` and `yarn` called [`pnpm`](https://pnpm.js.org/), which claims to be a "Fast, disk space efficient package manager".  Its primary feature looks promising:
+
+<Image
+  publicId="posts/reclaimed-10gb-of-disk-space-from-node-modules/pnpm"
+  alt="pnpm's value prop - one version of each package saved to disk"
+  caption="One version of each module sounds great"
+/>
+
+I haven't tried it yet, but will certainly be giving it a shot.
+
+## Epilogue 
+
+I think it's fair to say that this is a problem that the folks at npm and Facebook (who maintain yarn) are also looking closely at. My guess is that some healthy competition will improve this disk space nightmare... hopefully before I'm forced to buy a laptop with 1TB of storage. 🥳
+
+
+* * *
+
+
+### More reading
+
+I'm certainly not the first one to write about this.  Some more great reading for you to check out, if you're interested:
+
+*   [The node\_modules problem](https://dev.to/leoat12/the-nodemodules-problem-29dc)
+*   [What Happened When I Peeked Into My Node\_Modules Directory](https://medium.com/s/silicon-satire/i-peeked-into-my-node-modules-directory-and-you-wont-believe-what-happened-next-b89f63d21558) (this is the infamous tongue-in-cheek Guy Fieri article)
+*   [What’s really wrong with node\_modules and why this is your fault](https://hackernoon.com/whats-really-wrong-with-node-modules-and-why-this-is-your-fault-8ac9fa893823?gi=1ff87c0f83ba)
