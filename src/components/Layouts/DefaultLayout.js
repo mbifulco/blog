@@ -79,12 +79,7 @@ const DefaultLayout = ({ children }) => {
                   Mike Bifulco
                 </Text>
               </InternalLink>
-              {isHomePage && (
-                <SocialLinks
-                  spacing={2}
-                  marginLeft="2"
-                />
-              )}
+              {isHomePage && <SocialLinks spacing={2} marginLeft="2" />}
             </Stack>
 
             <Stack direction="row">
