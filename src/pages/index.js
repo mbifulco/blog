@@ -61,7 +61,7 @@ const HomePage = ({ posts }) => {
             </Link>
             .
           </Text>
-          <Text fontSize="xl" fontWeight="normal" fontStyle="italic" margin="0">
+          <Text fontSize="xl" fontWeight="normal" fontStyle="italic" margin="0" marginTop="1rem">
             I work at Google -- but the things I post here are my own, and don't
             necessarily reflect Google's views or opinions.
           </Text>
