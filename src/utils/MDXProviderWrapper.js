@@ -50,16 +50,19 @@ const Aside = (props) => {
 
 const Highlight = (props) => <Text as="mark" {...props} />;
 
-const InlineCode = (props) => (
-  <Code
-    color="rgb(214, 222, 235)"
-    whiteSpace="pre"
-    backgroundColor="#1a1a1d"
-    borderRadius=".3em"
-    padding="0.1ch 1ch"
-    {...props}
-  />
-);
+const InlineCode = (props) => {
+  const theme = useTheme();
+
+  return (
+    <Code
+      color={theme.colors.gray[900]}
+      whiteSpace="pre"
+      borderRadius=".3em"
+      padding="0.1ch 1ch"
+      {...props}
+    />
+  );
+}
 
 const Pre = (props) => {
   const classNames = props.children.props.className || '';
