@@ -36,7 +36,7 @@ const AboutPage = () => (
       <li>
         {' '}
         I know that my knowledge is imperfect, and I can be blind to my
-        privilege. I'm always willing to listen.
+        privilege. {"I'm"} always willing to listen.
       </li>
       <li>
         {' '}
