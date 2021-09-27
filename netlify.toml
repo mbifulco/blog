@@ -6,6 +6,6 @@
   build = "npm run build"
   publish = "out" 
 
-[[plugins]]
-  [[context.feature-next.plugins]]
-  package = "@netlify/plugin-nextjs"
+
+[[context.feature-next.plugins]]
+package = "@netlify/plugin-nextjs"
