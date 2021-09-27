@@ -9,7 +9,7 @@
     "dev": "next",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
     "start": "next start",
-    "lint": "eslint src",
+    "lint": "next lint",
     "eslint-check": "eslint --print-config . | eslint-config-prettier-check"
   },
   "dependencies": {
@@ -21,7 +21,6 @@
     "@mdx-js/loader": "^1.6.22",
     "@mdx-js/mdx": "^1.6.22",
     "@mdx-js/react": "^1.6.22",
-    "@netlify/plugin-nextjs": "^3.9.0",
     "@next/mdx": "^11.1.2",
     "date-fns": "^2.24.0",
     "dotenv": "^10.0.0",
@@ -48,6 +47,7 @@
     "use-cloudinary": "^4.1.0"
   },
   "devDependencies": {
+    "@next/eslint-plugin-next": "^11.1.2",
     "babel-eslint": "^10.1.0",
     "cssnano": "^5.0.8",
     "eslint": "^7.32.0",

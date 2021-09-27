@@ -32,6 +32,7 @@ const HomePage = ({ posts }) => {
         alignItems="flex-start"
       >
         <Image
+          alt="My headshot"
           publicId="mike-headshot-square"
           objectFit="contain"
           objectPosition="bottom"
@@ -49,7 +50,7 @@ const HomePage = ({ posts }) => {
             Oh, hello
           </Text>
           <Text fontSize="xl" fontWeight="normal" margin="0">
-            I'm a technologist, a designer, and a creator of things. I started
+            {"I'm"} a technologist, a designer, and a creator of things. I started
             this as a place to put together my thoughts on things that I think
             deserve a bigger stage than my{' '}
             <Link color={pink} href="https://twitter.com/irreverentmike">
@@ -62,8 +63,8 @@ const HomePage = ({ posts }) => {
             .
           </Text>
           <Text fontSize="xl" fontWeight="normal" fontStyle="italic" margin="0" marginTop="1rem">
-            I work at Google -- but the things I post here are my own, and don't
-            necessarily reflect Google's views or opinions.
+            I work at Google -- but the things I post here are my own, and {"don't"}
+            necessarily reflect {"Google's"} views or opinions.
           </Text>
         </Box>
       </Box>

@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useRouter } from 'next/router';
+import Image from 'next/image';
 
 const WebmentionMetadata = ({
   coverImageUrl,
@@ -23,7 +24,7 @@ const WebmentionMetadata = ({
       <article className="h-card">
         <header>
           {coverImageUrl && (
-            <img className="u-photo" src={coverImageUrl} alt="Hero" />
+            <Image className="u-photo" src={coverImageUrl} alt="Hero" />
           )}
           <h1 className="p-name">{title}</h1>
         </header>

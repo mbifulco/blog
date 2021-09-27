@@ -1,4 +1,5 @@
 import React from 'react';
+import Image from 'next/image'
 
 import { DefaultLayout as Layout } from '../components/Layouts';
 import SEO from '../components/seo';
@@ -21,8 +22,8 @@ const Shop = () => (
         </p>
 
         {/* eslint-disable max-len */}
-        <img
-          src="https://images.takeshape.io/f515f67b-e56f-4df6-9601-80eeb65f2f83/dev/fca91feb-ee45-4c92-a7e3-ce625f7ce7ae/egg-em.png"
+        <Image
+          src="https://res.cloudinary.com/mikebifulco-com/image/upload/v1632750265/egg-em_rexzgt.png"
           alt="egg sticker"
         />
         {/* eslint-enable max-len */}

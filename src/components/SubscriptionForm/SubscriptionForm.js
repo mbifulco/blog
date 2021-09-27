@@ -93,7 +93,7 @@ const SubscriptionForm = ({ tags }) => {
           }}
           width="45%"
         >
-          I'm in!
+          {"I'm in!"}
         </Button>
       </Flex>
       {tags &&
