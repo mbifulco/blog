@@ -23,7 +23,11 @@ Well, it all came down to a formatting issue. The header image for this article 
 
 In my case, it came down to a conflicting extension for Visual Studio Code. It turns out that the [beautify](https://marketplace.visualstudio.com/items?itemName=HookyQR.beautify) plugin takes precedence over Prettier in its default configuration. After some plucking around, I determined that if I _disable_ Beautify in the workspace where I'm using prettier, everything just suddenly... works. 😍
 
-![Disable beautify in your project workspace, and everything gets better](https://images.takeshape.io/f515f67b-e56f-4df6-9601-80eeb65f2f83/dev/c18b2b40-60af-4ee3-8070-146d65a90355/img-000-beautify.png?auto=compress%2Cformat)
+<Image
+  publicId="posts/embracing-prettier/disable-beautify"
+  alt="VS Code's extension interface showing the Beautify plugin, with an arrow pointing to the option that says 'Disable (workspace)'"
+  caption="Disable beautify in your project workspace, and everything gets better"
+/>
 
 
 
