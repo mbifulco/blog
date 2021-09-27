@@ -30,7 +30,6 @@ const SEO = ({
 
   return (
     <Head>
-      <html lang={lang || "en"} />
       {/* favicon */}
       <link
         rel="apple-touch-icon"
