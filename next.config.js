@@ -6,6 +6,7 @@ const withMDX = require('@next/mdx')({
     rehypePlugins: [],
   },
 });
+
 module.exports = withMDX({
   pageExtensions: ['js', 'jsx', 'md', 'mdx'],
 });

@@ -8,7 +8,7 @@ const Headshot = ({ className }) => (
     height={50}
     width={50}
     alt="Mike Bifulco headshot"
-    style={{ borderRadius: '12px' }}
+    // style={{ borderRadius: '12px' }}
     className={`headshot ${className}`}
   />
 );
