@@ -4,7 +4,8 @@
 #    more here: https://answers.netlify.com/t/how-to-do-a-branch-deploy-when-it-is-a-branch-containing-slash/4240
 [context.feature-next]
   build = "npm run build"
-  publish = "out"
+  publish = "out" 
 
-  [context.feature-next.plugins]
+[[plugins]]
+  [[context.feature-next.plugins]]
   package = "@netlify/plugin-nextjs"
