@@ -1,8 +1,10 @@
 # Set up a context specific to the next project: all deploys from the Production branch set in your site’s
 # Branches settings in the UI will inherit these settings.
-[context.feature\/next]
+# note that netlify replaces a / in the branch name with a -
+#    more here: https://answers.netlify.com/t/how-to-do-a-branch-deploy-when-it-is-a-branch-containing-slash/4240
+[context.feature-next]
   build = "npm run build"
   publish = "out"
 
-  [context.feature\/next.plugins]
+  [context.feature-next.plugins]
   package = "@netlify/plugin-nextjs"
