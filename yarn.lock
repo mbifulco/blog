@@ -848,11 +848,6 @@
   dependencies:
     "@chakra-ui/utils" "1.8.2"
 
-"@charlietango/use-native-lazy-loading@^1.7.1":
-  version "1.9.0"
-  resolved "https://registry.yarnpkg.com/@charlietango/use-native-lazy-loading/-/use-native-lazy-loading-1.9.0.tgz#825b9ccb284b9632d70ec7f03b77fbe65f8ce3fc"
-  integrity sha512-lIOJYxF+RXT9T1cDvfhmjfUyiePT6BaQY4fjknm36TKGH7OJpdY1yJrspqdK1sfL0botxSH8aADszqmi2TGGFQ==
-
 "@ctrl/tinycolor@^3.4.0":
   version "3.4.0"
   resolved "https://registry.yarnpkg.com/@ctrl/tinycolor/-/tinycolor-3.4.0.tgz#c3c5ae543c897caa9c2a68630bed355be5f9990f"
@@ -4632,10 +4627,10 @@ mdurl@^1.0.0:
   resolved "https://registry.yarnpkg.com/mdurl/-/mdurl-1.0.1.tgz#fe85b2ec75a59037f2adfec100fd6c601761152e"
   integrity sha1-/oWy7HWlkDfyrf7BAP1sYBdhFS4=
 
-mdx-embed@^0.0.20:
-  version "0.0.20"
-  resolved "https://registry.yarnpkg.com/mdx-embed/-/mdx-embed-0.0.20.tgz#22300c6bbd8aa432f609bece5e6972931ae719d8"
-  integrity sha512-c4DdQBz+DH+hdo1eYRh/pI+NWSnrtOPErVnJGKQdGC3jqEq22u0wERo9/gIsw4L8C6q81ry7SqLG0P44QMjscA==
+mdx-embed@^0.0.21:
+  version "0.0.21"
+  resolved "https://registry.yarnpkg.com/mdx-embed/-/mdx-embed-0.0.21.tgz#b8dcad852fbcb2b022b1fe57ad6f0fac3c78b8c8"
+  integrity sha512-fIfqqKvOnNdoH1XaKROsZUuV84fWA933GV2ApGBKh40RamMfI+HldYOaxeyazrtToUy9FT2hifOlHAY0UriM9g==
 
 merge-stream@^2.0.0:
   version "2.0.0"
@@ -5763,11 +5758,6 @@ react-focus-lock@2.5.0:
     react-clientside-effect "^1.2.2"
     use-callback-ref "^1.2.1"
     use-sidecar "^1.0.1"
-
-react-intersection-observer@^8.26.2:
-  version "8.31.0"
-  resolved "https://registry.yarnpkg.com/react-intersection-observer/-/react-intersection-observer-8.31.0.tgz#0ed21aaf93c4c0475b22b0ccaba6169076d01605"
-  integrity sha512-XraIC/tkrD9JtrmVA7ypEN1QIpKc52mXBH1u/bz/aicRLo8QQEJQAMUTb8mz4B6dqpPwyzgjrr7Ljv/2ACDtqw==
 
 react-is@17.0.2, "react-is@^16.8.0 || ^17.0.0":
   version "17.0.2"
@@ -6999,13 +6989,10 @@ use-callback-ref@^1.2.1, use-callback-ref@^1.2.3:
   resolved "https://registry.yarnpkg.com/use-callback-ref/-/use-callback-ref-1.2.5.tgz#6115ed242cfbaed5915499c0a9842ca2912f38a5"
   integrity sha512-gN3vgMISAgacF7sqsLPByqoePooY3n2emTH59Ur5d/M8eg4WTWu1xp8i8DHjohftIyEx0S08RiYxbffr4j8Peg==
 
-use-cloudinary@^4.1.0:
-  version "4.1.0"
-  resolved "https://registry.yarnpkg.com/use-cloudinary/-/use-cloudinary-4.1.0.tgz#afe2db21783ef8903a5194cadc65ad1f4f9168c0"
-  integrity sha512-8qhq7Ud1/aaADp+Aa/YIxIzFoK9q4O4AoPazoBsw8C81r5gZfijdpNndzxxNYQM0f0skLvrbbJi1WlKOyn/BLQ==
-  dependencies:
-    "@charlietango/use-native-lazy-loading" "^1.7.1"
-    react-intersection-observer "^8.26.2"
+use-cloudinary@^4.1.1:
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/use-cloudinary/-/use-cloudinary-4.1.1.tgz#c94b9d737a30cba97a13d196650d58c1bf980f3b"
+  integrity sha512-RziEB/YxIOfAVBjn6/pgglfwfTAdAY2RN9zR2E2K9pUKz9su6BLHak6xrL/tOFhjTf7ZMBKMSNXTFskRF6gXvg==
 
 use-sidecar@^1.0.1:
   version "1.0.5"
