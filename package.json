@@ -10,7 +10,8 @@
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
     "start": "next start",
     "lint": "next lint",
-    "eslint-check": "eslint --print-config . | eslint-config-prettier-check"
+    "eslint-check": "eslint --print-config . | eslint-config-prettier-check",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@chakra-ui/react": "^1.6.8",
@@ -45,7 +46,7 @@
     "eslint": "^7.32.0",
     "eslint-config-next": "^11.1.2",
     "eslint-config-prettier": "^8.3.0",
-    "husky": "^4.3.8",
+    "husky": ">=6",
     "lint-staged": "^10.5.4",
     "netlify-plugin-cache-nextjs": "^1.6.1",
     "prettier": "^2.4.1"
@@ -57,15 +58,12 @@
   "bugs": {
     "url": "https://github.com/mbifulco/blog/issues"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
   "lint-staged": {
     "*.{js,css,md}": [
       "prettier --write",
       "git add"
-    ]
+    ],
+    "*.js": "eslint --cache --fix",
+    "*.{js,jsx,ts,tsx,json,md}": "prettier --write"
   }
 }
