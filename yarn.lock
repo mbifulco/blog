@@ -4627,10 +4627,10 @@ mdurl@^1.0.0:
   resolved "https://registry.yarnpkg.com/mdurl/-/mdurl-1.0.1.tgz#fe85b2ec75a59037f2adfec100fd6c601761152e"
   integrity sha1-/oWy7HWlkDfyrf7BAP1sYBdhFS4=
 
-mdx-embed@^0.0.21:
-  version "0.0.21"
-  resolved "https://registry.yarnpkg.com/mdx-embed/-/mdx-embed-0.0.21.tgz#b8dcad852fbcb2b022b1fe57ad6f0fac3c78b8c8"
-  integrity sha512-fIfqqKvOnNdoH1XaKROsZUuV84fWA933GV2ApGBKh40RamMfI+HldYOaxeyazrtToUy9FT2hifOlHAY0UriM9g==
+mdx-embed@^0.0.22:
+  version "0.0.22"
+  resolved "https://registry.yarnpkg.com/mdx-embed/-/mdx-embed-0.0.22.tgz#63498cd0fc584ad1770a0fd0fde55e7ad75fde22"
+  integrity sha512-Wf9zsrPAYk+QVssBvKKOCqiGcWXOa0z76PObdEY5Oaq8rDvqlbSM/wv7YZ4LWiVOkNsK0mUF44A8o9QXxT+LLQ==
 
 merge-stream@^2.0.0:
   version "2.0.0"
@@ -4976,10 +4976,10 @@ netlify-plugin-cache-nextjs@^1.6.1:
   dependencies:
     "@netlify/cache-utils" "1.0.7"
 
-next-mdx-remote@^3.0.4:
-  version "3.0.4"
-  resolved "https://registry.yarnpkg.com/next-mdx-remote/-/next-mdx-remote-3.0.4.tgz#c9b4aff4ec0780b08f34ccd6be966e569d6d4fda"
-  integrity sha512-n/xN6GaeBgJiuTJDrG6iqJ2EY5rEZ99Vf2H1nc75MNn1a6XnZLgT6uQJxqbSN84svc9aU3CSxfRlOqgqVVPHIg==
+next-mdx-remote@^3.0.5:
+  version "3.0.5"
+  resolved "https://registry.yarnpkg.com/next-mdx-remote/-/next-mdx-remote-3.0.5.tgz#57b3ea156d20e622b51becbacedc995233cac236"
+  integrity sha512-m9OD2GBuqvz/IeM/h4kufQ7GEdaCaZ4owqkCQ+yoxzCIM7jVQYK9JWXNVcyPP/Y6FBS00fLH03Hn5VFdvkFf0A==
   dependencies:
     "@mdx-js/mdx" "^1.6.22"
     "@mdx-js/react" "^1.6.22"
