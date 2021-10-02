@@ -1,11 +1,6 @@
 /* eslint-disable react/prop-types */
 import { AnalyticsProvider } from '../utils/analytics';
 
-// prismjs color theme
-require('../styles/variables.css');
-require('../styles/prism.css');
-require('../styles/DefaultLayout.css');
-
 const { ChakraProvider } = require('@chakra-ui/react');
 
 // import App from 'next/app'

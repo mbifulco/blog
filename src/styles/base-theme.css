@@ -1,6 +1,4 @@
-@import './fonts.css';
 @import './variables.css';
-@import './prism.css';
 
 html {
   box-sizing: border-box;
@@ -15,7 +13,7 @@ html {
 body {
   margin: 0;
   padding: 0;
-  font-family: 'Inter UI', -apple-system, BlinkMacSystemFont, 'Roboto',
+  font-family: -apple-system, BlinkMacSystemFont, 'Roboto',
     'Segoe UI', Helvetica, Arial, sans-serif, 'apple color emoji',
     'segoe ui emoji', 'android emoji', 'emojisymbols', 'emojione mozilla',
     'twemoji mozilla', 'segoe ui symbol', 'noto color emoji';
@@ -84,10 +82,6 @@ h4 {
   h4 {
     font-size: 1.125rem;
   }
-}
-
-a {
-  color: inherit;
 }
 
 img {
@@ -244,7 +238,7 @@ ol ol {
 button,
 input,
 textarea {
-  font-family: 'Inter UI', -apple-system, BlinkMacSystemFont, 'Roboto',
+  font-family: -apple-system, BlinkMacSystemFont, 'Roboto',
     'Segoe UI', Helvetica, Arial, sans-serif;
 }
 
