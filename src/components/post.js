@@ -9,12 +9,11 @@ import { Heading, Link, Text, useColorMode, useTheme } from '@chakra-ui/react';
 
 import MentionsSummary from './mentionsSummary';
 import TagsSummary from './tagsSummary';
-import Navigation from './navigation';
 import * as style from '../styles/post.module.scss';
 import { Image } from '.';
 import frontmatterType from '../types/frontmatter';
 
-const Post = ({ summary, mentions, post, previous, next }) => {
+const Post = ({ summary, mentions, post }) => {
   const { frontmatter } = post;
 
   const { author, coverImagePublicId, date, excerpt, path, tags, title } =
@@ -33,10 +32,6 @@ const Post = ({ summary, mentions, post, previous, next }) => {
     light: '#555555',
   };
 
-  const previousPath = previous && previous.path;
-  const previousLabel = previous && previous.title;
-  const nextPath = next && next.path;
-  const nextLabel = next && next.title;
 
   const postPath = `/posts/${path}`;
 
@@ -98,13 +93,6 @@ const Post = ({ summary, mentions, post, previous, next }) => {
             <MDXRemote {...post.source} />
 
             <MentionsSummary mentions={mentions} />
-
-            <Navigation
-              previousPath={previousPath}
-              previousLabel={previousLabel}
-              nextPath={nextPath}
-              nextLabel={nextLabel}
-            />
           </>
         )}
       </div>
