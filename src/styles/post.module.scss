@@ -19,12 +19,15 @@
 .post img {
   max-width: 100%;
 }
-
 .post a {
   text-decoration: underline;
 }
 
 .post a:hover {
+  text-decoration: none;
+}
+
+.post header a {
   text-decoration: none;
 }
 
@@ -87,14 +90,6 @@ body.dark-mode .post h6 a {
   box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
   max-height: 90vh;
   margin-left: 0;
-}
-
-.readMore {
-  display: inline-block;
-  text-decoration: none;
-  font-weight: bold;
-  margin: 20px 0;
-  font-size: 1rem;
 }
 
 .postContent {

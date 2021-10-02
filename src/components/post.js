@@ -54,35 +54,41 @@ const Post = ({ summary, mentions, post, previous, next }) => {
   const formattedDate = moment(new Date(date)).format('DD MMMM YYYY');
 
   return (
-    <div className={style.post}>
+    <article className={style.post}>
       <div className={style.postContent}>
-        <Heading as="h1" color={headerColors[colorMode]}>
-          {summary ? (
-            <Link
-              as={NextLink}
-              style={{
-                color: headerColors[colorMode],
-                textDecoration: 'none',
-              }}
-              href={postPath}
-            >
-              {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-              <a>{title}</a>
-            </Link>
-          ) : (
-            title
-          )}
-        </Heading>
-        <Text fontSize="1rem" color={dateColors[colorMode]}>
-          {formattedDate} {author && <>— Written by {author}</>}
-        </Text>
-        <TagsSummary tags={tags} />
-        {coverImageContainer}
+        <header>
+          <Heading
+            as="h1"
+            color={theme.colors.pink[500]}
+            textDecoration="none"
+            border={0}
+          >
+            {summary ? (
+              <Link
+                as={NextLink}
+                href={postPath}
+              >
+                {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+                <a>{title}</a>
+              </Link>
+            ) : (
+              title
+            )}
+          </Heading>
+          <Text fontSize="1rem" color={dateColors[colorMode]}>
+            {formattedDate} {author && <>— Written by {author}</>}
+          </Text>
+          <TagsSummary tags={tags} />
+          {coverImageContainer}
+        </header>
 
         {summary ? (
           <>
             <p>{excerpt}</p>
-            <Link as={NextLink} href={postPath} className={style.readMore}>
+            <Link
+              as={NextLink}
+              href={postPath}
+            >
               Read more →
             </Link>
           </>
@@ -102,7 +108,7 @@ const Post = ({ summary, mentions, post, previous, next }) => {
           </>
         )}
       </div>
-    </div>
+    </article>
   );
 };
 
