@@ -6,10 +6,6 @@
   position: relative;
   padding: 20px;
 
-  :global .dark-theme :local & {
-    background: #252627;
-  }
-
   a {
     text-decoration: none;
   }

@@ -20,10 +20,6 @@
   cursor: pointer;
   appearance: none;
 
-  :global .dark-theme :local & {
-    background: var(--dark-background-secondary);
-  }
-
   + .button {
     margin-left: 10px;
   }

@@ -32,10 +32,6 @@ body {
     font-size: 1rem;
   }
 
-  &.dark-theme {
-    background-color: var(--dark-background);
-    color: var(--dark-color);
-  }
 }
 
 h1,
@@ -149,9 +145,6 @@ code {
   border-radius: 5px;
   font-size: 0.9rem;
 
-  .dark-theme & {
-    background: var(--dark-background-secondary);
-  }
 }
 
 pre {
@@ -207,18 +200,10 @@ th,
 td {
   border: 1px solid var(--light-color);
   padding: 10px;
-
-  .dark-theme & {
-    border-color: var(--dark-color);
-  }
 }
 
 th {
   background: var(--light-background-secondary);
-
-  .dark-theme & {
-    background: var(--dark-background-secondary);
-  }
 }
 
 ul,
@@ -248,9 +233,6 @@ hr {
   background: var(--light-border-color);
   height: 1px;
 
-  .dark-theme & {
-    background: var(--dark-border-color);
-  }
 }
 
 .hidden {
