@@ -5,7 +5,11 @@ import moment from 'moment';
 
 import { MDXRemote } from 'next-mdx-remote';
 
+import useSWR from 'swr';
+
 import { Heading, Link, Text, useColorMode, useTheme } from '@chakra-ui/react';
+
+import { getMentions } from '../utils/webmentions';
 
 import MentionsSummary from './mentionsSummary';
 import TagsSummary from './tagsSummary';
@@ -13,7 +17,7 @@ import * as style from '../styles/post.module.scss';
 import { Image } from '.';
 import frontmatterType from '../types/frontmatter';
 
-const Post = ({ summary, mentions, post }) => {
+const Post = ({ summary, post }) => {
   const { frontmatter } = post;
 
   const { author, coverImagePublicId, date, excerpt, path, tags, title } =
@@ -32,8 +36,9 @@ const Post = ({ summary, mentions, post }) => {
     light: '#555555',
   };
 
-
   const postPath = `/posts/${path}`;
+
+  const { data: mentions, error } = useSWR(postPath, getMentions);
 
   // TODO test cover image support
 
@@ -59,10 +64,7 @@ const Post = ({ summary, mentions, post }) => {
             border={0}
           >
             {summary ? (
-              <Link
-                as={NextLink}
-                href={postPath}
-              >
+              <Link as={NextLink} href={postPath}>
                 {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
                 <a>{title}</a>
               </Link>
@@ -80,10 +82,7 @@ const Post = ({ summary, mentions, post }) => {
         {summary ? (
           <>
             <p>{excerpt}</p>
-            <Link
-              as={NextLink}
-              href={postPath}
-            >
+            <Link as={NextLink} href={postPath}>
               Read more →
             </Link>
           </>
@@ -101,7 +100,6 @@ const Post = ({ summary, mentions, post }) => {
 };
 
 Post.propTypes = {
-  mentions: PropTypes.arrayOf(PropTypes.shape({})),
   post: PropTypes.shape({
     frontmatter: frontmatterType,
     source: PropTypes.shape({}),
