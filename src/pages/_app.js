@@ -1,4 +1,8 @@
 /* eslint-disable react/prop-types */
+import { useEffect } from 'react';
+import { useRouter } from 'next/router';
+import * as Fathom from 'fathom-client';
+
 import { AnalyticsProvider } from '../utils/analytics';
 
 const { ChakraProvider } = require('@chakra-ui/react');
@@ -6,6 +10,25 @@ const { ChakraProvider } = require('@chakra-ui/react');
 // import App from 'next/app'
 
 function MyApp({ Component, pageProps }) {
+  const router = useRouter();
+
+  useEffect(() => {
+    Fathom.load(process.env.NEXT_FATHOM_ID, {
+      includedDomains: ['mikebifulco.com', 'www.mikebifulco.com'],
+    });
+
+    function onRouteChangeComplete() {
+      Fathom.trackPageview();
+    }
+    // Record a pageview when route changes
+    router.events.on('routeChangeComplete', onRouteChangeComplete);
+
+    // Unassign event listener
+    return () => {
+      router.events.off('routeChangeComplete', onRouteChangeComplete);
+    };
+  }, []);
+
   return (
     <AnalyticsProvider>
       <ChakraProvider>
