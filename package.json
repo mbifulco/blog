@@ -6,7 +6,7 @@
   "license": "MIT",
   "scripts": {
     "build": "next build",
-    "dev": "next",
+    "dev": "NODE_OPTIONS='--inspect' next dev",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
     "start": "next start",
     "lint": "next lint",
@@ -24,6 +24,7 @@
     "@mdx-js/react": "^1.6.22",
     "@next/mdx": "^11.1.2",
     "date-fns": "^2.24.0",
+    "fathom-client": "^3.2.0",
     "feed": "^4.2.2",
     "framer-motion": "^4",
     "gray-matter": "^4.0.3",
@@ -38,7 +39,7 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "remark": "^14.0.1",
-    "remark-html": "^14.0.1",
+    "remark-html": "^15.0.0",
     "sass": "^1.42.1",
     "swr": "^1.0.1",
     "use-cloudinary": "^4.1.1"
@@ -49,7 +50,7 @@
     "eslint-config-next": "^11.1.2",
     "eslint-config-prettier": "^8.3.0",
     "husky": ">=6",
-    "lint-staged": "^10.5.4",
+    "lint-staged": "^11.2.0",
     "netlify-plugin-cache-nextjs": "^1.6.1",
     "prettier": "^2.4.1"
   },
