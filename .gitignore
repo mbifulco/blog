@@ -1,3 +1,7 @@
+# added by mike - don't save public/rss.xml, which is generated only in production
+# and will be made dynamically on server at build time
+public/rss.xml
+
 .next
 
 # Logs
