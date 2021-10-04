@@ -7,11 +7,14 @@ import { DefaultLayout } from '../components/Layouts';
 import { Image, PostFeed, SEO } from '../components';
 
 import { getAllPosts } from '../lib/blog';
+import { generateRSSFeed } from '../utils/rss' 
 
 
 export async function getStaticProps() {
   const posts = getAllPosts();
 
+  generateRSSFeed(posts);
+  
   return {
     props: {
       posts,

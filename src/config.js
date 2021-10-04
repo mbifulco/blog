@@ -1,10 +1,12 @@
 const BASE_SITE_URL = 'https://mikebifulco.com';
 
-export default {
+const config = {
   title: `Mike Bifulco - designer, developer, podcaster, maker`,
   author: {
     name: `Mike Bifulco @irreverentmike`,
     summary: `| Designer, developer advocate, maker, podcaster.`,
+    email: 'hello@mikebifulco.com',
+    link: 'https://twitter.com/irreverentmike',
   },
   social: {
     twitter: `irreverentmike`,
@@ -32,3 +34,5 @@ export default {
   ],
   siteUrl: BASE_SITE_URL,
 };
+
+export default config;
