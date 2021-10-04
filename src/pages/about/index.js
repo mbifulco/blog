@@ -5,11 +5,13 @@ import { Heading } from '@chakra-ui/react';
 import Image from 'next/image';
 import Metalmorphosis from './cover.png'
 
+import { SEO } from '../../components';
 import { DefaultLayout as Layout } from '../../components/Layouts';
 import { NewsletterSignup } from '../../components/NewsletterSignup';
 
 const AboutPage = () => (
   <Layout>
+    <SEO title="About me" />
     <Image src={Metalmorphosis} alt="Metalmorphisis, an amazing sculpture in my hometown of Charlotte, NC" />
     <Heading as="h1">
       Hey there
@@ -21,7 +23,7 @@ const AboutPage = () => (
     </p>
     <p>
       {
-        "My beliefs are always changing - but here's some things that are important to me:"
+        "These are some things that are important to me:"
       }
     </p>
 

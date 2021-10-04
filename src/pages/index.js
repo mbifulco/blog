@@ -27,7 +27,7 @@ const HomePage = ({ posts }) => {
   const pink = theme.colors.pink[400];
   return (
     <DefaultLayout>
-      <SEO title="Blog" />
+      <SEO title="Latest Articles" />
       <Box
         display={{ md: 'flex' }}
         margin="1rem 0 2rem 0"
