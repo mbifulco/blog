@@ -10,8 +10,6 @@ const WebmentionMetadata = ({
   publishedAt,
   title,
 }) => {
-
-
   const router = useRouter();
   const location = router.asPath;
 
