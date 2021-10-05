@@ -15,6 +15,7 @@ function MyApp({ Component, pageProps }) {
   useEffect(() => {
     Fathom.load(process.env.NEXT_PUBLIC_FATHOM_ID, {
       includedDomains: ['mikebifulco.com', 'www.mikebifulco.com'],
+      url: 'https://chickadee.mikebifulco.com/script.js',
     });
 
     function onRouteChangeComplete() {
