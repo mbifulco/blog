@@ -11,7 +11,7 @@ const TagsSummary = ({ tags }) => {
   if (!tags || tags.length <= 0) return null;
 
   return (
-    <Flex fontSize="small" direction="row">
+    <Flex fontSize="smaller" direction="row">
       {map(tags, (tag, id) => (
         <Tag
           key={`tag-${id || tag.name || tag}`}
