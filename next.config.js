@@ -9,4 +9,7 @@ const withMDX = require('@next/mdx')({
 
 module.exports = withMDX({
   pageExtensions: ['js', 'jsx', 'md', 'mdx'],
+  images: {
+    domains: ['i.ytimg.com'],
+  },
 });
