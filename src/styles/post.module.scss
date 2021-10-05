@@ -23,12 +23,12 @@
   text-decoration: underline;
 }
 
-.post a:hover {
+.post header a {
   text-decoration: none;
 }
 
-.post header a {
-  text-decoration: none;
+.post header a:hover {
+  text-decoration: underline;
 }
 
 .post p {
@@ -97,5 +97,5 @@ body.dark-mode .post h6 a {
 }
 
 .post p {
-  max-width: 50remnata;
+  max-width: 50rem;
 }
