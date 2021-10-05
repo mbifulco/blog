@@ -33,5 +33,10 @@ export function getAllPosts() {
   // sort posts by date,  newest first
   posts.sort((a, b) => compareDesc(a.frontmatter.date, b.frontmatter.date));
 
+  /// filter out drafts for production
+  if (process.env.NODE_ENV === 'production') {
+    return posts.filter((post) => post.frontmatter.published === true);
+  }
+
   return posts;
 } 

@@ -26,8 +26,6 @@ const MdxPostTemplate = ({ post, mentions }) => {
 
   const router = useRouter();
 
-  if (!published && process.env.NODE_ENV === 'production') return null;
-
   return (
     <DefaultLayout>
       {/* TODO image url to SEO */}
