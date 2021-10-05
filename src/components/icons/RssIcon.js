@@ -1,12 +1,13 @@
 /* eslint-disable max-len */
 import React from 'react';
+import PropTypes from 'prop-types';
 
-const RssIcon = () => (
+const RssIcon = ({ size }) => (
   <svg
     fill="currentColor"
     preserveAspectRatio="xMidYMid meet"
-    height="1em"
-    width="1em"
+    height={size || "1em"}
+    width={size || "1em"}
     viewBox="0 0 40 40"
     style={{ verticalAlign: 'middle' }}
   >
@@ -26,5 +27,9 @@ const RssIcon = () => (
     </g>
   </svg>
 );
+
+RssIcon.propTypes = {
+  size: PropTypes.string,
+};
 
 export default RssIcon;

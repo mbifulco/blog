@@ -2,13 +2,16 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
 import { MDXProvider } from '@mdx-js/react';
-import { MdxEmbedProvider } from '@pauliescanlon/gatsby-mdx-embed';
+import { MDXEmbedProvider } from 'mdx-embed';
 
 import { Button, Code, Box, Heading, Text, useTheme } from '@chakra-ui/react';
 import PrismHighlight, { defaultProps } from 'prism-react-renderer';
 import prismTheme from 'prism-react-renderer/themes/nightOwl';
 
 import { Image } from '../components';
+
+// one off component imports
+import { CenteredTextDemo } from '../components/demos/CenteredTextDemo';
 
 const H1 = (props) => <Heading as="h1" {...props} />;
 const H2 = (props) => <Heading as="h2" {...props} />;
@@ -45,20 +48,21 @@ const Aside = (props) => {
   );
 };
 
-const Highlight = (props) => {
-  return <Text as="mark" {...props} />;
-};
+const Highlight = (props) => <Text as="mark" {...props} />;
 
-const InlineCode = (props) => (
-  <Code
-    color="rgb(214, 222, 235)"
-    whiteSpace="pre"
-    backgroundColor="#1a1a1d"
-    borderRadius=".3em"
-    padding="0.1ch 1ch"
-    {...props}
-  />
-);
+const InlineCode = (props) => {
+  const theme = useTheme();
+
+  return (
+    <Code
+      color={theme.colors.gray[900]}
+      whiteSpace="pre"
+      borderRadius=".3em"
+      padding="0.1ch 1ch"
+      {...props}
+    />
+  );
+}
 
 const Pre = (props) => {
   const classNames = props.children.props.className || '';
@@ -95,13 +99,11 @@ const Pre = (props) => {
   );
 };
 
-const ImageWrapper = (props) => <Image marginBottom="1rem" {...props} />;
-
 const components = {
   Aside,
   Button,
   Highlight,
-  Image: ImageWrapper,
+  Image,
   inlineCode: InlineCode,
   h1: H1,
   h2: H2,
@@ -113,11 +115,26 @@ const components = {
   pre: Pre,
 };
 
+/* eslint-disable max-len */
+/* 
+  NOTE: due to a quirk in the mdx strategy we're using currently, we are unable to `import` components within mdx files.
+        To support that, they need to be added here. I'm keeping them in a separate object to track for later use, on the off chance this gets fixed one day.
+        I also recommend continuing to add `import` lines to individual mdx files to reduce work later - they don't seem to break anything right now
+  
+  for more context, https://github.com/hashicorp/next-mdx-remote#import--export
+*/
+const oneOffComponentsUsedInPosts = {
+  CenteredTextDemo, // used in dont-center-paragraph-text.mdx
+};
+/* eslint-enable max-len */
+
 // eslint-disable-next-line react/prop-types
 const MDXProviderWrapper = ({ children }) => (
-  <MdxEmbedProvider>
-    <MDXProvider components={components}>{children}</MDXProvider>
-  </MdxEmbedProvider>
+  <MDXEmbedProvider>
+    <MDXProvider components={{ ...components, ...oneOffComponentsUsedInPosts }}>
+      {children}
+    </MDXProvider>
+  </MDXEmbedProvider>
 );
 
 export default MDXProviderWrapper;

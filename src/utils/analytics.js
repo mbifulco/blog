@@ -23,6 +23,4 @@ AnalyticsProvider.propTypes = {
   children: PropTypes.node,
 };
 
-export const useAnalytics = () => {
-  return useContext(AnalyticsContext);
-};
+export const useAnalytics = () => useContext(AnalyticsContext);

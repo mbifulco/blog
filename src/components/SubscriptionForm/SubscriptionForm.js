@@ -1,33 +1,25 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { useStaticQuery, graphql } from 'gatsby';
+
+import { Button, Flex, Input, useTheme } from '@chakra-ui/react';
 
 import { useAnalytics } from '../../utils/analytics';
 import ACTIONS from '../../utils/analytics-actions';
 
-import * as classes from './SubscriptionForm.module.css';
+import * as classes from './SubscriptionForm.module.scss';
+
+import convertKitTags from '../../data/ConvertKitTags';
 
 const SubscriptionForm = ({ tags }) => {
   const trackAction = useAnalytics();
+  const theme = useTheme();
 
   const [status, setStatus] = useState(null);
   const FORM_ID = '1368838';
   const SUBFORM_ID = '8939';
   const FORM_URL = `https://app.convertkit.com/forms/${FORM_ID}/subscriptions`;
 
-  const data = useStaticQuery(graphql`
-    query {
-      allConvertkitTagYaml {
-        nodes {
-          name
-          id
-        }
-      }
-    }
-  `);
-
-  const allTags = data.allConvertkitTagYaml.nodes;
-  const tagMap = allTags.reduce((result, tag) => {
+  const tagMap = convertKitTags.reduce((result, tag) => {
     result[tag.name] = tag.id;
     return result;
   }, {});
@@ -66,21 +58,44 @@ const SubscriptionForm = ({ tags }) => {
       action={FORM_URL}
       method="post"
     >
-      <input
-        type="text"
-        aria-label="Your first name"
-        name="fields[first_name]"
-        placeholder="First name"
-        required
-      />
-      <input
-        type="email"
-        aria-label="Your email"
-        name="email_address"
-        placeholder="Your email address"
-        required
-      />
-
+      <Flex>
+        <Input
+          type="text"
+          aria-label="Your first name"
+          name="fields[first_name]"
+          placeholder="First name"
+          required
+          borderRadius="4px"
+          borderColor={theme.colors.pink[400]}
+          borderRight="0"
+          borderRightRadius="0"
+          flexGrow="1"
+        />
+        <Input
+          type="email"
+          aria-label="Your email"
+          name="email_address"
+          placeholder="Your email address"
+          required
+          borderColor={theme.colors.pink[400]}
+          borderRadius="0"
+          flexGrow="2"
+        />
+        <Button
+          type="submit"
+          flexGrow="2"
+          borderLeftRadius="0"
+          background="linear-gradient(180deg,#fe5186,#fe4156)"
+          color={theme.colors.white}
+          _hover={{
+            color: theme.colors.black,
+            background: theme.colors.gray[400]
+          }}
+          width="45%"
+        >
+          {"I'm in!"}
+        </Button>
+      </Flex>
       {tags &&
         tags.map((tag) => {
           const tagName = tag.name || tag;
@@ -103,7 +118,6 @@ const SubscriptionForm = ({ tags }) => {
           );
         })}
 
-      <button type="submit">I'm in!</button>
       {status === 'SUCCESS' && (
         <p>Check your inbox to confirm your subscription!</p>
       )}

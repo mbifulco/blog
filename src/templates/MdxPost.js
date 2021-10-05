@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { graphql } from 'gatsby';
+import { useRouter } from 'next/router';
 
 import { Flex } from '@chakra-ui/react';
 
@@ -12,33 +12,34 @@ import { NewsletterSignup } from '../components/NewsletterSignup';
 import Post from '../components/post';
 import WebmentionMetadata from '../components/webmentionMetadata';
 
-const MdxPostTemplate = ({ data, pageContext, location }) => {
-  const { body, excerpt, frontmatter } = data.post;
+import frontmatterType from '../types/frontmatter';
+
+const MdxPostTemplate = ({ post, mentions }) => {
+  const { excerpt, frontmatter } = post;
 
   const {
     published,
     date,
-    path,
     tags,
     title,
-    coverImagePublicId,
   } = frontmatter;
-  const { mentions } = data;
+
+  const router = useRouter();
 
   if (!published && process.env.NODE_ENV === 'production') return null;
 
   return (
     <DefaultLayout>
+      {/* TODO image url to SEO */}
       <SEO
-        canonical={location.href}
+        canonical={router.asPath}
         title={title}
         description={excerpt}
         // image={getImageUrl(featureImage.path)}
         ogType="article"
-        location={location}
       />
+      {/* TODO cover image url in webmentions */}
       <WebmentionMetadata
-        location={location}
         // coverImageUrl={coverImageUrl}
         summary={excerpt}
         publishedAt={date}
@@ -48,19 +49,8 @@ const MdxPostTemplate = ({ data, pageContext, location }) => {
           <em>Note:</em> this is a draft post
         </div>
       )}
-      <Post
-        key={pageContext.id}
-        post={{
-          coverImagePublicId,
-          date,
-          tags,
-          title,
-          path,
-          bodyMdx: body,
-          excerpt,
-        }}
-        mentions={mentions && mentions.nodes}
-      />
+
+      <Post post={post} mentions={mentions?.nodes} />
       <Flex direction="row" justifyContent="center" marginTop="3rem">
         <NewsletterSignup tags={tags} />
       </Flex>
@@ -68,52 +58,18 @@ const MdxPostTemplate = ({ data, pageContext, location }) => {
   );
 };
 
+MdxPostTemplate.propTypes = {
+  mentions: PropTypes.shape({
+    nodes: PropTypes.arrayOf(
+      PropTypes.shape({})
+    )
+  }),
+  post: PropTypes.shape({
+    excerpt: PropTypes.string,
+    frontmatter: frontmatterType
+  })
+}
+
 export default MdxPostTemplate;
 
-MdxPostTemplate.propTypes = {
-  data: PropTypes.object.isRequired,
-  pageContext: PropTypes.shape({
-    id: PropTypes.string,
-  }),
-  location: PropTypes.shape({
-    href: PropTypes.string,
-  }),
-};
 
-export const pageQuery = graphql`
-  query($path: String!, $id: String!) {
-    mentions: allWebMentionEntry(filter: { wmTarget: { eq: $path } }) {
-      nodes {
-        wmTarget
-        wmSource
-        wmProperty
-        wmId
-        type
-        url
-        likeOf
-        author {
-          url
-          type
-          photo
-          name
-        }
-        content {
-          text
-        }
-      }
-    }
-    post: mdx(id: { eq: $id }) {
-      body
-      excerpt
-      frontmatter {
-        coverImagePublicId
-        date
-        path
-        published
-        tags
-        title
-        type
-      }
-    }
-  }
-`;

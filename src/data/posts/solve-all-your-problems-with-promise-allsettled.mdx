@@ -1,0 +1,123 @@
+---
+title: "Solve* all your problems with Promise.allSettled()"
+type: post
+date: 04-12-2019
+excerpt: "Promise.allSettled() is a new API coming to the JavaScript / ES6 standard which can help you more efficiently build node applications that make simultaneous asynchronous API calls"
+published: true
+path: solve-all-your-problems-with-promise-allsettled
+tags: [javascript, dev, react]
+---
+
+(Note: This post was inspired by a talk from [Wes Bos](https://twitter.com/wesbos) at JAMstack_conf_nyc. Thanks for the tip, Wes!)
+
+Of late, I've found myself building JavaScript web applications with increasing complexity. If you're familiar with modern JavaScript, you've undoubtedly come across [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) - a construct which helps you execute code asynchronously. A `Promise`  is just what it sounds like: you use them to execute code which will (promise to) return a value at some point in the future:
+
+Check out this somewhat-contrived example, wherein we asynchronously load comments on a blog post:
+
+```js
+  const loadComments = new Promise((resolve, reject) => {
+    // run an asynchronous API call
+    BlogEngine.loadCommentsForPost({ id: '12345' })
+      .then(comments => {
+    // Everything worked! Return this promise with the comments we got back.
+    resolve(comments)
+      })
+      .error(err => {
+    // something went wrong - send the error back
+    reject(new Error(err))
+      })
+  })
+```
+
+There's also an alternative syntax pattern, `async` / `await`, which lets you write promises in a more legible, pseudo-serial form:
+
+```js
+  const loadComments = async () => {
+    try {
+      const comments = await BlogEngine.loadCommentsForPost({ id: '12345' })
+      return comments
+    } catch (err) {
+      return new Error(err)
+    }
+  }
+```
+
+## Dealing with multiple promises
+
+Inevitably, you'll find yourself in situations where you need to execute multiple promises. Let's start off simply:
+```js
+  const postIds = ['1', '2', '3', '4', '5'];
+  postIds.each((id) => {
+    // load the comments for this post
+    const comments = await loadComments(id);
+
+    // then do something with them, like spit them out to the console, for example
+    console.log(`Returned ${comments.length} comments, bru`);
+  })
+```
+
+Easy! A quick loop gets us comments for every post we're interested in. There's a catch here, though - the `await`  keyword will stop execution of the loop until `loadComments`  returns for each post. This means we're loading comments for each post _sequentially_, and not taking advantage of the browser's ability to send off multiple API requests at a time.
+
+The easiest way to send off multiple requests at once is wit `Promise.all()`. It's a function which takes an _array of_ `_Promise_`_s_, and returns an array with the responses from each promise:
+
+```js
+  const postIds = ['1', '2', '3', '4', '5'];
+  const promises = postIds.map(async (id) => {
+    return await loadComments(id);
+  };
+
+  const postComments = Promise.all(promises);
+
+  // postComments will be an Array of results fromj the promises we created:
+  console.log(JSON.postComments);
+  /*
+  [
+    { post1Comments },
+    { post2Comments },
+    etc...
+  ]
+```
+
+There is **one important catch (lol)** with `Promise.all()`. If _any_ of the promises sent to `Promise.all()` fails or `reject`s,  *everything*  fails. From the \[MDN Web Docs\](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global\_Objects/Promise/all) (emphasis mine):
+
+> The `Promise.all()`  method returns a single `Promise`  that resolves when all of the promises passed as an iterable have resolved or when the iterable contains no promises. **\*\*It rejects with the reason of the first promise that rejects.\*\***
+
+Well damn, it turns out that `Promise.all()`  is fairly conservative in its execution strategy. If you're unaware of this, it can be pretty dangerous. In the example above, it's not great if loading comments for _one post_ causes the comments for _every post_ not to load, right? Damn.
+
+## **Enter** `**Promise.allSettled()**` 
+
+Until fairly recently, there wasn't a spectacular answer for scenarios like this. \_\_However\_\_, we will soon have widespread access to [`Promise.allSettled()`](https://github.com/tc39/proposal-promise-allSettled), which is currently a Stage 3 proposal in front of the ECMAscript Technical Committee 39, the body in charge of approving and ratifying changes to ECMAscript (aka "JavaScript", for the un-initiated).
+
+You see, `Promise.allSettled()`  does exactly what we'd like in the example above loading blog comments. Rather than failing if _any_ of the proments handed to it fail, it waits until they all finish executing (until they all "settle", in other words), and returns an array from each:
+
+(this code sample is cribbed from the github proposal - go give it a look for more detail)
+
+```js
+  const promises = [fetch('index.html'), fetch('https://does-not-exist/')]
+  const results = await Promise.allSettled(promises)
+  const successfulPromises = results.filter(p => p.status === 'fulfilled')
+```
+
+## **Using** `**Promise.All()**` ** now (updated!)**
+
+**4/26/19 Update:**
+
+Install the [`core-js`](https://github.com/zloirock/core-js) package and include this somewhere in your codebase:
+
+```js
+  import 'core-js/proposals/promise-all-settled'
+```
+
+**Original post:**
+
+Ok, here's the thing - that's the tricky part. I wrote this post thinking it'd be as easy as telling you to use a `stage-3` preset in the `.babelrc` config on your project. As it turns out, as of v7, Babel has [stopped publishing stage presets](https://babeljs.io/blog/2018/07/27/removing-babels-stage-presets)! If that means anything to you, you ought to read their post.
+
+The answer right now is that it's _not_ yet a great idea to use `Promise.allSettled()`, because it isn't widely supported. To boot, as far as I can tell, there's not a babel config extension which will add support to your projects. At the moment, the best you'll get is a polyfill or an alternative library which implements `allSettled()`.
+
+I know that can be disappointing - be sure that I've got a dozen problems that would be well-served with this new bit of syntax. What I want you to focus on, though, is how amazing it is that JavaScript is continuing to grow. It's exciting and really freaking cool to see that these additions to the language are also being worked on in [public](https://github.com/tc39/proposal-promise-allSettled). Open Source is such a beautiful thing!
+
+If you're really motivated to use `Promise.All()`  in your code, you'd do well to contribute to the process in some way. This may be something as small as writing your own polyfill, or giving feedback to the folks involved with tc39, or one of the alternative libraries to use.
+
+## Footnote
+
+I'll do my best to keep this post up to date. When `allSettled` is released, I'll let y'all know. 👍

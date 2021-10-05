@@ -1,6 +1,4 @@
-@import './fonts.css';
 @import './variables.css';
-@import './prism.css';
 
 html {
   box-sizing: border-box;
@@ -15,7 +13,7 @@ html {
 body {
   margin: 0;
   padding: 0;
-  font-family: 'Inter UI', -apple-system, BlinkMacSystemFont, 'Roboto',
+  font-family: -apple-system, BlinkMacSystemFont, 'Roboto',
     'Segoe UI', Helvetica, Arial, sans-serif, 'apple color emoji',
     'segoe ui emoji', 'android emoji', 'emojisymbols', 'emojione mozilla',
     'twemoji mozilla', 'segoe ui symbol', 'noto color emoji';
@@ -34,10 +32,6 @@ body {
     font-size: 1rem;
   }
 
-  &.dark-theme {
-    background-color: var(--dark-background);
-    color: var(--dark-color);
-  }
 }
 
 h1,
@@ -84,10 +78,6 @@ h4 {
   h4 {
     font-size: 1.125rem;
   }
-}
-
-a {
-  color: inherit;
 }
 
 img {
@@ -155,9 +145,6 @@ code {
   border-radius: 5px;
   font-size: 0.9rem;
 
-  .dark-theme & {
-    background: var(--dark-background-secondary);
-  }
 }
 
 pre {
@@ -213,18 +200,10 @@ th,
 td {
   border: 1px solid var(--light-color);
   padding: 10px;
-
-  .dark-theme & {
-    border-color: var(--dark-color);
-  }
 }
 
 th {
   background: var(--light-background-secondary);
-
-  .dark-theme & {
-    background: var(--dark-background-secondary);
-  }
 }
 
 ul,
@@ -244,7 +223,7 @@ ol ol {
 button,
 input,
 textarea {
-  font-family: 'Inter UI', -apple-system, BlinkMacSystemFont, 'Roboto',
+  font-family: -apple-system, BlinkMacSystemFont, 'Roboto',
     'Segoe UI', Helvetica, Arial, sans-serif;
 }
 
@@ -254,9 +233,6 @@ hr {
   background: var(--light-border-color);
   height: 1px;
 
-  .dark-theme & {
-    background: var(--dark-border-color);
-  }
 }
 
 .hidden {

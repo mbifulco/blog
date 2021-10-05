@@ -1,46 +1,32 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-import { NewsletterSignup, Post } from '..';
-import { useRecentPosts } from '../../utils/recentPostsQuery';
+import { NewsletterSignup } from '..';
+import Post from '../post';
 
-const PostFeed = () => {
-  const recentPosts = useRecentPosts();
+const PostFeed = ({ posts }) => (
+  <>
+    {posts.map((post, idx) => {
+      const postEl = <Post post={post} key={post.slug} summary />;
 
-  return recentPosts.map((entry, idx) => {
-    let postEl = null;
-    switch (entry.type) {
-      case 'takeshape': {
-        postEl = <Post post={entry.post} key={entry.id} summary />;
-        break;
-      }
-      case 'mdx': {
-        postEl = (
-          <Post
-            post={{
-              ...entry.post,
-              ...entry.post.frontmatter,
-            }}
-            key={entry.id}
-            summary
-          />
+      if (idx === 1) {
+        return (
+          <div key="newsletter-wrapper">
+            {idx === 1 && <NewsletterSignup key="newsletter" />}
+            {postEl}
+          </div>
         );
-        break;
       }
-      default:
-        break;
-    }
 
-    if (idx === 1) {
-      return (
-        <div key="double-whammy">
-          {idx === 1 && <NewsletterSignup key="newsletter" />}
-          {postEl}
-        </div>
-      );
-    }
+      return postEl;
+    })}
+  </>
+);
 
-    return postEl;
-  });
+PostFeed.propTypes = {
+  posts: PropTypes.arrayOf(
+    PropTypes.shape({})
+  )
 };
 
 export default PostFeed;

@@ -1,16 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'gatsby';
+import Link from 'next/link';
 
-import * as classes from '../styles/tag.module.css';
+import * as classes from '../styles/tag.module.scss';
 
 const Tag = ({ children, url }) => {
   let tag = <span className={classes.container}>{children}</span>;
 
   if (url) {
     tag = (
-      <Link to={url} className={classes.link}>
-        {tag}
+      <Link href={url} className={classes.link}>
+        {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+        <a>{tag}</a>
       </Link>
     );
   }

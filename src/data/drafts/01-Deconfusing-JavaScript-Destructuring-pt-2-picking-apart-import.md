@@ -6,7 +6,7 @@ Let's talk about importing dependencies into your node projects. As your work ge
 
 ```javascript
 import React, { useState, useEffect } from 'react';
-import { Link } from 'gatsby';
+import Link from 'next/link';;
 import Button from '@material-ui/core/Button';
 import moment from 'moment';
 
@@ -91,7 +91,7 @@ Cool, huh? I know this can be confusing, but try to stick with it. It'll all sta
 ### Importing a subset of a library by way of destructuring
 
 ```javascript
-import { Link } from 'gatsby';
+import Link from 'next/link';;
 ```
 
 Boom! This should be easy by now. One of the things that `Gatsby` makes available is their [`link`](https://www.gatsbyjs.org/docs/gatsby-link/) component. We're importing _just that component_ to use here.

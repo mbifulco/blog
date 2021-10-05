@@ -16,7 +16,7 @@ function Image(props) {
     ...rest
   } = props;
   const { generateImageUrl } = useImage(
-    process.env.GATSBY_CLOUDINARY_CLOUD_NAME
+    process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME
   );
 
   const cloudinaryConfig = {
@@ -37,15 +37,16 @@ function Image(props) {
         height={height}
         width={width}
         src={url}
-        alt={alt}
+        alt={alt || caption}
+        loading="lazy"
       />
-      {caption && <figcaption>{caption}</figcaption>}
+      <figcaption>{caption}</figcaption>
     </figure>
   );
 }
 
 Image.propTypes = {
-  caption: PropTypes.oneOf([PropTypes.string, PropTypes.node]),
+  caption: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   publicId: PropTypes.string,
   transformations: PropTypes.arrayOf(PropTypes.string),
   width: PropTypes.string,

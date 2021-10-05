@@ -10,7 +10,9 @@ import { NewsletterSignup } from '../components/NewsletterSignup';
 import TagsSummary from '../components/tagsSummary';
 import WebmentionMetadata from '../components/webmentionMetadata';
 
-import * as style from '../styles/post.module.css';
+import frontmatterType from '../types/frontmatter';
+
+import * as style from '../styles/post.module.scss';
 
 const SinglePage = ({ children, pageContext, location }) => {
   const { mentions } = pageContext;
@@ -39,7 +41,6 @@ const SinglePage = ({ children, pageContext, location }) => {
         description={excerpt}
         image={coverImageUrl && coverImageUrl}
         ogType="article"
-        location={location}
       />
 
       <div className={style.post}>
@@ -49,7 +50,6 @@ const SinglePage = ({ children, pageContext, location }) => {
           </Heading>
           <TagsSummary tags={tags} />
           <WebmentionMetadata
-            location={location}
             coverImageUrl={coverImageUrl}
             summary={excerpt && excerpt}
             author={author && author}
@@ -69,14 +69,7 @@ const SinglePage = ({ children, pageContext, location }) => {
 SinglePage.propTypes = {
   children: PropTypes.node,
   pageContext: PropTypes.shape({
-    frontmatter: PropTypes.shape({
-      author: PropTypes.string,
-      coverImageUrl: PropTypes.string,
-      excerpt: PropTypes.string,
-      publishedAt: PropTypes.string,
-      title: PropTypes.string,
-      tags: PropTypes.arrayOf(PropTypes.string),
-    }),
+    frontmatter: frontmatterType,
     mentions: PropTypes.arrayOf(PropTypes.shape({})),
   }),
   location: PropTypes.shape({

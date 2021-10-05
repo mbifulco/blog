@@ -1,26 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { graphql, useStaticQuery } from 'gatsby';
-import { GatsbyImage } from "gatsby-plugin-image";
+import Image from 'next/image';
 
-const Headshot = ({ className }) => {
-  const data = useStaticQuery(graphql`{
-  file(relativePath: {eq: "mike-headshot-square.png"}) {
-    id
-    childImageSharp {
-      gatsbyImageData(width: 50, height: 50, layout: FIXED)
-    }
-  }
-}
-`);
-  return (
-    <GatsbyImage
-      alt="Mike Bifulco headshot"
-      image={data.file.childImageSharp.gatsbyImageData}
-      style={{ borderRadius: '12px' }}
-      className={`headshot ${className}`} />
-  );
-};
+const Headshot = ({ className }) => (
+  <Image
+    src="/images/mike-headshot-square.png"
+    height={50}
+    width={50}
+    alt="Mike Bifulco headshot"
+    // style={{ borderRadius: '12px' }}
+    className={`headshot ${className}`}
+  />
+);
 
 Headshot.propTypes = {
   className: PropTypes.string,

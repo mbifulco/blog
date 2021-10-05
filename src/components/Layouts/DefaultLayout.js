@@ -1,8 +1,9 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Link as InternalLink } from 'gatsby';
+import InternalLink from 'next/link';
 
-import { useLocation } from '@reach/router';
+import { useRouter } from 'next/router';
 
 import {
   Box,
@@ -16,10 +17,6 @@ import {
 import { Footer, SEO, SocialLinks } from '..';
 import MDXProviderWrapper from '../../utils/MDXProviderWrapper';
 
-import '../../styles/variables.css';
-import '../../styles/prism.css';
-import './DefaultLayout.css';
-
 const DefaultLayout = ({ children }) => {
   const theme = useTheme();
   const { colorMode } = useColorMode();
@@ -29,13 +26,14 @@ const DefaultLayout = ({ children }) => {
     dark: 'pink.400',
   };
 
-  const location = useLocation();
+  const router = useRouter();
+  const { pathname } = router;
 
-  const [isHomePage, setIsHomePage] = useState(location.pathname === '/');
+  const [isHomePage, setIsHomePage] = useState(pathname === '/');
 
   useEffect(() => {
-    setIsHomePage(location.pathname === '/');
-  }, [location.pathname]);
+    setIsHomePage(pathname === '/');
+  }, [pathname]);
 
   return (
     <MDXProviderWrapper>
@@ -60,42 +58,40 @@ const DefaultLayout = ({ children }) => {
             justifyContent={isHomePage ? 'flex-start' : 'space-between'}
             paddingBottom={isHomePage ? '0' : '1.5rem'}
           >
-            <InternalLink
-              style={{
-                textDecoration: 'none',
-              }}
-              to="/"
-            >
-              <Text
-                transition="all 5s ease"
-                fontSize={isHomePage ? '6xl' : 'lg'}
-                lineHeight="1"
-                fontWeight="700"
-                margin="0"
-                padding="0"
-                color={titleColors[colorMode]}
+            <Stack direction="row" alignItems="center">
+              <InternalLink
+                style={{
+                  textDecoration: 'none',
+                }}
+                href="/"
               >
-                Mike Bifulco
-              </Text>
-            </InternalLink>
+                <Text
+                  transition="all 5s ease"
+                  fontSize={isHomePage ? '6xl' : 'lg'}
+                  lineHeight="1"
+                  fontWeight="700"
+                  margin="0"
+                  padding="0"
+                  color={titleColors[colorMode]}
+                  cursor="pointer"
+                  as="a"
+                >
+                  Mike Bifulco
+                </Text>
+              </InternalLink>
+              {isHomePage && <SocialLinks spacing={2} marginLeft="2" />}
+            </Stack>
 
             <Stack direction="row">
-              <Link as={InternalLink} to="/posts">
-                Blog
+              <Link as={InternalLink} href="/">
+                <a>Blog</a>
               </Link>
-              <Link as={InternalLink} to="/about">
-                About
+              <Link as={InternalLink} href="/about">
+                <a>About</a>
               </Link>
-              <Link as={InternalLink} to="/newsletter">
-                Newsletter
+              <Link as={InternalLink} href="/newsletter">
+                <a>Newsletter</a>
               </Link>
-              {isHomePage && (
-                <SocialLinks
-                  color={theme.colors.gray[600]}
-                  spacing={2}
-                  marginLeft="2"
-                />
-              )}
             </Stack>
           </Stack>
 

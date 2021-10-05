@@ -1,10 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Helmet } from 'react-helmet';
-import { useStaticQuery, graphql } from 'gatsby';
-import { useLocation } from '@reach/router';
+
+import Head from 'next/head';
+import { useRouter } from 'next/router';
+
+import config from '../config';
 
 const SEO = ({
+  author,
   canonical,
   description,
   lang,
@@ -14,141 +17,92 @@ const SEO = ({
   ogType,
   image,
 }) => {
-  const location = useLocation();
-  const data = useStaticQuery(graphql`
-    query DefaultSEOQuery {
-      site {
-        siteMetadata {
-          title
-          description
-          author
-        }
-      }
-    }
-  `);
+  const router = useRouter();
+
   const {
     title: siteTitle,
     description: siteDescription,
-    author,
-  } = data.site.siteMetadata;
+    author: siteAuthor,
+  } = config;
+
   const metaTitle = title || siteTitle;
   const metaDescription = description || siteDescription;
 
-  const ogImage = image
-    ? {
-        property: `og:image`,
-        content: image,
-      }
-    : null;
-  const ogImageUrl = image
-    ? {
-        property: `og:image:url`,
-        content: image,
-      }
-    : null;
-
   return (
-    <Helmet
-      htmlAttributes={{
-        lang,
-      }}
-      link={
-        canonical ? [{ rel: 'canonical', key: canonical, href: canonical }] : []
-      }
-      title={metaTitle}
-      titleTemplate={title ? `${title} | ${siteTitle}` : siteTitle}
-      meta={[
-        {
-          name: `description`,
-          content: metaDescription,
-        },
-        {
-          property: `og:title`,
-          content: title ? `${title} | ${siteTitle}` : siteTitle,
-        },
-        {
-          property: `og:description`,
-          content: metaDescription,
-        },
-        {
-          property: `og:type`,
-          content: ogType || `website`,
-        },
-        {
-          name: `twitter:card`,
-          content: image ? `summary_large_image` : `summary`,
-        },
-        {
-          name: `twitter:title`,
-          content: metaTitle,
-        },
-        {
-          name: `twitter:creator`,
-          content: `@irreverentmike`,
-        },
-        {
-          name: `twitter:description`,
-          content: metaDescription,
-        },
-        {
-          name: `twitter:creator`,
-          content: author,
-        },
-        {
-          name: 'monetization',
-          content: '$twitter.xrptipbot.com/irreverentmike',
-        },
-      ]
-        .concat(
-          keywords.length > 0
-            ? {
-                name: `keywords`,
-                content: keywords.join(`, `),
-              }
-            : []
-        )
-        .concat(
-          location
-            ? {
-                name: 'og:url',
-                content: location.href,
-              }
-            : []
-        )
-        .concat(ogImage || [])
-        .concat(ogImageUrl || [])
-        .concat(meta)}
-    />
+    <Head>
+      {/* favicon */}
+      <link
+        rel="apple-touch-icon"
+        sizes="180x180"
+        href="/apple-touch-icon.png"
+      />
+      <link
+        rel="icon"
+        type="image/png"
+        sizes="32x32"
+        href="/favicon-32x32.png"
+      />
+      <link
+        rel="icon"
+        type="image/png"
+        sizes="16x16"
+        href="/favicon-16x16.png"
+      />
+      <link rel="manifest" href="/site.webmanifest" />
+      <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5" />
+      <meta name="msapplication-TileColor" content="#da532c" />
+      <meta name="theme-color" content="#ffffff" />
+      {/* end favicon */}
+
+      {canonical && <link rel="canonical" key={canonical} href={canonical} />}
+      <title>{`${title} | ${siteTitle}`}</title>
+      <meta name="description" content={metaDescription} />
+      <meta
+        name="monetization"
+        content="$twitter.xrptipbot.com/irreverentmike"
+      />
+
+      {keywords.length > 0 && (
+        <meta name="keywords" content={keywords.join(', ')} />
+      )}
+
+      <meta
+        name="twitter:card"
+        content={image ? `summary_large_image` : `summary`}
+      />
+      <meta name="twitter:title" content={metaTitle} />
+      <meta name="twitter:creator" content={author?.name || siteAuthor?.name} />
+      <meta name="twitter:description" content={metaDescription} />
+
+      <meta
+        name="og:title"
+        content={title ? `${title} | ${siteTitle}` : siteTitle}
+      />
+      <meta name="og:description" content={metaDescription} />
+      <meta name="og:type" content={ogType || `website`} />
+      <meta name="og:url" content={router.asPath} />
+      <meta name="og:image" content={image} />
+      <meta name="og:image:url" content={image} />
+      {meta}
+    </Head>
   );
 };
 
 SEO.defaultProps = {
-  lang: `en`,
   meta: [],
-  keywords: [
-    'gatsby',
-    'minimal',
-    'starter',
-    'blog',
-    'theme',
-    'dark',
-    'light',
-    'personal site',
-  ],
+  keywords: [],
 };
 
 SEO.propTypes = {
+  author: PropTypes.string,
   canonical: PropTypes.string,
   description: PropTypes.string,
-  lang: PropTypes.string,
-  location: PropTypes.shape({
-    href: PropTypes.string,
-  }),
   image: PropTypes.string,
   meta: PropTypes.array,
   ogType: PropTypes.string,
   keywords: PropTypes.arrayOf(PropTypes.string),
   title: PropTypes.string,
+  lang: PropTypes.string,
 };
 
 export default SEO;

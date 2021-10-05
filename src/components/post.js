@@ -1,31 +1,27 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link as GatsbyLink } from 'gatsby';
-import { GatsbyImage } from "gatsby-plugin-image";
+import NextLink from 'next/link';
 import moment from 'moment';
-import { getImageUrl } from '@takeshape/routing';
-import { MDXRenderer } from 'gatsby-plugin-mdx';
+
+import { MDXRemote } from 'next-mdx-remote';
+
+import useSWR from 'swr';
 
 import { Heading, Link, Text, useColorMode, useTheme } from '@chakra-ui/react';
 
+import { getMentions } from '../utils/webmentions';
+
 import MentionsSummary from './mentionsSummary';
 import TagsSummary from './tagsSummary';
-import Navigation from './navigation';
-import * as style from '../styles/post.module.css';
+import * as style from '../styles/post.module.scss';
 import { Image } from '.';
+import frontmatterType from '../types/frontmatter';
 
-const Post = ({ summary, mentions, post, previous, next }) => {
-  const {
-    author,
-    excerpt,
-    coverImagePublicId,
-    featureImage,
-    bodyHtml: html,
-    bodyMdx,
-    path,
-    tags,
-    title,
-  } = post;
+const Post = ({ summary, post }) => {
+  const { frontmatter } = post;
+
+  const { author, coverImagePublicId, date, excerpt, path, tags, title } =
+    frontmatter;
 
   const theme = useTheme();
   const { colorMode } = useColorMode();
@@ -40,133 +36,73 @@ const Post = ({ summary, mentions, post, previous, next }) => {
     light: '#555555',
   };
 
-  const date = post._enabledAt || post.date;
-
-  const previousPath = previous && previous.path;
-  const previousLabel = previous && previous.title;
-  const nextPath = next && next.path;
-  const nextLabel = next && next.title;
-
   const postPath = `/posts/${path}`;
 
-  const coverImageUrl =
-    featureImage &&
-    getImageUrl(featureImage.path, {
-      auto: 'format',
-      fit: 'max',
-      w: 760,
-      h: 535,
-      q: 80,
-    });
-  const coverImageAlt = featureImage && featureImage.description;
+  const { data: mentions, error } = useSWR(postPath, getMentions);
 
-  let coverImageContainer;
-  if (featureImage && featureImage.childImageSharp) {
-    coverImageContainer = (
-      <GatsbyImage
-        image={featureImage.childImageSharp.gatsbyImageData}
-        loading="lazy"
-        className={style.coverImage} />
-    );
-  } else if (coverImageUrl) {
-    coverImageContainer = (
-      <img
-        loading="lazy"
-        src={coverImageUrl}
-        className={style.coverImage}
-        alt={coverImageAlt}
-      />
-    );
-  } else if (coverImagePublicId) {
-    coverImageContainer = (
-      <Image marginBottom="2em" publicId={coverImagePublicId} />
-    );
-  }
+  // TODO test cover image support
+
+  const coverImageContainer = (
+    <Image
+      className={style.coverImage}
+      marginBottom="2em"
+      publicId={coverImagePublicId || `posts/${path}/cover`}
+      alt={excerpt}
+    />
+  );
 
   const formattedDate = moment(new Date(date)).format('DD MMMM YYYY');
 
   return (
-    <div className={style.post}>
+    <article className={style.post}>
       <div className={style.postContent}>
-        <Heading as="h1" color={headerColors[colorMode]}>
-          {summary ? (
-            <Link
-              as={GatsbyLink}
-              style={{
-                color: headerColors[colorMode],
-                textDecoration: 'none',
-              }}
-              to={postPath}
-            >
-              {title}
-            </Link>
-          ) : (
-            title
-          )}
-        </Heading>
-        <Text
-          fontSize="1rem"
-          color={dateColors[colorMode]}
-        >
-          {formattedDate} {author && <>— Written by {author}</>}
-        </Text>
-        <TagsSummary tags={tags} />
-        {coverImageContainer}
+        <header>
+          <Heading
+            as="h1"
+            color={theme.colors.pink[500]}
+            textDecoration="none"
+            border={0}
+          >
+            {summary ? (
+              <Link as={NextLink} href={postPath}>
+                {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+                <a>{title}</a>
+              </Link>
+            ) : (
+              title
+            )}
+          </Heading>
+          <Text fontSize="1rem" color={dateColors[colorMode]}>
+            {formattedDate} {author && <>— Written by {author}</>}
+          </Text>
+          <TagsSummary tags={tags} />
+          {coverImageContainer}
+        </header>
 
         {summary ? (
           <>
             <p>{excerpt}</p>
-            <Link as={GatsbyLink} to={postPath} className={style.readMore}>
+            <Link as={NextLink} href={postPath}>
               Read more →
             </Link>
           </>
         ) : (
           <>
-            {/* eslint-disable-next-line react/no-danger */}
-            <div dangerouslySetInnerHTML={{ __html: html }} />
-
-            {bodyMdx && <MDXRenderer>{bodyMdx}</MDXRenderer>}
+            {/* eslint-disable-next-line react/jsx-props-no-spreading */}
+            <MDXRemote {...post.source} />
 
             <MentionsSummary mentions={mentions} />
-
-            <Navigation
-              previousPath={previousPath}
-              previousLabel={previousLabel}
-              nextPath={nextPath}
-              nextLabel={nextLabel}
-            />
           </>
         )}
       </div>
-    </div>
+    </article>
   );
 };
 
 Post.propTypes = {
-  mentions: PropTypes.arrayOf(PropTypes.shape({})),
   post: PropTypes.shape({
-    bodyHtml: PropTypes.string,
-    bodyMdx: PropTypes.string,
-    tags: PropTypes.arrayOf(
-      PropTypes.oneOfType([PropTypes.shape({}), PropTypes.string])
-    ),
-    title: PropTypes.string,
-    date: PropTypes.string,
-    _enabledAt: PropTypes.string,
-    coverImagePublicId: PropTypes.string,
-    featureImage: PropTypes.shape({
-      childImageSharp: PropTypes.object,
-      description: PropTypes.string,
-      path: PropTypes.string,
-    }),
-    path: PropTypes.string,
-    coverImage: PropTypes.object,
-    coverImageAlt: PropTypes.string,
-    coverImageUrl: PropTypes.string,
-    author: PropTypes.string,
-    excerpt: PropTypes.string,
-    html: PropTypes.string,
-    id: PropTypes.string,
+    frontmatter: frontmatterType,
+    source: PropTypes.shape({}),
   }),
   summary: PropTypes.bool,
   previous: PropTypes.object,

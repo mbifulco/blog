@@ -2,18 +2,18 @@ import React from 'react';
 
 import { Heading } from '@chakra-ui/react';
 
+import { SEO } from '../../components';
 import { DefaultLayout as Layout } from '../../components/Layouts';
 import { NewsletterSignup } from '../../components/NewsletterSignup';
 
-const NewsletterPage = () => {
-  return (
-    <Layout>
-      <Heading as="h1" marginBottom="2rem">
-        Join the newsletter
-      </Heading>
-      <NewsletterSignup />
-    </Layout>
-  );
-};
+const NewsletterPage = () => (
+  <Layout>
+    <SEO title="Join the newsletter" />
+    <Heading as="h1" marginBottom="2rem">
+      Join the newsletter
+    </Heading>
+    <NewsletterSignup />
+  </Layout>
+);
 
 export default NewsletterPage;
