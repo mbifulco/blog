@@ -35,7 +35,7 @@ export function getAllPosts() {
 
   /// filter out drafts for production
   if (process.env.NODE_ENV === 'production') {
-    return posts.filter((post) => post.frontmatter.published === true);
+    return posts.filter((post) => post.frontmatter?.published !== false);
   }
 
   return posts;

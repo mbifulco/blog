@@ -35,7 +35,7 @@ export function getAllContentFromDirectory(directory) {
   /// filter out drafts for production
   if (process.env.NODE_ENV === 'production') {
     return articles.filter(
-      (article) => articles.frontmatter.published === true
+      (article) => articles.frontmatter?.published !== false
     );
   }
 
