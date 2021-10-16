@@ -39,9 +39,9 @@ const WorkPage = ({ articles }) => {
             This page contains articles, videos, and other references to my work
             over the years. {"I'm"} extremely lucky to be able to say that the
             nature of some of my work is that it is recorded for the public to
-            see, and that I've made news headlines from time to time (for good
-            reasons!) -- {"there's"} quite a bit of my work that {"isn't"}{' '}
-            represented here, too. {"I'm"} always happy to talk shop.{' '}
+            see, and that {"I've"} made news headlines from time to time (for
+            good reasons!) &mdash; {"there's"} quite a bit of my work that{' '}
+            {"isn't"} represented here, too. {"I'm"} always happy to talk shop.{' '}
             <a href="mailto:hello@mikebifulco.com">drop me a line</a> if{' '}
             {"you'd"} like to know more!
           </Text>
