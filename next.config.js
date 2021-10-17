@@ -12,4 +12,5 @@ module.exports = withMDX({
   images: {
     domains: ['i.ytimg.com'],
   },
+  target: 'serverless',
 });
