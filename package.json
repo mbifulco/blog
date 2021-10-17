@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "@chakra-ui/react": "^1.6.10",
-    "@emotion/react": "^11.5.0",
+    "@emotion/react": "^11",
     "@emotion/styled": "^11",
     "@material-ui/core": "^4.12.3",
     "@material-ui/lab": "^4.0.0-alpha.60",
@@ -46,6 +46,7 @@
     "use-cloudinary": "^4.1.1"
   },
   "devDependencies": {
+    "@netlify/plugin-nextjs": "^4.0.0-beta.1",
     "@next/eslint-plugin-next": "^11.1.2",
     "eslint": "^7.32.0",
     "eslint-config-next": "^11.1.2",
