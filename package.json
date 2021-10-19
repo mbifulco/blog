@@ -46,7 +46,7 @@
     "use-cloudinary": "^4.1.1"
   },
   "devDependencies": {
-    "@netlify/plugin-nextjs": "^4.0.0-beta.1",
+    "@netlify/plugin-nextjs": "4.0.0-beta.2",
     "@next/eslint-plugin-next": "^11.1.2",
     "eslint": "^7.32.0",
     "eslint-config-next": "^11.1.2",

@@ -1205,19 +1205,19 @@
     ufo "^0.7.9"
     unstorage "^0.2.8"
 
-"@netlify/plugin-nextjs@^4.0.0-beta.1":
-  version "4.0.0-beta.1"
-  resolved "https://registry.yarnpkg.com/@netlify/plugin-nextjs/-/plugin-nextjs-4.0.0-beta.1.tgz#ee044662193f0b8797341b8f0050d9fc99a9b4de"
-  integrity sha512-3zkd7pO8969VMYGh7iD61is5D/ND7g8edciybsNn4Ur8mN7Psbe+F/6SD7eAMdyXC7h988L1UTxYLc2kmn8xjw==
+"@netlify/plugin-nextjs@4.0.0-beta.2":
+  version "4.0.0-beta.2"
+  resolved "https://registry.yarnpkg.com/@netlify/plugin-nextjs/-/plugin-nextjs-4.0.0-beta.2.tgz#9c0aa8090ce1782dfbfa57513829b2558b08ce2e"
+  integrity sha512-0kOrPXC2RGuZC2z5A5UyLeQKW1mT/b7YEZ79yYnuzhE30urE4xw5GUGBCo5egL4yySY0KXX6lntSKFqRbIQygQ==
   dependencies:
     "@netlify/functions" "^0.7.2"
     "@netlify/ipx" "^0.0.7"
     "@vercel/node" "^1.11.2-canary.4"
     chalk "^4.1.2"
-    destr "^1.1.0"
     fs-extra "^10.0.0"
     moize "^6.1.0"
     outdent "^0.8.0"
+    pathe "^0.2.0"
     semver "^7.3.5"
     slash "^3.0.0"
     tiny-glob "^0.2.9"
@@ -6270,6 +6270,11 @@ path-type@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/path-type/-/path-type-4.0.0.tgz#84ed01c0a7ba380afe09d90a8c180dcd9d03043b"
   integrity sha512-gDKb8aZMDeD/tZWs9P6+q0J9Mwkdl6xMV8TjnGP3qJVJ06bdMgkbBlLU8IdfOsIsFz2BW1rNVT3XuNEl8zPAvw==
+
+pathe@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/pathe/-/pathe-0.2.0.tgz#30fd7bbe0a0d91f0e60bae621f5d19e9e225c339"
+  integrity sha512-sTitTPYnn23esFR3RlqYBWn4c45WGeLcsKzQiUpXJAyfcWkolvlYpV8FLo7JishK946oQwMFUCHXQ9AjGPKExw==
 
 pbkdf2@^3.0.3:
   version "3.1.2"
