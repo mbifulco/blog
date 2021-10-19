@@ -4,7 +4,15 @@ import React from 'react';
 import { MDXProvider } from '@mdx-js/react';
 import { MDXEmbedProvider } from 'mdx-embed';
 
-import { Button, Code, Box, Heading, Text, useTheme } from '@chakra-ui/react';
+import {
+  Button,
+  Code,
+  Box,
+  Heading,
+  Link,
+  Text,
+  useTheme,
+} from '@chakra-ui/react';
 import PrismHighlight, { defaultProps } from 'prism-react-renderer';
 import prismTheme from 'prism-react-renderer/themes/nightOwl';
 
@@ -22,6 +30,12 @@ const H6 = (props) => <Heading as="h6" {...props} />;
 const P = (props) => (
   <Box as="p" marginTop="1rem" marginBottom="1rem" {...props} />
 );
+
+const CustomLink = (props) => {
+  const theme = useTheme();
+  return <Link color={theme.colors.pink[600]} {...props} />;
+};
+
 const Aside = (props) => {
   const theme = useTheme();
 
@@ -62,7 +76,7 @@ const InlineCode = (props) => {
       {...props}
     />
   );
-}
+};
 
 const Pre = (props) => {
   const classNames = props.children.props.className || '';
@@ -85,8 +99,10 @@ const Pre = (props) => {
               // TODO: why is this needed though?
               if (i === tokens.length - 1) return null;
               return (
+                // eslint-disable-next-line react/jsx-key
                 <div {...getLineProps({ line, key: i })}>
                   {line.map((token, key) => (
+                    // eslint-disable-next-line react/jsx-key
                     <span {...getTokenProps({ token, key })} />
                   ))}
                 </div>
@@ -105,6 +121,7 @@ const components = {
   Highlight,
   Image,
   inlineCode: InlineCode,
+  a: CustomLink,
   h1: H1,
   h2: H2,
   h3: H3,

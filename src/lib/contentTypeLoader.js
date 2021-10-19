@@ -4,12 +4,9 @@ import { parse, compareDesc } from 'date-fns';
 import fs from 'fs';
 import { join } from 'path';
 
-// Add markdown files in `src/content/blog`
-const postsDirectory = join(process.cwd(), 'src', 'data', 'posts');
-
-export function getPostBySlug(slug) {
+export function getContentBySlug(slug, directory) {
   const realSlug = slug.replace(/\.mdx$/, '');
-  const fullPath = join(postsDirectory, `${realSlug}.mdx`);
+  const fullPath = join(directory, `${realSlug}.mdx`);
   const fileContents = fs.readFileSync(fullPath, 'utf8');
   const { data, content } = matter(fileContents);
 
@@ -26,20 +23,21 @@ export function getPostBySlug(slug) {
   };
 }
 
-export function getAllPosts() {
-  const slugs = fs.readdirSync(postsDirectory);
-  const posts = slugs.map((slug) => getPostBySlug(slug));
+export function getAllContentFromDirectory(directory) {
+  const slugs = fs.readdirSync(directory);
+  const articles = slugs.map((slug) => getContentBySlug(slug, directory));
 
   // sort posts by date,  newest first
-  posts.sort((a, b) => compareDesc(a.frontmatter.date, b.frontmatter.date));
+  articles.sort((a, b) =>
+    compareDesc(a?.frontmatter.date, b?.frontmatter.date)
+  );
 
   /// filter out drafts for production
   if (process.env.NODE_ENV === 'production') {
-    return posts.filter((post) => post.frontmatter?.published !== false);
+    return articles.filter(
+      (article) => articles.frontmatter?.published !== false
+    );
   }
 
-  return posts;
+  return articles;
 }
-
-export const getAllPostsByTag = (tag) =>
-  getAllPosts().filter((post) => post?.frontmatter?.tags?.includes(tag)) || [];

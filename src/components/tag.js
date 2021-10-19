@@ -2,17 +2,23 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
 
-import * as classes from '../styles/tag.module.scss';
+import { Link as ChakraLink, Flex, Text, useTheme } from '@chakra-ui/react';
 
 const Tag = ({ children, url }) => {
-  let tag = <span className={classes.container}>{children}</span>;
+  const theme = useTheme();
+
+  let tag = (
+    <Flex marginRight="0.5rem">
+      <Text color={theme.colors.gray[400]}>#</Text>
+      <Text color={theme.colors.gray[700]}>{children}</Text>
+    </Flex>
+  );
 
   if (url) {
     tag = (
-      <Link href={url} className={classes.link}>
-        {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+      <ChakraLink as={Link} href={url}>
         <a>{tag}</a>
-      </Link>
+      </ChakraLink>
     );
   }
   return tag;

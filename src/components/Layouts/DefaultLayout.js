@@ -86,6 +86,9 @@ const DefaultLayout = ({ children }) => {
               <Link as={InternalLink} href="/">
                 <a>Blog</a>
               </Link>
+              <Link as={InternalLink} href="/work">
+                <a>Work</a>
+              </Link>
               <Link as={InternalLink} href="/about">
                 <a>About</a>
               </Link>

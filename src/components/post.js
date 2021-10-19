@@ -51,7 +51,7 @@ const Post = ({ summary, post }) => {
     />
   );
 
-  const formattedDate = moment(new Date(date)).format('DD MMMM YYYY');
+  const formattedDate = moment(new Date(date)).format('MMMM DD, YYYY');
 
   return (
     <article className={style.post}>
