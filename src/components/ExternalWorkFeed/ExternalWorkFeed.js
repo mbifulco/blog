@@ -18,7 +18,7 @@ const ExternalWorkFeed = ({ articles }) => {
       <Box
         key={url}
         boxShadow={'0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)'}
-        padding="1.5rem 2rem 2rem 2rem"
+        padding="1.5rem 1rem 2rem 1rem"
         borderRadius="20px"
         marginBottom="2rem"
       >
