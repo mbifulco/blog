@@ -2,23 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { Box, Heading, Stack, Text, useTheme } from '@chakra-ui/react';
-import { serialize } from 'next-mdx-remote/serialize';
 
 import { DefaultLayout } from '../components/Layouts';
-import { ExternalWorkFeed, SEO } from '../components';
+import { ExternalWorkItem, SEO } from '../components';
 
 import { getAllExternalReferences } from '../lib/external-references';
 
 export async function getStaticProps() {
-  const articles = await Promise.all(
-    getAllExternalReferences().map(async (article) => {
-      const mdxSource = await serialize(article.content);
-      return {
-        ...article,
-        source: mdxSource,
-      };
-    })
-  );
+  const articles = await getAllExternalReferences();
 
   return {
     props: {
@@ -46,9 +37,15 @@ const WorkPage = ({ articles }) => {
             {"you'd"} like to know more!
           </Text>
         </Box>
-        <Box>
-          <ExternalWorkFeed articles={articles} />
-        </Box>
+        <Stack>
+          {articles.map((article) => (
+            <ExternalWorkItem
+              article={article}
+              border
+              key={article.frontmatter.url}
+            />
+          ))}
+        </Stack>
       </Stack>
     </DefaultLayout>
   );

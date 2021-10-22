@@ -7,14 +7,13 @@ import { DefaultLayout } from '../components/Layouts';
 import { Image, PostFeed, SEO } from '../components';
 
 import { getAllPosts } from '../lib/blog';
-import { generateRSSFeed } from '../utils/rss' 
-
+import { generateRSSFeed } from '../utils/rss';
 
 export async function getStaticProps() {
   const posts = getAllPosts();
 
   generateRSSFeed(posts);
-  
+
   return {
     props: {
       posts,
@@ -53,9 +52,9 @@ const HomePage = ({ posts }) => {
             Oh, hello
           </Text>
           <Text fontSize="xl" fontWeight="normal" margin="0">
-            {"I'm"} a technologist, a designer, and a creator of things. I started
-            this as a place to put together my thoughts on things that I think
-            deserve a bigger stage than my{' '}
+            {"I'm"} a technologist, a designer, and a creator of things. I
+            started this as a place to put together my thoughts on things that I
+            think deserve a bigger stage than my{' '}
             <Link color={pink} href="https://twitter.com/irreverentmike">
               twitter
             </Link>{' '}
@@ -65,8 +64,15 @@ const HomePage = ({ posts }) => {
             </Link>
             .
           </Text>
-          <Text fontSize="xl" fontWeight="normal" fontStyle="italic" margin="0" marginTop="1rem">
-            I work at Google -- but the things I post here are my own, and {"don't "}
+          <Text
+            fontSize="xl"
+            fontWeight="normal"
+            fontStyle="italic"
+            margin="0"
+            marginTop="1rem"
+          >
+            I work at Google -- but the things I post here are my own, and{' '}
+            {"don't "}
             necessarily reflect {"Google's"} views or opinions.
           </Text>
         </Box>
@@ -83,9 +89,7 @@ const HomePage = ({ posts }) => {
 };
 
 HomePage.propTypes = {
-  posts: PropTypes.arrayOf(
-    PropTypes.shape({})
-  )
-}
+  posts: PropTypes.arrayOf(PropTypes.shape({})),
+};
 
 export default HomePage;
