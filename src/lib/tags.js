@@ -17,7 +17,7 @@ export const getAllTags = async () => {
   });
 
   return {
-    allTags: new Set([...blogPostTags], [...articleTags]),
+    allTags: new Set([...blogPostTags, ...articleTags]),
     postTags: blogPostTags,
     externalReferenceTags: articleTags,
   };
