@@ -33,7 +33,5 @@ export const getAllExternalReferences = async () => {
 export const getAllExternalReferencesByTag = async (tag) => {
   const refs = await getAllExternalReferences();
 
-  return refs.filter(
-    (article) => article?.frontmatter?.tags?.includes(tag) || []
-  );
+  return refs.filter((article) => [...article.frontmatter?.tags].includes(tag));
 };

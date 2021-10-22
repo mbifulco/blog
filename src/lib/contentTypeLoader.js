@@ -17,6 +17,7 @@ export async function getContentBySlug(slug, directory, type) {
     date = parse(data.date, 'MM-dd-yyyy', new Date()).getTime();
   } catch (e) {
     console.error('invalid date in frontmatter of', data.title);
+    throw e;
   }
 
   const mdxSource = await serialize(content);

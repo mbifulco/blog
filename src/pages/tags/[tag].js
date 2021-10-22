@@ -51,7 +51,6 @@ const TagPage = ({ tag, posts, articles }) => {
     return new Date(b.frontmatter.date) - new Date(a.frontmatter.date);
   });
 
-  console.dir(all);
   return (
     <DefaultLayout>
       <SEO title={`#${tag}: ${posts.length} Articles`} />
