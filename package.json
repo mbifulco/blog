@@ -17,20 +17,18 @@
     "@chakra-ui/react": "^1.6.10",
     "@emotion/react": "^11",
     "@emotion/styled": "^11",
-    "@material-ui/core": "^4.12.3",
-    "@material-ui/lab": "^4.0.0-alpha.60",
     "@mdx-js/loader": "^1.6.22",
     "@mdx-js/mdx": "^1.6.22",
     "@mdx-js/react": "^1.6.22",
     "@next/mdx": "^11.1.2",
     "date-fns": "^2.25.0",
+    "dayjs": "^1.10.7",
     "fathom-client": "^3.2.0",
     "feed": "^4.2.2",
     "framer-motion": "^4",
     "gray-matter": "^4.0.3",
     "lodash": "^4.17.21",
     "mdx-embed": "^0.0.22",
-    "moment": "2.29.1",
     "next": "^11.1.2",
     "next-mdx-remote": "^3.0.6",
     "pluralize": "^8.0.0",
@@ -65,8 +63,7 @@
   },
   "lint-staged": {
     "*.{js,css,md}": [
-      "prettier --write",
-      "git add"
+      "prettier --write"
     ],
     "*.js": "eslint --cache --fix",
     "*.{js,jsx,ts,tsx,json,md}": "prettier --write"

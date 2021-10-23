@@ -1,7 +1,7 @@
 import { rules } from 'eslint-config-prettier';
 import { Feed } from 'feed';
-import moment from 'moment';
-import fs from 'fs'
+import dayjs from 'dayjs';
+import fs from 'fs';
 
 import config from '../config';
 
@@ -9,7 +9,7 @@ export const generateRSSFeed = (posts) => {
   if (process.env.NODE_ENV === 'development') {
     return;
   }
-  
+
   const { author, description, siteUrl, title } = config;
 
   const feed = new Feed({
@@ -25,12 +25,7 @@ export const generateRSSFeed = (posts) => {
 
   posts.forEach((post) => {
     const {
-      frontmatter: {
-        date,
-        excerpt,
-        path,
-        title,
-      },
+      frontmatter: { date, excerpt, path, title },
       content,
     } = post;
 
