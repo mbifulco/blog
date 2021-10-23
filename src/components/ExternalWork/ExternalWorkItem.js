@@ -1,6 +1,6 @@
 import { Box, Heading, Stack, Text, useTheme } from '@chakra-ui/react';
 import { MDXRemote } from 'next-mdx-remote';
-import moment from 'moment';
+import dayjs from 'dayjs';
 
 import TagsSummary from '../tagsSummary';
 
@@ -11,7 +11,7 @@ const ExternalWorkItem = ({ article, border = false }) => {
     frontmatter: { date, url, title, tags },
   } = article;
 
-  const formattedDate = moment(new Date(date)).format('MMMM DD, YYYY');
+  const formattedDate = dayjs(new Date(date)).format('MMMM DD, YYYY');
   return (
     <Box
       key={url}

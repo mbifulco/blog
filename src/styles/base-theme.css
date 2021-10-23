@@ -13,10 +13,10 @@ html {
 body {
   margin: 0;
   padding: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Roboto',
-    'Segoe UI', Helvetica, Arial, sans-serif, 'apple color emoji',
-    'segoe ui emoji', 'android emoji', 'emojisymbols', 'emojione mozilla',
-    'twemoji mozilla', 'segoe ui symbol', 'noto color emoji';
+  font-family: -apple-system, BlinkMacSystemFont, 'Roboto', 'Segoe UI',
+    Helvetica, Arial, sans-serif, 'apple color emoji', 'segoe ui emoji',
+    'android emoji', 'emojisymbols', 'emojione mozilla', 'twemoji mozilla',
+    'segoe ui symbol', 'noto color emoji';
   font-size: 1rem;
   font-weight: 600;
   line-height: 1.54;
@@ -31,7 +31,6 @@ body {
   @media (--phone) {
     font-size: 1rem;
   }
-
 }
 
 h1,
@@ -144,7 +143,6 @@ code {
   margin: 0 2px;
   border-radius: 5px;
   font-size: 0.9rem;
-
 }
 
 pre {
@@ -223,8 +221,8 @@ ol ol {
 button,
 input,
 textarea {
-  font-family: -apple-system, BlinkMacSystemFont, 'Roboto',
-    'Segoe UI', Helvetica, Arial, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Roboto', 'Segoe UI',
+    Helvetica, Arial, sans-serif;
 }
 
 hr {
@@ -232,7 +230,6 @@ hr {
   border: none;
   background: var(--light-border-color);
   height: 1px;
-
 }
 
 .hidden {
