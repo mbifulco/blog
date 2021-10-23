@@ -1,9 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-// Utilities
-import { kebabCase } from 'lodash';
-
 // Components
 import Link from 'next/link';
 
@@ -23,7 +20,7 @@ const TagsPage = ({ tags }) => (
         <ul className={tagsClasses.list}>
           {tags?.map((tag) => (
             <li key={`tag-${tag._id}`}>
-              <Link href={`/tags/${kebabCase(tag.name)}/`}>
+              <Link href={`/tags/${tag.name}/`}>
                 {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
                 <a>
                   <Tag>
@@ -38,7 +35,6 @@ const TagsPage = ({ tags }) => (
     </div>
   </Layout>
 );
-
 
 TagsPage.propTypes = {
   tags: PropTypes.arrayOf(

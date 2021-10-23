@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { map } from 'lodash';
-
 import { Flex } from '@chakra-ui/react';
 
 import Tag from './tag';
@@ -12,7 +10,7 @@ const TagsSummary = ({ tags }) => {
 
   return (
     <Flex fontSize="smaller" direction="row" flexWrap="wrap">
-      {map(tags, (tag, id) => (
+      {tags.map((tag, id) => (
         <Tag
           key={`tag-${id || tag.name || tag}`}
           url={`/tags/${tag.name || tag}`}
