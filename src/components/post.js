@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import NextLink from 'next/link';
-import moment from 'moment';
+import dayjs from 'dayjs';
 
 import { MDXRemote } from 'next-mdx-remote';
 
@@ -51,7 +51,7 @@ const Post = ({ summary, post }) => {
     />
   );
 
-  const formattedDate = moment(new Date(date)).format('MMMM DD, YYYY');
+  const formattedDate = dayjs(new Date(date)).format('MMMM DD, YYYY');
 
   return (
     <article className={style.post}>

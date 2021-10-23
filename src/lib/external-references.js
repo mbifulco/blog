@@ -1,4 +1,5 @@
 import { join } from 'path';
+import { serialize } from 'next-mdx-remote/serialize';
 
 import {
   getAllContentFromDirectory,
@@ -13,20 +14,24 @@ const externalReferencesDirectory = join(
   'external-references'
 );
 
-export const getAllExternalReferencesBySlug = (slug) =>
-  getContentBySlug(slug, externalReferencesDirectory);
+export const getExternalReferenceBySlug = async (slug) => {
+  const reference = await getContentBySlug(
+    slug,
+    externalReferencesDirectory,
+    'article'
+  );
+  return reference;
+};
 
-export const getAllExternalReferences = () => {
-  return getAllContentFromDirectory(externalReferencesDirectory).map(
-    (article) => {
-      return {
-        ...article,
-      };
-    }
+export const getAllExternalReferences = async () => {
+  return await getAllContentFromDirectory(
+    externalReferencesDirectory,
+    'article'
   );
 };
 
-export const getAllExternalReferencesByTag = (tag) =>
-  getAllExternalReferences().filter(
-    (article) => article?.frontmatter?.tags?.includes(tag) || []
-  );
+export const getAllExternalReferencesByTag = async (tag) => {
+  const refs = await getAllExternalReferences();
+
+  return refs.filter((article) => [...article.frontmatter?.tags].includes(tag));
+};
