@@ -1,6 +1,7 @@
-# added by mike - don't save public/rss.xml, which is generated only in production
-# and will be made dynamically on server at build time
+# added by mike - don't save rss.xml or sitemap.xml in the public folder.
+# they are generated only in production, and will be made dynamically on server at build time
 public/rss.xml
+public/sitemap.xml
 
 .next
 
