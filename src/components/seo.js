@@ -54,6 +54,10 @@ const SEO = ({
       <meta name="theme-color" content="#ffffff" />
       {/* end favicon */}
 
+      {/* affilimate */}
+      <meta name="am-api-token" content="NDGNbytop" />
+      {/* end affilimate */}
+
       {canonical && <link rel="canonical" key={canonical} href={canonical} />}
       <title>{`${title} | ${siteTitle}`}</title>
       <meta name="description" content={metaDescription} />
@@ -84,6 +88,8 @@ const SEO = ({
       <meta name="og:image" content={image} />
       <meta name="og:image:url" content={image} />
       {meta}
+
+      <script async src="https://snippet.affilimate.io"></script>
     </Head>
   );
 };
