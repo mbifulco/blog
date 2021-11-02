@@ -88,8 +88,6 @@ const SEO = ({
       <meta name="og:image" content={image} />
       <meta name="og:image:url" content={image} />
       {meta}
-
-      <script async src="https://snippet.affilimate.io"></script>
     </Head>
   );
 };

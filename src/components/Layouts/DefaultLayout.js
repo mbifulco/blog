@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import InternalLink from 'next/link';
+import Script from 'next/script';
 
 import { useRouter } from 'next/router';
 
@@ -105,6 +106,7 @@ const DefaultLayout = ({ children }) => {
           </Box>
         </Stack>
       </Box>
+      <Script src="https://snippet.affilimate.io" />
     </MDXProviderWrapper>
   );
 };
