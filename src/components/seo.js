@@ -6,11 +6,12 @@ import { useRouter } from 'next/router';
 
 import config from '../config';
 
+const baseUrl = config.siteUrl;
+
 const SEO = ({
   author,
   canonical,
   description,
-  lang,
   meta,
   keywords,
   title,
@@ -27,6 +28,17 @@ const SEO = ({
 
   const metaTitle = title || siteTitle;
   const metaDescription = description || siteDescription;
+
+  const fullCanonical = () => {
+    const link = canonical || router.asPath;
+    if (!link) return baseUrl;
+
+    const slashLink = link.startsWith('/') ? link : `/${link}`;
+
+    const fullUrl = link.startsWith(baseUrl) ? link : `${baseUrl}${slashLink}`;
+    console.log('setting canonical to', fullUrl);
+    return fullUrl;
+  };
 
   return (
     <Head>
@@ -58,9 +70,10 @@ const SEO = ({
       <meta name="am-api-token" content="NDGNbytop" />
       {/* end affilimate */}
 
-      {canonical && <link rel="canonical" key={canonical} href={canonical} />}
+      <link rel="canonical" href={fullCanonical(canonical)} />
+
       <title>{`${title} | ${siteTitle}`}</title>
-      <meta name="description" content={metaDescription} />
+      <meta name="description" content={description || metaDescription} />
       <meta
         name="monetization"
         content="$twitter.xrptipbot.com/irreverentmike"

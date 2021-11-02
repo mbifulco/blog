@@ -8,7 +8,7 @@ import { NewsletterSignup } from '../../components/NewsletterSignup';
 
 const NewsletterPage = () => (
   <Layout>
-    <SEO title="Join the newsletter" />
+    <SEO title="Join the newsletter: articles software dev, design, and climate" />
     <Heading as="h1" marginBottom="2rem">
       Join the newsletter
     </Heading>

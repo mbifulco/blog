@@ -2,19 +2,19 @@
 title: "Don't center align paragraph text"
 type: post
 date: 04-10-2021
-excerpt: "This is -- without exception -- my biggest design-related pet peeve. Centered text is bad for usability, accessibility -- and I really hate the way it looks."
-coverImagePublicId: "posts/center-align-text/center-align-text"
+excerpt: 'Centered text is bad for usability, accessibility, and eye scanning -- and I really hate the way it looks.'
+coverImagePublicId: 'posts/center-align-text/center-align-text'
 published: true
 path: dont-center-paragraph-text
 tags: [design, dev, css, accessibility]
 ---
 
-import CenteredTextDemo from '../../components/demos/CenteredTextDemo'
+import CenteredTextDemo from '../../components/demos/CenteredTextDemo';
 
 <Aside type="note">
 
-  This is an experimental post, meant to demonstrate to you the topic we're discussing. I'd love to hear what you think about it.  [Drop me a line](https://twitter.com/irreverentmike) if you find this compelling - I'm hoping to create more like it!
-  
+This is an experimental post, meant to demonstrate to you the topic we're discussing. I'd love to hear what you think about it. [Drop me a line](https://twitter.com/irreverentmike) if you find this compelling - I'm hoping to create more like it!
+
 </Aside>
 
 <CenteredTextDemo>
@@ -36,7 +36,6 @@ The British Dyslexia Association provides a <a href="https://www.bdadyslexia.org
 As a designer, this is _such_ an easy win. As a developer, it's often as easy as:
 
 ```css
-
 /* change this */
 .some-style-rule {
   text-align: center;
@@ -46,14 +45,14 @@ As a designer, this is _such_ an easy win. As a developer, it's often as easy as
 .some-style-rule {
   text-align: initial;
 }
-
 ```
 
 ## When you _can_ use centered-text
 
-Generally speaking, if you're certain that your text will fit on _one line,_ it may be okay to center it.  This generally applies to page titles, captions on pictures, and things of that nature. Even then, generally speaking my guidance is to avoid it.  Like many other things in design, if there's not a good reason _to_ do it... you're better without.
+Generally speaking, if you're certain that your text will fit on _one line,_ it may be okay to center it. This generally applies to page titles, captions on pictures, and things of that nature. Even then, generally speaking my guidance is to avoid it. Like many other things in design, if there's not a good reason _to_ do it... you're better without.
 
 ## Summary
+
 If you're working on a design that relies on centered text, consider other options. If you come across a big blob of centered text in your workplace, or out in the world somewhere, please feel free to use this post as a demo.
 
 </CenteredTextDemo>

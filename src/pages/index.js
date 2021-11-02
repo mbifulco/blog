@@ -26,22 +26,23 @@ const HomePage = ({ posts }) => {
   const pink = theme.colors.pink[400];
   return (
     <DefaultLayout>
-      <SEO title="Latest Articles" />
+      <SEO title="Latest articles on design, development, and the world" />
       <Box
         display={{ md: 'flex' }}
         margin="1rem 0 2rem 0"
         spacing={4}
         alignItems="flex-start"
       >
-        <Image
-          alt="My headshot"
-          publicId="mike-headshot-square"
-          objectFit="contain"
-          objectPosition="bottom"
-          height="250"
-          width="250"
-          marginRight={[0, 0, '1rem']}
-        />
+        <Box marginRight={[0, 0, '1rem']}>
+          <Image
+            alt="My headshot"
+            publicId="mike-headshot-square"
+            objectFit="contain"
+            objectPosition="bottom"
+            height="250"
+            width="250"
+          />
+        </Box>
         <Box maxWidth="50ch">
           <Text
             as="h2"
