@@ -100,6 +100,9 @@ const SEO = ({
       <meta name="og:url" content={router.asPath} />
       <meta name="og:image" content={image} />
       <meta name="og:image:url" content={image} />
+
+      <meta name="creator" content="Mike Bifulco @irreverentmike" />
+      <meta name="publisher" content="mikebifulco.com" />
       {meta}
     </Head>
   );
