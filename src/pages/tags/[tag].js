@@ -53,7 +53,10 @@ const TagPage = ({ tag, posts, articles }) => {
 
   return (
     <DefaultLayout>
-      <SEO title={`#${tag}: ${posts.length} Articles`} />
+      <SEO
+        title={`#${tag}: ${posts.length} posts, articles, and videos`}
+        description={`All of my blog posts, articles, and videos tagged with ${tag}`}
+      />
       <Heading as="h1">
         <Text as="span" color={theme.colors.gray[400]}>
           #
