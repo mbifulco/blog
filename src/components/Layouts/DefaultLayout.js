@@ -38,7 +38,7 @@ const DefaultLayout = ({ children }) => {
 
   return (
     <MDXProviderWrapper>
-      <SEO />
+      {/* <SEO /> */}
       <Box
         borderColor={theme.colors.pink[400]}
         borderWidth="1.25rem 0 0 0"

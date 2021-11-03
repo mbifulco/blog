@@ -63,7 +63,6 @@ const MentionsSummary = ({ mentions }) => {
               'MMMM DD, YYYY'
             );
 
-            console.log(mention);
             return (
               <div
                 className={classes.mention}

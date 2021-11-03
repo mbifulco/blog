@@ -22,7 +22,7 @@ const WorkPage = ({ articles }) => {
   const theme = useTheme();
   return (
     <DefaultLayout>
-      <SEO title="My work from around the web" />
+      <SEO title="My work from around the web" canonical="/work" />
       <Stack>
         <Heading as="h1">Some samples of my work online</Heading>
         <Box>

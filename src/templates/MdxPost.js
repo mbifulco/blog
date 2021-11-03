@@ -15,14 +15,9 @@ import WebmentionMetadata from '../components/webmentionMetadata';
 import frontmatterType from '../types/frontmatter';
 
 const MdxPostTemplate = ({ post, mentions }) => {
-  const { excerpt, frontmatter } = post;
+  const { frontmatter } = post;
 
-  const {
-    published,
-    date,
-    tags,
-    title,
-  } = frontmatter;
+  const { published, date, tags, title, excerpt } = frontmatter;
 
   const router = useRouter();
 
@@ -58,16 +53,12 @@ const MdxPostTemplate = ({ post, mentions }) => {
 
 MdxPostTemplate.propTypes = {
   mentions: PropTypes.shape({
-    nodes: PropTypes.arrayOf(
-      PropTypes.shape({})
-    )
+    nodes: PropTypes.arrayOf(PropTypes.shape({})),
   }),
   post: PropTypes.shape({
     excerpt: PropTypes.string,
-    frontmatter: frontmatterType
-  })
-}
+    frontmatter: frontmatterType,
+  }),
+};
 
 export default MdxPostTemplate;
-
-
