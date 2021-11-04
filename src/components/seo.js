@@ -36,7 +36,7 @@ const SEO = ({
     const slashLink = link.startsWith('/') ? link : `/${link}`;
 
     const fullUrl = link.startsWith(baseUrl) ? link : `${baseUrl}${slashLink}`;
-    console.log('setting canonical to', fullUrl);
+
     return fullUrl;
   };
 
