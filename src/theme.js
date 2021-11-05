@@ -5,6 +5,8 @@ import { extendTheme } from '@chakra-ui/react';
 const fontDefs = `'Inter UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Segoe UI', Helvetica, Arial, sans-serif, 'apple color emoji', 'segoe ui emoji', 'android emoji', 'emojisymbols', 'emojione mozilla', 'twemoji mozilla', 'segoe ui symbol', 'noto color emoji'`;
 
 const customTheme = {
+  initialColorMode: 'light',
+  useSystemColorMode: false,
   fonts: {
     body: fontDefs,
     heading: fontDefs,
