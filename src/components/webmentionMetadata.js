@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useRouter } from 'next/router';
-import Image from 'next/image';
 
 const WebmentionMetadata = ({
   coverImageUrl,
@@ -22,13 +21,14 @@ const WebmentionMetadata = ({
       <article className="h-card">
         <header>
           {coverImageUrl && (
-            <Image className="u-photo" src={coverImageUrl} alt="Hero" />
+            // eslint-disable-next-line @next/next/no-img-element
+            <img className="u-photo" src={coverImageUrl} alt="Hero" />
           )}
           <h1 className="p-name">{title}</h1>
         </header>
         <p className="p-summary e-content">{summary}</p>
         <footer>
-          <a className="u-url p-name" href={location || ""}>
+          <a className="u-url p-name" href={location || ''}>
             {author || 'Mike Bifulco'}
           </a>
         </footer>
