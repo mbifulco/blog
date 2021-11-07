@@ -12,14 +12,19 @@ import { NewsletterSignup } from '../components/NewsletterSignup';
 import Post from '../components/post';
 import WebmentionMetadata from '../components/webmentionMetadata';
 
+import { getCloudinaryImageUrl } from '../utils/images';
+
 import frontmatterType from '../types/frontmatter';
 
 const MdxPostTemplate = ({ post, mentions }) => {
   const { frontmatter } = post;
 
-  const { published, date, tags, title, excerpt } = frontmatter;
+  const { published, date, tags, title, excerpt, path } = frontmatter;
 
   const router = useRouter();
+
+  const postImagePublicId = `posts/${path}/cover`;
+  const coverImageUrl = getCloudinaryImageUrl(postImagePublicId);
 
   return (
     <DefaultLayout>
@@ -28,12 +33,12 @@ const MdxPostTemplate = ({ post, mentions }) => {
         canonical={router.asPath}
         title={title}
         description={excerpt}
-        // image={getImageUrl(featureImage.path)}
+        image={coverImageUrl}
         ogType="article"
       />
       {/* TODO cover image url in webmentions */}
       <WebmentionMetadata
-        // coverImageUrl={coverImageUrl}
+        coverImageUrl={coverImageUrl}
         summary={excerpt}
         publishedAt={date}
       />
