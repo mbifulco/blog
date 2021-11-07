@@ -1,0 +1,55 @@
+---
+title: How to make VS Code load faster with a little bit of housekeeping
+excerpt: 'Have you noticed that your favorite IDE has been slow to load lately? Try removing these before losing hope.'
+date: 11-07-2021
+path: make-vs-code-load-faster-by-removing-extensions
+tags: [dev, productivity, javascript]
+published: true
+---
+
+If you're a user of Visual Studio Code, you may find that over time it feels like new IDE windows are slow to load. In my experience, loading an environment from a cold start (firing up VS Code when it isn't running at all), or opening a window for a new project (`File >> New Window`) when Code is already running tend to take about the same amount of time.
+
+This is notably different from opening a new tab within the IDE - again, in my experience, once Code is up and running, new tabs take almost no time to fire up.
+
+## Why is it slow?
+
+In its most basic form VS Code is fairly performant - a fresh install of the IDE opens very quickly. Over time, if you're anything like me, you've probably installed any number of community-built [extensions from the VS Code Marketplace](https://marketplace.visualstudio.com/VSCode)
+
+## The Solution
+
+Well, the good news is that this one is exactly as easy as it sounds - you can gain quite a bit of startup performance by **removing unused and unnecessary extensions from VS Code**, by opening your Extensions pane (`Shift + command + X` on a mac, likely `control + shift + X` on Windows/Linux), and typing `@installed` into the search bar at the top of the list to see which extensions are currently installed. In my case, it looks like this:
+
+<Image
+  publicId="posts/make-vs-code-load-faster-by-removing-extensions/vscode-extensions-pane"
+  alt="VS Code Extensions pane highlighted in red"
+  caption="My installed extensions pane, highlighted in red"
+/>
+
+Extensions with particularly long load times will have their "Activation Time" highlighted in this list. It's currently shown in the upper-right corner of the extension list item with a load time in milliseconds listed next to it:
+
+<Image
+  publicId="posts/make-vs-code-load-faster-by-removing-extensions/extension-load-time"
+  alt="VS Code Extensions pane highlighted in red"
+  caption="My installed extensions pane, highlighted in red"
+/>
+
+## How to remove extensions with long activation times from Visual Studio Code
+
+1. Scan through your list of installed extensions, and remove any you don't use
+2. If there are remaining extensions which have high activation times listed, consider whether there's better options available (and install those!)
+3. If there aren't better options available, you'll either need to live with the load time for a given extension, or choose to bid it farewell. Worth noting here: these extensions are (generally) open-source, so you may want to visit the repo for that extension and [search for "activation time"](https://github.com/prettier/prettier-vscode/issues?q=activation+time) to see if anyone else is running into the same problem. If not, you might want to open an issue and let the maintainers of that extension know you're having trouble, or open a PR if you have a solution to offer up.
+
+...and that should do ya! If you're still running into performance issues after this, it could be any number of things. Are you running out of disk space on your computer? Maybe you're running out of available RAM? Are you running other applications that slow your machine down?
+
+Additionally, if you're a JavaScript or Node app developer, you may want to check out my article on [Reclaiming Disk Space from `node_modules`](https://mikebifulco.com/posts/reclaimed-10gb-of-disk-space-from-node-modules).
+
+I hope this helps! Feel free to share it with a friend if you found it useful.
+
+This post was inspired by a tweet I let fly recently after playing with load times in [Visual Studio Code](https://code.visualstudio.com/):
+
+<Tweet
+  tweetLink="https://twitter.com/irreverentmike/status/1454054616027574283"
+  align="center"
+/>
+
+_note: Cover photo for this article is from by <a href="https://unsplash.com/@loic?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Djim Loic</a> on <a href="https://unsplash.com/s/photos/time?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>._
