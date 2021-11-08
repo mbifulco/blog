@@ -19,11 +19,12 @@ import frontmatterType from '../types/frontmatter';
 const MdxPostTemplate = ({ post, mentions }) => {
   const { frontmatter } = post;
 
-  const { published, date, tags, title, excerpt, path } = frontmatter;
+  const { coverImagePublicId, published, date, tags, title, excerpt, path } =
+    frontmatter;
 
   const router = useRouter();
 
-  const postImagePublicId = `posts/${path}/cover`;
+  const postImagePublicId = coverImagePublicId || `posts/${path}/cover`;
   const coverImageUrl = getCloudinaryImageUrl(postImagePublicId);
 
   return (
