@@ -9,16 +9,10 @@ export async function getContentBySlug(slug, directory, type) {
   const realSlug = slug.replace(/\.mdx$/, '');
   const fullPath = join(directory, `${realSlug}.mdx`);
   const fileContents = fs.readFileSync(fullPath, 'utf8');
+
   const { data, content } = matter(fileContents);
 
-  let date;
-  try {
-    // store date in frontmatter as milliseconds since epoch
-    date = parse(data.date, 'MM-dd-yyyy', new Date()).getTime();
-  } catch (e) {
-    console.error('invalid date in frontmatter of', data.title);
-    throw e;
-  }
+  const articleDate = new Date(data.date);
 
   const mdxSource = await serialize(content);
 
@@ -26,7 +20,7 @@ export async function getContentBySlug(slug, directory, type) {
     slug: realSlug,
     frontmatter: {
       ...data,
-      date,
+      date: articleDate.toUTCString(),
       type,
     },
     content,
