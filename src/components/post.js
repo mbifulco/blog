@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import NextLink from 'next/link';
-import dayjs from 'dayjs';
 
 import { MDXRemote } from 'next-mdx-remote';
 
@@ -14,8 +13,9 @@ import { getMentions } from '../utils/webmentions';
 import MentionsSummary from './mentionsSummary';
 import TagsSummary from './tagsSummary';
 import * as style from '../styles/post.module.scss';
-import { Image } from '.';
+import { Image, PublishDate } from '.';
 import frontmatterType from '../types/frontmatter';
+import formatDate from '../utils/format-date';
 
 const Post = ({ summary, post }) => {
   const { frontmatter } = post;
@@ -46,8 +46,6 @@ const Post = ({ summary, post }) => {
     />
   );
 
-  const formattedDate = dayjs(new Date(date)).format('MMMM DD, YYYY');
-
   return (
     <article className={style.post}>
       <div className={style.postContent}>
@@ -68,7 +66,7 @@ const Post = ({ summary, post }) => {
             )}
           </Heading>
           <Text fontSize="1rem" color={dateColors[colorMode]}>
-            {formattedDate} {author && <>— Written by {author}</>}
+            <PublishDate date={date} /> {author && <>— Written by {author}</>}
           </Text>
           <TagsSummary tags={tags} />
           {coverImageContainer}

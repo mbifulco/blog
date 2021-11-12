@@ -1,7 +1,7 @@
 import { Box, Heading, Stack, Text, useTheme } from '@chakra-ui/react';
 import { MDXRemote } from 'next-mdx-remote';
-import dayjs from 'dayjs';
 
+import { PublishDate } from '..';
 import TagsSummary from '../tagsSummary';
 
 const ExternalWorkItem = ({ article, border = false }) => {
@@ -11,10 +11,9 @@ const ExternalWorkItem = ({ article, border = false }) => {
     frontmatter: { date, url, title, tags },
   } = article;
 
-  const formattedDate = dayjs(new Date(date)).format('MMMM DD, YYYY');
   return (
     <Box
-      key={url}
+      as="article"
       boxShadow={
         !!border
           ? '0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)'
@@ -30,7 +29,7 @@ const ExternalWorkItem = ({ article, border = false }) => {
             {title}
           </Heading>
           <Text marginTop={0} color={theme.colors.pink[500]}>
-            {formattedDate}
+            <PublishDate date={date} />
           </Text>
           <TagsSummary tags={tags} />
           <MDXRemote {...article.source} />

@@ -10,7 +10,7 @@ import { getAllPosts } from '../lib/blog';
 import { generateRSSFeed } from '../utils/rss';
 
 export async function getStaticProps() {
-  const posts = getAllPosts();
+  const posts = await getAllPosts();
 
   generateRSSFeed(posts);
 

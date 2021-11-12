@@ -13,7 +13,7 @@ import {
   useTheme,
 } from '@chakra-ui/react';
 
-import dayjs from 'dayjs';
+import formatDate from '../utils/format-date';
 
 import * as classes from '../styles/mentions.module.scss';
 
@@ -59,9 +59,7 @@ const MentionsSummary = ({ mentions }) => {
           {someoneMentioned.map((mention, idx) => {
             const { author, published: publishedDate, url } = mention.data;
 
-            const formattedPublishDtate = dayjs(new Date(publishedDate)).format(
-              'MMMM DD, YYYY'
-            );
+            const formattedPublishDtate = formatDate(new Date(publishedDate));
 
             return (
               <div

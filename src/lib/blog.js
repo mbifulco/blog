@@ -1,45 +1,32 @@
 // Install gray-matter and date-fns
-import matter from 'gray-matter';
-import { parse, compareDesc } from 'date-fns';
-import fs from 'fs';
 import { join } from 'path';
+
+import {
+  getAllContentFromDirectory,
+  getContentBySlug,
+} from './contentTypeLoader';
 
 // Add markdown files in `src/content/blog`
 const postsDirectory = join(process.cwd(), 'src', 'data', 'posts');
+const POST_CONTENT_TYPE = 'post';
 
-export function getPostBySlug(slug) {
-  const realSlug = slug.replace(/\.mdx$/, '');
-  const fullPath = join(postsDirectory, `${realSlug}.mdx`);
-  const fileContents = fs.readFileSync(fullPath, 'utf8');
-  const { data, content } = matter(fileContents);
+export const getPostBySlug = async (slug) => {
+  const post = await getContentBySlug(slug, postsDirectory, POST_CONTENT_TYPE);
 
-  // store date in frontmatter as milliseconds since epoch
-  const date = parse(data.date, 'MM-dd-yyyy', new Date()).getTime();
+  return post;
+};
 
-  return {
-    slug: realSlug,
-    frontmatter: {
-      ...data,
-      date,
-    },
-    content,
-  };
-}
+export const getAllPosts = async () => {
+  const allPosts = await getAllContentFromDirectory(
+    postsDirectory,
+    POST_CONTENT_TYPE
+  );
 
-export function getAllPosts() {
-  const slugs = fs.readdirSync(postsDirectory);
-  const posts = slugs.map((slug) => getPostBySlug(slug));
+  return allPosts;
+};
 
-  // sort posts by date,  newest first
-  posts.sort((a, b) => compareDesc(a.frontmatter.date, b.frontmatter.date));
+export const getAllPostsByTag = async (tag) => {
+  const posts = await getAllPosts();
 
-  /// filter out drafts for production
-  if (process.env.NODE_ENV === 'production') {
-    return posts.filter((post) => post.frontmatter?.published !== false);
-  }
-
-  return posts;
-}
-
-export const getAllPostsByTag = (tag) =>
-  getAllPosts().filter((post) => post?.frontmatter?.tags?.includes(tag)) || [];
+  return posts.filter((post) => post?.frontmatter?.tags?.includes(tag)) || [];
+};

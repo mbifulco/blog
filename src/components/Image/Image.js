@@ -31,6 +31,7 @@ function Image(props) {
         alt={alt || caption}
         // eslint-disable-next-line react/jsx-props-no-spreading
         {...rest}
+        loading="lazy"
       />
       <figcaption>{caption}</figcaption>
     </figure>

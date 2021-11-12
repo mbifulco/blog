@@ -39,11 +39,7 @@ const WorkPage = ({ articles }) => {
         </Box>
         <Stack>
           {articles.map((article) => (
-            <ExternalWorkItem
-              article={article}
-              border
-              key={article.frontmatter.url}
-            />
+            <ExternalWorkItem article={article} border key={article.slug} />
           ))}
         </Stack>
       </Stack>
