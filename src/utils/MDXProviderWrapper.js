@@ -94,7 +94,7 @@ const Pre = (props) => {
         }
       >
         {({ className, style, tokens, getLineProps, getTokenProps }) => (
-          <pre className={className} style={style}>
+          <pre className={className} style={{ ...style, overflowX: 'scroll' }}>
             {tokens.map((line, i) => {
               // TODO: why is this needed though?
               if (i === tokens.length - 1) return null;
