@@ -14,13 +14,13 @@ export function getPostBySlug(slug) {
 
   const { data, content } = matter(fileContents);
 
-  const postDate = new Date(data.date);
+  const articleDate = new Date(data.date);
 
   return {
     slug: realSlug,
     frontmatter: {
       ...data,
-      date: postDate.toUTCString(),
+      date: articleDate.toUTCString(),
     },
     content,
   };
