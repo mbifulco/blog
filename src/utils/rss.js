@@ -1,6 +1,5 @@
 import { rules } from 'eslint-config-prettier';
 import { Feed } from 'feed';
-import dayjs from 'dayjs';
 import fs from 'fs';
 
 import config from '../config';

@@ -8,8 +8,7 @@ const frontmatterType = PropTypes.shape({
   title: PropTypes.string,
   tags: PropTypes.arrayOf(PropTypes.string),
   published: PropTypes.bool,
-  date: PropTypes.number,
+  date: PropTypes.string,
 });
-
 
 export default frontmatterType;

@@ -1,6 +1,6 @@
 // Install gray-matter and date-fns
 import matter from 'gray-matter';
-import { parse, compareDesc } from 'date-fns';
+import { compareDesc, format, parse } from 'date-fns';
 import fs from 'fs';
 import { join } from 'path';
 
@@ -11,16 +11,22 @@ export function getPostBySlug(slug) {
   const realSlug = slug.replace(/\.mdx$/, '');
   const fullPath = join(postsDirectory, `${realSlug}.mdx`);
   const fileContents = fs.readFileSync(fullPath, 'utf8');
+  const stats = fs.statSync(fullPath);
+  const { mtime } = stats;
+
   const { data, content } = matter(fileContents);
 
   // store date in frontmatter as milliseconds since epoch
-  const date = parse(data.date, 'MM-dd-yyyy', new Date()).getTime();
+  const lastModified = new Date(mtime);
+  const postDate = new Date(data.date);
+
+  let date = compareDesc(lastModified, postDate) < 0 ? lastModified : postDate;
 
   return {
     slug: realSlug,
     frontmatter: {
       ...data,
-      date,
+      date: date.toUTCString(),
     },
     content,
   };
@@ -31,7 +37,9 @@ export function getAllPosts() {
   const posts = slugs.map((slug) => getPostBySlug(slug));
 
   // sort posts by date,  newest first
-  posts.sort((a, b) => compareDesc(a.frontmatter.date, b.frontmatter.date));
+  posts.sort((a, b) =>
+    compareDesc(new Date(a.frontmatter.date), new Date(b.frontmatter.date))
+  );
 
   /// filter out drafts for production
   if (process.env.NODE_ENV === 'production') {
