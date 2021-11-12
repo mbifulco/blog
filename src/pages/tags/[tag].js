@@ -17,7 +17,7 @@ export async function getStaticProps({ params }) {
   return {
     props: {
       tag,
-      posts: getAllPostsByTag(tag),
+      posts: await getAllPostsByTag(tag),
       articles,
     },
   };

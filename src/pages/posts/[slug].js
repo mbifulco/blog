@@ -5,7 +5,7 @@ import { getPostBySlug, getAllPosts } from '../../lib/blog';
 import MdxPostTemplate from '../../templates/MdxPost';
 
 export async function getStaticProps({ params }) {
-  const post = getPostBySlug(params.slug);
+  const post = await getPostBySlug(params.slug);
 
   const mdxSource = await serialize(post.content);
 
@@ -22,11 +22,10 @@ export async function getStaticPaths() {
 
   return {
     paths: posts.map((post) => ({
-        params: {
-          slug: post.slug,
-        },
-      })
-    ),
+      params: {
+        slug: post.slug,
+      },
+    })),
     fallback: false,
   };
 }

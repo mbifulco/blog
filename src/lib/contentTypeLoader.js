@@ -1,6 +1,6 @@
 // Install gray-matter and date-fns
 import matter from 'gray-matter';
-import { parse, compareDesc } from 'date-fns';
+import { compareDesc } from 'date-fns';
 import fs from 'fs';
 import { join } from 'path';
 import { serialize } from 'next-mdx-remote/serialize';
@@ -36,7 +36,7 @@ export async function getAllContentFromDirectory(directory, type) {
 
   // sort posts by date,  newest first
   articles.sort((a, b) =>
-    compareDesc(a?.frontmatter?.date, b?.frontmatter?.date)
+    compareDesc(new Date(a?.frontmatter?.date), new Date(b?.frontmatter?.date))
   );
 
   /// filter out drafts for production
