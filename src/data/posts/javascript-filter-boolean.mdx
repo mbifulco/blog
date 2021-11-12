@@ -1,0 +1,162 @@
+---
+title: 'JavaScript Tips: Using Array.filter(Boolean)'
+excerpt: "If you come across array.filter(Boolean) in JavaScript code, never fear! It's a handy bit of functional programming that cleans up arrays with null and undefined values in them."
+date: 11-12-2021
+type: post
+coverImagePublicId: posts/javascript-filter-boolean/cover
+path: javascript-filter-boolean
+tags: [dev, javascript, react, functional-programming]
+published: true
+---
+
+## What does .filter(Boolean) do on Arrays?
+
+This is a pattern I've been coming across quite a bit lately in JavaScript code, and can be extremely helpful once you understand what's going on. In short, it's a bit of [functional programming](https://mikebifulco.com/tags/functional-programming) which is used to remove `null` and `undefined` values from an array.
+
+```js
+const values = [1, 2, 3, 4, null, 5, 6, 7, undefined];
+
+console.log(values.length);
+// Output: 9
+
+console.log(values.filter(Boolean).length);
+// Output: 7
+
+// note that this does not mutate the value original array
+console.log(values.length);
+// Output: 9
+```
+
+## How does the Boolean part of .filter(Boolean) work?
+
+We're using a function built into arrays in JavaScript, called [Array.prototype.filter](https://developer.mozilla.org/en-US/docs/web/javascript/reference/global_objects/array/filter), which _creates a new array_ containing all elements that pass the check within the function it takes as an argument. In this case, we're using the JavaScript `Boolean` object wrapper's constructor as that testing function.
+
+`Boolean` is a helper class in JavaScript which can be used to test whether a given value or expression evaluates to `true` or `false`. There's a subtle, but **really important point** here - `Boolean()` follows the JavaScript rules of _truthiness_. That means that the output `Boolean()` might not always be what you imagine.
+
+### Examples of Boolean evaluating for _truthiness_
+
+<!-- prettier-ignore-start -->
+```js
+// straightforward boolean
+Boolean(true)   // true
+Boolean(false)  // false
+
+// null/undefined 
+Boolean(null)       // false
+Boolean(undefined) // false
+
+// hmm...
+Boolean(NaN)  // false
+Boolean(0)    // false
+Boolean(-0)   // false
+Boolean(-1)   // true
+
+// empty strings vs blank strings
+Boolean("")   // false
+Boolean(" ")  // true
+
+// empty objects
+Boolean([]) // true
+Boolean({}) // true
+
+// Date is just an object
+Boolean(new Date()) // true
+
+// oh god
+Boolean("false")                     // true
+Boolean("Or any string, really")     // true
+Boolean('The blog of Mike Bifulco')  // true
+```
+<!-- prettier-ignore-end -->
+
+## Warning: Be careful with the truth(y)
+
+So - `someArray.filter(Boolean)` is really helpful for removing `null` and `undefined` values, but it's important to bear in mind that there are quite a few confusing cases above... this trick will remove items with a value of `0` from your array! That can be a significant difference for interfaces where displaying a `0` is perfectly fine.
+
+I also want to call some attention to cases that evaluate to `-1` - for _many_ programmers, `-1` is synonymous with `false`, because that is _absolutely_ the case in many langauges... but not here.
+
+## Array.filter(Boolean) For React Developers
+
+I tend to come across this pattern being used fairly often for iterating over collections in React, to clean up an input array which may have had results removed from it upstream for some reason. This protects you from scary errors like `Can't read property foo of undefined` or `Can't read property bar of null`:
+
+```jsx
+
+const people = [
+  {
+    name: 'Mike Bifulco',
+    email: 'hello@mikebifulco.com',
+  },
+  null,
+  null,
+  null,
+  {
+    name: "Jimi Hendrix",
+    email: 'jimi@heyjimihimi@guitarsolo',
+  }
+]
+
+// display a list of people
+const PeopleList = ({people}) => {
+  return (
+    <ul>
+      {people.map(person) => {
+        // this will crash if there's a null/undefined in the list!
+        return (
+          <li>{person.name}: {person.email}</li>
+        );
+      }}
+    </ul>
+  );
+}
+
+// a safer implementation
+const SaferPeopleList = ({people}) => {
+  return (
+    <ul>
+      {people
+        .filter(Boolean) // this _one weird trick!_
+        .map(person) => {
+          return (
+            <li>{person.name}: {person.email}</li>
+          );
+        }
+      }
+    </ul>
+  );
+}
+```
+
+## Functional Programming reminder
+
+Like I mentioned above, this is a handy bit of functional programming -- as is the case with nearly all clever bits of functional programming, it's important to remember that we're not _mutating_ any arrays here - we are creating new ones. Let's show what that means in a quick example:
+
+```js
+const myPets = [
+  'Leo',
+  'Hamilton',
+  null,
+  'Jet',
+  'Pepper',
+  'Otis',
+  undefined,
+  'Iona',
+];
+
+console.log(myPets.length); // 8
+
+myPets
+  .filter(Boolean) // filter null and undefined
+  .forEach((pet) => {
+    console.log(pet); // prints all pet names once, no null or undefined present
+  });
+
+console.log(myPets.length); // still 8! filter _does not mutate the original array_
+```
+
+## Wrapping up
+
+Hopefully this has helped to demystify this little code pattern a bit. What do you think? Is this something you'll use in your projects? Are there dangers/tricks/cases I didn't consider here?
+
+Tell me all about it on twitter <a href="https://twitter.com/irreverentmike">@irreverentmike</a>. Thanks for reading!
+
+\_note: Cover photo for this article is from <a href="https://unsplash.com/@pawel_czerwinski?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Pawel Czerwinski</a> on <a href="https://unsplash.com/s/photos/array?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
