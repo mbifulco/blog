@@ -50,7 +50,7 @@ WebmentionMetadata.propTypes = {
   coverImageUrl: PropTypes.string,
   summary: PropTypes.string,
   author: PropTypes.string,
-  publishedAt: PropTypes.number,
+  publishedAt: PropTypes.string,
   title: PropTypes.string,
 };
 
