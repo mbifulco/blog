@@ -26,11 +26,6 @@ const Post = ({ summary, post }) => {
   const theme = useTheme();
   const { colorMode } = useColorMode();
 
-  const headerColors = {
-    dark: theme.colors.gray[200],
-    light: theme.colors.gray[900],
-  };
-
   const dateColors = {
     dark: theme.colors.gray[400],
     light: '#555555',
@@ -38,7 +33,7 @@ const Post = ({ summary, post }) => {
 
   const postPath = `/posts/${path}`;
 
-  const { data: mentions, error } = useSWR(postPath, getMentions);
+  const { data: mentions /* error */ } = useSWR(postPath, getMentions);
 
   // TODO test cover image support
 
