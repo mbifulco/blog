@@ -4,7 +4,7 @@ const FORMAT_STRING = 'MM-dd-yyyy';
 
 export const formatDate = (date, format = FORMAT_STRING) => {
   let workingDate = new Date(date);
-  debugger;
+
   if (!isValid(workingDate)) {
     console.error('invalid date', date);
     return null;
