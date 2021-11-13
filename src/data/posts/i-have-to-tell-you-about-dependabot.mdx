@@ -1,24 +1,28 @@
 ---
-title: "I have to tell you about Dependabot 🤖"
+title: 'I have to tell you about Dependabot 🤖'
 type: post
-date: 05-31-2019
+firstPublished: 05-31-2019
+updated: 11-13-2021
+date: 11-13-2021
 excerpt: "Dependabot is an automation service that will automatically create PRs to keep your projects' dependencies up to date, and it is fucking wonderful."
 published: true
 path: i-have-to-tell-you-about-dependabot
 tags: [productivity, tools, npm, javascript]
 ---
 
-[Dependabot](https://dependabot.com) is an automation service that will automatically create PRs to keep your projects' dependencies up to date, and it is fucking wonderful.
+**Update (2021)** Dependabot has been Acquired by GitHub, and many of the links from this post stopped working once they took down the original site (dependabot dot com). I've updated URLs here to point to more relevant links within GitHub's docs.
+
+[Dependabot](https://github.com/dependabot) is an automation service that will automatically create PRs to keep your projects' dependencies up to date, and it is fucking wonderful.
 
 <Image
   publicId="posts/i-have-to-tell-you-about-dependabot/dependabot-settings"
-  alt="Screenshot of the settings interface for a project on Dependabot.com"
+  alt="Screenshot of the settings interface for a project on the former Dependabot.com"
   caption="Setup for Dependabot is flexible, quick, and straightforward."
 />
 
-In just a few, sweet, wonderful minutes, you can install and configure it to automatically keep an eye on your project dependencies, and set a daily or weekly schedule to submit updates and changes.  Automation at its finest - dependabot is like having a super mindful teammate who keeps an eye on npm (or pip or rubygems or one of [many other languages](https://dependabot.com/#languages)) - you'll automatically get great, well-formed PRs for each dependency version bump, which you can test locally, or have sent up to your CI toolchain of choice.  
+In just a few, sweet, wonderful minutes, you can install and configure it to automatically keep an eye on your project dependencies, and set a daily or weekly schedule to submit updates and changes. Automation at its finest - dependabot is like having a super mindful teammate who keeps an eye on npm (or pip or rubygems or one of [many other languages](https://docs.github.com/en/code-security/supply-chain-security/keeping-your-dependencies-updated-automatically/about-dependabot-version-updates#supported-repositories-and-ecosystems)) - you'll automatically get great, well-formed PRs for each dependency version bump, which you can test locally, or have sent up to your CI toolchain of choice.
 
-After you run through the setup process, dependabot will monitor your repo and submit PRs to update individual dependencies on a daily or weekly rhythm (your choice!).  If the PR contains an important security update, it will be assigned a label of Security, too.
+After you run through the setup process, dependabot will monitor your repo and submit PRs to update individual dependencies on a daily or weekly rhythm (your choice!). If the PR contains an important security update, it will be assigned a label of Security, too.
 
 <Image
   publicId="posts/i-have-to-tell-you-about-dependabot/dependabot-pr"
@@ -26,7 +30,7 @@ After you run through the setup process, dependabot will monitor your repo and s
   caption="Automatically created PRs are simple and to the point."
 />
 
-Honestly, for me, it's like adding a member to my team.  I love automation, and I love making my life simpler.  Until now, for all of my projects, myself or another teammate would regularly run through all the dependencies in a given repo, and manually update them one at a time, testing and pushing them to GitHub to be run through CI and then eventually merged by the team.  The honest truth is that this process can take quite a while, and can be forgotten, and isn't mindful of important security updates at all.  That's all over now.
+Honestly, for me, it's like adding a member to my team. I love automation, and I love making my life simpler. Until now, for all of my projects, myself or another teammate would regularly run through all the dependencies in a given repo, and manually update them one at a time, testing and pushing them to GitHub to be run through CI and then eventually merged by the team. The honest truth is that this process can take quite a while, and can be forgotten, and isn't mindful of important security updates at all. That's all over now.
 
 <Image
   publicId="posts/i-have-to-tell-you-about-dependabot/merge"
@@ -36,9 +40,9 @@ Honestly, for me, it's like adding a member to my team.  I love automation, and 
 
 ## What else?
 
-There are a _ton_ of other features available to you the moment you install dependabot.  It responds to a wide variety of commands by way of GitHub comment.  In the screenshot above, I've approved a PR and asked dependabot to merge it as soon as CI has passed.  Now I don't have to babysit the repo in order to merge updates! Sweet!
+There are a _ton_ of other features available to you the moment you install dependabot. It responds to a wide variety of commands by way of GitHub comment. In the screenshot above, I've approved a PR and asked dependabot to merge it as soon as CI has passed. Now I don't have to babysit the repo in order to merge updates! Sweet!
 
-If your repo contains multiple languages, Dependabot can handle that.  If you've got a complex monorepo with multiple files representing your dependencies (for example, a node project set up with Lerna), dependabot can monitor each dependency file individually, with different rules for each.
+If your repo contains multiple languages, Dependabot can handle that. If you've got a complex monorepo with multiple files representing your dependencies (for example, a node project set up with Lerna), dependabot can monitor each dependency file individually, with different rules for each.
 
 <Image
   publicId="posts/i-have-to-tell-you-about-dependabot/github"
@@ -46,8 +50,8 @@ If your repo contains multiple languages, Dependabot can handle that.  If you've
   caption="Dependabot was acquired by GitHub"
 />
 
-This was the final kicker for me.  Dependabot was [just acquired by GitHub](https://dependabot.com/blog/hello-github/), and is now available completely free for use.  That's incredible!  There's no reason for you not to give it a shot.  Go check it out now, post haste!
+This was the final kicker for me. Dependabot was [just acquired by GitHub](https://github.blog/2019-07-25-one-million-dependabot-pull-requests-merged/), and is now available completely free for use. That's incredible! There's no reason for you not to give it a shot. Go check it out now, post haste!
 
-Go install [Dependabot](https://dependabot.com/)!
+Go install [Dependabot](https://docs.github.com/en/code-security/supply-chain-security/keeping-your-dependencies-updated-automatically/about-dependabot-version-updates)!
 
-_Note: the cover photo for this article comes from one of my favorite photographers, [Alex Knight](https://unsplash.com/@agkdesign?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText), and was made available un [Unsplash](https://unsplash.com/search/photos/robot?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText).  Thank you Alex for your work!  Go support him on [Patreon](https://patreon.com/agk42), and give him a follow on [Twitter](https://twitter.com/agkdesign)._
+_Note: the cover photo for this article comes from one of my favorite photographers, [Alex Knight](https://unsplash.com/@agkdesign?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText), and was made available un [Unsplash](https://unsplash.com/search/photos/robot?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText). Thank you Alex for your work! Go support him on [Patreon](https://patreon.com/agk42), and give him a follow on [Twitter](https://twitter.com/agkdesign)._
