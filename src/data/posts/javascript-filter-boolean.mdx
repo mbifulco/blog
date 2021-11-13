@@ -33,6 +33,32 @@ We're using a function built into arrays in JavaScript, called [Array.prototype.
 
 `Boolean` is a helper class in JavaScript which can be used to test whether a given value or expression evaluates to `true` or `false`. There's a subtle, but **really important point** here - `Boolean()` follows the JavaScript rules of _truthiness_. That means that the output `Boolean()` might not always be what you imagine.
 
+In this context, passing `Boolean` to `.filter` is effectively shorthand for doing this:
+
+```js
+array.filter((item) => {
+  return Boolean(item);
+});
+```
+
+which is also approximately the same as
+
+```js
+array.filter((item) => {
+  return !!item; // evaluate whether item is truthy
+});
+```
+
+or, simplified
+
+<!-- prettier-ignore-start -->
+```js
+array.filter(item => !!item)
+```
+<!-- prettier-ignore-end -->
+
+I suspect that you may have seen at least one of these variations before. In the end, `array.filter(Boolean)` is just shorthand for any of the other options above. It's the kind of thing that can cause even seasoned programmers to recoil in horror the first time they see it. Near as I can tell, though, it's a perfectly fine replacement.
+
 ### Examples of Boolean evaluating for _truthiness_
 
 <!-- prettier-ignore-start -->
@@ -41,7 +67,7 @@ We're using a function built into arrays in JavaScript, called [Array.prototype.
 Boolean(true)   // true
 Boolean(false)  // false
 
-// null/undefined 
+// null/undefined
 Boolean(null)       // false
 Boolean(undefined) // false
 
@@ -66,14 +92,17 @@ Boolean(new Date()) // true
 Boolean("false")                     // true
 Boolean("Or any string, really")     // true
 Boolean('The blog of Mike Bifulco')  // true
-```
+````
+
 <!-- prettier-ignore-end -->
 
 ## Warning: Be careful with the truth(y)
 
 So - `someArray.filter(Boolean)` is really helpful for removing `null` and `undefined` values, but it's important to bear in mind that there are quite a few confusing cases above... this trick will remove items with a value of `0` from your array! That can be a significant difference for interfaces where displaying a `0` is perfectly fine.
 
-I also want to call some attention to cases that evaluate to `-1` - for _many_ programmers, `-1` is synonymous with `false`, because that is _absolutely_ the case in many langauges... but not here.
+**EDIT: ** Hi, Mike from The Future™️ here - I've edited this paragraph to reflect the _actual_ truth... I had confused `-1` with `false` from my days as a BASIC programmer, where we'd sometimes create infinite loops with `while (-1)`... but even that means "while `true`"!
+
+I also want to call some attention to cases that evaluate to `-1`. <s>for _many_ programmers, `-1` is synonymous with `false`, because that is _absolutely_ the case in many langauges... but not here.</s> The `-1` case can also be unintuitive if you're not expecting it, but true to form, in JavaScript, `-1` is a truthy value!
 
 ## Array.filter(Boolean) For React Developers
 
