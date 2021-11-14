@@ -11,11 +11,12 @@ export const getStaticPageUrls = () => {
     .readdirSync(staticPagesDirectory)
     .filter((staticPage) => {
       return ![
-        '[slug].js',
         '_app.js',
         '_document.js',
-        '_error.js',
+        '[slug].js',
+        'index.js',
         'sitemap.xml.js',
+        '_error.js',
       ].includes(staticPage);
     })
     .map((staticPagePath) => {
