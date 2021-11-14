@@ -18,7 +18,7 @@ export const getServerSideProps = async ({ res }) => {
   const staticPageUrls = getStaticPageUrls();
 
   const allPostUrls = (await getAllPosts()).map(
-    (post) => `${siteUrl}/${post.frontmatter.path}`
+    (post) => `${siteUrl}/posts/${post.frontmatter.path}`
   );
 
   const allTagUrls = Array.from((await getAllTags()).allTags).map(
