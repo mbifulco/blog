@@ -1,0 +1,108 @@
+---
+title: 'JavaScript Tips: Nullish Coalescing (??)'
+excerpt: "Let's take a look at the Nullish Coalescing operator (??) in JavaScript, which returns the right operand if the left is null or undefined."
+date: 11-19-2021
+type: post
+coverImagePublicId: posts/nullish-coalescing-javascript/cover.webp
+path: nullish-coalescing-javascript
+tags: [dev, javascript, react]
+published: false
+---
+
+## What does the Nullish Coalescing (`??`) operator do in JavaScript?
+
+The Nullish Coalescing operator takes a left-hand and right-hand operand, returning the right value _if_ the left is `null` or `undefined`. Otherwise, it returns the left value.
+
+<!-- prettier-ignore-start -->
+```js
+let x;
+
+x = 1 ?? 100;         // 1
+x = null ?? 100;      // 100
+x = undefined ?? 100; // 100
+
+x = 'Peas' ?? 'Carrots';    // Peas
+x = null ?? 'Carrots';      // Carrots
+x = undefined ?? 'Carrots'; // Carrots
+```
+<!-- prettier-ignore-end -->
+
+Note that unlike [using Boolean on array.filter()](/posts/javascript-filter-boolean), there _aren't_ special cases to consider here for _truthy_ or _falsy_ values in Javascript. Nullish Coalescing _only_ returns the right value for `Null` and `undefined`, and not for `false` and some other cases, like:
+
+```js
+let y;
+
+y = -1 ?? 2; // -1
+y = false ?? 2; // false
+
+y = true ?? 2; // true
+y = NaN ?? 2; // NaN
+y = Infinity ?? 2; // Infinity
+y = -Infinity ?? 2; // -Infinity
+
+y = new Date() ?? 'soon'; // [the date object created by new Date()]
+```
+
+## Use Nullish Coalescing in React Components
+
+This can be used to simplify what has become a fairly common pattern in React components - checking whether a value is present before rendering it, and providing a fallback if not:
+
+<!-- prettier-ignore-start -->
+```jsx
+// use a ternary operator
+const LetterIntro = ({name}) => {
+  return (
+    <div>
+      Hi {name ? name : 'there'},
+    </div>
+  )
+};
+
+const BetterLetterIntro = ({name}) => {
+  return (
+    <div>
+      Hi {name ?? 'there'}
+    </div>
+  )
+}
+```
+<!-- prettier-ignore-end -->
+
+Both of these are _valid_ syntax, but you might argue that the latter is easier to read, so long as you understand what the `??` operator is doing.
+
+## Make sure to check compatibility on your project
+
+Nullish coalescing is quickly becoming available for use in browsers and JavaScript / Node / Deno, but you should make sure that the project you're working on is using a compatible version of the language before you start to add `??` to all your code.
+
+## Compatibility with Node and Deno
+
+To ensure compatibility with Node, your project must be using **Node version 14.0.0** or later.
+
+To ensure compatibility with Deno, you rproject must be using **Deno version 1.0.0** or later.
+
+## Compatibility with modern browsers
+
+Another thing to condier - as of the writing of this article, Nullish Coalescing isn't available in every web browser quite yet - Internet Explorer and Opera for Android are the two remaining holdouts. I'll leave it to you to decide whether or not that's a showstopper for you - and I don't know if I'd expect to see support in IE _ever_ given its [end-of-life](https://docs.microsoft.com/en-us/lifecycle/announcements/internet-explorer-11-end-of-support) announcement in mid 2021.
+
+<picture>
+  <source
+    type="image/webp"
+    srcSet="https://caniuse.bitsofco.de/static/v1/mdn-javascript__operators__nullish_coalescing-1636908973156.webp"
+  />
+  <source
+    type="image/png"
+    srcSet="https://caniuse.bitsofco.de/static/v1/mdn-javascript__operators__nullish_coalescing-1636908973156.png"
+  />
+  <img
+    src="https://caniuse.bitsofco.de/static/v1/mdn-javascript__operators__nullish_coalescing-1636908973156.jpg"
+    alt="Data on support for the mdn-javascript__operators__nullish_coalescing feature across the major browsers from caniuse.com"
+  />
+</picture>
+
+## Additional Reading
+
+If you found this useful, you might also want to check out these other articles:
+
+- [Using array.filter(Boolean)](/posts/javascript-filter-boolean)
+- A primer on [deconstructructing objects in JavaScript](/posts/deconfusing-javascript-destructuring-syntax)
+- [Understanding import syntax in Node](/posts/picking-apart-javascript-import)
