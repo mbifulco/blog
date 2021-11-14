@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://mikebifulco.com
+
+# Sitemaps
+Sitemap: https://mikebifulco.com/sitemap.xml

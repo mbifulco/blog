@@ -6,8 +6,7 @@
   "license": "MIT",
   "scripts": {
     "analyze": "ANALYZE=true next build",
-    "build": "next build && next-sitemap",
-    "postbuild": "next-sitemap",
+    "build": "next build",
     "dev": "NODE_OPTIONS='--inspect' next dev",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
     "start": "next start",
@@ -53,7 +52,6 @@
     "husky": ">=7.0.4",
     "lint-staged": "^11.2.6",
     "netlify-plugin-cache-nextjs": "^1.6.1",
-    "next-sitemap": "^1.6.203",
     "prettier": "^2.4.1"
   },
   "repository": {
