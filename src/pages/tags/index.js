@@ -4,12 +4,12 @@ import PropTypes from 'prop-types';
 // Components
 import Link from 'next/link';
 
-import Tag from '../components/tag';
-import { DefaultLayout as Layout } from '../components/Layouts';
+import Tag from '../../components/tag';
+import { DefaultLayout as Layout } from '../../components/Layouts';
 
-import * as classes from '../styles/post.module.scss';
-import * as tagsClasses from '../styles/tagsPage.module.scss';
-import { SEO } from '../components';
+import * as classes from '../../styles/post.module.scss';
+import * as tagsClasses from '../../styles/tagsPage.module.scss';
+import { SEO } from '../../components';
 
 const TagsPage = ({ tags }) => (
   <Layout>

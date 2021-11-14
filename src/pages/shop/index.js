@@ -1,11 +1,11 @@
 import React from 'react';
-import Image from 'next/image'
+import Image from 'next/image';
 
-import { DefaultLayout as Layout } from '../components/Layouts';
-import SEO from '../components/seo';
+import { DefaultLayout as Layout } from '../../components/Layouts';
+import SEO from '../../components/seo';
 
-import * as classes from '../styles/shop.module.scss';
-import SoldOut from '../components/soldOut';
+import * as classes from '../../styles/shop.module.scss';
+import SoldOut from '../../components/soldOut';
 
 const Shop = () => (
   <Layout>
@@ -23,7 +23,8 @@ const Shop = () => (
 
         {/* eslint-disable max-len */}
         <Image
-          src="https://res.cloudinary.com/mikebifulco-com/image/upload/v1632750265/egg-em_rexzgt.png"
+          src="https://res.cloudinary.com/mikebifulco-com/image/upload/v1632750265/egg-em.png"
+          layout="fill"
           alt="egg sticker"
         />
         {/* eslint-enable max-len */}

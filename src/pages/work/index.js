@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 
 import { Box, Heading, Stack, Text, useTheme } from '@chakra-ui/react';
 
-import { DefaultLayout } from '../components/Layouts';
-import { ExternalWorkItem, SEO } from '../components';
+import { DefaultLayout } from '../../components/Layouts';
+import { ExternalWorkItem, SEO } from '../../components';
 
-import { getAllExternalReferences } from '../lib/external-references';
+import { getAllExternalReferences } from '../../lib/external-references';
 
 export async function getStaticProps() {
   const articles = await getAllExternalReferences();
