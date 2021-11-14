@@ -88,8 +88,9 @@ const SEO = ({
         content={image ? `summary_large_image` : `summary`}
       />
       <meta name="twitter:title" content={metaTitle} />
-      <meta name="twitter:creator" content={author?.name || siteAuthor?.name} />
+      <meta name="twitter:creator" content="@irreverentmike" />
       <meta name="twitter:description" content={metaDescription} />
+      <meta name="twitter:site" content="@irreverentmike" />
 
       <meta
         name="og:title"
