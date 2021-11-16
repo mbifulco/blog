@@ -37,7 +37,7 @@ const WorkPage = ({ articles }) => {
             {"you'd"} like to know more!
           </Text>
         </Box>
-        <Stack>
+        <Stack spacing="3rem">
           {articles.map((article) => (
             <ExternalWorkItem article={article} border key={article.slug} />
           ))}
