@@ -1,8 +1,7 @@
 import React from 'react';
-import Image from 'next/image'
 
+import { Image, SEO } from '../components';
 import { DefaultLayout as Layout } from '../components/Layouts';
-import SEO from '../components/seo';
 
 import * as classes from '../styles/shop.module.scss';
 import SoldOut from '../components/soldOut';
@@ -22,10 +21,7 @@ const Shop = () => (
         </p>
 
         {/* eslint-disable max-len */}
-        <Image
-          src="https://res.cloudinary.com/mikebifulco-com/image/upload/v1632750265/egg-em_rexzgt.png"
-          alt="egg sticker"
-        />
+        <Image publicId="egg-em" alt="egg sticker" />
         {/* eslint-enable max-len */}
       </article>
     </main>
