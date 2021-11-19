@@ -15,7 +15,6 @@ import TagsSummary from './tagsSummary';
 import * as style from '../styles/post.module.scss';
 import { Image, PublishDate } from '.';
 import frontmatterType from '../types/frontmatter';
-import formatDate from '../utils/format-date';
 
 const Post = ({ summary, post }) => {
   const { frontmatter } = post;

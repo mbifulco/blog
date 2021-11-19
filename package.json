@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "@chakra-ui/react": "^1.7.2",
+    "@cloudinary/url-gen": "^1.2.0",
     "@emotion/react": "^11.6.0",
     "@emotion/styled": "^11.6.0",
     "@mdx-js/loader": "^1.6.22",
@@ -41,8 +42,7 @@
     "remark-html": "^15.0.0",
     "sass": "^1.43.4",
     "sharp": "^0.29.3",
-    "swr": "^1.0.1",
-    "use-cloudinary": "^4.1.1"
+    "swr": "^1.0.1"
   },
   "devDependencies": {
     "@netlify/plugin-nextjs": "4.0.0-beta.6",

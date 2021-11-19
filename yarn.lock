@@ -833,6 +833,11 @@
   dependencies:
     "@chakra-ui/utils" "1.9.1"
 
+"@cloudinary/url-gen@^1.2.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@cloudinary/url-gen/-/url-gen-1.2.0.tgz#f1ce33d2b48a007685ca050d22fe32592481ded7"
+  integrity sha512-Nd42dVANphz4o3dGc3qnZSSEvpKWFFRqKsBkUuH/5UZOQrBEyN0/cKVLoM1v8YaAm2Th2gx3yVIbwzMV1bWlCg==
+
 "@corex/deepmerge@^2.6.34":
   version "2.6.34"
   resolved "https://registry.yarnpkg.com/@corex/deepmerge/-/deepmerge-2.6.34.tgz#8dd084f2bcc9cf54f6b1210a1aebd25206de2a84"
@@ -7770,11 +7775,6 @@ use-callback-ref@^1.2.3, use-callback-ref@^1.2.5:
   version "1.2.5"
   resolved "https://registry.yarnpkg.com/use-callback-ref/-/use-callback-ref-1.2.5.tgz#6115ed242cfbaed5915499c0a9842ca2912f38a5"
   integrity sha512-gN3vgMISAgacF7sqsLPByqoePooY3n2emTH59Ur5d/M8eg4WTWu1xp8i8DHjohftIyEx0S08RiYxbffr4j8Peg==
-
-use-cloudinary@^4.1.1:
-  version "4.1.1"
-  resolved "https://registry.yarnpkg.com/use-cloudinary/-/use-cloudinary-4.1.1.tgz#c94b9d737a30cba97a13d196650d58c1bf980f3b"
-  integrity sha512-RziEB/YxIOfAVBjn6/pgglfwfTAdAY2RN9zR2E2K9pUKz9su6BLHak6xrL/tOFhjTf7ZMBKMSNXTFskRF6gXvg==
 
 use-sidecar@^1.0.1, use-sidecar@^1.0.5:
   version "1.0.5"

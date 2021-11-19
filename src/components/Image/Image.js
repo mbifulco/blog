@@ -3,23 +3,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { Image as Img } from '@chakra-ui/react';
-import { useImage } from 'use-cloudinary';
+
+import { getCloudinaryImageUrl } from '../../utils/images';
 
 function Image(props) {
   const { alt, caption, height, publicId, transformations, width, ...rest } =
     props;
-  const { generateImageUrl } = useImage(
-    process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME
-  );
 
-  const cloudinaryConfig = {
-    delivery: {
-      publicId,
-    },
-    transformations,
-  };
-
-  const url = generateImageUrl(cloudinaryConfig);
+  const url = getCloudinaryImageUrl(publicId);
 
   return (
     <figure>
