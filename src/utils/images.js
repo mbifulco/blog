@@ -1,4 +1,14 @@
+import { Cloudinary } from '@cloudinary/url-gen';
+
 export const getCloudinaryImageUrl = (publicId) => {
-  // from https://cloudinary.com/documentation/transformation_reference
-  return `https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/${publicId}`;
+  const cld = new Cloudinary({
+    cloud: {
+      cloudName: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
+    },
+  });
+
+  const myImage = cld.image(publicId);
+  const url = myImage.toURL();
+
+  return url;
 };
