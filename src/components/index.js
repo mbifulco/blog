@@ -7,3 +7,4 @@ export { PublishDate } from './PublishDate';
 export { default as Post } from './post';
 export { default as SEO } from './seo';
 export { SocialLinks } from './SocialLinks';
+export { default as WebmentionMetadata } from './webmentionMetadata';
