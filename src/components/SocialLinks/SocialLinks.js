@@ -6,8 +6,8 @@ import { Link, Stack } from '@chakra-ui/react';
 
 import { GitHubIcon, TwitterIcon, TwitchIcon, RssIcon } from '../icons';
 
-const iconSize = "2.25rem";
-const touchMargin = "0.5rem";
+const iconSize = '2.25rem';
+const touchMargin = '0.5rem';
 
 const SocialLinks = ({
   color,
@@ -47,7 +47,7 @@ const SocialLinks = ({
     </Link>
     <Link
       color={color || '#6441a5'}
-      href="https://twitch.tv/irreverentmike"
+      href="https://www.twitch.tv/irreverentmike"
       target="_blank"
       rel="noreferrer noopener"
       aria-label="@irreverentmike on twitch"
