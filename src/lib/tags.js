@@ -9,11 +9,15 @@ export const getAllTags = async () => {
   const allExternalReferences = await getAllExternalReferences();
 
   allPosts.forEach((post) => {
-    post?.frontmatter?.tags?.forEach((tag) => blogPostTags.add(tag));
+    post?.frontmatter?.tags?.forEach((tag) =>
+      blogPostTags.add(tag.toLocaleLowerCase())
+    );
   });
 
   allExternalReferences.forEach((externalReference) => {
-    externalReference?.frontmatter?.tags.forEach((tag) => articleTags.add(tag));
+    externalReference?.frontmatter?.tags.forEach((tag) =>
+      articleTags.add(tag.toLocaleLowerCase())
+    );
   });
 
   return {
