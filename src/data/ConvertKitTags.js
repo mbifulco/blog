@@ -1,4 +1,4 @@
-export default [
+const tags = [
   {
     name: 'developer',
     id: '1456077',
@@ -40,3 +40,5 @@ export default [
     id: '1456098',
   },
 ];
+
+export default tags;
