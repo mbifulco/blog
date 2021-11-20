@@ -2,17 +2,24 @@
 title: "Do you have your own Gatsby site? Let's brainstorm a dev.to cross-poster"
 type: post
 date: 06-23-2019
-excerpt: "So, like all good things, the idea for this post comes from a tweet..."
+excerpt: 'So, like all good things, the idea for this post comes from a tweet...'
 published: true
 path: gatsby-dev-to-cross-poster-brainstorm
 tags: [productivity, tools, react, dev, gatsby]
 ---
 
+<small>
+
+_Note: I updated some names and links in this post. Dev.to's product became
+**Forem** when it went open source_
+
+</small>
+
 So, like all good things, the idea for this post comes from a tweet:
 
 <Twitter tweetLink="irreverentmike/status/1141169316273897536" />
 
-This is something I've been ruminating on for a bit.  I've even tried to build it - a few times! I keep starting in on the work and getting lost in the millions of directions I could take it. 
+This is something I've been ruminating on for a bit. I've even tried to build it - a few times! I keep starting in on the work and getting lost in the millions of directions I could take it.
 
 Here's what I'd like: When I publish a new post to [my gatsby site](https://mikebifulco.com) (you're on it now!), I'd like for that post to appear on [dev.to](https://dev.to) automatically.
 
@@ -21,9 +28,9 @@ Here's what I'd like: When I publish a new post to [my gatsby site](https://mike
 - recreate my post verbatim, from its original markdown source
 - use the `canonical_url` frontmatter field to make sure I retain SEO goodness on my post
 - happen without my intervention
-- be agnostic of where my posts are coming from.  I use [takeshape.io](https://takeshape.io) as a headless CMS for my site, so my individual posts aren't in source control
+- be agnostic of where my posts are coming from. At the time of writing this article, I use [takeshape.io](https://www.takeshape.io) as a headless CMS for my site, so my individual posts aren't in source control
 - only take posts from my `master` branch, since I use feature branches for draft posts from time to time
-- use the [dev.to API](https://dev.to/api), of course
+- use the [dev.to API](https://developers.forem.com/api) (update: now called the _Forem API_), of course
 
 ## Nice to have:
 
@@ -31,13 +38,12 @@ Here's what I'd like: When I publish a new post to [my gatsby site](https://mike
 
 ## Possible approaches for this:
 
-1. Tap into GitHub's webhooks somehow, and fire off a post here 
+1. Tap into GitHub's webhooks somehow, and fire off a post here
 1. Come from a job kicked off after CI, maybe? I use CircleCI, but would like this feature to be fairly implementation agnostic.
 1. Use a [GitHub App](https://developer.github.com/v3/apps/)?
 1. ...or a [GitHub Action](https://github.com/mbifulco/thepraticaldev-crosspost-action)?
 1. Perhaps just a lamba function deployed to AWS or [Netlify Functions](https://functions.netlify.com/).
 
-So - here's where I ask for your help.  Surely there's a simple approach here I haven't thought of, or maybe it's a matter of collecting a few scenarios and building something based on 80/20.
+So - here's where I ask for your help. Surely there's a simple approach here I haven't thought of, or maybe it's a matter of collecting a few scenarios and building something based on 80/20.
 
-What else am I missing here? I'd love your help.  What use cases would you have for a cross-poster from your gatsby site? How would you implement it? How can we help each other?
-
+What else am I missing here? I'd love your help. What use cases would you have for a cross-poster from your gatsby site? How would you implement it? How can we help each other?
