@@ -2,18 +2,16 @@
 title: "Promise.allSettled() Pt.2 - it's partly settled!"
 type: post
 date: 04-26-2019
-excerpt: "This is a follow-up to my first post on the upcoming Promise.allSettled() function, coming soon to a node application near you. "
+excerpt: 'This is a follow-up to my first post on the upcoming Promise.allSettled() function, coming soon to a node application near you. '
 published: true
 path: promise-all-settled-pt-2-its-partly-settled
 tags: [npm, javascript, dev, react]
 ---
 
+This is a follow-up to my [first post](https://mikebifulco.com/posts/solve-all-your-problems-with-promise-allsettled) on the upcoming `Promise.allSettled()` function, coming soon to a node application near you.
 
-This is a follow-up to my [first post](https://mikebifulco.com/solve-all-your-problems-with-promise-allsettled) on the upcoming `Promise.allSettled()` function, coming soon to a node application near you. 
+Earlier today I was greeted by a [Pull Request](https://github.com/mbifulco/blog/pull/14) on my first post from GitHub user `@j-f1`.
 
-Earlier today I was greeted by a [Pull Request](https://github.com/mbifulco/blog/pull/14) on my first post from GitHub user `@j-f1`.  
-
-  
 <Image
   publicId="posts/promise-all-settled-pt-2-its-partly-settled/pr"
   alt="Screenshot of a github pull request on my last blog post"
@@ -28,14 +26,15 @@ That's right - [core-js](https://github.com/zloirock/core-js).  From their `REA
 
 <Aside>
 
-  It is a polyfill of the JavaScript standard library, which supports:  
-  - The latest ECMAScript standard.  
-  - ECMAScript standard library proposals.  
-  - Some WHATWG / W3C standards (cross-platform or closely related ECMAScript).  
+It is a polyfill of the JavaScript standard library, which supports:
 
-  It is maximally modular: you can easily choose to load only the features you will be using.  
-  It can be used without polluting the global namespace.  
-  It is [tightly integrated with `babel`: this allows many optimizations of `core-js` import.](https://github.com/zloirock/core-js/blob/master/docs/2019-03-19-core-js-3-babel-and-a-look-into-the-future.md#Babel)
+- The latest ECMAScript standard.
+- ECMAScript standard library proposals.
+- Some WHATWG / W3C standards (cross-platform or closely related ECMAScript).
+
+It is maximally modular: you can easily choose to load only the features you will be using.  
+ It can be used without polluting the global namespace.  
+ It is [tightly integrated with `babel`: this allows many optimizations of `core-js` import.](https://github.com/zloirock/core-js/blob/master/docs/2019-03-19-core-js-3-babel-and-a-look-into-the-future.md#Babel)
 
 </Aside>
 
@@ -43,11 +42,11 @@ That's right - [core-js](https://github.com/zloirock/core-js).  From their `REA
 
 <Aside>
 
-  [Promise.allSettled](https://github.com/tc39/proposal-promise-allSettled) stage 2 proposal
+[Promise.allSettled](https://github.com/tc39/proposal-promise-allSettled) stage 2 proposal
 
 </Aside>
 
-Well hot damn! That'll do it! 
+Well hot damn! That'll do it!
 
 ## **How to use core-js**
 
@@ -62,13 +61,13 @@ First, add the dependency to your project
 Then, at your app's entry point (usually something like `index.js`, or `app.js` in the root of your project):
 
 ```js
-  import 'core-js';
+import 'core-js';
 ```
 
 or, if you want to include _just_ the `Promise.allSettled()` polyfill, and nothing else, use:
 
 ```js
-  import 'core-js/proposals/promise-all-settled';
+import 'core-js/proposals/promise-all-settled';
 ```
 
 That's it! 🍻

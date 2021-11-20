@@ -17,7 +17,8 @@ const Shop = () => (
         <h2 id="angry-little-egg">Angry little egg</h2>
         <p>
           If you came here for{' '}
-          <a href="https://mikebifulco.com/egg-them-all">eggs</a>, we got eggs.
+          <a href="https://mikebifulco.com/posts/egg-them-all">eggs</a>, we got
+          eggs.
         </p>
 
         {/* eslint-disable max-len */}
