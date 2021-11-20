@@ -4,6 +4,7 @@ import { compareDesc } from 'date-fns';
 import fs from 'fs';
 import { join } from 'path';
 import { serialize } from 'next-mdx-remote/serialize';
+import { parseTag } from './tags';
 
 export async function getContentBySlug(slug, directory, type) {
   const realSlug = slug.replace(/\.mdx$/, '');
@@ -21,6 +22,7 @@ export async function getContentBySlug(slug, directory, type) {
     frontmatter: {
       ...data,
       date: articleDate.toUTCString(),
+      tags: data?.tags?.map((tag) => parseTag(tag)) || [],
       type,
     },
     content,
