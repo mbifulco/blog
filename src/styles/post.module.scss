@@ -6,7 +6,7 @@
 .post {
   width: 100%;
   text-align: left;
-  margin: 0 auto 3rem;
+  margin: 0 auto 1rem;
   font-weight: normal;
   font-size: larger;
   font-family: var(--font-stack);
@@ -18,10 +18,6 @@
 
 .post img {
   max-width: 100%;
-}
-
-.post header a {
-  text-decoration: none;
 }
 
 .post header a:hover {

@@ -38,7 +38,6 @@ const DefaultLayout = ({ children }) => {
 
   return (
     <MDXProviderWrapper>
-      {/* <SEO /> */}
       <Box
         borderColor={theme.colors.pink[400]}
         borderWidth="1.25rem 0 0 0"
@@ -101,9 +100,7 @@ const DefaultLayout = ({ children }) => {
 
           <Stack spacing={8}>{children}</Stack>
 
-          <Box minHeight="5rem" marginTop="1rem">
-            <Footer />
-          </Box>
+          <Footer />
         </Stack>
       </Box>
       <Script src="https://snippet.affilimate.io" />

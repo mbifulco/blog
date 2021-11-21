@@ -9,3 +9,6 @@ export { default as SEO } from './seo';
 export { SocialLinks } from './SocialLinks';
 export { default as Tag } from './tag';
 export { default as WebmentionMetadata } from './webmentionMetadata';
+
+/* related content */
+export { default as RelatedContentLinksByTag } from './RelatedContent/RelatedContentLinksByTag';
