@@ -1091,10 +1091,10 @@
   dependencies:
     is-promise "^4.0.0"
 
-"@netlify/functions@^0.8.0":
-  version "0.8.0"
-  resolved "https://registry.yarnpkg.com/@netlify/functions/-/functions-0.8.0.tgz#0c0a3d5a8efdc6aa469f75acb9df556a317cff1f"
-  integrity sha512-Ew4Q2ofSBa5aeVOvrHNNEkfCJNmjTkEIr+WkyveOZrcnKQGH/sTtPqVb6HP51NJHNhczBkd3S3KdXfrCB0q0Ig==
+"@netlify/functions@^0.9.0":
+  version "0.9.0"
+  resolved "https://registry.yarnpkg.com/@netlify/functions/-/functions-0.9.0.tgz#981205ebcbb810ef60faef630bc40e0f2767ab8e"
+  integrity sha512-CQ2L2MEA/hfcZrVl7yJrNCqTGjXDIrdcgF4NX/OwzU5QAmSQmjQWI890nMHf98Q7++K8ljTFyICpq26HDLKbDg==
   dependencies:
     is-promise "^4.0.0"
 
@@ -1113,12 +1113,12 @@
     ufo "^0.7.9"
     unstorage "^0.2.8"
 
-"@netlify/plugin-nextjs@4.0.0-beta.6":
-  version "4.0.0-beta.6"
-  resolved "https://registry.yarnpkg.com/@netlify/plugin-nextjs/-/plugin-nextjs-4.0.0-beta.6.tgz#eb968c83f4844b5bf92fdd4b92cd408bd6afdd72"
-  integrity sha512-6F18qQ5icHaH7rFPbK7sJJVXmOB9oVr0soeth6Wj+rmC9pg30bo8lv7L8bUX95KfOMfca0/4yh+zSxf40pm/Eg==
+"@netlify/plugin-nextjs@4.0.0-beta.9":
+  version "4.0.0-beta.9"
+  resolved "https://registry.yarnpkg.com/@netlify/plugin-nextjs/-/plugin-nextjs-4.0.0-beta.9.tgz#fd9f1c94561c0e36109fbe35b4ef5f81f6d09d31"
+  integrity sha512-DS0TqJdHkfPspiII0o1C7KXGhbsQiNO3C0XLNaKbRvZf5f4rN4UV9RKAFcEiJh5h67PHdan6sKTbHKVcHiTk+Q==
   dependencies:
-    "@netlify/functions" "^0.8.0"
+    "@netlify/functions" "^0.9.0"
     "@netlify/ipx" "^0.0.7"
     "@vercel/node" "^1.11.2-canary.4"
     chalk "^4.1.2"
@@ -3404,10 +3404,10 @@ fragment-cache@^0.2.1:
   dependencies:
     map-cache "^0.2.2"
 
-framer-motion@^5.3.1:
-  version "5.3.1"
-  resolved "https://registry.yarnpkg.com/framer-motion/-/framer-motion-5.3.1.tgz#5588f904f16b20a617f112ee2b10573e7392c488"
-  integrity sha512-wBqW2eAoIxGcp6zhIPlzHq9b6FqWG3Xir6ovgg/HZgbKajGLfcfYRsQU6qri0U53Qov5QZwb7CkfMjl0UIxL4A==
+framer-motion@^5.3.2:
+  version "5.3.2"
+  resolved "https://registry.yarnpkg.com/framer-motion/-/framer-motion-5.3.2.tgz#d749f597d8083a4ae2fba3a2c0821930f2cc7ad4"
+  integrity sha512-39xU+ev4inXRAMb2DtdrMnWEinlMLTsk1lmYKcHmHy2WjwewqN9vL+dzqRuhzoPz3fia4U4x2h2w/bNpgh7egA==
   dependencies:
     framesync "6.0.1"
     hey-listen "^1.0.8"
@@ -4694,10 +4694,10 @@ lines-and-columns@^1.1.6:
   resolved "https://registry.yarnpkg.com/lines-and-columns/-/lines-and-columns-1.1.6.tgz#1c00c743b433cd0a4e80758f7b64a57440d9ff00"
   integrity sha1-HADHQ7QzzQpOgHWPe2SldEDZ/wA=
 
-lint-staged@^12.1.1:
-  version "12.1.1"
-  resolved "https://registry.yarnpkg.com/lint-staged/-/lint-staged-12.1.1.tgz#d50efc88a0108d0f82158b3477bdce049bebfba8"
-  integrity sha512-zOmteWgJwTfZXcj6vXSnjeDDI/fvkKI2KOqRdc84ZFc2ZMDKXEeiTITtaskE3HiNrHraFmYVBpnMSZHngLoogA==
+lint-staged@^12.1.2:
+  version "12.1.2"
+  resolved "https://registry.yarnpkg.com/lint-staged/-/lint-staged-12.1.2.tgz#90c571927e1371fc133e720671dd7989eab53f74"
+  integrity sha512-bSMcQVqMW98HLLLR2c2tZ+vnDCnx4fd+0QJBQgN/4XkdspGRPc8DGp7UuOEBe1ApCfJ+wXXumYnJmU+wDo7j9A==
   dependencies:
     cli-truncate "^3.1.0"
     colorette "^2.0.16"
