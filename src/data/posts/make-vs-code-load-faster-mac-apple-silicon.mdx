@@ -1,0 +1,83 @@
+---
+title: Massively speed up VS Code loading time on Apple Silicon Macs in one step
+excerpt: "If you're running an Apple Silicon Mac (with an M1, M1 Pro, or M1 Max chip), you may be able to speed up VS Code massively with a quick update."
+date: 11-24-2021
+path: make-vs-code-load-faster-mac-apple-silicon
+cover: posts/make-vs-code-load-faster-mac-apple-silicon/cover.webp
+tags: [dev, productivity, javascript]
+type: post
+published: true
+---
+
+<Aside type="note">
+
+**Note:** This is an update to my recent post, [How to make VS Code load faster with a little bit of housekeeping](https://mikebifulco.com/posts/make-vs-code-load-faster-by-removing-extensions).
+I was pretty happy with the startup speed I gained by removing a few
+extensions, but VS Code still took a while to load.
+
+</Aside>
+
+Yesterday I stumbled on something that let me **load VS Code 775% faster** than before on my Mac laptop. Seriously. On a cold boot of VS Code, my load time went from 15 seconds to just about 2 seconds. So, how did I do it? Let's cut to the chase:
+
+## The Solution
+
+**If you are running Visual Studio Code on a Mac with an Apple Silicon processor (also known as an M1, M1 Pro, or M1 Max), you will get a _massive_ performance boost by installing an Apple Silicon optimized build of VS Code.**
+
+This is because previous builds weren't natively compatible with Apple Silicon, and ran Intel code through a virtualization process that apple calls Rosetta.
+
+The fix: **Download the [latest version of VS Code](https://code.visualstudio.com/download) for Mac, install it.** If you were previously running an Intel build, this is _all_ you need to do. That's it!
+
+## What's going on here
+
+In 2019, Apple released their first round of computers that run on their own processors, which they call Apple Silicon. These chips are fundamentally different from the Intel processors that Apple was using on all of their computers until recently. Apple found massive performance benefits from their migration to a new chipset, but running software on the new processor architecture requires app developers to recompile their software for the new chips.
+
+Thankfully, engineers at Apple were smart enough to know that asking every Mac app developer in the world to recompile their apps for Apple Silicon will take a very long time. To hedge against this, they built a recompilation layer into MacOS called _Rosetta,_ which allows Intel apps to run on the new chips. Because there's essentially a thin VM layer running these apps, they are slower and less energy efficient than apps compiled specifically for Apple Silicon.
+
+That's exactly the gain we're finding here by updating VS Code. There wasn't an Apple Silicon build available until [September of 2020](https://github.com/microsoft/vscode/issues/101662), due to VS Code's dependency on Electron to run.
+
+If this quick fix helps you and you're like me, you likely installed Code long before September of 2020. Your install of Code would get regular updates, but you were getting Intel builds of the app. Switching to a more recently downloaded version of the app will automatically install an Apple Silicon build, and just like that, you're sorted! 🧙‍♂️
+
+## Check to see if you're running an Intel version of VS Code
+
+In the process of figuring all of this out, I discovered that you can actually see which apps on your machine are running Intel builds vs Apple Silicon Builds.
+
+To check any given app, follow these steps:
+
+1. Open **Activity Monitor** (hit command + Space, and type in "Activity monitor")
+2. Right click on one of the _headings_ at the top of the table of running processes, to see a list of possible columns for the table.
+3. Make sure the option called **Kind** is checked
+4. You'll now see a column labeled "Kind", which will say "Apple" or "Intel"
+
+<Image
+  publicId="posts/make-vs-code-load-faster-mac-apple-silicon/kind-column"
+  caption="The 'Kind' column in Activity Monitor tells you which processor architecture every app is built to run against"
+  alt="Screenshot of Activity Monitor, with the 'Kind' column added"
+/>
+
+If you're running an Intel version of VS Code, you'll see something like this:
+
+<Image
+  publicId="posts/make-vs-code-load-faster-mac-apple-silicon/intel-build"
+  caption="The 'Kind' column will say Intel - and I bet your load times for VS Code could be much better."
+  alt="Screenshot of Activity Monitor, with the Visual Studio Code row highlighted, and the 'Kind' column showing 'Intel'"
+/>
+
+If that's the case, I have great news! You're probably going to see a massive speed boost. This is a good time to close VS Code and time how long it takes to start fresh. On my M1 Macbook Air with 16GB of ram, it took about 15s.
+
+Now, go **Download the [latest version of VS Code](https://code.visualstudio.com/download) for Mac** and install it on your computer (Choose to "Replace" the old install if prompted).
+
+When that's done, you should see this the next time you load VS Code:
+
+<Image
+  publicId="posts/make-vs-code-load-faster-mac-apple-silicon/apple-build"
+  caption="The 'Kind' column will say Apple"
+  alt="Screenshot of Activity Monitor, with the Visual Studio Code row highlighted, and the 'Kind' column showing 'Intel'"
+/>
+
+How was that load time now? For me, it was down to _about 2 seconds!_ It's not every day you get those kind of gains.
+
+## If you found this helpful, you may want to check out:
+
+- **[How to make VS Code load faster with a little bit of housekeeping](https://mikebifulco.com/posts/make-vs-code-load-faster-by-removing-extensions)**, my previous post on speeding up VS Code
+- **[I reclaimed 10GB of disk space from `node_modules`](https://mikebifulco.com/posts/reclaimed-10gb-of-disk-space-from-node-modules)** if you also happen to use Node to write JavaScript apps.
+- **[gitignore.io is great](https://mikebifulco.com/posts/gitignore-io-is-great)** for a tip on a super helpful tool for setting up `.gitignore` files on new projects.
