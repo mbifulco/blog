@@ -5,7 +5,8 @@
 
 .post ol,
 .post ul {
-  list-style-position: inside;
+  list-style-position: oustide;
+  margin-left: 1em; /* em and not rem for perfect alignment based on this line's size */
 }
 
 .post ol li:not(:last-child),
