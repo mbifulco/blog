@@ -3,6 +3,16 @@
   margin: 0.5rem 0 1rem 1rem;
 }
 
+.post ol,
+.post ul {
+  list-style-position: inside;
+}
+
+.post ol li:not(:last-child),
+.post ul li:not(:last-child) {
+  margin-bottom: 1rem;
+}
+
 .post {
   width: 100%;
   text-align: left;
