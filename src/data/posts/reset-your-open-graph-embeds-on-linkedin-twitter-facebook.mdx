@@ -9,48 +9,55 @@ path: reset-your-open-graph-embeds-on-linkedin-twitter-facebook
 tags: [seo, tools, gatsby, developer]
 ---
 
-## Earlier today, we had a problem at [Gymnasium](https://www.thegymnasium.com).
+## Earlier today, we had a problem at [Gymnasium](https://thegymnasium.com).
 
-We released a [new 5 minute tutorial on Making Headings and Lists more Accessible](https://thegymnasium.com/take5/making-headings-and-lists-more-accessible) - which is great news! If you build things for the web, and you've got 5 minutes to spare in your day (you do), you should give it a look.
+We released a [new 5 minute tutorial on Making Headings and Lists more Accessible](https://thegymnasium.com/courses/take5/making-headings-and-lists-more-accessible) - which is great news! If you build things for the web, and you've got 5 minutes to spare in your day (you do), you should give it a look.
 
-After the course was made public, our marketing wizard did her magic and started posting to our various social media pages: [Facebook](https://www.facebook.com/aquentgymnasium), [Twitter](https://twitter.com/AquentGymnasium), and [LinkedIn](https://www.linkedin.com/school/gymnasium/). 
+After the course was made public, our marketing wizard did her magic and started posting to our various social media pages: [Facebook](https://www.facebook.com/aquentgymnasium), [Twitter](https://twitter.com/AquentGymnasium), and [LinkedIn](https://www.linkedin.com/school/gymnasium/).
 
 It was immediately apparent that something was off. During our course release process, we missed the fact that Open Graph metadata for that course page wasn't correctly included. Unfortunately, that meant that _none_ of our posts on social media had the beautiful image previews that we'd expect to see (and by extension would likely see far less engagement).
 
 <Aside>
-  <em>Open Graph</em> metadata tells other services what kind of information is shown when a URL loads, so that they can create a preview of the URL that makes sense. Read more at <a href="https://ogp.me" target="_blank" rel="noopener noreferrer">ogp.me</a>.
+  <em>Open Graph</em> metadata tells other services what kind of information is
+  shown when a URL loads, so that they can create a preview of the URL that
+  makes sense. Read more at{' '}
+  <a href="https://ogp.me" target="_blank" rel="noopener noreferrer">
+    ogp.me
+  </a>
+  .
 </Aside>
 
-Fast forward a short while, and we updated our CMS with the necessary metadata for Open Graph Shares to work correctly.  Newly shared links in our team Slack now looked great! 
+Fast forward a short while, and we updated our CMS with the necessary metadata for Open Graph Shares to work correctly. Newly shared links in our team Slack now looked great!
 
 <Image
   publicId="posts/open-graph-cache-reset/slack-after"
   alt="screenshot of a post in slack"
   caption="Screenshot from slack after the fix - our new course was shared with the correct image"
-/>.
+/>
+.
 
 ## Social networks cache link previews
 
-Rather than redownload the preview image and metadata for a given link every time it's shared, your entire open graph preview is often cached.  Depending on the site, that cache may be cleared regularly throughout the day.  
+Rather than redownload the preview image and metadata for a given link every time it's shared, your entire open graph preview is often cached. Depending on the site, that cache may be cleared regularly throughout the day.
 
 Because we had _already_ posted links to our courses, every site we had shared to had cached our shared links with the bare defaults. The result was relatively plain, and not relevant to the content on the page - something like:
 
 `Free online courses on design and web development | Gymnasium`
 
-With Gymnasium's logo beside it.  Just defaults! Not a great look.
+With Gymnasium's logo beside it. Just defaults! Not a great look.
 
-Because we were working on a concerted marketing push to announce our new courses, these extremely plain previews were bad news. We've seen from experience that having an attractive (and differentiated) share image helps gain traction during the initial publicity of new content.  
+Because we were working on a concerted marketing push to announce our new courses, these extremely plain previews were bad news. We've seen from experience that having an attractive (and differentiated) share image helps gain traction during the initial publicity of new content.
 
 ## _You_ can trigger a cache reset on each of these sites!
 
-After some brief research, we found that there are tools to reset the cache on each of the major social networking sites.  They're each extremely easy to use - paste your URL in a box, click a button, and reset the cache if necessary.  Here's the ones we found to be useful:
+After some brief research, we found that there are tools to reset the cache on each of the major social networking sites. They're each extremely easy to use - paste your URL in a box, click a button, and reset the cache if necessary. Here's the ones we found to be useful:
 
 ### Use these links
 
-| Site | Cache reset tool link |  
-| :--- | :-------------------- |
+| Site     | Cache reset tool link                                                                        |
+| :------- | :------------------------------------------------------------------------------------------- |
 | Facebook | [https://developers.facebook.com/tools/debug/](https://developers.facebook.com/tools/debug/) |
-| LinkedIn | [https://www.linkedin.com/post-inspector/](https://www.linkedin.com/post-inspector/) |
-| Twitter | [https://cards-dev.twitter.com/validator](https://cards-dev.twitter.com/validator) |
+| LinkedIn | [https://www.linkedin.com/post-inspector/](https://www.linkedin.com/post-inspector/)         |
+| Twitter  | [https://cards-dev.twitter.com/validator](https://cards-dev.twitter.com/validator)           |
 
-That's all there is to it! Hit reset, re-share your link, and you should see your latest Open Graph preview shared.  Phew! 😅
+That's all there is to it! Hit reset, re-share your link, and you should see your latest Open Graph preview shared. Phew! 😅

@@ -1,8 +1,7 @@
 import React from 'react';
-import Image from 'next/image';
 
+import { Image, SEO } from '../../components';
 import { DefaultLayout as Layout } from '../../components/Layouts';
-import SEO from '../../components/seo';
 
 import * as classes from '../../styles/shop.module.scss';
 import SoldOut from '../../components/soldOut';
@@ -18,15 +17,12 @@ const Shop = () => (
         <h2 id="angry-little-egg">Angry little egg</h2>
         <p>
           If you came here for{' '}
-          <a href="https://mikebifulco.com/egg-them-all">eggs</a>, we got eggs.
+          <a href="https://mikebifulco.com/posts/egg-them-all">eggs</a>, we got
+          eggs.
         </p>
 
         {/* eslint-disable max-len */}
-        <Image
-          src="https://res.cloudinary.com/mikebifulco-com/image/upload/v1632750265/egg-em.png"
-          layout="fill"
-          alt="egg sticker"
-        />
+        <Image publicId="egg-em" alt="egg sticker" />
         {/* eslint-enable max-len */}
       </article>
     </main>

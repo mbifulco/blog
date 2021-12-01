@@ -3,10 +3,21 @@
   margin: 0.5rem 0 1rem 1rem;
 }
 
+.post ol,
+.post ul {
+  list-style-position: oustide;
+  margin-left: 1em; /* em and not rem for perfect alignment based on this line's size */
+}
+
+.post ol li:not(:last-child),
+.post ul li:not(:last-child) {
+  margin-bottom: 1rem;
+}
+
 .post {
   width: 100%;
   text-align: left;
-  margin: 0 auto 3rem;
+  margin: 0 auto 1rem;
   font-weight: normal;
   font-size: larger;
   font-family: var(--font-stack);
@@ -18,10 +29,6 @@
 
 .post img {
   max-width: 100%;
-}
-
-.post header a {
-  text-decoration: none;
 }
 
 .post header a:hover {

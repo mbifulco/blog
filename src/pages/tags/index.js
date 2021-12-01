@@ -3,38 +3,49 @@ import PropTypes from 'prop-types';
 
 // Components
 import Link from 'next/link';
+import { Heading, SimpleGrid, Text, useTheme } from '@chakra-ui/react';
 
-import Tag from '../../components/tag';
+import { getAllTags } from '../../lib/tags';
+
+import { Tag, NewsletterSignup, SEO } from '../../components';
 import { DefaultLayout as Layout } from '../../components/Layouts';
 
-import * as classes from '../../styles/post.module.scss';
-import * as tagsClasses from '../../styles/tagsPage.module.scss';
-import { SEO } from '../../components';
+export const getStaticProps = async () => {
+  const tags = await getAllTags();
+  return {
+    props: {
+      tags: Array.from(tags.allTags).sort(),
+    },
+  };
+};
 
-const TagsPage = ({ tags }) => (
-  <Layout>
-    <SEO />
-    <div className={classes.post}>
-      <div className={classes.postContent}>
-        <h1>Tags</h1>
-        <ul className={tagsClasses.list}>
-          {tags?.map((tag) => (
-            <li key={`tag-${tag._id}`}>
-              <Link href={`/tags/${tag.name}/`}>
-                {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-                <a>
-                  <Tag>
-                    {tag.name} ({tag.posts.total})
-                  </Tag>
-                </a>
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </div>
-  </Layout>
-);
+const TagsPage = ({ tags }) => {
+  const theme = useTheme();
+
+  return (
+    <Layout>
+      <SEO title="Browse all tags used on articles" />
+      <Heading as="h1">
+        All{' '}
+        <Text as="span" color={theme.colors.gray[400]}>
+          #
+        </Text>
+        tags used on articles across the site
+      </Heading>
+      <SimpleGrid minChildWidth="15ch" spacingY="1ch" fontSize="large">
+        {tags?.map((tag) => (
+          <Link href={`/tags/${tag}/`} key={`tag-${tag}`}>
+            {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+            <a>
+              <Tag>{tag}</Tag>
+            </a>
+          </Link>
+        ))}
+      </SimpleGrid>
+      <NewsletterSignup />
+    </Layout>
+  );
+};
 
 TagsPage.propTypes = {
   tags: PropTypes.arrayOf(

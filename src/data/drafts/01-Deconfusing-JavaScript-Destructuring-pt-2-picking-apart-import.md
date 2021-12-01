@@ -1,12 +1,12 @@
 # Picking apart JavaScript import syntax
 
-Note: this is a follow-up to my [first post](https://mikebifulco.com/deconfusing-javascript-destructuring-syntax) on destructuring. Import syntax uses destructuring pretty liberally, and it can be really confusing for folks who are new to using it. Give my other article a read first if this all seems confusing!
+Note: this is a follow-up to my [first post](https://mikebifulco.com/posts/deconfusing-javascript-destructuring-syntax) on destructuring. Import syntax uses destructuring pretty liberally, and it can be really confusing for folks who are new to using it. Give my other article a read first if this all seems confusing!
 
 Let's talk about importing dependencies into your node projects. As your work gets more complex, you will inevitably come across syntax like this:
 
 ```javascript
 import React, { useState, useEffect } from 'react';
-import Link from 'next/link';;
+import Link from 'next/link';
 import Button from '@material-ui/core/Button';
 import moment from 'moment';
 
@@ -91,7 +91,7 @@ Cool, huh? I know this can be confusing, but try to stick with it. It'll all sta
 ### Importing a subset of a library by way of destructuring
 
 ```javascript
-import Link from 'next/link';;
+import Link from 'next/link';
 ```
 
 Boom! This should be easy by now. One of the things that `Gatsby` makes available is their [`link`](https://www.gatsbyjs.org/docs/gatsby-link/) component. We're importing _just that component_ to use here.

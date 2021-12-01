@@ -11,17 +11,15 @@ const ExternalWorkItem = ({ article, border = false }) => {
     frontmatter: { date, url, title, tags },
   } = article;
 
+  {
+    /* note: box shadow from @drucial's https://www.betterneumorphism.com/?h=0&s=0&l=100 */
+  }
   return (
     <Box
       as="article"
-      boxShadow={
-        !!border
-          ? '0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)'
-          : null
-      }
-      padding={!!border ? '1.5rem 1rem 2rem 1rem' : null}
+      boxShadow={`8px 8px 20px hsl(0, 0%, 80%), -8px -7px 20px hsl(0, 0%, 120%), inset -0.2px -0.2px 0.8px hsl(0, 0%, 80%), inset 0.2px 0.2px 0.8px hsl(0, 0%, 120%);`}
+      padding={'1.5rem 1rem 2rem 1rem'}
       borderRadius="20px"
-      marginBottom="2rem"
     >
       <Stack>
         <Stack>

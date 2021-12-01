@@ -89,7 +89,7 @@ const SubscriptionForm = ({ tags }) => {
           color={theme.colors.white}
           _hover={{
             color: theme.colors.black,
-            background: theme.colors.gray[400]
+            background: theme.colors.gray[400],
           }}
           width="45%"
         >

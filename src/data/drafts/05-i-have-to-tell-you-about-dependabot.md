@@ -24,4 +24,4 @@ This was the final kicker for me. Dependabot was [just acquired by GitHub](https
 
 Go install [Dependabot](https://dependabot.com)!
 
-_Note: the cover photo for this article comes from one of my favorite photographers, [Alex Knight](https://unsplash.com/@agkdesign?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText), and was made available un [Unsplash](https://unsplash.com/search/photos/robot?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText). Thank you Alex for your work! Go support him on [Patreon](https://patreon.com/agk42), and give him a follow on [Twitter](https://twitter.com/agkdesign)._
+\_Note: the cover photo for this article comes from one of my favorite photographers, [Alex Knight](https://twitter.com/agkdesign), and was made available un [Unsplash](https://unsplash.com/search/photos/robot?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText). Thank you Alex for your work!

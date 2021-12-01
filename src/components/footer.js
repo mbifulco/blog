@@ -3,6 +3,7 @@ import React from 'react';
 import { Box, Link, Stack, Text, useTheme } from '@chakra-ui/react';
 
 import { SocialLinks } from './SocialLinks';
+import { RelatedContentLinksByTag } from '.';
 
 const Footer = () => {
   const theme = useTheme();
@@ -11,7 +12,10 @@ const Footer = () => {
   return (
     <Box as="footer" position="relative" fontSize="small">
       <Stack zIndex={10} position="absolute">
-        <SocialLinks />
+        <RelatedContentLinksByTag />
+        <Box margin="0 1.5rem">
+          <SocialLinks />
+        </Box>
         <span>© 2019-{new Date().getFullYear()} Mike Bifulco</span>
         <div className="credit">
           <span>
