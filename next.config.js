@@ -21,11 +21,5 @@ module.exports = withBundleAnalyzer(
       locales: ['en'],
       defaultLocale: 'en',
     },
-    rewrites: async () => [
-      {
-        source: '/sitemap.xml',
-        destination: '/api/sitemap.xml',
-      },
-    ],
   })
 );
