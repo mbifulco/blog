@@ -7,13 +7,19 @@
     Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', Helvetica, Arial,
     sans-serif;
 }
+
+@media screen and (min-width: 800px) {
+  #carbonads {
+    float: right;
+    margin-left: 4em;
+    max-width: 330px;
+  }
+}
 #carbonads {
   display: flex;
-  max-width: 330px;
   background-color: hsl(0, 0%, 98%);
   box-shadow: 0 1px 4px 1px hsla(0, 0%, 0%, 0.1);
   z-index: 100;
-  float: right;
 }
 #carbonads a {
   color: inherit;
