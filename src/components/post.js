@@ -13,7 +13,7 @@ import { getMentions } from '../utils/webmentions';
 import MentionsSummary from './mentionsSummary';
 import TagsSummary from './tagsSummary';
 import * as style from '../styles/post.module.scss';
-import { Image, PublishDate } from '.';
+import { CarbonAd, Image, PublishDate } from '.';
 import frontmatterType from '../types/frontmatter';
 
 const Post = ({ summary, post }) => {
@@ -80,6 +80,7 @@ const Post = ({ summary, post }) => {
           </>
         ) : (
           <>
+            {summary ? null : <CarbonAd />}
             {/* eslint-disable-next-line react/jsx-props-no-spreading */}
             <MDXRemote {...post.source} />
 

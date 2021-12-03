@@ -1,3 +1,4 @@
+export { CarbonAd } from './CarbonAd';
 export { default as Footer } from './footer';
 export { ExternalWorkItem } from './ExternalWork';
 export { Image } from './Image';
