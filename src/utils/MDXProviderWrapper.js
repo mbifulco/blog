@@ -11,6 +11,7 @@ import {
   Box,
   Heading,
   Link,
+  SimpleGrid,
   Stack,
   Text,
   useTheme,
@@ -153,6 +154,7 @@ const components = {
   h6: H6,
   p: P,
   pre: Pre,
+  SimpleGrid,
 };
 
 /* eslint-disable max-len */

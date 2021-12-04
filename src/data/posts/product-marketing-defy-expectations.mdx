@@ -68,7 +68,47 @@ Friends, I'm here to tell you: the AI tools that are available right now can aut
 
 Can you imagine if I had accepted this as truth, and published it without surrounding context? The only reason I discovered this wasn't true was because I took the time to look up corroborating information - but it would be _super_ easy to skip that step, especially if you don't understand some of the fundamentals of AI.
 
-### How this post came to be
+## What is the Von Restorff Effect?
+
+In principle, the Von Restorff Effect is simple: **given a group of similar choices, people tend to remember experiences or products which defy expectations** - the thing which stands out the most tends to be stickiest, and the more _memorable_ the unexpected experience is, the stickier something will be.
+
+For an extremely simple example, let's say I gave you 10 seconds to memorize as many animals from this list as possible:
+
+<SimpleGrid minChildWidth="100px" spacing="2ch">
+  <Button>Wolf</Button>
+  <Button>Beaver</Button>
+  <Button>Camel</Button>
+  <Button>Snail</Button>
+  <Button>Llama</Button>
+  <Button>Pig</Button>
+  <Button>Mink</Button>
+  <Button>Squirrel</Button>
+  <Button
+    style={{
+      backgroundColor: 'orangered',
+      fontWeight: 'bold',
+      color: 'white',
+      padding: '0.25ch',
+    }}
+  >
+    Owl
+  </Button>
+  <Button>Giraffe</Button>
+  <Button>Penguin</Button>
+  <Button>Eagle</Button>
+  <Button>Moth</Button>
+  <Button>Sheep</Button>
+  <Button>Camel</Button>
+  <Button>Panda</Button>
+  <Button>Koala</Button>
+  <Button>Chameleon</Button>
+</SimpleGrid>
+
+I'd put money any arbitrary person remembering _Owl_ over some of the others mentioned in there.
+
+This phenomenon can also be used to make _products_ more sticky by building _experiences_ which defy expectations - in any marketplace with significant competiton, creating a stand-out experience can give your product a massive advantage.
+
+## How this post came to be
 
 For articles on this site, I keep a list of topics that I think I want to write about in a big list. I slowly add to individual topics over time, and once I feel like there's enough information on a given topic to produce a meaningful article, I spend some time organizing thoughts from the note into prose, and then publish.
 
@@ -86,7 +126,7 @@ So I came away with this experience with two important learnings:
 
 <Aside type="note">
 
-1. Ironically, this experience in itself was an extremely salient example of the Von Restorff Effect for me. It completely defied my expectations, and it is something I won't soon forget.
+1. Ironically, **this experience was an amazing example of the Von Restorff Effect** for me. I froze in bewilderment the moment I realized what was going on, thoughts racing through my mind like I had reached the end of _Fight Club_ for the first time. It's a moment I won't soon forget.
 2. This is a really important lesson in working with AI, and how powerful it is. If you're not aware of the capabilities _and limits_ of the tools you're using, you are entering dangerous territory.
 
 </Aside>
@@ -98,6 +138,8 @@ The nugget here for people building products is simple: **if you can create an e
 ## A caveat on AI tools
 
 It's worth noting that I have intentionally omitted the names of the AI tool that led me to this experience. For me, this is because I'm struggling with whether or not it's responsible to point my readers to tools which can easily lead you into a false sense of certainty. _With great power,_ as they say...
+
+Given that most of my audience are developers, I think it should suffice to say that I used a product based on [Open AI's GPT-3](https://openai.com/) - an extremely robust AI tool for generating language.
 
 This is a story that I've struggled to tell because of how important I feel like this is.
 
@@ -113,7 +155,19 @@ If you're a software developer, you may have come across [GitHub Copilot](https:
   caption="Copilot will write code with you.. for you... and alongside you."
 />
 
-There are also tools available for general consumption to _generate writing_ using AI - in other words, feed a couple ideas into a tool, and in moments you'll have an AI-generated block of text which takes cues from some of the best publicly available writing in the world.
+You _should_ really spend some time using Copilot if you haven't already. It's pretty amazing to write a few lines of pseudocode in comments and see what it can generate for you. It feels like magic.
+
+### AI-generated code is still risky
+
+But, just like when using AI to generate writing, be warned: GitHub Copilot isn't perfect - it's pulling from a massive amount of public code, and making guesses based on what you tell it to do. It won't necessarily write the world's most performant code, and in some cases it will generate code with serious flaws. Since its early release as a technical preview, there have been all kinds of problems reported with copilot, including one report which gained attention since it appeared that Copilot was generating code that included (other people's) valid API keys:
+
+<Tweet align="center" tweetLink="pkell7/status/1411058236321681414" />
+
+## A cautionary conclusion
+
+As we introduce AI into more parts of our work and our lives, we need to be aware of the _risks_ of using it. As technologists, there's an ethical responsibility to communicate these risks to our non-techncial neighbors in ways that they can understand. It's my hope that this anecdote about trying to generate a blogpost with AI is something that can serve as a warning which you can explain to your aunt Judy, your boss, or the influencers in your feed who may not seem to understand the risks of using AI.
+
+I'd love it if you shared this post with a friend - and if you've got thoughts on other experiments you'd like to see, let me know! Find me at [@irreverentmike](https://twitter.com/irreverentmike) on twitter, or [@mbifulco](https://github.com/mbifulco) on GitHub.
 
 ## More reading
 
