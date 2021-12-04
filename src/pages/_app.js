@@ -2,10 +2,11 @@
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import * as Fathom from 'fathom-client';
+const { ChakraProvider } = require('@chakra-ui/react');
 
 import { AnalyticsProvider } from '../utils/analytics';
 
-const { ChakraProvider } = require('@chakra-ui/react');
+import '../components/CarbonAd/CarbonAd.css';
 
 // import App from 'next/app'
 
