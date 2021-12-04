@@ -15,7 +15,6 @@ export const getStaticPageUrls = () => {
         '_document.js',
         '[slug].js',
         'index.js',
-        'sitemap.xml.js',
         '_error.js',
       ].includes(staticPage);
     })

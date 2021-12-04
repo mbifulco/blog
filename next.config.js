@@ -21,5 +21,15 @@ module.exports = withBundleAnalyzer(
       locales: ['en'],
       defaultLocale: 'en',
     },
+    rewrites: async () => [
+      {
+        source: '/rss.xml',
+        destination: '/api/rss.xml',
+      },
+      {
+        source: '/sitemap.xml',
+        destination: '/api/sitemap.xml',
+      },
+    ],
   })
 );

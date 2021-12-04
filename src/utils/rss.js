@@ -1,14 +1,8 @@
 import { rules } from 'eslint-config-prettier';
 import { Feed } from 'feed';
-import fs from 'fs';
-
 import config from '../config';
 
 export const generateRSSFeed = (posts) => {
-  if (process.env.NODE_ENV === 'development') {
-    return;
-  }
-
   const { author, description, siteUrl, title } = config;
 
   const feed = new Feed({
@@ -39,8 +33,7 @@ export const generateRSSFeed = (posts) => {
       author: [author],
       date: new Date(date),
     });
-
-    // this will be mikebifulco.com/rss.xml
-    fs.writeFileSync('public/rss.xml', feed.rss2());
   });
+
+  return feed.rss2();
 };
