@@ -32,7 +32,7 @@ const WebmentionMetadata = ({
         <a rel="author" className="h-card p-author" href={location}>
           {author || 'Mike Bifulco'}
         </a>
-        {tags.map((tag) => (
+        {tags?.map((tag) => (
           <a
             key={`tag-link-${tag.name || tag}`}
             href={`https://mikebifulco.com/tags/${tag.name || tag}`}

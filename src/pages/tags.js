@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 // Components
-import Link from 'next/link';
 import { Heading, SimpleGrid, Text, useTheme } from '@chakra-ui/react';
 
 import { getAllTags } from '../lib/tags';
@@ -36,12 +35,9 @@ const TagsPage = ({ tags }) => {
       </Heading>
       <SimpleGrid minChildWidth="15ch" spacingY="1ch" fontSize="large">
         {tags?.map((tag) => (
-          <Link href={`/tags/${tag}/`} key={`tag-${tag}`}>
-            {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-            <a>
-              <Tag>{tag}</Tag>
-            </a>
-          </Link>
+          <Tag key={`tag-cloud-${tag}`} url={`/tags/${tag}/`}>
+            {tag}
+          </Tag>
         ))}
       </SimpleGrid>
       <NewsletterSignup />
