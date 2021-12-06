@@ -66,6 +66,7 @@ const BlogPost = (post) => {
         coverImageUrl={coverImageUrl}
         summary={excerpt}
         publishedAt={date}
+        tags={tags}
       />
       {!published && process.env.NODE_ENV !== 'production' && (
         <div>
