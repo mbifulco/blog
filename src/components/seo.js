@@ -42,6 +42,16 @@ const SEO = ({
 
   return (
     <Head>
+      {/* webmention enablement */}
+      <link
+        rel="webmention"
+        href="https://webmention.io/mikebifulco.com/webmention"
+      />
+      <link
+        rel="pingback"
+        href="https://webmention.io/mikebifulco.com/xmlrpc"
+      />
+
       {/* favicon */}
       <link
         rel="apple-touch-icon"
