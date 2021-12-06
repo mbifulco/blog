@@ -16,9 +16,10 @@ const WebmentionMetadata = ({
     <div
       style={{
         display: 'none',
+        height: '0',
       }}
     >
-      <article className="h-card">
+      <article className="h-card h-entry">
         <header>
           {coverImageUrl && (
             // eslint-disable-next-line @next/next/no-img-element
