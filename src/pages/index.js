@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { Box, Link, Text, useTheme } from '@chakra-ui/react';
 
 import { DefaultLayout } from '../components/Layouts';
-import { Image, PostFeed, SEO } from '../components';
+import { Image, PostFeed, SEO, WebmentionMetadata } from '../components';
 
 import { getAllPosts } from '../lib/blog';
 import { generateRSSFeed } from '../utils/rss';
@@ -26,7 +26,7 @@ const HomePage = ({ posts }) => {
   const pink = theme.colors.pink[400];
   return (
     <DefaultLayout>
-      <SEO title="Latest articles on design, development, and the world" />
+      <SEO title="Latest articles on design, development, and the world around me" />
       <Box
         display={{ md: 'flex' }}
         margin="1rem 0 2rem 0"
@@ -86,6 +86,10 @@ const HomePage = ({ posts }) => {
         </Text>
         <PostFeed posts={posts} />
       </Box>
+      <WebmentionMetadata
+        summary="mikebifulco.com - articles on design, development, and making the world a better place."
+        title="Home - mikebifulco.com"
+      />
     </DefaultLayout>
   );
 };

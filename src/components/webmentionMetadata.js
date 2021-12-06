@@ -7,6 +7,7 @@ const WebmentionMetadata = ({
   summary,
   author,
   publishedAt,
+  tags,
   title,
 }) => {
   const router = useRouter();
@@ -16,9 +17,10 @@ const WebmentionMetadata = ({
     <div
       style={{
         display: 'none',
+        height: '0',
       }}
     >
-      <article className="h-card">
+      <article className="h-card h-entry">
         <header>
           {coverImageUrl && (
             // eslint-disable-next-line @next/next/no-img-element
@@ -27,6 +29,19 @@ const WebmentionMetadata = ({
           <h1 className="p-name">{title}</h1>
         </header>
         <p className="p-summary e-content">{summary}</p>
+        <a rel="author" className="h-card p-author" href={location}>
+          {author || 'Mike Bifulco'}
+        </a>
+        {tags?.map((tag) => (
+          <a
+            key={`tag-link-${tag.name || tag}`}
+            href={`https://mikebifulco.com/tags/${tag.name || tag}`}
+            rel="category tag"
+            className="p-category"
+          >
+            {tag.name || tag}
+          </a>
+        ))}
         <footer>
           <a className="u-url p-name" href={location || ''}>
             {author || 'Mike Bifulco'}

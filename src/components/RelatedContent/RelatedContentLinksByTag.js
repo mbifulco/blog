@@ -1,5 +1,5 @@
 import { Box, Link, SimpleGrid, Text, useTheme } from '@chakra-ui/react';
-import { NextLink } from 'next/link';
+import NextLink from 'next/link';
 
 import TagDictionary, { getTagInformation } from '../../data/ConvertKitTags';
 
@@ -26,6 +26,7 @@ const RelatedContentLinksByTag = ({ tags = DEFAULT_TAGS_TO_DISPLAY }) => {
         {tags.map((tag) => {
           const tagInformation = getTagInformation(tag);
           if (!tagInformation) return null;
+
           return (
             <Link
               textDecoration="underline"
@@ -36,7 +37,7 @@ const RelatedContentLinksByTag = ({ tags = DEFAULT_TAGS_TO_DISPLAY }) => {
               href={`/tags/${tag}`}
               key={`related-content-${tag}`}
             >
-              Articles {tagInformation.label}
+              {`Articles ${tagInformation.label}`}
             </Link>
           );
         })}
