@@ -1,5 +1,5 @@
 import { Box, Link, SimpleGrid, Text, useTheme } from '@chakra-ui/react';
-import { NextLink } from 'next/link';
+import NextLink from 'next/link';
 
 import TagDictionary, { getTagInformation } from '../../data/ConvertKitTags';
 
