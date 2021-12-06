@@ -2,7 +2,7 @@
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import * as Fathom from 'fathom-client';
-const { ChakraProvider } = require('@chakra-ui/react');
+import { ChakraProvider } from '@chakra-ui/react';
 
 import { AnalyticsProvider } from '../utils/analytics';
 
