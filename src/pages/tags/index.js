@@ -34,12 +34,9 @@ const TagsPage = ({ tags }) => {
       </Heading>
       <SimpleGrid minChildWidth="15ch" spacingY="1ch" fontSize="large">
         {tags?.map((tag) => (
-          <Link href={`/tags/${tag}/`} key={`tag-${tag}`}>
-            {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-            <a>
-              <Tag>{tag}</Tag>
-            </a>
-          </Link>
+          <Tag url={`/tags/${tag.name || tag}/`} key={`tag-${tag.name || tag}`}>
+            {tag.name || tag}
+          </Tag>
         ))}
       </SimpleGrid>
       <NewsletterSignup />
