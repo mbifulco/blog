@@ -1,5 +1,9 @@
 # I have to tell you about Dependabot 🤖
 
+**Update: Do you want to know how to run Dependabot locally?**
+
+I wrote a follow-up to this article based on a question I've been getting fairly regularly: How do you run dependabot locally? You asked, I answered - check it out here: [How to run dependabot locally on your projects](https://mikebifulco.com/posts/run-dependabot-locally)
+
 ## I found a tool I love, and I want you to love it, too
 
 [Dependabot](https://dependabot.com) is an automation service that will _automatically_ create PRs to keep your projects' dependencies up to date, and it is fucking wonderful.
@@ -23,5 +27,9 @@ If your repo contains multiple languages, Dependabot can handle that. If you've 
 This was the final kicker for me. Dependabot was [just acquired by GitHub](https://dependabot.com/blog/hello-github/), and is now available _completely free_ for use. That's incredible! There's no reason for you not to give it a shot. Go check it out now, post haste!
 
 Go install [Dependabot](https://dependabot.com)!
+
+## For more reading
+
+- Check out my follow-up post: [How to run dependabot locally on your projects](https://mikebifulco.com/posts/run-dependabot-locally)
 
 \_Note: the cover photo for this article comes from one of my favorite photographers, [Alex Knight](https://twitter.com/agkdesign), and was made available un [Unsplash](https://unsplash.com/search/photos/robot?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText). Thank you Alex for your work!
