@@ -30,6 +30,6 @@ Go install [Dependabot](https://dependabot.com)!
 
 ## For more reading
 
-- Check out my follow-up post: [How to run dependabot locally on your projects](https://mikebifulco.com/posts/run-dependabot-locally)
+- Check out my follow-up post: How to [run dependabot locally](https://mikebifulco.com/posts/run-dependabot-locally)
 
 \_Note: the cover photo for this article comes from one of my favorite photographers, [Alex Knight](https://twitter.com/agkdesign), and was made available un [Unsplash](https://unsplash.com/search/photos/robot?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText). Thank you Alex for your work!
