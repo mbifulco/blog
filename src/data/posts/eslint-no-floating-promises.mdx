@@ -1,0 +1,61 @@
+---
+title: 'No Floating Promises: an eslint rule to prevent async code errors'
+path: eslint-no-floating-promises
+coverImagePublicId: posts/eslint-no-floating-promises/cover.webp
+published: true
+tags: [javascript, react, node]
+date: 12-11-2021
+---
+
+On my past few weekend Twitch streams ([twitch.tv/irreverentmike](https://www.twitch.tv/irreverentmike) by the way) I've been working on a browser-basd guitar tuner, to make usre of silly domain name I bought a year or so ago, [guithub.org](https://guithub.org).
+
+Working with Web APIs for Audio is super interesting, and has given me an opportunity to research and learn about lots of great stuff that's built into modern web browsers that I hadn't used much before, like the [Canvas API](https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API) and the [Web Audio API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API).
+
+It also requires me to use _lots_ of asynchronous code. Both Web Audio and Canvas require async to function, and as a result I've been using a lot of promises in my code. As I write and refactor the code for my pet project, I've found myself running into lots of errors relating to the setup and use of async _stuff._
+
+## The basics of async / await in JavaScript
+
+Executing code with `async` / `await` in JavaScript code requires a small amount of setup. At its most basic, it looks like this:
+
+```js
+// Functions which use await to execute code must be declared with the "async" keyword
+async function foo() {
+  return await bar();
+}
+
+// written another way
+const foo = async () => {
+  await bar();
+};
+```
+
+The `async` keyword is used to adorn the parent function, to let JavaScript know that somewhere inside the function you're going to be `await`ing something from another function call.
+
+The `await` keyword is used to tell JavaScript that the function you're calling on that line is _asynchronous_, and that it will be waiting for something to happen before it can continue.
+
+## The catch, and where you may run into trouble
+
+_Both_ of these ingredients are required for async / await to work, but drastically different things happen if you forget one or the other. If you forget to add _async_ - it's very likely that your code won't run at all. Somewhere along the line, the JavaScript interpreter will crash, and tell you that you're trying to use await in a function that isn't
+
+## What is a floating promise?
+
+If you forget `async`
+
+This is a problem for most of the time, as you're trying to return a value from a function that is still executing. This is called a _floating promise_, and it's a somewhat common mistake to make. It's a promise that is not being used by the rest of the code, and so it's not being resolved.
+
+Fast forward to today, when I came across this tweet:
+
+<Tweet tweetlink="flybayer/status/1469098848958222337" align="center" />
+
+```js
+const foo = async () => {
+  const result = await bar();
+  return result;
+};
+```
+
+## More Reading
+
+- Interested in learning more about promises? You may enjoy my series on `Promise.allSettled()`:
+  - Part 1: [Solve\* all your problems with Promise.allSettled()](https://mikebifulco.com/posts/solve-all-your-problems-with-promise-allsettled)
+  - Part 2: [Promise.allSettled() Pt.2 - it's partly settled!](https://mikebifulco.com/posts/promise-all-settled-pt-2-its-partly-settled)
