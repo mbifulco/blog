@@ -11,7 +11,7 @@ On my past few weekend Twitch streams ([twitch.tv/irreverentmike](https://www.tw
 
 Working with Web APIs for Audio is super interesting, and has given me an opportunity to research and learn about lots of great stuff that's built into modern web browsers that I hadn't used much before, like the [Canvas API](https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API) and the [Web Audio API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API).
 
-It also requires me to use _lots_ of asynchronous code. Both Web Audio and Canvas require async to function, and as a result I've been using a lot of promises in my code. As I write and refactor the code for my pet project, I've found myself running into lots of errors relating to the setup and use of async _stuff._
+It also requires me to use _lots_ of asynchronous code. Both Web Audio and Canvas require `async` to function, and as a result I've been using a lot of promises in my code. As I write and refactor the code for my pet project, I've found myself running into lots of errors relating to the setup and use of `async` _stuff._
 
 ## The basics of async / await in JavaScript
 
@@ -33,29 +33,94 @@ The `async` keyword is used to adorn the parent function, to let JavaScript know
 
 The `await` keyword is used to tell JavaScript that the function you're calling on that line is _asynchronous_, and that it will be waiting for something to happen before it can continue.
 
-## The catch, and where you may run into trouble
+## What happens when you forget to use `async`
 
-_Both_ of these ingredients are required for async / await to work, but drastically different things happen if you forget one or the other. If you forget to add _async_ - it's very likely that your code won't run at all. Somewhere along the line, the JavaScript interpreter will crash, and tell you that you're trying to use await in a function that isn't
+_Both_ of these ingredients are required for `async` / `await` to work, but drastically different things happen if you forget one or the other. If you forget to add `async` - it's very likely that your code won't run at all. Somewhere along the line, the JavaScript interpreter will crash, and tell you that you're trying to use `await` in a function that isn't marked as `async`.
 
 ## What is a floating promise?
 
-If you forget `async`
+**A floating promise is an async function that is called without use of the `await` keyword.**
 
-This is a problem for most of the time, as you're trying to return a value from a function that is still executing. This is called a _floating promise_, and it's a somewhat common mistake to make. It's a promise that is not being used by the rest of the code, and so it's not being resolved.
+In many cases, if you forget to include `await`, your IDE/linter/interpreter won't fail at all, because you technically haven't done anything wrong. You _can_ call an async function and not wait for it... this essentially creates a `Promise` but doesn't wait for it to resolve or reject. You'll effectively never hear back from it, and it may not even continue to execute.
 
-Fast forward to today, when I came across this tweet:
-
-<Tweet tweetlink="flybayer/status/1469098848958222337" align="center" />
+I'll take an example of what this looks like from the docs page for `eslint-plugin-no-floating-promise`, which you can find on [npm](https://www.npmjs.com/package/eslint-plugin-no-floating-promise) and [GitHub](https://github.com/SebastienGllmt/eslint-plugin-no-floating-promise#readme):
 
 ```js
-const foo = async () => {
-  const result = await bar();
-  return result;
-};
+async function writeToDb() {
+  // asynchronously write to DB
+}
+writeToDb(); // <- note we have no await here but probably the user intended to await on this!
 ```
+
+When `writeToDb()` is called, it's not waiting for anything to happen, and it's not returning a `Promise` to the caller. Instead, the app will continue on its merry way without necessarily throwing any exceptions... and very likely without writing to the database at all.
+
+It gets worse if you're relying on the return value from an async function:
+
+```js
+async function createNewRecordInDb(input) {
+  // asynchronously create new record in DB;
+  let newRecord = await blah(input.name, input.email);
+
+  return newRecord;
+}
+
+const entry = createNewRecordInDb({
+  name: 'John Doe',
+  email: 'foo@bar.com'
+);
+
+console.log('welcome to earth a brand new entry', entry)
+```
+
+This is a problem, as the code operates assuming you've gotten back a value from a function that's actually still executing. This is called a _floating promise_, and it's a somewhat common mistake to make. It's a promise that is not being used by the rest of the code, so it's not being resolved.
+
+### If you use JavaScript: eslint-plugin-no-floating-promise Saves the day
+
+As mentioned above, the eslint-plugin-no-floating-promise rule is a great way to make sure you don't accidentally forget to use `await` in your async functions. If you're working in JavaScript and your project already uses eslint, adding `eslint-plugin-no-floating-promise` is as easy as adding the plugin to your `.eslintrc` config file:
+
+```json
+{
+  "plugins": ["no-floating-promise"]
+}
+```
+
+and then adding the rule to your `rules` object:
+
+```json
+{
+  "rules": {
+    "no-floating-promise/no-floating-promise": 2
+  }
+}
+```
+
+You can see more details in the [docs for eslint-plugin-no-floating-promise](https://www.npmjs.com/package/eslint-plugin-no-floating-promise).
+
+### If you use TypeScript: `@typescript-eslint/no-floating-promises` already exists!
+
+If you're working in TypeScript, there's already a handy solution baked into `@typescript-eslint` - just activate the rule `@typescript-eslint/no-floating-promises` and you're good to go!
+
+```json
+{
+  /* ... */
+  "rules": {
+    "@typescript-eslint/no-floating-promises": "error"
+  }
+}
+```
+
+## Conclusion
+
+This is a really great way to protect yourself from an asynchronous programming issue in JavaScript and Typescript that can be extremely frustrating to debug if you're not actively looking for it. While suffering through finding floating promises in your code may be one way to learn about async / await in JavaScript, it's probably not a great use of your time, and setting up a quick lint rule can save you time, frustration, and maybe a broken keyboard or two.
 
 ## More Reading
 
 - Interested in learning more about promises? You may enjoy my series on `Promise.allSettled()`:
   - Part 1: [Solve\* all your problems with Promise.allSettled()](https://mikebifulco.com/posts/solve-all-your-problems-with-promise-allsettled)
   - Part 2: [Promise.allSettled() Pt.2 - it's partly settled!](https://mikebifulco.com/posts/promise-all-settled-pt-2-its-partly-settled)
+
+<small>
+
+_Note: The cover image for this post is based on a photo by <a href="https://unsplash.com/@praveentcom?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Praveen Thirumurugan</a> on <a href="https://unsplash.com/s/photos/pool-sign?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>_
+
+</small>
