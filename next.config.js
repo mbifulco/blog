@@ -17,9 +17,5 @@ module.exports = withBundleAnalyzer(
     images: {
       domains: ['i.ytimg.com', 'res.cloudinary.com'],
     },
-    i18n: {
-      locales: ['en'],
-      defaultLocale: 'en',
-    },
   })
 );
