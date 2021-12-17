@@ -28,7 +28,7 @@
     "date-fns": "^2.27.0",
     "fathom-client": "^3.2.0",
     "feed": "^4.2.2",
-    "framer-motion": "^5.5.1",
+    "framer-motion": "^5.5.5",
     "gray-matter": "^4.0.3",
     "mdx-embed": "^0.0.22",
     "next": "^12.0.7",
@@ -45,7 +45,7 @@
     "swr": "^1.1.1"
   },
   "devDependencies": {
-    "@netlify/plugin-nextjs": "4.0.0",
+    "@netlify/plugin-nextjs": "4.1.0",
     "@next/eslint-plugin-next": "^12.0.7",
     "eslint": "8.4.1",
     "eslint-config-next": "^12.0.7",
