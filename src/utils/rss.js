@@ -1,4 +1,3 @@
-import { rules } from 'eslint-config-prettier';
 import { Feed } from 'feed';
 import fs from 'fs';
 
