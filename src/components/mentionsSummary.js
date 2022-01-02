@@ -34,6 +34,7 @@ const MentionsSummary = ({ mentions }) => {
           <AvatarGroup max={15}>
             {likes.map((like) => {
               const { author } = like.data;
+              if (!author) return null;
               return (
                 <a
                   href={author.url}
@@ -61,23 +62,25 @@ const MentionsSummary = ({ mentions }) => {
 
             const formattedPublishDtate = formatDate(new Date(publishedDate));
 
+            if (!author) return null;
+
             return (
               <div
                 className={classes.mention}
                 key={`someone-mentioned-author-${idx}-${author.name}`}
               >
                 <Flex direction="row">
-                  <a href={author.url}>
+                  <a href={author?.url}>
                     <Avatar
                       alt={author.name}
                       src={author.photo}
-                      key={`mentioned-by-author-${author.name}`}
+                      key={`mentioned-by-author-${author?.name}`}
                       marginRight="0.5rem"
                     />
                   </a>
                   <Stack>
                     <span style={{ width: '100%' }}>
-                      <a href={author.url}>
+                      <a href={author?.url}>
                         <Text
                           color={theme.colors.pink[600]}
                           as="span"
