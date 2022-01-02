@@ -1,5 +1,5 @@
 ---
-title: 'MDX Tips: Link to headings in your mdx posts automatically with rehype'
+title: 'MDX Tips: Provide shortcut links to your article subheadings'
 date: 01-02-2022
 excerpt: 'This tutorial will teach you how to automatically add links to heading tags in your mdx posts. This should work for most nextJS sites that use MDX for content, as well as many other JavaScript-based sites which use MDX.'
 published: true
@@ -132,7 +132,7 @@ const CustomHeading = ({ as, id, ...props }) => {
       <Link href={`#${id}`}>
         <NextLink href={`#${id}`}>
           <Heading
-            as="h1"
+            as={as}
             display="inline"
             id={id}
             lineHeight={'1em'}

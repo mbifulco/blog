@@ -32,7 +32,7 @@ const CustomHeading = ({ as, id, ...props }) => {
       <Link href={`#${id}`} _hover={{ textDecoration: 'none' }}>
         <NextLink href={`#${id}`}>
           <Heading
-            as="h1"
+            as={as}
             display="inline"
             id={id}
             lineHeight={'1em'}
