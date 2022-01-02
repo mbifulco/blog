@@ -34,6 +34,7 @@ const MentionsSummary = ({ mentions }) => {
           <AvatarGroup max={15}>
             {likes.map((like) => {
               const { author } = like.data;
+              if (!author) return null;
               return (
                 <a
                   href={author.url}
