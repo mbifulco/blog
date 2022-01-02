@@ -14,11 +14,12 @@ import {
   WebmentionMetadata,
 } from '../../components';
 import { getCloudinaryImageUrl } from '../../utils/images';
+import mdxOptions from '../../utils/mdxOptions';
 
 export async function getStaticProps({ params }) {
   const post = await getPostBySlug(params.slug);
 
-  const mdxSource = await serialize(post.content);
+  const mdxSource = await serialize(post.content, mdxOptions);
 
   return {
     props: {

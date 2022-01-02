@@ -4,6 +4,8 @@ import React from 'react';
 import { MDXProvider } from '@mdx-js/react';
 import { MDXEmbedProvider } from 'mdx-embed';
 
+import NextLink from 'next/link';
+
 import {
   Button,
   Code,
@@ -24,12 +26,45 @@ import { Image } from '../components';
 // one off component imports
 import { CenteredTextDemo } from '../components/demos/CenteredTextDemo';
 
-const H1 = (props) => <Heading as="h1" {...props} />;
-const H2 = (props) => <Heading as="h2" {...props} />;
-const H3 = (props) => <Heading as="h3" {...props} />;
-const H4 = (props) => <Heading as="h4" {...props} />;
-const H5 = (props) => <Heading as="h5" {...props} />;
-const H6 = (props) => <Heading as="h6" {...props} />;
+const CustomHeading = ({ as, id, ...props }) => {
+  if (id) {
+    return (
+      <Link href={`#${id}`} passHref _hover={{ textDecoration: 'none' }}>
+        <NextLink href={`#${id}`}>
+          <Heading
+            as="h1"
+            display="inline"
+            id={id}
+            lineHeight={'1em'}
+            {...props}
+            _hover={{
+              _before: {
+                fontSize: '1em',
+                display: 'inline',
+                content: '"#"',
+                fontSize: 'smaller',
+                color: 'pink.600',
+                position: 'relative',
+                marginLeft: '-1.2ch',
+                paddingRight: '0.2ch',
+                textDecoration: 'none',
+                borderBottom: 0,
+              },
+            }}
+          />
+        </NextLink>
+      </Link>
+    );
+  }
+  return <Heading as={as} {...props} />;
+};
+
+const H1 = (props) => <CustomHeading as="h1" {...props} />;
+const H2 = (props) => <CustomHeading as="h2" {...props} />;
+const H3 = (props) => <CustomHeading as="h3" {...props} />;
+const H4 = (props) => <CustomHeading as="h4" {...props} />;
+const H5 = (props) => <CustomHeading as="h5" {...props} />;
+const H6 = (props) => <CustomHeading as="h6" {...props} />;
 const P = (props) => (
   <Box as="p" marginTop="1rem" marginBottom="1rem" {...props} />
 );
