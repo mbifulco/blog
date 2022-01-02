@@ -29,7 +29,7 @@ import { CenteredTextDemo } from '../components/demos/CenteredTextDemo';
 const CustomHeading = ({ as, id, ...props }) => {
   if (id) {
     return (
-      <Link href={`#${id}`} passHref _hover={{ textDecoration: 'none' }}>
+      <Link href={`#${id}`} _hover={{ textDecoration: 'none' }}>
         <NextLink href={`#${id}`}>
           <Heading
             as="h1"

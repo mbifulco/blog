@@ -1,0 +1,195 @@
+---
+title: 'MDX Tips: Link to headings in your mdx posts automatically with rehype'
+date: 01-02-2022
+excerpt: 'This tutorial will teach you how to automatically add links to heading tags in your mdx posts. This should work for most nextJS sites that use MDX for content, as well as many other JavaScript-based sites which use MDX.'
+published: true
+path: mdx-auto-link-headings-with-rehype-slug
+tags: [react, mdx, nextjs]
+---
+
+## Why you should link to headings in your articles
+
+You may have come across this pattern in articles and posts on sites you frequent - article headings (think `<h1>`, `<h2>`, `<h3>`, `<h4>`, `<h5>`, and `<h6>` in html) will be be wrapped in links that point to themselves. This allows readers to link to _specific_ headings in your articles, jumping to relevant bits of content without forcing someone to read through an entire article. Generally speaking, it will look something like this:
+
+```html
+<a href="#some-unique-id">
+  <h1 id="some-unique-id">My first blog post</h1>
+</a>
+```
+
+The `<a>` tag here has an `href` value of `#some-unique-id` - this is the id of the heading tag. This is based on an HTML [standard defined by the W3C](https://www.w3.org/TR/html401/struct/links.html#h-12.2.3). In short, you can link to any element on an HTML page which has a unique `id` attribute defined, by appending `#[id]` to the end of the URL, like `www.example.com#id-of-the-element`.
+
+## This is tricky with Markdown and MDX
+
+In most static site generators and JAMStack frameworks which allow you to use Markdown and MDX to generate content, the goal is simple: give authors a _very_ simple way to author content using Markdown syntax. The unfortunate side effect in this case is that there's not a way to specify IDs for the headings in Markdown posts (at least, not one that I'm aware of).
+
+A sample markdown post might look like this:
+
+```md
+---
+title: Hello, world
+---
+
+# A fish called wanda
+
+In this essay, I will explain the difference between...
+```
+
+This results in the following output:
+
+```html
+<h1>A fish called wanda</h1>
+<p>In this essay, I will explain the difference between...</p>
+```
+
+Fantastic! That's a nice, easy way to write, but there's not a way to add an id to the heading tag. At least, not out of the box. This is where MDX's plugins come in handy.
+
+## Automatically linking to headings in your mdx posts with rehype plugins
+
+> _Note: This tutorial assumes you're using MDX with NextJS, althought it may be applicable to other systems. Feel free to [send me](https://twitter.com/irreverentmike) any hurdles you encounter with other frameworks, and I'll try to document them here._
+
+### Step 1: Generate IDs for all headings automatically with rehype-slug
+
+[`rehype-slug`](https://github.com/rehypejs/rehype-slug) is a plugin that works with MDX, and will automatically generate IDs for your headings by generating a slug based on the text they contain.
+
+1. Install `rehype-slug` in your project by running `npm install --save rehype-slug` or `yarn add rehype-slug`
+
+2. Add `rehype-slug` to the list of rehype plugins MDX uses. In the case of next.js sites, it is likely wherever you call `serialize()` from `next-mdx-remote`.
+
+```jsx
+import rehypeSlug from 'rehype-slug';
+
+// ...
+
+const options = {
+  mdxOptions: {
+    rehypePlugins: [
+      rehypeSlug, // add IDs to any h1-h6 tag that doesn't have one, using a slug made from its text
+    ],
+  },
+};
+
+const mdxSource = await serialize(post.content, options);
+
+// ...
+```
+
+**Note:** My site uses `serialize()` in several places, so I extracted `options` to its own file. This avoids repeated code, and allows me to manage my plugins for MDX from one place.
+
+At this point, if you fire up your dev environment, and use your browser devtools to inspect any of the headings generated from markdown for your site, they should all have an `id` property added. For the example above, you'd see:
+
+```html
+<h1 id="a-fish-called-wanda">A fish called wanda</h1>
+```
+
+We're halfway there - you can now link to `www.example.com#a-fish-called-wanda`, and the browser will automatically scroll to the heading.
+
+### Step 2: use MDXProvider to customize the way heading tags render
+
+[MDXProvider](https://mdxjs.com/docs/using-mdx/#mdx-provider) is a wrapper component which allows you to customize the way your MDX renders by providing a list of `components`.
+
+This step will depend heavily on the UI frameworks you've chosen for your site - I use [Chakra UI](https://chakra-ui.com/) for my nextjs site, but you can use whatever you like - [tailwindcss](https://tailwindcss.com/), [Material UI](https://mui.com/), etc will all have similar parallels.
+
+Here's a simplified version of the code, which I'll show just for `<h1>` - you'd want to extend this for all title tags, i.e. `<h1>` through `<h6>`:
+
+```jsx
+import Link from 'next/link';
+
+const CustomH1 = ({ id, ...rest }) => {
+  if (id) {
+    return (
+      <Link href={`#${id}`}>
+        <a>
+          <h1 {...rest} />
+        </a>
+      </Link>
+    );
+  }
+  return <h1 {...rest} />;
+};
+
+const components = {
+  h1: CustomH1,
+};
+
+// this would also work in pages/_app.js
+const Layout = ({ children }) => {
+  return <MDXProvider components={components}>{children}</MDXProvider>;
+};
+```
+
+### Doing it with Chakra UI
+
+Like I mentioned above, my site uses Chakra UI to compose page layouts. I've added a bit of customization to links on my site - including a hover behavior which adds a nice `#` character before headings when they're hovered over. If you're curious about [my implementation](https://github.com/mbifulco/blog/pull/577) with Chakra UI, it looks a bit like this:
+
+```jsx
+import NextLink from 'next/link';
+import { Link, Heading } from '@chakra-ui/react';
+
+const CustomHeading = ({ as, id, ...props }) => {
+  if (id) {
+    return (
+      <Link href={`#${id}`}>
+        <NextLink href={`#${id}`}>
+          <Heading
+            as="h1"
+            display="inline"
+            id={id}
+            lineHeight={'1em'}
+            {...props}
+            _hover={{
+              _before: {
+                content: '"#"',
+                position: 'relative',
+                marginLeft: '-1.2ch',
+                paddingRight: '0.2ch',
+              },
+            }}
+          />
+        </NextLink>
+      </Link>
+    );
+  }
+  return <Heading as={as} {...props} />;
+};
+
+const H1 = (props) => <CustomHeading as="h1" {...props} />;
+const H2 = (props) => <CustomHeading as="h2" {...props} />;
+const H3 = (props) => <CustomHeading as="h3" {...props} />;
+const H4 = (props) => <CustomHeading as="h4" {...props} />;
+const H5 = (props) => <CustomHeading as="h5" {...props} />;
+const H6 = (props) => <CustomHeading as="h6" {...props} />;
+
+const components = {
+  h1: H1,
+  h2: H2,
+  h3: H3,
+  h4: H4,
+  h5: H5,
+  h6: H6,
+};
+
+// ...etc - components is passed to MDXProvider in my Layout component
+```
+
+## The Result
+
+The result is what you see on [this page](/posts/add-linking-headings-h1-h6-in-mdx#automatically-linking-to-headings-in-your-mdx-posts), and any of the other posts on my site! Every heading on my markdown pages contains an ID, and is wrapped in a link to itself. This makes it easy for readers to tap on the link to send it to their URL bar, or to right-click/long-press and copy a link to the part of the article they want to link to.
+
+The final markup looks a bit like this:
+
+```html
+<a href="#a-fish-called-wanda">
+  <h1 id="a-fish-called-wanda">A fish called wanda</h1>
+</a>
+```
+
+I hope you found this helpful! If you run into any trouble, feel free to [drop me a line on twitter](https://twitter.com/irreverentmike). Beyond that, I'd love it if you shared this post with someone who you think could benefit from it.
+
+## More reading
+
+If you found this helpful, you may also be interested in:
+
+- [JavaScript Tips: Nullish Coalescing (??)](https://mikebifulco.com/posts/nullish-coalescing-javascript)
+- [JavaScript Tips: Using Array.filter(Boolean)](https://mikebifulco.com/posts/javascript-filter-boolean)
+- [MDX: I should have done this sooner](https://mikebifulco.com/posts/moving-to-mdx)
