@@ -6,7 +6,14 @@ import { MDXRemote } from 'next-mdx-remote';
 
 import useSWR from 'swr';
 
-import { Heading, Link, Text, useColorMode, useTheme } from '@chakra-ui/react';
+import {
+  Heading,
+  Link,
+  Stack,
+  Text,
+  useColorMode,
+  useTheme,
+} from '@chakra-ui/react';
 
 import { getMentions } from '../utils/webmentions';
 
@@ -79,13 +86,13 @@ const Post = ({ summary, post }) => {
             </Link>
           </>
         ) : (
-          <>
+          <Stack spacing={4}>
             {summary ? null : <CarbonAd />}
             {/* eslint-disable-next-line react/jsx-props-no-spreading */}
             <MDXRemote {...post.source} />
 
             <MentionsSummary mentions={mentions} />
-          </>
+          </Stack>
         )}
       </div>
     </article>
