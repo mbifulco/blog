@@ -27,6 +27,8 @@ const MentionsSummary = ({ mentions }) => {
     (mention) => mention.activity.type !== 'like'
   );
 
+  const avatarSize = '48px';
+
   return (
     <>
       {likes.length > 0 && (
@@ -41,7 +43,12 @@ const MentionsSummary = ({ mentions }) => {
                   key={`like-author-${author.name}`}
                   className={classes.avatarLink}
                 >
-                  <Avatar alt={author.name} src={author.photo} />
+                  <Avatar
+                    height={avatarSize}
+                    width={avatarSize}
+                    alt={author.name}
+                    src={author.photo}
+                  />
                 </a>
               );
             })}
@@ -76,6 +83,8 @@ const MentionsSummary = ({ mentions }) => {
                       src={author.photo}
                       key={`mentioned-by-author-${author?.name}`}
                       marginRight="0.5rem"
+                      height={avatarSize}
+                      width={avatarSize}
                     />
                   </a>
                   <Stack>
