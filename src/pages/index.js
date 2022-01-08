@@ -50,6 +50,7 @@ const HomePage = ({ posts }) => {
             margin="0"
             lineHeight="1"
             marginBottom="0.5rem"
+            fontWeight={'bold'}
           >
             Oh, hello
           </Text>
