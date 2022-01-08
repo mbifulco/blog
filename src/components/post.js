@@ -49,6 +49,7 @@ const Post = ({ summary, post }) => {
       marginBottom="2em"
       publicId={coverImagePublicId || `posts/${path}/cover`}
       alt={excerpt}
+      loading="eager"
     />
   );
 
