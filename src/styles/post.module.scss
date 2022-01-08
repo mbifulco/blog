@@ -63,26 +63,6 @@
   border-left-width: 5px;
 }
 
-.post h1,
-.post h2,
-.post h3,
-.post h4,
-.post h5,
-.post h6 {
-  margin: 1.5rem 0;
-  font-weight: bold;
-  font-size: larger;
-}
-
-body.dark-mode .post h1 a,
-body.dark-mode .post h2 a,
-body.dark-mode .post h3 a,
-body.dark-mode .post h4 a,
-body.dark-mode .post h5 a,
-body.dark-mode .post h6 a {
-  color: #222;
-}
-
 .post h1 {
   font-size: 2.625rem;
   margin: 0;

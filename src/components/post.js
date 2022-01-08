@@ -57,10 +57,13 @@ const Post = ({ summary, post }) => {
       <div className={style.postContent}>
         <header>
           <Heading
-            as="h1"
+            as={summary ? 'h2' : 'h1'}
+            size="2xl"
             color={theme.colors.pink[500]}
             textDecoration="none"
             border={0}
+            margin={0}
+            padding={0}
           >
             {summary ? (
               <Link as={NextLink} href={postPath}>
