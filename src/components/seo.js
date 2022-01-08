@@ -82,7 +82,7 @@ const SEO = ({
 
       <link rel="canonical" href={fullCanonical(canonical)} />
 
-      <title>{`${title} | ${siteTitle}`}</title>
+      <title>{`${title} - ${siteTitle}`}</title>
       <meta name="description" content={description || metaDescription} />
       <meta
         name="monetization"
