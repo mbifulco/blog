@@ -5,6 +5,7 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 
 import config from '../config';
+import { getCloudinaryImageUrl } from '../utils/images';
 
 const baseUrl = config.siteUrl;
 
@@ -39,6 +40,9 @@ const SEO = ({
 
     return fullUrl;
   };
+
+  // fall back to a nice headshot of my domepiece if there's no OG image associated with this page
+  const ogImageUrl = image || getCloudinaryImageUrl('mike-headshot-square');
 
   return (
     <Head>
@@ -82,7 +86,7 @@ const SEO = ({
 
       <link rel="canonical" href={fullCanonical(canonical)} />
 
-      <title>{`${title} | ${siteTitle}`}</title>
+      <title>{`${title} - ${siteTitle}`}</title>
       <meta name="description" content={description || metaDescription} />
       <meta
         name="monetization"
@@ -95,7 +99,7 @@ const SEO = ({
 
       <meta
         name="twitter:card"
-        content={image ? `summary_large_image` : `summary`}
+        content={ogImageUrl ? `summary_large_image` : `summary`}
       />
       <meta name="twitter:title" content={metaTitle} />
       <meta name="twitter:creator" content={author?.name || siteAuthor?.name} />
@@ -108,8 +112,8 @@ const SEO = ({
       <meta name="og:description" content={metaDescription} />
       <meta name="og:type" content={ogType || `website`} />
       <meta name="og:url" content={router.asPath} />
-      <meta name="og:image" content={image} />
-      <meta name="og:image:url" content={image} />
+      <meta name="og:image" content={ogImageUrl} />
+      <meta name="og:image:url" content={ogImageUrl} />
 
       <meta name="creator" content="Mike Bifulco @irreverentmike" />
       <meta name="publisher" content="mikebifulco.com" />

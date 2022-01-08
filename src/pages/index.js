@@ -8,6 +8,7 @@ import { Image, PostFeed, SEO, WebmentionMetadata } from '../components';
 
 import { getAllPosts } from '../lib/blog';
 import { generateRSSFeed } from '../utils/rss';
+import { getCloudinaryImageUrl } from '../utils/images';
 
 export async function getStaticProps() {
   const posts = await getAllPosts();
@@ -21,12 +22,18 @@ export async function getStaticProps() {
   };
 }
 
+const headshotPublicId = 'mike-headshot-square';
+const headshotPublicUrl = getCloudinaryImageUrl(headshotPublicId);
+
 const HomePage = ({ posts }) => {
   const theme = useTheme();
   const pink = theme.colors.pink[400];
   return (
     <DefaultLayout>
-      <SEO title="Latest articles on design, development, and the world around me" />
+      <SEO
+        title="Latest articles on design, development, and the world around me"
+        image={headshotPublicUrl}
+      />
       <Box
         display={{ md: 'flex' }}
         margin="1rem 0 2rem 0"
@@ -36,7 +43,7 @@ const HomePage = ({ posts }) => {
         <Box marginRight={[0, 0, '1rem']}>
           <Image
             alt="My headshot"
-            publicId="mike-headshot-square"
+            publicId={headshotPublicId}
             objectFit="contain"
             objectPosition="bottom"
             height="250"
@@ -50,6 +57,7 @@ const HomePage = ({ posts }) => {
             margin="0"
             lineHeight="1"
             marginBottom="0.5rem"
+            fontWeight={'bold'}
           >
             Oh, hello
           </Text>
