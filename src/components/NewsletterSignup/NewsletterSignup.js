@@ -24,7 +24,7 @@ const NewsletterSignup = ({ tags }) => {
             <Headshot />
           </Flex>
           <Heading
-            as="h1"
+            as="h2"
             fontSize="1.375rem"
             marginBottom="1rem"
             color={theme.colors.black}

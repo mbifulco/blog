@@ -59,7 +59,15 @@ const CustomHeading = ({ as, id, ...props }) => {
   return <Heading as={as} {...props} />;
 };
 
-const H1 = (props) => <CustomHeading as="h1" {...props} />;
+/**
+ * note: we force H1 -> H2, because all H1s on the site are rendered
+ * directly in page templates. We only want 1 possible H1 per page, so this
+ * intentionally bumps them down. Leaving a data- attribute to render in HTML
+ * in case I ever run into this as a problem 🤣
+ */
+const H1 = (props) => (
+  <CustomHeading data-mike-h1-to-h2-in-mdxproviderwrapper as="h2" {...props} />
+);
 const H2 = (props) => <CustomHeading as="h2" {...props} />;
 const H3 = (props) => <CustomHeading as="h3" {...props} />;
 const H4 = (props) => <CustomHeading as="h4" {...props} />;
