@@ -31,7 +31,7 @@
     "framer-motion": "^5.5.6",
     "gray-matter": "^4.0.3",
     "mdx-embed": "^0.0.22",
-    "next": "^12.0.7",
+    "next": "^12.0.9",
     "next-mdx-remote": "^3.0.8",
     "pluralize": "^8.0.0",
     "prism-react-renderer": "^1.2.1",
