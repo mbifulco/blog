@@ -27,7 +27,7 @@ So, I built the site with Gatsby, as a visual clone of the Jekyll site. It worke
 
 3.  **Updating the site required too much understanding of Gatsby's underlying platform**
 
-    This basically meant that of the three of us who maintain the site, I was the only one equipped to make significant changes, because I had spent a good deal of time in my day-to-day job building prototypes with Gatsby for [Gymnasium](https://thegymnasium.com). When either of my teammates wanted to make changes to the site, they had a choice: spend hours and hours trying to figure out the site was configured, struggle to make changes, and submit a PR, _or_ create an issue on GitHub and assign it to me to fix. You can probably guess which happened more often - and looking back, it makes total sense.
+    This basically meant that of the three of us who maintain the site, I was the only one equipped to make significant changes, because I had spent a good deal of time in my day-to-day job building prototypes with Gatsby for [Gymnasium](https://thegymnasium.com). When either of my teammates wanted to make changes to the site, they had a choice: spend hours and hours trying to figure out how the site was configured, struggle to make changes, and submit a PR, _or_ create an issue on GitHub and assign it to me to fix. You can probably guess which happened more often - and looking back, it makes total sense.
 
 4.  **Some lugnut\* had used boostrap to design the layout for the site.**
 
@@ -61,7 +61,7 @@ Want to see how it works? Dive into the [SEO component in the site's source code
 
 ### Contact form & Newsletter signup
 
-We had previously been using [Netlify Forms](https://www.netlify.com/products/forms/) for the site's contact form, but since the new site is hoted on Vercel, that is no longer possible. We're now using [Airtable's API](https://github.com/apisyouwonthate/apisyouwonthate.com/blob/main/src/pages/api/contact/index.js) for the form, which lets us collate all submissions into one place. New entries to this form trigger a routine which notifies site owners that we got a message. We then use Airtable to track responses, and make sure that nothing gets lost in the mail.
+We had previously been using [Netlify Forms](https://www.netlify.com/products/forms/) for the site's contact form, but since the new site is hosted on Vercel, that is no longer possible. We're now using [Airtable's API](https://github.com/apisyouwonthate/apisyouwonthate.com/blob/main/src/pages/api/contact/index.js) for the form, which lets us collate all submissions into one place. New entries to this form trigger a routine which notifies site owners that we got a message. We then use Airtable to track responses, and make sure that nothing gets lost in the mail.
 
 This is all made possible by Next.js API routes. These are serverless functions that are magically deployed to the cloud for any route at `/pages/api/[slug]`. We use a similar approach for our Newsletter signup form, which adds contacts to a list on mailjet. You can check out the [API code here](https://github.com/apisyouwonthate/apisyouwonthate.com/blob/main/src/pages/api/newsletter/index.js), and the [newsletter form code here](https://github.com/apisyouwonthate/apisyouwonthate.com/blob/main/src/components/NewsletterForm/NewsletterForm.js).
 
