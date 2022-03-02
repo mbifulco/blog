@@ -1,0 +1,157 @@
+---
+title: What it's like to migrate a high-traffic website from Gatsby to Next.js
+excerpt: I migrated apisyouwonthate.com, a site with 20k+ monthly visits, from Gatsby to Next.js at the end of 2021. Let's talk about what I learned from that experience.
+tags: [gatsby, nextjs, dev, javascript, react]
+date: 02-13-2022
+published: true
+path: migrate-gatsby-to-nextjs-apisyouwonthate-com
+---
+
+[APIs You Won't Hate](https://apisyouwonthate.com) is a resource for developers who want to learn how to build APIs that are secure, performant, and easy to use. I've been helping to run and maintain the site since roughly the beginning of 2018, when I rebuilt it from a [Jekyll](https://jekyllrb.com/) site to a static site with [Gatsby](https://www.gatsbyjs.com/). This was a huge leap forward for the site - as we were growing the community and adding resources for API developers regularly, it became apparent that we were going to need to support some features that I wasn't really interested in building on top of Jekyll - support for multiple authors, an image optimzation solution.
+
+## Why we chose to move away from Gatsby
+
+So, I built the site with Gatsby, as a visual clone of the Jekyll site. It worked fantastically for us, but as we added more and more articles and authors to the site, it became challenging to maintain, for a variety of reasons.
+
+1.  **Building the site was slow**
+
+    From a clean cache, it could take from 11-15 minutes to build, which meant that regular deployments to our hosting provider were starting toget expensive.
+
+2.  **Dealing with images was challenging**
+
+    Gatsby has an _amazingly_ clever [strategy for image optimization](https://www.gatsbyjs.com/plugins/gatsby-image/), which involves sending all images used on the site through a pre-build pipeline that makes them accessible via Gatsby's graphql API. This is a foundational part of how Gatsby sites are meant to run, and it gives plenty of options for image loading strategies and optimization approaches. What we never quite got right with our implementation was a strategy that would allow authors to upload images to the [apisyouwonthate.com repo](https://github.com/apisyouwonthate/apisyouwonthate.com) with a naming strategy that was sensible. Essentially, due to a quick or our implementation, each image _on the site_ had to have a unique name, and if two images with the same name were uploaded, it caused all kinds of problems. You can imagine that in the course of writing dozens of articles about APIs, there's more than one occasion to create an image called `devtools-network-tab.png`, or `cover.png`, etc.
+
+3.  **Updating the site required too much understanding of Gatsby's underlying platform**
+
+    This basically meant that of the three of us who maintain the site, I was the only one equipped to make significant changes, because I had spent a good deal of time in my day-to-day job building prototypes with Gatsby for [Gymnasium](https://thegymnasium.com). When either of my teammates wanted to make changes to the site, they had a choice: spend hours and hours trying to figure out the site was configured, struggle to make changes, and submit a PR, _or_ create an issue on GitHub and assign it to me to fix. You can probably guess which happened more often - and looking back, it makes total sense.
+
+4.  **Some lugnut\* had used boostrap to design the layout for the site.**
+
+    <small>
+
+    (\*It was me.)
+
+    </small>
+
+    I used bootstrap out of convenience, and hamfisted it into working with our React site using a couple of libraries and band-aids to get it all "working" properly. This resulted in a near-infinite supply of teeny tiny little layout bugs. These would be fantastic if I needed them for job security... but in practice they were relentless headaches.
+
+## So, what did we gain from moving to Next.js?
+
+Let me be the first to tell you that it's _highly_ likely that everything I accomplished in the site rebuild on next is _possible_ with Gatsby (or your favorite framework). This rebuild sets the stage for a number of features to come, and should make it easier for us to collaborate with new authors, iterate on site designs, and add small features without having to suffer a 10+ minute CI process.
+
+This rebuild gave me a chance to add features, and add some meaningful updates which had been on my plate for quite a long time. Here's a quick summary of some of my favorite features of the new site:
+
+### SEO features
+
+For the first time ever, **Open Graph Images** are embedded correctly across the site - the site uses a fairly simple strategy, grabbing a predetermined cover image of just-the-right-size and embedding that in the header of each page using Open Graph metadata.
+
+<Image
+  publicId="posts/migrate-gatsby-to-nextjs-apisyouwonthate-com/og-embeds-work"
+  alt="An APIs You Won't Hate article shared on twitter now includes the cover image for the post"
+  caption="Rich Open Graph embeds get much more traffic from twitter than the alternative."
+/>
+
+We've also got fairly fine-grained control of other SEO metadata, including author names, article titles, and descriptions. Our new implementation will allow us to set Canonical URLs for articles crossposted to APIs You Won't Hate from other sources as well, which makes for better SEO all around. This may also help down the line if we want to add sponsored posts to the site which point to another origin as the canonical home for the information we share.
+
+Want to see how it works? Dive into the [SEO component in the site's source code](https://github.com/apisyouwonthate/apisyouwonthate.com/blob/main/src/components/SEO/SEO.js).
+
+### Contact form & Newsletter signup
+
+We had previously been using [Netlify Forms](https://www.netlify.com/products/forms/) for the site's contact form, but since the new site is hoted on Vercel, that is no longer possible. We're now using [Airtable's API](https://github.com/apisyouwonthate/apisyouwonthate.com/blob/main/src/pages/api/contact/index.js) for the form, which lets us collate all submissions into one place. New entries to this form trigger a routine which notifies site owners that we got a message. We then use Airtable to track responses, and make sure that nothing gets lost in the mail.
+
+This is all made possible by Next.js API routes. These are serverless functions that are magically deployed to the cloud for any route at `/pages/api/[slug]`. We use a similar approach for our Newsletter signup form, which adds contacts to a list on mailjet. You can check out the [API code here](https://github.com/apisyouwonthate/apisyouwonthate.com/blob/main/src/pages/api/newsletter/index.js), and the [newsletter form code here](https://github.com/apisyouwonthate/apisyouwonthate.com/blob/main/src/components/NewsletterForm/NewsletterForm.js).
+
+### Lighthouse scores
+
+Our Lighthouse scores _shot up_ with this reimplementation - and while they're a moving target for a variety of reasons, performance on the site is generally really great. This is helped immensely by [Next.js's Image component](https://nextjs.org/docs/basic-features/image-optimization), which uses a variety of web standards and recommended practices to load the right-size image depending on readers' given device and browser.
+
+<Image
+  publicId="posts/migrate-gatsby-to-nextjs-apisyouwonthate-com/lighthouse-scores"
+  alt="Lighthouse scores for APIs You Won't Hate: 95 Performance, 100 Accessibility, 100 Best Practies, 100 SEO"
+  caption="Near-perfect lighthouse scores were far easier to land thanks to our use of Next.js Image Optimization"
+/>
+
+### Search Performance
+
+One of the most important litmus tests available for our site's general performance comes from Google's Search Console. Thankfully, since the site was deployed, we've seen consistent traffic on across all of our pages, with a slight-but-steady increase week to week:
+
+<Image
+  publicId="posts/migrate-gatsby-to-nextjs-apisyouwonthate-com/search-results"
+  alt="Search Console traffic for APIs You Won't Hate"
+  caption="Search Console traffic for APIs You Won't Hate"
+/>
+
+Next also made it _far_ easier to generate a `sitemap.xml` for APIs You Won't Hate. In Gatsbyland, we needed to use [`gatsby-plugin-sitemap`](https://www.gatsbyjs.com/docs/how-to/adding-common-features/creating-a-sitemap/), which _is_ configurable, but is generated at _build time._ This meant that debugging sitemap changes took a full 10min+ for _each change_ - which was completely untenable for us.
+
+By contrast, our [sitemap implementation with Next.js](https://github.com/apisyouwonthate/apisyouwonthate.com/blob/main/next-sitemap.js) uses a library called [next-sitemap](https://github.com/iamvishnusankar/next-sitemap). It is _also_ generated at build time, but in a local dev environment builds take only a few seconds, allowing me to nail our sitemap much more quickly.
+
+<Image
+  publicId="posts/migrate-gatsby-to-nextjs-apisyouwonthate-com/sitemap"
+  alt="Google Search Contole's Sitemap ingestion for APIs You Won't Hate"
+  caption="Once everything was right, we pointed Google Search Console to the new sitemap, and verified that everything was working correctly."
+/>
+
+- make images easier to use
+- image optimization with sharp
+- easier to maintain
+- faster deployments
+- OSS feedback
+
+### Visual redesign
+
+Because this implementation work gave me an opportunity to rip out the old site's visual design, I was able to make some sorely changes to the site's overall look and feel. I removed Bootstrap and `react-bootstrap`, and used [Chakra UI](https://chakra-ui.com/) for layout building instead. There's a bit of a learning curve with Chakra (like any other UI library), but now that I'm familiar with it, I can build new responsive site pages efficiently and reliably.
+
+Here's some side-by-side comparisons of the old and new site:
+
+**Home Page**
+
+<SimpleGrid columns={[1, 1, 2]} gap={4}>
+  <Image
+    publicId="posts/migrate-gatsby-to-nextjs-apisyouwonthate-com/home-before"
+    alt="Old home page design for apisyouwonthate.com"
+    caption="Home page: before"
+  />
+  <Image
+    publicId="posts/migrate-gatsby-to-nextjs-apisyouwonthate-com/home-after"
+    alt="New home page design for apisyouwonthate.com"
+    caption="After"
+  />
+</SimpleGrid>
+
+**Book feature page**
+
+<SimpleGrid columns={[1, 1, 2]} gap={4}>
+  <Image
+    publicId="posts/migrate-gatsby-to-nextjs-apisyouwonthate-com/book-before"
+    alt="Old Book feature page for apisyouwonthate.com"
+    caption="Book feature page: before"
+  />
+
+  <Image
+    publicId="posts/migrate-gatsby-to-nextjs-apisyouwonthate-com/book-after"
+    alt="New book feature page for apisyouwonthate.com"
+    caption="After"
+  />
+</SimpleGrid>
+
+**Blog landing page**
+
+<SimpleGrid columns={[1, 1, 2]} gap={4}>
+<Image
+  publicId="posts/migrate-gatsby-to-nextjs-apisyouwonthate-com/blog-before"
+  caption="Old blog landing page for apisyouwonthate.com"
+  alt="Blog landing page: before"
+/>
+
+<Image
+  publicId="posts/migrate-gatsby-to-nextjs-apisyouwonthate-com/blog-after"
+  caption="New blog landing page for apisyouwonthate.com"
+  alt="After"
+/>
+</SimpleGrid>
+
+## Summary
+
+We've been up and running on Next for a few months now, and everything has been working smoothly. I'm really happy with how this implementation work went, and am really lucky to be able to have a wealth of choices in amazing developer communities that surround JAMstack and SSG tools. Having now built sites and companies with create-react-app, Gatsby, next.js, and Remix Run (keep an eye out for this one!) -- I can say with a high degree of confidence that they are _all_ super tools. You can get your work done in any one of these libraries - often the challenge we face as developers is sticking with our bets long enough to see them through.
+
+Keeping APIs You Won't Hate running and growing has been a forcing function to build a site that is performant and dependable, and affects a large-scale audience... for me, that's more than enough to motivate the work it takes to keep the site running. The community we've built and the knowledge we're sharing are truly fantastic, and it's my privilege to build real sites that people (hopefully) don't hate.
