@@ -15,11 +15,15 @@ So, I built the site with Gatsby, as a visual clone of the Jekyll site. It worke
 
 1.  **Building the site was slow**
 
-    From a clean cache, it could take from 11-15 minutes to build, which meant that regular deployments to our hosting provider were starting toget expensive.
+    From a clean cache, it could take from 11-15 minutes to build, which meant that regular deployments to our hosting provider were starting to get expensive. It also meant that any debug tasks which required a production build were _intolerably_ slow, and very frustrating.
 
 2.  **Dealing with images was challenging**
 
-    Gatsby has an _amazingly_ clever [strategy for image optimization](https://www.gatsbyjs.com/plugins/gatsby-image/), which involves sending all images used on the site through a pre-build pipeline that makes them accessible via Gatsby's graphql API. This is a foundational part of how Gatsby sites are meant to run, and it gives plenty of options for image loading strategies and optimization approaches. What we never quite got right with our implementation was a strategy that would allow authors to upload images to the [apisyouwonthate.com repo](https://github.com/apisyouwonthate/apisyouwonthate.com) with a naming strategy that was sensible. Essentially, due to a quick or our implementation, each image _on the site_ had to have a unique name, and if two images with the same name were uploaded, it caused all kinds of problems. You can imagine that in the course of writing dozens of articles about APIs, there's more than one occasion to create an image called `devtools-network-tab.png`, or `cover.png`, etc.
+    Gatsby has an _amazingly_ clever [strategy for image optimization](https://www.gatsbyjs.com/plugins/gatsby-image/), which involves sending all images used on the site through a pre-build pipeline that makes them accessible via Gatsby's graphql API. This is a foundational part of how Gatsby sites are meant to run, and it gives plenty of options for image loading strategies and optimization approaches.
+
+    What we never quite got right with our implementation was a strategy that would allow authors to upload images to the [apisyouwonthate.com repo](https://github.com/apisyouwonthate/apisyouwonthate.com) with a naming strategy that was sensible.
+
+    Essentially, due to a quirk in our chosen implementation, each image _on the site_ had to have a unique name, and if two images with the same name were uploaded, it caused all kinds of problems. You can imagine that in the course of writing dozens of articles about APIs, there's more than one occasion to create an image called `devtools-network-tab.png`, or `cover.png`, etc.
 
 3.  **Updating the site required too much understanding of Gatsby's underlying platform**
 
@@ -37,7 +41,7 @@ So, I built the site with Gatsby, as a visual clone of the Jekyll site. It worke
 
 ## So, what did we gain from moving to Next.js?
 
-Let me be the first to tell you that it's _highly_ likely that everything I accomplished in the site rebuild on next is _possible_ with Gatsby (or your favorite framework). This rebuild sets the stage for a number of features to come, and should make it easier for us to collaborate with new authors, iterate on site designs, and add small features without having to suffer a 10+ minute CI process.
+Let me be the first to tell you that it's _highly_ likely that everything I accomplished in the site rebuild with Next.js is _possible_ with Gatsby (or your favorite framework). This rebuild sets the stage for a number of features to come, and should make it easier for us to collaborate with new authors, iterate on site designs, and add small features without having to suffer a 10+ minute CI process.
 
 This rebuild gave me a chance to add features, and add some meaningful updates which had been on my plate for quite a long time. Here's a quick summary of some of my favorite features of the new site:
 
