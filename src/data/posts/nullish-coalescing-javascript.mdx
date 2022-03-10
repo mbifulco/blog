@@ -13,19 +13,17 @@ published: true
 
 JavaScript's Nullish Coalescing operator is two question mark characters next to one another (`??`). It takes a left-hand and right-hand operand, returning the right value _if_ the left is `null` or `undefined`. Otherwise, it returns the left value.
 
-<!-- prettier-ignore-start -->
 ```js
 let x;
 
-x = 1 ?? 100;         // 1
-x = null ?? 100;      // 100
+x = 1 ?? 100; // 1
+x = null ?? 100; // 100
 x = undefined ?? 100; // 100
 
-x = 'Peas' ?? 'Carrots';    // Peas
-x = null ?? 'Carrots';      // Carrots
+x = 'Peas' ?? 'Carrots'; // Peas
+x = null ?? 'Carrots'; // Carrots
 x = undefined ?? 'Carrots'; // Carrots
 ```
-<!-- prettier-ignore-end -->
 
 Note that unlike [using Boolean on array.filter()](https://mikebifulco.com/posts/javascript-filter-boolean), there _aren't_ special cases to consider here for _truthy_ or _falsy_ values in Javascript. Nullish Coalescing _only_ returns the right value for `Null` and `undefined`, and not for `false` and some other cases, like:
 
@@ -47,26 +45,16 @@ y = new Date() ?? 'soon'; // [the date object created by new Date()]
 
 This can be used to simplify what has become a fairly common pattern in React components - checking whether a value is present before rendering it, and providing a fallback if not:
 
-<!-- prettier-ignore-start -->
 ```jsx
 // use a ternary operator
-const LetterIntro = ({name}) => {
-  return (
-    <div>
-      Hi {name ? name : 'there'},
-    </div>
-  )
+const LetterIntro = ({ name }) => {
+  return <div>Hi {name ? name : 'there'},</div>;
 };
 
-const BetterLetterIntro = ({name}) => {
-  return (
-    <div>
-      Hi {name ?? 'there'}
-    </div>
-  )
-}
+const BetterLetterIntro = ({ name }) => {
+  return <div>Hi {name ?? 'there'}</div>;
+};
 ```
-<!-- prettier-ignore-end -->
 
 Both of these are _valid_ syntax, but you might argue that the latter is easier to read, so long as you understand what the `??` operator is doing.
 

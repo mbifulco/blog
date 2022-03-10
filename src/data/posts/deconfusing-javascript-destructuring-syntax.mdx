@@ -2,7 +2,7 @@
 title: Understanding JavaScript Destructuring Syntax
 type: post
 date: 03-26-2019
-excerpt: "Destructuring syntax in es6 (or es2015, etc) JavaScript is a wonderfully useful bit of the language.  It allows you to extract values from an Object and assign them to a new variable in one statement -- but it can be confusing to read."
+excerpt: 'Destructuring syntax in es6 (or es2015, etc) JavaScript is a wonderfully useful bit of the language.  It allows you to extract values from an Object and assign them to a new variable in one statement -- but it can be confusing to read.'
 published: true
 path: deconfusing-javascript-destructuring-syntax
 tags: [javascript, dev]
@@ -12,15 +12,17 @@ tags: [javascript, dev]
 
 [Destructuring](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment) syntax in es6 (or es2015, etc) JavaScript is a wonderfully useful bit of the language.  It allows you to extract values from an `Object` and assign them to a new variable in one statement.  If you've not come across destructuring before, a fairly basic case looks like this:
 
-    const person = {
-      name: 'Mike Bifulco',
-      height: 556,
-      fears: ['heights', 'fire'],
-    };
-    const { name } = person;
-    console.log(name); // this will print 'Mike Bifulco'
+```js
+const person = {
+  name: 'Mike Bifulco',
+  height: 556,
+  fears: ['heights', 'fire'],
+};
+const { name } = person;
+console.log(name); // this will print 'Mike Bifulco'
+```
 
-So - what's happening here is pretty simple.  We are creating a `const` called `name`, and filling it with the value found in `person.name` . This is accomplished using the bracket structure to the left of the `=`.  
+So - what's happening here is pretty simple.  We are creating a `const` called `name`, and filling it with the value found in `person.name` . This is accomplished using the bracket structure to the left of the `=`.
 
 (If you haven't seen or used this before, it can definitely be confusing.  Don't fault yourself for that - it'll become second-nature before long.)
 
@@ -30,16 +32,18 @@ There's are many other useful things you can do by way of destructuring.  For m
 
 If you want to pluck a value from within an object, but also need to rename it (for purposes of code readability, perhaps), you can do so in one line:
 
-    const person = {
-      name: 'Mike Bifulco',
-      height: 556,
-      fears: ['heights', 'fire'],
-    };
-    
-    const { height: currentHeight } = person;
-    
-    console.log(currentHeight); // 556
-    console.log(height); // undefined!
+```js
+const person = {
+  name: 'Mike Bifulco',
+  height: 556,
+  fears: ['heights', 'fire'],
+};
+
+const { height: currentHeight } = person;
+
+console.log(currentHeight); // 556
+console.log(height); // undefined!
+```
 
 Just like that, we've assigned `person.height` to `currentHeight` in one line.  Sweet!
 
@@ -47,45 +51,46 @@ Just like that, we've assigned `person.height` to `currentHeight` in one line. �
 
 You can extract one value from an object, and create another variable with everything else, you can do that, too:
 
-    const person = {
-      name: 'Mike Bifulco',
-      height: 556,
-      fears: ['heights', 'fire'],
-    };
-    
-    const { fears, ...fearlessPerson } = person;
-    
-    console.log(fearlessPerson.fears); // undefined!
-    console.log(fears[0]); // heights
+```js
+const person = {
+  name: 'Mike Bifulco',
+  height: 556,
+  fears: ['heights', 'fire'],
+};
+
+const { fears, ...fearlessPerson } = person;
+
+console.log(fearlessPerson.fears); // undefined!
+console.log(fears[0]); // heights
+```
 
 This is a combination of destructuring syntax and the spread operator (`...` ). Very handy!
 
 ## Hard mode: complex destructuring
 
-So both extracting and renaming things with destructuring are fairly straightforward.  I've been using both of those tricks comfortably for a while now.  In the past few months, I've been poking around with [GatsbyJS](https://gatsbyjs.org) for a few different projects (including my own website).  When I was starting to customize and implement my own Gatsby theme, I started to see some _really_ complex looking destructuring syntax, used to pull nested values from GraphQL queries throughout the site.  
+So both extracting and renaming things with destructuring are fairly straightforward.  I've been using both of those tricks comfortably for a while now.  In the past few months, I've been poking around with [GatsbyJS](https://gatsbyjs.org) for a few different projects (including my own website).  When I was starting to customize and implement my own Gatsby theme, I started to see some _really_ complex looking destructuring syntax, used to pull nested values from GraphQL queries throughout the site.
 
 I was really thrown - at first glance, it's not obvious what's going on.  Let's take a look at an example, pulled from a React component used to render a single page in a Gatsby theme:
 
-    const singlePage = ({
-      data,
-      location,
-      pageContext: { nextPagePath, previousPagePath },
-    }) => {
-      return (
-        <p>...react component markup</p>
-      );
-    };
+```jsx
+const singlePage = ({
+  data,
+  location,
+  pageContext: { nextPagePath, previousPagePath },
+}) => {
+  return <p>...react component markup</p>;
+};
+```
 
 There's a combination of things happening in the definition of the `singlePage` React component.  Let's look at just that destructure, and simplify it a bit:
 
-    const {
-      data,
-      location,
-      pageContext: {
-        nextPagePath,
-        previousPagePath,
-      },
-    } = props;
+```jsx
+const {
+  data,
+  location,
+  pageContext: { nextPagePath, previousPagePath },
+} = props;
+```
 
 It took some staring, and some playing around to figure out what was being accomplished here, so let's run through it step by step:
 
@@ -93,9 +98,9 @@ It took some staring, and some playing around to figure out what was being accom
 2.  The first two values, `data` and `location` make good sense - they look just like the examples above.  This line will create a `const` from each of those two paths in the `props` object.
 3.  `pageContext` is where things get interesting -  this is _another_ destructuring.  Somewhat confusingly, the values that are being pulled from `props` here are `nextPagePath` and `previousPagePath` . There is no variable being created for `pageContext` .
 
-If that description didn't help - I don't blame you.  It really took some practice for me to understand what's going on.  I'm not even sure I would recommend using this syntax - it's not particularly easy to read, especially when tools like `prettier` squish it onto fewer lines.  
+If that description didn't help - I don't blame you.  It really took some practice for me to understand what's going on.  I'm not even sure I would recommend using this syntax - it's not particularly easy to read, especially when tools like `prettier` squish it onto fewer lines.
 
-With that said, it seems to be the way-to-go when pulling data from GraphQL queries on Gatsby (and likely elsewhere). If you're going to be working in that world, it's a good idea to familiarize yourself with what's going on here. 
+With that said, it seems to be the way-to-go when pulling data from GraphQL queries on Gatsby (and likely elsewhere). If you're going to be working in that world, it's a good idea to familiarize yourself with what's going on here.
 
 ## Homework
 
@@ -103,11 +108,9 @@ I think the best way to get used to this syntax is just play around with it your
 
 Some challenges for you:
 
-*   Rename the variable `displayName` to `currentUserName` 
-*   Extract `editedBy` into its own variable
-*   Create an object called `meta` which contains everything in `directions` except for the `contactNumber` 
-
-  
+- Rename the variable `displayName` to `currentUserName`
+- Extract `editedBy` into its own variable
+- Create an object called `meta` which contains everything in `directions` except for the `contactNumber`
 
 ## Wrapping up
 
