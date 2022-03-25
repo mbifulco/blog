@@ -4,6 +4,7 @@ import { Box, Link, Stack, Text, useTheme } from '@chakra-ui/react';
 
 import { SocialLinks } from './SocialLinks';
 import { RelatedContentLinksByTag } from '.';
+import config from '../config';
 
 const Footer = () => {
   const theme = useTheme();
@@ -49,9 +50,9 @@ const Footer = () => {
           <span role="img" aria-label="wave">
             👋🏽
           </span>{' '}
-          Hi there. I work as a Developer Advocate at Google. Content on this
-          site contains my own opinions, and does not necessarily reflect the
-          views of my employer.
+          Hi there. I work as a {config.employer.role} at {config.employer.name}
+          . Content on this site contains my own opinions, and does not
+          necessarily reflect the views of my employer.
         </Text>
       </Stack>
     </Box>

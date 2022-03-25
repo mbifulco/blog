@@ -51,50 +51,45 @@ array.filter((item) => {
 
 or, simplified
 
-<!-- prettier-ignore-start -->
 ```js
-array.filter(item => !!item)
+array.filter((item) => !!item);
 ```
-<!-- prettier-ignore-end -->
 
 I suspect that you may have seen at least one of these variations before. In the end, `array.filter(Boolean)` is just shorthand for any of the other options above. It's the kind of thing that can cause even seasoned programmers to recoil in horror the first time they see it. Near as I can tell, though, it's a perfectly fine replacement.
 
 ### Examples of Boolean evaluating for _truthiness_
 
-<!-- prettier-ignore-start -->
 ```js
 // straightforward boolean
-Boolean(true)   // true
-Boolean(false)  // false
+Boolean(true); // true
+Boolean(false); // false
 
 // null/undefined
-Boolean(null)       // false
-Boolean(undefined) // false
+Boolean(null); // false
+Boolean(undefined); // false
 
 // hmm...
-Boolean(NaN)  // false
-Boolean(0)    // false
-Boolean(-0)   // false
-Boolean(-1)   // true
+Boolean(NaN); // false
+Boolean(0); // false
+Boolean(-0); // false
+Boolean(-1); // true
 
 // empty strings vs blank strings
-Boolean("")   // false
-Boolean(" ")  // true
+Boolean(''); // false
+Boolean(' '); // true
 
 // empty objects
-Boolean([]) // true
-Boolean({}) // true
+Boolean([]); // true
+Boolean({}); // true
 
 // Date is just an object
-Boolean(new Date()) // true
+Boolean(new Date()); // true
 
 // oh god
-Boolean("false")                     // true
-Boolean("Or any string, really")     // true
-Boolean('The blog of Mike Bifulco')  // true
-````
-
-<!-- prettier-ignore-end -->
+Boolean('false'); // true
+Boolean('Or any string, really'); // true
+Boolean('The blog of Mike Bifulco'); // true
+```
 
 ## Warning: Be careful with the truth(y)
 

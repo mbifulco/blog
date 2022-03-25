@@ -1,6 +1,11 @@
 const BASE_SITE_URL = 'https://mikebifulco.com';
 
 const config = {
+  employer: {
+    name: 'Stripe',
+    role: 'Developer Advocate',
+    url: 'https://stripe.com',
+  },
   title: `Mike Bifulco`,
   author: {
     name: `Mike Bifulco @irreverentmike`,
