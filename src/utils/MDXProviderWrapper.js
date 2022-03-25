@@ -189,6 +189,7 @@ const components = {
   Image,
   inlineCode: InlineCode,
   a: CustomLink,
+  blockquote: Aside,
   h1: H1,
   h2: H2,
   h3: H3,
