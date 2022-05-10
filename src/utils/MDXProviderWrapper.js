@@ -21,7 +21,7 @@ import {
 import PrismHighlight, { defaultProps } from 'prism-react-renderer';
 import prismTheme from 'prism-react-renderer/themes/nightOwl';
 
-import { Image } from '../components';
+import { Image } from '../components/Image';
 
 // one off component imports
 import { CenteredTextDemo } from '../components/demos/CenteredTextDemo';
@@ -30,7 +30,7 @@ const CustomHeading = ({ as, id, ...props }) => {
   if (id) {
     return (
       <Link href={`#${id}`} _hover={{ textDecoration: 'none' }}>
-        <NextLink href={`#${id}`}>
+        <NextLink href={`#${id}`} passHref>
           <Heading
             as={as}
             display="inline"
@@ -181,7 +181,7 @@ const Pre = (props) => {
   );
 };
 
-const components = {
+export const customComponents = {
   Aside,
   Button,
   Colophon,
@@ -213,12 +213,15 @@ const oneOffComponentsUsedInPosts = {
 };
 /* eslint-enable max-len */
 
+export const components = {
+  ...customComponents,
+  ...oneOffComponentsUsedInPosts,
+};
+
 // eslint-disable-next-line react/prop-types
 const MDXProviderWrapper = ({ children }) => (
   <MDXEmbedProvider>
-    <MDXProvider components={{ ...components, ...oneOffComponentsUsedInPosts }}>
-      {children}
-    </MDXProvider>
+    <MDXProvider components={components}>{children}</MDXProvider>
   </MDXEmbedProvider>
 );
 
