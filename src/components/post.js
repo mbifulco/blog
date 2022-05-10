@@ -22,6 +22,7 @@ import TagsSummary from './tagsSummary';
 import * as style from '../styles/post.module.scss';
 import { CarbonAd, Image, PublishDate } from '.';
 import frontmatterType from '../types/frontmatter';
+import { components } from '../utils/MDXProviderWrapper';
 
 const Post = ({ summary, post }) => {
   const { frontmatter } = post;
@@ -93,7 +94,7 @@ const Post = ({ summary, post }) => {
           <Stack spacing={4}>
             {summary ? null : <CarbonAd />}
             {/* eslint-disable-next-line react/jsx-props-no-spreading */}
-            <MDXRemote {...post.source} />
+            <MDXRemote {...post.source} components={components} />
 
             <MentionsSummary mentions={mentions} />
           </Stack>

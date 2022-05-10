@@ -2,6 +2,7 @@ import { Box, Heading, Stack, Text, useTheme } from '@chakra-ui/react';
 import { MDXRemote } from 'next-mdx-remote';
 
 import { PublishDate } from '..';
+import { components } from '../../utils/MDXProviderWrapper';
 import TagsSummary from '../tagsSummary';
 
 const ExternalWorkItem = ({ article, border = false }) => {
@@ -30,7 +31,7 @@ const ExternalWorkItem = ({ article, border = false }) => {
             <PublishDate date={date} />
           </Text>
           <TagsSummary tags={tags} />
-          <MDXRemote {...article.source} />
+          <MDXRemote {...article.source} components={components} />
         </Stack>
       </Stack>
     </Box>

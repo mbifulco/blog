@@ -6,10 +6,15 @@ import { Image as Img } from '@chakra-ui/react';
 
 import { getCloudinaryImageUrl } from '../../utils/images';
 
-function Image(props) {
-  const { alt, caption, height, publicId, transformations, width, ...rest } =
-    props;
-
+const Image = ({
+  alt,
+  caption,
+  height,
+  publicId,
+  transformations,
+  width,
+  ...rest
+}) => {
   const url = getCloudinaryImageUrl(publicId);
 
   return (
@@ -27,7 +32,7 @@ function Image(props) {
       <figcaption>{caption}</figcaption>
     </figure>
   );
-}
+};
 
 Image.propTypes = {
   caption: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
