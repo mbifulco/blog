@@ -33,23 +33,18 @@ const MentionsSummary = ({ mentions }) => {
     <>
       {likes.length > 0 && (
         <Stack direction="row" alignItems="center" marginTop="1rem">
-          <AvatarGroup max={15}>
+          <AvatarGroup max={4} flexWrap="wrap">
             {likes.map((like) => {
               const { author } = like.data;
               if (!author) return null;
               return (
-                <a
-                  href={author.url}
+                <Avatar
                   key={`like-author-${author.name}`}
-                  className={classes.avatarLink}
-                >
-                  <Avatar
-                    height={avatarSize}
-                    width={avatarSize}
-                    alt={author.name}
-                    src={author.photo}
-                  />
-                </a>
+                  height={avatarSize}
+                  width={avatarSize}
+                  alt={author.name}
+                  src={author.photo}
+                />
               );
             })}
           </AvatarGroup>
