@@ -4,6 +4,8 @@ import NextLink from 'next/link';
 
 import { MDXRemote } from 'next-mdx-remote';
 
+import { YouTube } from 'mdx-embed';
+
 import useSWR from 'swr';
 
 import {
@@ -27,8 +29,16 @@ import { components } from '../utils/MDXProviderWrapper';
 const Post = ({ summary, post }) => {
   const { frontmatter } = post;
 
-  const { author, coverImagePublicId, date, excerpt, path, tags, title } =
-    frontmatter;
+  const {
+    author,
+    coverImagePublicId,
+    date,
+    excerpt,
+    path,
+    tags,
+    title,
+    youTubeId,
+  } = frontmatter;
 
   const theme = useTheme();
   const { colorMode } = useColorMode();
@@ -44,7 +54,7 @@ const Post = ({ summary, post }) => {
 
   // TODO test cover image support
 
-  const coverImageContainer = (
+  let coverContainer = (
     <Image
       className={style.coverImage}
       marginBottom="2em"
@@ -53,6 +63,10 @@ const Post = ({ summary, post }) => {
       loading="eager"
     />
   );
+
+  if (!summary && youTubeId) {
+    coverContainer = <YouTube youTubeId="AbtoSbPUx9o" />;
+  }
 
   return (
     <article className={style.post}>
@@ -80,7 +94,7 @@ const Post = ({ summary, post }) => {
             <PublishDate date={date} /> {author && <>— Written by {author}</>}
           </Text>
           <TagsSummary tags={tags} />
-          {coverImageContainer}
+          {coverContainer}
         </header>
 
         {summary ? (

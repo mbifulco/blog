@@ -103,7 +103,6 @@ const DefaultLayout = ({ children }) => {
           <Footer />
         </Stack>
       </Box>
-      <Script src="https://snippet.affilimate.io" />
     </MDXProviderWrapper>
   );
 };

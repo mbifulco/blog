@@ -68,7 +68,7 @@ const CustomHeading = ({ as, id, ...props }) => {
 const H1 = (props) => (
   <CustomHeading data-mike-h1-to-h2-in-mdxproviderwrapper as="h2" {...props} />
 );
-const H2 = (props) => <CustomHeading as="h2" size="xl" {...props} />;
+const H2 = (props) => <CustomHeading as="h2" size="lg" {...props} />;
 const H3 = (props) => <CustomHeading as="h3" size="md" {...props} />;
 const H4 = (props) => <CustomHeading as="h4" size="md" {...props} />;
 const H5 = (props) => <CustomHeading as="h5" size="md" {...props} />;

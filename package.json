@@ -16,7 +16,7 @@
     "prepare": "husky install"
   },
   "dependencies": {
-    "@chakra-ui/react": "^2.1.0",
+    "@chakra-ui/react": "^2.1.2",
     "@cloudinary/url-gen": "^1.7.0",
     "@emotion/react": "^11.8.2",
     "@emotion/styled": "^11.8.1",
@@ -28,7 +28,7 @@
     "date-fns": "^2.28.0",
     "fathom-client": "^3.4.1",
     "feed": "^4.2.2",
-    "framer-motion": "^6.2.8",
+    "framer-motion": "^6.3.10",
     "gray-matter": "^4.0.3",
     "mdx-embed": "^1.0.0",
     "next": "^12.1.1",
@@ -38,23 +38,24 @@
     "prop-types": "^15.8.1",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
+    "react-icons": "^4.4.0",
     "rehype-autolink-headings": "^6.1.1",
     "rehype-img-size": "^1.0.1",
     "rehype-slug": "^5.0.1",
     "remark": "^14.0.2",
     "remark-html": "^15.0.1",
-    "sass": "^1.52.1",
-    "sharp": "^0.30.5",
+    "sass": "^1.52.2",
+    "sharp": "^0.30.6",
     "swr": "^1.2.2"
   },
   "devDependencies": {
     "@next/eslint-plugin-next": "^12.1.1",
-    "eslint": "8.16.0",
+    "eslint": "8.17.0",
     "eslint-config-next": "^12.1.1",
     "eslint-config-prettier": "^8.5.0",
     "husky": ">=8.0.1",
-    "lint-staged": "^12.3.7",
-    "next-sitemap": "^2.5.24",
+    "lint-staged": "^13.0.0",
+    "next-sitemap": "^3.0.5",
     "prettier": "^2.6.1"
   },
   "repository": {

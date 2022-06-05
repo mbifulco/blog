@@ -80,10 +80,6 @@ const SEO = ({
       <meta name="theme-color" content="#ffffff" />
       {/* end favicon */}
 
-      {/* affilimate */}
-      <meta name="am-api-token" content="NDGNbytop" />
-      {/* end affilimate */}
-
       <link rel="canonical" href={fullCanonical(canonical)} />
 
       <title>{`${title} - ${siteTitle}`}</title>
