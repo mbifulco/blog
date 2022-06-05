@@ -14,11 +14,14 @@ export const getCloudinaryImageUrl = (publicId) => {
   // Cloudinary seems to return images with a URL param of _a=[something] differently on each call of this function
   // including between server and client - Next didn't like this
   // related bug: https://github.com/vercel/next.js/discussions/35773
-  let x = new URL(url);
-  if (x.searchParams.has('_a')) {
-    x.searchParams.delete('_a');
-    url = x.toString();
+  if (url.includes('?')) {
+    url = url.split('?')[0];
   }
+  // let x = new URL(url);
+  // if (x.searchParams.has('_a')) {
+  //   x.searchParams.delete('_a');
+  //   url = x.toString();
+  // }
 
   return url;
 };
