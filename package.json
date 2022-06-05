@@ -38,6 +38,7 @@
     "prop-types": "^15.8.1",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
+    "react-icons": "^4.4.0",
     "rehype-autolink-headings": "^6.1.1",
     "rehype-img-size": "^1.0.1",
     "rehype-slug": "^5.0.1",

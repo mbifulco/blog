@@ -3,6 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { Link, Stack } from '@chakra-ui/react';
+import { FaYoutube } from 'react-icons/fa';
 
 import { GitHubIcon, TwitterIcon, TwitchIcon, RssIcon } from '../icons';
 
@@ -54,6 +55,18 @@ const SocialLinks = ({
       margin={touchMargin}
     >
       <TwitchIcon size={iconSize} />
+    </Link>
+    <Link
+      color={color || '#FF0000'}
+      href="https://www.youtube.com/c/MikeBifulco"
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="MikeBifulco on youtube"
+      margin={touchMargin}
+    >
+      <span style={{ fontSize: '36pt' }}>
+        <FaYoutube />
+      </span>
     </Link>
     <Link
       color={color || '#f78421'}
