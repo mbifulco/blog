@@ -59,6 +59,10 @@ const CustomHeading = ({ as, id, ...props }) => {
   return <Heading as={as} {...props} />;
 };
 
+const allHeadingstyleProps = {
+  lineHeight: '2',
+};
+
 /**
  * note: we force H1 -> H2, because all H1s on the site are rendered
  * directly in page templates. We only want 1 possible H1 per page, so this
@@ -66,15 +70,31 @@ const CustomHeading = ({ as, id, ...props }) => {
  * in case I ever run into this as a problem 🤣
  */
 const H1 = (props) => (
-  <CustomHeading data-mike-h1-to-h2-in-mdxproviderwrapper as="h2" {...props} />
+  <CustomHeading
+    data-mike-h1-to-h2-in-mdxproviderwrapper
+    as="h2"
+    size="lg"
+    {...allHeadingstyleProps}
+    {...props}
+  />
 );
-const H2 = (props) => <CustomHeading as="h2" size="lg" {...props} />;
-const H3 = (props) => <CustomHeading as="h3" size="md" {...props} />;
-const H4 = (props) => <CustomHeading as="h4" size="md" {...props} />;
-const H5 = (props) => <CustomHeading as="h5" size="md" {...props} />;
-const H6 = (props) => <CustomHeading as="h6" size="md" {...props} />;
+const H2 = (props) => (
+  <CustomHeading as="h2" size="lg" {...allHeadingstyleProps} {...props} />
+);
+const H3 = (props) => (
+  <CustomHeading as="h3" size="md" {...allHeadingstyleProps} {...props} />
+);
+const H4 = (props) => (
+  <CustomHeading as="h4" size="md" {...allHeadingstyleProps} {...props} />
+);
+const H5 = (props) => (
+  <CustomHeading as="h5" size="md" {...allHeadingstyleProps} {...props} />
+);
+const H6 = (props) => (
+  <CustomHeading as="h6" size="md" {...allHeadingstyleProps} {...props} />
+);
 const P = (props) => (
-  <Box as="p" marginTop="1rem" marginBottom="1rem" {...props} />
+  <Box as="p" marginTop="1rem" marginBottom="1.5rem" {...props} />
 );
 
 const CustomLink = (props) => {
