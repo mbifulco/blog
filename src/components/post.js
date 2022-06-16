@@ -25,6 +25,7 @@ import * as style from '../styles/post.module.scss';
 import { CarbonAd, Image, PublishDate } from '.';
 import frontmatterType from '../types/frontmatter';
 import { components } from '../utils/MDXProviderWrapper';
+import PolitePop from './PolitePop/PolitePop';
 
 const Post = ({ summary, post }) => {
   const { frontmatter } = post;
@@ -114,6 +115,7 @@ const Post = ({ summary, post }) => {
           </Stack>
         )}
       </div>
+      <PolitePop />
     </article>
   );
 };
