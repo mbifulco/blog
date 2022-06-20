@@ -1,4 +1,5 @@
 export { CarbonAd } from './CarbonAd';
+export { Colophon } from './Colophon';
 export { default as Footer } from './footer';
 export { ExternalWorkItem } from './ExternalWork';
 export { Image } from './Image';

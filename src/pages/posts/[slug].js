@@ -8,6 +8,7 @@ import { getPostBySlug, getAllPosts } from '../../lib/blog';
 
 import { DefaultLayout } from '../../components/Layouts';
 import {
+  Colophon,
   NewsletterSignup,
   Post,
   SEO,
@@ -79,6 +80,7 @@ const BlogPost = (post) => {
       <Flex direction="row" justifyContent="center" marginTop="3rem">
         <NewsletterSignup tags={tags} />
       </Flex>
+      <Colophon />
     </DefaultLayout>
   );
 };
