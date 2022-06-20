@@ -4,6 +4,9 @@ import NextLink from 'next/link';
 import TagDictionary, { getTagInformation } from '../../data/ConvertKitTags';
 
 const DEFAULT_TAGS_TO_DISPLAY = [
+  'react',
+  'remix',
+  'next.js',
   'developer',
   'javascript',
   'design',
@@ -11,7 +14,6 @@ const DEFAULT_TAGS_TO_DISPLAY = [
   'ux',
   'tools',
   'productivity',
-  'gatsby',
 ];
 
 const RelatedContentLinksByTag = ({ tags = DEFAULT_TAGS_TO_DISPLAY }) => {
@@ -20,9 +22,9 @@ const RelatedContentLinksByTag = ({ tags = DEFAULT_TAGS_TO_DISPLAY }) => {
   const pink = theme.colors.pink[600];
 
   return (
-    <Box>
+    <Box paddingTop="2rem" paddingBottom="5rem">
       <Text fontWeight="bold">More great resources</Text>
-      <SimpleGrid fontSize="large" minChildWidth="50%" spacingY="0.5rem">
+      <SimpleGrid fontSize="medium" minChildWidth="50%" spacingY="0.5rem">
         {tags.map((tag) => {
           const tagInformation = getTagInformation(tag);
           if (!tagInformation) return null;
@@ -42,7 +44,7 @@ const RelatedContentLinksByTag = ({ tags = DEFAULT_TAGS_TO_DISPLAY }) => {
           );
         })}
         <Link
-          color={'pink.600'}
+          color={pink}
           _hover={{
             textDecoration: 'none',
           }}

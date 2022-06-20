@@ -1,5 +1,30 @@
 const tags = [
   {
+    name: 'react',
+    id: '3175424',
+    label: 'about React.js',
+  },
+  {
+    name: 'remix',
+    id: '3175426',
+    label: 'about Remix.run',
+  },
+  {
+    name: 'next.js',
+    id: '3175427',
+    label: 'about Next.js',
+  },
+  {
+    name: 'founders',
+    id: '3175429',
+    label: 'for startup founders',
+  },
+  {
+    name: 'creators',
+    id: '3175431',
+    lavel: 'for creators',
+  },
+  {
     name: 'developer',
     id: '1456077',
     label: 'for developers',

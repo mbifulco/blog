@@ -13,7 +13,6 @@ const Footer = () => {
   return (
     <Box as="footer" position="relative" fontSize="small">
       <Stack zIndex={10} position="absolute">
-        <RelatedContentLinksByTag />
         <Box margin="0 1.5rem">
           <SocialLinks />
         </Box>
@@ -54,6 +53,7 @@ const Footer = () => {
           . Content on this site contains my own opinions, and does not
           necessarily reflect the views of my employer.
         </Text>
+        <RelatedContentLinksByTag />
       </Stack>
     </Box>
   );
