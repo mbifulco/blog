@@ -2,7 +2,7 @@ import Script from 'next/script';
 
 const PolitePopEmbed = ({ debug = false }) => (
   <Script
-    src="https://cdn.politepop.com/polite-pop-v1.4.17/polite-pop.min.js"
+    src="https://cdn.politepop.com/polite-pop-v1.5.0/polite-pop.min.js"
     strategy="lazyOnload"
     onLoad={() => {
       debugger;
