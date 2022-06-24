@@ -6,7 +6,7 @@ import TagDictionary, { getTagInformation } from '../../data/ConvertKitTags';
 const DEFAULT_TAGS_TO_DISPLAY = [
   'react',
   'remix',
-  'next.js',
+  'nextjs',
   'developer',
   'javascript',
   'design',

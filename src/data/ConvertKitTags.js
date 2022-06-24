@@ -10,7 +10,7 @@ const tags = [
     label: 'about Remix.run',
   },
   {
-    name: 'next.js',
+    name: 'nextjs',
     id: '3175427',
     label: 'about Next.js',
   },
