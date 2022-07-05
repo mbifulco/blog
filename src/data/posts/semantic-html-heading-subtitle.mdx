@@ -18,9 +18,17 @@ Search engines can more easily parse and understand semantic HTML, [which can he
 
 According to the [html spec](https://html.spec.whatwg.org/multipage/dom.html#heading-content-2), `h1` through `h6` tags are meant to indicate the structure of a document. In other words, each page should have at most 1 `<h1>` tag, and `<h2>` elements should be _sub-sections_ of that `h1` - not additional descriptions for it.
 
-This warning From the HTML spec does a great job of explaining it:
+This [warning from the HTML spec](https://html.spec.whatwg.org/multipage/dom.html#sectioning-content) does a great job of explaining it:
 
 > For example, the following snippet, intended to represent the heading of a corporate site, is non-conforming because the second line is not intended to be a heading of a subsection, but merely a subheading or subtitle (a subordinate heading for the same section).
+>
+> ```html
+> <body>
+>   <h1>ACME Corporation</h1>
+>   <h2>The leaders in arbitrary fast delivery since 1920</h2>
+>   ...
+> </body>
+> ```
 
 ## Use this code to add subtitles to headings
 

@@ -97,6 +97,21 @@ const P = (props) => (
   <Box as="p" marginTop="1rem" marginBottom="1.5rem" {...props} />
 );
 
+const Blockquote = ({ children }) => {
+  const theme = useTheme();
+  return (
+    <Text
+      as="blockquote"
+      paddingLeft="1.5rem"
+      paddingRight="1.5rem"
+      backgroundColor={theme.colors.gray[100]}
+      borderLeft={`5px solid ${theme.colors.pink[400]}`}
+    >
+      {children}
+    </Text>
+  );
+};
+
 const CustomLink = (props) => {
   const theme = useTheme();
   return <Link color={theme.colors.pink[600]} {...props} />;
@@ -203,6 +218,7 @@ const Pre = (props) => {
 
 export const customComponents = {
   Aside,
+  blockquote: Blockquote,
   Button,
   Colophon,
   Highlight,
