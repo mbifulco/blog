@@ -5,7 +5,6 @@ const PolitePopEmbed = ({ debug = false }) => (
     src="https://cdn.politepop.com/polite-pop-v1.4.17/polite-pop.min.js"
     strategy="lazyOnload"
     onLoad={() => {
-      debugger;
       PolitePop({
         styles: {
           popRoundedCorners: `8px`,
