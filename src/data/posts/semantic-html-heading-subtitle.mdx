@@ -30,20 +30,37 @@ This [warning from the HTML spec](https://html.spec.whatwg.org/multipage/dom.htm
 > </body>
 > ```
 
+(07/05/2022) As of the time of this writing, whatwg goes on to recommend use of `hgroup` in its solution. [According to MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/hgroup#usage_notes), hgroup should not be used, as it is not supported by assistive technologies needed for accesible reading of HTML sites.
+
 ## Use this code to add subtitles to headings
 
-The correct semantic structure of HTML for a heading with a subtitle is straightforward - nest your `<h1>`, etc with in a `<hgroup>` tag, and include a `<p>` tag with an appropriate class name as a sibling to that `h1`. Note that this same structure applies to `h2`-`h6` as well:
+The correct semantic structure of HTML for a heading with a subtitle is straightforward - nest your `<h1>`, etc with in a `<header>` tag, and include a `<p>` tag with an appropriate class name as a sibling to that `h1`:
 
 ```html
-<hgroup>
+<header>
   <h1>How to bootstrap a product as a solo founder</h1>
   <p class="tagline">
     Important lessongs learned from building 10 products on my own in 2 years
   </p>
-</hgroup>
+</header>
 ```
 
-For more details on this, check out the [semantics section of the WHATWG html spec](https://html.spec.whatwg.org/multipage/dom.html#semantics-2).
+For more details on this, check out [MDN docs on the header tag](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/header), and their [semantics section](https://developer.mozilla.org/en-US/docs/Glossary/Semantics).
+
+### 🚨 UPDATE: I was wrong! 🚨
+
+The first version of this article was wrong! I previously recommended using the `<hgroup>` tag as per the whatwg spec, but I was corrected by [@AnalyticsEqv](https://twitter.com/AnalyticsEqv) on twitter:
+
+<blockquote class="twitter-tweet">
+  <p lang="en" dir="ltr">
+    MDN specifically recommends against &lt;hgroup&gt; because assistive
+    technologies don&#39;t support it.
+  </p>
+  &mdash; EQV Analytics 🇺🇦 (@AnalyticsEqv) <a href="https://twitter.com/AnalyticsEqv/status/1544328749272993792?ref_src=twsrc%5Etfw">July 5, 2022</a>
+</blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8" />
+
+Thanks for the correction! I definitely get things wrong sometimes, and I'm always happy to correct myself when appropriate.
 
 ## Did you find this helpful?
 
