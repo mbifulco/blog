@@ -13,9 +13,12 @@ import {
   Box,
   Heading,
   Link,
+  ListItem,
+  OrderedList,
   SimpleGrid,
   Stack,
   Text,
+  UnorderedList,
   useTheme,
 } from '@chakra-ui/react';
 import PrismHighlight, { defaultProps } from 'prism-react-renderer';
@@ -216,6 +219,12 @@ const Pre = (props) => {
   );
 };
 
+const ListItemComponent = ({ children, ...rest }) => (
+  <ListItem {...rest} ml="1.25rem">
+    {children}
+  </ListItem>
+);
+
 export const customComponents = {
   Aside,
   blockquote: Blockquote,
@@ -231,9 +240,12 @@ export const customComponents = {
   h4: H4,
   h5: H5,
   h6: H6,
+  li: ListItemComponent,
+  ol: OrderedList,
   p: P,
   pre: Pre,
   SimpleGrid,
+  ul: UnorderedList,
 };
 
 /* eslint-disable max-len */
