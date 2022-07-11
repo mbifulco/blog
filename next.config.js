@@ -18,6 +18,7 @@ module.exports = withBundleAnalyzer(
     images: {
       domains: ['i.ytimg.com', 'res.cloudinary.com'],
     },
+    compress: false,
     async redirects() {
       return [
         {
