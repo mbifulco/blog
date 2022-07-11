@@ -19,6 +19,13 @@ module.exports = withBundleAnalyzer(
       domains: ['i.ytimg.com', 'res.cloudinary.com'],
     },
     compress: false,
+    webpack: {
+      config: {
+        optimization: {
+          minimize: false,
+        },
+      },
+    },
     async redirects() {
       return [
         {
