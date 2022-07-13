@@ -18,6 +18,7 @@ module.exports = withBundleAnalyzer(
     images: {
       domains: ['i.ytimg.com', 'res.cloudinary.com'],
     },
+    productionBrowserSourceMaps: true,
     compress: false,
     webpack: (config, context) => {
       return {
