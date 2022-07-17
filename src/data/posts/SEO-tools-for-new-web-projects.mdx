@@ -1,0 +1,56 @@
+---
+title: '5 Tools I add to every new web project for SEO and analytics'
+excerpt: I use tehse tools on every project to help track source code, monitor traffic on my site, and optimize content for better Search Engine Optimization (SEO).
+date: 07-12-2022
+published: false
+coverImagePublicId: 'posts/add-fathom-analytics-to-remix/cover.png'
+path: SEO-tools-for-new-web-projects
+tags: [react, remix, fathom, tutorial, analytics, video]
+---
+
+## Fathom Analytics
+
+Fathom is privacy first analytics for the web. According to [their site](https://usefathom.com), _Fathom is a Google Analytics alternative that doesn’t compromise visitor privacy for data. We revolutionized website analytics by making them easy to use and respectful of privacy laws (like GDPR and more)._
+
+If you've never paid attention analytics for your web properties, Fathom will be a revelation - it's super useful to have an understanding of which pages on your site are getting traffic, where it's coming from, and what times of day are most busy. If you've used Google Analytics in the past, you may be surprised just how freeing it is to use an analytics tool that prioritizes analytics. You _really_ don't need to know _who_ is on a given page - instead, focusing on the content on your site which is being visited, and the journey readers take to get there is a
+
+It's great, and privacy first. Google's advantage is quickly vanishing with GA4 due to new regulations
+
+- Fathom is lightweight and ridiculously easy to use. You can learn quickly which pages are getting the most traffic, and when. You don't need to know _who_ is doing what in your analytics
+  I've written a bit about my experiences with Fathom before. You may want to check out my other articles, including: [Why I switched to Fathom for Analytics](https://mikebifulco.com/posts/why-fathom-analytics) and [How to add Fathom Analytics to your Remix.run app](https://mikebifulco.com/posts/add-fathom-analytics-to-remix)
+
+If you're hesitant to pay for Fathom, they do also provide an open source version called [Fathom Lite](https://github.com/usefathom/fathom) - you'll need to configure and host it yourself, but it should give you an idea of what Fathom's premiums service is like.
+
+If you're interested in trying out Fathom, use my **referral link:** use my referral link [https://usefathom.com/ref/DPSSYB](https://usefathom.com/ref/DPSSYB)\*\* for a discount to get you started.
+
+## Google Search Console
+
+My adoption of [Google Search Console](https://search.google.com/search-console/about) come from what I learned taking Monica Lent's [Blogging for Devs](https://bloggingfordevs.com) course.
+
+You can register your site with the Google Search Console for free in a few quick steps, without adding Google Analytics (which is helpful if, like me, you've chosen [Fathom](https://mikebifulco.com/posts/why-fathom-analytics) for its privacy-first features).
+
+The Search Console allows you to see how many people are getting to your page from Google, and what they're searching for. It also gives you a time-view of your site's growth in popularity from search - in other words, you can see whether you're gaining traction via SEO or not.
+
+Best of all, it's free! Just register and follow instructions to add a DNS record, or upload a file to a specific place to verify that you own the site you're interested in monitoring. You should make sure to have a sitemap on your site - they're easy to generate, and worth the time to get right. This is what Google's crawlers primarily use to index your articles for search results.
+
+I use the Search Console to make decisions about things to write about next, and track the progress of my site over time. At the moment, Google will keeps 16 months of your site's traffic history around for you to analyze, but that history starts once you've registered you site with the Search Console. So, the sooner you get set up, the better!
+
+## Cloudflare
+
+I use [Cloudflare](https://cloudflare.com) to manage the DNS records for all of my sites. In addition to having a _really_ straightforward UI for DNS management, they offer a host of other features to keep your sites running well. This includes automated protection for DDoS attacks, maintenance mode, and performance enhancements such as origin server optimization and caching.
+
+Cloudflare provides a [Free Tier](https://www.cloudflare.com/plans/) that will work for most personal sites. You'll need to set up an account, look for the instructions to add your domain to your Cloudflare account, and then update your DNS settings as needed.
+
+Because I own domains from a variety of registrars, it's really nice to be able to manage DNS for all of them in one place. They also provide a ton of other great dev tools, like [Cloudflare Workers](https://workers.cloudflare.com/), which you can use to add interactivity to your site.
+
+## GitHub
+
+- If you're coding your own sites rather than using something like wordpress or Wix or Squarespace, tracking your source code is a no brainer.
+- Big learning curve - check out Gymnasium's _free_ course, [Introduction to GitHub](https://thegymnasium.com/courses/GYM/006/0/about) to get started, and don't be afraid to ask for help if you get stuck here.
+
+## Netlify / Vercel
+
+- Deploys straight from GitHub - unbeatable workflow
+- Easy rollback of your site if something goes wrong.
+- Test new changes on a real URL on the web before deploying to production
+- Collaborate via github, too
