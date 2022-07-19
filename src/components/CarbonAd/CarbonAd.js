@@ -1,6 +1,3 @@
-import Script from 'next/script';
-import { Box } from '@chakra-ui/react';
-
 const CarbonAd = () => {
   return (
     <script

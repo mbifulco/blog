@@ -4,8 +4,6 @@ import NextLink from 'next/link';
 
 import { MDXRemote } from 'next-mdx-remote';
 
-import { YouTube } from 'mdx-embed';
-
 import useSWR from 'swr';
 
 import {
@@ -26,6 +24,8 @@ import { CarbonAd, Image, PublishDate } from '.';
 import frontmatterType from '../types/frontmatter';
 import { components } from '../utils/MDXProviderWrapper';
 import PolitePop from './PolitePop/PolitePop';
+
+import { YouTube } from './MdxEmbedUtils';
 
 const Post = ({ summary, post }) => {
   const { frontmatter } = post;
@@ -66,7 +66,7 @@ const Post = ({ summary, post }) => {
   );
 
   if (!summary && youTubeId) {
-    coverContainer = <YouTube youTubeId="AbtoSbPUx9o" />;
+    coverContainer = <YouTube youTubeId={youTubeId} />;
   }
 
   return (

@@ -2,9 +2,10 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
 import { MDXProvider } from '@mdx-js/react';
-import { Tweet, YouTube, Vimeo } from 'mdx-embed';
 
 import NextLink from 'next/link';
+
+import { YouTube, Vimeo } from '../components/MdxEmbedUtils';
 
 import {
   Button,
@@ -25,12 +26,13 @@ import { Image } from '../components/Image';
 
 // one off component imports
 import { CenteredTextDemo } from '../components/demos/CenteredTextDemo';
+import Script from 'next/script';
 
 const CustomHeading = ({ as, id, ...props }) => {
   if (id) {
     return (
       <Link href={`#${id}`} _hover={{ textDecoration: 'none' }}>
-        <NextLink href={`#${id}`} passHref>
+        <NextLink href={`#${id}`}>
           <Heading
             as={as}
             display="inline"
@@ -93,9 +95,7 @@ const H5 = (props) => (
 const H6 = (props) => (
   <CustomHeading as="h6" size="md" {...allHeadingstyleProps} {...props} />
 );
-const P = (props) => (
-  <Box as="p" marginTop="1rem" marginBottom="1.5rem" {...props} />
-);
+const P = (props) => <Text marginTop="1rem" marginBottom="1.5rem" {...props} />;
 
 const Blockquote = ({ children }) => {
   const theme = useTheme();
@@ -252,14 +252,20 @@ const oneOffComponentsUsedInPosts = {
 export const components = {
   ...customComponents,
   ...oneOffComponentsUsedInPosts,
-  Tweet,
   YouTube,
   Vimeo,
 };
 
 // eslint-disable-next-line react/prop-types
 const MDXProviderWrapper = ({ children }) => (
-  <MDXProvider components={components}>{children}</MDXProvider>
+  <>
+    <Script
+      async
+      src="https://platform.twitter.com/widgets.js"
+      charset="utf-8"
+    />
+    <MDXProvider components={components}>{children}</MDXProvider>
+  </>
 );
 
 export default MDXProviderWrapper;

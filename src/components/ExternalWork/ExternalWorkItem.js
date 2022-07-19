@@ -23,16 +23,14 @@ const ExternalWorkItem = ({ article, border = false }) => {
       borderRadius="20px"
     >
       <Stack>
-        <Stack>
-          <Heading marginBottom="0" fontSize="2rem" as="h2" key={url}>
-            {title}
-          </Heading>
-          <Text marginTop={0} color={theme.colors.pink[500]}>
-            <PublishDate date={date} />
-          </Text>
-          <TagsSummary tags={tags} />
-          <MDXRemote {...article.source} components={components} />
-        </Stack>
+        <Heading marginBottom="0" fontSize="2rem" as="h2" key={url}>
+          {title}
+        </Heading>
+        <Text marginTop={0} color={theme.colors.pink[500]}>
+          <PublishDate date={date} />
+        </Text>
+        <TagsSummary tags={tags} />
+        <MDXRemote {...article.source} components={components} />
       </Stack>
     </Box>
   );
