@@ -4,6 +4,8 @@ import NextLink from 'next/link';
 
 import { MDXRemote } from 'next-mdx-remote';
 
+import { YouTube } from 'mdx-embed';
+
 import useSWR from 'swr';
 
 import {
@@ -22,12 +24,22 @@ import TagsSummary from './tagsSummary';
 import * as style from '../styles/post.module.scss';
 import { CarbonAd, Image, PublishDate } from '.';
 import frontmatterType from '../types/frontmatter';
+import { components } from '../utils/MDXProviderWrapper';
+import PolitePop from './PolitePop/PolitePop';
 
 const Post = ({ summary, post }) => {
   const { frontmatter } = post;
 
-  const { author, coverImagePublicId, date, excerpt, path, tags, title } =
-    frontmatter;
+  const {
+    author,
+    coverImagePublicId,
+    date,
+    excerpt,
+    path,
+    tags,
+    title,
+    youTubeId,
+  } = frontmatter;
 
   const theme = useTheme();
   const { colorMode } = useColorMode();
@@ -43,7 +55,7 @@ const Post = ({ summary, post }) => {
 
   // TODO test cover image support
 
-  const coverImageContainer = (
+  let coverContainer = (
     <Image
       className={style.coverImage}
       marginBottom="2em"
@@ -52,6 +64,10 @@ const Post = ({ summary, post }) => {
       loading="eager"
     />
   );
+
+  if (!summary && youTubeId) {
+    coverContainer = <YouTube youTubeId="AbtoSbPUx9o" />;
+  }
 
   return (
     <article className={style.post}>
@@ -79,7 +95,7 @@ const Post = ({ summary, post }) => {
             <PublishDate date={date} /> {author && <>— Written by {author}</>}
           </Text>
           <TagsSummary tags={tags} />
-          {coverImageContainer}
+          {coverContainer}
         </header>
 
         {summary ? (
@@ -93,12 +109,13 @@ const Post = ({ summary, post }) => {
           <Stack spacing={4}>
             {summary ? null : <CarbonAd />}
             {/* eslint-disable-next-line react/jsx-props-no-spreading */}
-            <MDXRemote {...post.source} />
+            <MDXRemote {...post.source} components={components} />
 
             <MentionsSummary mentions={mentions} />
           </Stack>
         )}
       </div>
+      <PolitePop />
     </article>
   );
 };

@@ -1,0 +1,72 @@
+---
+title: 'How to add Fathom Analytics to your Remix.run app'
+excerpt: Building a website using the Remix.run webb app framework? This tutorial will teach you how to add privacy-first analytics to your Remix site with Fathom.
+date: 06-05-2022
+published: true
+coverImagePublicId: 'posts/add-fathom-analytics-to-remix/cover.png'
+path: add-fathom-analytics-to-remix
+tags: [react, remix, fathom, tutorial, analytics, video]
+youTubeId: AbtoSbPUx9o
+---
+
+Building a website using the Remix.run web app framework? This tutorial will teach you how to add privacy-first analytics to your Remix site with Fathom.
+
+## How to set up Fathom on your Remix site
+
+1. Sign into your account with [Fathom](https://usefathom.com/login), and create a new site.
+2. Open the settings for that site, and look for _Script settings_. Hit the clipboard icon to copy the Script tag for your site.
+
+   <Image
+     publicId="posts/add-fathom-analytics-to-remix/script-settings"
+     alt="Script settings for one of my sites on Fathom's dashboard"
+     caption="You site's embed code will be on the script settings page. Hit the clipboard button to copy the code"
+   />
+
+3. Open up your Remix site in your IDE of choice. open `root.tsx` (or `root.jsx` if you're using JavaScript instead of TypeScript), and paste your embed code right before the `<Script />` tag:
+
+```jsx
+return (
+  <html lang="en">
+    <head>
+      <Meta />
+      <Links />
+    </head>
+    <body>
+      <Layout>
+        <Outlet />
+      </Layout>
+      <ScrollRestoration />
+
+      <script
+        src="https://cdn.usefathom.com/script.js"
+        data-site="TRSSCIOR"
+        defer
+      />
+      <Scripts />
+      <LiveReload />
+    </body>
+  </html>
+);
+```
+
+<small>
+  
+  _Note: ☝🏽 I've edited the `<script>` tag here to be self closing, rather than having `<script></script>`. It should work either way._
+
+</small>
+
+4. Start your site with `npm run dev` or `yarn dev` and visit any page (you may have to hit reload if you had the page open already). You should see this reflected in your fathom dashboard in real time!
+   <Image
+     publicId="posts/add-fathom-analytics-to-remix/tracking-results"
+     alt="You'll know it's working when you see a live visitor on your fathom dashboard"
+     caption="You'll know it's working when you see a live visitor on your fathom dashboard"
+   />
+
+## Try out Fathom - it's great!
+
+I've been using Fathom for years, and am a happy paying customer. If you'd like to give it a shot, you can get $10 off of Fathom when you **use my referral link [https://usefathom.com/ref/DPSSYB](https://usefathom.com/ref/DPSSYB)** to get started.
+
+## If you enjoyed this video
+
+- I wrote a post when I initially adopted fathom, called [Why I switched to Fathom for analytics](https://mikebifulco.com/posts/why-fathom-analytics)
+- Make sure to [subscribe to my YouTube channel](https://www.youtube.com/channel/mikebifulco)

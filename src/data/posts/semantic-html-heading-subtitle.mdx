@@ -1,0 +1,73 @@
+---
+title: 'The correct semantic HTML for adding subtitles to h1 tags'
+excerpt: 'This is the right format to use if you want to add a subtitle below an h1 tag on your html pages. Semantic HTML makes your site more accessible and better for SEO, since it is easier for search engines to process.'
+date: 07-05-2022
+published: true
+coverImagePublicId: 'posts/semantic-html-heading-subtitle/cover.png'
+tags: [react, html, seo, tutorial]
+path: semantic-html-heading-subtitle
+---
+
+## Semantic HTML makes your sites better
+
+Semantic HTML is important because it helps improve the accessibility of a web page and makes the code more readable. Semantic elements are those that clearly describe their meaning in a way that is easy for both humans and machines to understand.
+
+Search engines can more easily parse and understand semantic HTML, [which can help improve your website's SEO](https://developers.google.com/style/semantic-tagging). Semantic HTML uses tags to describe the meaning of content on a page, rather than just its presentation. This can help search engines better understand the content of a page and index it appropriately.
+
+### Using h2 as a subtitle for an h1 is incorrect
+
+According to the [html spec](https://html.spec.whatwg.org/multipage/dom.html#heading-content-2), `h1` through `h6` tags are meant to indicate the structure of a document. In other words, each page should have at most 1 `<h1>` tag, and `<h2>` elements should be _sub-sections_ of that `h1` - not additional descriptions for it.
+
+This [warning from the HTML spec](https://html.spec.whatwg.org/multipage/dom.html#sectioning-content) does a great job of explaining it:
+
+> For example, the following snippet, intended to represent the heading of a corporate site, is non-conforming because the second line is not intended to be a heading of a subsection, but merely a subheading or subtitle (a subordinate heading for the same section).
+>
+> ```html
+> <body>
+>   <h1>ACME Corporation</h1>
+>   <h2>The leaders in arbitrary fast delivery since 1920</h2>
+>   ...
+> </body>
+> ```
+
+(07/05/2022) As of the time of this writing, whatwg goes on to recommend use of `hgroup` in its solution. [According to MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/hgroup#usage_notes), hgroup should not be used, as it is not supported by assistive technologies needed for accesible reading of HTML sites.
+
+## Use this code to add subtitles to headings
+
+The correct semantic structure of HTML for a heading with a subtitle is straightforward - nest your `<h1>`, etc with in a `<header>` tag, and include a `<p>` tag with an appropriate class name as a sibling to that `h1`:
+
+```html
+<header>
+  <h1>How to bootstrap a product as a solo founder</h1>
+  <p class="tagline">
+    Important lessongs learned from building 10 products on my own in 2 years
+  </p>
+</header>
+```
+
+For more details on this, check out [MDN docs on the header tag](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/header), and their [semantics section](https://developer.mozilla.org/en-US/docs/Glossary/Semantics).
+
+### 🚨 UPDATE: I was wrong! 🚨
+
+The first version of this article was wrong! I previously recommended using the `<hgroup>` tag as per the whatwg spec, but I was corrected by [@AnalyticsEqv](https://twitter.com/AnalyticsEqv) on twitter:
+
+<blockquote class="twitter-tweet">
+  <p lang="en" dir="ltr">
+    MDN specifically recommends against &lt;hgroup&gt; because assistive
+    technologies don&#39;t support it.
+  </p>
+  &mdash; EQV Analytics 🇺🇦 (@AnalyticsEqv) <a href="https://twitter.com/AnalyticsEqv/status/1544328749272993792?ref_src=twsrc%5Etfw">July 5, 2022</a>
+</blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8" />
+
+Thanks for the correction! I definitely get things wrong sometimes, and I'm always happy to correct myself when appropriate.
+
+## Did you find this helpful?
+
+You might also like these other articles I've written:
+
+- [How to run dependabot locally on your projects](https://mikebifulco.com/posts/run-dependabot-locally)
+- [No Floating Promises: an eslint rule to prevent async code errors](https://mikebifulco.com/posts/eslint-no-floating-promises)
+- [JavaScript tips: nullish coalescing](https://mikebifulco.com/posts/nullish-coalescing-javascript)
+
+If you want to hear more from me, consider subscribing to my newsletter 👇🏼

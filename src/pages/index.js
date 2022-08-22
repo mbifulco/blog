@@ -9,6 +9,7 @@ import { Image, PostFeed, SEO, WebmentionMetadata } from '../components';
 import { getAllPosts } from '../lib/blog';
 import { generateRSSFeed } from '../utils/rss';
 import { getCloudinaryImageUrl } from '../utils/images';
+import config from '../config';
 
 export async function getStaticProps() {
   const posts = await getAllPosts();
@@ -81,9 +82,9 @@ const HomePage = ({ posts }) => {
             margin="0"
             marginTop="1rem"
           >
-            I work at Google -- but the things I post here are my own, and{' '}
-            {"don't "}
-            necessarily reflect {"Google's"} views or opinions.
+            I work at {config.employer.name} -- but the things I post here are
+            my own, and {"don't "}
+            necessarily reflect the views or opinions of {config.employer.name}.
           </Text>
         </Box>
       </Box>

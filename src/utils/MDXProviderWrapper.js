@@ -2,7 +2,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
 import { MDXProvider } from '@mdx-js/react';
-import { MDXEmbedProvider } from 'mdx-embed';
+import { Tweet, YouTube, Vimeo } from 'mdx-embed';
 
 import NextLink from 'next/link';
 
@@ -13,15 +13,18 @@ import {
   Box,
   Heading,
   Link,
+  ListItem,
+  OrderedList,
   SimpleGrid,
   Stack,
   Text,
+  UnorderedList,
   useTheme,
 } from '@chakra-ui/react';
 import PrismHighlight, { defaultProps } from 'prism-react-renderer';
 import prismTheme from 'prism-react-renderer/themes/nightOwl';
 
-import { Image } from '../components';
+import { Image } from '../components/Image';
 
 // one off component imports
 import { CenteredTextDemo } from '../components/demos/CenteredTextDemo';
@@ -30,7 +33,7 @@ const CustomHeading = ({ as, id, ...props }) => {
   if (id) {
     return (
       <Link href={`#${id}`} _hover={{ textDecoration: 'none' }}>
-        <NextLink href={`#${id}`}>
+        <NextLink href={`#${id}`} passHref>
           <Heading
             as={as}
             display="inline"
@@ -59,6 +62,10 @@ const CustomHeading = ({ as, id, ...props }) => {
   return <Heading as={as} {...props} />;
 };
 
+const allHeadingstyleProps = {
+  lineHeight: '2',
+};
+
 /**
  * note: we force H1 -> H2, because all H1s on the site are rendered
  * directly in page templates. We only want 1 possible H1 per page, so this
@@ -66,16 +73,47 @@ const CustomHeading = ({ as, id, ...props }) => {
  * in case I ever run into this as a problem 🤣
  */
 const H1 = (props) => (
-  <CustomHeading data-mike-h1-to-h2-in-mdxproviderwrapper as="h2" {...props} />
+  <CustomHeading
+    data-mike-h1-to-h2-in-mdxproviderwrapper
+    as="h2"
+    size="lg"
+    {...allHeadingstyleProps}
+    {...props}
+  />
 );
-const H2 = (props) => <CustomHeading as="h2" {...props} />;
-const H3 = (props) => <CustomHeading as="h3" {...props} />;
-const H4 = (props) => <CustomHeading as="h4" {...props} />;
-const H5 = (props) => <CustomHeading as="h5" {...props} />;
-const H6 = (props) => <CustomHeading as="h6" {...props} />;
+const H2 = (props) => (
+  <CustomHeading as="h2" size="lg" {...allHeadingstyleProps} {...props} />
+);
+const H3 = (props) => (
+  <CustomHeading as="h3" size="md" {...allHeadingstyleProps} {...props} />
+);
+const H4 = (props) => (
+  <CustomHeading as="h4" size="md" {...allHeadingstyleProps} {...props} />
+);
+const H5 = (props) => (
+  <CustomHeading as="h5" size="md" {...allHeadingstyleProps} {...props} />
+);
+const H6 = (props) => (
+  <CustomHeading as="h6" size="md" {...allHeadingstyleProps} {...props} />
+);
 const P = (props) => (
-  <Box as="p" marginTop="1rem" marginBottom="1rem" {...props} />
+  <Box as="p" marginTop="1rem" marginBottom="1.5rem" {...props} />
 );
+
+const Blockquote = ({ children }) => {
+  const theme = useTheme();
+  return (
+    <Text
+      as="blockquote"
+      paddingLeft="1.5rem"
+      paddingRight="1.5rem"
+      backgroundColor={theme.colors.gray[100]}
+      borderLeft={`5px solid ${theme.colors.pink[400]}`}
+    >
+      {children}
+    </Text>
+  );
+};
 
 const CustomLink = (props) => {
   const theme = useTheme();
@@ -181,8 +219,15 @@ const Pre = (props) => {
   );
 };
 
-const components = {
+const ListItemComponent = ({ children, ...rest }) => (
+  <ListItem {...rest} ml="1.25rem">
+    {children}
+  </ListItem>
+);
+
+export const customComponents = {
   Aside,
+  blockquote: Blockquote,
   Button,
   Colophon,
   Highlight,
@@ -196,9 +241,12 @@ const components = {
   h4: H4,
   h5: H5,
   h6: H6,
+  li: ListItemComponent,
+  ol: OrderedList,
   p: P,
   pre: Pre,
   SimpleGrid,
+  ul: UnorderedList,
 };
 
 /* eslint-disable max-len */
@@ -214,13 +262,17 @@ const oneOffComponentsUsedInPosts = {
 };
 /* eslint-enable max-len */
 
+export const components = {
+  ...customComponents,
+  ...oneOffComponentsUsedInPosts,
+  Tweet,
+  YouTube,
+  Vimeo,
+};
+
 // eslint-disable-next-line react/prop-types
 const MDXProviderWrapper = ({ children }) => (
-  <MDXEmbedProvider>
-    <MDXProvider components={{ ...components, ...oneOffComponentsUsedInPosts }}>
-      {children}
-    </MDXProvider>
-  </MDXEmbedProvider>
+  <MDXProvider components={components}>{children}</MDXProvider>
 );
 
 export default MDXProviderWrapper;

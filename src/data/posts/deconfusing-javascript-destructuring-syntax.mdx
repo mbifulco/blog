@@ -12,7 +12,7 @@ tags: [javascript, dev]
 
 [Destructuring](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment) syntax in es6 (or es2015, etc) JavaScript is a wonderfully useful bit of the language.  It allows you to extract values from an `Object` and assign them to a new variable in one statement.  If you've not come across destructuring before, a fairly basic case looks like this:
 
-```js
+```jsx
 const person = {
   name: 'Mike Bifulco',
   height: 556,
@@ -32,7 +32,7 @@ There's are many other useful things you can do by way of destructuring.  For m
 
 If you want to pluck a value from within an object, but also need to rename it (for purposes of code readability, perhaps), you can do so in one line:
 
-```js
+```jsx
 const person = {
   name: 'Mike Bifulco',
   height: 556,
@@ -51,7 +51,7 @@ Just like that, we've assigned `person.height` to `currentHeight` in one line. �
 
 You can extract one value from an object, and create another variable with everything else, you can do that, too:
 
-```js
+```jsx
 const person = {
   name: 'Mike Bifulco',
   height: 556,

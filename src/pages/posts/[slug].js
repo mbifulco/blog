@@ -8,6 +8,7 @@ import { getPostBySlug, getAllPosts } from '../../lib/blog';
 
 import { DefaultLayout } from '../../components/Layouts';
 import {
+  Colophon,
   NewsletterSignup,
   Post,
   SEO,
@@ -63,12 +64,6 @@ const BlogPost = (post) => {
         image={coverImageUrl}
         ogType="article"
       />
-      <WebmentionMetadata
-        coverImageUrl={coverImageUrl}
-        summary={excerpt}
-        publishedAt={date}
-        tags={tags}
-      />
       {!published && process.env.NODE_ENV !== 'production' && (
         <div>
           <em>Note:</em> this is a draft post
@@ -79,6 +74,14 @@ const BlogPost = (post) => {
       <Flex direction="row" justifyContent="center" marginTop="3rem">
         <NewsletterSignup tags={tags} />
       </Flex>
+      <Colophon />
+      <WebmentionMetadata
+        coverImageUrl={coverImageUrl}
+        summary={excerpt}
+        publishedAt={date}
+        tags={tags}
+        title={title}
+      />
     </DefaultLayout>
   );
 };

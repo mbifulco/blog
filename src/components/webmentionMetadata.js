@@ -26,7 +26,7 @@ const WebmentionMetadata = ({
             // eslint-disable-next-line @next/next/no-img-element
             <img className="u-photo" src={coverImageUrl} alt="Hero" />
           )}
-          <h1 className="p-name">{title}</h1>
+          <div className="p-name">{title}</div>
         </header>
         <p className="p-summary e-content">{summary}</p>
         <a rel="author" className="h-card p-author" href={location}>

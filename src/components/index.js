@@ -1,8 +1,10 @@
 export { CarbonAd } from './CarbonAd';
+export { Colophon } from './Colophon';
 export { default as Footer } from './footer';
 export { ExternalWorkItem } from './ExternalWork';
 export { Image } from './Image';
 export { NewsletterSignup } from './NewsletterSignup';
+export { PolitePop } from './PolitePop';
 export { PostFeed } from './PostFeed';
 export { PublishDate } from './PublishDate';
 export { default as Post } from './post';

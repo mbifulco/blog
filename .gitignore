@@ -2,6 +2,7 @@
 # they are generated only in production, and will be made dynamically on server at build time
 public/rss.xml
 public/sitemap.xml
+public/sitemap*
 
 .next
 
