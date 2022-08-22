@@ -64,12 +64,6 @@ const BlogPost = (post) => {
         image={coverImageUrl}
         ogType="article"
       />
-      <WebmentionMetadata
-        coverImageUrl={coverImageUrl}
-        summary={excerpt}
-        publishedAt={date}
-        tags={tags}
-      />
       {!published && process.env.NODE_ENV !== 'production' && (
         <div>
           <em>Note:</em> this is a draft post
@@ -81,6 +75,13 @@ const BlogPost = (post) => {
         <NewsletterSignup tags={tags} />
       </Flex>
       <Colophon />
+      <WebmentionMetadata
+        coverImageUrl={coverImageUrl}
+        summary={excerpt}
+        publishedAt={date}
+        tags={tags}
+        title={title}
+      />
     </DefaultLayout>
   );
 };
