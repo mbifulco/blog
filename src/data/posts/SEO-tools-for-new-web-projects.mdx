@@ -1,5 +1,5 @@
 ---
-title: '4 Tools I add to every new web project for SEO and analytics'
+title: '5 Tools I add to every new web project for SEO and analytics'
 excerpt: I use these tools on every project to help track source code, monitor traffic on my site, and optimize content for better Search Engine Optimization (SEO).
 date: 07-12-2022
 published: true
@@ -8,17 +8,35 @@ path: SEO-tools-for-new-web-projects
 tags: [react, remix, fathom, tutorial, analytics, video]
 ---
 
-## SEO & analytics help you grow your site's traffic over time
+## SEO & analytics help grow site traffic
 
-Whether you're working on your own blog, a news site, or abuilding a product, you _absolutely must_ care about your site's SEO. If your site is not optimized for search engines, it is less likely to be found by users, which can lead to fewer visitors and potential customers. Additionally, SEO tools can help you improve the usability of your site, making it easier for users to find the information they are looking for. In short, SEO can help you build a better website that is more likely to be successful, and these are the tools that I use to monitor and enhance my sites' performance.
+Whether you're working on your own blog, a news site, or abuilding a product, you _absolutely must_ care about your site's SEO. If your site is not optimized for search engines, it is harder to find, leading to fewer visitors and potential customers. SEO tools can help you improve the usability of your site, making it easier for users to find the information they are looking for.
+
+These are the tools that I use to monitor and enhance my sites' performance. The can help you build a site that is easier to find and use, too.
+
+## ahrefs webmaster tools
+
+You only need to spend a few moments researching SEO online before ahrefs pops up _somewhere_ in your results. In addition to their incredible [blog](https://ahrefs.com/blog/) and [studies](https://ahrefs.com/blog/category/data-studies/) on how search works on the web, they provide a fantastic suite of free tools for monitoring and improviing the SEO on your sites.
+
+<Image
+  publicId="posts/seo-tools-for-new-projects/ahrefs-audit"
+  alt="Screenshot of a weekly audit email from ahrefs - showing a 100 SEO score for mikebifulco.com, with a few warnings."
+  caption="There's always room to improve SEO, and ahrefs webmaster tools makes it easy to digest"
+/>
+
+I have found [ahrefs webmaster tools](https://ahrefs.com/webmaster-tools) to be absolutely invaluable in keeping an eye on my sites' content. Once you register a free account and verify that you have control of the sites you want to monitor, ahrefs will kick off a weekly audit of all the pages on your domain. It will check for common pitfalls, and give your site a health score from 0-100. If you're a dev, it may be helpful to think of it as a linter for SEO.
+
+I've used it to find and fix countless problems with my sites, from broken links to missing Canonical URLs, removing unnecessary redirects and finding opportunities to link existing articles to one another.
+
+You will get weekly audit reports in email, which let you know when things change - this can be helpful in situations where things out of your control end up affecting your site. Ever had someone take down an article that you link to? Ahrefs will find it.
 
 ## Google Search Console
 
 My adoption of [Google Search Console](https://search.google.com/search-console/about) come from what I learned taking Monica Lent's [Blogging for Devs](https://bloggingfordevs.com) course.
 
-You can register your site with the Google Search Console for free in a few quick steps, without adding Google Analytics (which is helpful if, like me, you've chosen [Fathom](https://mikebifulco.com/posts/why-fathom-analytics) for its privacy-first features).
+Google Search Console gives you reports on how and when people see your site pop up in Google Search results. Note that it won't track people _on your site_ like Google Analytics and Fathom do - just your performance in search. This is a useful litmus for your site's organic growth and authority. If you're investing in sharing your expertise and building a searchable site, your performance on Google Search Console should grow over time. In other words, you can see whether you're gaining traction via SEO or not.
 
-The Search Console allows you to see how many people are getting to your page from Google, and what they're searching for. It also gives you a time-view of your site's growth in popularity from search - in other words, you can see whether you're gaining traction via SEO or not.
+To get started, you'll need to register your site with the Google Search Console. Verifying your ownership takes a few quick steps, and doesn't require you to add Google Analytics (which is helpful if, like me, you've chosen [Fathom](https://mikebifulco.com/posts/why-fathom-analytics) for its privacy-first features).
 
 Best of all, it's free! Just register and follow instructions to add a DNS record, or upload a file to a specific place to verify that you own the site you're interested in monitoring. You should make sure to have a sitemap on your site - they're easy to generate, and worth the time to get right. This is what Google's crawlers primarily use to index your articles for search results.
 
@@ -32,7 +50,7 @@ If you've never paid attention analytics for your web properties, Fathom will be
 
 If you've used Google Analytics in the past, you may be surprised just how freeing it is to use an analytics tool that prioritizes analytics. You _really_ don't need to know _who_ is on a given page - instead, focusing on the content on your site which is being visited, and the journey readers take to get there is a super useful tool to have when you're researching and writing new articles.
 
-It's great, and puts your readers' privacy first. Google's advantage is quickly vanishing with GA4 due to new regulations and privacy tools that are being built into browsers and operating systems, and Fathom does a great job of providing value without fishing for every minute detail about your readers.
+It's great, and puts your readers' privacy first. Google's advantage is quickly vanishing due to new regulations, and privacy tools that are being built into browsers and operating systems. Fathom does a great job of providing value without fishing for every minute detail about your readers.
 
 Fathom is lightweight and ridiculously easy to use. The Fathom team provides docs for a variety of platforms and JAMstack site builders, including [Gatsby](https://usefathom.com/docs/integrations/gatsby), [ConvertKit](https://usefathom.com/docs/integrations/convertkit), [Next.js](https://usefathom.com/docs/integrations/next), [Vue](https://usefathom.com/docs/integrations/vue), [Webflow](https://usefathom.com/docs/integrations/webflow), [Wordpress](https://usefathom.com/docs/integrations/wordpress), and quite a few more.
 
@@ -42,7 +60,7 @@ I've written a bit about my experiences with Fathom before. You may want to chec
 
 If you're hesitant to pay for Fathom, they do also provide an open source version called [Fathom Lite](https://github.com/usefathom/fathom) - you'll need to configure and host it yourself, but it should give you an idea of what Fathom's premiums service is like.
 
-If you're interested in trying out Fathom, use my **referral link:** use my referral link [https://usefathom.com/ref/DPSSYB](https://usefathom.com/ref/DPSSYB)\*\* for a discount to get you started.
+If you're interested in trying out Fathom's paid service, use my [**referral link**](https://usefathom.com/ref/DPSSYB) for a discount to get you started.
 
 ## Cloudflare
 
@@ -75,3 +93,12 @@ Notifications come _very_ quickly - in my experience, I see them within minutes 
 You can set up any search keyword you want, so if there's a competitor or topic that you're hoping to keep an eye on, it's great for that, too.
 
 Overall, I highly recommend [f5bot](https://f5bot.com) - it's an incredibly useful tool, it's free, and it couldn't be easier to set up.
+
+## Related reading
+
+If you're going on the SEO-improvement journey for your sites, you might find these helpful:
+
+- [Why I switched to Fathom for Analytics](https://mikebifulco.com/posts/why-fathom-analytics)
+- [How to add Fathom Analytics to your Remix.run app](https://mikebifulco.com/posts/add-fathom-analytics-to-remix)
+- [Don't center-align paragraph text](https://mikebifulco.com/posts/dont-center-paragraph-text) - this is utterly unrelated to SEO, but c'mon, do better.
+- [SEO for Devs](https://seofordevs.com) - I absolutely cannot recommend this **free course** enough. Monica Lent has a masterful understanding of SEO, and I've learned a ton from her over the years.
