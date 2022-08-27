@@ -16,7 +16,7 @@
     "prepare": "husky install"
   },
   "dependencies": {
-    "@chakra-ui/react": "^2.2.8",
+    "@chakra-ui/react": "^2.2.9",
     "@cloudinary/url-gen": "^1.8.6",
     "@emotion/react": "^11.10.0",
     "@emotion/styled": "^11.10.0",
@@ -28,7 +28,7 @@
     "date-fns": "^2.29.2",
     "fathom-client": "^3.5.0",
     "feed": "^4.2.2",
-    "framer-motion": "^7.2.0",
+    "framer-motion": "^7.2.1",
     "gray-matter": "^4.0.3",
     "mdx-embed": "^1.0.0",
     "next": "^12.2.5",
@@ -50,7 +50,7 @@
   },
   "devDependencies": {
     "@next/eslint-plugin-next": "^12.2.5",
-    "eslint": "8.22.0",
+    "eslint": "8.23.0",
     "eslint-config-next": "^12.2.5",
     "eslint-config-prettier": "^8.5.0",
     "husky": ">=8.0.1",
