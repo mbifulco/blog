@@ -156,7 +156,7 @@ const Aside = (props) => {
   return (
     <Box
       borderLeft="8px solid"
-      padding="1rem 0 1rem 2rem"
+      padding="1rem 2rem"
       borderColor={selectedColor[400]}
       backgroundColor={selectedColor[50]}
       margin="2rem 0 2rem -2rem"
