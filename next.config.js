@@ -16,7 +16,7 @@ module.exports = withBundleAnalyzer(
   withMDX({
     pageExtensions: ['js', 'jsx', 'md', 'mdx'],
     images: {
-      domains: ['i.ytimg.com', 'res.cloudinary.com'],
+      domains: ['i.ytimg.com', 'res.cloudinary.com', 'images.unsplash.com'],
     },
     productionBrowserSourceMaps: true,
     compress: false,
