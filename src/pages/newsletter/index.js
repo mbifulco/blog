@@ -26,7 +26,7 @@ const NewsletterPage = ({ newsletters }) => (
     <SEO
       title="Subscribe to Tiny Improvements: articles software dev, design, and climate"
       image={
-        'https://res.cloudinary.com/mikebifulco-com/image/upload/v1662476730/newsletters/tiny-improvements-header_cg3qzg.png'
+        'https://res.cloudinary.com/mikebifulco-com/image/upload/v1662476730/newsletters/cover.png'
       }
     />
     <Heading as="h1" marginBottom="2rem">
