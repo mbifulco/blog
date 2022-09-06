@@ -14,7 +14,7 @@ const config = {
     link: 'https://twitter.com/irreverentmike',
   },
   social: {
-    twitter: `irreverentmike`,
+    twitter: `@irreverentmike`,
     instagram: `irreverentmike`,
     tiktok: `irreverentmike`,
     github: `mbifulco`,
