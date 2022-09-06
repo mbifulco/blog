@@ -8,17 +8,21 @@ import { getAllTags } from '../../lib/tags';
 import { Box } from '@chakra-ui/react';
 import { getAllExternalReferencesByTag } from '../../lib/external-references';
 import { Post, ExternalWorkItem } from '../../components';
+import { getAllNewslettersByTag } from '../../lib/newsletters';
 
 export async function getStaticProps({ params }) {
   const { tag } = params;
 
+  const posts = await getAllPostsByTag(tag);
   const articles = await getAllExternalReferencesByTag(tag);
+  const newsletters = await getAllNewslettersByTag(tag);
 
   return {
     props: {
       tag,
-      posts: await getAllPostsByTag(tag),
+      posts,
       articles,
+      newsletters,
     },
   };
 }
@@ -44,10 +48,10 @@ export async function getStaticPaths() {
   };
 }
 
-const TagPage = ({ tag, posts, articles }) => {
+const TagPage = ({ tag, posts, articles, newsletters }) => {
   const theme = useTheme();
 
-  let all = [...posts, ...articles].sort((a, b) => {
+  let all = [...posts, ...articles, ...newsletters].sort((a, b) => {
     return new Date(b.frontmatter.date) - new Date(a.frontmatter.date);
   });
 
@@ -67,6 +71,12 @@ const TagPage = ({ tag, posts, articles }) => {
       <Box>
         {all.map((content) => {
           switch (content.frontmatter.type) {
+            case 'newsletter':
+              <Post
+                post={content}
+                key={`newsletter-${content.frontmatter.path}`}
+                summary
+              />;
             case 'post':
               return (
                 <Post
