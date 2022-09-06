@@ -10,11 +10,13 @@ import { getAllPosts } from '../lib/blog';
 import { generateRSSFeed } from '../utils/rss';
 import { getCloudinaryImageUrl } from '../utils/images';
 import config from '../config';
+import { getAllNewsletters } from '../lib/newsletters';
 
 export async function getStaticProps() {
   const posts = await getAllPosts();
+  const newsletters = await getAllNewsletters();
 
-  generateRSSFeed(posts);
+  generateRSSFeed(posts, newsletters);
 
   return {
     props: {
