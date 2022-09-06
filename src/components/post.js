@@ -70,7 +70,7 @@ const Post = ({ summary, post }) => {
   }
 
   // no cover image for newsletters, we want it to look like an email
-  if (frontmatter?.type === 'newsletter') {
+  if (!summary && frontmatter?.type === 'newsletter') {
     coverContainer = null;
   }
 

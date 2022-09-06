@@ -27,7 +27,7 @@ export const getAllNewsletters = async () => {
 };
 
 export const getAllNewslettersByTag = async (tag) => {
-  const refs = await getAllExternalReferences();
+  const refs = await getAllNewsletters();
 
   return refs.filter((article) => [...article.frontmatter?.tags].includes(tag));
 };
