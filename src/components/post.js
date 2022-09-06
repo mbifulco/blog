@@ -69,6 +69,11 @@ const Post = ({ summary, post }) => {
     coverContainer = <YouTube youTubeId="AbtoSbPUx9o" />;
   }
 
+  // no cover image for newsletters, we want it to look like an email
+  if (frontmatter?.type === 'newsletter') {
+    coverContainer = null;
+  }
+
   return (
     <article className={style.post}>
       <div className={style.postContent}>

@@ -25,6 +25,7 @@ const SEO = ({
     title: siteTitle,
     description: siteDescription,
     author: siteAuthor,
+    social,
   } = config;
 
   const metaTitle = title || siteTitle;
@@ -98,7 +99,7 @@ const SEO = ({
         content={ogImageUrl ? `summary_large_image` : `summary`}
       />
       <meta name="twitter:title" content={metaTitle} />
-      <meta name="twitter:creator" content={author?.name || siteAuthor?.name} />
+      <meta name="twitter:creator" content={social.twitter} />
       <meta name="twitter:description" content={metaDescription} />
 
       <meta

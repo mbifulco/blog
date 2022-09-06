@@ -3,7 +3,7 @@ import fs from 'fs';
 
 import config from '../config';
 
-export const generateRSSFeed = (posts) => {
+export const generateRSSFeed = (posts, newsletters) => {
   if (process.env.NODE_ENV === 'development') {
     return;
   }
@@ -38,8 +38,27 @@ export const generateRSSFeed = (posts) => {
       author: [author],
       date: new Date(date),
     });
-
-    // this will be mikebifulco.com/rss.xml
-    fs.writeFileSync('public/rss.xml', feed.rss2());
   });
+
+  newsletters.forEach((newsletter) => {
+    const {
+      frontmatter: { date, excerpt, path, title },
+      content,
+    } = newsletter;
+
+    const url = `${siteUrl}/newsletter/${path}`;
+
+    feed.addItem({
+      title,
+      id: url,
+      link: url,
+      description: excerpt,
+      content,
+      author: [author],
+      date: new Date(date),
+    });
+  });
+
+  // this will be mikebifulco.com/rss.xml
+  fs.writeFileSync('public/rss.xml', feed.rss2());
 };
