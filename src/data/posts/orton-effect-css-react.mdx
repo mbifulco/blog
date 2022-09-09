@@ -1,0 +1,67 @@
+---
+title: The Orton Effect - dreamy photo effect in CSS and React
+excerpt: Learn how to implement the Orton Effect in CSS and React. The Orton Effect combines multiple images to create a single, surreal image, named after photographer Michael Orton
+tags: [css, react, javascript, design]
+path: orton-effect-css-react
+date: 09-09-2022
+---
+
+The [Orton Effect](https://www.capturelandscapes.com/orton-effect-explained/) is a photography technique that involves taking two pictures of the same scene, one with a long exposure and one with a shorter exposure, and then combining them. The result is an image that has both the sharpness of the long exposure and the detail of the shorter exposure. While it's not an exact replica, we can simulate the Orton Effect using CSS and React.
+
+## Emulating the Orton Effect in CSS
+
+To emulate the Orton Effect in CSS, we need to layer 2 copies of the same image on top of one other. To accomplish that, we'll nest them under a single parent - in this case, the [`figure` element](https://developer.mozilla.org/en-US/docs/web/html/element/figure). Note that for the second image, we set [`aria-hidden=true`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-hidden), so that people using Screen Readers. won't encounter the repeated image element. You can read more about that and other accessibility features of HTML on [MDN](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-hidden).
+
+```html
+<figure class="orton-effect">
+  <img
+    src="https://source.unsplash.com/P-yzuyWFEIk/1600x900"
+    alt="Autumn foliage over a beautiful pond"
+  />
+  <img
+    src="https://source.unsplash.com/P-yzuyWFEIk/1600x900"
+    aria-hidden="true"
+  />
+</figure>
+```
+
+Next, we'll use a CSS rule to apply some styles to the _first_ of the two images (in HTML-speak, that's the one on top).
+
+```css
+figure.orton-effect img:first-of-type {
+  position: absolute;
+  mix-blend-mode: lighten;
+  filter: blur(10px);
+  opacity: 25%;
+}
+```
+
+We're setting `position: absolute;` to layer this image on top of its sibling within the `<figure>` element. The remaining 3 lines of CSS set the top image to use the `lighten` blend mode, apply a gaussian blur using `filter`, and make the top image partly translucent by way of the `opacity` CSS property.
+
+This creates a hazy, glassy effect:
+
+### Before:
+
+<img
+  src="https://source.unsplash.com/P-yzuyWFEIk/1600x900"
+  alt="A snowy landscape"
+/>
+
+### After:
+
+<OrtonEffectImage
+  src={'https://source.unsplash.com/P-yzuyWFEIk/1600x900'}
+  alt="Autumn foliage over a beautiful pond"
+  blur={10}
+  opacity={25}
+/>
+
+## The Orton Effect in Action
+
+<OrtonEffectImage
+  src={'https://source.unsplash.com/vZlTg_McCDo/1600x900'}
+  alt="A snowy landscape"
+  blur={30}
+  opacity={70}
+  showControls={true}
+/>
