@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/alt-text */
 import { useState } from 'react';
 import {
   Box,
@@ -12,7 +13,7 @@ import {
 
 /* eslint-disable @next/next/no-img-element */
 export const OrtonEffectImage = ({
-  blur: blurStart,
+  blurRadius: blurStart,
   opacity: opacityStart,
   showControls,
   src,
@@ -40,24 +41,27 @@ export const OrtonEffectImage = ({
             position: 'absolute',
           }}
         />
-        <img src={src} alt={alt} />
+        <img src={src} aria-hidden={true} />
       </figure>
 
       {showControls && (
         <Stack spacing={2}>
           <Stack direction="row" pt={4} pb={2} mt={1}>
-            <Text fontSize={'sm'}>Opacity {opacity}%</Text>
+            <Text width="15%" fontSize={'sm'}>
+              Opacity {opacity}%
+            </Text>
             <Slider
               aria-label="slider-ex-6"
               onChange={(val) => setOpacity(val)}
               defaultValue={opacityStart}
+              width="80%"
             >
               <SliderMark
                 value={opacity}
                 textAlign="center"
                 bg="blue.500"
                 color="white"
-                mt="-5"
+                mt="-8"
                 ml="-5"
                 w="12"
               >
@@ -71,20 +75,23 @@ export const OrtonEffectImage = ({
           </Stack>
 
           <Stack direction="row" pb={2}>
-            <Text fontSize={'sm'}>Blur Radius {blurRadius}px</Text>
+            <Text width="15%" fontSize={'sm'}>
+              Blur Radius {blurRadius}px
+            </Text>
             <Slider
               aria-label="slider-ex-6"
               onChange={(val) => setRedBlurRadius(val)}
               min={5}
               max={100}
               defaultValue={blurStart}
+              width="80%"
             >
               <SliderMark
                 value={blurRadius}
                 textAlign="center"
                 bg="blue.500"
                 color="white"
-                mt="-5"
+                mt="-8"
                 ml="-5"
                 w="12"
               >

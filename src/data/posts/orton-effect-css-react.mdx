@@ -15,11 +15,11 @@ To emulate the Orton Effect in CSS, we need to layer 2 copies of the same image 
 ```html
 <figure class="orton-effect">
   <img
-    src="https://source.unsplash.com/P-yzuyWFEIk/1600x900"
-    alt="Autumn foliage over a beautiful pond"
+    src="https://source.unsplash.com/tRDGs9utMUo/1600x900"
+    alt="A man in the crosswalk on a city street"
   />
   <img
-    src="https://source.unsplash.com/P-yzuyWFEIk/1600x900"
+    src="https://source.unsplash.com/tRDGs9utMUo/1600x900"
     aria-hidden="true"
   />
 </figure>
@@ -31,7 +31,7 @@ Next, we'll use a CSS rule to apply some styles to the _first_ of the two images
 figure.orton-effect img:first-of-type {
   position: absolute;
   mix-blend-mode: lighten;
-  filter: blur(10px);
+  filter: blur(50px);
   opacity: 50%;
 }
 ```
@@ -43,26 +43,88 @@ This creates a hazy, glassy effect:
 ### Before:
 
 <img
-  src="https://source.unsplash.com/P-yzuyWFEIk/1600x900"
-  alt="A snowy landscape"
+  src="https://source.unsplash.com/tRDGs9utMUo/1600x900"
+  alt="A man in the crosswalk on a city street"
 />
 
 ### After:
 
 <OrtonEffectImage
-  src={'https://source.unsplash.com/P-yzuyWFEIk/1600x900'}
-  alt="Autumn foliage over a beautiful pond"
-  blur={10}
+  src={'https://source.unsplash.com/tRDGs9utMUo/1600x900'}
+  alt="A man in the crosswalk on a city street"
+  blurRadius={50}
   opacity={50}
-  showControls
 />
 
+It's subtle - but it is there, adding just a slight haze over the light parts of the photo, like a morning fog settling in over a dreamscape.
+
+## The Orton Effect in React
+
+To apply this to an adjustable React Component, we'll use CSS-in-JS to make blur and opacity dynamic. There's many ways to get this done, of course, so you may prefer a different approach. This is what a simple react component for this layout might look like:
+
+```jsx
+const OrtonEffectImage = ({ alt, blurRadius, opacity, src }) => {
+  return (
+    <figure>
+      <img
+        src={src}
+        alt={alt}
+        style={{
+          mixBlendMode: 'lighten',
+          filter: `blur(${blurRadius}px)`,
+          opacity: `${opacity}%`,
+          position: 'absolute',
+        }}
+      />
+      <img src={src} ariaHidden />
+    </figure>
+  );
+};
+```
+
+This gives us a reusable component that just needs a few parameters passed in - for example:
+
+```jsx
+<OrtonEffectImage
+  src={'https://source.unsplash.com/vZlTg_McCDo/1600x900'}
+  alt="A snowy landscape"
+  blurRadius={30}
+  opacity={70}
+/>
+```
+
+Note that a few things have changed here - we're no longer using a named CSS class (`.orton-image`) to select and modify images via CSS. The CSS is now specified on the `img` tag itself, and because it is passed in via `style` prop, it is a JavaScript Object -- so keywords have gone from skewer-case to camelCase, and there's commas where we once had semicolons. Additionally, we're using ES6 String templates to interpolate style rules from the opacity and blur radiuses passed in.
+
+There's some improvement to be done from here - you should do some error checking to make sure that opacity stays between 0 and 100%, and that the blur radius is a positive integer. It's also a good idea to provide some sensible fallback values for those options, in case they're not provided. I'll leave that up to you to implement.
+
 ## The Orton Effect in Action
+
+Below you will see the Orton Effect applied to a handful of other images from Unsplash.
+
+I've taken the above example a little further, and made blur and opacity adjustable, so that you can see how each parameter changes the image effect.
+
+I've found that an opacity of somewhere between 25 and 50% and tends to create a nice, subtle effect. The "right" blur radius is a bit more dependent on the specific image.
 
 <OrtonEffectImage
   src={'https://source.unsplash.com/vZlTg_McCDo/1600x900'}
   alt="A snowy landscape"
-  blur={30}
+  blurRadius={30}
+  opacity={70}
+  showControls
+/>
+
+<OrtonEffectImage
+  src={'https://source.unsplash.com/7d1yzghMSqk/1600x900'}
+  alt="A snowy landscape"
+  blurRadius={30}
+  opacity={70}
+  showControls
+/>
+
+<OrtonEffectImage
+  src={'https://source.unsplash.com/VmX3vmBecFE/900x800'}
+  alt="A snowy landscape"
+  blurRadius={30}
   opacity={70}
   showControls
 />
