@@ -28,6 +28,7 @@ import { Image } from '../components/Image';
 
 // one off component imports
 import { CenteredTextDemo } from '../components/demos/CenteredTextDemo';
+import { OrtonEffectImage } from '../components/demos/OrtonEffectImage';
 
 const CustomHeading = ({ as, id, ...props }) => {
   if (id) {
@@ -259,6 +260,7 @@ export const customComponents = {
 */
 const oneOffComponentsUsedInPosts = {
   CenteredTextDemo, // used in dont-center-paragraph-text.mdx
+  OrtonEffectImage, // used in orton-effect-css-react.mdx
 };
 /* eslint-enable max-len */
 

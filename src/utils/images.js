@@ -10,7 +10,7 @@ export const getCloudinaryImageUrl = (publicId) => {
     },
   });
 
-  const myImage = cld.image(publicId).format('auto').quality('auto');
+  const myImage = cld.image(publicId);
   let url = myImage.toURL({ trackedAnalytics: false });
 
   return url;

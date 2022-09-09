@@ -1,0 +1,142 @@
+---
+title: The Orton Effect - dreamy photo effect in CSS and React
+excerpt: Implement the Orton Effect in CSS and React. The Orton Effect creates a surreal, dreamy image effect, named after photographer Michael Orton.
+coverImagePublicId: posts/orton-effect-css-react/cover
+tags: [css, react, javascript, design]
+path: orton-effect-css-react
+date: 09-09-2022
+published: true
+---
+
+The [Orton Effect](https://www.capturelandscapes.com/orton-effect-explained/) is a photography technique that involves taking two pictures of the same scene, one with a long exposure and one with a shorter exposure, and then combining them. The result is an image that has both the sharpness of the long exposure and the detail of the shorter exposure. While it's not an exact replica, we can simulate a phoo filter for the Orton Effect using CSS and React.
+
+## Emulating the Orton Effect in CSS
+
+To emulate the Orton Effect in CSS, we need to layer 2 copies of the same image on top of one other. To accomplish that, we'll nest them under a single parent - in this case, the [`figure` element](https://developer.mozilla.org/en-US/docs/web/html/element/figure). Note that for the second image, we set [`aria-hidden=true`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-hidden), so that people using Screen Readers. won't encounter the repeated image element. You can read more about that and other accessibility features of HTML on [MDN](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-hidden).
+
+```html
+<figure class="orton-effect">
+  <img
+    src="https://source.unsplash.com/tRDGs9utMUo/1600x900"
+    alt="A man in the crosswalk on a city street"
+  />
+  <img
+    src="https://source.unsplash.com/tRDGs9utMUo/1600x900"
+    aria-hidden="true"
+  />
+</figure>
+```
+
+Next, we'll use a CSS rule to apply some styles to the _first_ of the two images (in HTML-speak, that's the one on top).
+
+```css
+figure.orton-effect img:first-of-type {
+  position: absolute;
+  mix-blend-mode: lighten;
+  filter: blur(50px);
+  opacity: 50%;
+}
+```
+
+We're setting `position: absolute;` to layer this image on top of its sibling within the `<figure>` element. The remaining 3 lines of CSS set the top image to use the `lighten` blend mode, apply a gaussian blur using `filter`, and make the top image partly translucent by way of the `opacity` CSS property.
+
+This creates a hazy, glassy effect:
+
+### Before:
+
+<img
+  src="https://source.unsplash.com/tRDGs9utMUo/1600x900"
+  alt="A man in the crosswalk on a city street"
+/>
+
+### After:
+
+<OrtonEffectImage
+  src={'https://source.unsplash.com/tRDGs9utMUo/1600x900'}
+  alt="A man in the crosswalk on a city street"
+  blurRadius={50}
+  opacity={50}
+/>
+
+It's subtle - but it is there, adding just a slight haze over the light parts of the photo, like a morning fog settling in over a dreamscape.
+
+## The Orton Effect in React
+
+To apply this to an adjustable React Component, we'll use CSS-in-JS to make blur and opacity dynamic. There's many ways to get this done, of course, so you may prefer a different approach. This is what a simple react component for this layout might look like:
+
+```jsx
+const OrtonEffectImage = ({ alt, blurRadius, opacity, src }) => {
+  return (
+    <figure>
+      <img
+        src={src}
+        alt={alt}
+        style={{
+          mixBlendMode: 'lighten',
+          filter: `blur(${blurRadius}px)`,
+          opacity: `${opacity}%`,
+          position: 'absolute',
+        }}
+      />
+      <img src={src} ariaHidden />
+    </figure>
+  );
+};
+```
+
+This gives us a reusable component that just needs a few parameters passed in - for example:
+
+```jsx
+<OrtonEffectImage
+  src={'https://source.unsplash.com/vZlTg_McCDo/1600x900'}
+  alt="A snowy landscape"
+  blurRadius={30}
+  opacity={70}
+/>
+```
+
+Note that a few things have changed here - we're no longer using a named CSS class (`.orton-image`) to select and modify images via CSS. The CSS is now specified on the `img` tag itself, and because it is passed in via `style` prop, it is a JavaScript Object -- so keywords have gone from skewer-case to camelCase, and there's commas where we once had semicolons. Additionally, we're using ES6 String templates to interpolate style rules from the opacity and blur radiuses passed in.
+
+There's some improvement to be done from here - you should do some error checking to make sure that opacity stays between 0 and 100%, and that the blur radius is a positive integer. It's also a good idea to provide some sensible fallback values for those options, in case they're not provided. I'll leave that up to you to implement.
+
+## The Orton Effect in Action
+
+Below you will see the Orton Effect applied to a handful of other images from Unsplash.
+
+I've taken the above example a little further, and made blur and opacity adjustable, so that you can see how each parameter changes the image effect.
+
+I've found that an opacity of somewhere between 25 and 50% and tends to create a nice, subtle effect. The "right" blur radius is a bit more dependent on the specific image.
+
+<OrtonEffectImage
+  src={'https://source.unsplash.com/vZlTg_McCDo/1600x900'}
+  alt="A snowy landscape"
+  blurRadius={30}
+  opacity={70}
+  showControls
+/>
+
+<OrtonEffectImage
+  src={'https://source.unsplash.com/7d1yzghMSqk/1600x900'}
+  alt="A snowy landscape"
+  blurRadius={30}
+  opacity={70}
+  showControls
+/>
+
+<OrtonEffectImage
+  src={'https://source.unsplash.com/VmX3vmBecFE/900x800'}
+  alt="A snowy landscape"
+  blurRadius={30}
+  opacity={70}
+  showControls
+/>
+
+## Summary
+
+The Orton effect is a photography technique that involves taking two images - one in focus and one out of focus - and overlaying them to create a third image with a dreamy, ethereal quality.
+
+It turns out that this effect can also be simulated using CSS and React! All you need is a bit of code to overlay two images and some CSS to blur one of the images.
+
+If you're looking to add a touch of magic to your photos, then recreating the Orton effect with CSS and React is a great way to do it.
+
+If you found this post useful, I'd love it if you'd consider subscribing to [my newsletter, Tiny Improvements](https://mikebifulco.com/newsletter) - I share articles and resources that catch my attention, as well as my perspective on tech news, designing products, and living a fulfilling life.
