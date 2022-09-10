@@ -4,7 +4,13 @@ import PropTypes from 'prop-types';
 import { Box, Link, Text, useTheme } from '@chakra-ui/react';
 
 import { DefaultLayout } from '../components/Layouts';
-import { Image, PostFeed, SEO, WebmentionMetadata } from '../components';
+import {
+  Image,
+  PostFeed,
+  SEO,
+  Subtitle,
+  WebmentionMetadata,
+} from '../components';
 
 import { getAllPosts } from '../lib/blog';
 import { generateRSSFeed } from '../utils/rss';
@@ -65,13 +71,12 @@ const HomePage = ({ posts }) => {
             Oh, hello
           </Text>
           <Text fontSize="xl" fontWeight="normal" margin="0">
-            {"I'm"} a technologist, a designer, and a creator of things. I
-            started this as a place to put together my thoughts on things that I
-            think deserve a bigger stage than my{' '}
+            {"I'm"} a startup founder, a designer, and a maker. I share my
+            writing on this site, but you can also find me on{' '}
             <Link color={pink} href="https://twitter.com/irreverentmike">
               twitter
             </Link>{' '}
-            or{' '}
+            and{' '}
             <Link color={pink} href="https://github.com/mbifulco">
               GitHub
             </Link>
@@ -84,17 +89,37 @@ const HomePage = ({ posts }) => {
             margin="0"
             marginTop="1rem"
           >
-            I work at {config.employer.name} -- but the things I post here are
-            my own, and {"don't "}
+            I work as a {config.employer.role} at{' '}
+            <Link
+              href={config.employer.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              color={pink}
+            >
+              {config.employer.name}
+            </Link>{' '}
+            &mdash; however, the things I post here are my own, and {"don't "}
             necessarily reflect the views or opinions of {config.employer.name}.
           </Text>
         </Box>
       </Box>
 
       <Box>
-        <Text color={pink} fontWeight={400}>
-          LATEST POSTS
-        </Text>
+        <Subtitle>The Podcast</Subtitle>
+        <Box padding="1rem 0">
+          <iframe
+            width="100%"
+            height="180"
+            frameBorder="no"
+            scrolling="no"
+            seamless
+            src="https://share.transistor.fm/e/tiny-improvements/latest"
+          />
+        </Box>
+      </Box>
+
+      <Box>
+        <Subtitle>LATEST POSTS</Subtitle>
         <PostFeed posts={posts} />
       </Box>
       <WebmentionMetadata

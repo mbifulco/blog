@@ -1,8 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
 import InternalLink from 'next/link';
-import Script from 'next/script';
 
 import { useRouter } from 'next/router';
 
@@ -15,7 +13,7 @@ import {
   useTheme,
 } from '@chakra-ui/react';
 
-import { Footer, SEO, SocialLinks } from '..';
+import { Footer, SocialLinks } from '..';
 import MDXProviderWrapper from '../../utils/MDXProviderWrapper';
 
 const DefaultLayout = ({ children }) => {
@@ -105,10 +103,6 @@ const DefaultLayout = ({ children }) => {
       </Box>
     </MDXProviderWrapper>
   );
-};
-
-DefaultLayout.propTypes = {
-  children: PropTypes.node,
 };
 
 export default DefaultLayout;
