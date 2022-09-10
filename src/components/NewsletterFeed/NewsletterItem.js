@@ -34,9 +34,9 @@ const NewsletterItem = ({ newsletter, as = 'h3' }) => {
       </Link>
       <Stack>
         <Text
-          color={'pink.500'}
+          color={'pink.600'}
           textTransform={'uppercase'}
-          fontWeight={800}
+          fontWeight={700}
           fontSize={'sm'}
         >
           📰 {formatDate(date)}
