@@ -65,13 +65,12 @@ const HomePage = ({ posts }) => {
             Oh, hello
           </Text>
           <Text fontSize="xl" fontWeight="normal" margin="0">
-            {"I'm"} a technologist, a designer, and a creator of things. I
-            started this as a place to put together my thoughts on things that I
-            think deserve a bigger stage than my{' '}
+            {"I'm"} a startup founder, a designer, and a maker. I share my
+            writing on this site, but you can also find me on{' '}
             <Link color={pink} href="https://twitter.com/irreverentmike">
               twitter
             </Link>{' '}
-            or{' '}
+            and{' '}
             <Link color={pink} href="https://github.com/mbifulco">
               GitHub
             </Link>
@@ -84,8 +83,16 @@ const HomePage = ({ posts }) => {
             margin="0"
             marginTop="1rem"
           >
-            I work at {config.employer.name} -- but the things I post here are
-            my own, and {"don't "}
+            I work as a {config.employer.role} at{' '}
+            <Link
+              href={config.employer.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              color={pink}
+            >
+              {config.employer.name}
+            </Link>{' '}
+            &mdash; however, the things I post here are my own, and {"don't "}
             necessarily reflect the views or opinions of {config.employer.name}.
           </Text>
         </Box>
