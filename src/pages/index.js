@@ -99,6 +99,17 @@ const HomePage = ({ posts }) => {
       </Box>
 
       <Box>
+        <iframe
+          width="100%"
+          height="180"
+          frameBorder="no"
+          scrolling="no"
+          seamless
+          src="https://share.transistor.fm/e/tiny-improvements/latest/dark"
+        ></iframe>
+      </Box>
+
+      <Box>
         <Text color={pink} fontWeight={400}>
           LATEST POSTS
         </Text>

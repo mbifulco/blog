@@ -1,21 +1,17 @@
 import React from 'react';
 
-import {
-  Box,
-  Heading,
-  SimpleGrid,
-  Stack,
-  Text,
-  useTheme,
-} from '@chakra-ui/react';
+import { Box, Heading, SimpleGrid, Stack, Text } from '@chakra-ui/react';
 
-import { Image, PostFeed, SEO } from '../../components';
-import { DefaultLayout as Layout } from '../../components/Layouts';
-import { NewsletterSignup } from '../../components/NewsletterSignup';
-import NewsletterItem from '../../components/NewsletterFeed/NewsletterItem';
+import {
+  DefaultLayout as Layout,
+  NewsletterItem,
+  NewsletterSignup,
+  SEO,
+  Subtitle,
+  SubscriptionForm,
+} from '../../components';
 
 import { getAllNewsletters } from '../../lib/newsletters';
-import { SubscriptionForm } from '../../components/SubscriptionForm';
 
 export async function getStaticProps() {
   const newsletters = await getAllNewsletters();
@@ -28,7 +24,6 @@ export async function getStaticProps() {
 }
 
 const NewsletterPage = ({ newsletters }) => {
-  const theme = useTheme();
   return (
     <Layout>
       <SEO
@@ -41,18 +36,7 @@ const NewsletterPage = ({ newsletters }) => {
       <Stack>
         <Box as="header">
           <Heading as="h1">Tiny Improvements</Heading>
-          <Text
-            as="span"
-            padding="0.25ch 1.5ch"
-            borderRadius={'40px'}
-            className="tagline"
-            fontSize={'sm'}
-            textTransform="uppercase"
-            color={theme.colors.white}
-            background={theme.colors.pink[500]}
-          >
-            The newsletter
-          </Text>
+          <Subtitle>The Newsletter</Subtitle>
         </Box>
         <Text fontSize={'xl'}>
           An occasional newsletter by me, for you. You&apos;ll get my thoughts
