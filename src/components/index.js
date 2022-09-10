@@ -1,7 +1,7 @@
 export { CarbonAd } from './CarbonAd';
 export { Colophon } from './Colophon';
 export { default as Footer } from './footer';
-export { DefaultLayout } from './Layouts';
+export { default as DefaultLayout } from './Layouts/DefaultLayout';
 export { ExternalWorkItem } from './ExternalWork';
 export { Image } from './Image';
 export { NewsletterSignup } from './NewsletterSignup';
