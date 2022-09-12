@@ -45,14 +45,16 @@ This creates a hazy, glassy effect:
 ### Before:
 
 <img
-  src="https://source.unsplash.com/tRDGs9utMUo/1600x900"
+  src="https://res.cloudinary.com/mikebifulco-com/image/upload/v1662995195/posts/orton-effect-css-react/crosswalk.jpg"
   alt="A man in the crosswalk on a city street"
 />
 
 ### After:
 
 <OrtonEffectImage
-  src={'https://source.unsplash.com/tRDGs9utMUo/1600x900'}
+  src={
+    'https://res.cloudinary.com/mikebifulco-com/image/upload/v1662995195/posts/orton-effect-css-react/crosswalk.jpg'
+  }
   alt="A man in the crosswalk on a city street"
   blurRadius={50}
   opacity={50}
@@ -88,7 +90,9 @@ This gives us a reusable component that just needs a few parameters passed in - 
 
 ```jsx
 <OrtonEffectImage
-  src={'https://source.unsplash.com/vZlTg_McCDo/1600x900'}
+  src={
+    'https://res.cloudinary.com/mikebifulco-com/image/upload/v1662995539/posts/orton-effect-css-react/snowy.jpg'
+  }
   alt="A snowy landscape"
   blurRadius={30}
   opacity={70}
@@ -108,7 +112,9 @@ I've taken the above example a little further, and made blur and opacity adjusta
 I've found that an opacity of somewhere between 25 and 50% and tends to create a nice, subtle effect. The "right" blur radius is a bit more dependent on the specific image.
 
 <OrtonEffectImage
-  src={'https://source.unsplash.com/vZlTg_McCDo/1600x900'}
+  src={
+    'https://res.cloudinary.com/mikebifulco-com/image/upload/v1662995539/posts/orton-effect-css-react/snowy.jpg'
+  }
   alt="A snowy landscape"
   blurRadius={30}
   opacity={70}
@@ -116,16 +122,20 @@ I've found that an opacity of somewhere between 25 and 50% and tends to create a
 />
 
 <OrtonEffectImage
-  src={'https://source.unsplash.com/7d1yzghMSqk/1600x900'}
-  alt="A snowy landscape"
+  src={
+    'https://res.cloudinary.com/mikebifulco-com/image/upload/v1662995644/posts/orton-effect-css-react/cafe.jpg'
+  }
+  alt="A scene at a local cafe"
   blurRadius={30}
   opacity={70}
   showControls
 />
 
 <OrtonEffectImage
-  src={'https://source.unsplash.com/VmX3vmBecFE/900x800'}
-  alt="A snowy landscape"
+  src={
+    'https://res.cloudinary.com/mikebifulco-com/image/upload/v1662995728/posts/orton-effect-css-react/pond.jpg'
+  }
+  alt="A pond with sunlight filtering through autumn leaves overhead"
   blurRadius={30}
   opacity={70}
   showControls
