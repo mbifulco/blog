@@ -28,7 +28,7 @@
     "date-fns": "^2.29.2",
     "fathom-client": "^3.5.0",
     "feed": "^4.2.2",
-    "framer-motion": "^7.3.2",
+    "framer-motion": "^7.3.3",
     "gray-matter": "^4.0.3",
     "mdx-embed": "^1.0.0",
     "next": "^12.3.0",
@@ -50,7 +50,7 @@
   },
   "devDependencies": {
     "@next/eslint-plugin-next": "^12.3.0",
-    "eslint": "8.23.0",
+    "eslint": "8.23.1",
     "eslint-config-next": "^12.3.0",
     "eslint-config-prettier": "^8.5.0",
     "husky": ">=8.0.1",
