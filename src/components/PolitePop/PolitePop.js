@@ -68,7 +68,6 @@ const PolitePopEmbed = ({ debug = false }) => {
           });
         }}
       />
-      <Button onClick={onOpen}>Open Modal</Button>
       <Modal
         onClose={onClose}
         size={'full'}
