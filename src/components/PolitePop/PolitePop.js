@@ -63,7 +63,6 @@ const PolitePopEmbed = ({ debug = false }) => {
           });
 
           PolitePop.onNewEmailSignup((e) => {
-            debugger;
             setSubscribeEvent(e);
             onOpen();
           });
