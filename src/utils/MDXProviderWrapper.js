@@ -174,7 +174,8 @@ const InlineCode = (props) => {
 
   return (
     <Code
-      color={theme.colors.gray[900]}
+      colorScheme={'facebook'}
+      verticalAlign="middle"
       whiteSpace="pre"
       borderRadius=".3em"
       padding="0.1ch 1ch"
@@ -233,7 +234,7 @@ export const customComponents = {
   Colophon,
   Highlight,
   Image,
-  inlineCode: InlineCode,
+  code: InlineCode,
   a: CustomLink,
   blockquote: Aside,
   h1: H1,
