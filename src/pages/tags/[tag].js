@@ -2,10 +2,10 @@ import React from 'react';
 
 import { getAllPostsByTag } from '../../lib/blog';
 import { DefaultLayout } from '../../components/Layouts';
-import { SEO } from '../../components';
+import { NewsletterItem, SEO } from '../../components';
 import { Heading, Text, useTheme } from '@chakra-ui/react';
 import { getAllTags } from '../../lib/tags';
-import { Box } from '@chakra-ui/react';
+import { Stack } from '@chakra-ui/react';
 import { getAllExternalReferencesByTag } from '../../lib/external-references';
 import { Post, ExternalWorkItem } from '../../components';
 import { getAllNewslettersByTag } from '../../lib/newsletters';
@@ -58,7 +58,7 @@ const TagPage = ({ tag, posts, articles, newsletters }) => {
   return (
     <DefaultLayout>
       <SEO
-        title={`#${tag}: ${posts.length} posts, articles, and videos`}
+        title={`#${tag}: ${all.length} posts, articles, and videos`}
         description={`All of my blog posts, articles, and videos tagged with ${tag}`}
       />
       <Heading as="h1">
@@ -68,15 +68,13 @@ const TagPage = ({ tag, posts, articles, newsletters }) => {
         <Text as="span">{tag}</Text>
         <Text as="span">: {all.length} posts tagged</Text>
       </Heading>
-      <Box>
+      <Stack spacing={8}>
         {all.map((content) => {
+          console.log(content.frontmatter.type);
           switch (content.frontmatter.type) {
-            case 'newsletter':
-              <Post
-                post={content}
-                key={`newsletter-${content.frontmatter.path}`}
-                summary
-              />;
+            case 'newsletter': {
+              return <NewsletterItem newsletter={content} />;
+            }
             case 'post':
               return (
                 <Post
@@ -96,7 +94,7 @@ const TagPage = ({ tag, posts, articles, newsletters }) => {
               break;
           }
         })}
-      </Box>
+      </Stack>
     </DefaultLayout>
   );
 };
