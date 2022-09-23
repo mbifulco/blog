@@ -296,7 +296,7 @@ export const getAllNewsletters = async () => {
 
   let nls = [];
   // iterate over the map we have of subject->newsletter, and push into a fresh array, which we'll return
-  for (subject in dedupedBySubject) {
+  for (let subject in dedupedBySubject) {
     nls.push(dedupedBySubject[subject]);
   }
 
