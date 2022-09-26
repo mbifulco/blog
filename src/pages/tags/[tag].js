@@ -73,7 +73,12 @@ const TagPage = ({ tag, posts, articles, newsletters }) => {
           console.log(content.frontmatter.type);
           switch (content.frontmatter.type) {
             case 'newsletter': {
-              return <NewsletterItem newsletter={content} />;
+              return (
+                <NewsletterItem
+                  key={`newsletter-${content.frontmatter.path}`}
+                  newsletter={content}
+                />
+              );
             }
             case 'post':
               return (

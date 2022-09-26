@@ -193,7 +193,7 @@ Once again, we use the loader pattern to query the ConvertKit API for details ab
 
 #### Render the body using dangersoulySetInnerHTML
 
-To render the contents of the newsletter, we are using a scary-looking React API pattern - `dangerouslySetInnerHTML`. This is a React API that allows you to render HTML that you have received from an API, and is generally considered a security risk. However, in this case, we are using it to render HTML that we have generated ourselves, and we are at least confident that it is safe to render. Generally speaking, this is a tecnique that shouldn't be used unless you are confident that the HTML you are rendering is safe.
+To render the contents of the newsletter, we are using a scary-looking React API pattern - `dangerouslySetInnerHTML`. This is a React API that allows you to render HTML that you have received from an API, and is generally considered a security risk. However, in this case, we are using it to render HTML that we have generated ourselves, and we are at least confident that it is somewhat safe to render. Generally speaking, this is a technique that shouldn't be used unless you are confident that the HTML you are rendering is safe.
 
 #### Helper functions for displaying ConvertKit newsletter content
 

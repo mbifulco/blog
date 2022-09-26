@@ -1,0 +1,348 @@
+---
+title: 'Growth hack: Publish newsletters to your Next.js site with ConvertKit API'
+excerpt: Use previous issues of your newsletter to attract new subscribers, using the ConvertKit API with your Next.js site.
+tags: [react, next.js, convertkit, tutorial, api]
+date: 09-23-2022
+published: true
+coverImagePublicId: 'posts/publish-your-newsletter-with-convertkit-api-next-js/cover.png'
+path: publish-your-newsletter-with-convertkit-api-next-js
+---
+
+## I publish a newsletter called Tiny Improvements
+
+[My little newsletter](https://mikebifulco.com/newsletter) is all about making small, incremental improvements to your work and home life, especially if you're building a product or company. I've been publishing it for a while now, and I've been using ConvertKit to manage my subscribers and send out the newsletter.
+
+<Aside>
+
+Note: This is a follow-up to my [previous post on using ConvertKit with Remix](https://mikebifulco.com/posts/publish-your-newsletter-with-convertkit-api-remix). If your site is built using [**Remix.run**](https://remix.run), you'll probably want to head over there.
+
+</Aside>
+
+In this post, we'll go over how I use the ConvertKit API to publish a newsletter page for a site built with [Next.js](https://nextjs.org).
+
+## Publish past issues to grow your newsletter
+
+I recently started publishing back-issues of my [newsletter](https://mikebifulco.com/newsletter) to my site, so that I can share them as evidence of the type of writing I do. In addition to being SEO-indexable, it allows me to share the newsletter with people who aren't subscribed to it, with a link to subscribe at the bottom of each issue.
+
+I wanted to explore a way to make _my_ process incrementally better, by using the [ConvertKit API](https://developers.convertkit.com/) to automate the publishing process with the same workflow that I use to send newsletters to subscribers.
+
+## Using the ConvertKit API to publish newsletters to a Next.js site
+
+Setting up an automated newsletter page is fairly simple, at least in theory:
+
+1. Write newsletters and send them, using ConvertKit's broadcast features (for the sake of this post, we'll use the term "newsletter" and "broadcast" somewhat interchangeably).
+2. Use the ConvertKit API's list-broadcasts endpoint to query for every published broadcast, to populate a newsletter index page
+3. For each published broadcast, use the ConvertKit API to get the details of that broadcast, and then render the content of that broadcast on a page.
+4. For SEO purposes, add each published newsletter page to `sitemap.xml`, with all the appropriate metadata.
+
+To get newsletters from the ConvertKit API, I set up 2 helper functions in `/src/utils/convertKit.js`. First is `getNewsletter()`, which takes a broadcast ID and returns the details of that broadcast.
+
+```js
+export const getNewsletter = async (broadcastId) => {
+  const res = await fetch(
+    `https://api.convertkit.com/v3/broadcasts/${broadcastId}?api_secret=${CONVERTKIT_API_SECRET}`
+  );
+
+  // rename "broadcast" to "newsletter" for consistency
+  const { broadcast: newsletter } = await res.json();
+
+  return newsletter;
+};
+```
+
+The second is `getAllNewsletters()`, which returns a list of all published broadcasts. In its simplest form, this function looks like this:
+
+```js
+export const getAllNewsletters = async () => {
+  const response = await fetch(
+    `https://api.convertkit.com/v3/broadcasts?api_secret=${CONVERTKIT_API_SECRET}`
+  );
+  const data = await response.json();
+
+  // rename "broadcasts" to "newsletters" for consistency
+  const { broadcasts: newsletters } = data;
+
+  return newsletters;
+};
+```
+
+<Aside type="warning">
+
+We are using an environment variable to supply the variable `CONVERTKIT_API_SECRET` - it is **super important** to keep this value secret, and not share it on the client-side of your app.
+
+</Aside>
+
+### Keeping your ConvertKit API Secret key safe on Next.js sites
+
+For this example, we're using `CONVERTKIT_API_SECRET` environment variable only on the server-rendered parts of our site, because we _do not want it to be exposed to the client_. To make this value accessible only server-side, add it to a file called `.env` or `.env.local`, according to [Next.js documentation](https://nextjs.org/docs/basic-features/environment-variables#loading-environment-variables). **Make sure you add `.env` and `.env.local` to your [`.gitignore` file](https://mikebifulco.com/posts/gitignore-io-is-great), so you don't accidentally commit it to your repository.**
+
+Importantly, this environment variable should only be exposed server-side, because we _didn't_ name it with a `NEXT_PUBLIC_` prefix - to read more about using environment variables to web clients, check out [Next.js documentation](https://nextjs.org/docs/basic-features/environment-variables#exposing-environment-variables-to-the-browser).
+
+### Rendering the newsletter index page
+
+Now that we have a way to get a list of all published newsletters, we can use that to render a page with a preview of each past issue. I created a new file called `/src/pages/newsletter/index.js` to render the newsletter index page.
+
+On this page, we use `getStaticProps` to fetch our list of newsletters on the server, and then pass them to render function, to display a list of links to each newsletter page.
+
+<small>
+
+_note: I stripped out the styling/presentation code from this example to keep
+it focused on data loading logic._
+
+</small>
+
+```jsx
+import { Link } from 'next/link';
+import { getAllNewsletters } from '../../utils/convertKit';
+
+import slugify from '../../utils/slugify';
+
+export const getStaticProps = async () => {
+  const newsletters = await getAllNewsletters();
+
+  return {
+    props: {
+      newsletters,
+    },
+  };
+};
+
+const NewsletterIndexPage = ({ newsletters }) => {
+  return (
+    <>
+      <h1>All Newsletters</h1>
+      <Stack>
+        {newsletters?.map((newsletter) => (
+          <Link
+            href={`/newsletter/${slugify(newsletter.subject)}`}
+            key={newsletter.id}
+          >
+            {newsletter.subject} - {formatDate(newsletter.published_at)}
+          </Link>
+        ))}
+      </Stack>
+    </>
+  );
+};
+
+export default NewsletterIndexPage;
+```
+
+You may have noticed that I'm also using a helper function called `slugify`, which uses the npm package `slugify`. This function takes a string and returns a skewer-case-version-of-it, which is useful for creating browser-friendly URLs from strings.
+
+```js
+import makeSlug from 'slugify';
+
+export const slugify = (string) => {
+  return makeSlug(string, {
+    replacement: '-',
+    remove: /[\[\],?*+~.()'"!:@]/g,
+    strict: true,
+    lower: true,
+  });
+};
+
+export default slugify;
+```
+
+This is an optional step that caused me a fair bit of heartache - the easiest way to link to individual newsletter pages is to use the broadcast ID, but I wanted to use a more human-readable URL, so I used `slugify` to create a URL-friendly version of the newsletter subject.
+
+The downsides of this approach are:
+
+- each newsletter _must_ have a unique URL
+- there's not a way to efficiently map a URL to a broadcast ID, so we have to iterate over all broadcasts to find the one that matches the URL (which you'll see in the next section)
+
+For now, I can live with this approach, since this computation is done once during build time, and until I have hundreds of newsletters, it shouldn't be too big of a performance hit.
+
+### Rendering a single newsletter page
+
+Now that we have a page listing all published newsletters, we need to create a page template to render a single newsletter. I created a new file called `/src/pages/newsletter/[subject].js` to render the newsletter index page (note, once again, that presentation and styling code is removed here for simplicify):
+
+```jsx
+import { useEffect } from 'react';
+import {
+  broadcastTemplateParse,
+  getAllNewsletters,
+} from '../../utils/convertKit';
+import slugify from '../../utils/slugify';
+
+export const getStaticPaths = async () => {
+  const newsletters = await getAllNewsletters();
+
+  return {
+    paths: newsletters.map((newsletter) => ({
+      params: {
+        subject: slugify(newsletter.subject),
+      },
+    })),
+    fallback: false,
+  };
+};
+
+export const getStaticProps = async (context) => {
+  const newsletters = await getAllNewsletters();
+
+  const { subject } = context.params;
+  const slug = slugify(subject);
+
+  const newsletter = newsletters.find(
+    (newsletter) => slugify(newsletter.subject) == slug
+  );
+
+  return {
+    props: {
+      newsletter,
+    },
+  };
+};
+
+const SingleNewsletterPage = ({ newsletter }) => {
+  const { subject } = newsletter;
+
+  return (
+    <>
+      <h1>{subject}</h1>
+      <div
+        dangerouslySetInnerHTML={{
+          __html: broadcastTemplateParse({ template: newsletter.content }),
+        }}
+      />
+    </>
+  );
+};
+
+export default SingleNewsletterPage;
+```
+
+The `getStaticPaths` function is used to generate a list of all possible URLs that should be pre-rendered. In this case, we're using the `getAllNewsletters` function to fetch a list of all published newsletters, and then using the `slugify` function to create a URL based on the newsletter's subject.
+
+The `getStaticProps` function is used to fetch the data for a single newsletter, based on the URL. We use the `getAllNewsletters` function to fetch a list of all published newsletters, and then use `newsletters.find()` to look for the newsletter whose subject line matches the URL for the current page when run through `slugify`. This uses a JavaScript API called [Array.find()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find), which is used to find single item in an array that matches a condition.
+
+#### Render the body using dangersoulySetInnerHTML
+
+To render the contents of the newsletter, we are using a scary-looking React API pattern - `dangerouslySetInnerHTML`. This is a [React API](https://reactjs.org/docs/dom-elements.html#dangerouslysetinnerhtml) that allows you to render HTML that you have received from an API, and is generally considered a security risk. However, in this case, we are using it to render HTML that we have generated ourselves, and we are at least somewhat confident that it is safe to render. Generally speaking, this is a technique that shouldn't be used unless you are confident that the HTML you are rendering is safe.
+
+#### Helper functions for displaying ConvertKit newsletter content
+
+We're also using 2 helper functions, which are defined in `/src/utils/convertKit.js`:
+
+```js
+import { Liquid } from 'liquidjs';
+const engine = new Liquid();
+
+export const broadcastTemplateParse = ({ template, data }) => {
+  const t = template.replaceAll('&quot;', '"');
+  const res = engine.parseAndRenderSync(t, data);
+  return res;
+};
+
+export const newsletterHasValidThumbnail = (newsletter) => {
+  const { thumbnail_url: thumbnailUrl } = newsletter;
+  if (!thumbnailUrl) return false;
+  if (thumbnailUrl.startsWith('https://functions-js.convertkit.com/icons'))
+    return false;
+  return true;
+};
+```
+
+The `newsletterHasValidThumbnail` function is a helper function that checks if the newsletter has a valid thumbnail image. ConvertKit provides a default thumbnail image for all newsletters, but you can also upload your own, by adding an image to your newsletter's body. This function checks if the thumbnail is the default image, and if so, returns `false` so we can skip rendering it.
+
+The `broadcastTemplateParse` function is a helper function that takes a newsletter template and parses it with the [Liquid](https://shopify.github.io/liquid/) templating language. This is how ConvertKit allows you to customize the HTML of your newsletter, and use dynamic data like the subscriber's name, or the date the newsletter was sent.
+
+**An important caveat:** There are _lots_ of little cases where this might not work perfectly, due to all of the amazing things you can do with Liquid in ConvertKit. At the moment, my newsletter uses fairly basic liquid customization - this may not do the trick for you if you're using more advanced features. Please test your implementation thoroughly!
+
+### Adding more detail to the index page
+
+At the time of writing this post, ConvertKit's v3 API is in "active development" - and as such, it's likely not feature complete. For example, the [current API for list-broadcasts](https://developers.convertkit.com/#list-broadcasts) provides a minimal amount of data about each broadcast:
+
+```bash
+curl https://api.convertkit.com/v3/broadcasts?api_secret=<your_secret_api_key>
+```
+
+```json
+{
+  "broadcasts": [
+    {
+      "id": 1,
+      "created_at": "2014-02-13T21:45:16.000Z",
+      "subject": "Welcome to my Newsletter!"
+    },
+    {
+      "id": 2,
+      "created_at": "2014-02-20T11:40:11.000Z",
+      "subject": "Check out my latest blog posts!"
+    },
+    {
+      "id": 3,
+      "created_at": "2014-02-29T08:21:18.000Z",
+      "subject": "How to get my free masterclass"
+    }
+  ]
+```
+
+Since we want to create an index page that shows a thumbnail for each newsletter, we need to query the API for more information about each newsletter. At the moment, the best way to do this is to query the API for each newsletter individually. It's not ideal, since we need to send an API call for each newsletter shown on the index page, but I'm hoping that with a bit of feedback, ConvertKit will add more data to the list-broadcasts API endpoint.
+
+We already have a function to query the API for a single newsletter (remember `getNewsletter` from earlier?), so we can use that to query the API for each newsletter on the index page.
+
+#### Filter out un-published newsletters
+
+The list-broadcasts endpoint also doesn't currently return whether or not a given broadcast was _published_ yet - which means that if you draft a future broadcast on your ConvertKit dashboard, it will still be returned by the list API. I don't want to share these yet-to-be-sent newsletters on any of my sites, so we'll add some logic to `getAllNewsletters` to filter out any newsletters that haven't been published yet.
+
+#### Don't render newsletters with duplicate subject lines
+
+There are some cases where I send the same newsletter multiple times, with the same subject line, to different audiences - usually because I've forgotten to include some details in the original broadcast. This results in multiple broadcasts with essentially the same content. I don't want to show these on my site, so I added some logic to deduple any newsletters that have the same subject line, displaying only the most recent one (which should be the most correct, in theory).
+
+This is the updated code for `getAllNewsletters` in `convertKit.js`:
+
+```jsx
+export const getAllNewsletters = async () => {
+  const response = await fetch(
+    `https://api.convertkit.com/v3/broadcasts?api_secret=${CONVERTKIT_API_SECRET}`
+  );
+  const data = await response.json();
+  const { broadcasts } = data;
+
+  // get details for each individual newsletter
+  const newsletters = await Promise.all(
+    broadcasts.map((broadcast) => getNewsletter(broadcast.id))
+  );
+
+  // hackish dedupe here - sometimes we publish a newsletter a _second_ time as a correction, or to a different audience.
+  // In those cases, they should always have the same subject. We're using subject as a way to deduplicate newsletters in that case
+  const dedupedBySubject = {};
+
+  // return only newsletters that have been published, and sort by most recent to oldest
+  newsletters
+    .filter((newsletter) => !!newsletter.published_at)
+    .sort((a, b) => new Date(b.published_at) - new Date(a.published_at))
+    .forEach((newsletter) => {
+      // the first one we encounter in this order will be the newest, so if there's one already we don't make any changes to the object map
+      if (!dedupedBySubject[newsletter.subject])
+        dedupedBySubject[newsletter.subject] = newsletter;
+    });
+
+  let nls = [];
+  // iterate over the map we have of subject->newsletter, and push into a fresh array, which we'll return
+  for (let subject in dedupedBySubject) {
+    nls.push(dedupedBySubject[subject]);
+  }
+
+  return nls;
+};
+```
+
+And with that, our basic implementation is complete - we've created a `/newsletter` page that shows a list of all of our newsletters, with a thumbnail image for each one. We've also added a `/newsletter/[subject]` page that shows the full content of a given newsletter.
+
+## Next steps
+
+There are a few things I'd like to add to this implementation in the future:
+
+- I'm unhappy with the bottleneck I've created for myself using `slugify` on the subject line to create the URL slug. I'd like to find a more efficient way to do this. A reasonable fallback for now might be to use the `BroadcastId` as the slug instead of the subject line, but those aren't human-readable.
+- This implementation presents some challenges for SEO - getting newsletter entries to show up in my site's `sitemap.xml` is currently done at build time, which means that new newsletters won't show up in the sitemap until I rebuild the site. In the future, I'll either need to generate the sitemap dynamically, or implement [Incremental Static Regeneration](https://nextjs.org/docs/basic-features/data-fetching/incremental-static-regeneration) so that new newsletters are added to the sitemap as soon as they're published.
+- I'm pretty diligent about [embedding opengraph metadata](https://mikebifulco.com/posts/reset-your-open-graph-embeds-on-linkedin-twitter-facebook) on the pages on my site, including images and excerpts from the article to use as previews on sites like twitter and LinkedIn. This implementation makes that tricky, as determining _which_ image to use as the cover for a given newsletter is a bit of a challenge. Right now I'm using the first image within a newsletter. I'm not sure what the best solution is here, but I'm open to suggestions!
+
+## Wrap-up
+
+I hope this post has been helpful to you, and that you've learned something new about how to use ConvertKit's API to create a custom newsletter index page for your Next.js site. I'd also love it if you checked out Tiny Improvements, my little newsletter about making better products and a better life - [mikebifulco.com/newsletter](https://mikebifulco.com/newsletter).
+
+If you have any questions, or if you've found a bug in my code, please feel free to reach out to me on Twitter [@irreverentmike](https://twitter.com/irreverentmike)!
