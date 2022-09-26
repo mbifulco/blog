@@ -111,16 +111,15 @@ const NewsletterIndexPage = ({ newsletters }) => {
   return (
     <>
       <h1>All Newsletters</h1>
-      <Stack>
+      <ul>
         {newsletters?.map((newsletter) => (
-          <Link
-            href={`/newsletter/${slugify(newsletter.subject)}`}
-            key={newsletter.id}
-          >
-            {newsletter.subject} - {formatDate(newsletter.published_at)}
-          </Link>
+          <li key={newsletter.id}>
+            <Link href={`/newsletter/${slugify(newsletter.subject)}`}>
+              {newsletter.subject} - {formatDate(newsletter.published_at)}
+            </Link>
+          </li>
         ))}
-      </Stack>
+      </ul>
     </>
   );
 };
