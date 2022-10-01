@@ -8,7 +8,9 @@ import { AdvancedImage, responsive } from '@cloudinary/react';
 const Image = ({ alt, caption, publicId, ...rest }) => {
   const cloudinaryImage = new CloudinaryImage(publicId, {
     cloudName: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
-  });
+  })
+    .format('auto')
+    .quality('auto');
 
   return (
     <figure>
