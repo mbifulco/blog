@@ -16,7 +16,20 @@ module.exports = withBundleAnalyzer(
   withMDX({
     pageExtensions: ['js', 'jsx', 'md', 'mdx'],
     images: {
-      domains: ['i.ytimg.com', 'res.cloudinary.com', 'images.unsplash.com'],
+      remotePatterns: [
+        {
+          protocol: 'https',
+          hostname: 'i.ytimg.com',
+        },
+        {
+          protocol: 'https',
+          hostname: 'res.cloudinary.com',
+        },
+        {
+          protocol: 'https',
+          hostname: 'images.unsplash.com',
+        },
+      ],
     },
     productionBrowserSourceMaps: true,
     compress: false,

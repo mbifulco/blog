@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "@chakra-ui/react": "^2.3.4",
+    "@cloudinary/react": "^1.5.0",
     "@cloudinary/url-gen": "^1.8.6",
     "@emotion/react": "^11.10.4",
     "@emotion/styled": "^11.10.4",
@@ -28,7 +29,7 @@
     "date-fns": "^2.29.3",
     "fathom-client": "^3.5.0",
     "feed": "^4.2.2",
-    "framer-motion": "^7.3.6",
+    "framer-motion": "^7.5.1",
     "gray-matter": "^4.0.3",
     "mdx-embed": "^1.0.0",
     "next": "^12.3.1",
@@ -45,17 +46,17 @@
     "remark": "^14.0.2",
     "remark-html": "^15.0.1",
     "sass": "^1.55.0",
-    "sharp": "^0.31.0",
+    "sharp": "^0.31.1",
     "swr": "^1.2.2"
   },
   "devDependencies": {
     "@next/eslint-plugin-next": "^12.3.1",
-    "eslint": "8.23.1",
+    "eslint": "8.24.0",
     "eslint-config-next": "^12.3.1",
     "eslint-config-prettier": "^8.5.0",
     "husky": ">=8.0.1",
     "lint-staged": "^13.0.3",
-    "next-sitemap": "^3.1.22",
+    "next-sitemap": "^3.1.23",
     "prettier": "^2.7.1"
   },
   "repository": {

@@ -2,32 +2,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Image as Img } from '@chakra-ui/react';
+import { CloudinaryImage } from '@cloudinary/url-gen';
+import { AdvancedImage, responsive } from '@cloudinary/react';
 
-import { getCloudinaryImageUrl } from '../../utils/images';
-
-const Image = ({
-  alt,
-  caption,
-  height,
-  publicId,
-  transformations,
-  width,
-  ...rest
-}) => {
-  const url = getCloudinaryImageUrl(publicId);
+const Image = ({ alt, caption, publicId, ...rest }) => {
+  const cloudinaryImage = new CloudinaryImage(publicId, {
+    cloudName: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
+  })
+    .format('auto')
+    .quality('auto');
 
   return (
     <figure>
-      <Img
-        // we also have changed `data` to `url` to better describe what `generateUrl` gives us back and makes more sense to pass to `src`
-        htmlHeight={height}
-        htmlWidth={width}
-        src={url}
-        alt={alt || caption}
-        // eslint-disable-next-line react/jsx-props-no-spreading
-        loading="lazy"
-        {...rest}
+      <AdvancedImage
+        alt={alt}
+        cldImg={cloudinaryImage}
+        plugins={[responsive()]}
       />
       <figcaption>{caption}</figcaption>
     </figure>
@@ -37,9 +27,6 @@ const Image = ({
 Image.propTypes = {
   caption: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   publicId: PropTypes.string,
-  transformations: PropTypes.arrayOf(PropTypes.string),
-  width: PropTypes.string,
-  height: PropTypes.string,
   alt: PropTypes.string,
 };
 
