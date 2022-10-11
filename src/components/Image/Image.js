@@ -38,8 +38,8 @@ Image.propTypes = {
   caption: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   publicId: PropTypes.string,
   transformations: PropTypes.arrayOf(PropTypes.string),
-  width: PropTypes.string,
-  height: PropTypes.string,
+  width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   alt: PropTypes.string,
 };
 
