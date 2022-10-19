@@ -24,12 +24,29 @@ const SubscriptionForm = ({ tags }) => {
     return result;
   }, {});
 
+  const logNewsletterEvent = ({ email, name, result, log }) => {
+    // send a request to our serverless API to log the event
+    fetch('/api/newsletterSignup', {
+      method: 'POST',
+      body: JSON.stringify({
+        email,
+        name,
+        result,
+        log,
+      }),
+    });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
+    // get email address and first name from formData
+    const email = formData.get('email_address');
+    const name = formData.get('fields[first_name]');
 
     try {
       trackAction(ACTIONS.NEWSLETTER_SUBSCRIPTION);
+
       const response = await fetch(FORM_URL, {
         method: 'post',
         body: formData,
@@ -41,12 +58,30 @@ const SubscriptionForm = ({ tags }) => {
       const json = await response.json();
 
       if (json.status === 'success') {
+        logNewsletterEvent({
+          email,
+          name,
+          result: json.status,
+          log: json,
+        });
         setStatus('SUCCESS');
         return;
       }
 
+      logNewsletterEvent({
+        email,
+        name,
+        result: json.status,
+        log: json,
+      });
       setStatus('ERROR');
     } catch (err) {
+      logNewsletterEvent({
+        email,
+        name,
+        result: json.status,
+        log: json,
+      });
       setStatus('ERROR');
     }
   };
