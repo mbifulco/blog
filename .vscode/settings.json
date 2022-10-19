@@ -2,5 +2,6 @@
   "editor.formatOnPaste": true,
   "editor.formatOnType": true,
   "debug.node.autoAttach": "off",
-  "cSpell.words": ["chakra", "convertkit", "deduped", "liquidjs", "Webmention"]
+  "cSpell.words": ["chakra", "convertkit", "deduped", "liquidjs", "Webmention"],
+  "dotenv.enableAutocloaking": true
 }
