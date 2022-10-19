@@ -16,12 +16,13 @@ export default async function handler(req, res) {
     process.env.AIRTABLE_BASE_ID
   );
 
-  const { ip, geo, cookies, userAgent, referrer, headers, url } = req;
+  const { ip, geo, cookies, userAgent, referer, headers, url } = req;
 
   try {
     const records = await base('Newsletter signup events').create([
       {
         fields: {
+          url: headers.referer,
           email,
           name,
           request: JSON.stringify({
@@ -30,7 +31,7 @@ export default async function handler(req, res) {
             geo,
             headers,
             ip,
-            referrer,
+            referer,
             url,
             userAgent,
           }),

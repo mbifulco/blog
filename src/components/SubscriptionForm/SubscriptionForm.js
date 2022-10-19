@@ -51,7 +51,7 @@ const SubscriptionForm = ({ tags }) => {
         method: 'post',
         body: formData,
         headers: {
-          'Content-Type': 'application/json',
+          accept: 'application/json',
         },
       });
 
