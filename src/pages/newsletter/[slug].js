@@ -6,7 +6,6 @@ import { Flex } from '@chakra-ui/react';
 
 import { getNewsletterBySlug, getAllNewsletters } from '../../lib/newsletters';
 
-import { DefaultLayout } from '../../components/Layouts';
 import {
   Colophon,
   NewsletterSignup,
@@ -54,7 +53,7 @@ const NewsletterPage = (post) => {
   const coverImageUrl = getCloudinaryImageUrl(postImagePublicId);
 
   return (
-    <DefaultLayout>
+    <>
       {/* TODO image url to SEO */}
       <SEO
         canonical={router.asPath}
@@ -76,7 +75,7 @@ const NewsletterPage = (post) => {
         tags={tags}
         title={title}
       />
-    </DefaultLayout>
+    </>
   );
 };
 
