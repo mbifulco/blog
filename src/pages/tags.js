@@ -7,7 +7,6 @@ import { Heading, SimpleGrid, Text, useTheme } from '@chakra-ui/react';
 import { getAllTags } from '../lib/tags';
 
 import { Tag, NewsletterSignup } from '../components';
-import { DefaultLayout as Layout } from '../components/Layouts';
 
 import { SEO } from '../components';
 
@@ -24,7 +23,7 @@ const TagsPage = ({ tags }) => {
   const theme = useTheme();
 
   return (
-    <Layout>
+    <>
       <SEO title="Browse all tags used on articles" />
       <Heading as="h1">
         All{' '}
@@ -41,7 +40,7 @@ const TagsPage = ({ tags }) => {
         ))}
       </SimpleGrid>
       <NewsletterSignup />
-    </Layout>
+    </>
   );
 };
 

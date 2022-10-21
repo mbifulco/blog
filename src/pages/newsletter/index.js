@@ -3,7 +3,6 @@ import React from 'react';
 import { Box, Heading, SimpleGrid, Stack, Text } from '@chakra-ui/react';
 
 import {
-  DefaultLayout as Layout,
   NewsletterItem,
   NewsletterSignup,
   SEO,
@@ -25,7 +24,7 @@ export async function getStaticProps() {
 
 const NewsletterPage = ({ newsletters }) => {
   return (
-    <Layout>
+    <>
       <SEO
         title="Subscribe to Tiny Improvements: articles software dev, design, and climate"
         image={
@@ -63,7 +62,7 @@ const NewsletterPage = ({ newsletters }) => {
       </Stack>
 
       <NewsletterSignup />
-    </Layout>
+    </>
   );
 };
 
