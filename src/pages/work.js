@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 
 import { Box, Heading, Stack, Text, useTheme } from '@chakra-ui/react';
 
-import { DefaultLayout } from '../components/Layouts';
 import { ExternalWorkItem, SEO } from '../components';
 
 import { getAllExternalReferences } from '../lib/external-references';
@@ -21,7 +20,7 @@ export async function getStaticProps() {
 const WorkPage = ({ articles }) => {
   const theme = useTheme();
   return (
-    <DefaultLayout>
+    <>
       <SEO title="My work from around the web" canonical="/work" />
       <Stack>
         <Heading as="h1">Some samples of my work online</Heading>
@@ -43,7 +42,7 @@ const WorkPage = ({ articles }) => {
           ))}
         </Stack>
       </Stack>
-    </DefaultLayout>
+    </>
   );
 };
 

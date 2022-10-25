@@ -56,7 +56,7 @@ const TagPage = ({ tag, posts, articles, newsletters }) => {
   });
 
   return (
-    <DefaultLayout>
+    <>
       <SEO
         title={`#${tag}: ${all.length} posts, articles, and videos`}
         description={`All of my blog posts, articles, and videos tagged with ${tag}`}
@@ -100,7 +100,7 @@ const TagPage = ({ tag, posts, articles, newsletters }) => {
           }
         })}
       </Stack>
-    </DefaultLayout>
+    </>
   );
 };
 

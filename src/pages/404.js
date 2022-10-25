@@ -2,7 +2,6 @@ import React from 'react';
 
 import { Heading, Link, Text, useTheme } from '@chakra-ui/react';
 
-import { DefaultLayout } from '../components/Layouts';
 import { Image, SEO } from '../components';
 
 const NotFoundPage = () => {
@@ -10,7 +9,7 @@ const NotFoundPage = () => {
   const pink = theme.colors.pink[600];
 
   return (
-    <DefaultLayout>
+    <>
       <SEO title="404: URL Not found" />
       <Heading as="h1">Uh oh, you stumbled upon a bad URL.</Heading>
       <Image
@@ -43,7 +42,7 @@ const NotFoundPage = () => {
         </Link>{' '}
         and {"I'll"} do my best to help you out..
       </Text>
-    </DefaultLayout>
+    </>
   );
 };
 

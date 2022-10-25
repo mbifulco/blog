@@ -7,6 +7,7 @@ import { ChakraProvider } from '@chakra-ui/react';
 import { AnalyticsProvider } from '../utils/analytics';
 
 import '../components/CarbonAd/CarbonAd.css';
+import { DefaultLayout } from '../components';
 
 // import App from 'next/app'
 
@@ -34,8 +35,10 @@ function MyApp({ Component, pageProps }) {
   return (
     <AnalyticsProvider>
       <ChakraProvider>
-        {/* eslint-disable-next-line react/jsx-props-no-spreading */}
-        <Component {...pageProps} />
+        <DefaultLayout>
+          {/* eslint-disable-next-line react/jsx-props-no-spreading */}
+          <Component {...pageProps} />
+        </DefaultLayout>
       </ChakraProvider>
     </AnalyticsProvider>
   );

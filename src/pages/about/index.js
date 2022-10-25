@@ -3,29 +3,25 @@ import React from 'react';
 import { Heading } from '@chakra-ui/react';
 
 import Image from 'next/image';
-import Metalmorphosis from './cover.png'
+import Metalmorphosis from './cover.png';
 
 import { SEO } from '../../components';
-import { DefaultLayout as Layout } from '../../components/Layouts';
 import { NewsletterSignup } from '../../components/NewsletterSignup';
 
 const AboutPage = () => (
-  <Layout>
+  <>
     <SEO title="About me" />
-    <Image src={Metalmorphosis} alt="Metalmorphisis, an amazing sculpture in my hometown of Charlotte, NC" />
-    <Heading as="h1">
-      Hey there
-    </Heading>
+    <Image
+      src={Metalmorphosis}
+      alt="Metalmorphisis, an amazing sculpture in my hometown of Charlotte, NC"
+    />
+    <Heading as="h1">Hey there</Heading>
     <p>
       {
         "I'm Mike Bifulco. I'm a technologist, a designer, and a creator of things. I started this as a place to put together my thoughts on things that I think deserve a bigger voice than twitter or GitHub."
       }
     </p>
-    <p>
-      {
-        "These are some things that are important to me:"
-      }
-    </p>
+    <p>{'These are some things that are important to me:'}</p>
 
     <ul>
       <li>
@@ -54,7 +50,7 @@ const AboutPage = () => (
     <p>{"I'd love to hear your thoughts on my thoughts - don't be shy!"}</p>
 
     <NewsletterSignup />
-  </Layout>
+  </>
 );
 
 export default AboutPage;

@@ -55,7 +55,7 @@ const BlogPost = (post) => {
   const coverImageUrl = getCloudinaryImageUrl(postImagePublicId);
 
   return (
-    <DefaultLayout>
+    <>
       {/* TODO image url to SEO */}
       <SEO
         canonical={router.asPath}
@@ -82,7 +82,7 @@ const BlogPost = (post) => {
         tags={tags}
         title={title}
       />
-    </DefaultLayout>
+    </>
   );
 };
 

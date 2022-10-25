@@ -1,13 +1,12 @@
 import React from 'react';
 
 import { Image, SEO } from '../components';
-import { DefaultLayout as Layout } from '../components/Layouts';
 
 import * as classes from '../styles/shop.module.scss';
 import SoldOut from '../components/soldOut';
 
 const Shop = () => (
-  <Layout>
+  <>
     <SEO title="Shop" />
     <main className={classes.content}>
       <h1>Shop</h1>
@@ -26,7 +25,7 @@ const Shop = () => (
         {/* eslint-enable max-len */}
       </article>
     </main>
-  </Layout>
+  </>
 );
 
 export default Shop;

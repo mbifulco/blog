@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 
 import { Box, Link, Text, useTheme } from '@chakra-ui/react';
 
-import { DefaultLayout } from '../components/Layouts';
 import {
   Image,
   PostFeed,
@@ -38,7 +37,7 @@ const HomePage = ({ posts }) => {
   const theme = useTheme();
   const pink = theme.colors.pink[400];
   return (
-    <DefaultLayout>
+    <>
       <SEO
         title="Latest articles on design, development, and the world around me"
         image={headshotPublicUrl}
@@ -126,7 +125,7 @@ const HomePage = ({ posts }) => {
         summary="mikebifulco.com - articles on design, development, and making the world a better place."
         title="Home - mikebifulco.com"
       />
-    </DefaultLayout>
+    </>
   );
 };
 
