@@ -34,7 +34,7 @@ const CustomHeading = ({ as, id, ...props }) => {
   if (id) {
     return (
       <Link href={`#${id}`} _hover={{ textDecoration: 'none' }}>
-        <NextLink href={`#${id}`} passHref>
+        <NextLink href={`#${id}`}>
           <Heading
             as={as}
             display="inline"

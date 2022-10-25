@@ -90,7 +90,7 @@ const Post = ({ summary, post }) => {
             {summary ? (
               <Link as={NextLink} href={postPath}>
                 {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-                <a>{title}</a>
+                {title}
               </Link>
             ) : (
               title
