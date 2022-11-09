@@ -21,13 +21,13 @@ module.exports = withMarkdoc({ schemaPath: './src/markdoc/' })({
       {
         source: '/meet',
         destination:
-          'https://calendar.google.com/calendar/u/0/appointments/AcZssZ0QlIIDE1tJhxGyqfaTa-ap5wT9tKqrA7PpxWs=',
+          'https://savvycal.com/irreverentmike/30m',
         permanent: false,
       },
       {
         source: '/meet/pod',
         destination:
-          'https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ2Zi9tQAqlVuP3eLMftB7i7JOBoKdfMxB_GKNJHeE-CQJS6q8YMCUa1KJRJaZ4NprJ516JUAtYP',
+          'https://savvycal.com/irreverentmike/pod',
         permanent: false,
       },
     ];
