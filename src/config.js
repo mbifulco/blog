@@ -2,9 +2,9 @@ const BASE_SITE_URL = 'https://mikebifulco.com';
 
 const config = {
   employer: {
-    name: 'Stripe',
-    role: 'Developer Advocate',
-    url: 'https://stripe.com',
+    name: '[Incognito Mode]',
+    role: 'Product Builder',
+    url: 'https://mikebifulco.com',
   },
   title: `Mike Bifulco`,
   author: {
@@ -43,7 +43,7 @@ const config = {
     - Remote Work, Remote Teams, and Remote Leadership
     - Personal Development, Self-Improvement, and Personal Growth
 
-    Tiny Improvements is written by Mike Bifulco. Mike was the founder of Smpl (acquired 2020), a coworking management application, a co-founder of APIs You Won’t Hate, the largest community of API developers on the web, and has held engineering leadership roles at Stripe, Google, and Microsoft. He is currently a Developer Advocate at Stripe, where he helps developers build great products. Find more of Mike's writing at mikebifulco.com.
+    Tiny Improvements is written by Mike Bifulco. Mike was the founder of Smpl (acquired 2020), a coworking management application, a co-founder of APIs You Won’t Hate, the largest community of API developers on the web, and has held engineering leadership roles at Stripe, Google, and Microsoft. He is currently a Developer Advocate, helping developers build great products. Find more of Mike's writing at mikebifulco.com.
     `,
   },
   // eslint-disable-next-line max-len
