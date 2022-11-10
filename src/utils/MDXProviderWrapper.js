@@ -237,7 +237,6 @@ const HorizontalRule = ({ height = 40, width = 250, color = 'pink' }) => {
         width="794px"
         height="51px"
         viewBox="0 0 794 51"
-        xmlns:xlink="http://www.w3.org/1999/xlink"
       ></svg>
     </Box>
   );
