@@ -5,6 +5,7 @@ import { MDXProvider } from '@mdx-js/react';
 import { Tweet, YouTube, Vimeo } from 'mdx-embed';
 
 import NextLink from 'next/link';
+import Script from 'next/script';
 
 import {
   Button,
@@ -227,6 +228,20 @@ const ListItemComponent = ({ children, ...rest }) => (
   </ListItem>
 );
 
+const HorizontalRule = ({ height = 40, width = 250, color = 'pink' }) => {
+  const theme = useTheme();
+  return (
+    <Box alignContent={'center'} justifyContent={'center'} display={'flex'}>
+      <svg
+        role="separator"
+        width="794px"
+        height="51px"
+        viewBox="0 0 794 51"
+      ></svg>
+    </Box>
+  );
+};
+
 export const customComponents = {
   Aside,
   blockquote: Blockquote,
@@ -247,6 +262,7 @@ export const customComponents = {
   ol: OrderedList,
   p: P,
   pre: Pre,
+  Script,
   SimpleGrid,
   ul: UnorderedList,
 };
