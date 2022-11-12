@@ -62,9 +62,6 @@ const NewsletterItem = ({ newsletter, as = 'h3' }) => {
       <Stack mt={6} direction={'row'} spacing={4} align={'center'}>
         <Stack direction={'column'} spacing={0} fontSize={'sm'}>
           <TagsSummary tags={tags} />
-          <Link href={`/newsletter/${slug}`} color={'gray.600'}>
-            6min read
-          </Link>
         </Stack>
       </Stack>
     </Box>

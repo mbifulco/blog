@@ -5,6 +5,7 @@ import { Box, Flex, Heading, Text, useTheme } from '@chakra-ui/react';
 
 import { Headshot } from '../Headshot';
 import { SubscriptionForm } from '../SubscriptionForm';
+import SponsorCTA from '../SponsorCTA/SponsorCTA';
 
 const NewsletterSignup = ({ tags }) => {
   const theme = useTheme();
@@ -19,7 +20,7 @@ const NewsletterSignup = ({ tags }) => {
         display="flex"
         justifyContent="center"
       >
-        <Box as="section" maxWidth="calc(100vw - 2rem)" margin="2rem 0">
+        <Box as="section" maxWidth="calc(100vw - 2rem)" margin="2rem 0 0 0">
           <Flex direction="row" justifyContent="center" marginBottom="0.5rem">
             <Headshot />
           </Flex>
@@ -40,6 +41,8 @@ const NewsletterSignup = ({ tags }) => {
             Unsubscribe anytime.
           </Text>
           <SubscriptionForm tags={tags} />
+          <br />
+          <SponsorCTA />
         </Box>
       </Flex>
     </Flex>
