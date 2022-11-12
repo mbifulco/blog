@@ -70,7 +70,6 @@ const TagPage = ({ tag, posts, articles, newsletters }) => {
       </Heading>
       <Stack spacing={8}>
         {all.map((content) => {
-          console.log(content.frontmatter.type);
           switch (content.frontmatter.type) {
             case 'newsletter': {
               return (

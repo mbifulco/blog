@@ -99,9 +99,7 @@ const CustomH1 = ({ id, ...rest }) => {
   if (id) {
     return (
       <Link href={`#${id}`}>
-        <a>
-          <h1 {...rest} />
-        </a>
+        <h1 {...rest} />
       </Link>
     );
   }
