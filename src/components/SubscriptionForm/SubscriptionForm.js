@@ -35,7 +35,7 @@ const SubscriptionForm = ({ tags }) => {
 
   const logNewsletterEvent = ({ email, name, result, log }) => {
     // send a request to our serverless API to log the event
-    fetch('/api/newsletterSignup', {
+    fetch('/api/newsletter/signup', {
       method: 'POST',
       body: JSON.stringify({
         email,

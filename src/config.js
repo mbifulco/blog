@@ -23,7 +23,7 @@ const config = {
     title: 'Tiny Improvements',
     tagline: 'For designing & building great products',
     shortDescription:
-      'An occasional newsletter by me, for you. You’ll get my thoughts on designing & building great products, and philosophy for living a life you love in an ever-changing world.',
+      'Learn about designing & building great products for the web, and my philosophy for living a life you love in an ever-changing world.',
     description: `
     Tiny Improvements is a newsletter for people designing and building great products.
 
