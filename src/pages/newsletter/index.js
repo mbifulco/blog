@@ -1,6 +1,14 @@
 import React from 'react';
 
-import { Box, Heading, SimpleGrid, Stack, Text } from '@chakra-ui/react';
+import {
+  Box,
+  Heading,
+  Link,
+  SimpleGrid,
+  Stack,
+  Text,
+  theme,
+} from '@chakra-ui/react';
 
 import {
   NewsletterItem,
@@ -11,6 +19,9 @@ import {
 } from '../../components';
 
 import { getAllNewsletters } from '../../lib/newsletters';
+import config from '../../config';
+import SponsorCTA from '../../components/SponsorCTA/SponsorCTA';
+import useConvertKitStats from '../../hooks/useConvertKitStats';
 
 export async function getStaticProps() {
   const newsletters = await getAllNewsletters();
@@ -23,6 +34,8 @@ export async function getStaticProps() {
 }
 
 const NewsletterPage = ({ newsletters }) => {
+  const { stats } = useConvertKitStats();
+
   return (
     <>
       <SEO
@@ -37,17 +50,19 @@ const NewsletterPage = ({ newsletters }) => {
           <Heading as="h1">Tiny Improvements</Heading>
           <Subtitle>The Newsletter</Subtitle>
         </Box>
+        <Text fontSize={'xl'}>{config.newsletter.shortDescription}</Text>
         <Text fontSize={'xl'}>
-          An occasional newsletter by me, for you. You&apos;ll get my thoughts
-          on designing &amp; building great products, and philosophy for living
-          a life you love in an ever-changing world.
-        </Text>
-        <Text fontSize={'xl'}>
-          Get it delivered straight to your inbox by filling out this happy
+          Join{' '}
+          <span style={{ fontWeight: 'bold' }}>
+            {stats ? stats.subscriberCount : 'the'} other product builders
+          </span>{' '}
+          and get it delivered straight to your inbox by filling out this happy
           lil&apos; form:
         </Text>
       </Stack>
       <SubscriptionForm />
+
+      <SponsorCTA />
 
       <Stack direction={'column'} spacing={'0'}>
         <Heading as="h2" size="md" margin={0} padding={0}>

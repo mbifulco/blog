@@ -12,7 +12,6 @@ const Subtitle = ({ as = 'span', children }) => {
       textTransform="uppercase"
       color={theme.colors.white}
       background={theme.colors.pink[500]}
-      boxShadow="1px 1px 5px rgba(0, 0, 0, 0.8)"
       display={'inline-block'}
     >
       {children}

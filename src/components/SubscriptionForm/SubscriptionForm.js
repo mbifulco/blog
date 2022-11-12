@@ -10,11 +10,20 @@ import * as classes from './SubscriptionForm.module.scss';
 
 import convertKitTags from '../../data/ConvertKitTags';
 
+import ReCaptchaDialog from './ReCaptchaDialog';
+
+const CONVERTKIT_SUBMIT_STATUS = {
+  SUCCESS: 'SUCCESS',
+  ERROR: 'ERROR',
+  QUARANTINE: 'QUARANTINE',
+};
+
 const SubscriptionForm = ({ tags }) => {
   const trackAction = useAnalytics();
   const theme = useTheme();
 
   const [status, setStatus] = useState(null);
+  const [recaptchaUrl, setRecaptchaUrl] = useState(null);
   const FORM_ID = '1368838';
   const SUBFORM_ID = '8939';
   const FORM_URL = `https://app.convertkit.com/forms/${FORM_ID}/subscriptions`;
@@ -26,7 +35,7 @@ const SubscriptionForm = ({ tags }) => {
 
   const logNewsletterEvent = ({ email, name, result, log }) => {
     // send a request to our serverless API to log the event
-    fetch('/api/newsletterSignup', {
+    fetch('/api/newsletter/signup', {
       method: 'POST',
       body: JSON.stringify({
         email,
@@ -44,6 +53,9 @@ const SubscriptionForm = ({ tags }) => {
     const email = formData.get('email_address');
     const name = formData.get('fields[first_name]');
 
+    let status;
+    let json;
+
     try {
       trackAction(ACTIONS.NEWSLETTER_SUBSCRIPTION);
 
@@ -55,34 +67,25 @@ const SubscriptionForm = ({ tags }) => {
         },
       });
 
-      const json = await response.json();
+      json = await response.json();
 
-      if (json.status === 'success') {
-        logNewsletterEvent({
-          email,
-          name,
-          result: json.status,
-          log: json,
-        });
-        setStatus('SUCCESS');
-        return;
+      status = json.status;
+
+      if (status === CONVERTKIT_SUBMIT_STATUS.QUARANTINE) {
+        // if the user is in quarantine, we need to show the recaptcha dialog
+        setRecaptchaUrl(json.url);
       }
 
+      setStatus(status.toUpperCase());
+    } catch (error) {
+      // TODO what happens here?
+    } finally {
       logNewsletterEvent({
         email,
         name,
-        result: json.status,
+        result: status,
         log: json,
       });
-      setStatus('ERROR');
-    } catch (err) {
-      logNewsletterEvent({
-        email,
-        name,
-        result: json.status,
-        log: json,
-      });
-      setStatus('ERROR');
     }
   };
 
@@ -153,10 +156,13 @@ const SubscriptionForm = ({ tags }) => {
           );
         })}
 
-      {status === 'SUCCESS' && (
+      {status === CONVERTKIT_SUBMIT_STATUS.SUCCESS && (
         <p>Check your inbox to confirm your subscription!</p>
       )}
-      {status === 'ERROR' && <p>Something went wrong, please try again.</p>}
+      {status === CONVERTKIT_SUBMIT_STATUS.ERROR && (
+        <p>Something went wrong, please try again.</p>
+      )}
+      {recaptchaUrl && <ReCaptchaDialog url={recaptchaUrl} />}
     </form>
   );
 };

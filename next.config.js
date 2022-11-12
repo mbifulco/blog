@@ -20,14 +20,17 @@ module.exports = withMarkdoc({ schemaPath: './src/markdoc/' })({
     return [
       {
         source: '/meet',
-        destination:
-          'https://savvycal.com/irreverentmike/30m',
+        destination: 'https://savvycal.com/irreverentmike/30m',
         permanent: false,
       },
       {
         source: '/meet/pod',
-        destination:
-          'https://savvycal.com/irreverentmike/pod',
+        destination: 'https://savvycal.com/irreverentmike/pod',
+        permanent: false,
+      },
+      {
+        source: '/sponsor',
+        destination: 'https://www.passionfroot.xyz/irreverentmike',
         permanent: false,
       },
     ];
