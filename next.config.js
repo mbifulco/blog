@@ -1,6 +1,4 @@
-const withMarkdoc = require('@markdoc/next.js');
-
-module.exports = withMarkdoc({ schemaPath: './src/markdoc/' })({
+module.exports = {
   pageExtensions: ['js', 'jsx', 'md', 'mdx'],
   images: {
     domains: ['i.ytimg.com', 'res.cloudinary.com', 'images.unsplash.com'],
@@ -35,4 +33,4 @@ module.exports = withMarkdoc({ schemaPath: './src/markdoc/' })({
       },
     ];
   },
-});
+};

@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useEffect, useState } from 'react';
-import InternalLink from 'next/link';
+import NextLink from 'next/link';
 
 import { useRouter } from 'next/router';
 
@@ -57,7 +57,7 @@ const DefaultLayout = ({ children }) => {
             paddingBottom={isHomePage ? '0' : '1.5rem'}
           >
             <Stack direction="row" alignItems="center">
-              <InternalLink
+              <NextLink
                 style={{
                   textDecoration: 'none',
                 }}
@@ -76,22 +76,29 @@ const DefaultLayout = ({ children }) => {
                 >
                   Mike Bifulco
                 </Text>
-              </InternalLink>
+              </NextLink>
               {isHomePage && <SocialLinks spacing={2} marginLeft="2" />}
             </Stack>
 
             <Stack direction="row">
-              <Link as={InternalLink} href="/">
-                <a>Blog</a>
+              <Link as={NextLink} href="/">
+                Blog
               </Link>
-              <Link as={InternalLink} href="/work">
-                <a>Work</a>
+              <Link as={NextLink} href="/podcast">
+                Podcast
               </Link>
-              <Link as={InternalLink} href="/about">
-                <a>About</a>
+              <Link as={NextLink} href="/about">
+                About
               </Link>
-              <Link as={InternalLink} href="/newsletter">
-                <a>Newsletter</a>
+              <Link
+                background="pink.400"
+                padding="0 1ch"
+                color="whiteAlpha.900"
+                borderRadius={'3px'}
+                as={NextLink}
+                href="/newsletter"
+              >
+                💌 Tiny Improvements
               </Link>
             </Stack>
           </Stack>

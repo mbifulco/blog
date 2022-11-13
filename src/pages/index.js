@@ -104,7 +104,9 @@ const HomePage = ({ posts }) => {
       </Box>
 
       <Box>
-        <Subtitle>The Podcast</Subtitle>
+        <Subtitle>
+          <Link href="/podcast">🎙️ The Podcast</Link>
+        </Subtitle>
         <Box padding="1rem 0">
           <iframe
             width="100%"

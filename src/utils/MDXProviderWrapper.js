@@ -2,7 +2,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
 import { MDXProvider } from '@mdx-js/react';
-import { Tweet, YouTube, Vimeo } from 'mdx-embed';
 
 import NextLink from 'next/link';
 import Script from 'next/script';
@@ -26,6 +25,8 @@ import PrismHighlight, { defaultProps } from 'prism-react-renderer';
 import prismTheme from 'prism-react-renderer/themes/nightOwl';
 
 import { Image } from '../components/Image';
+
+import { Tweet, YouTube, Vimeo } from '../components/MdxEmbed';
 
 // one off component imports
 import { CenteredTextDemo } from '../components/demos/CenteredTextDemo';

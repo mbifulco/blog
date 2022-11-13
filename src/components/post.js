@@ -4,7 +4,7 @@ import NextLink from 'next/link';
 
 import { MDXRemote } from 'next-mdx-remote';
 
-import { YouTube } from 'mdx-embed';
+import { YouTube } from './MdxEmbed';
 
 import useSWR from 'swr';
 
@@ -90,7 +90,7 @@ const Post = ({ summary, post }) => {
             {summary ? (
               <Link as={NextLink} href={postPath}>
                 {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-                <a>{title}</a>
+                {title}
               </Link>
             ) : (
               title
