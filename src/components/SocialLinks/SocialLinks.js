@@ -15,6 +15,7 @@ const SocialLinks = ({
   direction = 'row',
   spacing = 3,
   alignItems = 'center',
+  size = iconSize,
   ...rest
 }) => (
   <Stack
@@ -34,7 +35,7 @@ const SocialLinks = ({
       aria-label="@irreverentmike on twitter"
       margin={touchMargin}
     >
-      <TwitterIcon size={iconSize} />
+      <TwitterIcon size={size} />
     </Link>
     <Link
       color={color || '#6e5494'}
@@ -44,7 +45,7 @@ const SocialLinks = ({
       aria-label="@mbifulco on github"
       margin={touchMargin}
     >
-      <GitHubIcon size={iconSize} />
+      <GitHubIcon size={size} />
     </Link>
     <Link
       color={color || '#6441a5'}
@@ -54,7 +55,7 @@ const SocialLinks = ({
       aria-label="@irreverentmike on twitch"
       margin={touchMargin}
     >
-      <TwitchIcon size={iconSize} />
+      <TwitchIcon size={size} />
     </Link>
     <Link
       color={color || '#FF0000'}
@@ -64,7 +65,7 @@ const SocialLinks = ({
       aria-label="MikeBifulco on youtube"
       margin={touchMargin}
     >
-      <span style={{ fontSize: '36pt' }}>
+      <span style={{ fontSize: size }}>
         <FaYoutube />
       </span>
     </Link>
@@ -76,7 +77,7 @@ const SocialLinks = ({
       aria-label="RSS feed for this site"
       margin={touchMargin}
     >
-      <RssIcon size={iconSize} />
+      <RssIcon size={size} />
     </Link>
   </Stack>
 );
