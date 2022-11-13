@@ -32,7 +32,7 @@ const Eponymous = () => {
           eponymous
         </Text>
       </PopoverTrigger>
-      <PopoverContent>
+      <PopoverContent boxShadow="lg">
         <PopoverArrow />
         <PopoverCloseButton />
         <PopoverHeader>
