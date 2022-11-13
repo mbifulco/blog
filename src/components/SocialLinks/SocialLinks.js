@@ -6,6 +6,7 @@ import { Link, Stack } from '@chakra-ui/react';
 import { FaYoutube } from 'react-icons/fa';
 
 import { GitHubIcon, TwitterIcon, TwitchIcon, RssIcon } from '../icons';
+import MastodonIcon from '../icons/MastodonIcon';
 
 const iconSize = '2.25rem';
 const touchMargin = '0.5rem';
@@ -15,7 +16,7 @@ const SocialLinks = ({
   direction = 'row',
   spacing = 3,
   alignItems = 'center',
-  size = iconSize,
+  size = 'inherit',
   ...rest
 }) => (
   <Stack
@@ -35,7 +36,7 @@ const SocialLinks = ({
       aria-label="@irreverentmike on twitter"
       margin={touchMargin}
     >
-      <TwitterIcon size={size} />
+      <TwitterIcon size={'1em'} />
     </Link>
     <Link
       color={color || '#6e5494'}
@@ -45,7 +46,7 @@ const SocialLinks = ({
       aria-label="@mbifulco on github"
       margin={touchMargin}
     >
-      <GitHubIcon size={size} />
+      <GitHubIcon size={'1em'} />
     </Link>
     <Link
       color={color || '#6441a5'}
@@ -55,7 +56,7 @@ const SocialLinks = ({
       aria-label="@irreverentmike on twitch"
       margin={touchMargin}
     >
-      <TwitchIcon size={size} />
+      <TwitchIcon size={'1em'} />
     </Link>
     <Link
       color={color || '#FF0000'}
@@ -77,7 +78,17 @@ const SocialLinks = ({
       aria-label="RSS feed for this site"
       margin={touchMargin}
     >
-      <RssIcon size={size} />
+      <RssIcon size={'1em'} />
+    </Link>
+    <Link
+      color={color || '#2b90d9'}
+      target="_blank"
+      rel="noopener noreferrer me"
+      aria-label="@irreverentmike on Mastodon"
+      href="https://mastodon.online/@irreverentmike"
+      fontSize={'inherit'}
+    >
+      <MastodonIcon size={'1em'} />
     </Link>
   </Stack>
 );
