@@ -17,7 +17,7 @@ const SponsorCTA = () => {
         target="_blank"
         rel="noopener noreferrer"
       >
-        <a>Click here</a>
+        Click here
       </Link>
     </Text>
   );
