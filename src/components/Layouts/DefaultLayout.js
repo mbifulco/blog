@@ -84,14 +84,21 @@ const DefaultLayout = ({ children }) => {
               <Link as={NextLink} href="/">
                 Blog
               </Link>
-              <Link as={NextLink} href="/work">
-                Work
+              <Link as={NextLink} href="/podcast">
+                Podcast
               </Link>
               <Link as={NextLink} href="/about">
                 About
               </Link>
-              <Link as={NextLink} href="/newsletter">
-                Newsletter
+              <Link
+                background="pink.400"
+                padding="0 1ch"
+                color="whiteAlpha.900"
+                borderRadius={'3px'}
+                as={NextLink}
+                href="/newsletter"
+              >
+                💌 Tiny Improvements
               </Link>
             </Stack>
           </Stack>
