@@ -1,5 +1,8 @@
-import React, { useState } from 'react';
+import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+
+import LogRocket from 'logrocket';
+import setupLogRocketReact from 'logrocket-react';
 
 import { Button, Flex, Input, useTheme } from '@chakra-ui/react';
 
@@ -27,6 +30,11 @@ const SubscriptionForm = ({ tags }) => {
   const FORM_ID = '1368838';
   const SUBFORM_ID = '8939';
   const FORM_URL = `https://app.convertkit.com/forms/${FORM_ID}/subscriptions`;
+
+  useEffect(() => {
+    LogRocket.init(process.env.NEXT_PUBLIC_LOGROCKET_ID);
+    setupLogRocketReact(LogRocket);
+  }, []);
 
   const tagMap = convertKitTags.reduce((result, tag) => {
     result[tag.name] = tag.id;
