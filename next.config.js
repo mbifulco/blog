@@ -26,6 +26,11 @@ module.exports = {
         destination: 'https://savvycal.com/irreverentmike/pod',
         permanent: false,
       },
+      {
+        source: '/sponsor',
+        destination: 'https://www.passionfroot.xyz/irreverentmike',
+        permanent: false,
+      },
     ];
   },
 };
