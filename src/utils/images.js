@@ -10,8 +10,8 @@ export const getCloudinaryImageUrl = (publicId) => {
     },
   });
 
-  const myImage = cld.image(publicId);
-  let url = myImage.toURL({ trackedAnalytics: false });
-
-  return url;
+  return cld
+    .image(publicId)
+    .addTransformation('q_auto:eco,f_auto')
+    .toURL({ trackedAnalytics: false });
 };
