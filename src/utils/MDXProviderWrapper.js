@@ -35,30 +35,28 @@ import { OrtonEffectImage } from '../components/demos/OrtonEffectImage';
 const CustomHeading = ({ as, id, ...props }) => {
   if (id) {
     return (
-      <Link href={`#${id}`} _hover={{ textDecoration: 'none' }}>
-        <NextLink href={`#${id}`} passHref>
-          <Heading
-            as={as}
-            display="inline"
-            id={id}
-            lineHeight={'1em'}
-            {...props}
-            _hover={{
-              _before: {
-                fontSize: '1em',
-                display: 'inline',
-                content: '"#"',
-                fontSize: 'smaller',
-                color: 'pink.600',
-                position: 'relative',
-                marginLeft: '-1.2ch',
-                paddingRight: '0.2ch',
-                textDecoration: 'none',
-                borderBottom: 0,
-              },
-            }}
-          />
-        </NextLink>
+      <Link as={NextLink} href={`#${id}`} _hover={{ textDecoration: 'none' }}>
+        <Heading
+          as={as}
+          display="inline"
+          id={id}
+          lineHeight={'1em'}
+          {...props}
+          _hover={{
+            _before: {
+              fontSize: '1em',
+              display: 'inline',
+              content: '"#"',
+              fontSize: 'smaller',
+              color: 'pink.600',
+              position: 'relative',
+              marginLeft: '-1.2ch',
+              paddingRight: '0.2ch',
+              textDecoration: 'none',
+              borderBottom: 0,
+            },
+          }}
+        />
       </Link>
     );
   }
