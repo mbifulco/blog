@@ -56,7 +56,16 @@ const DefaultLayout = ({ children }) => {
             justifyContent={isHomePage ? 'flex-start' : 'space-between'}
             paddingBottom={isHomePage ? '0' : '1.5rem'}
           >
-            <Stack direction="row" alignItems="center">
+            <Stack
+              direction={['column', 'column', 'row']}
+              alignItems={['flex-start', 'flex-start', 'center']}
+              fontSize={isHomePage ? ['lg', 'lg', 'xl', '3xl'] : 'lg'}
+              color={[
+                titleColors[colorMode],
+                titleColors[colorMode],
+                undefined,
+              ]}
+            >
               <NextLink
                 style={{
                   textDecoration: 'none',
