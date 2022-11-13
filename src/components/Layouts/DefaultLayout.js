@@ -81,7 +81,6 @@ const DefaultLayout = ({ children }) => {
                   padding="0"
                   color={titleColors[colorMode]}
                   cursor="pointer"
-                  as="a"
                 >
                   Mike Bifulco
                 </Text>
