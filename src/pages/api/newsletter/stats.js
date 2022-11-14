@@ -6,12 +6,13 @@ export default async function handler(req, res) {
 
   // get newsletter subscriber count from ConvertKit API
   const response = await fetch(
-    `https://api.convertkit.com/v3/subscribers?api_secret=${process.env.CONVERTKIT_API_SECRET}`
+    `https://api.convertkit.com/v3/lifetime_stats?api_secret=${process.env.CONVERTKIT_API_SECRET}`
   );
   const json = await response.json();
 
-  const stats = {
-    subscriberCount: json.total_subscribers,
-  };
-  res.status(200).json(stats);
+  const { stats } = json;
+
+  res.status(200).json({
+    subscriberCount: stats.total_subscribers,
+  });
 }
