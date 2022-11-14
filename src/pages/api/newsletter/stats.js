@@ -12,8 +12,6 @@ export default async function handler(req, res) {
 
   const { stats } = json;
 
-  console.log('api got back stats', stats);
-
   res.status(200).json({
     subscriberCount: stats.total_subscribers,
   });
