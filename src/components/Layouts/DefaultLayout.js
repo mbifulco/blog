@@ -88,7 +88,22 @@ const DefaultLayout = ({ children }) => {
               {isHomePage && <SocialLinks spacing={2} marginLeft="2" />}
             </Stack>
 
-            <Stack direction="row">
+            <Link
+              display={['block', 'none']}
+              background="pink.400"
+              padding="0 1ch"
+              color="whiteAlpha.900"
+              borderRadius={'3px'}
+              as={NextLink}
+              href="/newsletter"
+            >
+              💌 Tiny Improvements
+            </Link>
+
+            <Stack
+              direction="row"
+              justifyContent={['space-between', 'flex-start']}
+            >
               <Link as={NextLink} href="/">
                 Blog
               </Link>
@@ -99,6 +114,7 @@ const DefaultLayout = ({ children }) => {
                 About
               </Link>
               <Link
+                display={['none', 'block']}
                 background="pink.400"
                 padding="0 1ch"
                 color="whiteAlpha.900"
