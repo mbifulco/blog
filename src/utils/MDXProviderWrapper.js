@@ -25,6 +25,7 @@ import PrismHighlight, { defaultProps } from 'prism-react-renderer';
 import prismTheme from 'prism-react-renderer/themes/nightOwl';
 
 import { Image } from '../components/Image';
+import { SponsoredSection } from '../components/SponsoredSection';
 
 import { Tweet, YouTube, Vimeo } from '../components/MdxEmbed';
 
@@ -263,6 +264,7 @@ export const customComponents = {
   pre: Pre,
   Script,
   SimpleGrid,
+  SponsoredSection,
   ul: UnorderedList,
 };
 
