@@ -62,7 +62,9 @@ const SponsoredSection = ({
             />
           </Link>
         )}
-        <Text>{children}</Text>
+
+        {children}
+
         <Stack alignContent="center">
           <Link href={href} as={NextLink} color="pink.500" alignSelf={'center'}>
             {CTAtext}
