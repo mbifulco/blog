@@ -50,10 +50,12 @@ const DefaultLayout = ({ children }) => {
         >
           <Stack
             overflowY="hidden"
-            alignItems={isHomePage ? 'flex-start' : 'center'}
+            alignItems={isHomePage ? 'flex-start' : ['flext-start', 'center']}
             shouldWrapChildren
-            direction={isHomePage ? 'column' : 'row'}
-            justifyContent={isHomePage ? 'flex-start' : 'space-between'}
+            direction={isHomePage ? 'column' : ['column', 'row']}
+            justifyContent={
+              isHomePage ? 'flex-start' : ['flex-start', 'space-between']
+            }
             paddingBottom={isHomePage ? '0' : '1.5rem'}
           >
             <Stack
@@ -85,25 +87,9 @@ const DefaultLayout = ({ children }) => {
                   Mike Bifulco
                 </Text>
               </NextLink>
-              {isHomePage && <SocialLinks spacing={2} marginLeft="2" />}
             </Stack>
 
-            <Link
-              display={['block', 'none']}
-              background="pink.400"
-              padding="0 1ch"
-              color="whiteAlpha.900"
-              borderRadius={'3px'}
-              as={NextLink}
-              href="/newsletter"
-            >
-              💌 Tiny Improvements
-            </Link>
-
-            <Stack
-              direction="row"
-              justifyContent={['space-between', 'flex-start']}
-            >
+            <Stack direction={['row']}>
               <Link as={NextLink} href="/">
                 Blog
               </Link>
@@ -114,7 +100,6 @@ const DefaultLayout = ({ children }) => {
                 About
               </Link>
               <Link
-                display={['none', 'block']}
                 background="pink.400"
                 padding="0 1ch"
                 color="whiteAlpha.900"
