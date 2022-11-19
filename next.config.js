@@ -1,5 +1,5 @@
 module.exports = {
-  pageExtensions: ['js', 'jsx', 'md', 'mdx'],
+  experimental: { appDir: true },
   images: {
     domains: ['i.ytimg.com', 'res.cloudinary.com', 'images.unsplash.com'],
   },
