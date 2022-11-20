@@ -85,7 +85,7 @@ const SocialLinks = ({
       target="_blank"
       rel="noopener noreferrer me"
       aria-label="@irreverentmike on Mastodon"
-      href="https://mastodon.online/@irreverentmike"
+      href="https://hachyderm.io/@irreverentmike"
       fontSize={'inherit'}
     >
       <MastodonIcon size={'1em'} />
