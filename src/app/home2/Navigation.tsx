@@ -4,7 +4,7 @@ import Link from './Link';
 
 const Navigation = () => {
   return (
-    <nav className="flex flex-col">
+    <nav className="flex flex-col mb-[2ch]">
       <NextLink className="size-xl font-bold text-6xl" href="/">
         Mike Bifulco
       </NextLink>
