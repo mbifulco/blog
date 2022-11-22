@@ -40,6 +40,7 @@ const SponsoredSection = ({
           ...displayBar,
           bottom: 'calc(-1em - 3px)',
         }}
+        fontSize="md"
       >
         <Link
           as={NextLink}
