@@ -23,11 +23,12 @@ export const generateRSSFeed = (posts, newsletters) => {
 
   posts.forEach((post) => {
     const {
-      frontmatter: { date, excerpt, path, title },
+      frontmatter: { date, excerpt, title },
       content,
+      slug,
     } = post;
 
-    const url = `${siteUrl}/posts/${path}`;
+    const url = `${siteUrl}/posts/${slug}`;
 
     feed.addItem({
       title,
@@ -42,11 +43,12 @@ export const generateRSSFeed = (posts, newsletters) => {
 
   newsletters.forEach((newsletter) => {
     const {
-      frontmatter: { date, excerpt, path, title },
+      frontmatter: { date, excerpt, title },
       content,
+      slug,
     } = newsletter;
 
-    const url = `${siteUrl}/newsletter/${path}`;
+    const url = `${siteUrl}/newsletter/${slug}`;
 
     feed.addItem({
       title,
