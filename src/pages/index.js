@@ -72,8 +72,8 @@ const HomePage = ({ posts }) => {
           <Text fontSize="xl" fontWeight="normal" margin="0">
             {"I'm"} a startup founder, a designer, and a maker. I share my
             writing on this site, but you can also find me on{' '}
-            <Link color={pink} href="https://twitter.com/irreverentmike">
-              twitter
+            <Link color={pink} href="https://hachyderm.io/@irreverentmike">
+              Mastodon
             </Link>{' '}
             and{' '}
             <Link color={pink} href="https://github.com/mbifulco">

@@ -29,12 +29,23 @@ const SocialLinks = ({
     {...rest}
   >
     <Link
+      color={color || '#2b90d9'}
+      target="_blank"
+      rel="noopener noreferrer me"
+      aria-label="@irreverentmike on Mastodon"
+      href="https://hachyderm.io/@irreverentmike"
+      fontSize={'inherit'}
+    >
+      <MastodonIcon size={'1em'} />
+    </Link>
+    <Link
       color={color || '#1da1f2'}
       href="https://twitter.com/irreverentmike"
       target="_blank"
       rel="noreferrer noopener me"
       aria-label="@irreverentmike on twitter"
       margin={touchMargin}
+      display="none"
     >
       <TwitterIcon size={'1em'} />
     </Link>
@@ -79,16 +90,6 @@ const SocialLinks = ({
       margin={touchMargin}
     >
       <RssIcon size={'1em'} />
-    </Link>
-    <Link
-      color={color || '#2b90d9'}
-      target="_blank"
-      rel="noopener noreferrer me"
-      aria-label="@irreverentmike on Mastodon"
-      href="https://hachyderm.io/@irreverentmike"
-      fontSize={'inherit'}
-    >
-      <MastodonIcon size={'1em'} />
     </Link>
   </Stack>
 );
