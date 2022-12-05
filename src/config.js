@@ -21,7 +21,8 @@ const config = {
   },
   newsletter: {
     title: 'Tiny Improvements',
-    tagline: 'For designing & building great products',
+    tagline: '💌 Helping devs build products that change the world',
+    ctaTagline: '💌 Learn how to build products that change the world',
     shortDescription:
       'Learn about designing & building great products for the web, and my philosophy for living a life you love in an ever-changing world.',
     description: `
