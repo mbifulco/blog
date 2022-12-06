@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Heading } from '@chakra-ui/react';
+import { Stack } from '@chakra-ui/react';
 
 import { serialize } from 'next-mdx-remote/serialize';
 import { MDXRemote } from 'next-mdx-remote';
@@ -32,7 +32,9 @@ export async function getStaticProps() {
 const AboutPage = ({ mdxSource }) => (
   <>
     <SEO title="About me" />
-    <MDXRemote {...mdxSource} components={components} />
+    <Stack>
+      <MDXRemote {...mdxSource} components={components} />
+    </Stack>
     <NewsletterSignup />
   </>
 );
