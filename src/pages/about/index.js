@@ -5,9 +5,6 @@ import { Stack } from '@chakra-ui/react';
 import { serialize } from 'next-mdx-remote/serialize';
 import { MDXRemote } from 'next-mdx-remote';
 
-import Image from 'next/image';
-import Metalmorphosis from './cover.png';
-
 import { SEO } from '../../components';
 import { NewsletterSignup } from '../../components/NewsletterSignup';
 
