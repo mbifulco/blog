@@ -65,7 +65,7 @@ const CustomHeading = ({ as, id, ...props }) => {
 };
 
 const allHeadingstyleProps = {
-  lineHeight: '2',
+  lineHeight: '1.2em',
 };
 
 /**
