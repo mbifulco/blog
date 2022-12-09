@@ -1,10 +1,4 @@
-import React, {
-  FunctionComponent,
-  useRef,
-  useEffect,
-  useState,
-  RefObject,
-} from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 
 export const GeneralObserver = ({ children, onEnter, height = 0 }) => {
   const ref = useRef(null);
@@ -26,7 +20,7 @@ export const GeneralObserver = ({ children, onEnter, height = 0 }) => {
     if (ref && ref.current) {
       observer.observe(ref.current);
     }
-  }, [ref]);
+  }, [ref, onEnter]);
 
   return (
     <div ref={ref} data-testid="general-observer" className="mdx-embed">
