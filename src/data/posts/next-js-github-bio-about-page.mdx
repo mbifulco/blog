@@ -1,0 +1,145 @@
+---
+title: Sync your About page and your GitHub bio on your Next.js site
+description: Learn how to sync your About page and your personal GitHub README bio on your Next.js site, as a step towards owning your content on social media.
+tags: [nextjs, github, javascript, react, webdev]
+date: 12-9-2022
+published: true
+path: next-js-github-bio-about-page
+---
+
+## Your about page tells the world who you are, and what matters to you
+
+For many developers, the about page is one of the most important pages on your website. It tends to be one of the most highly-visited pages on many devs' sites. It serves as the page that will tell the world who you are, and what matters to you. It's also the page that will help you stand out from the crowd, and help you connect with your audience.
+
+Similarly, your [GitHub profile README](https://docs.github.com/en/account-and-profile/setting-up-and-managing-your-github-profile/customizing-your-profile/managing-your-profile-readme) is the first thing that people will see when they visit your profile on GitHub. I've seen many creative uses for personal GitHub profile pages, but they are most commonly used as a place to share a bio, and to connect with your audience.
+
+They Sounds awfully similar, no?
+
+This week, I decided that for me at least, they _should_ be one in the same. [My personal about page](https://mikebifulco.com/about) and my [GitHub Profile](https://github.com/mbifulco) contained a lot of overlapping information, but weren't _quite_ the same. My site is built with Next.js, and I use an extension of Markdown called MDX to write my content. My GitHub profile README is written in Markdown. Because of this, keeping them in sync turned out to be pretty easy.
+
+## Setup and background
+
+Making this setup work requires some modifications to your Next.js site, and it's important to understand how things work before you dive in. Here's a quick overview of how this setup works:
+
+### Content flows from GitHub -> your Next.js site
+
+In this setup, the source of truth for content on the about page will be GitHub Profile README. From the next.js site, we fetch the README and render it on the About page using a library called [`next-mdx-remote`](https://github.com/hashicorp/next-mdx-remote).
+
+So, to update our bio in _both places_, we'll edit the README file on GitHub. This will update the content on our About page, as well as our GitHub profile README.
+
+### About next-mdx-remote
+
+[`next-mdx-remote`](https://github.com/hashicorp/next-mdx-remote) is an npm library that provides an API for loading remote MDX files into Next.js. It allows developers to write their pages in [MDX](https://mdxjs.com/docs/), an extension of [Markdown](https://daringfireball.net/projects/markdown/) that supports embedded React components. It also provides an API for loading the MDX files from a remote URL, allowing developers to use an external CMS or content storage system to manage their page content. This is exactly what we need to sync our About page and our GitHub profile README, which is written in Markdown.
+
+## How to sync your Next.js site About page to your GitHub README
+
+Here's how you can set this up:
+
+1. First, create an About page on your Next.js site. Typically, this means creating a file in the `/pages/` directory of your source code called `about.jsx` (or `about.tsx` if you're using TypeScript).
+
+```jsx
+// For sake of example, we'll use a Layout component to represent the visual layout of the page
+import Layout from '../components/Layout';
+
+export default function About({ source }) {
+  return <Layout>{/* content from GitHub will go here */}</Layout>;
+}
+```
+
+2. Next, create a GitHub profile README. If you haven't done this before, Monica Powell ([@indigitalcolor](https://twitter.com/indigitalcolor)) has a great tutorial - [How to create a GitHub profile README](https://aboutmonica.com/blog/how-to-create-a-github-profile-readme). This is where you'll write your bio - and this is the file that will be synced to your About page.
+
+3. Now you'll need to set up next-mdx-remote on your Next.js site. Once your readme is fetched from GitHub, we will use this library to serialize it as MDX -- in other words, to transform it from Markdown to renderable react components for Next.js.
+
+If you don't already have it installed, you can install it with npm, yarn, or pnpm.
+
+```bash {1,3-5}
+npm install next-mdx-remote
+# or
+yarn add next-mdx-remote
+# or
+pnpm add next-mdx-remote
+```
+
+4. Next, we need to grab the raw Markdown from our GitHub README, and feed it into next-mdx-remote. I chose to do this in getStaticProps, which means it will be fetched and rendered once when my site is built, and then cached. This is fine for my use case, but if you're updating your about page frequently, you may want to use getStaticProps instead, to fetch your README on every page render.
+
+So, back in `about.jsx`:
+
+```jsx {1,3-5}
+import { serialize } from 'next-mdx-remote/serialize';
+
+// For sake of example, we'll use a Layout component to represent the visual layout of the page
+import Layout from '../components/Layout';
+
+// fetch personal README from github and return it as mdx in getserversideprops
+export async function getStaticProps() {
+  const res = await fetch(
+    // replace this with your own README's raw URL (see below)
+    'https://raw.githubusercontent.com/mbifulco/mbifulco/main/README.md'
+  );
+  const content = await res.text();
+  const mdxSource = await serialize(content, mdxOptions);
+
+  return {
+    props: {
+      mdxSource,
+    },
+  };
+}
+
+export default function About({ source }) {
+  return <Layout>{/* content from GitHub will go here */}</Layout>;
+}
+```
+
+To get the raw URL for your README, go to your GitHub profile, and click on the README file. Then, click the "Raw" button in the top right corner of the file. Copy the URL from the address bar, and replace the URL in the code above with your own.
+
+5. Finally, you can render your README in your About page using MDX Remote.
+
+```jsx
+import { MDXRemote } from 'next-mdx-remote';
+import { serialize } from 'next-mdx-remote/serialize';
+
+// For sake of example, we'll use a Layout component to represent the visual layout of the page
+import Layout from '../components/Layout';
+
+// If you want to have MDX render custom components, you can import them here
+import { components } from '~/utils/mdx-components';
+
+export async function getStaticProps() {
+  // fetch personal README from github
+  const res = await fetch(
+    // replace this with your own README's raw URL
+    'https://raw.githubusercontent.com/[YOUR_USERNAME]/[YOUR_USERNAME]/[YOUR_DEFAULT_BRANCH]/README.md'
+  );
+  const content = await res.text();
+
+  // include mdxOptions as needed on your site
+  const mdxSource = await serialize(content /*, mdxOptions */);
+
+  // pass the mdxSource to the page component in props
+  return {
+    props: {
+      mdxSource,
+    },
+  };
+}
+
+export default function About({ mdxSource }) {
+  return (
+    <Layout>
+      {/* note: passing in components is optional */}
+      <MDXRemote {...mdxSource} components={components} />
+    </Layout>
+  );
+}
+```
+
+Bingo bango, we're there! Now, whenever you update your README, your About page will reflect those changes the next time your site is built.
+
+## More Next.js goodness
+
+If you enjoyed this post, you might want to check out some of my other [articles on next.js](https://mikebifulco.com/tags/nextjs) :
+
+- [Publish newsletters to your Next.js site with ConvertKit API](https://mikebifulco.com/posts/publish-your-newsletter-with-convertkit-api-next-js)
+- [What it's like to migrate a high-traffic website from Gatsby to Next.js](https://mikebifulco.com/posts/migrate-gatsby-to-nextjs-apisyouwonthate-com)
+- [https://mikebifulco.com/posts/mdx-auto-link-headings-with-rehype-slug](https://mikebifulco.com/posts/mdx-auto-link-headings-with-rehype-slug)
