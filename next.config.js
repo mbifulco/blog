@@ -8,9 +8,6 @@ const config = {
     domains: ['i.ytimg.com', 'res.cloudinary.com', 'images.unsplash.com'],
   },
   productionBrowserSourceMaps: true,
-  experimental: {
-    esmExternals: false,
-  },
   redirects: async () => {
     return [
       {
