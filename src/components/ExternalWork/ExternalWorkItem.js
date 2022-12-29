@@ -1,7 +1,8 @@
 import { Box, Heading, Stack, Text, useTheme } from '@chakra-ui/react';
 import { MDXRemote } from 'next-mdx-remote';
 
-import { PublishDate } from '..';
+import { PublishDate } from '../PublishDate';
+
 import { components } from '../../utils/MDXProviderWrapper';
 import TagsSummary from '../tagsSummary';
 

@@ -6,9 +6,9 @@ import { Heading, SimpleGrid, Text, useTheme } from '@chakra-ui/react';
 
 import { getAllTags } from '../lib/tags';
 
-import { Tag, NewsletterSignup } from '../components';
-
-import { SEO } from '../components';
+import Tag from '../components/tag';
+import NewsletterSignup from '../components/NewsletterSignup';
+import SEO from '../components/seo';
 
 export const getStaticProps = async () => {
   const tags = await getAllTags();

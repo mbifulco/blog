@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { NewsletterSignup } from '..';
+import { NewsletterSignup } from '../NewsletterSignup';
 import Post from '../post';
 
 const PostFeed = ({ posts }) => (
@@ -24,9 +24,7 @@ const PostFeed = ({ posts }) => (
 );
 
 PostFeed.propTypes = {
-  posts: PropTypes.arrayOf(
-    PropTypes.shape({})
-  )
+  posts: PropTypes.arrayOf(PropTypes.shape({})),
 };
 
 export default PostFeed;

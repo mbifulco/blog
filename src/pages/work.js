@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 
 import { Box, Heading, Stack, Text, useTheme } from '@chakra-ui/react';
 
-import { ExternalWorkItem, SEO } from '../components';
+import ExternalWorkItem from '../components/ExternalWork';
+import SEO from '../components/SEO';
 
 import { getAllExternalReferences } from '../lib/external-references';
 

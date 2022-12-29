@@ -3,8 +3,9 @@ import React from 'react';
 import { Box, Link, SimpleGrid, Stack, Text, useTheme } from '@chakra-ui/react';
 
 import { SocialLinks } from './SocialLinks';
-import { RelatedContentLinksByTag } from '.';
+import RelatedContentLinksByTag from './RelatedContent/RelatedContentLinksByTag';
 import config from '../config';
+
 import SponsorCTA from './SponsorCTA/SponsorCTA';
 
 const Footer = () => {

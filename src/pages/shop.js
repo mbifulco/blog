@@ -1,6 +1,7 @@
 import React from 'react';
 
-import { Image, SEO } from '../components';
+import { Image } from '../components/Image';
+import SEO from '../components/seo';
 
 import * as classes from '../styles/shop.module.scss';
 import SoldOut from '../components/soldOut';

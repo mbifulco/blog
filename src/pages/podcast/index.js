@@ -17,7 +17,9 @@ import {
   useTheme,
 } from '@chakra-ui/react';
 
-import { NewsletterSignup, SEO, Subtitle } from '../../components';
+import { NewsletterSignup } from '../../components/NewsletterSignup';
+import SEO from '../../components/SEO';
+import Subtitle from '../../components/Subtitle';
 
 const Eponymous = () => {
   const theme = useTheme();

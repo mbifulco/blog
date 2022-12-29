@@ -5,8 +5,8 @@ import { Stack } from '@chakra-ui/react';
 import { serialize } from 'next-mdx-remote/serialize';
 import { MDXRemote } from 'next-mdx-remote';
 
-import { SEO } from '../../components';
-import { NewsletterSignup } from '../../components/NewsletterSignup';
+import SEO from '../../components/SEO';
+import NewsletterSignup from '../../components/NewsletterSignup';
 
 import mdxOptions from '../../utils/mdxOptions';
 import { components } from '../../utils/MDXProviderWrapper';

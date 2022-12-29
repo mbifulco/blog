@@ -13,7 +13,8 @@ import {
   useTheme,
 } from '@chakra-ui/react';
 
-import { Footer, SocialLinks } from '..';
+import Footer from '../footer';
+
 import MDXProviderWrapper from '../../utils/MDXProviderWrapper';
 
 const DefaultLayout = ({ children }) => {

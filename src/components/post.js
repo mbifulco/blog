@@ -22,10 +22,14 @@ import { getMentions } from '../utils/webmentions';
 import MentionsSummary from './mentionsSummary';
 import TagsSummary from './tagsSummary';
 import * as style from '../styles/post.module.scss';
-import { CarbonAd, Image, PublishDate } from '.';
 import frontmatterType from '../types/frontmatter';
 import { components } from '../utils/MDXProviderWrapper';
 import PolitePop from './PolitePop/PolitePop';
+
+// import { CarbonAd, Image, PublishDate } from '.';
+import { CarbonAd } from './CarbonAd';
+import { Image } from './Image';
+import { PublishDate } from './PublishDate';
 
 const Post = ({ summary, post }) => {
   const { frontmatter } = post;

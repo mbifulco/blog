@@ -1,14 +1,16 @@
 import React from 'react';
+import { Heading, Text, useTheme } from '@chakra-ui/react';
 
 import { getAllPostsByTag } from '../../lib/blog';
-import { DefaultLayout } from '../../components/Layouts';
-import { NewsletterItem, SEO } from '../../components';
-import { Heading, Text, useTheme } from '@chakra-ui/react';
 import { getAllTags } from '../../lib/tags';
 import { Stack } from '@chakra-ui/react';
 import { getAllExternalReferencesByTag } from '../../lib/external-references';
-import { Post, ExternalWorkItem } from '../../components';
 import { getAllNewslettersByTag } from '../../lib/newsletters';
+
+import NewsletterItem from '../../components/NewsletterFeed/NewsletterItem';
+import SEO from '../../components/SEO';
+import Post from '../../components/post';
+import { ExternalWorkItem } from '../../components/ExternalWork';
 
 export async function getStaticProps({ params }) {
   const { tag } = params;
