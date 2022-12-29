@@ -7,7 +7,14 @@ import { Post } from '../Post';
 const PostFeed = ({ posts }) => (
   <>
     {posts.map((post, idx) => {
-      const postEl = <Post post={post} key={post.slug} summary />;
+      const postEl = (
+        <Post
+          post={post}
+          key={post.slug}
+          summary
+          eager={idx === 0 ? true : false}
+        />
+      );
 
       if (idx === 1) {
         return (

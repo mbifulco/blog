@@ -21,6 +21,8 @@ const Image = ({
   return (
     <figure>
       <Img
+        height={height}
+        width={width}
         // we also have changed `data` to `url` to better describe what `generateUrl` gives us back and makes more sense to pass to `src`
         htmlHeight={height}
         htmlWidth={width}

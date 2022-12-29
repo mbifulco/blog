@@ -11,19 +11,11 @@ import PolitePop from '../PolitePop/PolitePop';
 import { Image } from '../Image';
 import { PublishDate } from '../PublishDate';
 
-const PostSummary = ({ post }) => {
+const PostSummary = ({ post, eager = false }) => {
   const { frontmatter } = post;
 
-  const {
-    author,
-    coverImagePublicId,
-    date,
-    excerpt,
-    path,
-    tags,
-    title,
-    youTubeId,
-  } = frontmatter;
+  const { author, coverImagePublicId, date, excerpt, path, tags, title } =
+    frontmatter;
 
   const theme = useTheme();
   const { colorMode } = useColorMode();
@@ -43,7 +35,9 @@ const PostSummary = ({ post }) => {
       marginBottom="2em"
       publicId={coverImagePublicId || `posts/${path}/cover`}
       alt={excerpt}
-      loading="eager"
+      height={420}
+      width={800}
+      loading={eager ? 'eager' : 'lazy'}
     />
   );
 
