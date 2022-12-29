@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { NewsletterSignup } from '../NewsletterSignup';
-import Post from '../Post';
+import Post from '../post';
 
 const PostFeed = ({ posts }) => (
   <>

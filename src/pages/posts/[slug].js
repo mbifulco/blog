@@ -8,7 +8,7 @@ import { getPostBySlug, getAllPosts } from '../../lib/blog';
 
 import { Colophon } from '../../components/Colophon';
 import { NewsletterSignup } from '../../components/NewsletterSignup';
-import Post from '../../components/Post';
+import Post from '../../components/post';
 import SEO from '../../components/SEO';
 import WebmentionMetadata from '../../components/webmentionMetadata';
 
