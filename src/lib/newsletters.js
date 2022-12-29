@@ -20,10 +20,21 @@ export const getNewsletterBySlug = async (slug) => {
 };
 
 export const getAllNewsletters = async () => {
-  return await getAllContentFromDirectory(
+  const newsletters = await getAllContentFromDirectory(
     newslettersDirectory,
     NEWSLETTERS_CONTENT_TYPE
   );
+
+  return newsletters.map((newsletter) => {
+    const { content, source, ...rest } = newsletter;
+
+    return {
+      source: {
+        fontmatter: source?.frontmatter,
+      },
+      ...rest,
+    };
+  });
 };
 
 export const getAllNewslettersByTag = async (tag) => {

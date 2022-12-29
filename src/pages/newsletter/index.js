@@ -9,10 +9,10 @@ import {
 } from '@chakra-ui/react';
 
 import NewsletterItem from '../../components/NewsletterFeed/NewsletterItem';
-import NewsletterSignup from '../../components/NewsletterSignup';
+import { NewsletterSignup } from '../../components/NewsletterSignup';
 import SEO from '../../components/SEO';
-import Subtitle from '../../components/Subtitle';
-import SubscriptionForm from '../../components/SubscriptionForm';
+import { Subtitle } from '../../components/Subtitle';
+import { SubscriptionForm } from '../../components/SubscriptionForm';
 
 import { getAllNewsletters } from '../../lib/newsletters';
 import config from '../../config';

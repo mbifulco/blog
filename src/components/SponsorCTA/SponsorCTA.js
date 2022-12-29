@@ -8,7 +8,7 @@ const SponsorCTA = () => {
       <span role="img" aria-hidden>
         🎟️
       </span>{' '}
-      Interested in sponsoring? &rarr;{' '}
+      Get in touch to &rarr;{' '}
       <Link
         color={theme.colors.pink[400]}
         display="inline"
@@ -17,7 +17,7 @@ const SponsorCTA = () => {
         target="_blank"
         rel="noopener noreferrer"
       >
-        Click here
+        Sponsor Tiny Improvements
       </Link>
     </Text>
   );

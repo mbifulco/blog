@@ -6,7 +6,7 @@ import { serialize } from 'next-mdx-remote/serialize';
 import { MDXRemote } from 'next-mdx-remote';
 
 import SEO from '../../components/SEO';
-import NewsletterSignup from '../../components/NewsletterSignup';
+import { NewsletterSignup } from '../../components/NewsletterSignup';
 
 import mdxOptions from '../../utils/mdxOptions';
 import { components } from '../../utils/MDXProviderWrapper';

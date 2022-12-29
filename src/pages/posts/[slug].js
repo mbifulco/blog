@@ -6,11 +6,11 @@ import { Flex } from '@chakra-ui/react';
 
 import { getPostBySlug, getAllPosts } from '../../lib/blog';
 
-import Colophon from '../../components/Colophon';
-import NewsletterSignup from '../../components/NewsletterSignup';
+import { Colophon } from '../../components/Colophon';
+import { NewsletterSignup } from '../../components/NewsletterSignup';
 import Post from '../../components/Post';
 import SEO from '../../components/SEO';
-import WebmentionMetadata from '../../components/WebmentionMetadata';
+import WebmentionMetadata from '../../components/webmentionMetadata';
 
 import { getCloudinaryImageUrl } from '../../utils/images';
 import mdxOptions from '../../utils/mdxOptions';

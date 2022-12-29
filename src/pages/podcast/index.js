@@ -19,7 +19,7 @@ import {
 
 import { NewsletterSignup } from '../../components/NewsletterSignup';
 import SEO from '../../components/SEO';
-import Subtitle from '../../components/Subtitle';
+import { Subtitle } from '../../components/Subtitle';
 
 const Eponymous = () => {
   const theme = useTheme();

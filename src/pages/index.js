@@ -35,6 +35,8 @@ const HomePage = ({ posts }) => {
   const theme = useTheme();
   const pink = theme.colors.pink[400];
 
+  // console.dir(posts);
+
   return (
     <>
       <SEO
