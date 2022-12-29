@@ -1,7 +1,6 @@
 import Link from 'next/link';
 import { Box, Heading, Text, Stack, useColorModeValue } from '@chakra-ui/react';
 
-import { Image } from '..';
 import TagsSummary from '../tagsSummary';
 import formatDate from '../../utils/format-date';
 import { getCloudinaryImageUrl } from '../../utils/images';

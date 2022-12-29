@@ -1,18 +1,15 @@
-module.exports = {
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+  enabled: process.env.ANALYZE === 'true',
+});
+
+const config = {
   pageExtensions: ['js', 'jsx', 'md', 'mdx'],
   images: {
     domains: ['i.ytimg.com', 'res.cloudinary.com', 'images.unsplash.com'],
   },
   productionBrowserSourceMaps: true,
-  compress: false,
-  webpack: (config, context) => {
-    return {
-      ...config,
-      optimization: {
-        ...config?.optimzation,
-        minimize: false,
-      },
-    };
+  experimental: {
+    esmExternals: false,
   },
   redirects: async () => {
     return [
@@ -34,3 +31,5 @@ module.exports = {
     ];
   },
 };
+
+module.exports = withBundleAnalyzer(config);

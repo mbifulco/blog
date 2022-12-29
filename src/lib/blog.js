@@ -22,7 +22,18 @@ export const getAllPosts = async () => {
     POST_CONTENT_TYPE
   );
 
-  return allPosts;
+  // return allPosts;
+
+  return allPosts.map((post, idx) => {
+    const { content, source, ...rest } = post;
+
+    return {
+      source: {
+        fontmatter: source?.frontmatter,
+      },
+      ...rest,
+    };
+  });
 };
 
 export const getAllPostsByTag = async (tag) => {

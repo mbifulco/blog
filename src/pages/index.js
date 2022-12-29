@@ -3,13 +3,11 @@ import PropTypes from 'prop-types';
 
 import { Box, Link, Text, useTheme } from '@chakra-ui/react';
 
-import {
-  Image,
-  PostFeed,
-  SEO,
-  Subtitle,
-  WebmentionMetadata,
-} from '../components';
+import { Image } from '../components/Image';
+import { PostFeed } from '../components/PostFeed';
+import SEO from '../components/seo';
+import { Subtitle } from '../components/Subtitle';
+import WebmentionMetadata from '../components/webmentionMetadata';
 
 import { getAllPosts } from '../lib/blog';
 import { generateRSSFeed } from '../utils/rss';
@@ -36,6 +34,9 @@ const headshotPublicUrl = getCloudinaryImageUrl(headshotPublicId);
 const HomePage = ({ posts }) => {
   const theme = useTheme();
   const pink = theme.colors.pink[400];
+
+  // console.dir(posts);
+
   return (
     <>
       <SEO

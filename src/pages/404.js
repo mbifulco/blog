@@ -2,7 +2,8 @@ import React from 'react';
 
 import { Heading, Link, Text, useTheme } from '@chakra-ui/react';
 
-import { Image, SEO } from '../components';
+import { Image } from '../components/Image';
+import SEO from '../components/seo';
 
 const NotFoundPage = () => {
   const theme = useTheme();

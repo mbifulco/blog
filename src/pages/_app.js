@@ -7,7 +7,7 @@ import { ChakraProvider } from '@chakra-ui/react';
 import { AnalyticsProvider } from '../utils/analytics';
 
 import '../components/CarbonAd/CarbonAd.css';
-import { DefaultLayout } from '../components';
+import DefaultLayout from '../components/Layouts/DefaultLayout';
 
 // import App from 'next/app'
 
