@@ -8,16 +8,6 @@ const config = {
     domains: ['i.ytimg.com', 'res.cloudinary.com', 'images.unsplash.com'],
   },
   productionBrowserSourceMaps: true,
-  compress: false,
-  webpack: (config, context) => {
-    return {
-      ...config,
-      optimization: {
-        ...config?.optimzation,
-        minimize: false,
-      },
-    };
-  },
   redirects: async () => {
     return [
       {
