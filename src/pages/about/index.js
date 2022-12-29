@@ -28,7 +28,10 @@ export async function getStaticProps() {
 
 const AboutPage = ({ mdxSource }) => (
   <>
-    <SEO title="About me" />
+    <SEO
+      title="About Mike Bifulco - founder, developer advocate, designer, writer"
+      description="Mike Bifulco is a serial entrepreneur, author, and software developer, and former Stripe, Google, and Microsoft employee, working to build great products."
+    />
     <Stack>
       <MDXRemote {...mdxSource} components={components} />
     </Stack>
