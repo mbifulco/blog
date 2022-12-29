@@ -10,6 +10,7 @@ const Image = ({
   alt,
   caption,
   height,
+  loading = 'lazy',
   publicId,
   transformations,
   width,
@@ -26,7 +27,7 @@ const Image = ({
         src={url}
         alt={alt || caption}
         // eslint-disable-next-line react/jsx-props-no-spreading
-        loading="lazy"
+        loading={loading}
         {...rest}
       />
       <figcaption>{caption}</figcaption>
