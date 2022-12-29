@@ -8,7 +8,10 @@ import SoldOut from '../components/soldOut';
 
 const Shop = () => (
   <>
-    <SEO title="Shop" />
+    <SEO
+      title="Shop - stickers, design files, digital downloads, and other stuff I've made"
+      description="I occasionally design and sell things in small runs - stickers, design files, whitepapers, digital downloads, and other stuff I've made."
+    />
     <main className={classes.content}>
       <h1>Shop</h1>
 

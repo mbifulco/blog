@@ -12,7 +12,7 @@ The [Orton Effect](https://www.capturelandscapes.com/orton-effect-explained/) is
 
 ## Emulating the Orton Effect in CSS
 
-To emulate the Orton Effect in CSS, we need to layer 2 copies of the same image on top of one other. To accomplish that, we'll nest them under a single parent - in this case, the [`figure` element](https://developer.mozilla.org/en-US/docs/web/html/element/figure). Note that for the second image, we set [`aria-hidden=true`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-hidden), so that people using Screen Readers. won't encounter the repeated image element. You can read more about that and other accessibility features of HTML on [MDN](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-hidden).
+To emulate the Orton Effect in CSS, we need to layer 2 copies of the same image on top of one other. To accomplish that, we'll nest them under a single parent - in this case, the [`figure` element](https://developer.mozilla.org/en-US/docs/web/html/element/figure). Note that for the second image, we set [`aria-hidden=true`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-hidden), and intentinally set `alt` to an empty string, so that Screen Readers and other visual assistive tools skip them. won't encounter the repeated image element. You can read more about that and other accessibility features of HTML on [MDN](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-hidden).
 
 ```html
 <figure class="orton-effect">
@@ -23,6 +23,7 @@ To emulate the Orton Effect in CSS, we need to layer 2 copies of the same image 
   <img
     src="https://source.unsplash.com/tRDGs9utMUo/1600x900"
     aria-hidden="true"
+    alt=""
   />
 </figure>
 ```
@@ -80,7 +81,7 @@ const OrtonEffectImage = ({ alt, blurRadius, opacity, src }) => {
           position: 'absolute',
         }}
       />
-      <img src={src} ariaHidden />
+      <img src={src} ariaHidden alt="" />
     </figure>
   );
 };

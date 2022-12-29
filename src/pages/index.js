@@ -57,6 +57,7 @@ const HomePage = ({ posts }) => {
             objectPosition="bottom"
             height="250"
             width="250"
+            loading="eager"
           />
         </Box>
         <Box maxWidth="50ch">

@@ -10,6 +10,7 @@ const Image = ({
   alt,
   caption,
   height,
+  loading = 'lazy',
   publicId,
   transformations,
   width,
@@ -20,13 +21,15 @@ const Image = ({
   return (
     <figure>
       <Img
+        height={height}
+        width={width}
         // we also have changed `data` to `url` to better describe what `generateUrl` gives us back and makes more sense to pass to `src`
         htmlHeight={height}
         htmlWidth={width}
         src={url}
         alt={alt || caption}
         // eslint-disable-next-line react/jsx-props-no-spreading
-        loading="lazy"
+        loading={loading}
         {...rest}
       />
       <figcaption>{caption}</figcaption>
