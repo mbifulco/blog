@@ -12,6 +12,8 @@ export default async function handler(req, res) {
 
   const { stats } = json;
 
+  const CACHE_TIME_IN_SECONDS = 60 * 5; // 5 minutes
+  res.setHeader('Cache-Control', `s-maxage=${CACHE_TIME_IN_SECONDS}`);
   res.status(200).json({
     subscriberCount: stats.total_subscribers,
   });
