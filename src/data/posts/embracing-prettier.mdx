@@ -3,7 +3,7 @@ title: Embracing Prettier
 type: post
 date: 02-25-2019
 excerpt: "Prettier.js is a fantastic way to systemize and automate your project's code style."
-coverImagePublicId: embracing-prettier
+coverImagePublicId: posts/embracing-prettier/cover
 published: true
 path: embracing-prettier
 tags: [javascript, react, dev]
@@ -11,8 +11,8 @@ tags: [javascript, react, dev]
 
 [Prettier](https://prettier.io/) is "an opinionated code formatter", built to fit into your developer workflow. It's been out in the world for quite a while now, but until today, I had never successfully used it in any project I worked on. In truth, there's a few reasons for this:
 
-1. I was really used to (and really happy with) using [`eslint-config-airbnb`](https://www.npmjs.com/package/eslint-config-airbnb) for all of my projects. Across the board, I'd configured every node/react/js-based project to use the same airbnb config, and had a functional workflow for ensuring code quality at some level through those lint checks.  
-1. I was too busy to switch. This is a bit of a bullshit answer, since one of prettier's biggest advertised features is its lightweight setup. That's not to mention the amount of time that prettier _should_ save me once in use. A bad excuse.  
+1. I was really used to (and really happy with) using [`eslint-config-airbnb`](https://www.npmjs.com/package/eslint-config-airbnb) for all of my projects. Across the board, I'd configured every node/react/js-based project to use the same airbnb config, and had a functional workflow for ensuring code quality at some level through those lint checks.
+1. I was too busy to switch. This is a bit of a bullshit answer, since one of prettier's biggest advertised features is its lightweight setup. That's not to mention the amount of time that prettier _should_ save me once in use. A bad excuse.
 1. **I could never get it to work(!)** So - despite being adept at reading through docs, every single time I started down the path of setting up prettier on a project, I couldn't get it to work. Despite my peers shouting from the rooftops about how deliciously sublime prettier makes the development workflow, it seemed like a permanent impasse.
 
 ## So what was the problem, then?
@@ -28,8 +28,6 @@ In my case, it came down to a conflicting extension for Visual Studio Code. It t
   alt="VS Code's extension interface showing the Beautify plugin, with an arrow pointing to the option that says 'Disable (workspace)'"
   caption="Disable beautify in your project workspace, and everything gets better"
 />
-
-
 
 In my case, that was it! Prettier is now working as advertised.
 
