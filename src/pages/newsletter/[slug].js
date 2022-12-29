@@ -8,7 +8,7 @@ import { getNewsletterBySlug, getAllNewsletters } from '../../lib/newsletters';
 
 import { Colophon } from '../../components/Colophon';
 import { NewsletterSignup } from '../../components/NewsletterSignup';
-import Post from '../../components/post';
+import { Post } from '../../components/Post';
 import SEO from '../../components/seo';
 import WebmentionMetadata from '../../components/webmentionMetadata';
 

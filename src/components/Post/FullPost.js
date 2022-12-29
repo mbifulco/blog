@@ -1,10 +1,6 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import NextLink from 'next/link';
 
 import { MDXRemote } from 'next-mdx-remote';
-
-import { YouTube } from './MdxEmbed';
 
 import useSWR from 'swr';
 
@@ -17,21 +13,20 @@ import {
   useTheme,
 } from '@chakra-ui/react';
 
-import { getMentions } from '../utils/webmentions';
+import { getMentions } from '../../utils/webmentions';
 
+import { CarbonAd } from '../CarbonAd';
+import { components } from '../../utils/MDXProviderWrapper';
+import { Image } from '../Image';
 import MentionsSummary from './mentionsSummary';
-import TagsSummary from './tagsSummary';
-import * as style from '../styles/post.module.scss';
-import frontmatterType from '../types/frontmatter';
-import { components } from '../utils/MDXProviderWrapper';
-import PolitePop from './PolitePop/PolitePop';
+import { PolitePop } from '../PolitePop';
+import { PublishDate } from '../PublishDate';
+import TagsSummary from '../tagsSummary';
+import { YouTube } from '../MdxEmbed';
 
-// import { CarbonAd, Image, PublishDate } from '.';
-import { CarbonAd } from './CarbonAd';
-import { Image } from './Image';
-import { PublishDate } from './PublishDate';
+import * as style from '../../styles/post.module.scss';
 
-const Post = ({ summary, post }) => {
+const FullPost = ({ post }) => {
   const { frontmatter } = post;
 
   const {
@@ -69,12 +64,12 @@ const Post = ({ summary, post }) => {
     />
   );
 
-  if (!summary && youTubeId) {
+  if (youTubeId) {
     coverContainer = <YouTube youTubeId="AbtoSbPUx9o" />;
   }
 
   // no cover image for newsletters, we want it to look like an email
-  if (!summary && frontmatter?.type === 'newsletter') {
+  if (frontmatter?.type === 'newsletter') {
     coverContainer = null;
   }
 
@@ -83,7 +78,7 @@ const Post = ({ summary, post }) => {
       <div className={style.postContent}>
         <header>
           <Heading
-            as={summary ? 'h2' : 'h1'}
+            as={'h1'}
             size="2xl"
             color={theme.colors.pink[500]}
             textDecoration="none"
@@ -91,14 +86,7 @@ const Post = ({ summary, post }) => {
             margin={0}
             padding={0}
           >
-            {summary ? (
-              <Link as={NextLink} href={postPath}>
-                {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-                {title}
-              </Link>
-            ) : (
-              title
-            )}
+            {title}
           </Heading>
           <Text fontSize="1rem" color={dateColors[colorMode]}>
             <PublishDate date={date} /> {author && <>— Written by {author}</>}
@@ -107,36 +95,16 @@ const Post = ({ summary, post }) => {
           {coverContainer}
         </header>
 
-        {summary ? (
-          <>
-            <p>{excerpt}</p>
-            <Link as={NextLink} href={postPath}>
-              Read more →
-            </Link>
-          </>
-        ) : (
-          <Stack spacing={4}>
-            {summary ? null : <CarbonAd />}
-            {/* eslint-disable-next-line react/jsx-props-no-spreading */}
-            <MDXRemote {...post.source} components={components} />
-
-            <MentionsSummary mentions={mentions} />
-          </Stack>
-        )}
+        <Stack spacing={4}>
+          <CarbonAd />
+          {/* eslint-disable-next-line react/jsx-props-no-spreading */}
+          <MDXRemote {...post.source} components={components} />
+          <MentionsSummary mentions={mentions} />
+        </Stack>
       </div>
       <PolitePop />
     </article>
   );
 };
 
-Post.propTypes = {
-  post: PropTypes.shape({
-    frontmatter: frontmatterType,
-    source: PropTypes.shape({}),
-  }),
-  summary: PropTypes.bool,
-  previous: PropTypes.object,
-  next: PropTypes.object,
-};
-
-export default Post;
+export default FullPost;

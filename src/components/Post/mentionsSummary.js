@@ -13,9 +13,9 @@ import {
   useTheme,
 } from '@chakra-ui/react';
 
-import formatDate from '../utils/format-date';
+import formatDate from '../../utils/format-date';
 
-import * as classes from '../styles/mentions.module.scss';
+import * as classes from '../../styles/mentions.module.scss';
 
 const MentionsSummary = ({ mentions }) => {
   const theme = useTheme();
