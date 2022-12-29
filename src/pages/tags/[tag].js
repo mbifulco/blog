@@ -8,7 +8,7 @@ import { getAllExternalReferencesByTag } from '../../lib/external-references';
 import { getAllNewslettersByTag } from '../../lib/newsletters';
 
 import NewsletterItem from '../../components/NewsletterFeed/NewsletterItem';
-import SEO from '../../components/SEO';
+import SEO from '../../components/seo';
 import Post from '../../components/post';
 import { ExternalWorkItem } from '../../components/ExternalWork';
 

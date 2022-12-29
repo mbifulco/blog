@@ -10,7 +10,7 @@ import {
 
 import NewsletterItem from '../../components/NewsletterFeed/NewsletterItem';
 import { NewsletterSignup } from '../../components/NewsletterSignup';
-import SEO from '../../components/SEO';
+import SEO from '../../components/seo';
 import { Subtitle } from '../../components/Subtitle';
 import { SubscriptionForm } from '../../components/SubscriptionForm';
 

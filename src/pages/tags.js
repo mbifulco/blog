@@ -8,7 +8,7 @@ import { getAllTags } from '../lib/tags';
 
 import Tag from '../components/tag';
 import { NewsletterSignup } from '../components/NewsletterSignup';
-import SEO from '../components/SEO';
+import SEO from '../components/seo';
 
 export const getStaticProps = async () => {
   const tags = await getAllTags();

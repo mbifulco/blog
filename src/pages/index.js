@@ -5,7 +5,7 @@ import { Box, Link, Text, useTheme } from '@chakra-ui/react';
 
 import { Image } from '../components/Image';
 import { PostFeed } from '../components/PostFeed';
-import SEO from '../components/SEO';
+import SEO from '../components/seo';
 import { Subtitle } from '../components/Subtitle';
 import WebmentionMetadata from '../components/webmentionMetadata';
 
