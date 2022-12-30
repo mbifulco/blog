@@ -41,6 +41,7 @@ const FullPost = ({ post }) => {
     youTubeId,
   } = frontmatter;
 
+  const router = useRouter();
   const theme = useTheme();
   const { colorMode } = useColorMode();
 
