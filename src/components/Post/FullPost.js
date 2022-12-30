@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { MDXRemote } from 'next-mdx-remote';
+import { useRouter } from 'next/router';
 
 import useSWR from 'swr';
 
@@ -40,6 +41,7 @@ const FullPost = ({ post }) => {
     youTubeId,
   } = frontmatter;
 
+  const router = useRouter();
   const theme = useTheme();
   const { colorMode } = useColorMode();
 
@@ -48,9 +50,7 @@ const FullPost = ({ post }) => {
     light: '#555555',
   };
 
-  const postPath = `/posts/${path}`;
-
-  const { data: mentions /* error */ } = useSWR(postPath, getMentions);
+  const { data: mentions /* error */ } = useSWR(router.asPath, getMentions);
 
   // TODO test cover image support
 
