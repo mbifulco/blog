@@ -1,177 +1,103 @@
-import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-
-import LogRocket from 'logrocket';
-import setupLogRocketReact from 'logrocket-react';
-
-import { Button, Flex, Input, useTheme } from '@chakra-ui/react';
-
-import { useAnalytics } from '../../utils/analytics';
-import ACTIONS from '../../utils/analytics-actions';
-
-import * as classes from './SubscriptionForm.module.scss';
-
-import convertKitTags from '../../data/ConvertKitTags';
-
-import ReCaptchaDialog from './ReCaptchaDialog';
-
-const CONVERTKIT_SUBMIT_STATUS = {
-  SUCCESS: 'SUCCESS',
-  ERROR: 'ERROR',
-  QUARANTINE: 'QUARANTINE',
-};
+import Script from 'next/script';
+import { Flex } from '@chakra-ui/react';
 
 const SubscriptionForm = ({ tags }) => {
-  const trackAction = useAnalytics();
-  const theme = useTheme();
-
-  const [status, setStatus] = useState(null);
-  const [recaptchaUrl, setRecaptchaUrl] = useState(null);
-  const FORM_ID = '1368838';
-  const SUBFORM_ID = '8939';
-  const FORM_URL = `https://app.convertkit.com/forms/${FORM_ID}/subscriptions`;
-
-  useEffect(() => {
-    LogRocket.init(process.env.NEXT_PUBLIC_LOGROCKET_ID);
-    setupLogRocketReact(LogRocket);
-  }, []);
-
-  const tagMap = convertKitTags.reduce((result, tag) => {
-    result[tag.name] = tag.id;
-    return result;
-  }, {});
-
-  const logNewsletterEvent = ({ email, name, result, log }) => {
-    // send a request to our serverless API to log the event
-    fetch('/api/newsletter/signup', {
-      method: 'POST',
-      body: JSON.stringify({
-        email,
-        name,
-        result,
-        log,
-      }),
-    });
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const formData = new FormData(e.target);
-    // get email address and first name from formData
-    const email = formData.get('email_address');
-    const name = formData.get('fields[first_name]');
-
-    let status;
-    let json;
-
-    try {
-      trackAction(ACTIONS.NEWSLETTER_SUBSCRIPTION);
-
-      const response = await fetch(FORM_URL, {
-        method: 'post',
-        body: formData,
-        headers: {
-          accept: 'application/json',
-        },
-      });
-
-      json = await response.json();
-
-      status = json.status;
-
-      if (status === CONVERTKIT_SUBMIT_STATUS.QUARANTINE) {
-        // if the user is in quarantine, we need to show the recaptcha dialog
-        setRecaptchaUrl(json.url);
-      }
-
-      setStatus(status.toUpperCase());
-    } catch (error) {
-      // TODO what happens here?
-    } finally {
-      logNewsletterEvent({
-        email,
-        name,
-        result: status,
-        log: json,
-      });
-    }
-  };
-
   return (
-    <form
-      className={classes.subscriptionFormEmbed}
-      onSubmit={handleSubmit}
-      action={FORM_URL}
-      method="post"
-    >
-      <Flex>
-        <Input
-          type="text"
-          aria-label="Your first name"
-          name="fields[first_name]"
-          placeholder="First name"
-          required
-          borderRadius="4px"
-          borderColor={theme.colors.pink[400]}
-          borderRight="0"
-          borderRightRadius="0"
-          flexGrow="1"
-        />
-        <Input
-          type="email"
-          aria-label="Your email"
-          name="email_address"
-          placeholder="Your email address"
-          required
-          borderColor={theme.colors.pink[400]}
-          borderRadius="0"
-          flexGrow="2"
-        />
-        <Button
-          type="submit"
-          flexGrow="2"
-          borderLeftRadius="0"
-          background="linear-gradient(180deg,#fe5186,#fe4156)"
-          color={theme.colors.white}
-          _hover={{
-            color: theme.colors.black,
-            background: theme.colors.gray[400],
-          }}
-          width="45%"
-        >
-          {"I'm in!"}
-        </Button>
-      </Flex>
-      {tags &&
-        tags.map((tag) => {
-          const tagName = tag.name || tag;
-
-          // if we don't have this tag in convertkit, do nothing
-          if (!tagMap[tagName]) return null;
-
-          return (
-            <input
-              data-tag-name={tagName}
-              key={tagMap[tagName]}
-              id={`tag-${SUBFORM_ID}-${tagMap[tagName]}`}
-              type="checkbox"
-              style={{ display: 'none' }}
-              checked
-              readOnly
-              name="tags[]"
-              value={tagMap[tagName]}
-            />
-          );
-        })}
-
-      {status === CONVERTKIT_SUBMIT_STATUS.SUCCESS && (
-        <p>Check your inbox to confirm your subscription!</p>
-      )}
-      {status === CONVERTKIT_SUBMIT_STATUS.ERROR && (
-        <p>Something went wrong, please try again.</p>
-      )}
-      {recaptchaUrl && <ReCaptchaDialog url={recaptchaUrl} />}
-    </form>
+    <Flex>
+      <Script src="https://f.convertkit.com/ckjs/ck.5.js" />
+      <form
+        action="https://app.convertkit.com/forms/3923746/subscriptions"
+        className="seva-form formkit-form"
+        method="post"
+        data-sv-form="3923746"
+        data-uid="be6a97481a"
+        data-format="inline"
+        data-version="5"
+        data-options='{"settings":{"after_subscribe":{"action":"message","success_message":"Success! Now check your email to confirm your subscription.","redirect_url":""},"analytics":{"google":null,"fathom":null,"facebook":null,"segment":null,"pinterest":null,"sparkloop":null,"googletagmanager":null},"modal":{"trigger":"timer","scroll_percentage":null,"timer":5,"devices":"all","show_once_every":15},"powered_by":{"show":true,"url":"https://convertkit.com/features/forms?utm_campaign=poweredby&amp;utm_content=form&amp;utm_medium=referral&amp;utm_source=dynamic"},"recaptcha":{"enabled":false},"return_visitor":{"action":"custom_content","custom_content":"Thanks for subscribing!"},"slide_in":{"display_in":"bottom_right","trigger":"timer","scroll_percentage":null,"timer":5,"devices":"all","show_once_every":15},"sticky_bar":{"display_in":"top","trigger":"timer","scroll_percentage":null,"timer":5,"devices":"all","show_once_every":15}},"version":"5"}'
+        min-width="400 500 600 700 800"
+      >
+        <div data-style="clean">
+          <ul
+            className="formkit-alert formkit-alert-error"
+            data-element="errors"
+            data-group="alert"
+          ></ul>
+          <div
+            data-element="fields"
+            data-stacked="false"
+            className="seva-fields formkit-fields"
+            style={{
+              display: 'flex',
+              flexWrap: 'wrap',
+              width: '100%',
+              maxWidth: '100%',
+              margin: '0px',
+              padding: '0px',
+              alignItems: 'center',
+              border: '1px solid #ED64A6',
+              borderRadius: '4px',
+            }}
+          >
+            <div className="formkit-field">
+              <input
+                className="formkit-input"
+                aria-label="First Name"
+                name="fields[first_name]"
+                required=""
+                placeholder="First Name"
+                type="text"
+                style={{
+                  color: 'rgb(0, 0, 0)',
+                  borderColor: 'rgb(237, 100, 166)',
+                  borderRight: '1px solid #ED64A6',
+                  fontWeight: 400,
+                  padding: '1ch 2ch',
+                  borderRadius: '4px 0px 0px 4px',
+                  width: '100%',
+                }}
+              />
+            </div>
+            <div className="formkit-field" style={{ borderRadius: 0 }}>
+              <input
+                className="formkit-input"
+                name="email_address"
+                aria-label="Email Address"
+                placeholder="Email Address"
+                required=""
+                type="email"
+                style={{
+                  color: 'rgb(0, 0, 0)',
+                  borderColor: 'rgb(237, 100, 166)',
+                  borderRadius: '0',
+                  padding: '1ch 2ch',
+                  fontWeight: 400,
+                  minWidth: '30ch',
+                }}
+              />
+            </div>
+            <button
+              data-element="submit"
+              className="formkit-submit formkit-submit"
+              style={{
+                color: 'rgb(255, 255, 255)',
+                backgroundColor: 'rgb(237, 100, 166)',
+                borderRadius: '0px',
+                padding: '1ch 8ch',
+                fontWeight: 400,
+              }}
+            >
+              <div className="formkit-spinner">
+                <div></div>
+                <div></div>
+                <div></div>
+              </div>
+              <span className="">I&apos;m in!</span>
+            </button>
+          </div>
+        </div>
+      </form>
+    </Flex>
   );
 };
 
