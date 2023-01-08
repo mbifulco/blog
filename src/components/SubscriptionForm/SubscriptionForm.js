@@ -73,6 +73,7 @@ const SubscriptionForm = ({ tags }) => {
               flexGrow={2}
             />
             <Button
+              type="submit"
               data-element="submit"
               className="formkit-submit formkit-submit"
               borderRadius={['0 0 4px 4px', '0 0 4px 4px', '0px 4px 4px 0px']}
