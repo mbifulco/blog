@@ -1,8 +1,9 @@
 import PropTypes from 'prop-types';
 import Script from 'next/script';
-import { Flex } from '@chakra-ui/react';
+import { Button, Flex, Input, SimpleGrid, useTheme } from '@chakra-ui/react';
 
 const SubscriptionForm = ({ tags }) => {
+  const theme = useTheme();
   return (
     <Flex>
       <Script src="https://f.convertkit.com/ckjs/ck.5.js" />
@@ -24,65 +25,62 @@ const SubscriptionForm = ({ tags }) => {
             data-element="errors"
             data-group="alert"
           ></ul>
-          <Flex
+          <SimpleGrid
+            columns={[1, 1, 3]}
             data-element="fields"
             data-stacked="false"
             className="seva-fields formkit-fields"
             flexDir={['column', 'column', 'row']}
             width="100%"
             alignItems={'center'}
-            border="1px solid #ED64A6"
+            // border="1px solid #ED64A6"
             borderRadius="4px"
           >
-            <div className="formkit-field" style={{ flexGrow: 1 }}>
-              <input
-                className="formkit-input"
-                aria-label="First Name"
-                name="fields[first_name]"
-                required=""
-                placeholder="First Name"
-                type="text"
-                style={{
-                  color: 'rgb(0, 0, 0)',
-                  borderRight: '1px solid',
-                  borderColor: 'rgb(237, 100, 166)',
-                  // borderBottom: '1px solid #ED64A6',
-                  fontWeight: 400,
-                  padding: '1ch 2ch',
-                  borderRadius: '4px 0px 0px 4px',
-                  width: '100%',
-                }}
-              />
-            </div>
-            <div
-              className="formkit-field"
-              style={{ borderRadius: 0, flexGrow: 2 }}
-            >
-              <input
-                className="formkit-input"
-                name="email_address"
-                aria-label="Email Address"
-                placeholder="Email Address"
-                required=""
-                type="email"
-                style={{
-                  color: 'rgb(0, 0, 0)',
-                  borderColor: 'rgb(237, 100, 166)',
-                  borderRadius: '0',
-                  padding: '1ch 2ch',
-                  fontWeight: 400,
-                  width: '100%',
-                }}
-              />
-            </div>
-            <button
+            <Input
+              className="formkit-input"
+              aria-label="First Name"
+              name="fields[first_name]"
+              required=""
+              placeholder="First Name"
+              type="text"
+              borderColor={theme.colors.pink[400]}
+              border={`1px solid `}
+              borderRadius={[
+                '4px 4px 0px 0px',
+                '4px 4px 0px 0px',
+                '4px 0px 0px 4px',
+              ]}
+              borderBottomWidth={[0, 0, '1px']}
+              color="rgb(0, 0, 0)"
+              fontWeight={400}
+              padding="1ch 2ch"
+              width="100%"
+              flexGrow={1}
+            />
+            <Input
+              className="formkit-input"
+              name="email_address"
+              aria-label="Email Address"
+              placeholder="Email Address"
+              required=""
+              type="email"
+              color="rgb(0, 0, 0)"
+              borderColor="rgb(237, 100, 166)"
+              borderRadius="0"
+              padding="1ch 2ch"
+              fontWeight={400}
+              width="100%"
+              flexGrow={2}
+            />
+            <Button
               data-element="submit"
               className="formkit-submit formkit-submit"
+              borderRadius={['0 0 4px 4px', '0 0 4px 4px', '0px 4px 4px 0px']}
               style={{
                 color: 'rgb(255, 255, 255)',
                 backgroundColor: 'rgb(237, 100, 166)',
-                borderRadius: '0px',
-                padding: '1ch 8ch',
+
+                padding: '1ch 2ch',
                 fontWeight: 400,
                 flexGrow: 1,
               }}
@@ -93,8 +91,8 @@ const SubscriptionForm = ({ tags }) => {
                 <div></div>
               </div>
               <span className="">I&apos;m in!</span>
-            </button>
-          </Flex>
+            </Button>
+          </SimpleGrid>
         </div>
       </form>
     </Flex>
