@@ -2,7 +2,7 @@ import React from 'react';
 import { serialize } from 'next-mdx-remote/serialize';
 
 import { useRouter } from 'next/router';
-import { Flex } from '@chakra-ui/react';
+import { Flex, Text } from '@chakra-ui/react';
 
 import { getNewsletterBySlug, getAllNewsletters } from '../../lib/newsletters';
 
@@ -63,6 +63,14 @@ const NewsletterPage = (post) => {
       />
 
       <Post post={post} />
+      <Text fontSize={'1.35rem'} style={{ marginTop: '0' }}>
+        Thanks for reading Tiny Improvements. If you found this helpful,{' '}
+        {"I'd "}
+        love it if you shared this with a friend. It helps me out a great deal.
+      </Text>
+      <Text fontSize={'1.35rem'}>
+        Until next time - be excellent to each other!
+      </Text>
       <Flex direction="row" justifyContent="center" marginTop="3rem">
         <NewsletterSignup tags={tags} />
       </Flex>
