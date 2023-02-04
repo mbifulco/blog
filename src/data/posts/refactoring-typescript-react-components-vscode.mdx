@@ -1,0 +1,176 @@
+---
+title: 'Refactoring TypeScript React components in VS Code for fun and profit'
+excerpt: 'Extracting types from a JavaScript object is a common task in TypeScript. This post shows how to do it with VS Code.'
+tags: [vscode, typescript, react, nextjs]
+coverImagePublicId: 'blog/refactoring-typescript-react-components-vscode/cover'
+path: refactoring-typescript-react-components-vscode
+date: 02-03-2023
+published: true
+---
+
+## Extracting types from a JavaScript object
+
+I'm not a TypeScript expert, but I really enjoy using it to build React apps with Next.js. As I'm growing the skills I'll need to be a better TypeScript developer, I'm finding that a fairly typical chore for me is to refactor my code to extract types from a JavaScript object. For example, I often find myself writing code in react components that looks a lot like this:
+
+```tsx
+import Footer from '@components/Footer';
+import Header from '@components/Header';
+
+export default function PageLayout({ children }) {
+  return (
+    <>
+      <section className="min-h-[100vh] pb-8 sm:pb-12 lg:pb-12">
+        <Header />
+        <div className="lg:relative">{children}</div>
+      </section>
+      <Footer />
+    </>
+  );
+}
+```
+
+You've probably noticed that there is exactly 0 type-checking going on in this code. I've been writing react with good ol' plain JavaScript for so long that creating components like this is reflexive for me. I'm not even thinking about it.
+
+Eventually during implementation I get to the point where adding some complecity to the component requires me to add some type-checking. At that point, I usually refactor the component to lambda syntax, and add a type annotation to the component:
+
+```tsx
+import Footer from "@components/Footer";
+import Header from "@components/Header";
+
+const function PageLayout = ({ children }) => {
+  return (
+    <>
+      <section className="min-h-[100vh] pb-8 sm:pb-12 lg:pb-12">
+        <Header />
+        <div className="lg:relative">{children}</div>
+      </section>
+      <Footer />
+    </>
+  );
+};
+
+export default PageLayout;
+```
+
+Next, I'll add a type annotation to the `children` prop:
+
+```tsx
+import Footer from "@components/Footer";
+import Header from "@components/Header";
+
+const function PageLayout = ({ children }: { children: React.ReactNode }) => {
+  return (
+    <>
+      <section className="min-h-[100vh] pb-8 sm:pb-12 lg:pb-12">
+        <Header />
+        <div className="lg:relative">{children}</div>
+      </section>
+      <Footer />
+    </>
+  );
+};
+```
+
+Taking it a step further, I'll give the function _itself_ a type signature, using `React.FC` and generics to define the props:
+
+```tsx
+import Footer from "@components/Footer";
+import Header from "@components/Header";
+
+const function PageLayout:React.FC<{children: React.ReactNode}> = ({ children }) => {
+  return (
+    <>
+      <section className="min-h-[100vh] pb-8 sm:pb-12 lg:pb-12">
+        <Header />
+        <div className="lg:relative">{children}</div>
+      </section>
+      <Footer />
+    </>
+  );
+};
+```
+
+Up to this point, I don't really mind the way this component was written in any of the previous refactors. It's clearly getting more complex, but I can still understand what's going on. But what if I wanted to add a `variant` prop to the component? I'd have to add a type annotation to the function signature, and then add a type annotation to the `title` prop:
+
+```tsx
+import Footer from "@components/Footer";
+import Header from "@components/Header";
+
+const function PageLayout:React.FC<{children: React.ReactNode, variant: "dark" | "light" | "black" | "tan"}> = ({ children, variant }) => {
+  return (
+    <>
+      <section className="min-h-[100vh] pb-8 sm:pb-12 lg:pb-12">
+        <Header variant={variant} />
+        <div className="lg:relative">{children}</div>
+      </section>
+      <Footer />
+    </>
+  );
+};
+```
+
+Even with a little prettier formatting, this is getting a little hard to read. This is where I usually extract the props into a type, and then use that type in the function signature:
+
+```tsx
+import Footer from "@components/Footer";
+import Header from "@components/Header";
+
+type PageLayoutProps = {
+  children: React.ReactNode;
+  variant: "dark" | "light" | "black" | "tan";
+};
+
+type PageLayout = React.FC<PageLayoutProps>;
+
+const function PageLayout:PageLayout = ({ children, title }) => {
+  return (
+    <>
+      <section className="min-h-[100vh] pb-8 sm:pb-12 lg:pb-12">
+        <Header variant={variant}/>
+        <div className="lg:relative">{children}</div>
+      </section>
+      <Footer />
+    </>
+  );
+};
+
+```
+
+Now _this_ I like! The props for this page are defined in a single place, and the function signature is much easier to read.
+
+I can even add a JSDoc comment to the type definition to add some documentation:
+
+```tsx
+import Footer from "@components/Footer";
+import Header from "@components/Header";
+
+/**
+ * The PageLayout component is used to wrap all pages in the application.
+ * It provides a consistent header and footer, and a consistent layout for
+ * the page content.
+ * @param {object} props
+ * @param {React.ReactNode} props.children - The page content
+ * @param {"dark" | "light" | "black" | "tan"} props.variant - The color variant for the page
+ * @returns {JSX.Element}
+ */
+ */
+type PageLayoutProps = {
+  children: React.ReactNode;
+  variant: "dark" | "light" | "black" | "tan";
+};
+```
+
+## Don't learn TypeScript, just use it
+
+...and by that I mean that TypeScript is a _great_ enhancement to building things with JavaScript, but you do not need to be an expert on TypeScript to use it by any means. I've been starting to use TypeScript more and more in my projects, and I've found that I can get a lot of mileage out of it without having to learn every single detail about it.
+
+Theo from t3.gg has a great video that sums up my learning strategy for TypeScript pretty well: [Don't Learn Typescript](https://www.youtube.com/watch?v=kRiD6ZpAN_o). I highly recommend watching it, or putting it in your queue for your next coffee break.
+
+## Resources for learning TypeScript
+
+As I mentioned, I'm fairly new to TypeScript - I only just started using it in the past few months. If you're learning TypeScript and are looking for some great places to learn, check these out:
+
+- [Matt Pocock's YouTube channel](https://www.youtube.com/@mattpocockuk) is a library of really interesting videos about TypeScript. He shares tutorials as well as experience-driven, nuanced opinions about TypeScript (_when should I use an interface instead of a type?_ etc). IMO he's the defacto expert on TypeScript in real life.
+- [TypeScript Course](https://www.typescriptcourse.com/) is a fantastic _free_ email course from [Joe Previte](https://jsjoe.io) [(@jsjoeio)](https://twitter.com/jsjoeio). It's a to learn TypeScript a little bit at a time.
+- [TypeScript Deep Dive](https://basarat.gitbook.io/typescript/) is just what it sounds like - a thorough deep dive into TypeScript. It's a free book, with an available paid course on Udemy for those who want more .
+- [TypeScript Handbook](https://www.typescriptlang.org/docs/handbook/intro.html) is the official TypeScript documentation. For better or worse, I don't think it's a great place to start, but it contains every detail you might possibly need. I've found myself coming back to it from time to time to look up specific features and to help debug this-and-that.
