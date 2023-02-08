@@ -35,7 +35,7 @@ const config = {
       },
       {
         source: '/sponsor',
-        destination: 'https://www.passionfroot.xyz/irreverentmike',
+        destination: 'https://www.passionfroot.me/irreverentmike',
         permanent: false,
       },
     ];
