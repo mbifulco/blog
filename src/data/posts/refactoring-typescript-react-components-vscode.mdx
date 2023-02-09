@@ -16,7 +16,7 @@ I am brand new to TypeScript, and far from an expert. So far, I really enjoy usi
 import Footer from '@components/Footer';
 import Header from '@components/Header';
 
-export default function PageLayout({ children }) {
+const PageLayout = ({ children }) => {
   return (
     <>
       <section className="min-h-[100vh] pb-8 sm:pb-12 lg:pb-12">
@@ -26,7 +26,9 @@ export default function PageLayout({ children }) {
       <Footer />
     </>
   );
-}
+};
+
+export default PageLayout;
 ```
 
 There is no type-checking going on in this code as it is written. I've been writing react with good ol' plain JavaScript for so long that creating components like this is reflexive for me. I'm not even thinking about it.
@@ -34,10 +36,10 @@ There is no type-checking going on in this code as it is written. I've been writ
 Eventually during implementation I get to the point where adding some complexity to the component requires me to add some type-checking. At that point, I usually refactor the component to lambda syntax, and add a type annotation to the component:
 
 ```tsx
-import Footer from "@components/Footer";
-import Header from "@components/Header";
+import Footer from '@components/Footer';
+import Header from '@components/Header';
 
-const function PageLayout = ({ children }) => {
+const PageLayout = ({ children }) => {
   return (
     <>
       <section className="min-h-[100vh] pb-8 sm:pb-12 lg:pb-12">
@@ -55,10 +57,10 @@ export default PageLayout;
 Next, I'll add a type annotation to the `children` prop:
 
 ```tsx
-import Footer from "@components/Footer";
-import Header from "@components/Header";
+import Footer from '@components/Footer';
+import Header from '@components/Header';
 
-const function PageLayout = ({ children }: { children: React.ReactNode }) => {
+const PageLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <>
       <section className="min-h-[100vh] pb-8 sm:pb-12 lg:pb-12">
@@ -74,10 +76,10 @@ const function PageLayout = ({ children }: { children: React.ReactNode }) => {
 Taking it a step further, I'll give the function a return type signature, using `React.FC` and generics to define the props:
 
 ```tsx
-import Footer from "@components/Footer";
-import Header from "@components/Header";
+import Footer from '@components/Footer';
+import Header from '@components/Header';
 
-const function PageLayout:React.FC<{children: React.ReactNode}> = ({ children }) => {
+const PageLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return (
     <>
       <section className="min-h-[100vh] pb-8 sm:pb-12 lg:pb-12">
@@ -93,10 +95,13 @@ const function PageLayout:React.FC<{children: React.ReactNode}> = ({ children })
 Up to this point, I don't really mind the way this component was written in any of the previous refactors. It's clearly getting more complex, but I can still understand what's going on. But what if I wanted to add a `variant` prop to the component? I'd have to add another type annotation to the function signature:
 
 ```tsx
-import Footer from "@components/Footer";
-import Header from "@components/Header";
+import Footer from '@components/Footer';
+import Header from '@components/Header';
 
-const function PageLayout:React.FC<{children: React.ReactNode, variant: "dark" | "light" | "black" | "tan"}> = ({ children, variant }) => {
+const PageLayout: React.FC<{
+  children: React.ReactNode;
+  variant: 'dark' | 'light' | 'black' | 'tan';
+}> = ({ children, variant }) => {
   return (
     <>
       <section className="min-h-[100vh] pb-8 sm:pb-12 lg:pb-12">
@@ -112,31 +117,56 @@ const function PageLayout:React.FC<{children: React.ReactNode, variant: "dark" |
 Even with a little prettier formatting, this is getting a little hard to read. This is where I usually extract the props into a type, and then use that type in the function signature:
 
 ```tsx
-import Footer from "@components/Footer";
-import Header from "@components/Header";
+import Footer from '@components/Footer';
+import Header from '@components/Header';
 
 type PageLayoutProps = {
   children: React.ReactNode;
-  variant: "dark" | "light" | "black" | "tan";
+  variant: 'dark' | 'light' | 'black' | 'tan';
 };
 
 type PageLayout = React.FC<PageLayoutProps>;
 
-const function PageLayout:PageLayout = ({ children, title }) => {
+const PageLayout: PageLayout = ({ children, title }) => {
   return (
     <>
       <section className="min-h-[100vh] pb-8 sm:pb-12 lg:pb-12">
-        <Header variant={variant}/>
+        <Header variant={variant} />
         <div className="lg:relative">{children}</div>
       </section>
       <Footer />
     </>
   );
 };
-
 ```
 
 Now _this_ I like! The props for this page are defined in a single place, and the function signature is much easier to read.
+
+## Using VS Code's refactor menu to extract types
+
+As it works out, VS Code has loads of functionality to make this sort of work quicker. The refactor menu can be accessed by highlighting some code, right clicking on it, and selecting `Refactor...`. There are a number of TypeScript-specific functions provided which can help you refactor your code.
+
+In this case, we can extract types from our component's signature in a few steps:
+
+<Image
+  publicId="posts/refactor-react-typescript/refactor-1"
+  alt="VS Code Screenshot: Select the entire `React.FC<` return type and right clicking on it"
+  caption='Select the entire `React.FC<` return type and right click on it, and Choose "Refactor..." from the context menu.'
+/>
+
+<Image
+  publicId="posts/refactor-react-typescript/refactor-2"
+  alt="VS Code Screenshot: Choose 'extract type to type alias' from the refactor menu"
+  caption='Select "Extract type to type alias" to extract the type into a type alias'
+/>
+
+<Image
+  publicId="posts/refactor-react-typescript/refactor-3"
+  alt="VS Code Screenshot: Give the extracted type a name, and hit enter."
+  caption="Give the extracted type a name, and hit enter."
+/>
+
+## Bonus: Add JSDoc comments to your types for better intellisense
 
 If you want to take it further, you can add a JSDoc comment to the type definition to add some documentation. This is a good way to document your code, and it's also a good way to get better intellisense for your code if it's supported in your editor:
 
