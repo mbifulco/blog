@@ -127,7 +127,7 @@ type PageLayoutProps = {
 
 type PageLayout = React.FC<PageLayoutProps>;
 
-const PageLayout: PageLayout = ({ children, title }) => {
+const PageLayout: PageLayout = ({ children, variant }) => {
   return (
     <>
       <section className="min-h-[100vh] pb-8 sm:pb-12 lg:pb-12">
@@ -174,22 +174,23 @@ If you want to take it further, you can add a JSDoc comment to the type definiti
 import Footer from "@components/Footer";
 import Header from "@components/Header";
 
-/**
- * The PageLayout component is used to wrap all pages in the application.
- * It provides a consistent header and footer, and a consistent layout for
- * the page content.
- * @param {object} props
- * @param {React.ReactNode} props.children - The page content
- * @param {"dark" | "light" | "black" | "tan"} props.variant - The color variant for the page
- * @returns {JSX.Element}
- */
- */
 type PageLayoutProps = {
   children: React.ReactNode;
   variant: "dark" | "light" | "black" | "tan";
 };
 
-/* etc */
+/**
+ * The PageLayout component is used to wrap all pages in the application.
+ * It provides a consistent header and footer, and a consistent layout for
+ * the page content.
+ * @param {object} props
+ *   @param {React.ReactNode} props.children - The page content
+ *   @param {"dark" | "light" | "black" | "tan"} props.variant - The color variant for the page
+ * @returns {JSX.Element}
+ **/
+const PageLayout: PageLayout = ({ children, title }) => {
+
+  /* etc */
 ```
 
 ## Don't learn TypeScript, just use it
