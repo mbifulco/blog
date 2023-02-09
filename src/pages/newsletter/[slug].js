@@ -2,7 +2,7 @@ import React from 'react';
 import { serialize } from 'next-mdx-remote/serialize';
 
 import { useRouter } from 'next/router';
-import { Flex, Text } from '@chakra-ui/react';
+import { Flex, Text, useColorMode, useTheme } from '@chakra-ui/react';
 
 import { getNewsletterBySlug, getAllNewsletters } from '../../lib/newsletters';
 
@@ -48,6 +48,8 @@ const NewsletterPage = (post) => {
   const { coverImagePublicId, date, tags, title, excerpt, path } = frontmatter;
 
   const router = useRouter();
+  const theme = useTheme();
+  const { colorMode } = useColorMode();
 
   const postImagePublicId = coverImagePublicId || `posts/${path}/cover`;
   const coverImageUrl = getCloudinaryImageUrl(postImagePublicId);
@@ -68,7 +70,7 @@ const NewsletterPage = (post) => {
         ogType="article"
       />
       <Text fontSize="1rem" color={dateColors[colorMode]}>
-        <PublishDate date={date} /> {author && <>— Written by {author}</>}
+        <PublishDate date={date} />
       </Text>
 
       <Post post={post} />
