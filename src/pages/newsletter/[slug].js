@@ -2,7 +2,7 @@ import React from 'react';
 import { serialize } from 'next-mdx-remote/serialize';
 
 import { useRouter } from 'next/router';
-import { Flex, Text } from '@chakra-ui/react';
+import { Flex, Text, useColorMode, useTheme } from '@chakra-ui/react';
 
 import { getNewsletterBySlug, getAllNewsletters } from '../../lib/newsletters';
 
@@ -11,6 +11,7 @@ import { NewsletterSignup } from '../../components/NewsletterSignup';
 import { Post } from '../../components/Post';
 import SEO from '../../components/seo';
 import WebmentionMetadata from '../../components/webmentionMetadata';
+import { PublishDate } from '../../components/PublishDate';
 
 import { getCloudinaryImageUrl } from '../../utils/images';
 import mdxOptions from '../../utils/mdxOptions';
@@ -47,9 +48,16 @@ const NewsletterPage = (post) => {
   const { coverImagePublicId, date, tags, title, excerpt, path } = frontmatter;
 
   const router = useRouter();
+  const theme = useTheme();
+  const { colorMode } = useColorMode();
 
   const postImagePublicId = coverImagePublicId || `posts/${path}/cover`;
   const coverImageUrl = getCloudinaryImageUrl(postImagePublicId);
+
+  const dateColors = {
+    dark: theme.colors.gray[400],
+    light: '#555555',
+  };
 
   return (
     <>
@@ -61,6 +69,9 @@ const NewsletterPage = (post) => {
         image={coverImageUrl}
         ogType="article"
       />
+      <Text fontSize="1rem" color={dateColors[colorMode]}>
+        <PublishDate date={date} />
+      </Text>
 
       <Post post={post} />
       <Text fontSize={'1.35rem'} style={{ marginTop: '0' }}>
