@@ -1,5 +1,5 @@
 ---
-title: 'Refactoring TypeScript React components in VS Code for fun and profit'
+title: 'Refactoring TypeScript React components in VS Code'
 excerpt: 'Extracting types from a JavaScript object is a common task in TypeScript. This post shows how to do it with VS Code.'
 tags: [vscode, typescript, react, nextjs]
 coverImagePublicId: 'blog/refactoring-typescript-react-components-vscode/cover'
@@ -10,7 +10,7 @@ published: true
 
 ## Extracting types from a JavaScript object
 
-I'm not a TypeScript expert, but I really enjoy using it to build React apps with Next.js. As I'm growing the skills I'll need to be a better TypeScript developer, I'm finding that a fairly typical chore for me is to refactor my code to extract types from a JavaScript object. For example, I often find myself writing code in react components that looks a lot like this:
+I am brand new to TypeScript, and far from an expert. So far, I really enjoy using it to build React apps with Next.js. As I'm growing the skills I'll need to be a better TypeScript developer, I'm finding that a fairly typical chore for me is to refactor my code to extract types from a JavaScript object. For example, I often find myself writing code in react components that looks a lot like this:
 
 ```tsx
 import Footer from '@components/Footer';
@@ -29,9 +29,9 @@ export default function PageLayout({ children }) {
 }
 ```
 
-You've probably noticed that there is exactly 0 type-checking going on in this code. I've been writing react with good ol' plain JavaScript for so long that creating components like this is reflexive for me. I'm not even thinking about it.
+There is no type-checking going on in this code as it is written. I've been writing react with good ol' plain JavaScript for so long that creating components like this is reflexive for me. I'm not even thinking about it.
 
-Eventually during implementation I get to the point where adding some complecity to the component requires me to add some type-checking. At that point, I usually refactor the component to lambda syntax, and add a type annotation to the component:
+Eventually during implementation I get to the point where adding some complexity to the component requires me to add some type-checking. At that point, I usually refactor the component to lambda syntax, and add a type annotation to the component:
 
 ```tsx
 import Footer from "@components/Footer";
@@ -71,7 +71,7 @@ const function PageLayout = ({ children }: { children: React.ReactNode }) => {
 };
 ```
 
-Taking it a step further, I'll give the function _itself_ a type signature, using `React.FC` and generics to define the props:
+Taking it a step further, I'll give the function a return type signature, using `React.FC` and generics to define the props:
 
 ```tsx
 import Footer from "@components/Footer";
@@ -90,7 +90,7 @@ const function PageLayout:React.FC<{children: React.ReactNode}> = ({ children })
 };
 ```
 
-Up to this point, I don't really mind the way this component was written in any of the previous refactors. It's clearly getting more complex, but I can still understand what's going on. But what if I wanted to add a `variant` prop to the component? I'd have to add a type annotation to the function signature, and then add a type annotation to the `title` prop:
+Up to this point, I don't really mind the way this component was written in any of the previous refactors. It's clearly getting more complex, but I can still understand what's going on. But what if I wanted to add a `variant` prop to the component? I'd have to add another type annotation to the function signature:
 
 ```tsx
 import Footer from "@components/Footer";
@@ -138,7 +138,7 @@ const function PageLayout:PageLayout = ({ children, title }) => {
 
 Now _this_ I like! The props for this page are defined in a single place, and the function signature is much easier to read.
 
-I can even add a JSDoc comment to the type definition to add some documentation:
+If you want to take it further, you can add a JSDoc comment to the type definition to add some documentation. This is a good way to document your code, and it's also a good way to get better intellisense for your code if it's supported in your editor:
 
 ```tsx
 import Footer from "@components/Footer";
@@ -158,13 +158,17 @@ type PageLayoutProps = {
   children: React.ReactNode;
   variant: "dark" | "light" | "black" | "tan";
 };
+
+/* etc */
 ```
 
 ## Don't learn TypeScript, just use it
 
 ...and by that I mean that TypeScript is a _great_ enhancement to building things with JavaScript, but you do not need to be an expert on TypeScript to use it by any means. I've been starting to use TypeScript more and more in my projects, and I've found that I can get a lot of mileage out of it without having to learn every single detail about it.
 
-Theo from t3.gg has a great video that sums up my learning strategy for TypeScript pretty well: [Don't Learn Typescript](https://www.youtube.com/watch?v=kRiD6ZpAN_o). I highly recommend watching it, or putting it in your queue for your next coffee break.
+Theo from [t3.gg](https://t3.gg) has a great video that sums up my learning strategy for TypeScript pretty well, called Don't Learn TypeScript. I highly recommend watching it, or putting it in your queue for your next coffee break:
+
+<YouTube youTubeId="kRiD6ZpAN_o" />.{' '}
 
 ## Resources for learning TypeScript
 

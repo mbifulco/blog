@@ -11,6 +11,7 @@ import { NewsletterSignup } from '../../components/NewsletterSignup';
 import { Post } from '../../components/Post';
 import SEO from '../../components/seo';
 import WebmentionMetadata from '../../components/webmentionMetadata';
+import { PublishDate } from '../../components/PublishDate';
 
 import { getCloudinaryImageUrl } from '../../utils/images';
 import mdxOptions from '../../utils/mdxOptions';
@@ -61,6 +62,9 @@ const NewsletterPage = (post) => {
         image={coverImageUrl}
         ogType="article"
       />
+      <Text fontSize="1rem" color={dateColors[colorMode]}>
+        <PublishDate date={date} /> {author && <>— Written by {author}</>}
+      </Text>
 
       <Post post={post} />
       <Text fontSize={'1.35rem'} style={{ marginTop: '0' }}>
