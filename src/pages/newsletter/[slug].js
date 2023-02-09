@@ -52,6 +52,11 @@ const NewsletterPage = (post) => {
   const postImagePublicId = coverImagePublicId || `posts/${path}/cover`;
   const coverImageUrl = getCloudinaryImageUrl(postImagePublicId);
 
+  const dateColors = {
+    dark: theme.colors.gray[400],
+    light: '#555555',
+  };
+
   return (
     <>
       {/* TODO image url to SEO */}
