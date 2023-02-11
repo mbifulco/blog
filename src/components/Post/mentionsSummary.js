@@ -22,8 +22,6 @@ const MentionsSummary = ({ mentions }) => {
 
   if (!mentions || mentions.length === 0) return null;
 
-  console.log(mentions);
-
   const likes = mentions.filter((mention) => mention.activity.type === 'like');
   const someoneMentioned = mentions.filter((mention) => {
     if (mention.activity.type === 'like') return false;
