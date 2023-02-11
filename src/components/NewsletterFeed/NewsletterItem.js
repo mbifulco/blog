@@ -13,9 +13,6 @@ const NewsletterItem = ({ newsletter, as = 'h3', compact = false }) => {
     <Box
       w={'full'}
       bg={useColorModeValue('white', 'gray.900')}
-      boxShadow={'2xl'}
-      rounded={'md'}
-      p={6}
       overflow={'hidden'}
     >
       <Link
@@ -24,9 +21,6 @@ const NewsletterItem = ({ newsletter, as = 'h3', compact = false }) => {
       >
         <Box
           bg={'gray.100'}
-          mt={-6}
-          mx={-6}
-          mb={6}
           minH={'205px'}
           height="100%"
           backgroundImage={getCloudinaryImageUrl(coverImagePublicId)}
@@ -34,7 +28,7 @@ const NewsletterItem = ({ newsletter, as = 'h3', compact = false }) => {
           aspectRatio="1200/630"
         />
       </Link>
-      <Stack>
+      <Stack mt={4}>
         <Heading color={'pink.600'} fontSize={'xl'} fontFamily={'body'} as={as}>
           <Link href={`/newsletter/${slug}`}>{title}</Link>
         </Heading>

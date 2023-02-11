@@ -54,7 +54,7 @@ const HomePage = ({ posts, newsletter }) => {
       />
       <Box
         display={{ md: 'flex' }}
-        margin="1rem 0 2rem 0"
+        margin="1rem 0 1rem 0"
         spacing={4}
         alignItems="flex-start"
       >
@@ -131,7 +131,7 @@ const HomePage = ({ posts, newsletter }) => {
           <Subtitle>
             <Link href="/podcast">🎙️ The Podcast</Link>
           </Subtitle>
-          <Box padding="1rem 0 0 0" boxShadow={'2xl'} borderRadius="7px">
+          <Box padding="1rem 0 0 0">
             <iframe
               width="100%"
               height="390"
