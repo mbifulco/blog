@@ -3,6 +3,7 @@ import {
   Heading,
   Link,
   SimpleGrid,
+  Spacer,
   Stack,
   Text,
   theme,
@@ -32,6 +33,8 @@ export async function getStaticProps() {
 const NewsletterPage = ({ newsletters }) => {
   const { stats } = useConvertKitStats();
 
+  const [latestNewsletter, ...pastNewsletters] = newsletters;
+
   return (
     <>
       <SEO
@@ -60,12 +63,18 @@ const NewsletterPage = ({ newsletters }) => {
 
       <SponsorCTA />
 
-      <Stack direction={'column'} spacing={'0'}>
+      <Stack direction={'column'} spacing={'4'}>
+        <Heading as="h2" size="md" margin={0} padding={0}>
+          💌 Read the latest dispatch
+        </Heading>
+        <NewsletterItem newsletter={latestNewsletter} />
+        <Spacer />
+
         <Heading as="h2" size="md" margin={0} padding={0}>
           Read past disptaches
         </Heading>
         <SimpleGrid minChildWidth="300px" spacing="20px" marginTop={0}>
-          {newsletters.map((newsletter) => {
+          {pastNewsletters.map((newsletter) => {
             const { slug } = newsletter?.frontmatter;
             return <NewsletterItem newsletter={newsletter} key={slug} />;
           })}

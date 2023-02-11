@@ -2,9 +2,9 @@ const BASE_SITE_URL = 'https://mikebifulco.com';
 
 const config = {
   employer: {
-    name: '[Incognito Mode]',
-    role: 'Product Builder',
-    url: 'https://mikebifulco.com',
+    name: 'Craftwork',
+    role: 'co-founder & CTO',
+    url: 'https://craftwork.com',
   },
   title: `Mike Bifulco`,
   author: {

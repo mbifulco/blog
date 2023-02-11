@@ -5,64 +5,54 @@ import TagsSummary from '../tagsSummary';
 import formatDate from '../../utils/format-date';
 import { getCloudinaryImageUrl } from '../../utils/images';
 
-const NewsletterItem = ({ newsletter, as = 'h3' }) => {
+const NewsletterItem = ({ newsletter, as = 'h3', compact = false }) => {
   const { coverImagePublicId, date, excerpt, slug, tags, title } =
     newsletter.frontmatter;
 
   return (
     <Box
-      maxW={'445px'}
       w={'full'}
       bg={useColorModeValue('white', 'gray.900')}
-      boxShadow={'2xl'}
-      rounded={'md'}
-      p={6}
       overflow={'hidden'}
     >
-      <Link href={`/newsletter/${slug}`}>
+      <Link
+        href={`/newsletter/${slug}`}
+        style={{ display: 'block', aspectRatio: '1200/670', margin: '0' }}
+      >
         <Box
-          h={'210px'}
           bg={'gray.100'}
-          mt={-6}
-          mx={-6}
-          mb={6}
-          pos={'relative'}
+          minH={'205px'}
+          height="100%"
           backgroundImage={getCloudinaryImageUrl(coverImagePublicId)}
           backgroundSize="cover"
+          aspectRatio="1200/630"
         />
       </Link>
-      <Stack>
-        <Text
-          color={'pink.600'}
-          textTransform={'uppercase'}
-          fontWeight={700}
-          fontSize={'sm'}
-        >
-          📰 {formatDate(date)}
-        </Text>
-        <Heading
-          color={useColorModeValue('gray.700', 'white')}
-          fontSize={'xl'}
-          fontFamily={'body'}
-          as={as}
-          height="2.5em"
-        >
+      <Stack mt={4}>
+        <Heading color={'pink.600'} fontSize={'xl'} fontFamily={'body'} as={as}>
           <Link href={`/newsletter/${slug}`}>{title}</Link>
         </Heading>
+        {!compact && (
+          <Text textTransform={'uppercase'} fontSize={'sm'} color="gray.500">
+            {formatDate(date)}
+          </Text>
+        )}
         <Text
-          color={'gray.500'}
-          height="6rem"
+          color={'gray.600'}
+          noOfLines={3}
           overflowY={'hidden'}
           textOverflow="ellipsis"
         >
           {excerpt}
         </Text>
       </Stack>
-      <Stack mt={6} direction={'row'} spacing={4} align={'center'}>
-        <Stack direction={'column'} spacing={0} fontSize={'sm'}>
-          <TagsSummary tags={tags} />
+      {!compact && (
+        <Stack mt={6} direction={'row'} spacing={4} align={'center'}>
+          <Stack direction={'column'} spacing={0} fontSize={'sm'}>
+            <TagsSummary tags={tags} />
+          </Stack>
         </Stack>
-      </Stack>
+      )}
     </Box>
   );
 };

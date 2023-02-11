@@ -23,9 +23,18 @@ const MentionsSummary = ({ mentions }) => {
   if (!mentions || mentions.length === 0) return null;
 
   const likes = mentions.filter((mention) => mention.activity.type === 'like');
-  const someoneMentioned = mentions.filter(
-    (mention) => mention.activity.type !== 'like'
-  );
+  const someoneMentioned = mentions.filter((mention) => {
+    if (mention.activity.type === 'like') return false;
+    if (
+      mention?.data?.author?.url === 'https://reddit.com/user/irreverentmike/'
+    )
+      return false;
+    if (mention?.data?.author?.url === 'https://hachyderm.io/@irreverentmike')
+      return false;
+    if (mention?.data?.author?.url === 'https://twitter.com/irreverentmike')
+      return false;
+    return true;
+  });
 
   const avatarSize = '48px';
 
