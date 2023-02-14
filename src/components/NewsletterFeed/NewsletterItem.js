@@ -25,7 +25,7 @@ const NewsletterItem = ({ newsletter, as = 'h3', compact = false }) => {
           height="100%"
           backgroundImage={getCloudinaryImageUrl(coverImagePublicId)}
           backgroundSize="cover"
-          aspectRatio="1200/630"
+          style={{ aspectRatio: '1200/630' }}
         />
       </Link>
       <Stack mt={4}>

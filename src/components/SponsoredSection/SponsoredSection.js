@@ -1,5 +1,5 @@
 import NextLink from 'next/link';
-import { Box, Link, Stack, Text, useTheme } from '@chakra-ui/react';
+import { Box, Button, Link, Stack, Text, useTheme } from '@chakra-ui/react';
 
 import { Image } from '../Image';
 
@@ -51,9 +51,12 @@ const SponsoredSection = ({
           textColor={theme.colors.gray[500]}
           fontSize="sm"
           display={'block'}
-          marginBottom="1ch"
+          marginBottom="2ch"
         >
-          Thanks to our sponsor
+          Thanks so much to our sponsor{' '}
+          <Text fontWeight="bold" as="span">
+            {sponsorName}
+          </Text>
         </Link>
         {imagePublicId && (
           <Link as={NextLink} href={href} target="_blank">
@@ -67,9 +70,14 @@ const SponsoredSection = ({
         {children}
 
         <Stack alignContent="center">
-          <Link href={href} as={NextLink} color="pink.500" alignSelf={'center'}>
+          <Button
+            href={href}
+            as={NextLink}
+            colorScheme="blue"
+            alignSelf={'center'}
+          >
             {CTAtext}
-          </Link>
+          </Button>
         </Stack>
       </Box>
     </Box>
