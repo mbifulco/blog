@@ -231,14 +231,17 @@ const ListItemComponent = ({ children, ...rest }) => (
 const HorizontalRule = ({ height = 40, width = 250, color = 'pink' }) => {
   const theme = useTheme();
   return (
-    <Box alignContent={'center'} justifyContent={'center'} display={'flex'}>
-      <svg
-        role="separator"
-        width="794px"
-        height="51px"
-        viewBox="0 0 794 51"
-      ></svg>
-    </Box>
+    <Box
+      alignContent={'center'}
+      justifyContent={'center'}
+      display={'flex'}
+      borderBottom={`5px solid ${theme.colors[color][400]}`}
+      maxW={'50%'}
+      w={'50%'}
+      marginTop="3rem"
+      marginBottom="2rem"
+      alignSelf={'center'}
+    />
   );
 };
 
@@ -258,6 +261,7 @@ export const customComponents = {
   h4: H4,
   h5: H5,
   h6: H6,
+  hr: HorizontalRule,
   li: ListItemComponent,
   ol: OrderedList,
   p: P,
