@@ -1,0 +1,92 @@
+---
+title: '3 tips to fix stubborn TypeScript errors with VS Code'
+excerpt: "Sometimes fixing a TypeScript or eslint error in VS Code can feel impossible. Here's what I do when I have tried everything else."
+tags: [vscode, typescript, react, nextjs]
+coverImagePublicId: 'posts/typescript-vscode-error-fix-last-resort/cover'
+path: typescript-vscode-error-fix-last-resort
+date: 02-15-2023
+published: true
+---
+
+## I'm new to TypeScript.
+
+I've been using TypeScript to build software for my new company, [Craftwork](https://craftwork.com). I've been pretty open about the fact that I'm new to TypeScript, and have been blissfully writing non-type-safe javascript code since somewhere around 2005.
+
+Of course, that's all changing.
+
+This new project is built with [create-t3-app](https://create.t3.gg), a framework for building TypeSafe apps with Next.js and TRPC. Out of the box, t3 is configured with some sensible (and fairly strict) settings for both eslint and TypeScript's tsconfig.
+
+If you're familiar with TypeScript, Eslint, and tsconfig you may want to skip ahead to [My last resort to fix TypeScript errors in VS Code](#my-last-resort-to-fix-typescript-errors-in-vs-code).
+
+### ESLint in a nutshell
+
+If you're not familiar, _eslint is a **linter**_ - a tool that will help you identify and fix code quality and formatting issues in your code.
+
+ESLint is a popular linter for JavaScript, and it can also be used with TypeScript. It provides a wide range of configurable rules that you can use to enforce consistent code style and identify potential bugs. ESLint is highly extensible, which means you can customize it to fit your specific needs. For example, you can use it to enforce your team's coding standards, or to catch common mistakes that TypeScript can't detect on its own.
+
+### tsconfig in a nutshell
+
+When you're working on a TypeScript project, `tsconfig.json` is a configuration file that allows you to specify how the TypeScript compiler should behave when it compiles your code.
+
+The purpose of tsconfig.json is to provide a single source of truth for your TypeScript project's configuration. It allows you to specify options such as the target version of JavaScript you want to generate, the module system you want to use, the paths to your project's source files, and many other settings.
+
+One of the main benefits of using tsconfig.json is that it allows you to enforce a consistent set of rules across your project. You can use it to enforce specific compiler options, which helps to ensure that your code is consistent and that everyone on your team is using the same settings. tsconfig.json also allows you to configure your project's build pipeline, so you can easily automate the process of compiling and bundling your TypeScript code.
+
+Additionally, tsconfig.json allows you to take advantage of features like incremental compilation, which can significantly improve the speed of your builds by only compiling the parts of your project that have changed since the last build.
+
+## How TypeScript works in VS Code
+
+There are a few steps required to set up TypeScript to work with VS Code. If you haven't done this yet, you should follow the instructions on VisualStudio.com to get started: [TypeScript in Visual Studio Code](https://code.visualstudio.com/Docs/languages/typescript).
+
+When you open a TypeScript file in VS Code, the TypeScript language server will start in the background. The language server is a separate process that provides language features like IntelliSense, code navigation, and code refactoring. It also provides the ability to run TypeScript code in the editor. Because TypeScript has _many_ options and plugins, the language server uses the `tsconfig.json` file in your project to determine the rules it should use to compile your code.
+
+VS Code needs to determine which version of TypeScript to use, so it will look for a `package.json` file in your project. If it finds one, it will use the version of TypeScript specified in the `devDependencies` section. If it doesn't find a `package.json` file, it will use the version of TypeScript that is bundled with VS Code.
+
+---
+
+## My last resort to fix TypeScript errors in VS Code
+
+Sometimes, when I'm working on a TypeScript project, I'll get an error in VS Code that I can't figure out. I'll check and double-check against articles and tutorials online, or ask my hyper-smart TypeScript friends ([Sean Rogers, everyone](https://seanrogers.dev/)), and despite doing everything I can think of to address the problem, sometimes I just can't get the error to go away.
+
+Here's what I do when I find myself in this situation:
+
+### Make sure VS Code is using the correct version of TypeScript
+
+Sometimes VS Code's TypeScript process doesn't use the right version of TypeScript for the project I'm working on. For me, this seems to happen after updating TypeScript versions, or when switching between projects that use different versions of TypeScript.
+
+To check which version of TypeScript VS Code is using, open the Command Palette (Ctrl+Shift+P on Windows, or &#8984; on a Mac) and type `TypeScript: Select TypeScript Version`.
+
+<Image
+  publicId="posts/typescript-vscode-error-fix-last-resort/select-typescript-version"
+  alt="Select TypeScript Version in the command palette in VS Code"
+/>
+
+If the version of TypeScript that is selected is not the one you expect, select the correct version from the list. Generally speaking, you'll want to select the version of TypeScript that is specified in your project's `package.json` file, by selecting `Use Workspace Version` option.
+
+### Restart the TS server process
+
+If that doesn't fix the problem, or VS Code was already running my workspace's version of TypeScript, the next thing I'll do is restart the TS server process. This is the background process being run by VS Code to actually analyze and compile your TypeScript code into JavaScript. Sometimes this process malfunctions, and restarting it can fix the problem.
+
+To restart the TS server process, open the Command Palette (Ctrl+Shift+P on Windows, or &#8984; on a Mac) and type `TypeScript: Restart TS Server`.
+
+<Image
+  publicId="posts/typescript-vscode-error-fix-last-resort/select-typescript-version"
+  alt="Select TypeScript Version in the command palette in VS Code"
+/>
+
+### Restart the ESLint server process
+
+On occasion I'll also need to restart the ESLint server process. Just like it sounds, this is the process that analyzes your code for linting errors, according to the rules specified in your project's `.eslintrc` file and the version of ESLint that is specified in your project's `package.json` file.
+
+<Image
+  publicId="posts/typescript-vscode-error-fix-last-resort/restart-eslint-server"
+  alt="Restart ESLint Server in the command palette in VS Code"
+/>
+
+## If that doesn't work, I'm out of ideas
+
+..and by that, I mean I'm still learning. There's loads to learn about TypeScript, and I've found quite a few great resources online from devs like me who have shared their experiences and knowledge. I hope this article helps you - and if you're looking for more, check these out:
+
+- Kent C. Dodds has a great article called [Using fetch with TypeScript](https://kentcdodds.com/blog/using-fetch-with-type-script) which I nearly have memorized at this point. This is the problem I was trying work through when I discovered that I needed to restart the TS server process in VS Code.
+- [James Q. Quick](https://www.youtube.com/@JamesQQuick) has a great YouTube channel where he shares tips and tutorials for building web apps with a wide variety of frameworks and technologies.
+- I've got some more articles on working with TypeScript in VS Code, including [Refactoring TypeScript React components in VS Code](https://mikebifulco.com/posts/refactoring-typescript-react-components-vscode#resources-for-learning-typescript)
