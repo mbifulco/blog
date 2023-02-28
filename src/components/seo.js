@@ -18,6 +18,7 @@ const SEO = ({
   title,
   ogType,
   image,
+  publishedAt,
 }) => {
   const router = useRouter();
 
@@ -56,7 +57,6 @@ const SEO = ({
         rel="pingback"
         href="https://webmention.io/mikebifulco.com/xmlrpc"
       />
-
       {/* favicon */}
       <link
         rel="apple-touch-icon"
@@ -80,20 +80,16 @@ const SEO = ({
       <meta name="msapplication-TileColor" content="#da532c" />
       <meta name="theme-color" content="#ffffff" />
       {/* end favicon */}
-
       <link rel="canonical" href={fullCanonical(canonical)} />
-
       <title>{title}</title>
       <meta name="description" content={description || metaDescription} />
       <meta
         name="monetization"
         content="$twitter.xrptipbot.com/irreverentmike"
       />
-
       {keywords.length > 0 && (
         <meta name="keywords" content={keywords.join(', ')} />
       )}
-
       <meta
         name="twitter:card"
         content={ogImageUrl ? `summary_large_image` : `summary`}
@@ -101,7 +97,6 @@ const SEO = ({
       <meta name="twitter:title" content={metaTitle} />
       <meta name="twitter:creator" content={social.twitter} />
       <meta name="twitter:description" content={metaDescription} />
-
       <meta
         name="og:title"
         content={title ? `${title} | ${siteTitle}` : siteTitle}
@@ -111,10 +106,12 @@ const SEO = ({
       <meta name="og:url" content={router.asPath} />
       <meta name="og:image" content={ogImageUrl} />
       <meta name="og:image:url" content={ogImageUrl} />
-
       <meta name="creator" content="Mike Bifulco @irreverentmike" />
       <meta name="publisher" content="mikebifulco.com" />
-      {meta}
+      {publishedAt && (
+        <meta name="article:published_time" content={publishedAt} />
+      )}
+      t{meta}
     </Head>
   );
 };
