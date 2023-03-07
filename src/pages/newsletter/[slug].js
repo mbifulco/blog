@@ -64,7 +64,7 @@ const NewsletterPage = (post) => {
       {/* TODO image url to SEO */}
       <SEO
         canonical={router.asPath}
-        title={`Newsletter: ${title} - Tiny Improvements`}
+        title={`Tiny Improvements: ${title}`}
         description={excerpt}
         image={coverImageUrl}
         ogType="article"
