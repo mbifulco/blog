@@ -2,7 +2,15 @@ import React from 'react';
 import { serialize } from 'next-mdx-remote/serialize';
 
 import { useRouter } from 'next/router';
-import { Flex, Text, useColorMode, useTheme } from '@chakra-ui/react';
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  Flex,
+  Text,
+  useColorMode,
+  useTheme,
+} from '@chakra-ui/react';
 
 import { getNewsletterBySlug, getAllNewsletters } from '../../lib/newsletters';
 
@@ -11,10 +19,11 @@ import { NewsletterSignup } from '../../components/NewsletterSignup';
 import { Post } from '../../components/Post';
 import SEO from '../../components/seo';
 import WebmentionMetadata from '../../components/webmentionMetadata';
-import { PublishDate } from '../../components/PublishDate';
 
 import { getCloudinaryImageUrl } from '../../utils/images';
 import mdxOptions from '../../utils/mdxOptions';
+import Link from 'next/link';
+import { FaChevronRight } from 'react-icons/fa';
 
 export async function getStaticProps({ params }) {
   const newsletter = await getNewsletterBySlug(params.slug);
@@ -64,15 +73,30 @@ const NewsletterPage = (post) => {
       {/* TODO image url to SEO */}
       <SEO
         canonical={router.asPath}
-        title={`Tiny Improvements: ${title}`}
+        title={`${title}`}
         description={excerpt}
         image={coverImageUrl}
         ogType="article"
       />
-      <Text fontSize="1rem" color={dateColors[colorMode]}>
-        <PublishDate date={date} />
-      </Text>
 
+      <Breadcrumb
+        separator={
+          <FaChevronRight
+            style={{ color: theme.colors.pink[500] }}
+            fontSize="smaller"
+          />
+        }
+      >
+        <BreadcrumbItem>
+          <BreadcrumbLink href="/newsletter" as={Link}>
+            💌 Tiny Improvements
+          </BreadcrumbLink>
+        </BreadcrumbItem>
+
+        <BreadcrumbItem isCurrentPage>
+          <BreadcrumbLink>{title}</BreadcrumbLink>
+        </BreadcrumbItem>
+      </Breadcrumb>
       <Post post={post} />
       <Text fontSize={'1.35rem'} style={{ marginTop: '0' }}>
         Thanks for reading Tiny Improvements. If you found this helpful,{' '}
