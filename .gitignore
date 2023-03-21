@@ -229,3 +229,6 @@ $RECYCLE.BIN/
 
 # Local Netlify folder
 .netlify
+
+# experiments 
+.output
