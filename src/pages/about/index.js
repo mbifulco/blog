@@ -23,6 +23,7 @@ export async function getStaticProps() {
     props: {
       mdxSource,
     },
+    revalidate: 15 * 60, // 15 minutes
   };
 }
 
