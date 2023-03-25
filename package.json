@@ -29,7 +29,7 @@
     "date-fns": "^2.29.3",
     "fathom-client": "^3.5.0",
     "feed": "^4.2.2",
-    "framer-motion": "^9.0.2",
+    "framer-motion": "^10.9.1",
     "gray-matter": "^4.0.3",
     "logrocket": "^4.0.0",
     "logrocket-react": "^5.0.1",
