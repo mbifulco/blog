@@ -1,0 +1,77 @@
+---
+title: 'The first 90 days as a technical cofounder - building a startup in 2023'
+description: "I'm building a new company for the first time since 2016. A lot has changed since then. Here's what feels different this time around."
+date: 04-06-2023
+tags: [newsletter, startup, founder]
+slug: building-a-startup-in-2023-90-day-report
+coverImagePublicId: newsletter/building-a-startup-in-2023-90-day-report/cover
+---
+
+I've been working on a new startup.
+
+Last week, we (re)launched [Craftwork.com](https://craftwork.com), with a fresh design aesthetic and what I think is a really wonderful brand. We're building a tech-enabled home painting service, which is already making the process of getting your home painted easier and more delightful for our customers.
+
+We also published a press release written by my friend and co-founder Tim Griffin, Craftwork's CEO. You can read that here: [Introducing Craftwork](https://craftwork.com/articles/introduction).
+
+I've written about building products and companies in the past few years as part of my work at Stripe and Google, and on my own site - but this is the first time I've been a technical co-founder since when we launched smpl in 2016. A lot has changed since then.
+
+---
+
+**A note for non-technical readers:** this post is going to be pretty tech-heavy. I'm going to talk about a lot of tools and technologies that I use to build products. If you're not a developer, you might not find this interesting. Rest assured I'll be writing about more of the design/business/philosophical side of things in the future.
+
+Thanks for being here - I love y'all!
+
+---
+
+## Launching a startup in 2023 - here's what feels different this time around:
+
+### 1. The bar for design and branding is higher than ever
+
+I've always been a big believer in the importance of design and branding. I worked as a UXer for years, and even earned (most of) a Master's Degree in Human-Computer Interaction to deepen my understanding of design. I've written about it endlessly ([see articles tagged with #design on my site](https://mikebifulco.com/tags/design).
+
+In 2023, investing time and effort (and, let's be honest - money) into design and branding is fundamental to building a successful company. Whether we consciously realize it or not, it is easier to trust _something new_ if it looks and feels cohesive and professional. At Craftwork, we're asking customers to let us into their homes, and to trust us with their most valuable asset. Our brand and design language helps us build this critical trust with our customers.
+
+### 2. Automation and tooling are the real 10x engineer
+
+I _love_ automating things. There's nothing better than writing a script that saves time for you and your teammates, and buys peace of mind. It's been astonishing to see how much better the tools for automation have gotten in the past few years.
+
+Critically, there's been enough time for _all_ of the automation tools to see competitors arise. This forces companies building tools to be innovative and keep raising the bar for what they make. Here's a few choices I've found myself with:
+
+- For **dependency audits**: [Dependabot](https://mikebifulco.com/posts/i-have-to-tell-you-about-dependabot) is still going strong, and has competition in [Mend Renovate](https://www.mend.io/renovate/), which works on both GitHub and GitLab, and offers a different configuration experience.
+- For **no-code, event-driven automation**: [IFTTT](https://ifttt.com/) is the OG, but continues to become more consumer-focused. [Zapier](https://zapier.com/) has arisen as a popular choice, but I've found myself exploring other options like [Make](https://make.com/), [Trigger.dev](https://trigger.dev/) and [n8n](https://n8n.io/).
+
+### 3. A focus on Developer Experience (DX) is a competitive advantage
+
+There's not a single engineer on this planet who wants to work on a product that sucks to maintain. We all want to work on products that are easy to understand, easy to enhance, and easy to deploy. This is something that has gotten steadily better since I've been in the industry, but it's still a huge differentiator for companies that get it right.
+
+Happily, many companies building devtools have done a fantastic job of turning the eye of UX research toward devs - seeing engineers as users, and building products that are delightful to build with. What's more, most of these companies are _incredibly_ friendly to startups, offering generous free tiers and discounts to help companies get off the ground.
+
+**A quick note about AWS:** somehow, AWS has wrestled its way into place as the de facto standard for cloud-based infrastructure for many dev teams - my people, it is _heartbreakingly difficult_ to use at all, and requires continual education and effort to use correctly and securely while staying up to date. The AWS dashboard is a hellscape of UX dark patterns, and the documentation is a labyrinth. I think many teams turn to AWS because it appears to be dirt cheap - but the cost of maintaining a team that can use it effectively is _astronomical_. I'm not saying you should never use AWS - but I am saying that you should think _very carefully_ about whether you need to use it, and whether you can get save long term costs by using something else (you almost certainly can).
+
+Here's a few examples that have made life better for me at Craftwork:
+
+- For **git-driven deployments (CD)** - [Vercel](https://vercel.com) and [Netlify](https://netlify) are both fantastic. I use both across the sites I maintain, and they're both great. We're using Vercel for Craftwork, and .
+
+- For **payments**, [Stripe](https://stripe.com/) is still unbeatable when it comes to DX. The mountain of features that have been added in the past few years make it _so much easier_ to build a robust payments system that can handle the complexities of the real world. Even still, there are companies building APIs _on top of Stripe_ that make life that much easier for certain use cases.
+
+- For **analytics**, [Google Analytics](https://analytics.google.com) is still the standard, but has had to pivot hard in the past year or so to avoid legal consequences due to privacy laws being passed in the EU. For a great alternative that is privacy-focused, I use [Fathom](https://usefathom.com/ref/DPSSYB) on all my personal projects). Recently [Plausible](https://plausible.io/) has popped up as another option.
+
+- The world of devx for **databases** has been absolutely buck-wild. At smpl, we used [Firebase](https://firebase.google.com/) because it was so damn easy to deal with - but it was a _nightmare_ to migrate away from when we needed to. [Supabase](https://supabase.io/) has emerged as a great alternative based on PostgreSQL, and I've been really loving [Planetscale](https://planetscale.com/)'s DX for branching databases.
+
+- Even **database schema management** has gone through a renaissance. [Prisma](https://www.prisma.io/) has become the standard for a variety of use cases, and recently [Drizzle ORM](https://github.com/drizzle-team/drizzle-orm) has popped up as a fantastic alternative if you're building with TypeScript.
+
+### Frameworks for everyone
+
+Finally - web frameworks/meta-frameworks for building web apps have gotten _so much better_. This is another place where competition has been a _great_ thing for the industry. I've been using [Next.js](https://nextjs.org/) for a few years now, and it's been making life better and better. Even still , there's plenty of competition just in the JavaScript world: [SvelteKit](https://kit.svelte.dev/) and [Astro](https://astro.build/blog/introducing-astro/) are incredible, [Angular](https://angular.io/) has been releasing industry-leading features, and [SolidJS](https://www.solidjs.com/) is an extremely promising newcomer.
+
+Even if you don't love JavaScript - [Laravel](https://laravel.com/) is keeping the PHP world humming, and [Ruby on Rails](https://rubyonrails.org/) gives Ruby devs insane productivity. [Django](https://www.djangoproject.com/) is still the standard for Python devs, and if you're building web apps with .net, [Blazor](https://dotnet.microsoft.com/en-us/apps/aspnet/web-apps/blazor) exists.
+
+There are even incredible meta-frameworks - we've been building Craftwork with an offshoot of an offshoot - [create-t3-app](https://create.t3.gg/) is a full stack TypeScript framework built on top of Next.js, Prisma, and tRPC. Because we'll likely be building a react-native app eventually, we're using an Open Source "fork" of create-t3-app called [create-t3-turbo](https://github.com/t3-oss/create-t3-turbo) to build individual apps and services in a monorepo. It's been _incredible_ to work with, and has made it easy to build a robust, scalable app with a small team.
+
+## A conclusion with a twist
+
+All of these things -- every single thing I've mentioned above -- helps to create a better environment to get things done. It's easier than ever to build a product, but for any team, the thing that will separate good from great is _how_ you do it. Focusing on communication, accessibility, inclusivity, and growth are not to be overlooked.
+
+The tools we use are important, but the people we work with, _how_ we work with them, and the lives we build around our companies are far more important for longevity, and for living a great life.
+
+I sat down to write this newsletter thinking I'd throw out a few quick bullet points about how the world of devtools has changed in the past few years. I didn't expect to write a 2000 word essay, but here we are. I hope this has been helpful to you, and I hope you'll take a look at some of the tools I've mentioned here. If you have any questions, feel free to reply to this email or drop me a line on Mastodon [@irreverentmike@hachyderm.io](https://hachyderm.io/@irreverentmike).
