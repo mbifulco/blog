@@ -1,0 +1,136 @@
+---
+title: 'Add custom fonts to Next.js sites with Tailwind using next/font'
+excerpt: 'Learn how to add custom fonts to your Next.js app using next/font and Tailwind CSS. Improve user experience without sacrificing performance.'
+tags: [nextjs, react, tailwind, typescript, SEO]
+date: 04-17-2023
+path: custom-fonts-with-next-font-and-tailwind
+---
+
+## Adding custom fonts to your website is a typical requirement for most web projects
+
+By default, Next.js sites will add small set of fonts that you can use for your sites (in addition to the default fonts for a given browser). That can be useful to get started quickly, but for most custom site designs, you'll need to add custom fonts and typefaces that fit your site's brand and design guidelines.
+
+In this tutorial, you'll learn how to **add custom fonts to your Next.js site using the `next/font` package and Tailwind CSS**. There's a few configuration steps needed to load fonts from Google Fonts using `next/font`, generate CSS variables for each font, and then use those variables to create custom font families in your Tailwind config.
+
+With this setup, you'll be able to easily use your custom fonts throughout your Next.js app using Tailwind's utility classes.
+
+### SEO Benefits of using custom fonts correctly on your Next.js site
+
+In addition to improving the user experience, implementing custom fonts on your website can also have a [positive impact on your Lighthouse scores](https://web.dev/patterns/web-vitals-patterns/fonts/) and SEO. However, it's important to implement custom fonts carefully to avoid performance issues. Using too many or too large font files can slow down your site's loading time and hurt your Lighthouse performance score. Additionally, using custom fonts in a way that affects the visual stability of the page can result in lower scores for Core Web Vitals, which can impact your SEO. So, it's important to strike a balance between using custom fonts to enhance the design and ensuring that they don't negatively impact performance or user experience.
+
+### About next/font
+
+[`next/font` is an npm package](https://nextjs.org/docs/api-reference/next/font) developed by Vercel, which provides an easy way to load fonts in your Next.js app, while maintaing performance, and minimizing [Cumulative Layout Shift (CLS)](https://web.dev/optimize-cls/). It uses the Font Loading API to asynchronously load local font files stored in your repo, or from popular font providers such as Google Fonts, Typekit, and Fonts.com. The package also generates optimized font subsets to reduce the amount of data transferred over the network, and it provides a convenient way to generate CSS variables for each font, which can be used to create custom font families in your [Tailwind config](https://tailwindcss.com/docs/configuration). This makes it easy to use custom fonts throughout your Next.js app with minimal configuration.
+
+## How to: Add multiple custom fonts to your Next.js site with Tailwind CSS
+
+There are several ways to load custom fonts into your next.js app. If you're using a Google Fonts as your custom font provider, you can use the `next/font/google` package to load fonts from Google Fonts. The process is slightly different for loading font files that are stored locally in your repo, but the basic steps are the same:
+
+### Load custom fonts from Google Fonts
+
+In `_app.jsx/tsx`, load your the fonts you need from `next/font/google`, but use the `variable` configuration prop, which you will use to generate a definition for a CSS `--var` for each font:
+
+```tsx
+import { Barlow_Condensed, Inter } from 'next/font/google';
+const barlowCondensed = Barlow_Condensed({
+  weight: '700',
+  subsets: ['latin'],
+  variable: '--font-barlow-condensed',
+});
+const inter = Inter({
+  subsets: ['latin'],
+  variable: '--font-inter',
+});
+```
+
+### Load custom fonts from a local file
+
+This next example shows how you would load a font from a local file. It also showcases another feature of the `next/fonts` library - you can map font weights to different files as needed. This also applies for font _styles_ (italic, bold, etc).
+
+In `_app.jsx/tsx`, load your the fonts you need from `next/font/local` using the syntax below. Note that in this case, font files in my repo are also being hosted in `/public/fonts` directory. Again, make sure to use the `variable` configuration prop, which you will use to generate a definition for a CSS `--var` for each font:
+
+```tsx
+import localFont from 'next/font/local';
+
+const grosa = localFont({
+  src: [
+    {
+      path: '../../public/fonts/Grosa/Grosa-Regular.woff2',
+      weight: '500',
+      style: 'normal',
+    },
+    {
+      path: '../../public/fonts/Grosa/Grosa-Medium.woff2',
+      weight: '600',
+      style: 'normal',
+    },
+    {
+      path: '../../public/fonts/Grosa/Grosa-Bold.woff2',
+      weight: '700',
+      style: 'normal',
+    },
+  ],
+  variable: '--font-grosa',
+});
+```
+
+### After loading custom fonts, generate CSS variables for each font
+
+Then, in that same `_app.tsx` component - pass the generated variables into the wrapper class. This will make that variable available to any child of that element in the DOM (in other words, your whole app):
+
+```tsx
+export default function MyApp({ Component, pageProps }) {
+  return (
+    <main
+      className={`${inter.variable} ${barlowCondensed.variable} ${grosa.variable}`}
+    >
+      <Component {...pageProps} />
+    </main>
+  );
+}
+```
+
+Behind the scenes, next is generates unique css classes for each font permutation. These classes do one thing: they define a [css custom property](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties) (sometimes called a css variable) for each font.
+
+By adding the resulting CSS classes to the root of your Next.js app, these variables are made available to any child of the `App` component - essentially all pages and components on your site.
+
+<Image
+  publicId="custom-fonts-with-next-font-and-tailwind/classes"
+  caption="is a screenshot from Chrome Browser tools for Craftwork.com, which is built using this setup"
+  alt="screenshot of chrome browser tools showing the resulting CSS classes"
+/>
+
+### Use these variables your Tailwind config to create font families
+
+Up to this point, we've loaded our custom fonts into our Next.js app, and we've made those fonts available to our entire app using CSS variables. Now, we need to tell Tailwind how to use these variables, by assigning them to specific font-family classes.
+
+In your Tailwind config, add an entry to your `theme.extend`, to create a new font family that uses the google fonts you just imported - that will look something like this:
+
+```tsx
+// tailwind.config.js
+export default {
+  theme: {
+    extend: {
+      fontFamily: {
+        "barlow-condensed": "var(--font-barlow-condensed)", // note: you can call the left side of this whatever you want - barlow-bold or title-font or foo-bar, this is what you'll use in your Tailwind css classes to use this font
+        "inter-medium": "var(--font-inter)", // note: the bit that goes inside the var() function is the same variable name we defined in app.tsx
+      }
+    }
+  }
+```
+
+Then, whenever you want to use the fonts you've added, ask for that font-family in your tailwind classnames by prefixing the font-family with "font-", like this:
+
+```tsx
+const myComponent: React.FC = () => (
+  <p className="font-barlow-condensed">
+    This should be rendered with the Barlow font family
+  </p>
+);
+
+export default myComponent;
+```
+
+That should do the trick!
+
+If you're wondering where these steps came from, it is essentially a combination of the instructions provided in [Next's docs for Font Optimization](https://nextjs.org/docs/basic-features/font-optimization). My team is using this very configuration setup for our Next.js site on [Craftwork.com](https://craftwork.com) to load custom fonts both locally and from Google Fonts, and it's been working great.
