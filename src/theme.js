@@ -14,7 +14,7 @@ const customTheme = {
   },
   colors: {
     pink: {
-      50: '#ffe3ed',
+      50: '#ffe3ec',
       100: '#ffb1ca',
       200: '#ff7fa7',
       300: '#fe4e84',
