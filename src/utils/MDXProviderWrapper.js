@@ -20,9 +20,11 @@ import {
   Text,
   UnorderedList,
   useTheme,
+  Table,
+  Tr,
+  Td,
 } from '@chakra-ui/react';
-import PrismHighlight, { defaultProps } from 'prism-react-renderer';
-import prismTheme from 'prism-react-renderer/themes/nightOwl';
+import { Highlight, defaultProps, themes } from 'prism-react-renderer';
 
 import { Image } from '../components/Image';
 import { SponsoredSection } from '../components/SponsoredSection';
@@ -168,7 +170,7 @@ const Aside = (props) => {
   );
 };
 
-const Highlight = (props) => <Text as="mark" {...props} />;
+const TextHighlight = (props) => <Text as="mark" {...props} />;
 
 const InlineCode = (props) => {
   const theme = useTheme();
@@ -180,6 +182,7 @@ const InlineCode = (props) => {
       whiteSpace="pre"
       borderRadius=".3em"
       padding="0.1ch 1ch"
+      overflowX={'auto'}
       {...props}
     />
   );
@@ -190,9 +193,9 @@ const Pre = (props) => {
   const matches = classNames.match(/language-(?<lang>.*)/);
   return (
     <Box marginBottom="2rem" marginTop="2rem">
-      <PrismHighlight
+      <Highlight
         {...defaultProps}
-        theme={prismTheme}
+        theme={themes.nightOwl}
         code={props.children.props.children}
         language={
           matches && matches.groups && matches.groups.lang
@@ -201,23 +204,36 @@ const Pre = (props) => {
         }
       >
         {({ className, style, tokens, getLineProps, getTokenProps }) => (
-          <pre className={className} style={{ ...style, overflowX: 'scroll' }}>
+          <pre className={className} style={{ ...style, overflowX: 'auto' }}>
             {tokens.map((line, i) => {
               // TODO: why is this needed though?
               if (i === tokens.length - 1) return null;
               return (
                 // eslint-disable-next-line react/jsx-key
-                <div {...getLineProps({ line, key: i })}>
-                  {line.map((token, key) => (
-                    // eslint-disable-next-line react/jsx-key
-                    <span {...getTokenProps({ token, key })} />
-                  ))}
+                <div style={{ display: 'table-row' }} key={`code-line-${i}`}>
+                  <span
+                    style={{
+                      opacity: 0.5,
+                      paddingRight: '1ch',
+                      display: 'table-cell',
+                    }}
+                  >
+                    {i + 1}
+                  </span>
+                  <span style={{ display: 'table-cell' }}>
+                    <div {...getLineProps({ line, key: i })}>
+                      {line.map((token, key) => (
+                        // eslint-disable-next-line react/jsx-key
+                        <span {...getTokenProps({ token, key })} />
+                      ))}
+                    </div>
+                  </span>
                 </div>
               );
             })}
           </pre>
         )}
-      </PrismHighlight>
+      </Highlight>
     </Box>
   );
 };
@@ -250,7 +266,7 @@ export const customComponents = {
   blockquote: Blockquote,
   Button,
   Colophon,
-  Highlight,
+  Highlight: TextHighlight,
   Image,
   code: InlineCode,
   a: CustomLink,
@@ -273,11 +289,11 @@ export const customComponents = {
 };
 
 /* eslint-disable max-len */
-/* 
+/*
   NOTE: due to a quirk in the mdx strategy we're using currently, we are unable to `import` components within mdx files.
         To support that, they need to be added here. I'm keeping them in a separate object to track for later use, on the off chance this gets fixed one day.
         I also recommend continuing to add `import` lines to individual mdx files to reduce work later - they don't seem to break anything right now
-  
+
   for more context, https://github.com/hashicorp/next-mdx-remote#import--export
 */
 const oneOffComponentsUsedInPosts = {
