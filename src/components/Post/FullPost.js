@@ -95,7 +95,7 @@ const FullPost = ({ post }) => {
           {coverContainer}
         </header>
 
-        <Stack spacing={4}>
+        <Stack spacing={2}>
           <CarbonAd />
           {/* eslint-disable-next-line react/jsx-props-no-spreading */}
           <MDXRemote {...post.source} components={components} />

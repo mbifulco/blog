@@ -101,7 +101,7 @@ const H6 = (props) => (
   <CustomHeading as="h6" size="md" {...allHeadingstyleProps} {...props} />
 );
 const P = (props) => (
-  <Box as="p" marginTop="1rem" marginBottom="1.5rem" {...props} />
+  <Box as="p" marginTop="0.5rem" marginBottom="0.5rem" {...props} />
 );
 
 const Blockquote = ({ children }) => {
