@@ -70,16 +70,7 @@ const HomePage = ({ posts, newsletter }) => {
           />
         </Box>
         <Box maxWidth="50ch">
-          <Text
-            as="h2"
-            fontSize="4xl"
-            margin="0"
-            lineHeight="1"
-            marginBottom="0.5rem"
-            fontWeight={'bold'}
-          >
-            Oh, hello
-          </Text>
+          <h2 className="text-4xl m-0 font-bold mb-2">Oh, hello</h2>
           <Text fontSize="xl" fontWeight="normal" margin="0">
             {"I'm"} a startup founder, a designer, and a maker. I share my
             writing on this site, but you can also find me on{' '}
