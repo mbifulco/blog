@@ -31,8 +31,6 @@
     "feed": "^4.2.2",
     "framer-motion": "^10.12.18",
     "gray-matter": "^4.0.3",
-    "logrocket": "^4.0.4",
-    "logrocket-react": "^5.0.1",
     "next": "^13.4.12",
     "next-mdx-remote": "4.2.0",
     "pluralize": "^8.0.0",
