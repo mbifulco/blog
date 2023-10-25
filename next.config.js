@@ -3,7 +3,7 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 });
 
 const config = {
-  pageExtensions: ['js', 'jsx', 'md', 'mdx'],
+  pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md', 'mdx'],
   images: {
     remotePatterns: [
       {

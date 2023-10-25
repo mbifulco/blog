@@ -57,7 +57,8 @@
     "husky": ">=8.0.3",
     "lint-staged": "^13.2.3",
     "next-sitemap": "^4.1.8",
-    "prettier": "^3.0.0"
+    "prettier": "^3.0.0",
+    "typescript": "5.2.2"
   },
   "repository": {
     "type": "git",
