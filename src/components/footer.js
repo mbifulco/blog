@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Box, Link, SimpleGrid, Stack, Text, useTheme } from '@chakra-ui/react';
+import Link from 'next/link';
 
 import { SocialLinks } from './SocialLinks';
 import RelatedContentLinksByTag from './RelatedContent/RelatedContentLinksByTag';
@@ -9,22 +9,17 @@ import config from '../config';
 import SponsorCTA from './SponsorCTA/SponsorCTA';
 
 const Footer = () => {
-  const theme = useTheme();
-
-  const pink = theme.colors.pink[600]; // use dark pink for accessibility on small text
   return (
-    <Box as="footer" position="relative" fontSize="small" paddingTop="2rem">
-      <SimpleGrid minChildWidth={'200px'} spacing="4">
-        <Stack zIndex={10}>
+    <footer className="relative text-sm pt-8">
+      <div className="grid md:grid-cols-2 gap-4">
+        <div className="flex flex-col gap-2">
           <span>© 2019-{new Date().getFullYear()} Mike Bifulco</span>
 
           <SponsorCTA />
-          <Box margin="0 1.5rem">
-            <SocialLinks />
-          </Box>
-        </Stack>
-        <Stack>
-          <Text as="i" id="disclaimer">
+          <SocialLinks />
+        </div>
+        <div className="flex flex-col gap-2">
+          <i as="i" id="disclaimer">
             Disclaimer:{' '}
             <span role="img" aria-label="wave">
               👋🏽
@@ -32,13 +27,13 @@ const Footer = () => {
             Hi there. I work as a {config.employer.role} at{' '}
             {config.employer.name}. These are my opinions, and not necessarily
             the views of my employer.
-          </Text>
+          </i>
 
           <div className="credit">
             <span>
               Built with{' '}
               <Link
-                color={pink}
+                className="text-pink-600"
                 href="https://nextjs.org/"
                 target="_blank"
                 rel="noreferrer noopener"
@@ -51,7 +46,7 @@ const Footer = () => {
             <span>
               Source code on{' '}
               <Link
-                color={pink}
+                className="text-pink-600"
                 href="https://github.com/mbifulco/blog"
                 target="_blank"
                 rel="noreferrer noopener"
@@ -61,11 +56,11 @@ const Footer = () => {
               .
             </span>
           </div>
-        </Stack>
-      </SimpleGrid>
+        </div>
+      </div>
 
       <RelatedContentLinksByTag />
-    </Box>
+    </footer>
   );
 };
 
