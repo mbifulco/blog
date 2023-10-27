@@ -1,25 +1,21 @@
-import { Text, Link, useTheme } from '@chakra-ui/react';
+import Link from 'next/link';
 
 const SponsorCTA = () => {
-  const theme = useTheme();
-
   return (
-    <Text>
+    <p>
       <span role="img" aria-hidden>
         🎟️
       </span>{' '}
       Get in touch to &rarr;{' '}
       <Link
-        color={theme.colors.pink[400]}
-        display="inline"
-        fontWeight={600}
+        className="text-pink-600 inline font-bold"
         href="/sponsor"
         target="_blank"
         rel="noopener noreferrer"
       >
         Sponsor Tiny Improvements
       </Link>
-    </Text>
+    </p>
   );
 };
 
