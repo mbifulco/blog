@@ -11,25 +11,10 @@ import MastodonIcon from '../icons/MastodonIcon';
 const iconSize = '2.25rem';
 const touchMargin = '0.5rem';
 
-const SocialLinks = ({
-  color,
-  direction = 'row',
-  spacing = 3,
-  alignItems = 'center',
-  size = 'inherit',
-  ...rest
-}) => (
-  <Stack
-    marginBottom="1rem"
-    marginTop="1rem"
-    height="2rem"
-    direction={direction}
-    spacing={spacing}
-    alignItems={alignItems}
-    {...rest}
-  >
+const SocialLinks = () => (
+  <div className="flex flex-row gap-8 items-center">
     <Link
-      color={color || '#2b90d9'}
+      color="#2b90d9"
       target="_blank"
       rel="noopener noreferrer me"
       aria-label="@irreverentmike on Mastodon"
@@ -39,7 +24,7 @@ const SocialLinks = ({
       <MastodonIcon size={'1em'} />
     </Link>
     <Link
-      color={color || '#1da1f2'}
+      color="#1da1f2"
       href="https://twitter.com/irreverentmike"
       target="_blank"
       rel="noreferrer noopener me"
@@ -50,7 +35,7 @@ const SocialLinks = ({
       <TwitterIcon size={'1em'} />
     </Link>
     <Link
-      color={color || '#6e5494'}
+      color="#6e5494"
       href="https://github.com/mbifulco"
       target="_blank"
       rel="noreferrer noopener me"
@@ -60,7 +45,7 @@ const SocialLinks = ({
       <GitHubIcon size={'1em'} />
     </Link>
     <Link
-      color={color || '#6441a5'}
+      color="#6441a5"
       href="https://www.twitch.tv/irreverentmike"
       target="_blank"
       rel="noreferrer noopener"
@@ -70,19 +55,19 @@ const SocialLinks = ({
       <TwitchIcon size={'1em'} />
     </Link>
     <Link
-      color={color || '#FF0000'}
+      color="#FF0000"
       href="https://www.youtube.com/c/MikeBifulco"
       target="_blank"
       rel="noopener noreferrer"
       aria-label="MikeBifulco on youtube"
       margin={touchMargin}
     >
-      <span style={{ fontSize: size }}>
+      <span className="text-sm">
         <FaYoutube />
       </span>
     </Link>
     <Link
-      color={color || '#f78421'}
+      color="#f78421"
       href="/rss.xml"
       target="_blank"
       rel="noopener noreferrer"
@@ -91,14 +76,7 @@ const SocialLinks = ({
     >
       <RssIcon size={'1em'} />
     </Link>
-  </Stack>
+  </div>
 );
-
-SocialLinks.propTypes = {
-  alignItems: PropTypes.string,
-  color: PropTypes.string,
-  direction: PropTypes.oneOf(['row', 'column']),
-  spacing: PropTypes.number,
-};
 
 export default SocialLinks;

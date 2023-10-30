@@ -19,7 +19,7 @@ const Footer = () => {
           <SocialLinks />
         </div>
         <div className="flex flex-col gap-2">
-          <i as="i" id="disclaimer">
+          <i id="disclaimer">
             Disclaimer:{' '}
             <span role="img" aria-label="wave">
               👋🏽
@@ -37,7 +37,6 @@ const Footer = () => {
                 href="https://nextjs.org/"
                 target="_blank"
                 rel="noreferrer noopener"
-                name="Nextjs"
               >
                 Next
               </Link>

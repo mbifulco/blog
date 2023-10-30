@@ -10,6 +10,8 @@ import {
   useTheme,
 } from '@chakra-ui/react';
 
+import NextLink from 'next/link';
+
 import { Image } from '../components/Image';
 import { PostFeed } from '../components/PostFeed';
 import SEO from '../components/seo';
@@ -73,7 +75,14 @@ const HomePage = ({ posts, newsletter }) => {
           <h2 className="text-4xl m-0 font-bold mb-2">Oh, hello</h2>
           <Text fontSize="xl" fontWeight="normal" margin="0">
             {"I'm"} a startup founder, a designer, and a maker. I share my
-            writing on this site, but you can also find me on{' '}
+            writing on this site, but you can also find me on threads{' '}
+            <NextLink
+              href="https://threads.net/@irrevernemikt"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              @irreverentmike
+            </NextLink>{' '}
             <Link color={pink} href="https://hachyderm.io/@irreverentmike">
               Mastodon
             </Link>{' '}
