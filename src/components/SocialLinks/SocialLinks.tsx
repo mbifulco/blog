@@ -16,7 +16,7 @@ const SocialLinks = () => (
       aria-label="@irreverentmike on Mastodon"
       href="https://hachyderm.io/@irreverentmike"
     >
-      <MastodonIcon size={'1em'} />
+      <MastodonIcon />
     </Link>
 
     <Link
@@ -26,7 +26,7 @@ const SocialLinks = () => (
       rel="noreferrer noopener me"
       aria-label="@irreverentmike on twitter"
     >
-      <TwitterIcon size={'1em'} />
+      <TwitterIcon />
     </Link>
     <Link
       className="hover:text-pink-600 m-1 h-4 w-4"
@@ -35,7 +35,7 @@ const SocialLinks = () => (
       rel="noreferrer noopener me"
       aria-label="@mbifulco on github"
     >
-      <GitHubIcon size={'1em'} />
+      <GitHubIcon />
     </Link>
     <Link
       className="hover:text-pink-600 m-1 h-4 w-4"
@@ -44,7 +44,7 @@ const SocialLinks = () => (
       rel="noreferrer noopener"
       aria-label="@irreverentmike on twitch"
     >
-      <TwitchIcon size={'1em'} />
+      <TwitchIcon />
     </Link>
     <Link
       className="hover:text-pink-600 m-1 h-4 w-4"
@@ -64,7 +64,7 @@ const SocialLinks = () => (
       rel="noopener noreferrer"
       aria-label="RSS feed for this site"
     >
-      <RssIcon size={'1em'} />
+      <RssIcon />
     </Link>
   </div>
 );
