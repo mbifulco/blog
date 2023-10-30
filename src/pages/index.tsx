@@ -63,8 +63,7 @@ const HomePage = ({ posts, newsletter }) => {
           <Image
             alt="My headshot"
             publicId={headshotPublicId}
-            objectFit="contain"
-            objectPosition="bottom"
+            className="object-contain object-bottom"
             height="250"
             width="250"
             loading="eager"
