@@ -11,6 +11,10 @@ export default async function handler(req, res) {
   const json = await response.json();
 
   const { stats } = json;
+  if (!stats) {
+    res.status(500).send({ message: 'Something went wrong' });
+    return;
+  }
 
   const CACHE_TIME_IN_SECONDS = 60 * 5; // 5 minutes
   res.setHeader('Cache-Control', `s-maxage=${CACHE_TIME_IN_SECONDS}`);
