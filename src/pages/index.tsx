@@ -57,7 +57,6 @@ const HomePage = ({ posts, newsletter }) => {
       <Box
         display={{ md: 'flex' }}
         margin="1rem 0 1rem 0"
-        spacing={4}
         alignItems="flex-start"
       >
         <Box marginRight={[0, 0, '1rem']}>
