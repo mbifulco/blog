@@ -1,18 +1,18 @@
 /* eslint-disable max-len */
-import React from 'react';
-import PropTypes from 'prop-types';
 
-const TwitchIcon = ({ size }) => (
+import clsx from 'clsx';
+import { SocialIcon } from '.';
+
+const TwitchIcon: SocialIcon = ({ className }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    xmlnslink="http://www.w3.org/1999/xlink"
+    xmlnsXlink="http://www.w3.org/1999/xlink"
     viewBox="0 0 28 28"
     xmlSpace="preserve"
     fill="currentColor"
-    height={size || '1em'}
-    width={size || '1em'}
     preserveAspectRatio="xMidYMid meet"
     style={{ verticalAlign: 'middle' }}
+    className={clsx('w-4 h-4', className)}
   >
     <g>
       <path d="M11.5,11.7c-0.8,0-1.4,0.7-1.4,1.6s0.6,1.6,1.4,1.6c0.8,0,1.4-0.7,1.4-1.6 C12.9,12.4,12.3,11.7,11.5,11.7L11.5,11.7z M16.6,11.7c-0.8,0-1.4,0.7-1.4,1.6s0.6,1.6,1.4,1.6c0.8,0,1.4-0.7,1.4-1.6 S17.4,11.7,16.6,11.7L16.6,11.7z" />
@@ -20,9 +20,5 @@ const TwitchIcon = ({ size }) => (
     </g>
   </svg>
 );
-
-TwitchIcon.propTypes = {
-  size: PropTypes.string,
-}
 
 export default TwitchIcon;

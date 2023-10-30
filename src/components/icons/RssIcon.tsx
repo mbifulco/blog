@@ -1,15 +1,13 @@
-/* eslint-disable max-len */
-import React from 'react';
-import PropTypes from 'prop-types';
+import clsx from 'clsx';
+import { SocialIcon } from '.';
 
-const RssIcon = ({ size }) => (
+/* eslint-disable max-len */
+const RssIcon: SocialIcon = ({ className }) => (
   <svg
     fill="currentColor"
     preserveAspectRatio="xMidYMid meet"
-    height={size || "1em"}
-    width={size || "1em"}
     viewBox="0 0 40 40"
-    style={{ verticalAlign: 'middle' }}
+    className={clsx('w-4 h-4', className)}
   >
     <g
       id="Page-1"
@@ -27,9 +25,5 @@ const RssIcon = ({ size }) => (
     </g>
   </svg>
 );
-
-RssIcon.propTypes = {
-  size: PropTypes.string,
-};
 
 export default RssIcon;
