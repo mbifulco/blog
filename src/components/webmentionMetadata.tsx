@@ -1,8 +1,15 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import { useRouter } from 'next/router';
 
-const WebmentionMetadata = ({
+type WebmentionMetadataProps = {
+  coverImageUrl?: string;
+  summary?: string;
+  author?: string;
+  publishedAt?: string;
+  title?: string;
+  tags?: Array<{ name: string }> | Array<string>;
+};
+
+const WebmentionMetadata: React.FC<WebmentionMetadataProps> = ({
   coverImageUrl,
   summary,
   author,
@@ -59,14 +66,6 @@ const WebmentionMetadata = ({
       </article>
     </div>
   );
-};
-
-WebmentionMetadata.propTypes = {
-  coverImageUrl: PropTypes.string,
-  summary: PropTypes.string,
-  author: PropTypes.string,
-  publishedAt: PropTypes.string,
-  title: PropTypes.string,
 };
 
 export default WebmentionMetadata;

@@ -1,14 +1,15 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
+import { useState } from 'react';
 
-import { Box, Button } from '@chakra-ui/react';
-
-export const CenteredTextDemo = ({ children }) => {
+export const CenteredTextDemo = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => {
   const [isCentered, setIsCentered] = useState(true);
 
   const ToggleButton = (
-    <Button
-      colorScheme="red"
+    <button
+      className="bg-red-600 hover:bg-red-700 active:bg-red-800 text-white font-medium py-2 px-6 rounded w-fit"
       onClick={() => {
         setIsCentered(!isCentered);
       }}
@@ -19,26 +20,21 @@ export const CenteredTextDemo = ({ children }) => {
       ) : (
         <span>Wait, show me again</span>
       )} */}
-    </Button>
+    </button>
   );
 
   return (
     <>
-      {ToggleButton}
-      <Box
-        marginTop="1rem"
-        marginBottom="1rem"
+      <div className="mx-auto">{ToggleButton}</div>
+      <div
+        className="my-4"
         style={{ textAlign: isCentered ? 'center' : 'inherit' }}
       >
         {children}
-      </Box>
+      </div>
       {ToggleButton}
     </>
   );
 };
-
-CenteredTextDemo.propTypes = {
-  children: PropTypes.node,
-}
 
 export default CenteredTextDemo;

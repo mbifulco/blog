@@ -1,6 +1,3 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 
@@ -9,7 +6,20 @@ import { getCloudinaryImageUrl } from '../utils/images';
 
 const baseUrl = config.siteUrl;
 
-const SEO = ({
+type SEOProps = {
+  author?: string;
+  canonical?: string;
+  description?: string;
+  image?: string;
+  meta?: Array<{ name: string; content: string }>;
+  ogType?: string;
+  keywords?: Array<String>;
+  title?: string;
+  lang?: string;
+  publishedAt?: string | Date;
+};
+
+const SEO: React.FC<SEOProps> = ({
   author,
   canonical,
   description,
@@ -80,14 +90,15 @@ const SEO = ({
       <meta name="msapplication-TileColor" content="#da532c" />
       <meta name="theme-color" content="#ffffff" />
       {/* end favicon */}
-      <link rel="canonical" href={fullCanonical(canonical)} />
+
+      <link rel="canonical" href={fullCanonical()} />
       <title>{title}</title>
       <meta name="description" content={description || metaDescription} />
       <meta
         name="monetization"
         content="$twitter.xrptipbot.com/irreverentmike"
       />
-      {keywords.length > 0 && (
+      {keywords?.length > 0 && (
         <meta name="keywords" content={keywords.join(', ')} />
       )}
       <meta
@@ -109,28 +120,16 @@ const SEO = ({
       <meta name="creator" content="Mike Bifulco @irreverentmike" />
       <meta name="publisher" content="mikebifulco.com" />
       {publishedAt && (
-        <meta name="article:published_time" content={publishedAt} />
+        <meta
+          name="article:published_time"
+          content={new Date(publishedAt).toUTCString()}
+        />
       )}
-      t{meta}
+      {meta?.map(({ name, content }) => (
+        <meta key={name} name={name} content={content} />
+      ))}
     </Head>
   );
-};
-
-SEO.defaultProps = {
-  meta: [],
-  keywords: [],
-};
-
-SEO.propTypes = {
-  author: PropTypes.string,
-  canonical: PropTypes.string,
-  description: PropTypes.string,
-  image: PropTypes.string,
-  meta: PropTypes.array,
-  ogType: PropTypes.string,
-  keywords: PropTypes.arrayOf(PropTypes.string),
-  title: PropTypes.string,
-  lang: PropTypes.string,
 };
 
 export default SEO;

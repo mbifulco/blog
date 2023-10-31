@@ -1,0 +1,12 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  a {
+    @apply text-pink-600 hover:underline;
+  }
+  a:hover {
+    @apply text-pink-600;
+  }
+}

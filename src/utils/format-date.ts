@@ -2,7 +2,10 @@ import { format as DoFormatting, isValid } from 'date-fns';
 
 const FORMAT_STRING = 'MM-dd-yyyy';
 
-export const formatDate = (date, format = FORMAT_STRING) => {
+export const formatDate = (
+  date: string | number | Date,
+  format: string = FORMAT_STRING
+) => {
   let workingDate = new Date(date);
 
   if (!isValid(workingDate)) {

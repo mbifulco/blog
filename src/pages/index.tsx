@@ -10,6 +10,8 @@ import {
   useTheme,
 } from '@chakra-ui/react';
 
+import NextLink from 'next/link';
+
 import { Image } from '../components/Image';
 import { PostFeed } from '../components/PostFeed';
 import SEO from '../components/seo';
@@ -55,34 +57,30 @@ const HomePage = ({ posts, newsletter }) => {
       <Box
         display={{ md: 'flex' }}
         margin="1rem 0 1rem 0"
-        spacing={4}
         alignItems="flex-start"
       >
         <Box marginRight={[0, 0, '1rem']}>
           <Image
             alt="My headshot"
             publicId={headshotPublicId}
-            objectFit="contain"
-            objectPosition="bottom"
+            className="object-contain object-bottom"
             height="250"
             width="250"
             loading="eager"
           />
         </Box>
         <Box maxWidth="50ch">
-          <Text
-            as="h2"
-            fontSize="4xl"
-            margin="0"
-            lineHeight="1"
-            marginBottom="0.5rem"
-            fontWeight={'bold'}
-          >
-            Oh, hello
-          </Text>
+          <h2 className="text-4xl m-0 font-bold mb-2">Oh, hello</h2>
           <Text fontSize="xl" fontWeight="normal" margin="0">
             {"I'm"} a startup founder, a designer, and a maker. I share my
-            writing on this site, but you can also find me on{' '}
+            writing on this site, but you can also find me on threads{' '}
+            <NextLink
+              href="https://threads.net/@irrevernemikt"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              @irreverentmike
+            </NextLink>{' '}
             <Link color={pink} href="https://hachyderm.io/@irreverentmike">
               Mastodon
             </Link>{' '}
