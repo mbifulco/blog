@@ -133,8 +133,6 @@ const HomePage = ({ posts, newsletter }) => {
             <iframe
               width="100%"
               height="390"
-              frameBorder="no"
-              scrolling="no"
               seamless
               src="https://share.transistor.fm/e/tiny-improvements/playlist"
             />
