@@ -29,7 +29,14 @@ export const handleTwttrLoad = () => {
   }
 };
 
-export const Tweet = ({
+type TweetProps = {
+  tweetLink: string;
+  theme?: 'light' | 'dark';
+  align?: 'left' | 'center' | 'right';
+  hideConversation?: boolean;
+};
+
+export const Tweet: React.FC<TweetProps> = ({
   tweetLink,
   theme = 'light',
   align = 'left',

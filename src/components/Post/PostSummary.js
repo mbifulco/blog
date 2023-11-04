@@ -10,6 +10,7 @@ import PolitePop from '../PolitePop/PolitePop';
 
 import { Image } from '../Image';
 import { PublishDate } from '../PublishDate';
+import clsx from 'clsx';
 
 const PostSummary = ({ post, eager = false }) => {
   const { frontmatter } = post;
@@ -31,10 +32,11 @@ const PostSummary = ({ post, eager = false }) => {
 
   let coverContainer = (
     <Image
-      className={style.coverImage}
-      marginBottom="2em"
+      className={clsx(
+        'sm:rounded-lg mb-4 shadow -mx-2 sm:mx-0 object-cover object-center'
+      )}
       publicId={coverImagePublicId || `posts/${path}/cover`}
-      alt={excerpt}
+      alt={excerpt || title}
       height={420}
       width={800}
       loading={eager ? 'eager' : 'lazy'}

@@ -1,6 +1,16 @@
-import React, { useRef, useEffect, useState } from 'react';
+import { useRef, useEffect, useState } from 'react';
 
-export const GeneralObserver = ({ children, onEnter, height = 0 }) => {
+type GeneralObserverProps = {
+  children: React.ReactNode;
+  onEnter?: () => void;
+  height?: number;
+};
+
+export const GeneralObserver: React.FC<GeneralObserverProps> = ({
+  children,
+  onEnter,
+  height = 0,
+}) => {
   const ref = useRef(null);
   const [isChildVisible, setIsChildVisible] = useState(false);
   useEffect(() => {

@@ -1,11 +1,14 @@
-import PropTypes from 'prop-types';
 import Script from 'next/script';
-import { Button, Flex, Input, SimpleGrid, useTheme } from '@chakra-ui/react';
+import { Button, Input, SimpleGrid, useTheme } from '@chakra-ui/react';
 
-const SubscriptionForm = ({ tags }) => {
+type SubscriptionFormProps = {
+  tags: string[];
+};
+
+const SubscriptionForm: React.FC<SubscriptionFormProps> = ({ tags }) => {
   const theme = useTheme();
   return (
-    <Flex>
+    <div className="flex flex-col gap-2">
       <Script src="https://f.convertkit.com/ckjs/ck.5.js" />
       <form
         action="https://app.convertkit.com/forms/3923746/subscriptions"
@@ -40,7 +43,7 @@ const SubscriptionForm = ({ tags }) => {
               className="formkit-input"
               aria-label="First Name"
               name="fields[first_name]"
-              required=""
+              required
               placeholder="First Name"
               type="text"
               borderColor={theme.colors.pink[400]}
@@ -62,7 +65,7 @@ const SubscriptionForm = ({ tags }) => {
               name="email_address"
               aria-label="Email Address"
               placeholder="Email Address"
-              required=""
+              required
               type="email"
               color="rgb(0, 0, 0)"
               borderColor="rgb(237, 100, 166)"
@@ -96,14 +99,8 @@ const SubscriptionForm = ({ tags }) => {
           </SimpleGrid>
         </div>
       </form>
-    </Flex>
+    </div>
   );
-};
-
-SubscriptionForm.propTypes = {
-  tags: PropTypes.arrayOf(
-    PropTypes.oneOfType([PropTypes.shape({}), PropTypes.string])
-  ),
 };
 
 export default SubscriptionForm;

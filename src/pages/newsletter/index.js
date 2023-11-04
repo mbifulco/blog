@@ -46,8 +46,13 @@ const NewsletterPage = ({ newsletters }) => {
 
       <Stack>
         <Box as="header">
-          <Heading as="h1">Tiny Improvements</Heading>
-          <Subtitle>The Newsletter</Subtitle>
+          <Heading as="h1">
+            <span role="img" aria-label="heart envelope emoji">
+              💌
+            </span>{' '}
+            Tiny Improvements
+          </Heading>
+          <Subtitle>{config.newsletter.tagline}</Subtitle>
         </Box>
         <Text fontSize={'xl'}>{config.newsletter.shortDescription}</Text>
         <Text fontSize={'xl'}>

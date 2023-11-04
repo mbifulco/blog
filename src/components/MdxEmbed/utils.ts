@@ -33,8 +33,8 @@ export const createScriptTag = (providerEmbedUrl, providerEmbedScript) => {
     script.innerText = providerEmbedScript;
   }
 
-  script.onerror = (error) => {
-    console.error(`MDXEmbedProvider ${error.type}`, error);
+  script.onerror = (error: string | Event) => {
+    console.error(`MDXEmbedProvider error`, error);
   };
 
   document.getElementsByTagName(`head`)[0].appendChild(script);

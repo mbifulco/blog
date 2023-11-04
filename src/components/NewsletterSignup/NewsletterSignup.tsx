@@ -1,6 +1,3 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-
 import { Box, Flex, Heading, Stack, Text, useTheme } from '@chakra-ui/react';
 
 import { Headshot } from '../Headshot';
@@ -9,7 +6,11 @@ import SponsorCTA from '../SponsorCTA/SponsorCTA';
 import useConvertKitStats from '../../hooks/useConvertKitStats';
 import config from '../../config';
 
-const NewsletterSignup = ({ tags }) => {
+type NewsletterSignupProps = {
+  tags: string[];
+};
+
+const NewsletterSignup: React.FC<NewsletterSignupProps> = ({ tags }) => {
   const theme = useTheme();
 
   const { stats } = useConvertKitStats();
@@ -53,12 +54,6 @@ const NewsletterSignup = ({ tags }) => {
       </Flex>
     </Flex>
   );
-};
-
-NewsletterSignup.propTypes = {
-  tags: PropTypes.arrayOf(
-    PropTypes.oneOfType([PropTypes.shape({}), PropTypes.string])
-  ),
 };
 
 export default NewsletterSignup;

@@ -47,7 +47,7 @@ const DefaultLayout = ({ children }) => {
               </Link>
             </div>
 
-            <div className="flex flex-row gap-2">
+            <div className="flex flex-row flex-wrap gap-2 justify-between sm:justify-normal sm:w-fit w-full px-1">
               <Link className="text-black hover:underline" href="/">
                 Blog
               </Link>
@@ -58,7 +58,7 @@ const DefaultLayout = ({ children }) => {
                 About
               </Link>
               <Link
-                className="bg-pink-400 hover:bg-pink-500 active:bg-pink-600 hover:no-underline text-white hover:text-white py-0 px-[1ch] rounded-sm"
+                className="bg-pink-400 hover:bg-pink-500 active:bg-pink-600 hover:no-underline text-white hover:text-white py-0 px-[1ch] rounded-sm whitespace-nowrap"
                 href="/newsletter"
               >
                 💌 Tiny Improvements

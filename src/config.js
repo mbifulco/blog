@@ -20,11 +20,11 @@ const config = {
     github: `mbifulco`,
   },
   newsletter: {
-    title: 'Tiny Improvements',
-    tagline: '💌 Helping devs build products that change the world',
+    title: '💌 Tiny Improvements',
+    tagline: 'Build with a purpose',
     ctaTagline: '💌 Learn how to build products that change the world',
     shortDescription:
-      'Learn about designing & building great products for the web, and my philosophy for living a life you love in an ever-changing world.',
+      'A newsletter for product builders, startup founders, and indiehackers, who design with intention, and my thoughts on living a life you love in a busy world.',
     description: `
     Tiny Improvements is a newsletter for people designing and building great products.
 

@@ -1,7 +1,20 @@
 import { getPadding } from './utils';
 import GeneralObserver from './general-observer';
 
-export const YouTube = ({
+type YouTubeProps = {
+  youTubeId?: string;
+  youTubePlaylistId?: string;
+  aspectRatio?: '16:9' | '4:3' | '1:1';
+  autoPlay?: boolean;
+  skipTo?: {
+    h: number;
+    m: number;
+    s: number;
+  };
+  noCookie?: boolean;
+};
+
+export const YouTube: React.FC<YouTubeProps> = ({
   youTubeId,
   youTubePlaylistId,
   aspectRatio = '16:9',

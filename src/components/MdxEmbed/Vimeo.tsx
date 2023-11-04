@@ -1,7 +1,17 @@
 import { getPadding } from './utils';
 import { GeneralObserver } from './general-observer';
 
-export const Vimeo = ({
+type VimeoProps = {
+  vimeoId: string;
+  autoPlay?: boolean;
+  skipTo?: {
+    h: number;
+    m: number;
+    s: number;
+  };
+};
+
+export const Vimeo: React.FC<VimeoProps> = ({
   vimeoId,
   autoPlay = false,
   skipTo = { h: 0, m: 0, s: 0 },
