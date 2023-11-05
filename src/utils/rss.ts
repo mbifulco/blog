@@ -11,9 +11,10 @@ export const generateRSSFeed = (posts, newsletters) => {
   const { author, description, siteUrl, title } = config;
 
   const feed = new Feed({
+    id: siteUrl,
+    copyright: `All rights reserved ${new Date().getFullYear()}, Mike Bifulco`,
     title,
     description,
-    baseUrl: siteUrl,
     link: siteUrl,
     feedLinks: {
       rss2: `${siteUrl}/rss.xml`,
