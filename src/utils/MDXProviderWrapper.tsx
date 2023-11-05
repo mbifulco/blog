@@ -1,8 +1,6 @@
-/* eslint-disable react/prop-types */
 /* eslint-disable react/jsx-props-no-spreading */
-import React from 'react';
-import { MDXProvider } from '@mdx-js/react';
 
+import { MDXProvider } from '@mdx-js/react';
 import NextLink from 'next/link';
 import Script from 'next/script';
 
@@ -20,11 +18,8 @@ import {
   Text,
   UnorderedList,
   useTheme,
-  Table,
-  Tr,
-  Td,
 } from '@chakra-ui/react';
-import { Highlight, defaultProps, themes } from 'prism-react-renderer';
+import { Highlight, themes } from 'prism-react-renderer';
 
 import { Image } from '../components/Image';
 import { SponsoredSection } from '../components/SponsoredSection';
@@ -47,7 +42,6 @@ const CustomHeading = ({ as, id, ...props }) => {
           {...props}
           _hover={{
             _before: {
-              fontSize: '1em',
               display: 'inline',
               content: '"#"',
               fontSize: 'smaller',
@@ -194,7 +188,6 @@ const Pre = (props) => {
   return (
     <Box marginBottom="2rem" marginTop="2rem">
       <Highlight
-        {...defaultProps}
         theme={themes.nightOwl}
         code={props.children.props.children}
         language={
@@ -270,7 +263,6 @@ export const customComponents = {
   Image,
   code: InlineCode,
   a: CustomLink,
-  blockquote: Aside,
   h1: H1,
   h2: H2,
   h3: H3,

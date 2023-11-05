@@ -1,7 +1,7 @@
 import { CldImage } from 'next-cloudinary';
 
 type ImageProps = {
-  caption?: string;
+  caption?: React.ReactNode;
   publicId?: string;
   transformations?: Array<string>;
   width?: number;
@@ -29,7 +29,7 @@ const Image: React.FC<ImageProps> = ({
         height={height}
         width={width}
         src={publicId}
-        alt={alt || caption}
+        alt={alt}
         loading={loading}
         className={className}
         // eslint-disable-next-line react/jsx-props-no-spreading

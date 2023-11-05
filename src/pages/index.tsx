@@ -64,9 +64,9 @@ const HomePage: NextPage<HomePageProps> = ({ posts, newsletter }) => {
         margin="1rem 0 1rem 0"
         alignItems="flex-start"
       >
-        <Box marginRight={[0, 0, '1rem']}>
+        <div className="mr-0 lg:mr-4">
           <Headshot size={250} />
-        </Box>
+        </div>
         <Box maxWidth="50ch">
           <h2 className="text-4xl m-0 font-bold mb-2">Oh, hello</h2>
           <Text fontSize="xl" fontWeight="normal" margin="0">

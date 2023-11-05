@@ -8,7 +8,7 @@ import { getAllExternalReferences } from '../lib/external-references';
 import { GetStaticProps } from 'next';
 import { Article } from '../data/content-types';
 
-const getStaticProps: GetStaticProps = async () => {
+export const getStaticProps: GetStaticProps = async () => {
   const articles = await getAllExternalReferences();
 
   return {
@@ -42,7 +42,7 @@ const WorkPage: NextPage<WorkPageProps> = ({ articles }) => {
           </Text>
         </Box>
         <Stack spacing="2rem">
-          {articles.map((article) => (
+          {articles?.map((article) => (
             <ExternalWorkItem article={article} border key={article.slug} />
           ))}
         </Stack>
