@@ -12,7 +12,6 @@ import {
 
 import NextLink from 'next/link';
 
-import { Image } from '../components/Image';
 import { PostFeed } from '../components/PostFeed';
 import SEO from '../components/seo';
 import { Subtitle } from '../components/Subtitle';
@@ -24,6 +23,7 @@ import { getCloudinaryImageUrl } from '../utils/images';
 import config from '../config';
 import { getAllNewsletters } from '../lib/newsletters';
 import NewsletterItem from '../components/NewsletterFeed/NewsletterItem';
+import { Headshot } from '../components/Headshot';
 
 export async function getStaticProps() {
   const posts = await getAllPosts();
@@ -60,15 +60,7 @@ const HomePage = ({ posts, newsletter }) => {
         alignItems="flex-start"
       >
         <Box marginRight={[0, 0, '1rem']}>
-          <Image
-            alt="My headshot"
-            publicId={headshotPublicId}
-            className="object-contain object-bottom"
-            height={250}
-            width={250}
-            loading="eager"
-            priority
-          />
+          <Headshot size={250} />
         </Box>
         <Box maxWidth="50ch">
           <h2 className="text-4xl m-0 font-bold mb-2">Oh, hello</h2>

@@ -9,6 +9,7 @@ type ImageProps = {
   alt?: string;
   loading?: 'lazy' | 'eager';
   className?: string;
+  priority?: boolean;
 };
 
 const Image: React.FC<ImageProps> = ({
