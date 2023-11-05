@@ -17,6 +17,7 @@
   "include": [
     "fathom.d.ts",
     "next-env.d.ts",
+    "polite-pop.d.ts",
     "twttr.d.ts",
     "**/*.ts",
     "**/*.tsx"
