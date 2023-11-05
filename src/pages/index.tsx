@@ -67,6 +67,7 @@ const HomePage = ({ posts, newsletter }) => {
             height={250}
             width={250}
             loading="eager"
+            priority
           />
         </Box>
         <Box maxWidth="50ch">
