@@ -64,8 +64,8 @@ const HomePage = ({ posts, newsletter }) => {
             alt="My headshot"
             publicId={headshotPublicId}
             className="object-contain object-bottom"
-            height="250"
-            width="250"
+            height={250}
+            width={250}
             loading="eager"
           />
         </Box>
