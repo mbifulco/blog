@@ -3,24 +3,7 @@ import Link from 'next/link';
 import TagsSummary from '../tagsSummary';
 import formatDate from '../../utils/format-date';
 import { getCloudinaryImageUrl } from '../../utils/images';
-
-type NewsletterMetadata = {
-  coverImagePublicId: string;
-  date: string | number | Date;
-  excerpt: string;
-  slug: string;
-  tags: string[];
-  title: string;
-};
-
-type Newsletter = {
-  frontmatter: NewsletterMetadata;
-};
-
-type NewsletterItemProps = {
-  newsletter: Newsletter;
-  compact?: boolean;
-};
+import { NewsletterItemProps } from '../../data/content-types';
 
 const NewsletterItem: React.FC<NewsletterItemProps> = ({
   newsletter,

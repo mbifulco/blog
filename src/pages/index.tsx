@@ -1,6 +1,3 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-
 import {
   Box,
   Link,
@@ -24,6 +21,9 @@ import config from '../config';
 import { getAllNewsletters } from '../lib/newsletters';
 import NewsletterItem from '../components/NewsletterFeed/NewsletterItem';
 import { Headshot } from '../components/Headshot';
+import { NextPage } from 'next';
+import { Newsletter } from '../data/content-types';
+import { Post } from '../data/content-types';
 
 export async function getStaticProps() {
   const posts = await getAllPosts();
@@ -42,7 +42,12 @@ export async function getStaticProps() {
 const headshotPublicId = 'mike-headshot-square';
 const headshotPublicUrl = getCloudinaryImageUrl(headshotPublicId);
 
-const HomePage = ({ posts, newsletter }) => {
+type HomePageProps = {
+  posts: Post[];
+  newsletter: Newsletter;
+};
+
+const HomePage: NextPage<HomePageProps> = ({ posts, newsletter }) => {
   const theme = useTheme();
   const pink = theme.colors.pink[400];
 
@@ -143,10 +148,6 @@ const HomePage = ({ posts, newsletter }) => {
       />
     </>
   );
-};
-
-HomePage.propTypes = {
-  posts: PropTypes.arrayOf(PropTypes.shape({})),
 };
 
 export default HomePage;

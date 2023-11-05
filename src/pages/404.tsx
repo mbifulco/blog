@@ -4,8 +4,9 @@ import { Heading, Link, Text, useTheme } from '@chakra-ui/react';
 
 import { Image } from '../components/Image';
 import SEO from '../components/seo';
+import { NextPage } from 'next';
 
-const NotFoundPage = () => {
+const NotFoundPage: NextPage = () => {
   const theme = useTheme();
   const pink = theme.colors.pink[600];
 

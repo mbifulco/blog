@@ -7,7 +7,7 @@ import useConvertKitStats from '../../hooks/useConvertKitStats';
 import config from '../../config';
 
 type NewsletterSignupProps = {
-  tags: string[];
+  tags?: string[];
 };
 
 const NewsletterSignup: React.FC<NewsletterSignupProps> = ({ tags }) => {

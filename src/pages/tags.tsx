@@ -1,7 +1,5 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-
 // Components
+import type { NextPage } from 'next';
 import { Heading, SimpleGrid, Text, useTheme } from '@chakra-ui/react';
 
 import { getAllTags } from '../lib/tags';
@@ -9,8 +7,9 @@ import { getAllTags } from '../lib/tags';
 import Tag from '../components/tag';
 import { NewsletterSignup } from '../components/NewsletterSignup';
 import SEO from '../components/seo';
+import { GetStaticProps } from 'next';
 
-export const getStaticProps = async () => {
+export const getStaticProps: GetStaticProps = async () => {
   const tags = await getAllTags();
   return {
     props: {
@@ -19,7 +18,11 @@ export const getStaticProps = async () => {
   };
 };
 
-const TagsPage = ({ tags }) => {
+type TagsPageProps = {
+  tags: string[];
+};
+
+const TagsPage: NextPage<TagsPageProps> = ({ tags }) => {
   const theme = useTheme();
 
   return (
@@ -42,14 +45,6 @@ const TagsPage = ({ tags }) => {
       <NewsletterSignup />
     </>
   );
-};
-
-TagsPage.propTypes = {
-  tags: PropTypes.arrayOf(
-    PropTypes.shape({
-      items: PropTypes.shape({}),
-    })
-  ),
 };
 
 export default TagsPage;

@@ -1,14 +1,14 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-
+import type { NextPage } from 'next';
 import { Box, Heading, Stack, Text, useTheme } from '@chakra-ui/react';
 
 import { ExternalWorkItem } from '../components/ExternalWork';
 import SEO from '../components/seo';
 
 import { getAllExternalReferences } from '../lib/external-references';
+import { GetStaticProps } from 'next';
+import { Article } from '../data/content-types';
 
-export async function getStaticProps() {
+const getStaticProps: GetStaticProps = async () => {
   const articles = await getAllExternalReferences();
 
   return {
@@ -16,9 +16,13 @@ export async function getStaticProps() {
       articles,
     },
   };
-}
+};
 
-const WorkPage = ({ articles }) => {
+type WorkPageProps = {
+  articles: Article[];
+};
+
+const WorkPage: NextPage<WorkPageProps> = ({ articles }) => {
   const theme = useTheme();
   return (
     <>
@@ -45,10 +49,6 @@ const WorkPage = ({ articles }) => {
       </Stack>
     </>
   );
-};
-
-WorkPage.propTypes = {
-  articles: PropTypes.arrayOf(PropTypes.shape({})),
 };
 
 export default WorkPage;

@@ -2,6 +2,7 @@
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import * as Fathom from 'fathom-client';
+import { AppProps } from 'next/app';
 import { ChakraProvider } from '@chakra-ui/react';
 
 import { AnalyticsProvider } from '../utils/analytics';
@@ -13,7 +14,7 @@ import DefaultLayout from '../components/Layouts/DefaultLayout';
 
 // import App from 'next/app'
 
-function MyApp({ Component, pageProps }) {
+function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
 
   useEffect(() => {
