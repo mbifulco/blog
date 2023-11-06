@@ -1,5 +1,4 @@
-import React from 'react';
-import { serialize } from 'next-mdx-remote/serialize';
+import type { GetStaticProps, NextPage } from 'next';
 
 import { useRouter } from 'next/router';
 import { Flex } from '@chakra-ui/react';
@@ -8,25 +7,33 @@ import { getPostBySlug, getAllPosts } from '../../lib/blog';
 
 import { Colophon } from '../../components/Colophon';
 import { NewsletterSignup } from '../../components/NewsletterSignup';
-import { Post } from '../../components/Post';
+import { BlogPost as Post } from '../../components/Post';
 import SEO from '../../components/seo';
 import WebmentionMetadata from '../../components/webmentionMetadata';
 
 import { getCloudinaryImageUrl } from '../../utils/images';
 import mdxOptions from '../../utils/mdxOptions';
+import { BlogPost } from '../../data/content-types';
 
-export async function getStaticProps({ params }) {
-  const post = await getPostBySlug(params.slug);
+type PostPageParams = {
+  slug: string;
+};
 
-  const mdxSource = await serialize(post.content, mdxOptions);
+type Props = {
+  post: BlogPost;
+};
+
+export const getStaticProps: GetStaticProps<Props, PostPageParams> = async ({
+  params,
+}) => {
+  const post = await getPostBySlug(params.slug!);
 
   return {
     props: {
-      ...post,
-      source: mdxSource,
+      post,
     },
   };
-}
+};
 
 export async function getStaticPaths() {
   const posts = await getAllPosts();
@@ -41,11 +48,13 @@ export async function getStaticPaths() {
   };
 }
 
-const BlogPost = (post) => {
+const BlogPost: NextPage<Props> = ({ post }) => {
   const { frontmatter } = post;
 
   const { coverImagePublicId, published, date, tags, title, excerpt, path } =
     frontmatter;
+
+  console.log('frontmatter is', frontmatter);
 
   const router = useRouter();
 

@@ -44,7 +44,6 @@ const CustomHeading = ({ as, id, ...props }) => {
             _before: {
               display: 'inline',
               content: '"#"',
-              fontSize: 'smaller',
               color: 'pink.600',
               position: 'relative',
               marginLeft: '-1.2ch',
@@ -94,9 +93,7 @@ const H5 = (props) => (
 const H6 = (props) => (
   <CustomHeading as="h6" size="md" {...allHeadingstyleProps} {...props} />
 );
-const P = (props) => (
-  <Box as="p" marginTop="0.5rem" marginBottom="0.5rem" {...props} />
-);
+const P = (props) => <p className="my-2 text-lg max-w-prose" {...props} />;
 
 const Blockquote = ({ children }) => {
   const theme = useTheme();
@@ -174,7 +171,6 @@ const InlineCode = (props) => {
       colorScheme={'facebook'}
       verticalAlign="middle"
       whiteSpace="pre"
-      borderRadius=".3em"
       padding="0.1ch 1ch"
       overflowX={'auto'}
       {...props}
@@ -185,8 +181,14 @@ const InlineCode = (props) => {
 const Pre = (props) => {
   const classNames = props.children.props.className || '';
   const matches = classNames.match(/language-(?<lang>.*)/);
+
   return (
-    <Box marginBottom="2rem" marginTop="2rem">
+    <p
+      className={`rounded p-[3ch] max-w-3xl`}
+      style={{
+        background: themes.nightOwl.plain.backgroundColor,
+      }}
+    >
       <Highlight
         theme={themes.nightOwl}
         code={props.children.props.children}
@@ -227,7 +229,7 @@ const Pre = (props) => {
           </pre>
         )}
       </Highlight>
-    </Box>
+    </p>
   );
 };
 

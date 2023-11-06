@@ -4,19 +4,26 @@ import NextLink from 'next/link';
 import { Heading, Link, Text, useColorMode, useTheme } from '@chakra-ui/react';
 
 import TagsSummary from '../tagsSummary';
-import * as style from '../../styles/post.module.scss';
 
 import PolitePop from '../PolitePop/PolitePop';
 
 import { Image } from '../Image';
 import { PublishDate } from '../PublishDate';
 import clsx from 'clsx';
+import { BlogPost } from '../../data/content-types';
 
-const PostSummary = ({ post, eager = false }) => {
+type PostSummaryProps = {
+  post: BlogPost;
+  eager?: boolean;
+};
+
+const PostSummary: React.FC<PostSummaryProps> = ({ post, eager = false }) => {
   const { frontmatter } = post;
 
   const { author, coverImagePublicId, date, excerpt, path, tags, title } =
     frontmatter;
+
+  console.log('frontmatter is', frontmatter);
 
   const theme = useTheme();
   const { colorMode } = useColorMode();
@@ -44,8 +51,8 @@ const PostSummary = ({ post, eager = false }) => {
   );
 
   return (
-    <article className={style.post}>
-      <div className={style.postContent}>
+    <article>
+      <div className="relative">
         <header>
           <Heading
             as={'h2'}
@@ -56,9 +63,7 @@ const PostSummary = ({ post, eager = false }) => {
             margin={0}
             padding={0}
           >
-            <Link as={NextLink} href={postPath}>
-              {title}
-            </Link>
+            <NextLink href={postPath}>{title}</NextLink>
           </Heading>
           <Text fontSize="1rem" color={dateColors[colorMode]}>
             <PublishDate date={date} /> {author && <>— Written by {author}</>}
@@ -67,7 +72,7 @@ const PostSummary = ({ post, eager = false }) => {
           {coverContainer}
         </header>
 
-        <p>{excerpt}</p>
+        <p className="max-w-prose">{excerpt}</p>
         <Link as={NextLink} href={postPath}>
           Read more →
         </Link>

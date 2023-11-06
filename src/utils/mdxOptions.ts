@@ -1,7 +1,11 @@
+import type { CompileOptions } from '@mdx-js/mdx';
+
 import imageSize from 'rehype-img-size';
 import rehypeSlug from 'rehype-slug';
 
-const mdxOptions = {
+const mdxOptions: {
+  mdxOptions: Omit<CompileOptions, 'outputFormat' | 'providerImportSource'>;
+} = {
   mdxOptions: {
     rehypePlugins: [
       [imageSize, { dir: 'public' }],

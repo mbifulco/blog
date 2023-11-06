@@ -23,7 +23,7 @@ import NewsletterItem from '../components/NewsletterFeed/NewsletterItem';
 import { Headshot } from '../components/Headshot';
 import { NextPage } from 'next';
 import { Newsletter } from '../data/content-types';
-import { Post } from '../data/content-types';
+import { BlogPost } from '../data/content-types';
 
 export async function getStaticProps() {
   const posts = await getAllPosts();
@@ -43,7 +43,7 @@ const headshotPublicId = 'mike-headshot-square';
 const headshotPublicUrl = getCloudinaryImageUrl(headshotPublicId);
 
 type HomePageProps = {
-  posts: Post[];
+  posts: BlogPost[];
   newsletter: Newsletter;
 };
 
