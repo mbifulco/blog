@@ -3,15 +3,10 @@ import matter from 'gray-matter';
 import { compareDesc } from 'date-fns';
 import fs from 'fs';
 import { join } from 'path';
-import { serialize } from 'next-mdx-remote/serialize';
-import imageSize from 'rehype-img-size';
-import rehypeSlug from 'rehype-slug';
 
 import { parseTag } from './tags';
-import options from '../utils/mdxOptions';
+import { serialize } from '../utils/mdx';
 import { MarkdownDocument } from '../data/content-types';
-
-const { mdxOptions } = options;
 
 export const getContentBySlug = async <T extends Record<string, any>>(
   slug: string,
@@ -26,14 +21,7 @@ export const getContentBySlug = async <T extends Record<string, any>>(
 
   const articleDate = new Date(data?.date);
 
-  const mdxSource = await serialize(content, {
-    mdxOptions: {
-      rehypePlugins: [
-        rehypeSlug, // add IDs to any h1-h6 tag that doesn't have one, using a slug made from its text
-      ],
-    },
-    parseFrontmatter: true,
-  });
+  const mdxSource = await serialize(content);
 
   return {
     slug: realSlug,

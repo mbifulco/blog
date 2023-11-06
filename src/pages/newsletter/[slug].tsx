@@ -1,4 +1,3 @@
-import React from 'react';
 import { serialize } from 'next-mdx-remote/serialize';
 
 import { useRouter } from 'next/router';
@@ -16,19 +15,20 @@ import { getNewsletterBySlug, getAllNewsletters } from '../../lib/newsletters';
 
 import { Colophon } from '../../components/Colophon';
 import { NewsletterSignup } from '../../components/NewsletterSignup';
-import { Post } from '../../components/Post';
+import { BlogPost as Post } from '../../components/Post';
 import SEO from '../../components/seo';
 import WebmentionMetadata from '../../components/webmentionMetadata';
 
 import { getCloudinaryImageUrl } from '../../utils/images';
-import mdxOptions from '../../utils/mdxOptions';
+import { serialize } from '../../utils/mdx';
+
 import Link from 'next/link';
 import { FaChevronRight } from 'react-icons/fa';
 
 export async function getStaticProps({ params }) {
   const newsletter = await getNewsletterBySlug(params.slug);
 
-  const mdxSource = await serialize(newsletter.content, mdxOptions);
+  const mdxSource = await serialize(newsletter.content);
 
   return {
     props: {
@@ -78,7 +78,6 @@ const NewsletterPage = (post) => {
         image={coverImageUrl}
         ogType="article"
       />
-
       <Breadcrumb
         separator={
           <FaChevronRight
@@ -97,6 +96,7 @@ const NewsletterPage = (post) => {
           <BreadcrumbLink>{title}</BreadcrumbLink>
         </BreadcrumbItem>
       </Breadcrumb>
+
       <Post post={post} />
       <Text fontSize={'1.35rem'} style={{ marginTop: '0' }}>
         Thanks for reading Tiny Improvements. If you found this helpful,{' '}

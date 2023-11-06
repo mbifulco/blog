@@ -23,8 +23,6 @@ const PostSummary: React.FC<PostSummaryProps> = ({ post, eager = false }) => {
   const { author, coverImagePublicId, date, excerpt, path, tags, title } =
     frontmatter;
 
-  console.log('frontmatter is', frontmatter);
-
   const theme = useTheme();
   const { colorMode } = useColorMode();
 

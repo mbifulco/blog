@@ -9,7 +9,6 @@ import {
   Code,
   Flex,
   Box,
-  Heading,
   Link,
   ListItem,
   OrderedList,
@@ -29,34 +28,33 @@ import { Tweet, YouTube, Vimeo } from '../components/MdxEmbed';
 // one off component imports
 import { CenteredTextDemo } from '../components/demos/CenteredTextDemo';
 import { OrtonEffectImage } from '../components/demos/OrtonEffectImage';
+import clsx from 'clsx';
+import { Heading } from '../components/Heading';
 
-const CustomHeading = ({ as, id, ...props }) => {
+const CustomHeading = ({ as, children, id, ...props }) => {
   if (id) {
+    // if we have an ID, render a "#" character before the heading on hover
     return (
-      <Link as={NextLink} href={`#${id}`} _hover={{ textDecoration: 'none' }}>
+      <NextLink href={`#${id}`} className="hover:no-underline">
         <Heading
           as={as}
-          display="inline"
+          className={clsx(
+            'inline leading-6 tracking-normal',
+            "hover:before:inline hover:before:content-['#'] hover:before:relative hover:before:text-pink-700 hover:before:-ml-[1.2ch] hover:before:pr-[0.2ch] hover:before:no-underline hover:before:border-b-0"
+          )}
           id={id}
-          lineHeight={'1em'}
           {...props}
-          _hover={{
-            _before: {
-              display: 'inline',
-              content: '"#"',
-              color: 'pink.600',
-              position: 'relative',
-              marginLeft: '-1.2ch',
-              paddingRight: '0.2ch',
-              textDecoration: 'none',
-              borderBottom: 0,
-            },
-          }}
-        />
-      </Link>
+        >
+          {children}
+        </Heading>
+      </NextLink>
     );
   }
-  return <Heading as={as} {...props} />;
+  return (
+    <Heading as={as} {...props}>
+      {children}
+    </Heading>
+  );
 };
 
 const allHeadingstyleProps = {

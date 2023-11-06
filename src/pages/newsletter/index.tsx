@@ -1,12 +1,10 @@
 import {
   Box,
   Heading,
-  Link,
   SimpleGrid,
   Spacer,
   Stack,
   Text,
-  theme,
 } from '@chakra-ui/react';
 
 import NewsletterItem from '../../components/NewsletterFeed/NewsletterItem';

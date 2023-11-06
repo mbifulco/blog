@@ -12,20 +12,20 @@ import SEO from '../../components/seo';
 import WebmentionMetadata from '../../components/webmentionMetadata';
 
 import { getCloudinaryImageUrl } from '../../utils/images';
-import mdxOptions from '../../utils/mdxOptions';
 import { BlogPost } from '../../data/content-types';
 
 type PostPageParams = {
   slug: string;
 };
 
-type Props = {
+type PostPageProps = {
   post: BlogPost;
 };
 
-export const getStaticProps: GetStaticProps<Props, PostPageParams> = async ({
-  params,
-}) => {
+export const getStaticProps: GetStaticProps<
+  PostPageProps,
+  PostPageParams
+> = async ({ params }) => {
   const post = await getPostBySlug(params.slug!);
 
   return {
@@ -48,13 +48,11 @@ export async function getStaticPaths() {
   };
 }
 
-const BlogPost: NextPage<Props> = ({ post }) => {
+const BlogPost: NextPage<PostPageProps> = ({ post }) => {
   const { frontmatter } = post;
 
   const { coverImagePublicId, published, date, tags, title, excerpt, path } =
     frontmatter;
-
-  console.log('frontmatter is', frontmatter);
 
   const router = useRouter();
 
@@ -71,7 +69,7 @@ const BlogPost: NextPage<Props> = ({ post }) => {
         image={coverImageUrl}
         ogType="article"
       />
-      {!published && process.env.NODE_ENV !== 'production' && (
+      {published === false && process.env.NODE_ENV !== 'production' && (
         <div>
           <em>Note:</em> this is a draft post
         </div>

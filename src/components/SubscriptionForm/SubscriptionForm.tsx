@@ -2,7 +2,7 @@ import Script from 'next/script';
 import { Button, Input, SimpleGrid, useTheme } from '@chakra-ui/react';
 
 type SubscriptionFormProps = {
-  tags: string[];
+  tags?: string[];
 };
 
 const SubscriptionForm: React.FC<SubscriptionFormProps> = ({ tags }) => {
