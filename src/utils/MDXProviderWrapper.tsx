@@ -23,7 +23,7 @@ import { Highlight, themes } from 'prism-react-renderer';
 import { Image } from '../components/Image';
 import { SponsoredSection } from '../components/SponsoredSection';
 
-import { Tweet, YouTube, Vimeo } from '../components/MdxEmbed';
+import { Tweet, YouTube, Vimeo, Threads } from '../components/MdxEmbed';
 
 // one off component imports
 import { CenteredTextDemo } from '../components/demos/CenteredTextDemo';
@@ -57,10 +57,6 @@ const CustomHeading = ({ as, children, id, ...props }) => {
   );
 };
 
-const allHeadingstyleProps = {
-  lineHeight: '1.2em',
-};
-
 /**
  * note: we force H1 -> H2, because all H1s on the site are rendered
  * directly in page templates. We only want 1 possible H1 per page, so this
@@ -72,25 +68,14 @@ const H1 = (props) => (
     data-mike-h1-to-h2-in-mdxproviderwrapper
     as="h2"
     size="lg"
-    {...allHeadingstyleProps}
     {...props}
   />
 );
-const H2 = (props) => (
-  <CustomHeading as="h2" size="lg" {...allHeadingstyleProps} {...props} />
-);
-const H3 = (props) => (
-  <CustomHeading as="h3" size="md" {...allHeadingstyleProps} {...props} />
-);
-const H4 = (props) => (
-  <CustomHeading as="h4" size="md" {...allHeadingstyleProps} {...props} />
-);
-const H5 = (props) => (
-  <CustomHeading as="h5" size="md" {...allHeadingstyleProps} {...props} />
-);
-const H6 = (props) => (
-  <CustomHeading as="h6" size="md" {...allHeadingstyleProps} {...props} />
-);
+const H2 = (props) => <CustomHeading as="h2" size="lg" {...props} />;
+const H3 = (props) => <CustomHeading as="h3" size="md" {...props} />;
+const H4 = (props) => <CustomHeading as="h4" size="md" {...props} />;
+const H5 = (props) => <CustomHeading as="h5" size="md" {...props} />;
+const H6 = (props) => <CustomHeading as="h6" size="md" {...props} />;
 const P = (props) => <p className="my-2 text-lg max-w-prose" {...props} />;
 
 const Blockquote = ({ children }) => {
@@ -297,6 +282,7 @@ const oneOffComponentsUsedInPosts = {
 export const components = {
   ...customComponents,
   ...oneOffComponentsUsedInPosts,
+  Threads,
   Tweet,
   YouTube,
   Vimeo,
