@@ -1,5 +1,3 @@
-import { serialize } from 'next-mdx-remote/serialize';
-
 import { useRouter } from 'next/router';
 import {
   Breadcrumb,
