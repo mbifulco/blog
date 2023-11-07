@@ -11,6 +11,8 @@ import SponsorCTA from './SponsorCTA/SponsorCTA';
 const Footer = () => {
   return (
     <footer className="relative text-sm pt-8">
+      <RelatedContentLinksByTag />
+
       <div className="grid md:grid-cols-2 gap-4">
         <div className="flex flex-col gap-2">
           <span>© 2019-{new Date().getFullYear()} Mike Bifulco</span>
@@ -18,6 +20,7 @@ const Footer = () => {
           <SponsorCTA />
           <SocialLinks />
         </div>
+
         <div className="flex flex-col gap-2">
           <i id="disclaimer">
             Disclaimer:{' '}
@@ -57,8 +60,6 @@ const Footer = () => {
           </div>
         </div>
       </div>
-
-      <RelatedContentLinksByTag />
     </footer>
   );
 };

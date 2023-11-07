@@ -1,6 +1,3 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-
 import {
   Box,
   Link,
@@ -12,7 +9,6 @@ import {
 
 import NextLink from 'next/link';
 
-import { Image } from '../components/Image';
 import { PostFeed } from '../components/PostFeed';
 import SEO from '../components/seo';
 import { Subtitle } from '../components/Subtitle';
@@ -24,6 +20,10 @@ import { getCloudinaryImageUrl } from '../utils/images';
 import config from '../config';
 import { getAllNewsletters } from '../lib/newsletters';
 import NewsletterItem from '../components/NewsletterFeed/NewsletterItem';
+import { Headshot } from '../components/Headshot';
+import { NextPage } from 'next';
+import { Newsletter } from '../data/content-types';
+import { BlogPost } from '../data/content-types';
 
 export async function getStaticProps() {
   const posts = await getAllPosts();
@@ -42,7 +42,12 @@ export async function getStaticProps() {
 const headshotPublicId = 'mike-headshot-square';
 const headshotPublicUrl = getCloudinaryImageUrl(headshotPublicId);
 
-const HomePage = ({ posts, newsletter }) => {
+type HomePageProps = {
+  posts: BlogPost[];
+  newsletter: Newsletter;
+};
+
+const HomePage: NextPage<HomePageProps> = ({ posts, newsletter }) => {
   const theme = useTheme();
   const pink = theme.colors.pink[400];
 
@@ -59,16 +64,9 @@ const HomePage = ({ posts, newsletter }) => {
         margin="1rem 0 1rem 0"
         alignItems="flex-start"
       >
-        <Box marginRight={[0, 0, '1rem']}>
-          <Image
-            alt="My headshot"
-            publicId={headshotPublicId}
-            className="object-contain object-bottom"
-            height="250"
-            width="250"
-            loading="eager"
-          />
-        </Box>
+        <div className="mr-0 lg:mr-4">
+          <Headshot size={250} />
+        </div>
         <Box maxWidth="50ch">
           <h2 className="text-4xl m-0 font-bold mb-2">Oh, hello</h2>
           <Text fontSize="xl" fontWeight="normal" margin="0">
@@ -133,8 +131,6 @@ const HomePage = ({ posts, newsletter }) => {
             <iframe
               width="100%"
               height="390"
-              frameBorder="no"
-              scrolling="no"
               seamless
               src="https://share.transistor.fm/e/tiny-improvements/playlist"
             />
@@ -152,10 +148,6 @@ const HomePage = ({ posts, newsletter }) => {
       />
     </>
   );
-};
-
-HomePage.propTypes = {
-  posts: PropTypes.arrayOf(PropTypes.shape({})),
 };
 
 export default HomePage;

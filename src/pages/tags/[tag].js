@@ -9,7 +9,7 @@ import { getAllNewslettersByTag } from '../../lib/newsletters';
 
 import NewsletterItem from '../../components/NewsletterFeed/NewsletterItem';
 import SEO from '../../components/seo';
-import { Post } from '../../components/Post';
+import { BlogPost as Post } from '../../components/Post';
 import { ExternalWorkItem } from '../../components/ExternalWork';
 
 export async function getStaticProps({ params }) {
