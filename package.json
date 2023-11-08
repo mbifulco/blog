@@ -12,8 +12,7 @@
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
     "start": "next start",
     "lint": "next lint",
-    "eslint-check": "eslint --print-config . | eslint-config-prettier-check",
-    "prepare": "husky install"
+    "eslint-check": "eslint --print-config . | eslint-config-prettier-check"
   },
   "dependencies": {
     "@chakra-ui/react": "^2.7.1",
@@ -56,12 +55,18 @@
   },
   "devDependencies": {
     "@next/eslint-plugin-next": "^14.0.1",
+    "@types/eslint": "^8.44.7",
+    "@types/pluralize": "^0.0.33",
+    "@typescript-eslint/eslint-plugin": "^6.10.0",
     "@typescript-eslint/parser": "^6.10.0",
     "eslint": "8.53.0",
     "eslint-config-next": "^14.0.1",
     "eslint-config-prettier": "^9.0.0",
-    "husky": ">=8.0.3",
-    "lint-staged": "^15.0.2",
+    "eslint-config-turbo": "^1.10.16",
+    "eslint-plugin-import": "^2.29.0",
+    "eslint-plugin-jsx-a11y": "^6.8.0",
+    "eslint-plugin-react": "^7.33.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
     "next-sitemap": "^4.2.3",
     "prettier": "^3.0.3",
     "tailwindcss": "^3.3.5",
@@ -74,11 +79,10 @@
   "bugs": {
     "url": "https://github.com/mbifulco/blog/issues"
   },
-  "lint-staged": {
-    "*.{js,css,md}": [
-      "prettier --write"
-    ],
-    "*.js": "eslint --cache --fix",
-    "*.{js,jsx,ts,tsx,json,md}": "prettier --write"
+  "eslintConfig": {
+    "root": true,
+    "extends": [
+      "./eslint.config.js"
+    ]
   }
 }
