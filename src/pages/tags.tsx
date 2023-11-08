@@ -1,13 +1,12 @@
 // Components
-import type { NextPage } from 'next';
-import { Heading, SimpleGrid, Text, useTheme } from '@chakra-ui/react';
+import type { GetStaticProps, NextPage } from 'next';
 
 import { getAllTags } from '../lib/tags';
 
 import Tag from '../components/tag';
 import { NewsletterSignup } from '../components/NewsletterSignup';
 import SEO from '../components/seo';
-import { GetStaticProps } from 'next';
+import { Heading } from '../components/Heading';
 
 export const getStaticProps: GetStaticProps = async () => {
   const tags = await getAllTags();
@@ -23,25 +22,20 @@ type TagsPageProps = {
 };
 
 const TagsPage: NextPage<TagsPageProps> = ({ tags }) => {
-  const theme = useTheme();
-
   return (
     <>
       <SEO title="Browse all tags used on articles" />
       <Heading as="h1">
-        All{' '}
-        <Text as="span" color={theme.colors.gray[400]}>
-          #
-        </Text>
+        All <span className="text-gray-400">#</span>
         tags used on articles across the site
       </Heading>
-      <SimpleGrid minChildWidth="15ch" spacingY="1ch" fontSize="large">
+      <div className="flex flex-row gap-2 flex-wrap text-xl">
         {tags?.map((tag) => (
           <Tag key={`tag-cloud-${tag}`} url={`/tags/${tag}/`}>
             {tag}
           </Tag>
         ))}
-      </SimpleGrid>
+      </div>
       <NewsletterSignup />
     </>
   );
