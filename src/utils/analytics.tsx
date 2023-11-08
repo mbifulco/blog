@@ -5,9 +5,15 @@ import PropTypes from 'prop-types';
 
 const AnalyticsContext = createContext({});
 
-export const AnalyticsProvider = ({ children }) => {
-  const logClicks = (goalId, valueInCents = 0) => {
-    if (fathom && fathom.trackGoal) {
+type AnalyticsProviderProps = {
+  children: React.ReactNode;
+};
+
+export const AnalyticsProvider: React.FC<AnalyticsProviderProps> = ({
+  children,
+}) => {
+  const logClicks = (goalId: string, valueInCents = 0) => {
+    if (fathom?.trackGoal) {
       fathom.trackGoal(goalId, valueInCents);
     }
   };
