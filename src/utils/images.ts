@@ -1,6 +1,6 @@
 import { Cloudinary } from '@cloudinary/url-gen';
 
-export const getCloudinaryImageUrl = (publicId) => {
+export const getCloudinaryImageUrl = (publicId: string) => {
   const cld = new Cloudinary({
     cloud: {
       cloudName: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,

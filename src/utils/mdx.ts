@@ -7,7 +7,7 @@ export const serialize = async (content: string) => {
   const mdxSource = await serializeMdx(content, {
     mdxOptions: {
       rehypePlugins: [
-        // @ts-ignore
+        // @ts-expect-error strange config shouting from imageSize
         [imageSize, { dir: 'public' }],
         rehypeSlug, // add IDs to any h1-h6 tag that doesn't have one, using a slug made from its text
       ],
