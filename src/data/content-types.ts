@@ -23,7 +23,7 @@ type NewsletterMetadata = {
 
 export type Newsletter = {
   frontmatter: NewsletterMetadata;
-};
+} & MarkdownDocument;
 
 export type NewsletterItemProps = {
   newsletter: Newsletter;
