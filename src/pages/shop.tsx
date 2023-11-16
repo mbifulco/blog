@@ -2,7 +2,7 @@ import { Image } from '../components/Image';
 import SEO from '../components/seo';
 
 import SoldOut from '../components/soldOut';
-import { NextPage } from 'next';
+import type { NextPage } from 'next';
 
 const Shop: NextPage = () => (
   <>
@@ -24,9 +24,7 @@ const Shop: NextPage = () => (
           eggs.
         </p>
 
-        {/* eslint-disable max-len */}
         <Image publicId="egg-em" alt="egg sticker" className="mx-0 my-8" />
-        {/* eslint-enable max-len */}
       </article>
     </main>
   </>

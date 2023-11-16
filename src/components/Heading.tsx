@@ -1,17 +1,21 @@
 import clsx from 'clsx';
 
-type HeadingProps<T extends React.ElementType> = {
-  as: T;
+// Define the types of headings allowed
+type HeadingType = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
+
+export type HeadingProps = {
+  as: HeadingType;
   children: React.ReactNode;
   className?: string;
-} & React.ComponentPropsWithoutRef<T>;
+  id?: string;
+};
 
-export const Heading = <T extends React.ElementType = 'h2'>({
+export const Heading = ({
   as,
   children,
   className,
   ...props
-}: HeadingProps<T>) => {
+}: HeadingProps) => {
   // Use the 'as' prop to dynamically determine the component type
   const Component = as || 'h2';
 

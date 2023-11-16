@@ -1,40 +1,47 @@
+import type { GetStaticProps } from 'next';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  Flex,
-  Text,
-  useColorMode,
-  useTheme,
-} from '@chakra-ui/react';
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink } from '@chakra-ui/react';
 
 import { getNewsletterBySlug, getAllNewsletters } from '../../lib/newsletters';
 
 import { Colophon } from '../../components/Colophon';
 import { NewsletterSignup } from '../../components/NewsletterSignup';
-import { BlogPost as Post } from '../../components/Post';
 import SEO from '../../components/seo';
 import WebmentionMetadata from '../../components/webmentionMetadata';
 
 import { getCloudinaryImageUrl } from '../../utils/images';
 import { serialize } from '../../utils/mdx';
 
-import Link from 'next/link';
 import { FaChevronRight } from 'react-icons/fa';
+import type { Newsletter } from '../../data/content-types';
+import FullPost from '../../components/Post/FullPost';
 
-export async function getStaticProps({ params }) {
+type NewsletterPageParams = {
+  slug: string;
+};
+
+export const getStaticProps: GetStaticProps<
+  NewsletterPageProps,
+  NewsletterPageParams
+> = async ({ params }) => {
+  if (!params) {
+    throw new Error('No params provided');
+  }
+
   const newsletter = await getNewsletterBySlug(params.slug);
 
   const mdxSource = await serialize(newsletter.content);
 
   return {
     props: {
-      ...newsletter,
-      source: mdxSource,
+      newsletter: {
+        ...newsletter,
+        source: mdxSource,
+      },
     },
   };
-}
+};
 
 export async function getStaticPaths() {
   const newsletters = await getAllNewsletters();
@@ -49,22 +56,19 @@ export async function getStaticPaths() {
   };
 }
 
-const NewsletterPage = (post) => {
-  const { frontmatter } = post;
+type NewsletterPageProps = {
+  newsletter: Newsletter;
+};
+
+const NewsletterPage: React.FC<NewsletterPageProps> = ({ newsletter }) => {
+  const { frontmatter } = newsletter;
 
   const { coverImagePublicId, date, tags, title, excerpt, path } = frontmatter;
 
   const router = useRouter();
-  const theme = useTheme();
-  const { colorMode } = useColorMode();
 
   const postImagePublicId = coverImagePublicId || `posts/${path}/cover`;
   const coverImageUrl = getCloudinaryImageUrl(postImagePublicId);
-
-  const dateColors = {
-    dark: theme.colors.gray[400],
-    light: '#555555',
-  };
 
   return (
     <>
@@ -78,10 +82,7 @@ const NewsletterPage = (post) => {
       />
       <Breadcrumb
         separator={
-          <FaChevronRight
-            style={{ color: theme.colors.pink[500] }}
-            fontSize="smaller"
-          />
+          <FaChevronRight className="text-pink-500" fontSize="smaller" />
         }
       >
         <BreadcrumbItem>
@@ -95,18 +96,16 @@ const NewsletterPage = (post) => {
         </BreadcrumbItem>
       </Breadcrumb>
 
-      <Post post={post} />
-      <Text fontSize={'1.35rem'} style={{ marginTop: '0' }}>
+      <FullPost post={newsletter} />
+      <p className="mt-0 text-xl">
         Thanks for reading Tiny Improvements. If you found this helpful,{' '}
         {"I'd "}
         love it if you shared this with a friend. It helps me out a great deal.
-      </Text>
-      <Text fontSize={'1.35rem'}>
-        Until next time - be excellent to each other!
-      </Text>
-      <Flex direction="row" justifyContent="center" marginTop="3rem">
+      </p>
+      <p className="text-xl">Until next time - be excellent to each other!</p>
+      <div className="flex flex-row justify-center mt-12">
         <NewsletterSignup tags={tags} />
-      </Flex>
+      </div>
       <Colophon />
       <WebmentionMetadata
         coverImageUrl={coverImageUrl}

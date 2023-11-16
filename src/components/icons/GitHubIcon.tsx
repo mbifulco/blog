@@ -1,7 +1,5 @@
-/* eslint-disable max-len */
-import { SocialIcon } from '.';
-
 import clsx from 'clsx';
+import type { SocialIcon } from '.';
 
 const GitHubIcon: SocialIcon = ({ className }) => (
   <svg

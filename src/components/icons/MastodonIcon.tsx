@@ -1,6 +1,4 @@
-/* eslint-disable max-len */
 import clsx from 'clsx';
-
 import type { SocialIcon } from '.';
 
 const MastodonIcon: SocialIcon = ({ className }) => (

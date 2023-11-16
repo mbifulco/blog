@@ -17,8 +17,10 @@ import { getAllNewsletters } from '../../lib/newsletters';
 import config from '../../config';
 import SponsorCTA from '../../components/SponsorCTA/SponsorCTA';
 import useConvertKitStats from '../../hooks/useConvertKitStats';
+import type { Newsletter } from '../../data/content-types';
+import type { GetStaticProps } from 'next';
 
-export async function getStaticProps() {
+export const getStaticProps: GetStaticProps<NewsletterPageProps> = async () => {
   const newsletters = await getAllNewsletters();
 
   return {
@@ -26,9 +28,13 @@ export async function getStaticProps() {
       newsletters,
     },
   };
-}
+};
 
-const NewsletterPage = ({ newsletters }) => {
+type NewsletterPageProps = {
+  newsletters: Newsletter[];
+};
+
+const NewsletterPage: React.FC<NewsletterPageProps> = ({ newsletters }) => {
   const { stats } = useConvertKitStats();
 
   const [latestNewsletter, ...pastNewsletters] = newsletters;
@@ -56,7 +62,7 @@ const NewsletterPage = ({ newsletters }) => {
         <Text fontSize={'xl'}>
           Join{' '}
           <span style={{ fontWeight: 'bold' }}>
-            {stats ? stats.subscriberCount : 'the'} other product builders
+            {stats?.subscriberCount ?? 'the'} other product builders
           </span>{' '}
           and get it delivered straight to your inbox by filling out this happy
           lil&apos; form:

@@ -1,4 +1,17 @@
-export default async function handler(req, res) {
+import type { NextApiRequest, NextApiResponse } from 'next';
+
+type ResponseData = {
+  subscriberCount: number;
+};
+
+type ErrorResponse = {
+  message: string;
+};
+
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse<ResponseData | ErrorResponse>
+) {
   if (req.method !== 'GET') {
     res.status(405).send({ message: 'Only GET requests allowed' });
     return;
@@ -8,7 +21,9 @@ export default async function handler(req, res) {
   const response = await fetch(
     `https://api.convertkit.com/v3/lifetime_stats?api_secret=${process.env.CONVERTKIT_API_SECRET}`
   );
-  const json = await response.json();
+  const json = (await response.json()) as {
+    stats: { total_subscribers: number };
+  };
 
   const { stats } = json;
   if (!stats) {

@@ -41,7 +41,7 @@ const WorkPage: NextPage<WorkPageProps> = ({ articles }) => {
         </div>
         <div className="flex flex-col gap-8">
           {articles?.map((article) => (
-            <ExternalWorkItem article={article} border key={article.slug} />
+            <ExternalWorkItem article={article} key={article.slug} />
           ))}
         </div>
       </div>

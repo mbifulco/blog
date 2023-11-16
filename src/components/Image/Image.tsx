@@ -3,7 +3,7 @@ import { CldImage } from 'next-cloudinary';
 type ImageProps = {
   caption?: React.ReactNode;
   publicId?: string;
-  transformations?: Array<string>;
+  transformations?: string[];
   width?: number;
   height?: number;
   alt?: string;
@@ -23,16 +23,21 @@ const Image: React.FC<ImageProps> = ({
   width = 1200,
   ...rest
 }) => {
+  if (!publicId) {
+    console.warn('No public ID provided for image');
+    return null;
+  }
+
   return (
     <figure className="-mx-1 sm:mx-0">
       <CldImage
         height={height}
         width={width}
         src={publicId}
-        alt={alt}
+        alt={alt ?? publicId}
         loading={loading}
         className={className}
-        // eslint-disable-next-line react/jsx-props-no-spreading
+        transformations={transformations}
         {...rest}
       />
       <figcaption>{caption}</figcaption>

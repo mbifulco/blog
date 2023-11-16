@@ -5,7 +5,7 @@ import formatDate from '../../utils/format-date';
 import type { WebMention } from '../../utils/webmentions';
 
 type MentionsSummaryProps = {
-  mentions: WebMention[];
+  mentions?: WebMention[];
 };
 const MentionsSummary: React.FC<MentionsSummaryProps> = ({ mentions }) => {
   if (!mentions || mentions.length === 0) return null;

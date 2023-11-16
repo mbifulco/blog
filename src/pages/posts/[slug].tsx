@@ -26,7 +26,11 @@ export const getStaticProps: GetStaticProps<
   PostPageProps,
   PostPageParams
 > = async ({ params }) => {
-  const post = await getPostBySlug(params.slug!);
+  if (!params) {
+    throw new Error('No params provided');
+  }
+
+  const post = await getPostBySlug(params.slug);
 
   return {
     props: {

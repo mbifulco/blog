@@ -1,7 +1,7 @@
 import Tag from './tag';
 
 type TagsSummaryProps = {
-  tags: Array<string> | Array<{ name: string }>;
+  tags?: string[];
 };
 
 const TagsSummary: React.FC<TagsSummaryProps> = ({ tags }) => {
@@ -9,14 +9,14 @@ const TagsSummary: React.FC<TagsSummaryProps> = ({ tags }) => {
 
   return (
     <div className="flex flex-row text-sm flex-wrap">
-      {tags.map((tag, id) => (
-        <Tag
-          key={`tag-${id || tag?.name || tag}`}
-          url={`/tags/${tag?.name || tag}`}
-        >
-          {tag.name || tag}
-        </Tag>
-      ))}
+      {tags.map((tag, id) => {
+        if (!tag) return null;
+        return (
+          <Tag key={`tag-${id || tag}`} url={`/tags/${tag}`}>
+            {tag}
+          </Tag>
+        );
+      })}
     </div>
   );
 };

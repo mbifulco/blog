@@ -1,6 +1,6 @@
-import { Stack } from '@chakra-ui/react';
+import type { NextPage } from 'next';
+import type { MDXRemoteSerializeResult } from 'next-mdx-remote';
 import { MDXRemote } from 'next-mdx-remote';
-import { NextPage } from 'next';
 
 import SEO from '../../components/seo';
 import { NewsletterSignup } from '../../components/NewsletterSignup';
@@ -25,7 +25,7 @@ export async function getStaticProps() {
 }
 
 type AboutPageProps = {
-  mdxSource: any;
+  mdxSource: MDXRemoteSerializeResult;
 };
 
 const AboutPage: NextPage<AboutPageProps> = ({ mdxSource }) => (
@@ -34,9 +34,9 @@ const AboutPage: NextPage<AboutPageProps> = ({ mdxSource }) => (
       title="About Mike Bifulco - founder, developer advocate, designer, writer"
       description="Mike Bifulco is a serial entrepreneur, author, and software developer, and former Stripe, Google, and Microsoft employee, working to build great products."
     />
-    <Stack>
+    <div className="flex flex-col">
       <MDXRemote {...mdxSource} components={components} />
-    </Stack>
+    </div>
     <NewsletterSignup />
   </>
 );

@@ -29,9 +29,15 @@ import { Tweet, YouTube, Vimeo, Threads } from '../components/MdxEmbed';
 import { CenteredTextDemo } from '../components/demos/CenteredTextDemo';
 import { OrtonEffectImage } from '../components/demos/OrtonEffectImage';
 import clsx from 'clsx';
-import { Heading } from '../components/Heading';
+import { Heading, HeadingProps } from '../components/Heading';
+import { HTMLProps } from 'react';
 
-const CustomHeading = ({ as, children, id, ...props }) => {
+const CustomHeading: React.FC<HeadingProps> = ({
+  as,
+  children,
+  id,
+  ...props
+}) => {
   if (id) {
     // if we have an ID, render a "#" character before the heading on hover
     return (
@@ -79,76 +85,54 @@ const H6 = (props) => <CustomHeading as="h6" size="md" {...props} />;
 const P = (props) => <p className="my-2 text-lg max-w-prose" {...props} />;
 
 const Blockquote = ({ children }) => {
-  const theme = useTheme();
   return (
-    <Text
-      as="blockquote"
-      paddingLeft="1.5rem"
-      paddingRight="1.5rem"
-      backgroundColor={theme.colors.gray[100]}
-      borderLeft={`5px solid ${theme.colors.pink[400]}`}
-    >
+    <blockquote className="px-3 bg-gray-100 border-l-4 border-pink-400">
       {children}
-    </Text>
+    </blockquote>
   );
 };
 
 const CustomLink = (props) => {
-  const theme = useTheme();
-  return <Link color={theme.colors.pink[600]} {...props} />;
+  return <NextLink className="text-pink-600 hover:underline" {...props} />;
 };
 
 const Colophon = () => {
-  const theme = useTheme();
   return (
-    <Flex
-      direction="row"
-      justifyContent="center"
-      aria-hidden="true"
-      color={theme.colors.pink[400]}
-      fontWeight="bold"
-      margin="3rem 0 1.5rem"
+    <div
+      className="text-pink-400 font-bold flex flex-row gap-2 mt-12 mb-6"
+      aria-hidden
     >
-      <Stack direction="row" spacing="1.25rem">
-        <Text>*</Text>
-        <Text>*</Text>
-        <Text>*</Text>
-      </Stack>
-    </Flex>
+      <div className="flex flex-row gap-5">
+        <span>*</span>
+        <span>*</span>
+        <span>*</span>
+      </div>
+    </div>
   );
 };
 
-const Aside = (props) => {
-  const theme = useTheme();
-
-  const colors = {
-    default: theme.colors.pink,
-    info: theme.colors.yellow,
-    note: theme.colors.green,
-    error: theme.colors.red,
-    warning: theme.colors.red,
-  };
-
-  const selectedColor = colors[props.type] || colors.default;
-
+type AsideProps = HTMLProps<HTMLDivElement> & {
+  type: 'default' | 'info' | 'note' | 'error' | 'warning';
+};
+const Aside: React.FC<AsideProps> = ({ type = 'default', ...props }) => {
   return (
-    <Box
-      borderLeft="8px solid"
-      padding="1rem 2rem"
-      borderColor={selectedColor[400]}
-      backgroundColor={selectedColor[50]}
-      margin="2rem 0 2rem -2rem"
-      color={theme.colors.gray[900]}
+    <aside
+      className={clsx(
+        'border-l-8 border-solid py-4 px-8 my-8 -ml-8',
+        type === 'default' && 'bg-pink-50 border-pink-400 text-pink-900',
+        type === 'info' && 'bg-yellow-50 border-yellow-400 text-yellow-900',
+        type === 'note' && 'bg-green-50 border-green-400 text-green-900',
+        type === 'error' && 'bg-red-50 border-red-400 text-red-900',
+        type === 'warning' && 'bg-red-50 border-red-400 text-red-900'
+      )}
       {...props}
     />
   );
 };
 
-const TextHighlight = (props) => <Text as="mark" {...props} />;
+const TextHighlight = (props: HTMLProps<HTMLElement>) => <mark {...props} />;
 
 const InlineCode = (props) => {
-  const theme = useTheme();
-
   return (
     <Code
       colorScheme={'facebook'}
