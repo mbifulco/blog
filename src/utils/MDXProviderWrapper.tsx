@@ -1,23 +1,9 @@
-/* eslint-disable react/jsx-props-no-spreading */
-
+import type { HTMLProps } from 'react';
 import { MDXProvider } from '@mdx-js/react';
-import NextLink from 'next/link';
+import Link from 'next/link';
 import Script from 'next/script';
 
-import {
-  Button,
-  Code,
-  Flex,
-  Box,
-  Link,
-  ListItem,
-  OrderedList,
-  SimpleGrid,
-  Stack,
-  Text,
-  UnorderedList,
-  useTheme,
-} from '@chakra-ui/react';
+import { Button, Code, SimpleGrid } from '@chakra-ui/react';
 import { Highlight, themes } from 'prism-react-renderer';
 
 import { Image } from '../components/Image';
@@ -29,8 +15,8 @@ import { Tweet, YouTube, Vimeo, Threads } from '../components/MdxEmbed';
 import { CenteredTextDemo } from '../components/demos/CenteredTextDemo';
 import { OrtonEffectImage } from '../components/demos/OrtonEffectImage';
 import clsx from 'clsx';
-import { Heading, HeadingProps } from '../components/Heading';
-import { HTMLProps } from 'react';
+import type { HeadingProps } from '../components/Heading';
+import { Heading } from '../components/Heading';
 
 const CustomHeading: React.FC<HeadingProps> = ({
   as,
@@ -41,7 +27,7 @@ const CustomHeading: React.FC<HeadingProps> = ({
   if (id) {
     // if we have an ID, render a "#" character before the heading on hover
     return (
-      <NextLink href={`#${id}`} className="hover:no-underline">
+      <Link href={`#${id}`} className="hover:no-underline">
         <Heading
           as={as}
           className={clsx(
@@ -53,7 +39,7 @@ const CustomHeading: React.FC<HeadingProps> = ({
         >
           {children}
         </Heading>
-      </NextLink>
+      </Link>
     );
   }
   return (
@@ -82,7 +68,7 @@ const H3 = (props) => <CustomHeading as="h3" size="md" {...props} />;
 const H4 = (props) => <CustomHeading as="h4" size="md" {...props} />;
 const H5 = (props) => <CustomHeading as="h5" size="md" {...props} />;
 const H6 = (props) => <CustomHeading as="h6" size="md" {...props} />;
-const P = (props) => <p className="my-2 text-lg max-w-prose" {...props} />;
+const P = (props) => <p className="my-2 text-xl" {...props} />;
 
 const Blockquote = ({ children }) => {
   return (
@@ -93,7 +79,7 @@ const Blockquote = ({ children }) => {
 };
 
 const CustomLink = (props) => {
-  return <NextLink className="text-pink-600 hover:underline" {...props} />;
+  return <Link className="text-pink-600 hover:underline" {...props} />;
 };
 
 const Colophon = () => {
@@ -200,26 +186,27 @@ const Pre = (props) => {
   );
 };
 
-const ListItemComponent = ({ children, ...rest }) => (
-  <ListItem {...rest} ml="1.25rem">
+const OrderedList = ({ children, ...rest }) => (
+  <ol {...rest} className="list-decimal text-xl flex flex-col gap-3">
     {children}
-  </ListItem>
+  </ol>
 );
 
-const HorizontalRule = ({ height = 40, width = 250, color = 'pink' }) => {
-  const theme = useTheme();
+const UnorderedList = ({ children, ...rest }) => (
+  <ul {...rest} className="list-disc text-xl flex flex-col gap-3">
+    {children}
+  </ul>
+);
+
+const ListItemComponent = ({ children, ...rest }) => (
+  <li {...rest} className="ml-5">
+    {children}
+  </li>
+);
+
+const HorizontalRule = () => {
   return (
-    <Box
-      alignContent={'center'}
-      justifyContent={'center'}
-      display={'flex'}
-      borderBottom={`5px solid ${theme.colors[color][400]}`}
-      maxW={'50%'}
-      w={'50%'}
-      marginTop="3rem"
-      marginBottom="2rem"
-      alignSelf={'center'}
-    />
+    <div className="align-center justify-center flex flex-col max-w-[50%] w-[50%] mt-12 mb-8 self-center border-b-[5px] border-solid border-pink-400" />
   );
 };
 
@@ -240,13 +227,13 @@ export const customComponents = {
   h6: H6,
   hr: HorizontalRule,
   li: ListItemComponent,
-  ol: OrderedList,
   p: P,
   pre: Pre,
   Script,
   SimpleGrid,
   SponsoredSection,
   ul: UnorderedList,
+  ol: OrderedList,
 };
 
 /* eslint-disable max-len */

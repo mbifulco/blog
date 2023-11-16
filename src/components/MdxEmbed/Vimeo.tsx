@@ -26,7 +26,7 @@ export const Vimeo: React.FC<VimeoProps> = ({
         style={{
           position: 'relative',
           width: '100%',
-          ...getPadding('16:9'),
+          paddingTop: getPadding('16:9'),
         }}
       >
         <iframe

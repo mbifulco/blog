@@ -1,8 +1,6 @@
-/* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
 
 import Link from 'next/link';
-import { FaYoutube } from 'react-icons/fa';
 
 import {
   GitHubIcon,

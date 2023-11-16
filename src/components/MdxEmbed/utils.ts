@@ -1,4 +1,6 @@
-export const getPadding = (aspectRatio) => {
+type AspectRatioOptions = '1:1' | '16:9' | '4:3' | '3:2' | 8.5;
+
+export const getPadding = (aspectRatio: AspectRatioOptions) => {
   const config = {
     '1:1': {
       paddingTop: '100%',
@@ -16,11 +18,14 @@ export const getPadding = (aspectRatio) => {
       paddingTop: '62.5%',
     },
   };
-  // @ts-ignore
-  return config[aspectRatio];
+
+  return config[aspectRatio].paddingTop;
 };
 
-export const createScriptTag = (providerEmbedUrl, providerEmbedScript) => {
+export const createScriptTag = (
+  providerEmbedUrl?: string | null,
+  providerEmbedScript?: string | null
+) => {
   const script = document.createElement(`script`);
 
   script.type = `text/javascript`;
@@ -40,7 +45,7 @@ export const createScriptTag = (providerEmbedUrl, providerEmbedScript) => {
   document.getElementsByTagName(`head`)[0].appendChild(script);
 };
 
-export const createStyleSheet = (href) => {
+export const createStyleSheet = (href: string) => {
   const link = document.createElement(`link`);
 
   link.type = `text/css`;
@@ -49,6 +54,3 @@ export const createStyleSheet = (href) => {
 
   document.getElementsByTagName(`head`)[0].appendChild(link);
 };
-
-export const isEmptyString = (value) =>
-  value === null || value === undefined || value.length === 0;
