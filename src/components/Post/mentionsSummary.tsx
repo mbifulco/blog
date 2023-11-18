@@ -1,6 +1,6 @@
 import pluralize from 'pluralize';
-import { Avatar, AvatarGroup } from '@chakra-ui/react';
 
+import { Avatar, AvatarGroup } from '../Avatars';
 import formatDate from '../../utils/format-date';
 import type { WebMention } from '../../utils/webmentions';
 
@@ -30,21 +30,18 @@ const MentionsSummary: React.FC<MentionsSummaryProps> = ({ mentions }) => {
     <>
       {likes.length > 0 && (
         <div className="flex flex-row mt-4 items-center">
-          <AvatarGroup max={4} flexWrap="wrap">
-            {likes.map((like) => {
+          <AvatarGroup
+            people={likes.map((like) => {
               const { author } = like.data;
-              if (!author) return null;
-              return (
-                <Avatar
-                  key={`like-author-${author.name}`}
-                  height={avatarSize}
-                  width={avatarSize}
-                  name={author?.name || 'Unknown author'}
-                  src={author.photo}
-                />
-              );
+              return {
+                name: author?.name || 'Unknown author',
+                src: author?.photo,
+                size: 48,
+              };
             })}
-          </AvatarGroup>
+            variant="lg"
+          />
+
           <span>
             <span role="img" aria-label="likes">
               ❤️
@@ -71,11 +68,9 @@ const MentionsSummary: React.FC<MentionsSummaryProps> = ({ mentions }) => {
                 <a href={author?.url}>
                   <Avatar
                     name={author.name}
-                    src={author.photo}
+                    src={author?.photo}
                     key={`mentioned-by-author-${author?.name}`}
-                    marginRight="0.5rem"
-                    height={avatarSize}
-                    width={avatarSize}
+                    variant="xl"
                   />
                 </a>
                 <div className="flex flex-col gap-4">
