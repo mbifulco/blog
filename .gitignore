@@ -230,5 +230,8 @@ $RECYCLE.BIN/
 # Local Netlify folder
 .netlify
 
-# experiments 
+# experiments
 .output
+
+# turborepo
+.turbo
