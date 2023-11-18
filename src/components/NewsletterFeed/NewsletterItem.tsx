@@ -3,12 +3,9 @@ import Link from 'next/link';
 import TagsSummary from '../tagsSummary';
 import formatDate from '../../utils/format-date';
 import { getCloudinaryImageUrl } from '../../utils/images';
-import { NewsletterItemProps } from '../../data/content-types';
+import type { NewsletterItemProps } from '../../data/content-types';
 
-const NewsletterItem: React.FC<NewsletterItemProps> = ({
-  newsletter,
-  compact = false,
-}) => {
+const NewsletterItem: React.FC<NewsletterItemProps> = ({ newsletter }) => {
   const { coverImagePublicId, date, excerpt, slug, tags, title } =
     newsletter.frontmatter;
 
@@ -31,20 +28,18 @@ const NewsletterItem: React.FC<NewsletterItemProps> = ({
         <h3 className="text-pink-600 text-xl font-sans font-bold">
           <Link href={`/newsletter/${slug}`}>{title}</Link>
         </h3>
-        {!compact && (
-          <p className="uppercase text-sm text-gray-500">{formatDate(date)}</p>
-        )}
+        <p className="uppercase text-sm text-gray-500 hidden lg:visible">
+          {formatDate(date)}
+        </p>
         <p className="text-gray-600 line-clamp-3 overflow-ellipsis overflow-y-hidden">
           {excerpt}
         </p>
       </div>
-      {!compact && (
-        <div className="mt-6 flex flex-col gap-4 self-center">
-          <div className="flex flex-row text-sm">
-            <TagsSummary tags={tags} />
-          </div>
+      <div className="mt-6 flex-col gap-4 self-center hidden lg:flex">
+        <div className="flex flex-row text-sm">
+          <TagsSummary tags={tags} />
         </div>
-      )}
+      </div>
     </div>
   );
 };

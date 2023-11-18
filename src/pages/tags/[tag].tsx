@@ -1,6 +1,3 @@
-import React from 'react';
-import { Heading, Text, useTheme } from '@chakra-ui/react';
-
 import { getAllPostsByTag } from '../../lib/blog';
 import { getAllTags } from '../../lib/tags';
 import { Stack } from '@chakra-ui/react';
@@ -11,8 +8,29 @@ import NewsletterItem from '../../components/NewsletterFeed/NewsletterItem';
 import SEO from '../../components/seo';
 import { BlogPost as Post } from '../../components/Post';
 import { ExternalWorkItem } from '../../components/ExternalWork';
+import type { Article, BlogPost, Newsletter } from '../../data/content-types';
+import type { GetStaticProps, GetStaticPaths } from 'next';
+import { Heading } from '../../components/Heading';
 
-export async function getStaticProps({ params }) {
+type TagPageParams = {
+  tag: string;
+};
+
+type TagPageProps = {
+  tag: string;
+  posts: BlogPost[];
+  articles: Article[];
+  newsletters: Newsletter[];
+};
+
+export const getStaticProps: GetStaticProps<
+  TagPageProps,
+  TagPageParams
+> = async ({ params }) => {
+  if (!params) {
+    throw new Error('No params provided');
+  }
+
   const { tag } = params;
 
   const posts = await getAllPostsByTag(tag);
@@ -27,34 +45,34 @@ export async function getStaticProps({ params }) {
       newsletters,
     },
   };
-}
+};
 
-export async function getStaticPaths() {
+export const getStaticPaths: GetStaticPaths<TagPageParams> = async () => {
   const tags = await getAllTags();
 
   const { allTags } = tags;
 
-  const paths = [];
-
-  for (let tag of allTags) {
-    paths.push({
+  return {
+    paths: allTags.map((tag) => ({
       params: {
         tag,
       },
-    });
-  }
-
-  return {
-    paths,
+    })),
     fallback: false,
   };
-}
+};
 
-const TagPage = ({ tag, posts, articles, newsletters }) => {
-  const theme = useTheme();
-
-  let all = [...posts, ...articles, ...newsletters].sort((a, b) => {
-    return new Date(b.frontmatter.date) - new Date(a.frontmatter.date);
+const TagPage: React.FC<TagPageProps> = ({
+  tag,
+  posts,
+  articles,
+  newsletters,
+}) => {
+  const all = [...posts, ...articles, ...newsletters].sort((a, b) => {
+    return (
+      new Date(b.frontmatter.date).getTime() -
+      new Date(a.frontmatter.date).getTime()
+    );
   });
 
   return (
@@ -64,11 +82,9 @@ const TagPage = ({ tag, posts, articles, newsletters }) => {
         description={`Posts, articles, and videos tagged with ${tag} for designers and developers building great things on the web.`}
       />
       <Heading as="h1">
-        <Text as="span" color={theme.colors.gray[400]}>
-          #
-        </Text>
-        <Text as="span">{tag}</Text>
-        <Text as="span">: {all.length} posts tagged</Text>
+        <span className="text-gray-400">#</span>
+        <span>{tag}</span>
+        <span>: {all.length} posts tagged</span>
       </Heading>
       <Stack spacing={8}>
         {all.map((content) => {
@@ -76,23 +92,23 @@ const TagPage = ({ tag, posts, articles, newsletters }) => {
             case 'newsletter': {
               return (
                 <NewsletterItem
-                  key={`newsletter-${content.frontmatter.path}`}
-                  newsletter={content}
+                  key={`newsletter-${content.frontmatter.path as string}`}
+                  newsletter={content as Newsletter}
                 />
               );
             }
             case 'post':
               return (
                 <Post
-                  post={content}
-                  key={`post-${content.frontmatter.path}`}
+                  post={content as BlogPost}
+                  key={`post-${content.frontmatter.path as string}`}
                   summary
                 />
               );
             case 'article':
               return (
                 <ExternalWorkItem
-                  article={content}
+                  article={content as Article}
                   key={`article-${content.frontmatter.title}`}
                 />
               );

@@ -1,5 +1,3 @@
-/// <reference path="../../../polite-pop.d.ts" />
-
 // Your code here
 
 import { useState } from 'react';
@@ -23,11 +21,13 @@ import {
 } from '@chakra-ui/react';
 
 type ConfirmButtonProps = {
-  email: string;
+  email?: string;
   onClick?: () => void;
 };
 
 const ConfirmButton: React.FC<ConfirmButtonProps> = ({ email, onClick }) => {
+  if (!email) return null;
+
   if (email.endsWith('@gmail.com')) {
     return (
       <Button
@@ -41,11 +41,19 @@ const ConfirmButton: React.FC<ConfirmButtonProps> = ({ email, onClick }) => {
       </Button>
     );
   }
+  return null;
+};
+
+type SubscribeEvent = {
+  email?: string;
+  firstName?: string;
 };
 
 const PolitePopEmbed = ({ debug = false }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [subscribeEvent, setSubscribeEvent] = useState(null);
+  const [subscribeEvent, setSubscribeEvent] = useState<SubscribeEvent | null>(
+    null
+  );
   return (
     <>
       <Script
@@ -72,7 +80,7 @@ const PolitePopEmbed = ({ debug = false }) => {
             debug: debug,
           });
 
-          PolitePop.onNewEmailSignup((e) => {
+          PolitePop.onNewEmailSignup((e: SubscribeEvent) => {
             setSubscribeEvent(e);
             onOpen();
           });
@@ -81,7 +89,7 @@ const PolitePopEmbed = ({ debug = false }) => {
       <Modal
         onClose={onClose}
         size={'full'}
-        isOpen={isOpen && subscribeEvent?.email}
+        isOpen={isOpen && !!subscribeEvent?.email}
       >
         <ModalOverlay />
         <ModalContent>

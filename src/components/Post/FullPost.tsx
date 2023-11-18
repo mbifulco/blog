@@ -3,8 +3,6 @@ import { useRouter } from 'next/router';
 
 import useSWR from 'swr';
 
-import { Heading, Text, useColorMode, useTheme } from '@chakra-ui/react';
-
 import { getMentions } from '../../utils/webmentions';
 
 import { CarbonAd } from '../CarbonAd';
@@ -15,8 +13,13 @@ import { PolitePop } from '../PolitePop';
 import { PublishDate } from '../PublishDate';
 import TagsSummary from '../tagsSummary';
 import { YouTube } from '../MdxEmbed';
+import type { BlogPost, Newsletter } from '../../data/content-types';
 
-const FullPost = ({ post }) => {
+type FullPostProps = {
+  post: BlogPost | Newsletter;
+};
+
+const FullPost: React.FC<FullPostProps> = ({ post }) => {
   const { frontmatter } = post;
 
   const {
@@ -31,24 +34,18 @@ const FullPost = ({ post }) => {
   } = frontmatter;
 
   const router = useRouter();
-  const theme = useTheme();
-  const { colorMode } = useColorMode();
-
-  const dateColors = {
-    dark: theme.colors.gray[400],
-    light: '#555555',
-  };
 
   const { data: mentions /* error */ } = useSWR(router.asPath, getMentions);
 
   // TODO test cover image support
 
-  let coverContainer = (
+  let coverContainer: React.ReactNode = (
     <Image
       className={'rounded-lg mb-4 shadow ml-0 object-cover object-center'}
       publicId={coverImagePublicId || `posts/${path}/cover`}
       alt={excerpt}
       loading="eager"
+      priority
     />
   );
 
@@ -68,16 +65,15 @@ const FullPost = ({ post }) => {
           <h1 className="text-3xl lg:text-5xl font-bold p-0 m-0 border-none no-underline text-pink-500">
             {title}
           </h1>
-          <Text fontSize="1rem" color={dateColors[colorMode]}>
+          <p className="dark:text-gray-400 text-gray-700 text-xs">
             <PublishDate date={date} /> {author && <>— Written by {author}</>}
-          </Text>
+          </p>
           <TagsSummary tags={tags} />
           {coverContainer}
         </header>
 
         <div className="flex flex-col gap-4">
           <CarbonAd />
-          {/* eslint-disable-next-line react/jsx-props-no-spreading */}
           <MDXRemote {...post.source} components={components} />
           <MentionsSummary mentions={mentions} />
         </div>

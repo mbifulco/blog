@@ -1,15 +1,16 @@
+import type { MarkdownDocument, Newsletter } from '../data/content-types';
 import { getAllPosts } from './blog';
 import { getAllExternalReferences } from './external-references';
 import { getAllNewsletters } from './newsletters';
 
-export const parseTag = (tag) => {
+export const parseTag = (tag: string) => {
   return tag.split(' ').join('-').toLocaleLowerCase();
 };
 
 export const getAllTags = async () => {
-  const blogPostTags = new Set();
-  const articleTags = new Set();
-  const newsletterTags = new Set();
+  const blogPostTags = new Set<string>();
+  const articleTags = new Set<string>();
+  const newsletterTags = new Set<string>();
 
   const allPosts = await getAllPosts();
   const allExternalReferences = await getAllExternalReferences();
@@ -19,20 +20,20 @@ export const getAllTags = async () => {
     post?.frontmatter?.tags?.forEach((tag) => blogPostTags.add(parseTag(tag)));
   });
 
-  allExternalReferences.forEach((externalReference) => {
-    externalReference?.frontmatter?.tags.forEach((tag) =>
+  allExternalReferences.forEach((externalReference: MarkdownDocument) => {
+    externalReference?.frontmatter?.tags?.forEach((tag) =>
       articleTags.add(parseTag(tag))
     );
   });
 
-  allNewsletters.forEach((newsletter) => {
+  allNewsletters.forEach((newsletter: Newsletter) => {
     newsletter?.frontmatter?.tags.forEach((tag) =>
       newsletterTags.add(parseTag(tag))
     );
   });
 
   return {
-    allTags: new Set([...blogPostTags, ...articleTags, ...newsletterTags]),
+    allTags: [...blogPostTags, ...articleTags, ...newsletterTags],
     postTags: blogPostTags,
     externalReferenceTags: articleTags,
     newsletterTags: newsletterTags,

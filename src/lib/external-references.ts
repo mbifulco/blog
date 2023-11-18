@@ -4,6 +4,7 @@ import {
   getAllContentFromDirectory,
   getContentBySlug,
 } from './contentTypeLoader';
+import type { Article } from '../data/content-types';
 
 // directory reference to `src/content/external-references`
 const externalReferencesDirectory = join(
@@ -15,7 +16,7 @@ const externalReferencesDirectory = join(
 
 const EXTERNAL_REFERENCES_CONTENT_TYPE = 'article';
 
-export const getExternalReferenceBySlug = async (slug) => {
+export const getExternalReferenceBySlug = async (slug: string) => {
   const reference = await getContentBySlug(
     slug,
     externalReferencesDirectory,
@@ -25,13 +26,15 @@ export const getExternalReferenceBySlug = async (slug) => {
 };
 
 export const getAllExternalReferences = async () => {
-  return await getAllContentFromDirectory(
+  const articles = (await getAllContentFromDirectory(
     externalReferencesDirectory,
     EXTERNAL_REFERENCES_CONTENT_TYPE
-  );
+  )) as Article[];
+
+  return articles;
 };
 
-export const getAllExternalReferencesByTag = async (tag) => {
+export const getAllExternalReferencesByTag = async (tag: string) => {
   const refs = await getAllExternalReferences();
 
   return refs.filter((article) => [...article.frontmatter?.tags].includes(tag));

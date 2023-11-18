@@ -12,21 +12,20 @@
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
     "start": "next start",
     "lint": "next lint",
-    "eslint-check": "eslint --print-config . | eslint-config-prettier-check",
-    "prepare": "husky install"
+    "eslint-check": "eslint --print-config . | eslint-config-prettier-check"
   },
   "dependencies": {
-    "@chakra-ui/react": "^2.7.1",
-    "@cloudinary/url-gen": "^1.12.1",
+    "@chakra-ui/react": "^2.8.2",
+    "@cloudinary/url-gen": "^1.13.0",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@mdx-js/loader": "^3.0.0",
     "@mdx-js/mdx": "^3.0.0",
     "@mdx-js/react": "^3.0.0",
-    "@next/bundle-analyzer": "^14.0.1",
-    "@next/mdx": "^14.0.1",
+    "@next/bundle-analyzer": "^14.0.3",
+    "@next/mdx": "^14.0.3",
     "@types/mdx": "^2.0.10",
-    "@types/semver": "^7.5.4",
+    "@types/semver": "^7.5.5",
     "airtable": "^0.12.2",
     "autoprefixer": "^10.4.16",
     "clsx": "^2.0.0",
@@ -35,17 +34,17 @@
     "feed": "^4.2.2",
     "framer-motion": "^10.12.18",
     "gray-matter": "^4.0.3",
-    "next": "^14.0.1",
-    "next-cloudinary": "^5.3.0",
-    "next-mdx-remote": "4.2.0",
+    "next": "^14.0.3",
+    "next-cloudinary": "^5.7.0",
+    "next-mdx-remote": "4.4.1",
     "pluralize": "^8.0.0",
     "postcss": "^8.4.31",
-    "prism-react-renderer": "^2.1.0",
+    "prism-react-renderer": "^2.2.0",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-icons": "^4.11.0",
-    "rehype-autolink-headings": "^7.0.0",
+    "react-icons": "^4.12.0",
+    "rehype-autolink-headings": "^7.1.0",
     "rehype-img-size": "^1.0.1",
     "rehype-slug": "^6.0.0",
     "remark": "^15.0.1",
@@ -55,15 +54,21 @@
     "swr": "^2.2.4"
   },
   "devDependencies": {
-    "@next/eslint-plugin-next": "^14.0.1",
-    "@typescript-eslint/parser": "^6.10.0",
-    "eslint": "8.53.0",
-    "eslint-config-next": "^14.0.1",
+    "@next/eslint-plugin-next": "^14.0.3",
+    "@types/eslint": "^8.44.7",
+    "@types/pluralize": "^0.0.33",
+    "@typescript-eslint/eslint-plugin": "^6.11.0",
+    "@typescript-eslint/parser": "^6.11.0",
+    "eslint": "8.54.0",
+    "eslint-config-next": "^14.0.3",
     "eslint-config-prettier": "^9.0.0",
-    "husky": ">=8.0.3",
-    "lint-staged": "^15.0.2",
+    "eslint-config-turbo": "^1.10.16",
+    "eslint-plugin-import": "^2.29.0",
+    "eslint-plugin-jsx-a11y": "^6.8.0",
+    "eslint-plugin-react": "^7.33.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
     "next-sitemap": "^4.2.3",
-    "prettier": "^3.0.3",
+    "prettier": "^3.1.0",
     "tailwindcss": "^3.3.5",
     "typescript": "5.2.2"
   },
@@ -74,11 +79,10 @@
   "bugs": {
     "url": "https://github.com/mbifulco/blog/issues"
   },
-  "lint-staged": {
-    "*.{js,css,md}": [
-      "prettier --write"
-    ],
-    "*.js": "eslint --cache --fix",
-    "*.{js,jsx,ts,tsx,json,md}": "prettier --write"
+  "eslintConfig": {
+    "root": true,
+    "extends": [
+      "./eslint.config.js"
+    ]
   }
 }

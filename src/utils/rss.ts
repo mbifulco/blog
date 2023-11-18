@@ -2,8 +2,12 @@ import { Feed } from 'feed';
 import fs from 'fs';
 
 import config from '../config';
+import type { BlogPost, Newsletter } from '../data/content-types';
 
-export const generateRSSFeed = (posts, newsletters) => {
+export const generateRSSFeed = (
+  posts: BlogPost[],
+  newsletters: Newsletter[]
+) => {
   if (process.env.NODE_ENV === 'development') {
     return;
   }

@@ -1,13 +1,6 @@
-import {
-  Box,
-  Link,
-  SimpleGrid,
-  Text,
-  useBreakpointValue,
-  useTheme,
-} from '@chakra-ui/react';
-
-import NextLink from 'next/link';
+import type { NextPage } from 'next';
+import Link from 'next/link';
+import { startOfToday } from 'date-fns';
 
 import { PostFeed } from '../components/PostFeed';
 import SEO from '../components/seo';
@@ -21,9 +14,7 @@ import config from '../config';
 import { getAllNewsletters } from '../lib/newsletters';
 import NewsletterItem from '../components/NewsletterFeed/NewsletterItem';
 import { Headshot } from '../components/Headshot';
-import { NextPage } from 'next';
-import { Newsletter } from '../data/content-types';
-import { BlogPost } from '../data/content-types';
+import type { Newsletter, BlogPost } from '../data/content-types';
 
 export async function getStaticProps() {
   const posts = await getAllPosts();
@@ -48,103 +39,94 @@ type HomePageProps = {
 };
 
 const HomePage: NextPage<HomePageProps> = ({ posts, newsletter }) => {
-  const theme = useTheme();
-  const pink = theme.colors.pink[400];
-
-  // console.dir(posts);
-
   return (
     <>
       <SEO
         title="Latest articles on design, development, and the world around me"
         image={headshotPublicUrl}
       />
-      <Box
-        display={{ md: 'flex' }}
-        margin="1rem 0 1rem 0"
-        alignItems="flex-start"
-      >
+      <div className="md:flex my-4 items-start">
         <div className="mr-0 lg:mr-4">
           <Headshot size={250} />
         </div>
-        <Box maxWidth="50ch">
+        <div className="max-w-[50ch]">
           <h2 className="text-4xl m-0 font-bold mb-2">Oh, hello</h2>
-          <Text fontSize="xl" fontWeight="normal" margin="0">
+          <p className="text-xl font-normal m-0">
             {"I'm"} a startup founder, a designer, and a maker. I share my
             writing on this site, but you can also find me on threads{' '}
-            <NextLink
+            <Link
               href="https://threads.net/@irrevernemikt"
               target="_blank"
               rel="noopener noreferrer"
             >
               @irreverentmike
-            </NextLink>{' '}
-            <Link color={pink} href="https://hachyderm.io/@irreverentmike">
+            </Link>{' '}
+            <Link
+              className="text-pink-600 hover:underline"
+              href="https://hachyderm.io/@irreverentmike"
+            >
               Mastodon
             </Link>{' '}
             and{' '}
-            <Link color={pink} href="https://github.com/mbifulco">
+            <Link
+              className="text-pink-600 hover:underline"
+              href="https://github.com/mbifulco"
+            >
               GitHub
             </Link>
             .
-          </Text>
-          <Text
-            fontSize="xl"
-            fontWeight="normal"
-            fontStyle="italic"
-            margin="0"
-            marginTop="1rem"
-          >
+          </p>
+          <p className="text-cl font-normal italic mt-4 mx-0 mb-0">
             I work as a {config.employer.role} at{' '}
             <Link
               href={config.employer.url}
               target="_blank"
               rel="noopener noreferrer"
-              color={pink}
+              className="text-pink-600 hover:underline"
             >
               {config.employer.name}
             </Link>{' '}
             &mdash; however, the things I post here are my own, and {"don't "}
             necessarily reflect the views or opinions of {config.employer.name}.
-          </Text>
-        </Box>
-      </Box>
+          </p>
+        </div>
+      </div>
 
-      <SimpleGrid columns={[1, 1, 1, 2]} spacing={4}>
-        <Box>
+      <div className="grid lg:grid-cols-2 gap-4">
+        <div>
           <Subtitle>
             <Link href="/newsletter">💌 Tiny Improvements newsletter</Link>
           </Subtitle>
-          <Box padding="1rem 0">
-            <NewsletterItem
-              newsletter={newsletter}
-              compact={useBreakpointValue([false, false, false, true])}
-            />
-          </Box>
-        </Box>
+          <div className="my-4">
+            <NewsletterItem newsletter={newsletter} />
+          </div>
+        </div>
 
-        <Box>
+        <div>
           <Subtitle>
             <Link href="/podcast">🎙️ The Podcast</Link>
           </Subtitle>
-          <Box padding="1rem 0 0 0">
+          <div className="pt-4">
             <iframe
               width="100%"
               height="390"
               seamless
               src="https://share.transistor.fm/e/tiny-improvements/playlist"
             />
-          </Box>
-        </Box>
-      </SimpleGrid>
+          </div>
+        </div>
+      </div>
 
-      <Box>
-        <Subtitle>LATEST POSTS</Subtitle>
+      <div className="flex flex-col gap-8">
+        <div>
+          <Subtitle>LATEST POSTS</Subtitle>
+        </div>
         <PostFeed posts={posts} />
-      </Box>
+      </div>
       <WebmentionMetadata
         summary="mikebifulco.com - articles on design, development, and making the world a better place."
         title="Home - mikebifulco.com"
+        publishedAt={startOfToday()}
       />
     </>
   );

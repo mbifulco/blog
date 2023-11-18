@@ -1,7 +1,5 @@
-/* eslint-disable max-len */
-
 import clsx from 'clsx';
-import { SocialIcon } from '.';
+import type { SocialIcon } from '.';
 
 const TwitchIcon: SocialIcon = ({ className }) => (
   <svg

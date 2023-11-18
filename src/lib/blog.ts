@@ -13,11 +13,7 @@ const postsDirectory = join(process.cwd(), 'src', 'data', 'posts');
 const POST_CONTENT_TYPE = 'post';
 
 export const getPostBySlug = async (slug: string) => {
-  const post = await getContentBySlug<BlogPost>(
-    slug,
-    postsDirectory,
-    POST_CONTENT_TYPE
-  );
+  const post = await getContentBySlug(slug, postsDirectory, POST_CONTENT_TYPE);
 
   return post as BlogPost;
 };
@@ -31,7 +27,7 @@ export const getAllPosts = async () => {
   return allPosts;
 };
 
-export const getAllPostsByTag = async (tag) => {
+export const getAllPostsByTag = async (tag: string) => {
   const posts = await getAllPosts();
 
   return posts.filter((post) => post?.frontmatter?.tags?.includes(tag)) || [];

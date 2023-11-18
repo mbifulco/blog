@@ -27,7 +27,7 @@ export const GeneralObserver: React.FC<GeneralObserverProps> = ({
         threshold: 0,
       }
     );
-    if (ref && ref.current) {
+    if (ref?.current) {
       observer.observe(ref.current);
     }
   }, [ref, onEnter]);

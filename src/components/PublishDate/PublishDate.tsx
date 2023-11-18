@@ -10,7 +10,7 @@ const PublishDate: React.FC<PublishDateProps> = ({ date }) => {
     return null;
   }
   return (
-    <time dateTime={formattedDate.toUTCString()}>
+    <time className="text-lg" dateTime={formattedDate.toUTCString()}>
       {formatDate(date, 'MMMM dd, yyyy')}
     </time>
   );

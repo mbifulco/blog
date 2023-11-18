@@ -1,7 +1,6 @@
 import clsx from 'clsx';
-import { SocialIcon } from '.';
+import type { SocialIcon } from '.';
 
-/* eslint-disable max-len */
 const RssIcon: SocialIcon = ({ className }) => (
   <svg
     fill="currentColor"

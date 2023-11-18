@@ -1,20 +1,16 @@
-import NextLink from 'next/link';
+import Link from 'next/link';
 import {
   Box,
   Heading,
-  Link,
   Popover,
   PopoverTrigger,
   PopoverContent,
   PopoverHeader,
   PopoverBody,
-  PopoverFooter,
   PopoverArrow,
   PopoverCloseButton,
-  PopoverAnchor,
   Stack,
   Text,
-  useTheme,
 } from '@chakra-ui/react';
 
 import { NewsletterSignup } from '../../components/NewsletterSignup';
@@ -22,17 +18,12 @@ import SEO from '../../components/seo';
 import { Subtitle } from '../../components/Subtitle';
 
 const Eponymous = () => {
-  const theme = useTheme();
   return (
     <Popover trigger="hover">
       <PopoverTrigger>
-        <Text
-          as="span"
-          borderBottom={`${theme.colors.pink[400]} 1px dashed`}
-          cursor="pointer"
-        >
+        <span className="border-b border-dashed border-pink-400 cursor-pointer">
           eponymous
-        </Text>
+        </span>
       </PopoverTrigger>
       <PopoverContent boxShadow="lg">
         <PopoverArrow />
@@ -50,7 +41,7 @@ const Eponymous = () => {
         <PopoverBody fontSize={'sm'}>
           {"That's"} right, my newsletter is also called{' '}
           <em>Tiny Improvements</em>. Sound interesting? Check it out{' '}
-          <Link color="pink.400" href="/newsletter">
+          <Link className="text-pink-600 hover:underline" href="/newsletter">
             here
           </Link>
           .
@@ -79,7 +70,7 @@ const PodcastPage = () => {
           Occasionally, {"I'll"} write something I like <em>so much</em> that I
           record it as a podcast. Think of them short-form audio essays,
           published under the same title as my <Eponymous />{' '}
-          <Link color="pink.400" as={NextLink} href="/newsletter">
+          <Link className="text-pink-600 hover:underline" href="/newsletter">
             newsletter
           </Link>
           .

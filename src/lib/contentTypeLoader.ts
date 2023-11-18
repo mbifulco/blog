@@ -6,20 +6,22 @@ import { join } from 'path';
 
 import { parseTag } from './tags';
 import { serialize } from '../utils/mdx';
-import { MarkdownDocument } from '../data/content-types';
+import type { MarkdownDocument } from '../data/content-types';
 
-export const getContentBySlug = async <T extends Record<string, any>>(
+export const getContentBySlug = async (
   slug: string,
-  directory: string,
+  directory: fs.PathLike,
   type: string
 ): Promise<MarkdownDocument> => {
   const realSlug = slug.replace(/\.mdx$/, '');
-  const fullPath = join(directory, `${realSlug}.mdx`);
+  const fullPath = join(directory.toString(), `${realSlug}.mdx`);
   const fileContents = fs.readFileSync(fullPath, 'utf8');
 
   const { data, content } = matter(fileContents);
 
-  const articleDate = new Date(data?.date);
+  const { date, tags } = data;
+
+  const articleDate = new Date(date as string);
 
   const mdxSource = await serialize(content);
 
@@ -28,7 +30,7 @@ export const getContentBySlug = async <T extends Record<string, any>>(
     frontmatter: {
       ...data,
       date: articleDate.toUTCString(),
-      tags: data?.tags?.map((tag: string) => parseTag(tag)) || [],
+      tags: (tags as string[])?.map((tag: string) => parseTag(tag)) || [],
       type,
     },
     content,
@@ -36,7 +38,10 @@ export const getContentBySlug = async <T extends Record<string, any>>(
   };
 };
 
-export async function getAllContentFromDirectory(directory, type) {
+export async function getAllContentFromDirectory(
+  directory: fs.PathLike,
+  type: string
+) {
   const slugs = fs.readdirSync(directory);
   const articles = await Promise.all(
     slugs.map(async (slug) => await getContentBySlug(slug, directory, type))

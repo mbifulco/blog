@@ -1,12 +1,11 @@
 import type { NextPage } from 'next';
-import { Box, Heading, Stack, Text, useTheme } from '@chakra-ui/react';
+import type { GetStaticProps } from 'next';
 
 import { ExternalWorkItem } from '../components/ExternalWork';
 import SEO from '../components/seo';
 
 import { getAllExternalReferences } from '../lib/external-references';
-import { GetStaticProps } from 'next';
-import { Article } from '../data/content-types';
+import type { Article } from '../data/content-types';
 
 export const getStaticProps: GetStaticProps = async () => {
   const articles = await getAllExternalReferences();
@@ -23,14 +22,13 @@ type WorkPageProps = {
 };
 
 const WorkPage: NextPage<WorkPageProps> = ({ articles }) => {
-  const theme = useTheme();
   return (
     <>
       <SEO title="My work from around the web" canonical="/work" />
-      <Stack>
-        <Heading as="h1">Some samples of my work online</Heading>
-        <Box>
-          <Text maxWidth="75ch" marginBottom="2rem">
+      <div className="flex flex-row gap-4">
+        <h1 className="font-bold text-4xl">Some samples of my work online</h1>
+        <div>
+          <p className="mb-8">
             This page contains articles, videos, and other references to my work
             over the years. {"I'm"} extremely lucky to be able to say that the
             nature of some of my work is that it is recorded for the public to
@@ -39,14 +37,14 @@ const WorkPage: NextPage<WorkPageProps> = ({ articles }) => {
             {"isn't"} represented here, too. {"I'm"} always happy to talk shop.{' '}
             <a href="mailto:hello@mikebifulco.com">drop me a line</a> if{' '}
             {"you'd"} like to know more!
-          </Text>
-        </Box>
-        <Stack spacing="2rem">
+          </p>
+        </div>
+        <div className="flex flex-col gap-8">
           {articles?.map((article) => (
-            <ExternalWorkItem article={article} border key={article.slug} />
+            <ExternalWorkItem article={article} key={article.slug} />
           ))}
-        </Stack>
-      </Stack>
+        </div>
+      </div>
     </>
   );
 };

@@ -1,7 +1,6 @@
 /* eslint-disable jsx-a11y/alt-text */
 import { useState } from 'react';
 import {
-  Box,
   Slider,
   SliderTrack,
   SliderFilledTrack,
@@ -11,22 +10,23 @@ import {
   Text,
 } from '@chakra-ui/react';
 
+type OrtonEffectImageProps = {
+  blurRadius?: number;
+  opacity?: number;
+  showControls?: boolean;
+  src: string;
+  alt?: string;
+};
 /* eslint-disable @next/next/no-img-element */
-export const OrtonEffectImage = ({
+export const OrtonEffectImage: React.FC<OrtonEffectImageProps> = ({
   blurRadius: blurStart,
   opacity: opacityStart,
   showControls,
   src,
   alt = '',
 }) => {
-  const [opacity, setOpacity] = useState(opacityStart || 50);
-  const [blurRadius, setRedBlurRadius] = useState(blurStart || 15);
-
-  const labelStyles = {
-    mt: '2',
-    ml: '-2.5',
-    fontSize: 'sm',
-  };
+  const [opacity, setOpacity] = useState<number>(opacityStart ?? 50);
+  const [blurRadius, setRedBlurRadius] = useState<number>(blurStart ?? 15);
 
   return (
     <Stack spacing={2}>

@@ -6,21 +6,26 @@ import { getCloudinaryImageUrl } from '../utils/images';
 
 const baseUrl = config.siteUrl;
 
+type SEOMeta = {
+  name: string;
+  content: string;
+};
+
 type SEOProps = {
   author?: string;
   canonical?: string;
   description?: string;
   image?: string;
-  meta?: Array<{ name: string; content: string }>;
+  meta?: SEOMeta[];
   ogType?: string;
-  keywords?: Array<String>;
+  keywords?: string[];
   title?: string;
   lang?: string;
   publishedAt?: string | Date;
 };
 
 const SEO: React.FC<SEOProps> = ({
-  author,
+  author: _,
   canonical,
   description,
   meta,
@@ -35,15 +40,15 @@ const SEO: React.FC<SEOProps> = ({
   const {
     title: siteTitle,
     description: siteDescription,
-    author: siteAuthor,
+    author: _siteAuthor,
     social,
   } = config;
 
-  const metaTitle = title || siteTitle;
-  const metaDescription = description || siteDescription;
+  const metaTitle = title ?? siteTitle;
+  const metaDescription = description ?? siteDescription;
 
   const fullCanonical = () => {
-    const link = canonical || router.asPath;
+    const link = canonical ?? router.asPath;
     if (!link) return baseUrl;
 
     const slashLink = link.startsWith('/') ? link : `/${link}`;
@@ -54,7 +59,7 @@ const SEO: React.FC<SEOProps> = ({
   };
 
   // fall back to a nice headshot of my domepiece if there's no OG image associated with this page
-  const ogImageUrl = image || getCloudinaryImageUrl('mike-headshot-square');
+  const ogImageUrl = image ?? getCloudinaryImageUrl('mike-headshot-square');
 
   return (
     <Head>
@@ -93,12 +98,12 @@ const SEO: React.FC<SEOProps> = ({
 
       <link rel="canonical" href={fullCanonical()} />
       <title>{title}</title>
-      <meta name="description" content={description || metaDescription} />
+      <meta name="description" content={description ?? metaDescription} />
       <meta
         name="monetization"
         content="$twitter.xrptipbot.com/irreverentmike"
       />
-      {keywords?.length > 0 && (
+      {keywords && keywords?.length > 0 && (
         <meta name="keywords" content={keywords.join(', ')} />
       )}
       <meta
@@ -113,7 +118,7 @@ const SEO: React.FC<SEOProps> = ({
         content={title ? `${title} | ${siteTitle}` : siteTitle}
       />
       <meta name="og:description" content={metaDescription} />
-      <meta name="og:type" content={ogType || `website`} />
+      <meta name="og:type" content={ogType ?? `website`} />
       <meta name="og:url" content={router.asPath} />
       <meta name="og:image" content={ogImageUrl} />
       <meta name="og:image:url" content={ogImageUrl} />

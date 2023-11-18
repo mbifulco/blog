@@ -1,15 +1,13 @@
 import React from 'react';
 
-import { Heading, Link, Text, useTheme } from '@chakra-ui/react';
+import type { NextPage } from 'next';
+import Link from 'next/link';
 
+import { Heading } from '../components/Heading';
 import { Image } from '../components/Image';
 import SEO from '../components/seo';
-import { NextPage } from 'next';
 
 const NotFoundPage: NextPage = () => {
-  const theme = useTheme();
-  const pink = theme.colors.pink[600];
-
   return (
     <>
       <SEO title="404: URL Not found" />
@@ -21,14 +19,14 @@ const NotFoundPage: NextPage = () => {
           <span>
             Photo by{' '}
             <Link
-              color={pink}
+              className="text-pink-600 hover:underline no-underline"
               href="https://unsplash.com/@pawel_czerwinski?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"
             >
               Pawel Czerwinski
             </Link>{' '}
             on{' '}
             <Link
-              color={pink}
+              className="text-pink-600 hover:underline no-underline"
               href="https://unsplash.com/s/photos/plant?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"
             >
               Unsplash
@@ -36,14 +34,17 @@ const NotFoundPage: NextPage = () => {
           </span>
         }
       />
-      <Text as="p">
+      <p>
         Hey, shit, sorry, this &mdash; {"isn't"} a page. If {"you're "}
         expecting something to be here,{' '}
-        <Link color={pink} href="https://twitter.com/irreverentmike">
+        <Link
+          className="text-pink-600 hover:underline no-underline"
+          href="https://twitter.com/irreverentmike"
+        >
           tweet at me (@irreverentmike)
         </Link>{' '}
         and {"I'll"} do my best to help you out..
-      </Text>
+      </p>
     </>
   );
 };

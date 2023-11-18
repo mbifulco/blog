@@ -4,28 +4,15 @@ import { PublishDate } from '../PublishDate';
 
 import { components } from '../../utils/MDXProviderWrapper';
 import TagsSummary from '../tagsSummary';
-
-type Article = {
-  frontmatter: {
-    date: string;
-    url: string;
-    title: string;
-    tags: string[];
-  };
-  source: {
-    compiledSource: string;
-    renderedOutput: string;
-  };
-};
+import type { Article } from '../../data/content-types';
 
 type ExternalWorkItemProps = {
   article: Article;
-  border?: boolean;
 };
 
-const ExternalWorkItem = ({ article, border = false }) => {
+const ExternalWorkItem: React.FC<ExternalWorkItemProps> = ({ article }) => {
   const {
-    frontmatter: { date, url, title, tags },
+    frontmatter: { date, title, tags },
   } = article;
 
   {

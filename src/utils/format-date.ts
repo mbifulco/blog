@@ -6,7 +6,7 @@ export const formatDate = (
   date: string | number | Date,
   format: string = FORMAT_STRING
 ) => {
-  let workingDate = new Date(date);
+  const workingDate = new Date(date);
 
   if (!isValid(workingDate)) {
     console.error('invalid date', date);

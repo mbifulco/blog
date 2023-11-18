@@ -8,9 +8,12 @@ const twttrEmbedScript = `
 const twttrLoad = () => {
   if (
     typeof window.twttr !== `undefined` &&
-    window.twttr.widgets &&
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+    window?.twttr?.widgets &&
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
     typeof window.twttr.widgets.load === `function`
   ) {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
     window.twttr.widgets.load(document.getElementsByClassName(`mdx-embed`));
   }
 };

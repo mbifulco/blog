@@ -10,7 +10,7 @@ import SponsorCTA from './SponsorCTA/SponsorCTA';
 
 const Footer = () => {
   return (
-    <footer className="relative text-sm pt-8">
+    <footer className="relative text-sm pt-8 pb-20">
       <RelatedContentLinksByTag />
 
       <div className="grid md:grid-cols-2 gap-4">

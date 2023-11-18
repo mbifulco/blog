@@ -1,12 +1,11 @@
 import Script from 'next/script';
-import { Button, Input, SimpleGrid, useTheme } from '@chakra-ui/react';
+import { Button, Input, SimpleGrid } from '@chakra-ui/react';
 
 type SubscriptionFormProps = {
   tags?: string[];
 };
 
-const SubscriptionForm: React.FC<SubscriptionFormProps> = ({ tags }) => {
-  const theme = useTheme();
+const SubscriptionForm: React.FC<SubscriptionFormProps> = ({ tags: _ }) => {
   return (
     <div className="flex flex-col gap-2">
       <Script src="https://f.convertkit.com/ckjs/ck.5.js" />
@@ -40,14 +39,13 @@ const SubscriptionForm: React.FC<SubscriptionFormProps> = ({ tags }) => {
             borderRadius="4px"
           >
             <Input
-              className="formkit-input"
+              className="formkit-input border-pink-400"
               aria-label="First Name"
               name="fields[first_name]"
               required
               placeholder="First Name"
               type="text"
-              borderColor={theme.colors.pink[400]}
-              border={`1px solid `}
+              border={`1px solid`}
               borderRadius={[
                 '4px 4px 0px 0px',
                 '4px 4px 0px 0px',

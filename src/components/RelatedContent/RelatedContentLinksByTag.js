@@ -1,7 +1,6 @@
-import { Box, Link, SimpleGrid, Text, useTheme } from '@chakra-ui/react';
-import NextLink from 'next/link';
+import Link from 'next/link';
 
-import TagDictionary, { getTagInformation } from '../../data/ConvertKitTags';
+import { getTagInformation } from '../../data/ConvertKitTags';
 
 const DEFAULT_TAGS_TO_DISPLAY = [
   'react',
@@ -17,25 +16,17 @@ const DEFAULT_TAGS_TO_DISPLAY = [
 ];
 
 const RelatedContentLinksByTag = ({ tags = DEFAULT_TAGS_TO_DISPLAY }) => {
-  const theme = useTheme();
-
-  const pink = theme.colors.pink[600];
-
   return (
-    <Box paddingTop="2rem" paddingBottom="5rem">
-      <Text fontWeight="bold">More great resources</Text>
-      <SimpleGrid fontSize="medium" minChildWidth="50%" spacingY="0.5rem">
+    <div className="pt-8 pb-20">
+      <p className="font-bold">More great resources</p>
+      <grid className="text-lg grid grid-cols-1 sm:grid-cols-2">
         {tags.map((tag) => {
           const tagInformation = getTagInformation(tag);
           if (!tagInformation) return null;
 
           return (
             <Link
-              textDecoration="underline"
-              _hover={{
-                textDecoration: 'none',
-              }}
-              as={NextLink}
+              className="underline hover:no-underline"
               href={`/tags/${tag}`}
               key={`related-content-${tag}`}
             >
@@ -43,18 +34,11 @@ const RelatedContentLinksByTag = ({ tags = DEFAULT_TAGS_TO_DISPLAY }) => {
             </Link>
           );
         })}
-        <Link
-          color={pink}
-          _hover={{
-            textDecoration: 'none',
-          }}
-          textDecoration="underline"
-          href={`/tags`}
-        >
+        <Link className="text-pink underline hover:no-underline" href={`/tags`}>
           Browse all topics &rarr;
         </Link>
-      </SimpleGrid>
-    </Box>
+      </grid>
+    </div>
   );
 };
 

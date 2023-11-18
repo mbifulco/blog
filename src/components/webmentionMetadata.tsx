@@ -4,9 +4,9 @@ type WebmentionMetadataProps = {
   coverImageUrl?: string;
   summary?: string;
   author?: string;
-  publishedAt?: string;
+  publishedAt?: string | number | Date;
   title?: string;
-  tags?: Array<{ name: string }> | Array<string>;
+  tags?: string[];
 };
 
 const WebmentionMetadata: React.FC<WebmentionMetadataProps> = ({
@@ -19,6 +19,8 @@ const WebmentionMetadata: React.FC<WebmentionMetadataProps> = ({
 }) => {
   const router = useRouter();
   const location = router.asPath;
+
+  const publishDate = publishedAt ? new Date(publishedAt) : new Date();
 
   return (
     <div
@@ -37,31 +39,29 @@ const WebmentionMetadata: React.FC<WebmentionMetadataProps> = ({
         </header>
         <p className="p-summary e-content">{summary}</p>
         <a rel="author" className="h-card p-author" href={location}>
-          {author || 'Mike Bifulco'}
+          {author ?? 'Mike Bifulco'}
         </a>
         {tags?.map((tag) => (
           <a
-            key={`tag-link-${tag.name || tag}`}
-            href={`https://mikebifulco.com/tags/${tag.name || tag}`}
+            key={`tag-link-${tag}`}
+            href={`https://mikebifulco.com/tags/${tag}`}
             rel="category tag"
             className="p-category"
           >
-            {tag.name || tag}
+            {tag}
           </a>
         ))}
         <footer>
           <a className="u-url p-name" href={location || ''}>
-            {author || 'Mike Bifulco'}
+            {author ?? 'Mike Bifulco'}
           </a>
         </footer>
         <time
           className="dt-published"
           itemProp="datepublished"
-          dateTime={publishedAt}
+          dateTime={publishDate.toISOString()}
         >
-          {`${new Date(publishedAt || null)
-            .toISOString()
-            .replace('Z', '')}+01:00`}
+          {`${publishDate.toISOString().replace('Z', '')}+01:00`}
         </time>
       </article>
     </div>

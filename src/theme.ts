@@ -1,10 +1,9 @@
 import { extendTheme } from '@chakra-ui/react';
 // Let's say you want to add custom colors
 
-// eslint-disable-next-line max-len
 const fontDefs = `'Inter UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Segoe UI', Helvetica, Arial, sans-serif, 'apple color emoji', 'segoe ui emoji', 'android emoji', 'emojisymbols', 'emojione mozilla', 'twemoji mozilla', 'segoe ui symbol', 'noto color emoji'`;
 
-const customTheme = {
+const customTheme = extendTheme({
   initialColorMode: 'light',
   useSystemColorMode: false,
   fonts: {
@@ -26,6 +25,6 @@ const customTheme = {
       900: '#1f0008',
     },
   },
-};
+});
 
-export default extendTheme(customTheme);
+export default customTheme;

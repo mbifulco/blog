@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 
@@ -49,7 +48,7 @@ const DefaultLayout = ({ children }) => {
 
             <div className="flex flex-row flex-wrap gap-2 justify-between sm:justify-normal sm:w-fit w-full px-1">
               <Link className="text-black hover:underline" href="/">
-                Arctiles
+                Articles
               </Link>
               <Link className="text-black hover:underline" href="/podcast">
                 Podcast

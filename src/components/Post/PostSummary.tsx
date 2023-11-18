@@ -1,7 +1,5 @@
 import React from 'react';
-import NextLink from 'next/link';
-
-import { Heading, Link, Text, useColorMode, useTheme } from '@chakra-ui/react';
+import Link from 'next/link';
 
 import TagsSummary from '../tagsSummary';
 
@@ -10,7 +8,8 @@ import PolitePop from '../PolitePop/PolitePop';
 import { Image } from '../Image';
 import { PublishDate } from '../PublishDate';
 import clsx from 'clsx';
-import { BlogPost } from '../../data/content-types';
+import type { BlogPost } from '../../data/content-types';
+import { Heading } from '../Heading';
 
 type PostSummaryProps = {
   post: BlogPost;
@@ -23,55 +22,47 @@ const PostSummary: React.FC<PostSummaryProps> = ({ post, eager = false }) => {
   const { author, coverImagePublicId, date, excerpt, path, tags, title } =
     frontmatter;
 
-  const theme = useTheme();
-  const { colorMode } = useColorMode();
-
-  const dateColors = {
-    dark: theme.colors.gray[400],
-    light: '#555555',
-  };
-
   const postPath = `/posts/${path}`;
 
-  // TODO test cover image support
-
-  let coverContainer = (
-    <Image
-      className={clsx(
-        'sm:rounded-lg mb-4 shadow -mx-2 sm:mx-0 object-cover object-center'
-      )}
-      publicId={coverImagePublicId || `posts/${path}/cover`}
-      alt={excerpt || title}
-      height={420}
-      width={800}
-      loading={eager ? 'eager' : 'lazy'}
-    />
+  const coverContainer = (
+    <Link href="postPath">
+      <Image
+        className={clsx(
+          'sm:rounded-lg mb-4 shadow -mx-2 sm:mx-0 object-cover object-center'
+        )}
+        publicId={coverImagePublicId || `posts/${path}/cover`}
+        alt={excerpt || title}
+        height={630}
+        width={1200}
+        loading={eager ? 'eager' : 'lazy'}
+      />
+    </Link>
   );
 
   return (
     <article>
       <div className="relative">
-        <header>
-          <Heading
-            as={'h2'}
-            size="2xl"
-            color={theme.colors.pink[500]}
-            textDecoration="none"
-            border={0}
-            margin={0}
-            padding={0}
-          >
-            <NextLink href={postPath}>{title}</NextLink>
+        <header className="flex flex-col gap-1">
+          <Heading as={'h2'} className="m-0 p-0">
+            <Link
+              className="text-pink-600 hover:underline no-underline"
+              href={postPath}
+            >
+              {title}
+            </Link>
           </Heading>
-          <Text fontSize="1rem" color={dateColors[colorMode]}>
+          <p className="text-gray-700">
             <PublishDate date={date} /> {author && <>— Written by {author}</>}
-          </Text>
+          </p>
           <TagsSummary tags={tags} />
           {coverContainer}
         </header>
 
-        <p className="max-w-prose">{excerpt}</p>
-        <Link as={NextLink} href={postPath}>
+        <p className="text-xl">{excerpt}</p>
+        <Link
+          className="text-pink-600 hover:underline no-underline"
+          href={postPath}
+        >
           Read more →
         </Link>
       </div>

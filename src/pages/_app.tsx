@@ -1,8 +1,7 @@
-/* eslint-disable react/prop-types */
 import { useEffect } from 'react';
+import type { AppProps } from 'next/app';
 import { useRouter } from 'next/router';
 import * as Fathom from 'fathom-client';
-import { AppProps } from 'next/app';
 import { ChakraProvider } from '@chakra-ui/react';
 
 import { AnalyticsProvider } from '../utils/analytics';
@@ -18,6 +17,8 @@ function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
 
   useEffect(() => {
+    if (!process.env.NEXT_PUBLIC_FATHOM_ID) return;
+
     Fathom.load(process.env.NEXT_PUBLIC_FATHOM_ID, {
       includedDomains: ['mikebifulco.com', 'www.mikebifulco.com'],
       url: 'https://cdn.usefathom.com/script.js',
@@ -39,7 +40,6 @@ function MyApp({ Component, pageProps }: AppProps) {
     <AnalyticsProvider>
       <ChakraProvider>
         <DefaultLayout>
-          {/* eslint-disable-next-line react/jsx-props-no-spreading */}
           <Component {...pageProps} />
         </DefaultLayout>
       </ChakraProvider>

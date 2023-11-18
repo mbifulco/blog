@@ -46,14 +46,13 @@ export const YouTube: React.FC<YouTubeProps> = ({
         style={{
           position: 'relative',
           width: '100%',
-          ...getPadding(aspectRatio),
+          paddingTop: getPadding(aspectRatio),
         }}
       >
         <iframe
           data-testid="youtube"
           title={`youTube-${youTubeId ? youTubeId : youTubePlaylistId}`}
           src={src}
-          frameBorder="0"
           allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
           allowFullScreen
           style={{
