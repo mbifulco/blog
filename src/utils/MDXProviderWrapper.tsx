@@ -1,4 +1,5 @@
-import type { HTMLProps } from 'react';
+import React, { Children } from 'react';
+import type { HTMLProps, ReactElement } from 'react';
 import { MDXProvider } from '@mdx-js/react';
 import Link from 'next/link';
 import Script from 'next/script';
@@ -131,12 +132,27 @@ const InlineCode = (props) => {
   );
 };
 
-const Pre = (props) => {
-  const classNames = props.children.props.className || '';
-  const matches = classNames.match(/language-(?<lang>.*)/);
+type PreProps = {
+  children?: React.ReactNode;
+};
+
+const Pre: React.FC<PreProps> = ({ children }) => {
+  const firstChild = Children.toArray(children)[0] as ReactElement;
+
+  if (!React.isValidElement(firstChild)) {
+    return null;
+  }
+
+  const firstChildProps = firstChild.props as {
+    className?: string;
+    children?: React.ReactNode;
+  };
+
+  const classNames = firstChildProps.className!;
+  const matches = classNames?.match(/language-(?<lang>.*)/);
 
   return (
-    <p
+    <div
       className={`rounded p-[3ch] max-w-3xl`}
       style={{
         background: themes.nightOwl.plain.backgroundColor,
@@ -144,12 +160,8 @@ const Pre = (props) => {
     >
       <Highlight
         theme={themes.nightOwl}
-        code={props.children.props.children}
-        language={
-          matches && matches.groups && matches.groups.lang
-            ? matches.groups.lang
-            : ''
-        }
+        code={firstChildProps?.children as string}
+        language={matches?.groups?.lang ?? ''}
       >
         {({ className, style, tokens, getLineProps, getTokenProps }) => (
           <pre className={className} style={{ ...style, overflowX: 'auto' }}>
@@ -157,7 +169,6 @@ const Pre = (props) => {
               // TODO: why is this needed though?
               if (i === tokens.length - 1) return null;
               return (
-                // eslint-disable-next-line react/jsx-key
                 <div style={{ display: 'table-row' }} key={`code-line-${i}`}>
                   <span
                     style={{
@@ -170,9 +181,11 @@ const Pre = (props) => {
                   </span>
                   <span style={{ display: 'table-cell' }}>
                     <div {...getLineProps({ line, key: i })}>
-                      {line.map((token, key) => (
-                        // eslint-disable-next-line react/jsx-key
-                        <span {...getTokenProps({ token, key })} />
+                      {line.map((token, lineKey) => (
+                        <span
+                          key={lineKey}
+                          {...getTokenProps({ token, key: lineKey })}
+                        />
                       ))}
                     </div>
                   </span>
@@ -182,7 +195,7 @@ const Pre = (props) => {
           </pre>
         )}
       </Highlight>
-    </p>
+    </div>
   );
 };
 
@@ -236,7 +249,6 @@ export const customComponents = {
   ol: OrderedList,
 };
 
-/* eslint-disable max-len */
 /*
   NOTE: due to a quirk in the mdx strategy we're using currently, we are unable to `import` components within mdx files.
         To support that, they need to be added here. I'm keeping them in a separate object to track for later use, on the off chance this gets fixed one day.
@@ -248,7 +260,6 @@ const oneOffComponentsUsedInPosts = {
   CenteredTextDemo, // used in dont-center-paragraph-text.mdx
   OrtonEffectImage, // used in orton-effect-css-react.mdx
 };
-/* eslint-enable max-len */
 
 export const components = {
   ...customComponents,
@@ -259,7 +270,6 @@ export const components = {
   Vimeo,
 };
 
-// eslint-disable-next-line react/prop-types
 const MDXProviderWrapper = ({ children }) => (
   <MDXProvider components={components}>{children}</MDXProvider>
 );
