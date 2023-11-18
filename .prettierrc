@@ -3,5 +3,26 @@
   "semi": true,
   "singleQuote": true,
   "jsxSingleQuote": false,
-  "tabWidth": 2
+  "tabWidth": 2,
+  "plugins": [
+    "@ianvs/prettier-plugin-sort-imports",
+    "prettier-plugin-tailwindcss"
+  ],
+  "tailwindconfig": "./tailwind.config.ts",
+  "importOrder": [
+    "^(react/(.*)$)|^(react$)|^(react-native(.*)$)",
+    "^(next/(.*)$)|^(next$)",
+    "^(expo(.*)$)|^(expo$)",
+    "<THIRD_PARTY_MODULES>",
+    "",
+    "^@craftwork/(.*)$",
+    "^@components/(.*)$",
+    "^@layouts/(.*)$",
+    "^@ui/(.*)$",
+    "^@utils/(.*)$",
+    "^@styles/(.*)$",
+    "^@/(.*)$",
+    "^[./]"
+  ],
+  "importOrderParserPlugins": ["typescript", "jsx", "decorators-legacy"]
 }

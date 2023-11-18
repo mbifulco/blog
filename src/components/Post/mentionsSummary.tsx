@@ -24,8 +24,6 @@ const MentionsSummary: React.FC<MentionsSummaryProps> = ({ mentions }) => {
     return true;
   });
 
-  const avatarSize = '48px';
-
   return (
     <>
       {likes.length > 0 && (

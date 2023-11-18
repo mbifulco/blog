@@ -1,5 +1,6 @@
 import clsx from 'clsx';
-import Avatar, { AvatarBaseProps, AvatarSizeVariant } from './Avatar';
+import Avatar from './Avatar';
+import type { AvatarBaseProps, AvatarSizeVariant } from './Avatar';
 
 type AvatarGroupProps = {
   people: AvatarBaseProps[];
@@ -12,6 +13,7 @@ const AvatarGroup: React.FC<AvatarGroupProps> = ({ people, variant }) => {
       {people.map((person, idx) => {
         return (
           <Avatar
+            key={`avatar-group-${idx}-${person.name}`}
             className={clsx(
               idx === 0 && 'z-10',
               idx === 1 && 'z-20',
