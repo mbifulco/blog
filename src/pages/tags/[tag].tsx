@@ -1,6 +1,5 @@
 import { getAllPostsByTag } from '../../lib/blog';
 import { getAllTags } from '../../lib/tags';
-import { Stack } from '@chakra-ui/react';
 import { getAllExternalReferencesByTag } from '../../lib/external-references';
 import { getAllNewslettersByTag } from '../../lib/newsletters';
 
@@ -86,7 +85,7 @@ const TagPage: React.FC<TagPageProps> = ({
         <span>{tag}</span>
         <span>: {all.length} posts tagged</span>
       </Heading>
-      <Stack spacing={8}>
+      <div className="flex flex-col gap-8">
         {all.map((content) => {
           switch (content.frontmatter.type) {
             case 'newsletter': {
@@ -116,7 +115,7 @@ const TagPage: React.FC<TagPageProps> = ({
               break;
           }
         })}
-      </Stack>
+      </div>
     </>
   );
 };

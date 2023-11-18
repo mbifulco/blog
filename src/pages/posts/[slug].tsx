@@ -1,7 +1,6 @@
 import type { GetStaticProps, NextPage } from 'next';
 
 import { useRouter } from 'next/router';
-import { Flex } from '@chakra-ui/react';
 
 import { getPostBySlug, getAllPosts } from '../../lib/blog';
 
@@ -80,9 +79,9 @@ const BlogPost: NextPage<PostPageProps> = ({ post }) => {
       )}
 
       <Post post={post} />
-      <Flex direction="row" justifyContent="center" marginTop="3rem">
+      <div className="flex flex-row justify-center mt-12">
         <NewsletterSignup tags={tags} />
-      </Flex>
+      </div>
       <Colophon />
       <WebmentionMetadata
         coverImageUrl={coverImageUrl}
