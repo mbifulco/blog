@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import NextLink from 'next/link';
 
 import { getTagInformation } from '../../data/ConvertKitTags';
 
@@ -28,7 +27,6 @@ const RelatedContentLinksByTag = ({ tags = DEFAULT_TAGS_TO_DISPLAY }) => {
           return (
             <Link
               className="underline hover:no-underline"
-              as={NextLink}
               href={`/tags/${tag}`}
               key={`related-content-${tag}`}
             >
