@@ -41,7 +41,7 @@ const Eponymous = () => {
         <PopoverBody fontSize={'sm'}>
           {"That's"} right, my newsletter is also called{' '}
           <em>Tiny Improvements</em>. Sound interesting? Check it out{' '}
-          <Link color="pink.400" href="/newsletter">
+          <Link className="text-pink-600 hover:underline" href="/newsletter">
             here
           </Link>
           .

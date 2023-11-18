@@ -117,8 +117,10 @@ const HomePage: NextPage<HomePageProps> = ({ posts, newsletter }) => {
         </div>
       </div>
 
-      <div>
-        <Subtitle>LATEST POSTS</Subtitle>
+      <div className="flex flex-col gap-8">
+        <div>
+          <Subtitle>LATEST POSTS</Subtitle>
+        </div>
         <PostFeed posts={posts} />
       </div>
       <WebmentionMetadata

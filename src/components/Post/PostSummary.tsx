@@ -25,16 +25,18 @@ const PostSummary: React.FC<PostSummaryProps> = ({ post, eager = false }) => {
   const postPath = `/posts/${path}`;
 
   const coverContainer = (
-    <Image
-      className={clsx(
-        'sm:rounded-lg mb-4 shadow -mx-2 sm:mx-0 object-cover object-center'
-      )}
-      publicId={coverImagePublicId || `posts/${path}/cover`}
-      alt={excerpt || title}
-      height={630}
-      width={1200}
-      loading={eager ? 'eager' : 'lazy'}
-    />
+    <Link href="postPath">
+      <Image
+        className={clsx(
+          'sm:rounded-lg mb-4 shadow -mx-2 sm:mx-0 object-cover object-center'
+        )}
+        publicId={coverImagePublicId || `posts/${path}/cover`}
+        alt={excerpt || title}
+        height={630}
+        width={1200}
+        loading={eager ? 'eager' : 'lazy'}
+      />
+    </Link>
   );
 
   return (

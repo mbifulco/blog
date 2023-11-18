@@ -19,7 +19,7 @@ const RelatedContentLinksByTag = ({ tags = DEFAULT_TAGS_TO_DISPLAY }) => {
   return (
     <div className="pt-8 pb-20">
       <p className="font-bold">More great resources</p>
-      <grid className="text-lg grid grid-rows-1 md:grid-rows-5">
+      <grid className="text-lg grid grid-cols-1 sm:grid-cols-2">
         {tags.map((tag) => {
           const tagInformation = getTagInformation(tag);
           if (!tagInformation) return null;
