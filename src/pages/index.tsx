@@ -1,6 +1,6 @@
+import type { NextPage } from 'next';
 import Link from 'next/link';
-
-import NextLink from 'next/link';
+import { startOfToday } from 'date-fns';
 
 import { PostFeed } from '../components/PostFeed';
 import SEO from '../components/seo';
@@ -14,7 +14,6 @@ import config from '../config';
 import { getAllNewsletters } from '../lib/newsletters';
 import NewsletterItem from '../components/NewsletterFeed/NewsletterItem';
 import { Headshot } from '../components/Headshot';
-import type { NextPage } from 'next';
 import type { Newsletter, BlogPost } from '../data/content-types';
 
 export async function getStaticProps() {
@@ -55,13 +54,13 @@ const HomePage: NextPage<HomePageProps> = ({ posts, newsletter }) => {
           <p className="text-xl font-normal m-0">
             {"I'm"} a startup founder, a designer, and a maker. I share my
             writing on this site, but you can also find me on threads{' '}
-            <NextLink
+            <Link
               href="https://threads.net/@irrevernemikt"
               target="_blank"
               rel="noopener noreferrer"
             >
               @irreverentmike
-            </NextLink>{' '}
+            </Link>{' '}
             <Link
               className="text-pink-600 hover:underline"
               href="https://hachyderm.io/@irreverentmike"
@@ -125,6 +124,7 @@ const HomePage: NextPage<HomePageProps> = ({ posts, newsletter }) => {
       <WebmentionMetadata
         summary="mikebifulco.com - articles on design, development, and making the world a better place."
         title="Home - mikebifulco.com"
+        publishedAt={startOfToday()}
       />
     </>
   );
