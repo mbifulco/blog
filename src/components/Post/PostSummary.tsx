@@ -31,8 +31,8 @@ const PostSummary: React.FC<PostSummaryProps> = ({ post, eager = false }) => {
       )}
       publicId={coverImagePublicId || `posts/${path}/cover`}
       alt={excerpt || title}
-      height={420}
-      width={800}
+      height={630}
+      width={1200}
       loading={eager ? 'eager' : 'lazy'}
     />
   );
@@ -50,6 +50,7 @@ const PostSummary: React.FC<PostSummaryProps> = ({ post, eager = false }) => {
             </Link>
           </Heading>
           <p className="text-[1rem] text-gray-700">
+            {!date && <h2>this mf</h2>}
             <PublishDate date={date} /> {author && <>— Written by {author}</>}
           </p>
           <TagsSummary tags={tags} />
