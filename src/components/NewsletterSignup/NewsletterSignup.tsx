@@ -21,7 +21,7 @@ const NewsletterSignup: React.FC<NewsletterSignupProps> = ({ tags }) => {
           <Heading as="h2" className="text-2xl mb-4 text-black">
             Subscribe to Tiny Improvements
             {stats &&
-              `, along with ${stats?.subscriberCount || ''} other builders`}
+              `, along with ${stats?.subscriberCount ?? ''} other builders`}
           </Heading>
 
           <p>{config.newsletter.shortDescription}</p>
