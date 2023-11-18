@@ -11,7 +11,7 @@ type BreadcrumbsProps = {
 const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ crumbs }) => {
   return (
     <nav aria-label="Breadcrumb">
-      <ol className="flex space-x-2 text-sm max-w-full overflow-ellipsis truncate whitespace-nowrap w-full">
+      <ol className="flex w-full max-w-full space-x-2 truncate overflow-ellipsis whitespace-nowrap text-sm">
         {crumbs.map((crumb, idx) => {
           return (
             <li className="inline" key={`breadcrumb-${idx}`}>

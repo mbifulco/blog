@@ -1,17 +1,14 @@
 import type { GetStaticProps, NextPage } from 'next';
-
 import { useRouter } from 'next/router';
-
-import { getPostBySlug, getAllPosts } from '../../lib/blog';
 
 import { Colophon } from '../../components/Colophon';
 import { NewsletterSignup } from '../../components/NewsletterSignup';
 import { BlogPost as Post } from '../../components/Post';
 import SEO from '../../components/seo';
 import WebmentionMetadata from '../../components/webmentionMetadata';
-
+import type { BlogPost } from '../../data/content-types';
+import { getAllPosts, getPostBySlug } from '../../lib/blog';
 import { getCloudinaryImageUrl } from '../../utils/images';
-import { BlogPost } from '../../data/content-types';
 
 type PostPageParams = {
   slug: string;
@@ -79,7 +76,7 @@ const BlogPost: NextPage<PostPageProps> = ({ post }) => {
       )}
 
       <Post post={post} />
-      <div className="flex flex-row justify-center mt-12">
+      <div className="mt-12 flex flex-row justify-center">
         <NewsletterSignup tags={tags} />
       </div>
       <Colophon />

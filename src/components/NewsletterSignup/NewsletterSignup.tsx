@@ -1,9 +1,9 @@
-import { Headshot } from '../Headshot';
-import { SubscriptionForm } from '../SubscriptionForm';
-import SponsorCTA from '../SponsorCTA/SponsorCTA';
-import useConvertKitStats from '../../hooks/useConvertKitStats';
 import config from '../../config';
+import useConvertKitStats from '../../hooks/useConvertKitStats';
 import { Heading } from '../Heading';
+import { Headshot } from '../Headshot';
+import SponsorCTA from '../SponsorCTA/SponsorCTA';
+import { SubscriptionForm } from '../SubscriptionForm';
 
 type NewsletterSignupProps = {
   tags?: string[];
@@ -12,20 +12,20 @@ type NewsletterSignupProps = {
 const NewsletterSignup: React.FC<NewsletterSignupProps> = ({ tags }) => {
   const { stats } = useConvertKitStats();
   return (
-    <div className="flex flex-row justify-center mb-4">
-      <div className="flex flex-col border border-solid border-gray-200 bg-white max-w-[800px] py-4 px-8 my-0 mx-auto justify-center">
-        <section className="flex flex-col gap-4 mt-8 mx-0 mb-0 max-w-[calc(100vw_-_2rem)]">
-          <div className="flex flex-row justify-center mb-2">
+    <div className="mb-4 flex flex-row justify-center">
+      <div className="mx-auto my-0 flex max-w-[800px] flex-col justify-center border border-solid border-gray-200 bg-white px-8 py-4">
+        <section className="mx-0 mb-0 mt-8 flex max-w-[calc(100vw_-_2rem)] flex-col gap-4">
+          <div className="mb-2 flex flex-row justify-center">
             <Headshot />
           </div>
           <p>Subscribe and join {stats?.subscriberCount} other builders</p>
-          <Heading as="h2" className="text-2xl mb-4 text-black">
+          <Heading as="h2" className="mb-4 text-2xl text-black">
             💌 Tiny Improvements Newsletter
           </Heading>
 
           <p>{config.newsletter.shortDescription}</p>
           <SubscriptionForm tags={tags} />
-          <p className="mb-2 text-gray-600 text-sm">
+          <p className="mb-2 text-sm text-gray-600">
             Typically once a week, straight from me to you.{' '}
             <span role="img" aria-label="kissy face">
               😘

@@ -3,12 +3,12 @@ import {
   Box,
   Heading,
   Popover,
-  PopoverTrigger,
+  PopoverArrow,
+  PopoverBody,
+  PopoverCloseButton,
   PopoverContent,
   PopoverHeader,
-  PopoverBody,
-  PopoverArrow,
-  PopoverCloseButton,
+  PopoverTrigger,
   Stack,
   Text,
 } from '@chakra-ui/react';
@@ -21,7 +21,7 @@ const Eponymous = () => {
   return (
     <Popover trigger="hover">
       <PopoverTrigger>
-        <span className="border-b border-dashed border-pink-400 cursor-pointer">
+        <span className="cursor-pointer border-b border-dashed border-pink-400">
           eponymous
         </span>
       </PopoverTrigger>

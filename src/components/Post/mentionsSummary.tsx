@@ -1,8 +1,8 @@
 import pluralize from 'pluralize';
 
-import { Avatar, AvatarGroup } from '../Avatar';
 import formatDate from '../../utils/format-date';
 import type { WebMention } from '../../utils/webmentions';
+import { Avatar, AvatarGroup } from '../Avatar';
 
 type MentionsSummaryProps = {
   mentions?: WebMention[];
@@ -27,7 +27,7 @@ const MentionsSummary: React.FC<MentionsSummaryProps> = ({ mentions }) => {
   return (
     <>
       {likes.length > 0 && (
-        <div className="flex flex-row mt-4 items-center">
+        <div className="mt-4 flex flex-row items-center">
           <AvatarGroup
             people={likes.map((like) => {
               const { author } = like.data;
@@ -50,7 +50,7 @@ const MentionsSummary: React.FC<MentionsSummaryProps> = ({ mentions }) => {
       )}
       {someoneMentioned.length > 0 && (
         <div>
-          <h3 className="font-bold text-xl">Mentions</h3>
+          <h3 className="text-xl font-bold">Mentions</h3>
           {someoneMentioned.map((mention, idx) => {
             const { author, published: publishedDate, url } = mention.data;
 
@@ -60,7 +60,7 @@ const MentionsSummary: React.FC<MentionsSummaryProps> = ({ mentions }) => {
 
             return (
               <div
-                className="bg-white/40 p-3 mb-3 flex flex-row gap-3"
+                className="mb-3 flex flex-row gap-3 bg-white/40 p-3"
                 key={`someone-mentioned-author-${idx}-${author.name}`}
               >
                 <a href={author?.url}>
@@ -74,7 +74,7 @@ const MentionsSummary: React.FC<MentionsSummaryProps> = ({ mentions }) => {
                 <div className="flex flex-col gap-4">
                   <span style={{ width: '100%' }}>
                     <a
-                      className="text-pink-600 font-bold hover:underline"
+                      className="font-bold text-pink-600 hover:underline"
                       href={author?.url}
                     >
                       {author.name}

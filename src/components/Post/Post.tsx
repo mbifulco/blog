@@ -1,6 +1,6 @@
-import PostSummary from './PostSummary';
+import type { BlogPost } from '../../data/content-types';
 import FullPost from './FullPost';
-import { BlogPost } from '../../data/content-types';
+import PostSummary from './PostSummary';
 
 type PostProps = {
   summary?: boolean;
@@ -8,9 +8,9 @@ type PostProps = {
   eager?: boolean;
 };
 
-const BlogPost: React.FC<PostProps> = ({ summary, post, eager }) => {
+const BlogPostRenderer: React.FC<PostProps> = ({ summary, post, eager }) => {
   if (summary) return <PostSummary post={post} eager={eager} />;
   return <FullPost post={post} />;
 };
 
-export default BlogPost;
+export default BlogPostRenderer;

@@ -9,7 +9,7 @@ export const CenteredTextDemo = ({
 
   const ToggleButton = (
     <button
-      className="bg-red-600 hover:bg-red-700 active:bg-red-800 text-white font-medium py-2 px-6 rounded w-fit"
+      className="w-fit rounded bg-red-600 px-6 py-2 font-medium text-white hover:bg-red-700 active:bg-red-800"
       onClick={() => {
         setIsCentered(!isCentered);
       }}

@@ -1,3 +1,4 @@
+import type { GetStaticProps } from 'next';
 import {
   Box,
   Heading,
@@ -10,15 +11,13 @@ import {
 import NewsletterItem from '../../components/NewsletterFeed/NewsletterItem';
 import { NewsletterSignup } from '../../components/NewsletterSignup';
 import SEO from '../../components/seo';
-import { Subtitle } from '../../components/Subtitle';
-import { SubscriptionForm } from '../../components/SubscriptionForm';
-
-import { getAllNewsletters } from '../../lib/newsletters';
-import config from '../../config';
 import SponsorCTA from '../../components/SponsorCTA/SponsorCTA';
-import useConvertKitStats from '../../hooks/useConvertKitStats';
+import { SubscriptionForm } from '../../components/SubscriptionForm';
+import { Subtitle } from '../../components/Subtitle';
+import config from '../../config';
 import type { Newsletter } from '../../data/content-types';
-import type { GetStaticProps } from 'next';
+import useConvertKitStats from '../../hooks/useConvertKitStats';
+import { getAllNewsletters } from '../../lib/newsletters';
 
 export const getStaticProps: GetStaticProps<NewsletterPageProps> = async () => {
   const newsletters = await getAllNewsletters();

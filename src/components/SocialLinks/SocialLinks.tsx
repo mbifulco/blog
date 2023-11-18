@@ -1,21 +1,20 @@
 import React from 'react';
-
 import Link from 'next/link';
 
 import {
   GitHubIcon,
-  TwitterIcon,
-  TwitchIcon,
   RssIcon,
-  YouTubeIcon,
   ThreadsIcon,
+  TwitchIcon,
+  TwitterIcon,
+  YouTubeIcon,
 } from '../icons';
 import MastodonIcon from '../icons/MastodonIcon';
 
 const SocialLinks = () => (
-  <div className="flex flex-row gap-6 items-center">
+  <div className="flex flex-row items-center gap-6">
     <Link
-      className="hover:scale-125 transition-all duration-200 hover:text-pink-600 m-1 h-4 w-4"
+      className="m-1 h-4 w-4 transition-all duration-200 hover:scale-125 hover:text-pink-600"
       href="https://threads.net/@irreverentmike"
       target="_blank"
       rel="noreferrer noopener me"
@@ -25,7 +24,7 @@ const SocialLinks = () => (
     </Link>
 
     <Link
-      className="hover:scale-125 transition-all duration-200 hover:text-red m-1 h-4 w-4"
+      className="hover:text-red m-1 h-4 w-4 transition-all duration-200 hover:scale-125"
       href="https://www.youtube.com/c/MikeBifulco"
       target="_blank"
       rel="noopener noreferrer me"
@@ -37,7 +36,7 @@ const SocialLinks = () => (
     </Link>
 
     <Link
-      className="hover:scale-125 transition-all duration-200 hover:text-pink-600 m-1 h-4 w-4"
+      className="m-1 h-4 w-4 transition-all duration-200 hover:scale-125 hover:text-pink-600"
       href="https://github.com/mbifulco"
       target="_blank"
       rel="noreferrer noopener me"
@@ -47,7 +46,7 @@ const SocialLinks = () => (
     </Link>
 
     <Link
-      className="hover:scale-125 transition-all duration-200 hover:text-pink-600 m-1 h-4 w-4"
+      className="m-1 h-4 w-4 transition-all duration-200 hover:scale-125 hover:text-pink-600"
       target="_blank"
       rel="noopener noreferrer me"
       aria-label="@irreverentmike on Mastodon"
@@ -57,7 +56,7 @@ const SocialLinks = () => (
     </Link>
 
     <Link
-      className="hover:scale-125 transition-all duration-200 hover:text-pink-600 m-1 h-4 w-4 hidden"
+      className="m-1 hidden h-4 w-4 transition-all duration-200 hover:scale-125 hover:text-pink-600"
       href="https://twitter.com/irreverentmike"
       target="_blank"
       rel="noreferrer noopener me"
@@ -67,7 +66,7 @@ const SocialLinks = () => (
     </Link>
 
     <Link
-      className="hover:scale-125 transition-all duration-200 hover:text-pink-600 m-1 h-4 w-4 hidden"
+      className="m-1 hidden h-4 w-4 transition-all duration-200 hover:scale-125 hover:text-pink-600"
       href="https://www.twitch.tv/irreverentmike"
       target="_blank"
       rel="noreferrer noopener"
@@ -77,7 +76,7 @@ const SocialLinks = () => (
     </Link>
 
     <Link
-      className="hover:scale-125 transition-all duration-200 hover:text-pink-600 m-1 h-4 w-4"
+      className="m-1 h-4 w-4 transition-all duration-200 hover:scale-125 hover:text-pink-600"
       href="/rss.xml"
       target="_blank"
       rel="noopener noreferrer"

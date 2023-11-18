@@ -1,15 +1,15 @@
+import type { GetStaticPaths, GetStaticProps } from 'next';
+
+import { ExternalWorkItem } from '../../components/ExternalWork';
+import { Heading } from '../../components/Heading';
+import NewsletterItem from '../../components/NewsletterFeed/NewsletterItem';
+import { BlogPost as Post } from '../../components/Post';
+import SEO from '../../components/seo';
+import type { Article, BlogPost, Newsletter } from '../../data/content-types';
 import { getAllPostsByTag } from '../../lib/blog';
-import { getAllTags } from '../../lib/tags';
 import { getAllExternalReferencesByTag } from '../../lib/external-references';
 import { getAllNewslettersByTag } from '../../lib/newsletters';
-
-import NewsletterItem from '../../components/NewsletterFeed/NewsletterItem';
-import SEO from '../../components/seo';
-import { BlogPost as Post } from '../../components/Post';
-import { ExternalWorkItem } from '../../components/ExternalWork';
-import type { Article, BlogPost, Newsletter } from '../../data/content-types';
-import type { GetStaticProps, GetStaticPaths } from 'next';
-import { Heading } from '../../components/Heading';
+import { getAllTags } from '../../lib/tags';
 
 type TagPageParams = {
   tag: string;

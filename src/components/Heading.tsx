@@ -48,7 +48,7 @@ export const Heading = ({
     <Component
       {...props}
       className={clsx(
-        'font-bold text-pink-600 hover:text-pink-700 active:text-pink-900 font-futura',
+        'font-futura font-bold text-pink-600 hover:text-pink-700 active:text-pink-900',
         headingClasses,
         className
       )}

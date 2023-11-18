@@ -1,19 +1,16 @@
 import type { GetStaticProps } from 'next';
 import { useRouter } from 'next/router';
 
-import { getNewsletterBySlug, getAllNewsletters } from '../../lib/newsletters';
-
+import { BreadCrumbs } from '../../components/Breadcrumbs';
 import { Colophon } from '../../components/Colophon';
 import { NewsletterSignup } from '../../components/NewsletterSignup';
+import FullPost from '../../components/Post/FullPost';
 import SEO from '../../components/seo';
 import WebmentionMetadata from '../../components/webmentionMetadata';
-
+import type { Newsletter } from '../../data/content-types';
+import { getAllNewsletters, getNewsletterBySlug } from '../../lib/newsletters';
 import { getCloudinaryImageUrl } from '../../utils/images';
 import { serialize } from '../../utils/mdx';
-
-import type { Newsletter } from '../../data/content-types';
-import FullPost from '../../components/Post/FullPost';
-import { BreadCrumbs } from '../../components/Breadcrumbs';
 
 type NewsletterPageParams = {
   slug: string;
@@ -98,7 +95,7 @@ const NewsletterPage: React.FC<NewsletterPageProps> = ({ newsletter }) => {
         love it if you shared this with a friend. It helps me out a great deal.
       </p>
       <p className="text-xl">Until next time - be excellent to each other!</p>
-      <div className="flex flex-row justify-center mt-12">
+      <div className="mt-12 flex flex-row justify-center">
         <NewsletterSignup tags={tags} />
       </div>
       <Colophon />

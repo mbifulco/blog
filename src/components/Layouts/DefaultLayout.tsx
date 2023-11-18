@@ -1,12 +1,10 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-
 import { useRouter } from 'next/router';
-
-import Footer from '../footer';
+import clsx from 'clsx';
 
 import MDXProviderWrapper from '../../utils/MDXProviderWrapper';
-import clsx from 'clsx';
+import Footer from '../footer';
 
 const DefaultLayout = ({ children }) => {
   const router = useRouter();
@@ -20,24 +18,24 @@ const DefaultLayout = ({ children }) => {
 
   return (
     <MDXProviderWrapper>
-      <div className="border-t-[1.25rem] border-pink-400 border-solid pt-4 md:pt-8 w-full">
-        <div className="w-full lg:w-[50rem] mx-auto my-0 py-0 px-1 lg:p-0 flex flex-col">
+      <div className="w-full border-t-[1.25rem] border-solid border-pink-400 pt-4 md:pt-8">
+        <div className="mx-auto my-0 flex w-full flex-col px-1 py-0 lg:w-[50rem] lg:p-0">
           <div
             className={clsx(
-              'flex flex-col gap-2 md:flex-row overflow-y-hidden items-start column justify-between pb-6',
+              'column flex flex-col items-start justify-between gap-2 overflow-y-hidden pb-6 md:flex-row',
               isHomePage && 'lg:items-center lg:justify-between'
             )}
           >
             <div
               className={clsx(
-                'flex flex-col md:flex-row items-start md:items-center',
+                'flex flex-col items-start md:flex-row md:items-center',
                 isHomePage ? 'text-lg md:text-xl xl:text-3xl' : 'text-lg'
               )}
             >
               <Link className="no-underline hover:no-underline" href="/">
                 <p
                   className={clsx(
-                    'transition-all duration-1000 ease-in-out font-bold m-0 p-0 text-black cursor-pointer hover:no-underline',
+                    'm-0 cursor-pointer p-0 font-bold text-black transition-all duration-1000 ease-in-out hover:no-underline',
                     isHomePage ? 'text-6xl' : 'text-lg'
                   )}
                 >
@@ -46,7 +44,7 @@ const DefaultLayout = ({ children }) => {
               </Link>
             </div>
 
-            <div className="flex flex-row flex-wrap gap-2 justify-between sm:justify-normal sm:w-fit w-full px-1">
+            <div className="flex w-full flex-row flex-wrap justify-between gap-2 px-1 sm:w-fit sm:justify-normal">
               <Link className="text-black hover:underline" href="/">
                 Articles
               </Link>
@@ -57,7 +55,7 @@ const DefaultLayout = ({ children }) => {
                 About
               </Link>
               <Link
-                className="bg-pink-400 hover:bg-pink-500 active:bg-pink-600 hover:no-underline text-white hover:text-white py-0 px-[1ch] rounded-sm whitespace-nowrap"
+                className="whitespace-nowrap rounded-sm bg-pink-400 px-[1ch] py-0 text-white hover:bg-pink-500 hover:text-white hover:no-underline active:bg-pink-600"
                 href="/newsletter"
               >
                 💌 Tiny Improvements

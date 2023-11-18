@@ -1,23 +1,20 @@
 import React, { Children } from 'react';
 import type { HTMLProps, ReactElement } from 'react';
-import { MDXProvider } from '@mdx-js/react';
 import Link from 'next/link';
 import Script from 'next/script';
-
 import { Button, Code, SimpleGrid } from '@chakra-ui/react';
+import { MDXProvider } from '@mdx-js/react';
+import clsx from 'clsx';
 import { Highlight, themes } from 'prism-react-renderer';
-
-import { Image } from '../components/Image';
-import { SponsoredSection } from '../components/SponsoredSection';
-
-import { Tweet, YouTube, Vimeo, Threads } from '../components/MdxEmbed';
 
 // one off component imports
 import { CenteredTextDemo } from '../components/demos/CenteredTextDemo';
 import { OrtonEffectImage } from '../components/demos/OrtonEffectImage';
-import clsx from 'clsx';
 import type { HeadingProps } from '../components/Heading';
 import { Heading } from '../components/Heading';
+import { Image } from '../components/Image';
+import { Threads, Tweet, Vimeo, YouTube } from '../components/MdxEmbed';
+import { SponsoredSection } from '../components/SponsoredSection';
 
 const CustomHeading: React.FC<HeadingProps> = ({
   as,
@@ -33,7 +30,7 @@ const CustomHeading: React.FC<HeadingProps> = ({
           as={as}
           className={clsx(
             'inline leading-6 tracking-normal',
-            "hover:before:inline hover:before:content-['#'] hover:before:relative hover:before:text-pink-700 hover:before:-ml-[1.2ch] hover:before:pr-[0.2ch] hover:before:no-underline hover:before:border-b-0"
+            "hover:before:relative hover:before:-ml-[1.2ch] hover:before:inline hover:before:border-b-0 hover:before:pr-[0.2ch] hover:before:text-pink-700 hover:before:no-underline hover:before:content-['#']"
           )}
           id={id}
           {...props}
@@ -73,7 +70,7 @@ const P = (props) => <p className="my-2 text-xl" {...props} />;
 
 const Blockquote = ({ children }) => {
   return (
-    <blockquote className="px-3 bg-gray-100 border-l-4 border-pink-400">
+    <blockquote className="border-l-4 border-pink-400 bg-gray-100 px-3">
       {children}
     </blockquote>
   );
@@ -86,7 +83,7 @@ const CustomLink = (props) => {
 const Colophon = () => {
   return (
     <div
-      className="text-pink-400 font-bold flex flex-row gap-2 mt-12 mb-6"
+      className="mb-6 mt-12 flex flex-row gap-2 font-bold text-pink-400"
       aria-hidden
     >
       <div className="flex flex-row gap-5">
@@ -105,12 +102,12 @@ const Aside: React.FC<AsideProps> = ({ type = 'default', ...props }) => {
   return (
     <aside
       className={clsx(
-        'border-l-8 border-solid py-4 px-8 my-8 -ml-8',
-        type === 'default' && 'bg-pink-50 border-pink-400 text-pink-900',
-        type === 'info' && 'bg-yellow-50 border-yellow-400 text-yellow-900',
-        type === 'note' && 'bg-green-50 border-green-400 text-green-900',
-        type === 'error' && 'bg-red-50 border-red-400 text-red-900',
-        type === 'warning' && 'bg-red-50 border-red-400 text-red-900'
+        'my-8 -ml-8 border-l-8 border-solid px-8 py-4',
+        type === 'default' && 'border-pink-400 bg-pink-50 text-pink-900',
+        type === 'info' && 'border-yellow-400 bg-yellow-50 text-yellow-900',
+        type === 'note' && 'border-green-400 bg-green-50 text-green-900',
+        type === 'error' && 'border-red-400 bg-red-50 text-red-900',
+        type === 'warning' && 'border-red-400 bg-red-50 text-red-900'
       )}
       {...props}
     />
@@ -153,7 +150,7 @@ const Pre: React.FC<PreProps> = ({ children }) => {
 
   return (
     <div
-      className={`rounded p-[3ch] max-w-3xl`}
+      className={`max-w-3xl rounded p-[3ch]`}
       style={{
         background: themes.nightOwl.plain.backgroundColor,
       }}
@@ -200,13 +197,13 @@ const Pre: React.FC<PreProps> = ({ children }) => {
 };
 
 const OrderedList = ({ children, ...rest }) => (
-  <ol {...rest} className="list-decimal text-xl flex flex-col gap-3">
+  <ol {...rest} className="flex list-decimal flex-col gap-3 text-xl">
     {children}
   </ol>
 );
 
 const UnorderedList = ({ children, ...rest }) => (
-  <ul {...rest} className="list-disc text-xl flex flex-col gap-3">
+  <ul {...rest} className="flex list-disc flex-col gap-3 text-xl">
     {children}
   </ul>
 );
@@ -219,7 +216,7 @@ const ListItemComponent = ({ children, ...rest }) => (
 
 const HorizontalRule = () => {
   return (
-    <div className="align-center justify-center flex flex-col max-w-[50%] w-[50%] mt-12 mb-8 self-center border-b-[5px] border-solid border-pink-400" />
+    <div className="align-center mb-8 mt-12 flex w-[50%] max-w-[50%] flex-col justify-center self-center border-b-[5px] border-solid border-pink-400" />
   );
 };
 

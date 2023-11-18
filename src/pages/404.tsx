@@ -1,5 +1,4 @@
 import React from 'react';
-
 import type { NextPage } from 'next';
 import Link from 'next/link';
 
@@ -19,14 +18,14 @@ const NotFoundPage: NextPage = () => {
           <span>
             Photo by{' '}
             <Link
-              className="text-pink-600 hover:underline no-underline"
+              className="text-pink-600 no-underline hover:underline"
               href="https://unsplash.com/@pawel_czerwinski?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"
             >
               Pawel Czerwinski
             </Link>{' '}
             on{' '}
             <Link
-              className="text-pink-600 hover:underline no-underline"
+              className="text-pink-600 no-underline hover:underline"
               href="https://unsplash.com/s/photos/plant?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"
             >
               Unsplash
@@ -38,7 +37,7 @@ const NotFoundPage: NextPage = () => {
         Hey, shit, sorry, this &mdash; {"isn't"} a page. If {"you're "}
         expecting something to be here,{' '}
         <Link
-          className="text-pink-600 hover:underline no-underline"
+          className="text-pink-600 no-underline hover:underline"
           href="https://twitter.com/irreverentmike"
         >
           tweet at me (@irreverentmike)

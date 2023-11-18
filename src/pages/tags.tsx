@@ -1,12 +1,11 @@
 // Components
 import type { GetStaticProps, NextPage } from 'next';
 
-import { getAllTags } from '../lib/tags';
-
-import Tag from '../components/tag';
+import { Heading } from '../components/Heading';
 import { NewsletterSignup } from '../components/NewsletterSignup';
 import SEO from '../components/seo';
-import { Heading } from '../components/Heading';
+import Tag from '../components/tag';
+import { getAllTags } from '../lib/tags';
 
 export const getStaticProps: GetStaticProps = async () => {
   const tags = await getAllTags();
@@ -29,7 +28,7 @@ const TagsPage: NextPage<TagsPageProps> = ({ tags }) => {
         All <span className="text-gray-400">#</span>
         tags used on articles across the site
       </Heading>
-      <div className="flex flex-row gap-2 flex-wrap text-xl">
+      <div className="flex flex-row flex-wrap gap-2 text-xl">
         {tags?.map((tag) => (
           <Tag key={`tag-cloud-${tag}`} url={`/tags/${tag}/`}>
             {tag}

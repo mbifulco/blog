@@ -1,15 +1,13 @@
 import React from 'react';
 import Link from 'next/link';
-
-import TagsSummary from '../tagsSummary';
-
-import PolitePop from '../PolitePop/PolitePop';
-
-import { Image } from '../Image';
-import { PublishDate } from '../PublishDate';
 import clsx from 'clsx';
+
 import type { BlogPost } from '../../data/content-types';
 import { Heading } from '../Heading';
+import { Image } from '../Image';
+import PolitePop from '../PolitePop/PolitePop';
+import { PublishDate } from '../PublishDate';
+import TagsSummary from '../tagsSummary';
 
 type PostSummaryProps = {
   post: BlogPost;
@@ -28,7 +26,7 @@ const PostSummary: React.FC<PostSummaryProps> = ({ post, eager = false }) => {
     <Link href="postPath">
       <Image
         className={clsx(
-          'sm:rounded-lg mb-4 shadow -mx-2 sm:mx-0 object-cover object-center'
+          '-mx-2 mb-4 object-cover object-center shadow sm:mx-0 sm:rounded-lg'
         )}
         publicId={coverImagePublicId || `posts/${path}/cover`}
         alt={excerpt || title}
@@ -45,7 +43,7 @@ const PostSummary: React.FC<PostSummaryProps> = ({ post, eager = false }) => {
         <header className="flex flex-col gap-1">
           <Heading as={'h2'} className="m-0 p-0">
             <Link
-              className="text-pink-600 hover:underline no-underline"
+              className="text-pink-600 no-underline hover:underline"
               href={postPath}
             >
               {title}
@@ -60,7 +58,7 @@ const PostSummary: React.FC<PostSummaryProps> = ({ post, eager = false }) => {
 
         <p className="text-xl">{excerpt}</p>
         <Link
-          className="text-pink-600 hover:underline no-underline"
+          className="text-pink-600 no-underline hover:underline"
           href={postPath}
         >
           Read more →

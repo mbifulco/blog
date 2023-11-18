@@ -1,19 +1,17 @@
 import React from 'react';
-
 import Link from 'next/link';
 
-import { SocialLinks } from './SocialLinks';
-import RelatedContentLinksByTag from './RelatedContent/RelatedContentLinksByTag';
 import config from '../config';
-
+import RelatedContentLinksByTag from './RelatedContent/RelatedContentLinksByTag';
+import { SocialLinks } from './SocialLinks';
 import SponsorCTA from './SponsorCTA/SponsorCTA';
 
 const Footer = () => {
   return (
-    <footer className="relative text-sm pt-8 pb-20">
+    <footer className="relative pb-20 pt-8 text-sm">
       <RelatedContentLinksByTag />
 
-      <div className="grid md:grid-cols-2 gap-4">
+      <div className="grid gap-4 md:grid-cols-2">
         <div className="flex flex-col gap-2">
           <span>© 2019-{new Date().getFullYear()} Mike Bifulco</span>
 

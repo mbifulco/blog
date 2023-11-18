@@ -1,7 +1,7 @@
 import Link from 'next/link';
+import clsx from 'clsx';
 
 import { Image } from '../Image';
-import clsx from 'clsx';
 
 type SponsoredSectionProps = {
   CTAtext: string;
@@ -22,13 +22,13 @@ const SponsoredSection: React.FC<SponsoredSectionProps> = ({
     <div className="overflow-x-hidden md:overflow-x-visible">
       <section
         className={clsx(
-          'sponsored-section border border-solid border-gray-300 rounded-sm -mx-8 my-4 px-8 py-4 text-md',
-          'before:top-[calc(-1em_-_3px)] before:content-["_"] before:height-[3px] before:width-[33%] before:background-pink-400 before:position-relative before:ml-auto before:mr-auto',
-          'after:top-[calc(-1em_-_3px)] after:content-["_"] after:height-[3px] after:width-[33%] after:background-pink-400 after:position-relative after:ml-auto after:mr-auto'
+          'sponsored-section text-md -mx-8 my-4 rounded-sm border border-solid border-gray-300 px-8 py-4',
+          'before:height-[3px] before:width-[33%] before:background-pink-400 before:position-relative before:top-[calc(-1em_-_3px)] before:ml-auto before:mr-auto before:content-["_"]',
+          'after:height-[3px] after:width-[33%] after:background-pink-400 after:position-relative after:top-[calc(-1em_-_3px)] after:ml-auto after:mr-auto after:content-["_"]'
         )}
       >
         <Link
-          className="thank-you uppercase text-gray-500 text-sm block mb-[2ch]"
+          className="thank-you mb-[2ch] block text-sm uppercase text-gray-500"
           href="/sponsor"
           target="_blank"
         >
@@ -46,9 +46,9 @@ const SponsoredSection: React.FC<SponsoredSectionProps> = ({
 
         {children}
 
-        <div className="flex flex-col gap-4 content-center">
+        <div className="flex flex-col content-center gap-4">
           <Link
-            className="rounded bg-blue-600 text-white hover:no-underline hover:bg-blue-700 active:bg-blue-800 hover:text-white py-2 px-4 self-center"
+            className="self-center rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 hover:text-white hover:no-underline active:bg-blue-800"
             href={href}
           >
             {CTAtext}

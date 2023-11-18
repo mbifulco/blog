@@ -22,7 +22,8 @@
     "polite-pop.d.ts",
     "twttr.d.ts",
     "**/*.ts",
-    "**/*.tsx"
+    "**/*.tsx",
+    "tailwind.config.js"
   ],
   "exclude": ["node_modules"]
 }

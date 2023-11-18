@@ -1,4 +1,5 @@
 import clsx from 'clsx';
+
 import Avatar from './Avatar';
 import type { AvatarBaseProps, AvatarSizeVariant } from './Avatar';
 

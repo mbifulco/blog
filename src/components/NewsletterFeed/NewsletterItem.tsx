@@ -1,22 +1,22 @@
 import Link from 'next/link';
 
-import TagsSummary from '../tagsSummary';
+import type { NewsletterItemProps } from '../../data/content-types';
 import formatDate from '../../utils/format-date';
 import { getCloudinaryImageUrl } from '../../utils/images';
-import type { NewsletterItemProps } from '../../data/content-types';
+import TagsSummary from '../tagsSummary';
 
 const NewsletterItem: React.FC<NewsletterItemProps> = ({ newsletter }) => {
   const { coverImagePublicId, date, excerpt, slug, tags, title } =
     newsletter.frontmatter;
 
   return (
-    <div className="w-full bg-white overflow-hidden">
+    <div className="w-full overflow-hidden bg-white">
       <Link
         href={`/newsletter/${slug}`}
-        className="block aspect-[1200/630] m-0"
+        className="m-0 block aspect-[1200/630]"
       >
         <div
-          className="min-h-[205px] h-full bg-cover aspect-[1200/630]"
+          className="aspect-[1200/630] h-full min-h-[205px] bg-cover"
           style={{
             backgroundImage: `url('${getCloudinaryImageUrl(
               coverImagePublicId
@@ -25,17 +25,17 @@ const NewsletterItem: React.FC<NewsletterItemProps> = ({ newsletter }) => {
         />
       </Link>
       <div className="mt-4 flex flex-col">
-        <h3 className="text-pink-600 text-xl font-sans font-bold">
+        <h3 className="font-sans text-xl font-bold text-pink-600">
           <Link href={`/newsletter/${slug}`}>{title}</Link>
         </h3>
-        <p className="uppercase text-sm text-gray-500 hidden lg:visible">
+        <p className="hidden text-sm uppercase text-gray-500 lg:visible">
           {formatDate(date)}
         </p>
-        <p className="text-gray-600 line-clamp-3 overflow-ellipsis overflow-y-hidden">
+        <p className="line-clamp-3 overflow-y-hidden overflow-ellipsis text-gray-600">
           {excerpt}
         </p>
       </div>
-      <div className="mt-6 flex-col gap-4 self-center hidden lg:flex">
+      <div className="mt-6 hidden flex-col gap-4 self-center lg:flex">
         <div className="flex flex-row text-sm">
           <TagsSummary tags={tags} />
         </div>

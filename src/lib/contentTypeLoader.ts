@@ -1,12 +1,12 @@
 // Install gray-matter and date-fns
-import matter from 'gray-matter';
-import { compareDesc } from 'date-fns';
 import fs from 'fs';
 import { join } from 'path';
+import { compareDesc } from 'date-fns';
+import matter from 'gray-matter';
 
-import { parseTag } from './tags';
-import { serialize } from '../utils/mdx';
 import type { MarkdownDocument } from '../data/content-types';
+import { serialize } from '../utils/mdx';
+import { parseTag } from './tags';
 
 export const getContentBySlug = async (
   slug: string,

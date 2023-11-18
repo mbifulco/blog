@@ -1,14 +1,14 @@
 import { useEffect } from 'react';
 import type { AppProps } from 'next/app';
 import { useRouter } from 'next/router';
-import * as Fathom from 'fathom-client';
 import { ChakraProvider } from '@chakra-ui/react';
+import * as Fathom from 'fathom-client';
 
 import { AnalyticsProvider } from '../utils/analytics';
 
 import '../styles/globals.css';
-
 import '../components/CarbonAd/CarbonAd.css';
+
 import DefaultLayout from '../components/Layouts/DefaultLayout';
 
 // import App from 'next/app'

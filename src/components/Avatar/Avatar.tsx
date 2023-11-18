@@ -23,7 +23,7 @@ const Avatar: React.FC<AvatarProps> = ({
   return (
     <div
       className={clsx(
-        'inline-block relative',
+        'relative inline-block',
         variant === 'sm' && 'h-8 w-8',
         variant === 'md' && 'h-10 w-10',
         variant === 'lg' && 'h-12 w-12',

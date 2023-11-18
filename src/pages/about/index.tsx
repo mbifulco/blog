@@ -2,9 +2,8 @@ import type { NextPage } from 'next';
 import type { MDXRemoteSerializeResult } from 'next-mdx-remote';
 import { MDXRemote } from 'next-mdx-remote';
 
-import SEO from '../../components/seo';
 import { NewsletterSignup } from '../../components/NewsletterSignup';
-
+import SEO from '../../components/seo';
 import { serialize } from '../../utils/mdx';
 import { components } from '../../utils/MDXProviderWrapper';
 
