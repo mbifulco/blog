@@ -28,7 +28,7 @@ const WorkPage: NextPage<WorkPageProps> = ({ articles }) => {
       <div className="flex flex-row gap-4">
         <h1 className="font-bold text-4xl">Some samples of my work online</h1>
         <div>
-          <p className="max-w-prose mb-8">
+          <p className="mb-8">
             This page contains articles, videos, and other references to my work
             over the years. {"I'm"} extremely lucky to be able to say that the
             nature of some of my work is that it is recorded for the public to
