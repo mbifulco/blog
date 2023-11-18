@@ -1,8 +1,7 @@
-import NextLink from 'next/link';
+import Link from 'next/link';
 import {
   Box,
   Heading,
-  Link,
   Popover,
   PopoverTrigger,
   PopoverContent,
@@ -71,7 +70,7 @@ const PodcastPage = () => {
           Occasionally, {"I'll"} write something I like <em>so much</em> that I
           record it as a podcast. Think of them short-form audio essays,
           published under the same title as my <Eponymous />{' '}
-          <Link color="pink.400" as={NextLink} href="/newsletter">
+          <Link className="text-pink-600 hover:underline" href="/newsletter">
             newsletter
           </Link>
           .
