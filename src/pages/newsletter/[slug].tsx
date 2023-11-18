@@ -1,7 +1,5 @@
 import type { GetStaticProps } from 'next';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { Breadcrumb, BreadcrumbItem, BreadcrumbLink } from '@chakra-ui/react';
 
 import { getNewsletterBySlug, getAllNewsletters } from '../../lib/newsletters';
 
@@ -13,9 +11,9 @@ import WebmentionMetadata from '../../components/webmentionMetadata';
 import { getCloudinaryImageUrl } from '../../utils/images';
 import { serialize } from '../../utils/mdx';
 
-import { FaChevronRight } from 'react-icons/fa';
 import type { Newsletter } from '../../data/content-types';
 import FullPost from '../../components/Post/FullPost';
+import { BreadCrumbs } from '../../components/Breadcrumbs';
 
 type NewsletterPageParams = {
   slug: string;
@@ -80,21 +78,18 @@ const NewsletterPage: React.FC<NewsletterPageProps> = ({ newsletter }) => {
         image={coverImageUrl}
         ogType="article"
       />
-      <Breadcrumb
-        separator={
-          <FaChevronRight className="text-pink-500" fontSize="smaller" />
-        }
-      >
-        <BreadcrumbItem>
-          <BreadcrumbLink href="/newsletter" as={Link}>
-            💌 Tiny Improvements
-          </BreadcrumbLink>
-        </BreadcrumbItem>
-
-        <BreadcrumbItem isCurrentPage>
-          <BreadcrumbLink>{title}</BreadcrumbLink>
-        </BreadcrumbItem>
-      </Breadcrumb>
+      <BreadCrumbs
+        crumbs={[
+          {
+            name: '💌 Tiny Improvements',
+            href: '/newsletter',
+          },
+          {
+            name: title,
+            href: `#`,
+          },
+        ]}
+      />
 
       <FullPost post={newsletter} />
       <p className="mt-0 text-xl">

@@ -1,6 +1,6 @@
 import pluralize from 'pluralize';
 
-import { Avatar, AvatarGroup } from '../Avatars';
+import { Avatar, AvatarGroup } from '../Avatar';
 import formatDate from '../../utils/format-date';
 import type { WebMention } from '../../utils/webmentions';
 
