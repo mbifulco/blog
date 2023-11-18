@@ -2,6 +2,7 @@ import type { NextPage } from 'next';
 import Link from 'next/link';
 import { startOfToday } from 'date-fns';
 
+import { Heading } from '../components/Heading';
 import { Headshot } from '../components/Headshot';
 import NewsletterItem from '../components/NewsletterFeed/NewsletterItem';
 import { PostFeed } from '../components/PostFeed';
@@ -49,7 +50,9 @@ const HomePage: NextPage<HomePageProps> = ({ posts, newsletter }) => {
           <Headshot size={250} />
         </div>
         <div className="max-w-[50ch]">
-          <h2 className="m-0 mb-2 text-4xl font-bold">Oh, hello</h2>
+          <Heading as="h2" className="m-0 mb-2 text-4xl font-bold">
+            Oh, hello
+          </Heading>
           <p className="m-0 text-xl font-normal">
             {"I'm"} a startup founder, a designer, and a maker. I share my
             writing on this site, but you can also find me on threads{' '}
@@ -75,7 +78,7 @@ const HomePage: NextPage<HomePageProps> = ({ posts, newsletter }) => {
             </Link>
             .
           </p>
-          <p className="text-cl mx-0 mb-0 mt-4 font-normal italic">
+          <p className="mx-0 mb-0 mt-4 text-xl font-normal italic">
             I work as a {config.employer.role} at{' '}
             <Link
               href={config.employer.url}

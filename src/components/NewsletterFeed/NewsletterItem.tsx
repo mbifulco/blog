@@ -3,6 +3,7 @@ import Link from 'next/link';
 import type { NewsletterItemProps } from '../../data/content-types';
 import formatDate from '../../utils/format-date';
 import { getCloudinaryImageUrl } from '../../utils/images';
+import { Heading } from '../Heading';
 import TagsSummary from '../tagsSummary';
 
 const NewsletterItem: React.FC<NewsletterItemProps> = ({ newsletter }) => {
@@ -25,9 +26,9 @@ const NewsletterItem: React.FC<NewsletterItemProps> = ({ newsletter }) => {
         />
       </Link>
       <div className="mt-4 flex flex-col">
-        <h3 className="font-sans text-xl font-bold text-pink-600">
+        <Heading as="h3" className="text-xl text-pink-600">
           <Link href={`/newsletter/${slug}`}>{title}</Link>
-        </h3>
+        </Heading>
         <p className="hidden text-sm uppercase text-gray-500 lg:visible">
           {formatDate(date)}
         </p>

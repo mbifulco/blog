@@ -7,7 +7,7 @@ type PostFeedProps = {
 };
 
 const PostFeed: React.FC<PostFeedProps> = ({ posts }) => (
-  <>
+  <div className="flex flex-col gap-8">
     {posts.map((post, idx) => {
       const postEl = <Post summary key={post.slug} post={post} />;
 
@@ -22,7 +22,7 @@ const PostFeed: React.FC<PostFeedProps> = ({ posts }) => (
 
       return postEl;
     })}
-  </>
+  </div>
 );
 
 export default PostFeed;

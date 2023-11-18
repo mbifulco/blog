@@ -18,7 +18,7 @@ const DefaultLayout = ({ children }) => {
 
   return (
     <MDXProviderWrapper>
-      <div className="w-full border-t-[1.25rem] border-solid border-pink-400 pt-4 md:pt-8">
+      <div className="w-full border-t-[.25rem] border-solid border-pink-400 pt-4 md:pt-8">
         <div className="mx-auto my-0 flex w-full flex-col px-1 py-0 lg:w-[50rem] lg:p-0">
           <div
             className={clsx(
@@ -35,8 +35,8 @@ const DefaultLayout = ({ children }) => {
               <Link className="no-underline hover:no-underline" href="/">
                 <p
                   className={clsx(
-                    'm-0 cursor-pointer p-0 font-bold text-black transition-all duration-1000 ease-in-out hover:no-underline',
-                    isHomePage ? 'text-6xl' : 'text-lg'
+                    'm-0 cursor-pointer p-0 font-futura font-bold uppercase text-black transition-all duration-1000 ease-in-out hover:no-underline',
+                    isHomePage ? 'text-4xl' : 'text-lg'
                   )}
                 >
                   Mike Bifulco
@@ -44,14 +44,23 @@ const DefaultLayout = ({ children }) => {
               </Link>
             </div>
 
-            <div className="flex w-full flex-row flex-wrap justify-between gap-2 px-1 sm:w-fit sm:justify-normal">
-              <Link className="text-black hover:underline" href="/">
+            <div className="flex w-full flex-row flex-wrap justify-between gap-2 px-1 font-futura font-medium uppercase text-gray-800 sm:w-fit sm:justify-normal">
+              <Link
+                className="hover:text-pink-600 hover:no-underline active:text-gray-900"
+                href="/"
+              >
                 Articles
               </Link>
-              <Link className="text-black hover:underline" href="/podcast">
+              <Link
+                className="hover:text-pink-600 hover:no-underline active:text-gray-900"
+                href="/podcast"
+              >
                 Podcast
               </Link>
-              <Link className="text-black hover:underline" href="/about">
+              <Link
+                className="hover:text-pink-600 hover:no-underline active:text-gray-900"
+                href="/about"
+              >
                 About
               </Link>
               <Link

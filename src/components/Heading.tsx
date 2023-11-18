@@ -22,7 +22,7 @@ export const Heading = ({
   let headingClasses = '';
   switch (Component) {
     case 'h1':
-      headingClasses = 'text-5xl';
+      headingClasses = 'text-3xl';
       break;
     case 'h2':
       headingClasses = 'text-4xl';
@@ -48,7 +48,7 @@ export const Heading = ({
     <Component
       {...props}
       className={clsx(
-        'font-futura font-bold text-pink-600 hover:text-pink-700 active:text-pink-900',
+        'font-futura font-bold uppercase text-pink-600',
         headingClasses,
         className
       )}

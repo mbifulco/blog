@@ -2,6 +2,7 @@ import { MDXRemote } from 'next-mdx-remote';
 
 import type { Article } from '../../data/content-types';
 import { components } from '../../utils/MDXProviderWrapper';
+import { Heading } from '../Heading';
 import { PublishDate } from '../PublishDate';
 import TagsSummary from '../tagsSummary';
 
@@ -19,7 +20,9 @@ const ExternalWorkItem: React.FC<ExternalWorkItemProps> = ({ article }) => {
   }
   return (
     <article className="flex flex-col rounded-md p-6 shadow-2xl">
-      <h2 className="mb-0 text-2xl font-bold">{title}</h2>
+      <Heading as="h2" className="mb-0">
+        {title}
+      </Heading>
       <p className="mt-0 text-pink-500">
         <PublishDate date={date} />
       </p>

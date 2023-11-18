@@ -6,6 +6,7 @@ import type { BlogPost, Newsletter } from '../../data/content-types';
 import { components } from '../../utils/MDXProviderWrapper';
 import { getMentions } from '../../utils/webmentions';
 import { CarbonAd } from '../CarbonAd';
+import { Heading } from '../Heading';
 import { Image } from '../Image';
 import { YouTube } from '../MdxEmbed';
 import { PolitePop } from '../PolitePop';
@@ -60,9 +61,9 @@ const FullPost: React.FC<FullPostProps> = ({ post }) => {
     <article className={'mx-auto mb-4 w-full text-left text-base'}>
       <div className={'relative'}>
         <header>
-          <h1 className="m-0 border-none p-0 text-3xl font-bold text-pink-500 no-underline lg:text-5xl">
+          <Heading as="h1" className="m-0 p-0">
             {title}
-          </h1>
+          </Heading>
           <p className="text-xs text-gray-700 dark:text-gray-400">
             <PublishDate date={date} /> {author && <>— Written by {author}</>}
           </p>

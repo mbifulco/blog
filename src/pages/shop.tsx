@@ -1,5 +1,6 @@
 import type { NextPage } from 'next';
 
+import { Heading } from '../components/Heading';
 import { Image } from '../components/Image';
 import SEO from '../components/seo';
 import SoldOut from '../components/soldOut';
@@ -15,9 +16,9 @@ const Shop: NextPage = () => (
 
       <article className={'relative max-w-[45%] rounded bg-gray-50 p-2'}>
         <SoldOut />
-        <h2 className="m-0" id="angry-little-egg">
+        <Heading as="h2" className="m-0" id="angry-little-egg">
           Angry little egg
-        </h2>
+        </Heading>
         <p className="m-0">
           If you came here for{' '}
           <a href="https://mikebifulco.com/posts/egg-them-all">eggs</a>, we got

@@ -14,19 +14,25 @@ const NewsletterSignup: React.FC<NewsletterSignupProps> = ({ tags }) => {
   return (
     <div className="mb-4 flex flex-row justify-center">
       <div className="mx-auto my-0 flex max-w-[800px] flex-col justify-center border border-solid border-gray-200 bg-white px-8 py-4">
-        <section className="mx-0 mb-0 mt-8 flex max-w-[calc(100vw_-_2rem)] flex-col gap-4">
+        <section className="mx-0 mb-0 mt-8 flex max-w-[calc(100vw_-_2rem)] flex-col gap-2">
           <div className="mb-2 flex flex-row justify-center">
             <Headshot />
           </div>
-          <p>Subscribe and join {stats?.subscriberCount} other builders</p>
-          <Heading as="h2" className="mb-4 text-2xl text-black">
+          <Heading as="h2" className="text-2xl text-black">
             💌 Tiny Improvements Newsletter
           </Heading>
+          <p className="font-futura font-bold uppercase">
+            Subscribe and join{' '}
+            <span className="text-pink-600">
+              {stats?.subscriberCount ? `🔥 ${stats.subscriberCount}` : ''}
+            </span>{' '}
+            other builders
+          </p>
 
           <p>{config.newsletter.shortDescription}</p>
           <SubscriptionForm tags={tags} />
-          <p className="mb-2 text-sm text-gray-600">
-            Typically once a week, straight from me to you.{' '}
+          <p className="text-sm text-gray-600">
+            Once a week, straight from me to you.{' '}
             <span role="img" aria-label="kissy face">
               😘
             </span>{' '}
