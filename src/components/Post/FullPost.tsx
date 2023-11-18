@@ -45,6 +45,7 @@ const FullPost: React.FC<FullPostProps> = ({ post }) => {
       publicId={coverImagePublicId || `posts/${path}/cover`}
       alt={excerpt}
       loading="eager"
+      priority
     />
   );
 
