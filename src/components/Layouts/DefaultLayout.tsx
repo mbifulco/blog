@@ -12,9 +12,8 @@ const DefaultLayout = ({ children }) => {
 
           <div className="mx-auto flex flex-col gap-8 lg:w-[50rem]">
             {children}
+            <Footer />
           </div>
-
-          <Footer />
         </div>
       </div>
     </MDXProviderWrapper>
