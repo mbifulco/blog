@@ -1,13 +1,7 @@
 import type { GetStaticProps } from 'next';
-import {
-  Box,
-  Heading,
-  SimpleGrid,
-  Spacer,
-  Stack,
-  Text,
-} from '@chakra-ui/react';
+import { Box, SimpleGrid, Spacer, Stack, Text } from '@chakra-ui/react';
 
+import { Heading } from '@components/Heading';
 import NewsletterItem from '../../components/NewsletterFeed/NewsletterItem';
 import { NewsletterSignup } from '../../components/NewsletterSignup';
 import SEO from '../../components/seo';
@@ -72,9 +66,7 @@ const NewsletterPage: React.FC<NewsletterPageProps> = ({ newsletters }) => {
       <SponsorCTA />
 
       <Stack direction={'column'} spacing={'4'}>
-        <Heading as="h2" size="md" margin={0} padding={0}>
-          💌 Read the latest dispatch
-        </Heading>
+        <Heading as="h2">💌 Read the latest dispatch</Heading>
         <NewsletterItem newsletter={latestNewsletter} />
         <Spacer />
 
