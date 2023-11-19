@@ -48,7 +48,7 @@ export async function getStaticPaths() {
   };
 }
 
-const BlogPost: NextPage<PostPageProps> = ({ post }) => {
+const PostPage: NextPage<PostPageProps> = ({ post }) => {
   const { frontmatter } = post;
 
   const { coverImagePublicId, published, date, tags, title, excerpt, path } =
@@ -91,4 +91,4 @@ const BlogPost: NextPage<PostPageProps> = ({ post }) => {
   );
 };
 
-export default BlogPost;
+export default PostPage;
