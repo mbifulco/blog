@@ -4,9 +4,9 @@ import Link from 'next/link';
 import Script from 'next/script';
 import { Button, Code, SimpleGrid } from '@chakra-ui/react';
 import { MDXProvider } from '@mdx-js/react';
-import clsx from 'clsx';
 import { Highlight, themes } from 'prism-react-renderer';
 
+import clsxm from '@utils/clsxm';
 // one off component imports
 import { CenteredTextDemo } from '../components/demos/CenteredTextDemo';
 import { OrtonEffectImage } from '../components/demos/OrtonEffectImage';
@@ -28,7 +28,7 @@ const CustomHeading: React.FC<HeadingProps> = ({
       <Link href={`#${id}`} className="hover:no-underline">
         <Heading
           as={as}
-          className={clsx(
+          className={clsxm(
             'inline leading-6 tracking-normal',
             "hover:before:relative hover:before:-ml-[1.2ch] hover:before:inline hover:before:border-b-0 hover:before:pr-[0.2ch] hover:before:text-pink-700 hover:before:no-underline hover:before:content-['#']"
           )}
@@ -101,7 +101,7 @@ type AsideProps = HTMLProps<HTMLDivElement> & {
 const Aside: React.FC<AsideProps> = ({ type = 'default', ...props }) => {
   return (
     <aside
-      className={clsx(
+      className={clsxm(
         'my-8 -ml-8 border-l-8 border-solid px-8 py-4',
         type === 'default' && 'border-pink-400 bg-pink-50 text-pink-900',
         type === 'info' && 'border-yellow-400 bg-yellow-50 text-yellow-900',

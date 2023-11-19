@@ -3,13 +3,13 @@ import Link from 'next/link';
 
 import {
   GitHubIcon,
+  MastodonIcon,
   RssIcon,
   ThreadsIcon,
   TwitchIcon,
   TwitterIcon,
   YouTubeIcon,
 } from '../icons';
-import MastodonIcon from '../icons/MastodonIcon';
 
 const SocialLinks = () => (
   <div className="flex flex-row items-center gap-6">

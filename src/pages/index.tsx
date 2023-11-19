@@ -45,7 +45,7 @@ const HomePage: NextPage<HomePageProps> = ({ posts, newsletter }) => {
         title="Latest articles on design, development, and the world around me"
         image={headshotPublicUrl}
       />
-      <div className="my-4 items-start md:flex">
+      <div className="my-4 items-start gap-4 md:flex">
         <div className="mr-0 lg:mr-4">
           <Headshot size={250} />
         </div>

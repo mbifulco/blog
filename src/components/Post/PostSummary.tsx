@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
-import clsx from 'clsx';
 
+import clsxm from '@utils/clsxm';
 import type { BlogPost } from '../../data/content-types';
 import { Heading } from '../Heading';
 import { Image } from '../Image';
@@ -25,7 +25,7 @@ const PostSummary: React.FC<PostSummaryProps> = ({ post, eager = false }) => {
   const coverContainer = (
     <Link href="postPath">
       <Image
-        className={clsx(
+        className={clsxm(
           '-mx-2 mb-4 object-cover object-center shadow sm:mx-0 sm:rounded-lg'
         )}
         publicId={coverImagePublicId || `posts/${path}/cover`}

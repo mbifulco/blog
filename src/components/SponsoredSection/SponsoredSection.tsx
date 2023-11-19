@@ -1,6 +1,6 @@
 import Link from 'next/link';
-import clsx from 'clsx';
 
+import clsxm from '@utils/clsxm';
 import { Image } from '../Image';
 
 type SponsoredSectionProps = {
@@ -21,7 +21,7 @@ const SponsoredSection: React.FC<SponsoredSectionProps> = ({
   return (
     <div className="overflow-x-hidden md:overflow-x-visible">
       <section
-        className={clsx(
+        className={clsxm(
           'sponsored-section text-md -mx-8 my-4 rounded-sm border border-solid border-gray-300 px-8 py-4',
           'before:height-[3px] before:width-[33%] before:background-pink-400 before:position-relative before:top-[calc(-1em_-_3px)] before:ml-auto before:mr-auto before:content-["_"]',
           'after:height-[3px] after:width-[33%] after:background-pink-400 after:position-relative after:top-[calc(-1em_-_3px)] after:ml-auto after:mr-auto after:content-["_"]'

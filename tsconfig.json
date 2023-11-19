@@ -14,7 +14,15 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "strictNullChecks": true,
-    "target": "ES2017"
+    "target": "ES2017",
+    "baseUrl": ".",
+    "paths": {
+      "@components/*": ["src/components/*"],
+      "@hooks/*": ["src/hooks/*"],
+      "@layouts/*": ["src/components/layouts/*"],
+      "@lib/*": ["src/lib/*"],
+      "@utils/*": ["src/utils/*"]
+    }
   },
   "include": [
     "fathom.d.ts",

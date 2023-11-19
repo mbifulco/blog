@@ -14,7 +14,7 @@ const NewsletterItem: React.FC<NewsletterItemProps> = ({ newsletter }) => {
     <div className="w-full overflow-hidden bg-white">
       <Link
         href={`/newsletter/${slug}`}
-        className="m-0 block aspect-[1200/630]"
+        className="m-0 block aspect-[1200/630] max-w-full"
       >
         <div
           className="aspect-[1200/630] h-full min-h-[205px] bg-cover"

@@ -1,9 +1,9 @@
 import type { GetStaticProps } from 'next';
 import { useRouter } from 'next/router';
 
+import NewsletterHero from '@components/NewsletterSignup/NewsletterHero';
 import { BreadCrumbs } from '../../components/Breadcrumbs';
 import { Colophon } from '../../components/Colophon';
-import { NewsletterSignup } from '../../components/NewsletterSignup';
 import FullPost from '../../components/Post/FullPost';
 import SEO from '../../components/seo';
 import WebmentionMetadata from '../../components/webmentionMetadata';
@@ -89,15 +89,14 @@ const NewsletterPage: React.FC<NewsletterPageProps> = ({ newsletter }) => {
       />
 
       <FullPost post={newsletter} />
+
+      <NewsletterHero />
       <p className="mt-0 text-xl">
         Thanks for reading Tiny Improvements. If you found this helpful,{' '}
         {"I'd "}
         love it if you shared this with a friend. It helps me out a great deal.
       </p>
       <p className="text-xl">Until next time - be excellent to each other!</p>
-      <div className="mt-12 flex flex-row justify-center">
-        <NewsletterSignup tags={tags} />
-      </div>
       <Colophon />
       <WebmentionMetadata
         coverImageUrl={coverImageUrl}
