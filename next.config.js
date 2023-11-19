@@ -46,6 +46,11 @@ const config = {
         destination: 'https://www.passionfroot.me/irreverentmike',
         permanent: false,
       },
+      {
+        source: '/tinyimprovements',
+        destination: '/newsletter',
+        permanent: false,
+      },
     ];
   },
 };
