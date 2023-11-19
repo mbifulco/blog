@@ -61,11 +61,11 @@ const H1 = (props) => (
     {...props}
   />
 );
-const H2 = (props) => <CustomHeading as="h2" size="lg" {...props} />;
-const H3 = (props) => <CustomHeading as="h3" size="md" {...props} />;
-const H4 = (props) => <CustomHeading as="h4" size="md" {...props} />;
-const H5 = (props) => <CustomHeading as="h5" size="md" {...props} />;
-const H6 = (props) => <CustomHeading as="h6" size="md" {...props} />;
+const H2 = (props) => <CustomHeading as="h2" {...props} />;
+const H3 = (props) => <CustomHeading as="h3" {...props} />;
+const H4 = (props) => <CustomHeading as="h4" {...props} />;
+const H5 = (props) => <CustomHeading as="h5" {...props} />;
+const H6 = (props) => <CustomHeading as="h6" {...props} />;
 const P = (props) => <p className="my-2 text-xl" {...props} />;
 
 const Blockquote = ({ children }) => {
