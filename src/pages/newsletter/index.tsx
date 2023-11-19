@@ -70,7 +70,7 @@ const NewsletterPage: React.FC<NewsletterPageProps> = ({ newsletters }) => {
         <NewsletterItem newsletter={latestNewsletter} />
         <Spacer />
 
-        <Heading as="h2" size="md" margin={0} padding={0}>
+        <Heading as="h2" className="m-0 p-0">
           Read past disptaches
         </Heading>
         <SimpleGrid minChildWidth="300px" spacing="20px" marginTop={0}>
