@@ -29,7 +29,7 @@ const CustomHeading: React.FC<HeadingProps> = ({
         <Heading
           as={as}
           className={clsxm(
-            'inline leading-6 tracking-normal',
+            'inline tracking-normal',
             "hover:before:relative hover:before:-ml-[1.2ch] hover:before:inline hover:before:border-b-0 hover:before:pr-[0.2ch] hover:before:text-pink-700 hover:before:no-underline hover:before:content-['#']"
           )}
           id={id}
