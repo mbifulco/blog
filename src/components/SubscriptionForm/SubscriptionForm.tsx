@@ -92,7 +92,7 @@ const SubscriptionForm: React.FC<SubscriptionFormProps> = ({ tags: _ }) => {
                 <div></div>
                 <div></div>
               </div>
-              <span className="">I&apos;m in!</span>
+              <span className="">💌 Subscribe</span>
             </Button>
           </SimpleGrid>
         </div>

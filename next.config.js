@@ -26,6 +26,10 @@ const config = {
         protocol: 'https',
         hostname: 'webmention.io',
       },
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+      },
     ],
   },
   productionBrowserSourceMaps: true,

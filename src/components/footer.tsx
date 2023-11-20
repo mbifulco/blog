@@ -1,4 +1,3 @@
-import React from 'react';
 import Link from 'next/link';
 
 import config from '../config';
@@ -8,7 +7,7 @@ import SponsorCTA from './SponsorCTA/SponsorCTA';
 
 const Footer = () => {
   return (
-    <footer className="relative pb-20 pt-8 text-sm">
+    <footer className="pb-20 pt-8 text-sm xl:relative xl:mx-auto xl:max-w-[50rem]">
       <RelatedContentLinksByTag />
 
       <div className="grid gap-4 md:grid-cols-2">

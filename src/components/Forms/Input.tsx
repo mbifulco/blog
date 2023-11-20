@@ -13,7 +13,7 @@ const Input: React.FC<InputProps> = ({
   ...props
 }) => (
   <input
-    className="block w-full rounded-md border-zinc-300 shadow-sm focus:border-zinc-500 focus:ring-zinc-500 sm:text-sm"
+    className="block w-full rounded-lg border-zinc-300 shadow-sm focus:border-zinc-500 focus:ring-zinc-500 sm:text-sm"
     id={id}
     placeholder={placeholder}
     required={required}

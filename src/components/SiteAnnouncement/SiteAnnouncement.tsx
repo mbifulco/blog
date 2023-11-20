@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import { XMarkIcon } from '@heroicons/react/24/outline';
 
 import clsxm from '@utils/clsxm';
 
@@ -14,7 +13,7 @@ const SiteAnnouncement: React.FC<SiteAnnouncementProps> = ({
   return (
     <div
       className={clsxm(
-        'flex w-screen max-w-full items-center justify-center bg-[#502954] py-3 transition-all duration-500 ease-in-out',
+        'flex w-screen max-w-full items-center justify-center bg-[#8d5781] py-3 transition-all duration-500 ease-in-out',
         sticky && 'sticky top-0 z-[100]',
         className
       )}

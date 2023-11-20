@@ -3,70 +3,66 @@
  * @see https://v0.dev/t/kB60c2A2FTB
  */
 
-import Image from 'next/image';
 import useConvertKitStats from '@hooks/useConvertKitStats';
+import config from 'src/config';
 
 import Button from '@components/Button';
 import Input from '@components/Forms/Input';
 import Label from '@components/Forms/Label';
+import { Heading } from '@components/Heading';
+import { Image } from '@components/Image';
+import { SubscriptionForm } from '@components/SubscriptionForm';
 
 const NewsletterHero = () => {
   const { stats } = useConvertKitStats();
 
   return (
-    <section className="w-full py-12 md:py-24 lg:py-32 xl:py-48">
-      <div className="container px-4 md:px-6">
+    <section className="lg:py-30 w-full bg-gray-700 py-8 text-white md:py-24 xl:py-56">
+      <div className="px-0">
         <div className="grid gap-6 lg:grid-cols-2 lg:gap-12 xl:grid-cols-2">
           <Image
-            alt="Newsletter"
-            className="aspect-content mx-auto overflow-hidden rounded-xl object-cover object-center sm:w-full"
-            height="400"
-            src="/placeholder.svg"
-            width="400"
+            publicId="newsletters/hero-images/washed-up"
+            alt="Washed up, as always"
+            className="mx-auto aspect-square overflow-hidden object-cover object-left sm:w-full"
+            height={898}
+            width={1600}
           />
-          <div className="flex flex-col justify-center space-y-4">
-            <div className="space-y-2">
-              <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none">
-                💌 Tiny Improvements Newsletter
-              </h1>
-              <p className="max-w-[600px] text-gray-700 md:text-xl">
-                Join the{' '}
-                <span className="text-bold text-pink-600">
-                  {stats?.subscriberCount ?? (
-                    <span>
-                      <i role="img" aria-label="fire">
-                        🔥
-                      </i>{' '}
-                      {stats?.subscriberCount}
-                    </span>
-                  )}{' '}
-                  other product builders
-                </span>{' '}
-                readers getting tiny improvements in their inbox every week.
+          <div className="flex flex-col justify-center gap-10  md:text-xl lg:pr-12 xl:text-2xl">
+            <div className="max-w-prose space-y-4 text-gray-300">
+              <Heading
+                as="h2"
+                className="text-white xl:text-7xl"
+                id="newsletter-signup"
+              >
+                SHIP PRODUCTS <br />
+                THAT <span className="text-pink-600">MATTER</span>
+              </Heading>
+              <p>
+                💌 Tiny Improvements: my weekly newsletter sharing one small yet
+                impactful idea for product builders, startup founders, and
+                indiehackers.
               </p>
-              <p className="max-w-[600px] text-gray-500 md:text-xl">
-                Our newsletter brings you the best tips and tricks for
-                productivity, self-improvement, and personal growth.
+              <p>
+                It&apos;s your cheat code for building products your customers
+                will love. Learn from the CTO of a Y Combinator-backed startup,
+                with past experience at Google, Stripe, and Microsoft.
               </p>
             </div>
-            <div className="w-full max-w-sm space-y-2">
-              <form className="space-y-4">
-                <div className="space-y-2">
-                  <Label htmlFor="first-name">First Name</Label>
-                  <Input id="first-name" required />
-                </div>
-                <div className="space-y-2">
-                  <Input
-                    id="email"
-                    placeholder="m@example.com"
-                    required
-                    type="email"
-                  />
-                </div>
-                <Button className="w-full" type="submit">
-                  Sign Up
-                </Button>
-              </form>
+            <div className="w-full space-y-2">
+              <SubscriptionForm />
+              <p className="max-w-[600px] text-lg text-gray-300">
+                Join{' '}
+                <span className="text-pink-400">
+                  {stats?.subscriberCount ? (
+                    <span>{stats?.subscriberCount}</span>
+                  ) : (
+                    'the'
+                  )}{' '}
+                  other product builders
+                </span>
+                {', '}
+                and start shipping today!
+              </p>
             </div>
           </div>
         </div>

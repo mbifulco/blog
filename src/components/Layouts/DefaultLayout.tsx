@@ -13,7 +13,7 @@ const DefaultLayout = ({ children }) => {
 
           <SiteAnnouncement />
 
-          <div className="mx-auto flex flex-col gap-8 lg:w-[50rem]">
+          <div className="flex flex-col gap-8">
             {children}
             <Footer />
           </div>

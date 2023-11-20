@@ -75,29 +75,33 @@ const NewsletterPage: React.FC<NewsletterPageProps> = ({ newsletter }) => {
         image={coverImageUrl}
         ogType="article"
       />
-      <BreadCrumbs
-        crumbs={[
-          {
-            name: '💌 Tiny Improvements',
-            href: '/newsletter',
-          },
-          {
-            name: title,
-            href: `#`,
-          },
-        ]}
-      />
+      <div className="mx-auto lg:w-[50rem]">
+        <BreadCrumbs
+          crumbs={[
+            {
+              name: '💌 Tiny Improvements',
+              href: '/newsletter',
+            },
+            {
+              name: title,
+              href: `#`,
+            },
+          ]}
+        />
+      </div>
 
       <FullPost post={newsletter} />
+      <Colophon />
 
-      <NewsletterHero />
-      <p className="mt-0 text-xl">
+      <p className="mx-auto mt-0 text-xl lg:w-[50rem]">
         Thanks for reading Tiny Improvements. If you found this helpful,{' '}
         {"I'd "}
         love it if you shared this with a friend. It helps me out a great deal.
       </p>
-      <p className="text-xl">Until next time - be excellent to each other!</p>
-      <Colophon />
+      <p className="mx-auto text-xl lg:w-[50rem]">
+        Until next time - be excellent to each other!
+      </p>
+      <NewsletterHero />
       <WebmentionMetadata
         coverImageUrl={coverImageUrl}
         summary={excerpt}
