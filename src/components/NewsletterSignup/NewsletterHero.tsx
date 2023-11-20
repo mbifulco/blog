@@ -4,11 +4,7 @@
  */
 
 import useConvertKitStats from '@hooks/useConvertKitStats';
-import config from 'src/config';
 
-import Button from '@components/Button';
-import Input from '@components/Forms/Input';
-import Label from '@components/Forms/Label';
 import { Heading } from '@components/Heading';
 import { Image } from '@components/Image';
 import { SubscriptionForm } from '@components/SubscriptionForm';
