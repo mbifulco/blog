@@ -21,10 +21,10 @@ const config = {
   },
   newsletter: {
     title: '💌 Tiny Improvements',
-    tagline: 'Build with a purpose',
+    tagline: 'Ship products that matter',
     ctaTagline: '💌 Learn how to build products that change the world',
     shortDescription:
-      'A newsletter for product builders, startup founders, and indiehackers, who design with intention, and my thoughts on living a life you love in a busy world.',
+      "My weekly newsletter for product builders. It's a single, tiny idea to help you build better products.",
     description: `
     Tiny Improvements is a newsletter for people designing and building great products.
 

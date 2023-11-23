@@ -1,3 +1,5 @@
+import clsxm from '@utils/clsxm';
+
 type InputProps = {
   id: string;
   placeholder?: string;
@@ -6,6 +8,7 @@ type InputProps = {
 } & React.InputHTMLAttributes<HTMLInputElement>;
 
 const Input: React.FC<InputProps> = ({
+  className,
   id,
   placeholder,
   required,
@@ -13,7 +16,10 @@ const Input: React.FC<InputProps> = ({
   ...props
 }) => (
   <input
-    className="block w-full rounded-lg border-zinc-300 shadow-sm focus:border-zinc-500 focus:ring-zinc-500 sm:text-sm"
+    className={clsxm(
+      'block w-full rounded-lg border-zinc-300 shadow-sm focus:border-zinc-500 focus:ring-zinc-500 sm:text-sm',
+      className
+    )}
     id={id}
     placeholder={placeholder}
     required={required}

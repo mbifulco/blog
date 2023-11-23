@@ -23,7 +23,7 @@ const PostSummary: React.FC<PostSummaryProps> = ({ post, eager = false }) => {
   const postPath = `/posts/${path}`;
 
   const coverContainer = (
-    <Link href="postPath">
+    <Link href={postPath}>
       <Image
         className={clsxm(
           '-mx-2 mb-4 object-cover object-center shadow sm:mx-0 sm:rounded-lg'

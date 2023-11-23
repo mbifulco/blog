@@ -1,6 +1,7 @@
 import Link from 'next/link';
 
 import clsxm from '@utils/clsxm';
+import config from '../../config';
 
 type SiteAnnouncementProps = {
   className?: string;
@@ -10,15 +11,22 @@ const SiteAnnouncement: React.FC<SiteAnnouncementProps> = ({
   className = '',
   sticky = false,
 }) => {
+  let { shortDescription } = config.newsletter;
+
+  // make first character lower case
+  shortDescription =
+    shortDescription.charAt(0).toLowerCase() + shortDescription.slice(1);
+
   return (
     <div
       className={clsxm(
-        'flex w-screen max-w-full items-center justify-center bg-[#8d5781] py-3 transition-all duration-500 ease-in-out',
+        'flex w-screen max-w-full items-center justify-center bg-pink-950  text-pink-900 transition-all duration-500 ease-in-out',
         sticky && 'sticky top-0 z-[100]',
         className
       )}
+      style={{ backgroundImage: `url(/images/wiggle.svg)` }}
     >
-      <div className="mx-auto flex flex-row gap-4 px-2 text-sm text-white">
+      <div className="mx-auto flex flex-row gap-4  px-2 py-3 text-sm text-white">
         <p>
           Subscribe to{' '}
           <Link
@@ -27,8 +35,7 @@ const SiteAnnouncement: React.FC<SiteAnnouncementProps> = ({
           >
             💌 Tiny Improvements
           </Link>
-          , my weekly newsletter for product builders. It&apos;s a single, tiny
-          idea to help you build better products.
+          , {shortDescription}
         </p>
       </div>
       {/* <button
