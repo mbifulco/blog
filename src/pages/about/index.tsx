@@ -33,7 +33,7 @@ const AboutPage: NextPage<AboutPageProps> = ({ mdxSource }) => (
       title="About Mike Bifulco - founder, developer advocate, designer, writer"
       description="Mike Bifulco is a serial entrepreneur, author, and software developer, and former Stripe, Google, and Microsoft employee, working to build great products."
     />
-    <main className="mx-auto max-w-[50rem]">
+    <main className="mx-auto max-w-4xl">
       <div className="flex flex-col">
         <MDXRemote {...mdxSource} components={components} />
       </div>

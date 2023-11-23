@@ -7,7 +7,7 @@ type PostFeedProps = {
 };
 
 const PostFeed: React.FC<PostFeedProps> = ({ posts }) => (
-  <div className="flex flex-col gap-8">
+  <div className="flex flex-col gap-12">
     {posts.map((post, idx) => {
       const postEl = <Post summary key={post.slug} post={post} />;
 

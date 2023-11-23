@@ -40,7 +40,7 @@ type HomePageProps = {
 
 const HomePage: NextPage<HomePageProps> = ({ posts, newsletter }) => {
   return (
-    <>
+    <div className="mx-auto flex max-w-4xl flex-col gap-12">
       <SEO
         title="Latest articles on design, development, and the world around me"
         image={headshotPublicUrl}
@@ -99,7 +99,7 @@ const HomePage: NextPage<HomePageProps> = ({ posts, newsletter }) => {
           <Subtitle>
             <Link href="/newsletter">💌 Tiny Improvements newsletter</Link>
           </Subtitle>
-          <div className="my-4">
+          <div className="my-2">
             <NewsletterItem newsletter={newsletter} />
           </div>
         </div>
@@ -108,7 +108,7 @@ const HomePage: NextPage<HomePageProps> = ({ posts, newsletter }) => {
           <Subtitle>
             <Link href="/podcast">🎙️ The Podcast</Link>
           </Subtitle>
-          <div className="pt-4">
+          <div className="my-2">
             <iframe
               width="100%"
               height="390"
@@ -119,10 +119,8 @@ const HomePage: NextPage<HomePageProps> = ({ posts, newsletter }) => {
         </div>
       </div>
 
-      <div className="flex flex-col gap-8">
-        <div>
-          <Subtitle>LATEST POSTS</Subtitle>
-        </div>
+      <div>
+        <Subtitle>LATEST POSTS</Subtitle>
         <PostFeed posts={posts} />
       </div>
       <WebmentionMetadata
@@ -130,7 +128,7 @@ const HomePage: NextPage<HomePageProps> = ({ posts, newsletter }) => {
         title="Home - mikebifulco.com"
         publishedAt={startOfToday()}
       />
-    </>
+    </div>
   );
 };
 
