@@ -53,7 +53,7 @@ const Eponymous = () => {
 
 const PodcastPage = () => {
   return (
-    <>
+    <div className="mx-auto flex max-w-4xl flex-col gap-4">
       <SEO
         title="Subscribe to Tiny Improvements: articles software dev, design, and climate"
         image={
@@ -89,7 +89,7 @@ const PodcastPage = () => {
       </Stack>
 
       <NewsletterSignup />
-    </>
+    </div>
   );
 };
 

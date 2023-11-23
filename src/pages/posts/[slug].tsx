@@ -2,7 +2,7 @@ import type { GetStaticProps, NextPage } from 'next';
 import { useRouter } from 'next/router';
 
 import { Colophon } from '../../components/Colophon';
-import { NewsletterSignup } from '../../components/NewsletterSignup';
+import { NewsletterHero } from '../../components/NewsletterSignup';
 import { BlogPost as Post } from '../../components/Post';
 import SEO from '../../components/seo';
 import WebmentionMetadata from '../../components/webmentionMetadata';
@@ -76,10 +76,6 @@ const PostPage: NextPage<PostPageProps> = ({ post }) => {
       )}
 
       <Post post={post} />
-      <div className="mt-12 flex flex-row justify-center">
-        <NewsletterSignup tags={tags} />
-      </div>
-      <Colophon />
       <WebmentionMetadata
         coverImageUrl={coverImageUrl}
         summary={excerpt}
@@ -87,6 +83,8 @@ const PostPage: NextPage<PostPageProps> = ({ post }) => {
         tags={tags}
         title={title}
       />
+      <Colophon />
+      <NewsletterHero />
     </>
   );
 };

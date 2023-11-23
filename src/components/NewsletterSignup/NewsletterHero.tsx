@@ -22,7 +22,7 @@ const NewsletterHero = () => {
           <Image
             publicId="newsletters/hero-images/washed-up"
             alt="Washed up, as always"
-            className="mx-auto hidden aspect-square overflow-hidden object-cover object-left sm:w-full lg:block"
+            className="mx-auto hidden aspect-square overflow-hidden object-cover object-left py-10 sm:w-full lg:block"
             height={898}
             width={1600}
           />
