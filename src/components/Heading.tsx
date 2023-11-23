@@ -22,19 +22,19 @@ export const Heading = ({
   let headingClasses = '';
   switch (Component) {
     case 'h1':
-      headingClasses = 'text-6xl';
+      headingClasses = 'text-4xl uppercase';
       break;
     case 'h2':
-      headingClasses = 'text-5xl';
-      break;
-    case 'h3':
-      headingClasses = 'text-4xl';
-      break;
-    case 'h4':
       headingClasses = 'text-3xl';
       break;
-    case 'h5':
+    case 'h3':
+      headingClasses = 'text-2xl';
+      break;
+    case 'h4':
       headingClasses = 'text-xl';
+      break;
+    case 'h5':
+      headingClasses = 'text-lg';
       break;
     case 'h6':
       headingClasses = 'text-lg';
@@ -48,7 +48,7 @@ export const Heading = ({
     <Component
       {...props}
       className={clsxm(
-        'font-futura font-bold uppercase text-pink-600',
+        'font-futura font-bold text-pink-600',
         headingClasses,
         className
       )}

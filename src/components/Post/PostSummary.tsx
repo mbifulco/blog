@@ -41,7 +41,7 @@ const PostSummary: React.FC<PostSummaryProps> = ({ post, eager = false }) => {
     <article>
       <div className="relative">
         <header className="flex flex-col gap-1">
-          <Heading as={'h2'} className="m-0 p-0">
+          <Heading as={'h2'} className="m-0 p-0 uppercase">
             <Link
               className="text-pink-600 no-underline hover:underline"
               href={postPath}
