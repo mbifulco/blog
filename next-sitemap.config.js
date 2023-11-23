@@ -1,8 +1,7 @@
-const env = import('./src/utils/env.mjs');
-
 /** @type {import('next-sitemap').IConfig} */
 module.exports = {
-  siteUrl: env.SITE_URL || 'https://mikebifulco.com',
+  // process.env.SITE_URL provided by next.js, no need to use env for it
+  siteUrl: process.env.env.SITE_URL || 'https://mikebifulco.com',
   generateRobotsTxt: process.env.CONTEXT === 'production', // only generate robots.txt for prod
   // ...other options
 };
