@@ -1,8 +1,8 @@
 import pluralize from 'pluralize';
-import { Avatar, AvatarGroup } from '@chakra-ui/react';
 
 import formatDate from '../../utils/format-date';
 import type { WebMention } from '../../utils/webmentions';
+import { Avatar, AvatarGroup } from '../Avatar';
 
 type MentionsSummaryProps = {
   mentions?: WebMention[];
@@ -24,27 +24,22 @@ const MentionsSummary: React.FC<MentionsSummaryProps> = ({ mentions }) => {
     return true;
   });
 
-  const avatarSize = '48px';
-
   return (
     <>
       {likes.length > 0 && (
-        <div className="flex flex-row mt-4 items-center">
-          <AvatarGroup max={4} flexWrap="wrap">
-            {likes.map((like) => {
+        <div className="mt-4 flex flex-row items-center">
+          <AvatarGroup
+            people={likes.map((like) => {
               const { author } = like.data;
-              if (!author) return null;
-              return (
-                <Avatar
-                  key={`like-author-${author.name}`}
-                  height={avatarSize}
-                  width={avatarSize}
-                  name={author?.name || 'Unknown author'}
-                  src={author.photo}
-                />
-              );
+              return {
+                name: author?.name || 'Unknown author',
+                src: author?.photo,
+                size: 48,
+              };
             })}
-          </AvatarGroup>
+            variant="lg"
+          />
+
           <span>
             <span role="img" aria-label="likes">
               ❤️
@@ -55,7 +50,7 @@ const MentionsSummary: React.FC<MentionsSummaryProps> = ({ mentions }) => {
       )}
       {someoneMentioned.length > 0 && (
         <div>
-          <h3 className="font-bold text-xl">Mentions</h3>
+          <h3 className="text-xl font-bold">Mentions</h3>
           {someoneMentioned.map((mention, idx) => {
             const { author, published: publishedDate, url } = mention.data;
 
@@ -65,23 +60,21 @@ const MentionsSummary: React.FC<MentionsSummaryProps> = ({ mentions }) => {
 
             return (
               <div
-                className="bg-white/40 p-3 mb-3 flex flex-row gap-3"
+                className="mb-3 flex flex-row gap-3 bg-white/40 p-3"
                 key={`someone-mentioned-author-${idx}-${author.name}`}
               >
                 <a href={author?.url}>
                   <Avatar
                     name={author.name}
-                    src={author.photo}
+                    src={author?.photo}
                     key={`mentioned-by-author-${author?.name}`}
-                    marginRight="0.5rem"
-                    height={avatarSize}
-                    width={avatarSize}
+                    variant="xl"
                   />
                 </a>
                 <div className="flex flex-col gap-4">
                   <span style={{ width: '100%' }}>
                     <a
-                      className="text-pink-600 font-bold hover:underline"
+                      className="font-bold text-pink-600 hover:underline"
                       href={author?.url}
                     >
                       {author.name}

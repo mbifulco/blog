@@ -1,21 +1,16 @@
 import type { GetStaticProps } from 'next';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { Breadcrumb, BreadcrumbItem, BreadcrumbLink } from '@chakra-ui/react';
 
-import { getNewsletterBySlug, getAllNewsletters } from '../../lib/newsletters';
-
+import NewsletterHero from '@components/NewsletterSignup/NewsletterHero';
+import { BreadCrumbs } from '../../components/Breadcrumbs';
 import { Colophon } from '../../components/Colophon';
-import { NewsletterSignup } from '../../components/NewsletterSignup';
+import FullPost from '../../components/Post/FullPost';
 import SEO from '../../components/seo';
 import WebmentionMetadata from '../../components/webmentionMetadata';
-
+import type { Newsletter } from '../../data/content-types';
+import { getAllNewsletters, getNewsletterBySlug } from '../../lib/newsletters';
 import { getCloudinaryImageUrl } from '../../utils/images';
 import { serialize } from '../../utils/mdx';
-
-import { FaChevronRight } from 'react-icons/fa';
-import type { Newsletter } from '../../data/content-types';
-import FullPost from '../../components/Post/FullPost';
 
 type NewsletterPageParams = {
   slug: string;
@@ -80,33 +75,33 @@ const NewsletterPage: React.FC<NewsletterPageProps> = ({ newsletter }) => {
         image={coverImageUrl}
         ogType="article"
       />
-      <Breadcrumb
-        separator={
-          <FaChevronRight className="text-pink-500" fontSize="smaller" />
-        }
-      >
-        <BreadcrumbItem>
-          <BreadcrumbLink href="/newsletter" as={Link}>
-            💌 Tiny Improvements
-          </BreadcrumbLink>
-        </BreadcrumbItem>
-
-        <BreadcrumbItem isCurrentPage>
-          <BreadcrumbLink>{title}</BreadcrumbLink>
-        </BreadcrumbItem>
-      </Breadcrumb>
+      <div className="mx-auto max-w-4xl">
+        <BreadCrumbs
+          crumbs={[
+            {
+              name: '💌 Tiny Improvements',
+              href: '/newsletter',
+            },
+            {
+              name: title,
+              href: `#`,
+            },
+          ]}
+        />
+      </div>
 
       <FullPost post={newsletter} />
-      <p className="mt-0 text-xl">
+      <Colophon />
+
+      <p className="mx-auto mt-0 max-w-4xl text-xl">
         Thanks for reading Tiny Improvements. If you found this helpful,{' '}
         {"I'd "}
         love it if you shared this with a friend. It helps me out a great deal.
       </p>
-      <p className="text-xl">Until next time - be excellent to each other!</p>
-      <div className="flex flex-row justify-center mt-12">
-        <NewsletterSignup tags={tags} />
-      </div>
-      <Colophon />
+      <p className="mx-auto max-w-4xl text-xl">
+        Until next time - be excellent to each other!
+      </p>
+      <NewsletterHero />
       <WebmentionMetadata
         coverImageUrl={coverImageUrl}
         summary={excerpt}

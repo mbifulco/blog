@@ -1,24 +1,17 @@
-import {
-  Box,
-  Heading,
-  SimpleGrid,
-  Spacer,
-  Stack,
-  Text,
-} from '@chakra-ui/react';
+import type { GetStaticProps } from 'next';
+import { SimpleGrid, Spacer } from '@chakra-ui/react';
 
+import { Heading } from '@components/Heading';
 import NewsletterItem from '../../components/NewsletterFeed/NewsletterItem';
 import { NewsletterSignup } from '../../components/NewsletterSignup';
 import SEO from '../../components/seo';
-import { Subtitle } from '../../components/Subtitle';
-import { SubscriptionForm } from '../../components/SubscriptionForm';
-
-import { getAllNewsletters } from '../../lib/newsletters';
-import config from '../../config';
 import SponsorCTA from '../../components/SponsorCTA/SponsorCTA';
-import useConvertKitStats from '../../hooks/useConvertKitStats';
+import { SubscriptionForm } from '../../components/SubscriptionForm';
+import { Subtitle } from '../../components/Subtitle';
+import config from '../../config';
 import type { Newsletter } from '../../data/content-types';
-import type { GetStaticProps } from 'next';
+import useConvertKitStats from '../../hooks/useConvertKitStats';
+import { getAllNewsletters } from '../../lib/newsletters';
 
 export const getStaticProps: GetStaticProps<NewsletterPageProps> = async () => {
   const newsletters = await getAllNewsletters();
@@ -40,7 +33,7 @@ const NewsletterPage: React.FC<NewsletterPageProps> = ({ newsletters }) => {
   const [latestNewsletter, ...pastNewsletters] = newsletters;
 
   return (
-    <>
+    <div className="mx-auto flex max-w-4xl flex-col gap-4">
       <SEO
         title="Subscribe to Tiny Improvements: articles software dev, design, and climate"
         image={
@@ -48,8 +41,8 @@ const NewsletterPage: React.FC<NewsletterPageProps> = ({ newsletters }) => {
         }
       />
 
-      <Stack>
-        <Box as="header">
+      <div className="flex flex-col gap-4">
+        <header>
           <Heading as="h1">
             <span role="img" aria-label="heart envelope emoji">
               💌
@@ -57,41 +50,40 @@ const NewsletterPage: React.FC<NewsletterPageProps> = ({ newsletters }) => {
             Tiny Improvements
           </Heading>
           <Subtitle>{config.newsletter.tagline}</Subtitle>
-        </Box>
-        <Text fontSize={'xl'}>{config.newsletter.shortDescription}</Text>
-        <Text fontSize={'xl'}>
+        </header>
+        <p className="text-xl">{config.newsletter.shortDescription}</p>
+        <p className="text-xl">
           Join{' '}
           <span style={{ fontWeight: 'bold' }}>
             {stats?.subscriberCount ?? 'the'} other product builders
           </span>{' '}
           and get it delivered straight to your inbox by filling out this happy
           lil&apos; form:
-        </Text>
-      </Stack>
-      <SubscriptionForm />
+        </p>
+      </div>
+      <div className="mx-auto flex max-w-2xl flex-col gap-2">
+        <SubscriptionForm />
+        <SponsorCTA />
+      </div>
 
-      <SponsorCTA />
+      <Heading as="h2" className="mb-4 mt-10 text-xl text-black" id="latest">
+        💌 Read the latest dispatch
+      </Heading>
+      <NewsletterItem newsletter={latestNewsletter} />
+      <Spacer />
 
-      <Stack direction={'column'} spacing={'4'}>
-        <Heading as="h2" size="md" margin={0} padding={0}>
-          💌 Read the latest dispatch
-        </Heading>
-        <NewsletterItem newsletter={latestNewsletter} />
-        <Spacer />
-
-        <Heading as="h2" size="md" margin={0} padding={0}>
-          Read past disptaches
-        </Heading>
-        <SimpleGrid minChildWidth="300px" spacing="20px" marginTop={0}>
-          {pastNewsletters.map((newsletter) => {
-            const { slug } = newsletter?.frontmatter;
-            return <NewsletterItem newsletter={newsletter} key={slug} />;
-          })}
-        </SimpleGrid>
-      </Stack>
+      <Heading as="h2" className="mb-4 mt-10 text-xl text-black" id="past">
+        Read past disptaches
+      </Heading>
+      <SimpleGrid minChildWidth="300px" spacing="20px" marginTop={0}>
+        {pastNewsletters.map((newsletter) => {
+          const { slug } = newsletter?.frontmatter;
+          return <NewsletterItem newsletter={newsletter} key={slug} />;
+        })}
+      </SimpleGrid>
 
       <NewsletterSignup />
-    </>
+    </div>
   );
 };
 

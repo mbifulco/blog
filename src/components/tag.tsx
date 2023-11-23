@@ -7,7 +7,7 @@ type TagProps = {
 
 const Tag: React.FC<TagProps> = ({ children, url }) => {
   let tag = (
-    <div className="flex mr-2 gap-0">
+    <div className="mr-2 flex gap-0">
       <span className="text-gray-400">#</span>
       <span className="text-gray-700">{children}</span>
     </div>
@@ -15,7 +15,7 @@ const Tag: React.FC<TagProps> = ({ children, url }) => {
 
   if (url) {
     tag = (
-      <Link href={url} className="text-sm text-gray hover:underline">
+      <Link href={url} className="text-gray text-md hover:underline">
         {tag}
       </Link>
     );

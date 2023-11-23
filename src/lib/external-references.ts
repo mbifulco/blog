@@ -1,10 +1,10 @@
 import { join } from 'path';
 
+import type { Article } from '../data/content-types';
 import {
   getAllContentFromDirectory,
   getContentBySlug,
 } from './contentTypeLoader';
-import type { Article } from '../data/content-types';
 
 // directory reference to `src/content/external-references`
 const externalReferencesDirectory = join(

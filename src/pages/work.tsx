@@ -1,11 +1,9 @@
-import type { NextPage } from 'next';
-import type { GetStaticProps } from 'next';
+import type { GetStaticProps, NextPage } from 'next';
 
 import { ExternalWorkItem } from '../components/ExternalWork';
 import SEO from '../components/seo';
-
-import { getAllExternalReferences } from '../lib/external-references';
 import type { Article } from '../data/content-types';
+import { getAllExternalReferences } from '../lib/external-references';
 
 export const getStaticProps: GetStaticProps = async () => {
   const articles = await getAllExternalReferences();
@@ -26,7 +24,7 @@ const WorkPage: NextPage<WorkPageProps> = ({ articles }) => {
     <>
       <SEO title="My work from around the web" canonical="/work" />
       <div className="flex flex-row gap-4">
-        <h1 className="font-bold text-4xl">Some samples of my work online</h1>
+        <h1 className="text-4xl font-bold">Some samples of my work online</h1>
         <div>
           <p className="mb-8">
             This page contains articles, videos, and other references to my work

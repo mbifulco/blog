@@ -1,10 +1,10 @@
 import { MDXRemote } from 'next-mdx-remote';
 
-import { PublishDate } from '../PublishDate';
-
-import { components } from '../../utils/MDXProviderWrapper';
-import TagsSummary from '../tagsSummary';
 import type { Article } from '../../data/content-types';
+import { components } from '../../utils/MDXProviderWrapper';
+import { Heading } from '../Heading';
+import { PublishDate } from '../PublishDate';
+import TagsSummary from '../tagsSummary';
 
 type ExternalWorkItemProps = {
   article: Article;
@@ -19,8 +19,10 @@ const ExternalWorkItem: React.FC<ExternalWorkItemProps> = ({ article }) => {
     /* note: box shadow from @drucial's https://www.betterneumorphism.com/?h=0&s=0&l=100 */
   }
   return (
-    <article className="shadow-2xl p-6 rounded-md flex flex-col">
-      <h2 className="mb-0 text-2xl font-bold">{title}</h2>
+    <article className="flex flex-col rounded-md p-6 shadow-2xl">
+      <Heading as="h2" className="mb-0">
+        {title}
+      </Heading>
       <p className="mt-0 text-pink-500">
         <PublishDate date={date} />
       </p>

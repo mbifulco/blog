@@ -1,18 +1,14 @@
 import type { GetStaticProps, NextPage } from 'next';
-
 import { useRouter } from 'next/router';
-import { Flex } from '@chakra-ui/react';
-
-import { getPostBySlug, getAllPosts } from '../../lib/blog';
 
 import { Colophon } from '../../components/Colophon';
-import { NewsletterSignup } from '../../components/NewsletterSignup';
+import { NewsletterHero } from '../../components/NewsletterSignup';
 import { BlogPost as Post } from '../../components/Post';
 import SEO from '../../components/seo';
 import WebmentionMetadata from '../../components/webmentionMetadata';
-
+import type { BlogPost } from '../../data/content-types';
+import { getAllPosts, getPostBySlug } from '../../lib/blog';
 import { getCloudinaryImageUrl } from '../../utils/images';
-import { BlogPost } from '../../data/content-types';
 
 type PostPageParams = {
   slug: string;
@@ -52,7 +48,7 @@ export async function getStaticPaths() {
   };
 }
 
-const BlogPost: NextPage<PostPageProps> = ({ post }) => {
+const PostPage: NextPage<PostPageProps> = ({ post }) => {
   const { frontmatter } = post;
 
   const { coverImagePublicId, published, date, tags, title, excerpt, path } =
@@ -80,10 +76,6 @@ const BlogPost: NextPage<PostPageProps> = ({ post }) => {
       )}
 
       <Post post={post} />
-      <Flex direction="row" justifyContent="center" marginTop="3rem">
-        <NewsletterSignup tags={tags} />
-      </Flex>
-      <Colophon />
       <WebmentionMetadata
         coverImageUrl={coverImageUrl}
         summary={excerpt}
@@ -91,8 +83,10 @@ const BlogPost: NextPage<PostPageProps> = ({ post }) => {
         tags={tags}
         title={title}
       />
+      <Colophon />
+      <NewsletterHero />
     </>
   );
 };
 
-export default BlogPost;
+export default PostPage;

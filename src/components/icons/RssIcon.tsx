@@ -1,4 +1,4 @@
-import clsx from 'clsx';
+import clsxm from '@utils/clsxm';
 import type { SocialIcon } from '.';
 
 const RssIcon: SocialIcon = ({ className }) => (
@@ -6,7 +6,7 @@ const RssIcon: SocialIcon = ({ className }) => (
     fill="currentColor"
     preserveAspectRatio="xMidYMid meet"
     viewBox="0 0 40 40"
-    className={clsx('w-4 h-4', className)}
+    className={clsxm('h-4 w-4', className)}
   >
     <g
       id="Page-1"

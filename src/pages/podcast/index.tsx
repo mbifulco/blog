@@ -1,18 +1,18 @@
 import Link from 'next/link';
 import {
   Box,
-  Heading,
   Popover,
-  PopoverTrigger,
+  PopoverArrow,
+  PopoverBody,
+  PopoverCloseButton,
   PopoverContent,
   PopoverHeader,
-  PopoverBody,
-  PopoverArrow,
-  PopoverCloseButton,
+  PopoverTrigger,
   Stack,
   Text,
 } from '@chakra-ui/react';
 
+import { Heading } from '@components/Heading';
 import { NewsletterSignup } from '../../components/NewsletterSignup';
 import SEO from '../../components/seo';
 import { Subtitle } from '../../components/Subtitle';
@@ -21,7 +21,7 @@ const Eponymous = () => {
   return (
     <Popover trigger="hover">
       <PopoverTrigger>
-        <span className="border-b border-dashed border-pink-400 cursor-pointer">
+        <span className="cursor-pointer border-b border-dashed border-pink-400">
           eponymous
         </span>
       </PopoverTrigger>
@@ -53,7 +53,7 @@ const Eponymous = () => {
 
 const PodcastPage = () => {
   return (
-    <>
+    <div className="mx-auto flex max-w-4xl flex-col gap-4">
       <SEO
         title="Subscribe to Tiny Improvements: articles software dev, design, and climate"
         image={
@@ -89,7 +89,7 @@ const PodcastPage = () => {
       </Stack>
 
       <NewsletterSignup />
-    </>
+    </div>
   );
 };
 

@@ -2,23 +2,22 @@
 
 import { useState } from 'react';
 import Script from 'next/script';
-
-import GmailIcon from './GmailIcon';
-
 import {
   Button,
+  Container,
   Icon,
   Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalCloseButton,
   ModalBody,
+  ModalCloseButton,
+  ModalContent,
   ModalFooter,
+  ModalHeader,
+  ModalOverlay,
   Text,
   useDisclosure,
-  Container,
 } from '@chakra-ui/react';
+
+import GmailIcon from './GmailIcon';
 
 type ConfirmButtonProps = {
   email?: string;

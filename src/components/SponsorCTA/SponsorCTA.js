@@ -8,7 +8,7 @@ const SponsorCTA = () => {
       </span>{' '}
       Get in touch to &rarr;{' '}
       <Link
-        className="text-pink-600 inline font-bold"
+        className="inline font-bold text-pink-600"
         href="/sponsor"
         target="_blank"
         rel="noopener noreferrer"

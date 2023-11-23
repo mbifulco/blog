@@ -1,10 +1,10 @@
 import { join } from 'path';
 
+import type { Newsletter } from '../data/content-types';
 import {
   getAllContentFromDirectory,
   getContentBySlug,
 } from './contentTypeLoader';
-import type { Newsletter } from '../data/content-types';
 
 // directory reference to `src/content/external-references`
 const newslettersDirectory = join(process.cwd(), 'src', 'data', 'newsletters');

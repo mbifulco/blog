@@ -1,5 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 
+import { env } from '@utils/env.mjs';
+
 type ResponseData = {
   subscriberCount: number;
 };
@@ -19,7 +21,7 @@ export default async function handler(
 
   // get newsletter subscriber count from ConvertKit API
   const response = await fetch(
-    `https://api.convertkit.com/v3/lifetime_stats?api_secret=${process.env.CONVERTKIT_API_SECRET}`
+    `https://api.convertkit.com/v3/lifetime_stats?api_secret=${env.CONVERTKIT_API_SECRET}`
   );
   const json = (await response.json()) as {
     stats: { total_subscribers: number };

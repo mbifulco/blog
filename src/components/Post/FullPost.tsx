@@ -1,19 +1,18 @@
-import { MDXRemote } from 'next-mdx-remote';
 import { useRouter } from 'next/router';
-
+import { MDXRemote } from 'next-mdx-remote';
 import useSWR from 'swr';
 
-import { getMentions } from '../../utils/webmentions';
-
-import { CarbonAd } from '../CarbonAd';
+import type { BlogPost, Newsletter } from '../../data/content-types';
 import { components } from '../../utils/MDXProviderWrapper';
+import { getMentions } from '../../utils/webmentions';
+import { CarbonAd } from '../CarbonAd';
+import { Heading } from '../Heading';
 import { Image } from '../Image';
-import MentionsSummary from './mentionsSummary';
+import { YouTube } from '../MdxEmbed';
 import { PolitePop } from '../PolitePop';
 import { PublishDate } from '../PublishDate';
 import TagsSummary from '../tagsSummary';
-import { YouTube } from '../MdxEmbed';
-import type { BlogPost, Newsletter } from '../../data/content-types';
+import MentionsSummary from './mentionsSummary';
 
 type FullPostProps = {
   post: BlogPost | Newsletter;
@@ -41,7 +40,7 @@ const FullPost: React.FC<FullPostProps> = ({ post }) => {
 
   let coverContainer: React.ReactNode = (
     <Image
-      className={'rounded-lg mb-4 shadow ml-0 object-cover object-center'}
+      className={'mb-4 ml-0 rounded-lg object-cover object-center shadow'}
       publicId={coverImagePublicId || `posts/${path}/cover`}
       alt={excerpt}
       loading="eager"
@@ -59,13 +58,13 @@ const FullPost: React.FC<FullPostProps> = ({ post }) => {
   }
 
   return (
-    <article className={'w-full text-left mx-auto mb-4 text-base'}>
+    <article className={'mx-auto mb-4 w-full max-w-4xl text-left text-base'}>
       <div className={'relative'}>
         <header>
-          <h1 className="text-3xl lg:text-5xl font-bold p-0 m-0 border-none no-underline text-pink-500">
+          <Heading as="h1" className="m-0 p-0">
             {title}
-          </h1>
-          <p className="dark:text-gray-400 text-gray-700 text-xs">
+          </Heading>
+          <p className="text-xs text-gray-700 dark:text-gray-400">
             <PublishDate date={date} /> {author && <>— Written by {author}</>}
           </p>
           <TagsSummary tags={tags} />

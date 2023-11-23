@@ -2,7 +2,6 @@
 import { join } from 'path';
 
 import type { BlogPost } from '../data/content-types';
-
 import {
   getAllContentFromDirectory,
   getContentBySlug,

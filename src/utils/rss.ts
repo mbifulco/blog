@@ -1,5 +1,5 @@
-import { Feed } from 'feed';
 import fs from 'fs';
+import { Feed } from 'feed';
 
 import config from '../config';
 import type { BlogPost, Newsletter } from '../data/content-types';

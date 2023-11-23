@@ -2,10 +2,10 @@
 import { useState } from 'react';
 import {
   Slider,
-  SliderTrack,
   SliderFilledTrack,
-  SliderThumb,
   SliderMark,
+  SliderThumb,
+  SliderTrack,
   Stack,
   Text,
 } from '@chakra-ui/react';

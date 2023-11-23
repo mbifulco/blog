@@ -40,6 +40,7 @@ const SubscriptionForm: React.FC<SubscriptionFormProps> = ({ tags: _ }) => {
           >
             <Input
               className="formkit-input border-pink-400"
+              backgroundColor="white"
               aria-label="First Name"
               name="fields[first_name]"
               required
@@ -60,6 +61,7 @@ const SubscriptionForm: React.FC<SubscriptionFormProps> = ({ tags: _ }) => {
             />
             <Input
               className="formkit-input"
+              backgroundColor="white"
               name="email_address"
               aria-label="Email Address"
               placeholder="Email Address"
@@ -92,7 +94,7 @@ const SubscriptionForm: React.FC<SubscriptionFormProps> = ({ tags: _ }) => {
                 <div></div>
                 <div></div>
               </div>
-              <span className="">I&apos;m in!</span>
+              <span className="">💌 Subscribe</span>
             </Button>
           </SimpleGrid>
         </div>

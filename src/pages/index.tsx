@@ -2,19 +2,19 @@ import type { NextPage } from 'next';
 import Link from 'next/link';
 import { startOfToday } from 'date-fns';
 
+import { Heading } from '../components/Heading';
+import { Headshot } from '../components/Headshot';
+import NewsletterItem from '../components/NewsletterFeed/NewsletterItem';
 import { PostFeed } from '../components/PostFeed';
 import SEO from '../components/seo';
 import { Subtitle } from '../components/Subtitle';
 import WebmentionMetadata from '../components/webmentionMetadata';
-
-import { getAllPosts } from '../lib/blog';
-import { generateRSSFeed } from '../utils/rss';
-import { getCloudinaryImageUrl } from '../utils/images';
 import config from '../config';
+import type { BlogPost, Newsletter } from '../data/content-types';
+import { getAllPosts } from '../lib/blog';
 import { getAllNewsletters } from '../lib/newsletters';
-import NewsletterItem from '../components/NewsletterFeed/NewsletterItem';
-import { Headshot } from '../components/Headshot';
-import type { Newsletter, BlogPost } from '../data/content-types';
+import { getCloudinaryImageUrl } from '../utils/images';
+import { generateRSSFeed } from '../utils/rss';
 
 export async function getStaticProps() {
   const posts = await getAllPosts();
@@ -40,18 +40,20 @@ type HomePageProps = {
 
 const HomePage: NextPage<HomePageProps> = ({ posts, newsletter }) => {
   return (
-    <>
+    <div className="mx-auto flex max-w-4xl flex-col gap-12">
       <SEO
         title="Latest articles on design, development, and the world around me"
         image={headshotPublicUrl}
       />
-      <div className="md:flex my-4 items-start">
+      <div className="my-4 items-start gap-4 md:flex">
         <div className="mr-0 lg:mr-4">
           <Headshot size={250} />
         </div>
         <div className="max-w-[50ch]">
-          <h2 className="text-4xl m-0 font-bold mb-2">Oh, hello</h2>
-          <p className="text-xl font-normal m-0">
+          <Heading as="h2" className="m-0 mb-2 text-4xl font-bold">
+            Oh, hello
+          </Heading>
+          <p className="m-0 text-xl font-normal">
             {"I'm"} a startup founder, a designer, and a maker. I share my
             writing on this site, but you can also find me on threads{' '}
             <Link
@@ -76,7 +78,7 @@ const HomePage: NextPage<HomePageProps> = ({ posts, newsletter }) => {
             </Link>
             .
           </p>
-          <p className="text-cl font-normal italic mt-4 mx-0 mb-0">
+          <p className="mx-0 mb-0 mt-4 text-xl font-normal italic">
             I work as a {config.employer.role} at{' '}
             <Link
               href={config.employer.url}
@@ -92,12 +94,12 @@ const HomePage: NextPage<HomePageProps> = ({ posts, newsletter }) => {
         </div>
       </div>
 
-      <div className="grid lg:grid-cols-2 gap-4">
+      <div className="grid gap-4 lg:grid-cols-2">
         <div>
           <Subtitle>
             <Link href="/newsletter">💌 Tiny Improvements newsletter</Link>
           </Subtitle>
-          <div className="my-4">
+          <div className="my-2">
             <NewsletterItem newsletter={newsletter} />
           </div>
         </div>
@@ -106,7 +108,7 @@ const HomePage: NextPage<HomePageProps> = ({ posts, newsletter }) => {
           <Subtitle>
             <Link href="/podcast">🎙️ The Podcast</Link>
           </Subtitle>
-          <div className="pt-4">
+          <div className="my-2">
             <iframe
               width="100%"
               height="390"
@@ -117,10 +119,8 @@ const HomePage: NextPage<HomePageProps> = ({ posts, newsletter }) => {
         </div>
       </div>
 
-      <div className="flex flex-col gap-8">
-        <div>
-          <Subtitle>LATEST POSTS</Subtitle>
-        </div>
+      <div>
+        <Subtitle>LATEST POSTS</Subtitle>
         <PostFeed posts={posts} />
       </div>
       <WebmentionMetadata
@@ -128,7 +128,7 @@ const HomePage: NextPage<HomePageProps> = ({ posts, newsletter }) => {
         title="Home - mikebifulco.com"
         publishedAt={startOfToday()}
       />
-    </>
+    </div>
   );
 };
 

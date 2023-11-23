@@ -1,11 +1,10 @@
-const withBundleAnalyzer = require('@next/bundle-analyzer')({
-  enabled: process.env.ANALYZE === 'true',
-});
+import withBundleAnalyzer from '@next/bundle-analyzer';
+
+import './src/utils/env.mjs';
 
 /**
  * @type {import('next').NextConfig}
  **/
-
 const config = {
   pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md', 'mdx'],
   images: {
@@ -17,6 +16,14 @@ const config = {
       {
         protocol: 'https',
         hostname: 'res.cloudinary.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'webmention.io',
       },
       {
         protocol: 'https',
@@ -42,8 +49,15 @@ const config = {
         destination: 'https://www.passionfroot.me/irreverentmike',
         permanent: false,
       },
+      {
+        source: '/tinyimprovements',
+        destination: '/newsletter',
+        permanent: false,
+      },
     ];
   },
 };
 
-module.exports = withBundleAnalyzer(config);
+export default withBundleAnalyzer({ enabled: process.env.ANALYZE === true })(
+  config
+);

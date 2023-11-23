@@ -1,5 +1,4 @@
 import { serialize as serializeMdx } from 'next-mdx-remote/serialize';
-
 import imageSize from 'rehype-img-size';
 import rehypeSlug from 'rehype-slug';
 

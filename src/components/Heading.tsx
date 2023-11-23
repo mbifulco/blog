@@ -1,4 +1,4 @@
-import clsx from 'clsx';
+import clsxm from '@utils/clsxm';
 
 // Define the types of headings allowed
 type HeadingType = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
@@ -22,19 +22,19 @@ export const Heading = ({
   let headingClasses = '';
   switch (Component) {
     case 'h1':
-      headingClasses = 'text-5xl';
+      headingClasses = 'text-4xl uppercase';
       break;
     case 'h2':
-      headingClasses = 'text-4xl';
-      break;
-    case 'h3':
       headingClasses = 'text-3xl';
       break;
-    case 'h4':
+    case 'h3':
       headingClasses = 'text-2xl';
       break;
-    case 'h5':
+    case 'h4':
       headingClasses = 'text-xl';
+      break;
+    case 'h5':
+      headingClasses = 'text-lg';
       break;
     case 'h6':
       headingClasses = 'text-lg';
@@ -47,8 +47,8 @@ export const Heading = ({
   return (
     <Component
       {...props}
-      className={clsx(
-        'font-bold text-pink-600 hover:text-pink-700 active:text-pink-900',
+      className={clsxm(
+        'font-futura font-bold text-pink-600',
         headingClasses,
         className
       )}

@@ -2,9 +2,8 @@ import type { NextPage } from 'next';
 import type { MDXRemoteSerializeResult } from 'next-mdx-remote';
 import { MDXRemote } from 'next-mdx-remote';
 
+import { NewsletterHero } from '../../components/NewsletterSignup';
 import SEO from '../../components/seo';
-import { NewsletterSignup } from '../../components/NewsletterSignup';
-
 import { serialize } from '../../utils/mdx';
 import { components } from '../../utils/MDXProviderWrapper';
 
@@ -34,10 +33,12 @@ const AboutPage: NextPage<AboutPageProps> = ({ mdxSource }) => (
       title="About Mike Bifulco - founder, developer advocate, designer, writer"
       description="Mike Bifulco is a serial entrepreneur, author, and software developer, and former Stripe, Google, and Microsoft employee, working to build great products."
     />
-    <div className="flex flex-col">
-      <MDXRemote {...mdxSource} components={components} />
-    </div>
-    <NewsletterSignup />
+    <main className="mx-auto max-w-4xl">
+      <div className="flex flex-col">
+        <MDXRemote {...mdxSource} components={components} />
+      </div>
+    </main>
+    <NewsletterHero />
   </>
 );
 
