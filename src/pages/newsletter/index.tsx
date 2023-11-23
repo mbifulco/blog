@@ -1,5 +1,5 @@
 import type { GetStaticProps } from 'next';
-import { Box, SimpleGrid, Spacer, Stack, Text } from '@chakra-ui/react';
+import { SimpleGrid, Spacer } from '@chakra-ui/react';
 
 import { Heading } from '@components/Heading';
 import NewsletterItem from '../../components/NewsletterFeed/NewsletterItem';
