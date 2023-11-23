@@ -4,6 +4,7 @@ import { z } from 'zod';
 export const env = createEnv({
   server: {
     CONVERTKIT_API_SECRET: z.string(),
+    SITE_URL: z.string().url(),
   },
 
   /**
@@ -15,7 +16,6 @@ export const env = createEnv({
   client: {
     NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME: z.string().min(1),
     NEXT_PUBLIC_FATHOM_ID: z.string().min(8),
-    NODE_ENV: z.string(),
   },
 
   /**
@@ -25,13 +25,12 @@ export const env = createEnv({
   runtimeEnv: {
     // server
     CONVERTKIT_API_SECRET: process.env.CONVERTKIT_API_SECRET,
+    SITE_URL: process.env.SITE_URL,
 
     // client
     NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME:
       process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
     NEXT_PUBLIC_FATHOM_ID: process.env.NEXT_PUBLIC_FATHOM_ID,
-
-    NODE_ENV: process.env.NODE_ENV,
   },
 
   /**
