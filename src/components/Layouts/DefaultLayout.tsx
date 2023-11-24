@@ -13,7 +13,7 @@ const DefaultLayout = ({ children }) => {
 
           <SiteAnnouncement />
 
-          <div className="flex flex-col gap-8">
+          <div className="flex flex-col">
             {children}
             <Footer />
           </div>

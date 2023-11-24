@@ -20,7 +20,7 @@ const SiteAnnouncement: React.FC<SiteAnnouncementProps> = ({
   return (
     <div
       className={clsxm(
-        'flex w-screen max-w-full items-center justify-center bg-pink-950  text-pink-900 transition-all duration-500 ease-in-out',
+        'flex w-screen max-w-full items-center justify-center bg-gray-950 transition-all duration-500 ease-in-out',
         sticky && 'sticky top-0 z-[100]',
         className
       )}
