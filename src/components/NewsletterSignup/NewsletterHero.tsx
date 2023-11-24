@@ -14,11 +14,11 @@ const NewsletterHero = () => {
 
   return (
     <section
-      className="-ml-4 w-screen bg-pink-950 py-0 text-pink-400"
+      className="-ml-4 w-screen bg-gray-950 py-0"
       style={{ backgroundImage: `url(/images/wiggle.svg)` }}
     >
       <div className="m-20 lg:m-0">
-        <div className="flex flex-col-reverse gap-6 lg:flex-row lg:gap-12">
+        <div className="flex flex-col-reverse items-center justify-center gap-6 lg:flex-row lg:gap-12">
           <Image
             publicId="newsletters/hero-images/washed-up"
             alt="Washed up, as always"

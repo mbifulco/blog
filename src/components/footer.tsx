@@ -8,7 +8,7 @@ import SponsorCTA from './SponsorCTA/SponsorCTA';
 const Footer = () => {
   return (
     <footer
-      className="bg-pink-950 py-0 pb-20 text-pink-400"
+      className="bg-gray-950 py-0 pb-20"
       style={{ backgroundImage: `url(/images/wiggle.svg)` }}
     >
       <div className="mx-auto max-w-4xl pt-8 text-sm text-white xl:relative">
