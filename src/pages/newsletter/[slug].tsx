@@ -110,6 +110,7 @@ const NewsletterPage: React.FC<NewsletterPageProps> = ({ newsletter }) => {
         tags={tags}
         title={title}
       />
+      <div className="mt-10" />
       <NewsletterHero />
     </>
   );
