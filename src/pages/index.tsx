@@ -2,6 +2,7 @@ import type { NextPage } from 'next';
 import Link from 'next/link';
 import { startOfToday } from 'date-fns';
 
+import { Colophon } from '../components/Colophon';
 import { Heading } from '../components/Heading';
 import { Headshot } from '../components/Headshot';
 import NewsletterItem from '../components/NewsletterFeed/NewsletterItem';
@@ -40,7 +41,7 @@ type HomePageProps = {
 
 const HomePage: NextPage<HomePageProps> = ({ posts, newsletter }) => {
   return (
-    <div className="mx-auto flex max-w-4xl flex-col gap-12">
+    <div className="mx-auto flex max-w-4xl flex-col gap-12 mb-10">
       <SEO
         title="Latest articles on design, development, and the world around me"
         image={headshotPublicUrl}
@@ -128,6 +129,8 @@ const HomePage: NextPage<HomePageProps> = ({ posts, newsletter }) => {
         title="Home - mikebifulco.com"
         publishedAt={startOfToday()}
       />
+
+      <Colophon />
     </div>
   );
 };
