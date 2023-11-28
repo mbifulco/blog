@@ -8,7 +8,7 @@ import SEO from '../components/seo';
 
 const NotFoundPage: NextPage = () => {
   return (
-    <>
+    <div className="mx-auto mb-10 flex max-w-4xl flex-col gap-8 text-xl">
       <SEO title="404: URL Not found" />
       <Heading as="h1">Uh oh, you stumbled upon a bad URL.</Heading>
       <Image
@@ -38,13 +38,20 @@ const NotFoundPage: NextPage = () => {
         expecting something to be here,{' '}
         <Link
           className="text-pink-600 no-underline hover:underline"
-          href="https://twitter.com/irreverentmike"
+          href="mailto:hello@mikebifulco.com"
         >
-          tweet at me (@irreverentmike)
+          email me
         </Link>{' '}
-        and {"I'll"} do my best to help you out..
+        or message me on threads {'('}
+        <Link
+          className="text-pink-600 no-underline hover:underline"
+          href="https://threads.net/@irreverentmike"
+        >
+          @irreverentmike
+        </Link>
+        {')'}, and {"I'll"} do my best to help you out.
       </p>
-    </>
+    </div>
   );
 };
 
