@@ -41,7 +41,7 @@ type HomePageProps = {
 
 const HomePage: NextPage<HomePageProps> = ({ posts, newsletter }) => {
   return (
-    <div className="mx-auto flex max-w-4xl flex-col gap-12 mb-10">
+    <div className="mx-auto mb-10 flex max-w-4xl flex-col gap-12">
       <SEO
         title="Latest articles on design, development, and the world around me"
         image={headshotPublicUrl}
@@ -114,7 +114,7 @@ const HomePage: NextPage<HomePageProps> = ({ posts, newsletter }) => {
               width="100%"
               height="390"
               seamless
-              src="https://share.transistor.fm/e/tiny-improvements/playlist"
+              src="https://share.transistor.fm/e/tiny-improvements/playlist?color=F90476"
             />
           </div>
         </div>
