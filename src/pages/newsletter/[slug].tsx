@@ -75,7 +75,10 @@ const NewsletterPage: React.FC<NewsletterPageProps> = ({ newsletter }) => {
           image={coverImageUrl}
           ogType="article"
         />
-        <div className="max-w-4xl">
+        <div
+          className="w-[41 rem]
+          mx-auto max-w-4xl"
+        >
           <BreadCrumbs
             crumbs={[
               {
