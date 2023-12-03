@@ -331,15 +331,28 @@ Nice!
 
 Head over to `http://localhost:3000/sitemap.xml` and check out the nicely formatted sitemap, with the correct canonical URL for each post. Now your web app, your readers, _and_ Google are all on the same page. 🔥
 
-## Get the code
+## To do: update your redirects when a post's title changes
 
-You can find the code for this tutorial on [GitHub at mbifulco/next-self-healing-urls-app-router](https://github.com/mbifulco/next-self-healing-urls-app-router). If you enjoyed this post, please consider giving it a star ⭐️ on GitHub!
+To be completely thorough there's one more thing we should probably do: if a post's title changes, you should add an entry to your redirects file to redirect the old URL to the new one. Even though this is a self-healing URL, it's still a good idea to add a redirect for the old URL, just in case someone has bookmarked it, or if someone has shared it on social media. This will also help Google understand that the old URL is no longer the correct one, and that it should index the new URL instead.
+
+This is a bit more challenging, but it's worth it.
+
+Because making this work is dependent on your specific setup, I'm not going to include a code example here, but I'll give you a few pointers:
+
+- In your CMS, when a post is saved, check whether the title has changed. If it has, add an entry to your redirects file to redirect the old URL to the new one.
+- It's a good to make sure that you don't accidentally create a redirect loop. If the new URL for a given path is the same as any of the prior URLs, don't add a new redirect, and remove any existing redirects for that path.
+- You may need to kick off a rebuild of your site to make sure that the new redirect is picked up by your app. If you're using Vercel, you can use their [API to trigger a rebuild](https://vercel.com/docs/api#endpoints/deployments/redeploy-all-deployments) when a post is saved.
+
 
 ## Summary: self-healing URLs in Next.js
 
 In this post, we learned how to set up self-healing URLs in Next.js. We used the App Router to generate URLs for all posts, and we used the App Router's `generateMetadata` function to generate metadata for each post. This function is called at build time, and it returns an object that contains the `title` and `alternates` for each post. The `alternates` object contains the `canonical` URL for each post, which is used to tell search engines which URL is the correct one for each post. **This is great for SEO purposes** - it helps Google verify that when your page loads, the URL in the address bar matches the URL that Google has indexed for that page. It also has usability benefits: if your post's title ever changes, the URL will magically update itself to match the new title. Additionally, people who visit your page while using a screen reader will have a better experience, because the URL will always match the content on the page.
 
 Not too shabby!
+
+## Get the code
+
+You can find the code for this tutorial on [GitHub at mbifulco/next-self-healing-urls-app-router](https://github.com/mbifulco/next-self-healing-urls-app-router). If you enjoyed this post, please consider giving it a star ⭐️ on GitHub!
 
 
 ## PS: What about using the Next.js Pages router?
