@@ -14,6 +14,12 @@ _note: This post is inspired by a great video from YouTuber Aaron Francis: [Make
 
 </small>
 
+<Image
+  publicId="posts/self-healing-urls-nextjs-seo/demo"
+  alt="A demo of a self-healing URL made in Next.js"
+  caption="Ever wonder how Amazon and Medium create self-healing URLs?"
+/>
+
 Building sites with human-readable URLs is helpful for a few reasons: it gives users a better understanding of what they're getting when they click on a link to your site, it's better for SEO, and it's more accessible (screen readers can read out the URL to the user and they can understand where they are on the site). It's also just a nice thing to do for your users... by way of example, these two URLs _feel_ dramatically different:
 
 `https://example.com/posts/c61sca0`
@@ -311,6 +317,19 @@ export default function NotFound() {
   return <div>Not Found</div>;
 }
 ```
+
+## Try it out!
+
+That should do it! run `yarn dev` to start the server, and navigate to `http://localhost:3000/posts/1` - you'll see it _automatically_ redirect to a better URL.
+
+<Image
+  publicId="posts/self-healing-urls-nextjs-seo/demo"
+  alt="A demo of a self-healing URL made in Next.js"
+/>
+
+Nice!
+
+Head over to `http://localhost:3000/sitemap.xml` and check out the nicely formatted sitemap, with the correct canonical URL for each post. Now your web app, your readers, _and_ Google are all on the same page. 🔥
 
 ## Get the code
 
