@@ -1,0 +1,330 @@
+---
+title: How to set up self-healing URLs in Next.js for better SEO
+description: Learn how to set up self-healing URLs in Next.js for better SEO
+date: 2023-12-02
+tags: [nextjs, seo, typescript]
+coverImagePublicId: posts/self-healing-urls-nextjs-seo/cover
+path: self-healing-urls-nextjs-seo
+---
+
+
+<small>
+
+_note: This post is inspired by a great video from YouTuber Aaron Francis: [Make self-healing URLs with Laravel](https://www.youtube.com/watch?v=a6lnfyES-LA&t=326s). For all my PHP homies - go check that video out. It's great!_
+
+</small>
+
+Building sites with human-readable URLs is helpful for a few reasons: it gives users a better understanding of what they're getting when they click on a link to your site, it's better for SEO, and it's more accessible (screen readers can read out the URL to the user and they can understand where they are on the site). It's also just a nice thing to do for your users... by way of example, these two URLs _feel_ dramatically different:
+
+`https://example.com/posts/c61sca0`
+
+vs
+
+`https://example.com/posts/how-to-set-up-self-healing-urls-in-nextjs-for-better-seo`
+
+The first one is a bit of a mystery box. You have no idea what you're going to get when you click on it. The second one is much more descriptive, and _hopefully_ the contents of the page match the URL.
+
+...but, what happens if you change the title of the post? The human-readable URL is now misleading. If you're using a static site generator like Next.js, you can use the file system to create self-healing URLs that will always point to the correct page, even if the title changes.
+
+Or, what if you're managing a larger site, where it's possible that two posts may have the same title?
+
+These are both issues that self-healing URLs are attempting to solve.
+
+## What are self-healing URLs?
+
+**Self-healing URLs are URLs that allow for human-readable text, but also include a unique identifier that will always point to the correct page**, even if the human-readable text changes, or gets removed entirely.
+
+In this post, we'll learn **how to set up self-healing URLs in Next.js.** This is something used on sites like Amazon and Medium to make sharing links a little more robust. These are URLs that allow for human-readable text, but also include a unique identifier that will always point to the correct page, even if the human-readable text changes, or gets removed entirely.
+
+Here's the URL-pattern we're to build: `https://example.com/posts/${POST_TITLE}-${POST_ID}`.
+
+Ultimately, we'll use the `id` of a post to identify which content to render on a page, and we'll use the `title` of the post to create a human-readable portion in the URL. As long as the URL ends with a hyphen followed by the `id`, we will redirect to the correct page, with a nicely formatted, human-readable URL.
+
+## Self-healing URLs in Next.js with the App router
+
+To create self-healing URLs for blog posts with the [Next.js App router](https://nextjs.org/docs/api-reference/next/router), we'll start with a fresh react app from the cli:
+
+```bash
+# with npm
+npx create-next-app
+
+# or, with yarn
+yarn create next-app
+
+# or, with pnpm
+pnpm create next-app
+```
+
+Give your project a name, and select the options you want to use. I used all the defaults for this example:
+
+```
+✔ What is your project named? … next-self-healing-urls-app-router
+✔ Would you like to use TypeScript? Yes
+✔ Would you like to use ESLint? Yes
+✔ Would you like to use Tailwind CSS? Yes
+✔ Would you like to use `src/` directory? Yes
+✔ Would you like to use App Router? (recommended) Yes
+✔ Would you like to customize the default import alias (@/*)? No
+```
+
+You'll also need to install the `slugify` package, which we'll use to create a URL-safe slug from the post's title:
+
+```bash
+npm install slugify
+
+# or, with yarn
+yarn add slugify
+
+# or, with pnpm
+pnpm add slugify
+```
+
+### Set up dynamic routing
+
+We'll need to add a few files to the default setup. Using the App directory, create the following directories and files:
+
+```
+app
+├── posts
+│   └── [slug]         // note that this is a _folder_ called [slug]. This is how dynamic routes are set up in the app router
+│        └── page.tsx  // render one post
+├── not-found.tsx      // this will render if someone tries to visit a post page with an id that doesn't exist in the url
+├── sitemap.ts         // generate a dynamic sitemap with the _correct_ canonical URL for each post
+└── utils
+    └── post.ts        // types and helper functions to load posts and format URLs
+```
+
+Let's start with `post.ts`. This file contains a type definition and helper functions to load posts and format URLs.
+
+```ts
+import slugify from 'slugify';
+
+export type Post = {
+  userId: number;
+  id: number;
+  title: string;
+  content: string;
+};
+
+export const getAllPosts = async () => {
+  // fetch all posts from an example API.
+  // this is just a placeholder, replace with your own data
+  // shout out to https://jsonplaceholder.typicode.com/ - what a great service!
+  const postsResponse = await fetch(
+    'https://jsonplaceholder.typicode.com/posts',
+  );
+  const posts = (await postsResponse.json()) as Post[];
+
+  return posts;
+};
+
+export const getPostById = async (id?: string | number) => {
+  if (!id) {
+    throw new Error('No ID provided');
+  }
+
+  if (typeof id === 'string') {
+    id = parseInt(id);
+  }
+
+  const allPosts = await getAllPosts();
+
+  const post = allPosts.find((post) => post.id === id);
+
+  if (!post) {
+    // we'll use a try/catch block around this function later
+    // to redirect if a post doesn't exist with this id,
+    // so make sure to throw an error here.
+    throw new Error('Post not found');
+  }
+
+  return post;
+};
+
+/**
+ * Converts input to a URL-safe slug
+ * @param {string} title - the title of the post
+ * @returns {string} a URL-safe slug based on the post's title
+ */
+const titleToSlug = (title: string) => {
+  const uriSlug = slugify(title, {
+    lower: true, // convert everything to lower case
+    trim: true, // remove leading and trailing spaces
+  });
+
+  // encode special characters like spaces and quotes to be URL-safe
+  return encodeURI(uriSlug);
+};
+
+// given a post, return its slug
+export const getPostSlug = (post: Post) => {
+  return `${titleToSlug(post.title)}-${post.id}`;
+};
+
+// given any slug, try to extract an id from it
+export const getIdFromSlug = (slug: string) => slug.split('-').pop();
+
+```
+
+### Generate a sitemap with the correct canonical URL for each post
+
+Let's talk SEO for a moment: Google (and other search engines) use your site's sitemap file to understand the structure of your site. This helps them index your site more accurately, and it helps them understand which pages are the most important. Next.js supports static and dynamic sitemap generation, which you can read about in their [docs on sitemap.xml](https://nextjs.org/docs/app/api-reference/file-conventions/metadata/sitemap). Your sitemap should contain the canonical URL for every page in your site.
+
+When Google and other search engines crawl your site, they use the Sitemap as an address book, and then visit each page found in the sitemap to analyze the content on the page, and deciding how to rank it in search results. If the URL in the address bar doesn't match the URL that Google has indexed for that page, it can cause problems with SEO. For example, if you have a page with the URL `https://example.com/foo/bar/some-url-here`, but Google has indexed the page as `https://example.com/foo/bar/some-other-url-here`, Google will think that you have two pages with the same content, and it will penalize you for duplicate content.
+
+This is where the **canonical tag** comes in. The [canonical tag](https://ahrefs.com/blog/canonical-tags/) is a special bit of metadata that you can add to your page's `<head>` tag, which is used to tell search engines which URL is the _original URL for the content onthat page_. Ideally, the canonical URL for our blog posts should _exactly_ match the pattern we've set up for our self-healing URLs: `https://example.com/posts/${POST_TITLE}-${POST_ID}`. This is the URL that we want Google to index for each post. We'll do that by making sure we use this URL in our sitemap, and by adding a canonical tag to each post page.
+
+A canonical tag looks like this:
+
+```html
+<link rel="canonical" href="https://example.com/foo/bar" />
+```
+
+
+So, this is what sitemap.ts looks like:
+
+```ts
+import { getAllPosts, getPostSlug } from '@/utils/posts';
+import { MetadataRoute } from 'next';
+
+export default async function sitemap(): MetadataRoute.Sitemap {
+  const allPosts = await getAllPosts();
+
+  let urlPrefix = 'http://localhost:3000';
+  if (process.env.NODE_ENV !== 'production') {
+    urlPrefix = 'https://example.com';
+  }
+
+  return allPosts.map((post) => ({
+    url: `${urlPrefix}/posts/${getPostSlug(post)}`, // https://example.com/posts/this-is-a-post-1
+    lastModified: new Date(), // ideally, this is the last modified date of the post
+    changeFrequency: 'daily', // this will be used to determine how often pages are re-crawled
+    priority: 0.7, // the priority of this URL relative to other URLs on your site
+  }));
+}
+```
+
+Now, if you run your app and visit `https://localhost:3000/sitemap.xml`, you should see a sitemap that includes an entry for each post, with the correct canonical URL specified.
+
+
+### Setting up page.tsx: where the magic happens
+
+In the file `app/posts/[slug]/page.tsx`, we use the [Next.js App Router's `generateStaticParams` function](https://nextjs.org/docs/app/building-your-application/routing/dynamic-routes#generating-static-params) to generate URLs for all posts. This function is called at build time, and it returns an array of objects that contain the `slug` for each post. The `slug` is used to generate the URL for each post page.
+
+Then, in the server function which renders the post page, we check whether the current URL's readable portion matches the post's actual slug. If not, we redirect to the correct URL.
+
+We also use the [Next.js App Router's `generateMetadata` function](https://nextjs.org/docs/app/next-script#generating-metadata) to generate metadata for each post. This function is called at build time, and it returns an object that contains the `title` and `alternates` for each post. The `alternates` object contains the `canonical` URL for each post, which is used to tell search engines which URL is the correct one for each post. **This is critical for SEO purposes** - it helps Google verify that when your page loads, the URL in the address bar matches the URL that Google has indexed for that page.
+
+
+```tsx
+import { Metadata, ResolvingMetadata } from 'next';
+import { RedirectType, notFound, redirect } from 'next/navigation';
+import { isRedirectError } from 'next/dist/client/components/redirect';
+
+import { Post, getAllPosts, getPostById, getPostSlug } from '@/utils/posts';
+import { getIdFromSlug } from '@/utils/posts';
+
+// generate URLs for all posts
+export async function generateStaticParams() {
+  const posts = await getAllPosts();
+
+  return posts.map((post) => {
+    const slug = getPostSlug(post);
+
+    return {
+      slug,
+    };
+  });
+}
+
+type PostPageParams = {
+  params: {
+    slug: string;
+  };
+};
+
+export default async function Post({ params }: PostPageParams) {
+  const id = getIdFromSlug(params.slug);
+
+  let post: Post;
+  try {
+    post = await getPostById(id);
+    const correctSlug = getPostSlug(post);
+
+    // check whether the current URL's readable portion matches the post's actual slug
+    if (correctSlug !== params.slug) {
+      // if not, redirect to the correct URL
+      const redirectUrl = `/posts/${correctSlug}`;
+      await redirect(redirectUrl, RedirectType.replace);
+    }
+  } catch (e) {
+    // this is a hack to make redirects work from within a try/catch block
+    // shout out to @jeengbe on github for the tip
+    // https://github.com/vercel/next.js/issues/49298#issuecomment-1537433377
+    if (isRedirectError(e)) {
+      throw e;
+    }
+
+    // if the post doesn't exist, return the "not found" 404 page
+    notFound();
+  }
+
+  // make your post look nice IRL
+  return <div>My Post: {params.slug}</div>;
+}
+
+export async function generateMetadata(
+  { params }: PostPageParams,
+  parent: ResolvingMetadata,
+): Promise<Metadata> {
+  // read route params
+  const id = getIdFromSlug(params.slug);
+  // fetch data
+  const post = await getPostById(id);
+
+  return {
+    title: post.title,
+    alternates: {
+      canonical: `https://example.com/posts/${params.slug}`,
+    },
+  };
+}
+```
+
+Another important note - _entire_ component is rendered server-side - visitors to this page won't see any content flash on screen if they enter an incorrect URL. This is huge for page performance and SEO purposes, and has traditionally been challenging while using Static Site Generation.
+
+Instead of a screen flash, your users get a great experience: they can try to load an incorrect URL, and as long as the URL ends with a hyphen followed by the `id`, they'll be redirected to the correct URL seamlessly, like magic. If the URL doesn't match the pattern, they'll be redirected to the 404 page.
+
+
+
+### Not Found: a 404 page for posts that don't exist
+
+In `app/not-found.tsx`, create a 404 page that will render if someone tries to visit a post page with an id that doesn't exist in the url. [Next provides a `notFound` function](https://nextjs.org/docs/app/api-reference/functions/not-found) that will return a 404 page. We used this in page.tsx to return a 404 page if the post doesn't exist. You'll want to make this page look nice and include some helpful text, but for the sake of this example, we'll keep it simple:
+
+```tsx
+/*
+  redirect to this page by calling the `notFound` function from the App Router in a page's server function:
+  import { notFound } from 'next/navigation';
+*/
+
+export default function NotFound() {
+  return <div>Not Found</div>;
+}
+```
+
+## Get the code
+
+You can find the code for this tutorial on [GitHub at mbifulco/next-self-healing-urls-app-router](https://github.com/mbifulco/next-self-healing-urls-app-router). If you enjoyed this post, please consider giving it a star ⭐️ on GitHub!
+
+## Summary: self-healing URLs in Next.js
+
+In this post, we learned how to set up self-healing URLs in Next.js. We used the App Router to generate URLs for all posts, and we used the App Router's `generateMetadata` function to generate metadata for each post. This function is called at build time, and it returns an object that contains the `title` and `alternates` for each post. The `alternates` object contains the `canonical` URL for each post, which is used to tell search engines which URL is the correct one for each post. **This is great for SEO purposes** - it helps Google verify that when your page loads, the URL in the address bar matches the URL that Google has indexed for that page. It also has usability benefits: if your post's title ever changes, the URL will magically update itself to match the new title. Additionally, people who visit your page while using a screen reader will have a better experience, because the URL will always match the content on the page.
+
+Not too shabby!
+
+
+## PS: What about using the Next.js Pages router?
+
+This post _started_ as a tutorial for using the Next.js Pages router to create self-healing URLs, but I ran into a few issues that would make it really challenging to recommend going down this path if you're using the pages router (which is actually what [mikebifulco.com uses](https://github.com/mbifulco/blog)!). For that reason, I think **this is a feature you should only add if you're using the App Router**. I'm including the draft of my original post here [in a gist](https://gist.github.com/mbifulco/daf23aed0d827ec6317962691cb9cd0d) in case anyone wants to take a stab at it. If you figure it out, please let me know!
+
+
