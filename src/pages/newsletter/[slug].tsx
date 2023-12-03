@@ -67,7 +67,7 @@ const NewsletterPage: React.FC<NewsletterPageProps> = ({ newsletter }) => {
 
   return (
     <>
-      <div className="flex flex-col gap-8">
+      <div className="mx-auto flex max-w-prose flex-col gap-8">
         <SEO
           canonical={router.asPath}
           title={`${title}`}

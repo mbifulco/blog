@@ -61,29 +61,31 @@ const PostPage: NextPage<PostPageProps> = ({ post }) => {
 
   return (
     <>
-      {/* TODO image url to SEO */}
-      <SEO
-        canonical={router.asPath}
-        title={title}
-        description={excerpt}
-        image={coverImageUrl}
-        ogType="article"
-      />
-      {published === false && process.env.NODE_ENV !== 'production' && (
-        <div>
-          <em>Note:</em> this is a draft post
-        </div>
-      )}
+      <div className="mx-auto flex max-w-4xl flex-col">
+        {/* TODO image url to SEO */}
+        <SEO
+          canonical={router.asPath}
+          title={title}
+          description={excerpt}
+          image={coverImageUrl}
+          ogType="article"
+        />
+        {published === false && process.env.NODE_ENV !== 'production' && (
+          <div>
+            <em>Note:</em> this is a draft post
+          </div>
+        )}
 
-      <Post post={post} />
-      <WebmentionMetadata
-        coverImageUrl={coverImageUrl}
-        summary={excerpt}
-        publishedAt={date}
-        tags={tags}
-        title={title}
-      />
-      <Colophon />
+        <Post post={post} />
+        <WebmentionMetadata
+          coverImageUrl={coverImageUrl}
+          summary={excerpt}
+          publishedAt={date}
+          tags={tags}
+          title={title}
+        />
+        <Colophon />
+      </div>
       <NewsletterHero />
     </>
   );
