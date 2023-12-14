@@ -6,6 +6,14 @@ import './src/utils/env.mjs';
  * @type {import('next').NextConfig}
  **/
 const config = {
+  rewrites: async () => {
+    return [
+      {
+        source: '/ingest/:path*',
+        destination: 'https://app.posthog.com/:path*',
+      },
+    ];
+  },
   pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md', 'mdx'],
   images: {
     remotePatterns: [
