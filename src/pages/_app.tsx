@@ -3,6 +3,8 @@ import type { AppProps } from 'next/app';
 import { useRouter } from 'next/router';
 import { ChakraProvider } from '@chakra-ui/react';
 import * as Fathom from 'fathom-client';
+import posthog from 'posthog-js';
+import { PostHogProvider } from 'posthog-js/react';
 
 import { env } from '@utils/env.mjs';
 import { AnalyticsProvider } from '../utils/analytics';
@@ -12,7 +14,16 @@ import '../components/CarbonAd/CarbonAd.css';
 
 import DefaultLayout from '../components/Layouts/DefaultLayout';
 
-// import App from 'next/app'
+// Check that PostHog is client-side (used to handle Next.js SSR)
+if (typeof window !== 'undefined') {
+  posthog.init(process.env.NEXT_PUBLIC_POSTHOG_KEY!, {
+    api_host: 'https://app.posthog.com',
+    // Enable debug mode in development
+    loaded: (posthog) => {
+      if (process.env.NODE_ENV === 'development') posthog.debug();
+    },
+  });
+}
 
 function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
@@ -26,6 +37,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 
     function onRouteChangeComplete() {
       Fathom.trackPageview();
+      posthog?.capture('$pageview');
     }
     // Record a pageview when route changes
     router.events.on('routeChangeComplete', onRouteChangeComplete);
@@ -37,13 +49,15 @@ function MyApp({ Component, pageProps }: AppProps) {
   });
 
   return (
-    <AnalyticsProvider>
-      <ChakraProvider>
-        <DefaultLayout>
-          <Component {...pageProps} />
-        </DefaultLayout>
-      </ChakraProvider>
-    </AnalyticsProvider>
+    <PostHogProvider client={posthog}>
+      <AnalyticsProvider>
+        <ChakraProvider>
+          <DefaultLayout>
+            <Component {...pageProps} />
+          </DefaultLayout>
+        </ChakraProvider>
+      </AnalyticsProvider>
+    </PostHogProvider>
   );
 }
 
