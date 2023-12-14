@@ -18,9 +18,10 @@ import DefaultLayout from '../components/Layouts/DefaultLayout';
 if (typeof window !== 'undefined') {
   posthog.init(process.env.NEXT_PUBLIC_POSTHOG_KEY!, {
     api_host:
-      process.env.NODE_ENV === 'production'
-        ? 'https://mikebifulco.com/ingest'
-        : 'https://app.posthog.com',
+      process.env.NODE_ENV === 'development' ||
+      process.env.VERCEL_ENV === 'preview'
+        ? 'https://app.posthog.com'
+        : 'https://mikebifulco.com/ingest',
     // Enable debug mode in development
     loaded: (posthog) => {
       if (process.env.NODE_ENV === 'development') posthog.debug();
