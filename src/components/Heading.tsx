@@ -22,13 +22,13 @@ export const Heading = ({
   let headingClasses = '';
   switch (Component) {
     case 'h1':
-      headingClasses = 'text-4xl uppercase';
+      headingClasses = 'text-2xl md:text-4xl uppercase';
       break;
     case 'h2':
-      headingClasses = 'text-3xl';
+      headingClasses = 'text-2xl md:text-3xl';
       break;
     case 'h3':
-      headingClasses = 'text-2xl';
+      headingClasses = 'text-xl md:text-2xl';
       break;
     case 'h4':
       headingClasses = 'text-xl';
