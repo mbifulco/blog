@@ -119,6 +119,8 @@ const TextHighlight = (props: HTMLProps<HTMLElement>) => <mark {...props} />;
 const InlineCode = (props) => {
   return (
     <Code
+      overscrollX={'scroll'}
+      maxW={'100%'}
       colorScheme={'facebook'}
       verticalAlign="middle"
       whiteSpace="pre"

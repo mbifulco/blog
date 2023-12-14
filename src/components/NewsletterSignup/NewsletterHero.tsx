@@ -17,7 +17,7 @@ const NewsletterHero = () => {
       className="-ml-4 w-screen bg-gray-950 py-0"
       style={{ backgroundImage: `url(/images/wiggle.svg)` }}
     >
-      <div className="m-20 lg:m-0">
+      <div className="m-4 sm:m-20 lg:m-0">
         <div className="flex flex-col-reverse items-center justify-center gap-6 lg:flex-row lg:gap-12">
           <Image
             publicId="newsletters/hero-images/washed-up"

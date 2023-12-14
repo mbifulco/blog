@@ -61,7 +61,7 @@ const PostPage: NextPage<PostPageProps> = ({ post }) => {
 
   return (
     <>
-      <div className="mx-auto flex max-w-4xl flex-col">
+      <div className="mx-auto flex max-w-full flex-col xl:max-w-4xl">
         {/* TODO image url to SEO */}
         <SEO
           canonical={router.asPath}
