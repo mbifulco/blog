@@ -33,7 +33,7 @@
     "airtable": "^0.12.2",
     "autoprefixer": "^10.4.16",
     "clsx": "^2.0.0",
-    "date-fns": "^2.30.0",
+    "date-fns": "^3.0.6",
     "fathom-client": "^3.6.0",
     "feed": "^4.2.2",
     "framer-motion": "^10.16.16",
