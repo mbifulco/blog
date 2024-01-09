@@ -72,7 +72,7 @@ const PolitePopEmbed = ({ debug = false }) => {
             newEmailSignupSuccessMessage: '🎉 Thank you!',
             politePopHtml: `<p>Hey there - I put out an occasional newsletter with product and software development tips. Interested in subscribing?</p>`,
             politePopYesText: `Sounds great!`,
-            exitIntentPopHtml: `<p>Interested in occasional updates on my writing and other work?</p>`,
+            exitIntentPopHtml: `<p>💌 Tiny Improvements is my weekly newsletter for product builders. It's a single, tiny idea to help you build better products.</p><p>Interested in subscribing?</p>`,
             modalHtml: `<h2>Product strategies for Indie Hackers, react devs, and creators</h2><p>I write about building products, finding an audience, and useful tools for getting your work done. Typically 1-2 emails a month, straight from my brain to your inbox.&nbsp;😘</p><p>Unsubscribe any time.</p>`,
             character: `none`,
             signupFormAction: `https://app.convertkit.com/forms/1368838/subscriptions`,
