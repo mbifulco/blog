@@ -5,6 +5,7 @@ type Frontmatter = {
   tags?: string[];
   published?: boolean;
   slug?: string;
+  podcastUrl?: string;
 } & Record<string, string | number | boolean | Date | string[]>;
 // Extend MarkdownDocument to include common frontmatter fields and other fields as needed
 export type MarkdownDocument = {

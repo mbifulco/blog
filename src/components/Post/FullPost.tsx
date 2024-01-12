@@ -27,6 +27,7 @@ const FullPost: React.FC<FullPostProps> = ({ post }) => {
     date,
     excerpt,
     path,
+    podcastUrl,
     tags,
     title,
     youTubeId,
@@ -60,7 +61,7 @@ const FullPost: React.FC<FullPostProps> = ({ post }) => {
   return (
     <article className={'mx-auto mb-4 w-full text-left text-base'}>
       <div className={'relative'}>
-        <header>
+        <header className="mb-4 flex flex-col gap-2">
           <Heading as="h1" className="m-0 p-0">
             {title}
           </Heading>
@@ -69,6 +70,9 @@ const FullPost: React.FC<FullPostProps> = ({ post }) => {
           </p>
           <TagsSummary tags={tags} />
           {coverContainer}
+          {podcastUrl && (
+            <iframe width="100%" height="180" seamless src={podcastUrl} />
+          )}
         </header>
 
         <div className="flex flex-col gap-4">
