@@ -50,7 +50,7 @@ const FullPost: React.FC<FullPostProps> = ({ post }) => {
   );
 
   if (youTubeId) {
-    coverContainer = <YouTube youTubeId="AbtoSbPUx9o" />;
+    coverContainer = <YouTube youTubeId={youTubeId} />;
   }
 
   // no cover image for newsletters, we want it to look like an email
