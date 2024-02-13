@@ -1,11 +1,11 @@
 // Components
 import type { GetStaticProps, NextPage } from 'next';
 
-import { Heading } from '../components/Heading';
-import { NewsletterHero } from '../components/NewsletterSignup';
-import SEO from '../components/seo';
-import Tag from '../components/tag';
-import { getAllTags } from '../lib/tags';
+import { Heading } from '../../components/Heading';
+import { NewsletterHero } from '../../components/NewsletterSignup';
+import SEO from '../../components/seo';
+import Tag from '../../components/tag';
+import { getAllTags } from '../../lib/tags';
 
 export const getStaticProps: GetStaticProps = async () => {
   const tags = await getAllTags();
