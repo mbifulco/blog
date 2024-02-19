@@ -11,7 +11,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     return res.status(401).json({ message: 'Unauthorized' });
   }
 
-  check to make sure this is a POST request
+  // check to make sure this is a POST request
   if (req.method !== 'POST') {
     return res.status(405).json({ message: 'Method not allowed' });
   }
