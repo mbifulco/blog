@@ -26,9 +26,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
   const { data, error } = await resend.contacts.create({
     email,
-    first_name: firstName,
+    firstName,
     unsubscribed: false,
-    audience_id: AUDIENCE_ID,
+    audienceId: AUDIENCE_ID,
   });
 
   if (error) {
