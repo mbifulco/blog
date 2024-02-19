@@ -30,7 +30,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   useEffect(() => {
     if (process.env.NODE_ENV !== 'production') return;
-    Fathom.load(env.NEXT_PUBLIC_FATHOM_ID!, {
+    Fathom.load(env.NEXT_PUBLIC_FATHOM_ID, {
       includedDomains: ['mikebifulco.com', 'www.mikebifulco.com'],
       url: 'https://cdn.usefathom.com/script.js',
     });
