@@ -1,6 +1,9 @@
 import withBundleAnalyzer from '@next/bundle-analyzer';
 
-import './src/utils/env.mjs';
+import createJiti from "jiti";
+const jiti = createJiti(new URL(import.meta.url).pathname);
+
+jiti('./src/utils/env');
 
 /**
  * @type {import('next').NextConfig}

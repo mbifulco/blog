@@ -1,0 +1,19 @@
+import { createEnv } from '@t3-oss/env-nextjs';
+import { z } from 'zod';
+
+export const env = createEnv({
+  server: {
+    CONVERTKIT_API_SECRET: z.string(),
+  },
+  client: {
+    NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME: z.string().min(1),
+    NEXT_PUBLIC_FATHOM_ID: z.string().min(8),
+  },
+  // For Next.js >= 13.4.4, you only need to destructure client variables:
+  // see: https://env.t3.gg/docs/nextjs#create-your-schema
+  experimental__runtimeEnv: {
+    NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME:
+      process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
+    NEXT_PUBLIC_FATHOM_ID: process.env.NEXT_PUBLIC_FATHOM_ID,
+  },
+});
