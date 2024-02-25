@@ -1,6 +1,6 @@
 import { Cloudinary } from '@cloudinary/url-gen';
 
-import { env } from '@utils/env.mjs';
+import { env } from '@utils/env';
 
 export const getCloudinaryImageUrl = (publicId: string) => {
   const cld = new Cloudinary({
