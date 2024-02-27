@@ -1,0 +1,91 @@
+---
+title: I hate Tailwind CSS. Here's why I use it.
+excerpt:
+  Tailwind CSS is a utility-first CSS framework that I've come to love. Here's
+  why I use it and why I think you should too.
+tags: [design, css, startup, productivity]
+date: 02-27-2024
+slug: i-hate-tailwind-css-heres-why-i-use-it
+coverImagePublicId: newsletters/i-hate-tailwind-css-heres-why-i-use-it/cover
+---
+
+<Image
+  publicId="newsletters/i-hate-tailwind-css-heres-why-i-use-it/cover"
+  alt="I hate Tailwind CSS. Here's why I use it."
+  width="800"
+  height="400"
+  layout="responsive"
+/>
+
+## Thanks, I hate it
+
+In the first days of building [Craftwork](https://craftwork.com), I made the decision to use Tailwind CSS for our projects. This choice was driven by tailwind's adaptability, and its popularity among developers.
+
+Here's the thing though: Tailwind and I don't really get along. I've spent years learning to create design systems with traditional CSS. More recently I found myself building products using full-blown UI libraries like Material UI and Chakra, because they make it _super_ fast_ to build a rich, functional, and accessible UI.
+
+By contrast, Tailwind is somewhere in the middle of these two. On some level it bypasses the nuanced understanding and control that come with writing raw CSS. It's also not _fully_ functional out of the box like Material UI or Chakra - and yet... for so many reasons, it's _really_ good.
+
+For us, Tailwind provides some huge benefits:
+
+- **Speed**: Tailwind's utility-first approach allows us to quickly implement designs without having to write custom CSS. This is especially useful when we're iterating on designs and need to make changes quickly.
+- **Universality**: At Craftwork, our stack includes Ruby on Rails, Next.js, and React-Native. Tailwind's flexibility allows us to use the same styling system across all these platforms, which is a huge win for us.
+- **Talent**: Craftwork isn't just me, and it never will be. Tailwind's popularity across the industry has made it almost trivial to find developers who are familiar with it. This is a huge win for us as we grow our team.
+- **UI Libraries**: Due to its popularity, there _are_ many UI libraries built around Tailwind, including: [TailwindUI](https://tailwindui.com), [ShadCN UI](https://ui.shadcn.com/), and [Aceternity UI](https://ui.aceternity.com/components). Costs to license each of these libraries vary (some are even free!), and they're essentially copy-pasteable components that you can use to build your products. Very cool.
+
+## What this means for us in practice
+
+Tailwind's adaptability is really what shines; from day one, it has enabled us to onboard new teammates, and build interfaces more rapidly. Its consistent utility across our entire stack means that regardless of the project, new team members can quickly read, understand, and contribute to our codebase. The decision to use Tailwind, therefore, wasn't just about adhering to current trends or sidestepping the complexities of CSS; it was a strategic move to ensure our team can hit the ground running, maintaining agility and coherence across our diverse projects.
+
+This underscores a more important principle in tech selection: aligning tool choices with team dynamics and project requirements is a skill. It's a delicate balancing act -- weighing the benefits of technological efficiency and team scalability against the richness of personal expertise and the depth of traditional craftsmanship. It's a reminder that our growth as developers is not just about keeping up with the latest tools but also about valuing and honing our foundational skills.
+
+Put another way, for everything we build, we have to balance velocity and quality. Tailwind is a tool that gives us wins in both columns.
+
+## What I'd like to see change
+
+All that being said, I do still have a wishlist for Tailwind:
+
+1. **Better tooling**: Tailwind's approach to utility-first CSS is great for performance, but it also means we have to configure Tailwind to compile per-project, so that it only includes the styles we use. When this (infrequently) breaks, it can be difficult to detect, and debugging it isn't always straightforward.
+2. **Better IDE support**: Tailwind provides a consistent language for styling our apps - there are plugins for VS Code's Intellisense that make it easier to write Tailwind classes, but it doesn't _always_ work. This can make it difficult to remember the exact class names for certain styles, and can slow down our development process.
+3. **Prettier Prettier rules**: Adding tailwind classes to html means that we often have long lists of class names added to our html. This causes individual lines of code to be very long - despite what many engineers will tell you, this is [demonstrably worse for UX](https://www.nngroup.com/articles/f-shaped-pattern-reading-web-content/) than having class names listed on separate lines. There's [lots of discussion about building a prettier rule](https://github.com/tailwindlabs/tailwindcss/discussions?discussions_q=multiple+lines) for this, but as far as I've seen, there's not a great solution yet.
+
+<Image
+  publicId="newsletters/i-hate-tailwind-css-heres-why-i-use-it/horizontal-scan"
+  alt="Screenshot of tailwind css code resulting in lots of long lines of code, causing horizontal scanning issues"
+  caption="Like it or not, a horizontal list of classes is more taxing than a vertical list would be."
+>
+
+
+So in the end, do I hate Tailwind? No, of course not. I've come to appreciate it for what it is: a pragmatic choice that has helped us build better products, faster. And that's something I can get behind.
+
+**I'd love to hear from you**. What are your thoughts on Tailwind? Do you have any tips for using it more effectively? Is there a UI Library you love that I missed?  Maybe you have a wishlist of your own? Let me know by replying to this email.
+
+---
+
+## What I'm thinking about this week: Watching experts work
+
+### 🎶 A musical savant showcasing mastry
+
+There's something extremely satisfying about watching someone who's really good at their job do their thing. I've been sharing this video of musical composer [Jacob Collier using Logic masterfully](https://www.youtube.com/watch?v=tVHyuhsAles) to compose a song in real time. There's such a beautiful confluence of skill, creativity, and deep understanding in this video.
+
+The best creative tools make superusers shine, and I think that's something we should all strive for in our work.
+
+### 🔌 Plug kinda nerdy, but he chill
+
+I was pretty deep in the YouTube rabbit hole when I came across [@AllThingsOnePlace](https://www.youtube.com/watch?v=-JkUcrlDtZ0). This is an electrical engineer whose videos are all about analyzing and reviewing power supplies and other electrical components. I promise it is _way_ more interesting than it sounds. I had no idea that you could measure the _quality_ of power coming from a USB charger!
+
+---
+
+## More from me
+
+### 🎙️ [Every business is an API business](https://apisyouwonthate.com/podcast/allan-knabe-apiable-api-portal/)
+
+In my recent podcast interview with Allan Knabe from Apiable for APIs You Won't Hate, we dicussed how Apiable is building an API Portal service that helps API teams to create, secure, market, and monetize API products. Catch it on the [APIs You Won't Hate feed here](](https://apisyouwonthate.com/podcast/allan-knabe-apiable-api-portal/)), or wherever you listen to your podcasts.
+
+### 🎥 [I've been more active on YouTube](https://youtube.com/@mikebifulco?sub_confirmation=1)
+
+Over the past month or so, I've gotten back into live coding on YouTube on the weekends. I've also got plans to start publishing more dev tutorials and startup content. If you're interested in that kind of thing, [subscribe to my channel](https://youtube.com/@mikebifulco?sub_confirmation=1) to stay up to date.
+
+
+---
+
+Hey, one more thing: make sure you [register to vote](https://vote.org). It's important. Like, deeply, existentially important.
