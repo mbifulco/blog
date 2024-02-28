@@ -6,7 +6,7 @@ import * as Fathom from 'fathom-client';
 import posthog from 'posthog-js';
 import { PostHogProvider } from 'posthog-js/react';
 
-import { env } from '@utils/env.mjs';
+import { env } from '@utils/env';
 import { AnalyticsProvider } from '../utils/analytics';
 
 import '../styles/globals.css';
