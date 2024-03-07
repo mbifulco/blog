@@ -35,7 +35,8 @@ const NewsletterPage: React.FC<NewsletterPageProps> = ({ newsletters }) => {
   return (
     <div className="mx-auto flex max-w-4xl flex-col gap-4">
       <SEO
-        title="Subscribe to Tiny Improvements: articles software dev, design, and climate"
+        title="Subscribe to Tiny Improvements: a newsletter for startup founders, indiehackers, and product builders"
+
         image={
           'https://res.cloudinary.com/mikebifulco-com/image/upload/v1662476730/newsletters/cover.png'
         }
