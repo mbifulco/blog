@@ -18,6 +18,24 @@ type FullPostProps = {
   post: BlogPost | Newsletter;
 };
 
+type VideoStructuredData = {
+  '@context': string;
+  '@type': string;
+  name: string;
+  description: string;
+  thumbnailUrl: string;
+  uploadDate: string;
+  contentUrl: string;
+  embedUrl: string;
+  duration: string;
+  interactionStatistic: {
+    '@type': string;
+    interactionType: { '@type': string };
+    userInteractionCount: number;
+  };
+  regionsAllowed: string;
+};
+
 const FullPost: React.FC<FullPostProps> = ({ post }) => {
   const { frontmatter } = post;
 
@@ -49,8 +67,27 @@ const FullPost: React.FC<FullPostProps> = ({ post }) => {
     />
   );
 
+  let videoStructuredData: VideoStructuredData | undefined = undefined;
+
   if (youTubeId) {
-    coverContainer = <YouTube youTubeId={youTubeId.toString()} />;
+    coverContainer = <YouTube youTubeId={youTubeId} />;
+    videoStructuredData = {
+      '@context': '<https></https>://schema.org',
+      '@type': 'VideoObject',
+      name: title,
+      description: excerpt,
+      thumbnailUrl: `https://i.ytimg.com/vi/${youTubeId}/hqdefault.jpg`,
+      uploadDate: new Date(date).toISOString(),
+      contentUrl: `https://www.youtube.com/watch?v=${youTubeId}`,
+      embedUrl: `https://www.youtube.com/embed/${youTubeId}`,
+      duration: 'PT1M33S',
+      interactionStatistic: {
+        '@type': 'InteractionCounter',
+        interactionType: { '@type': 'http://schema.org/WatchAction' },
+        userInteractionCount: 0,
+      },
+      regionsAllowed: 'US',
+    };
   }
 
   // no cover image for newsletters, we want it to look like an email
@@ -59,30 +96,40 @@ const FullPost: React.FC<FullPostProps> = ({ post }) => {
   }
 
   return (
-    <article className={'mx-auto mb-4 w-full text-left text-base'}>
-      <div className={'relative'}>
-        <header className="mb-4 flex flex-col gap-2">
-          <Heading as="h1" className="m-0 p-0">
-            {title}
-          </Heading>
-          <p className="text-xs text-gray-700 dark:text-gray-400">
-            <PublishDate date={date} /> {author && <>— Written by {author}</>}
-          </p>
-          <TagsSummary tags={tags} />
-          {coverContainer}
-          {podcastUrl && (
-            <iframe width="100%" height="180" seamless src={podcastUrl} />
-          )}
-        </header>
+    <>
+      {videoStructuredData && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(videoStructuredData),
+          }}
+        />
+      )}
+      <article className={'mx-auto mb-4 w-full text-left text-base'}>
+        <div className={'relative'}>
+          <header className="mb-4 flex flex-col gap-2">
+            <Heading as="h1" className="m-0 p-0">
+              {title}
+            </Heading>
+            <p className="text-xs text-gray-700 dark:text-gray-400">
+              <PublishDate date={date} /> {author && <>— Written by {author}</>}
+            </p>
+            <TagsSummary tags={tags} />
+            {coverContainer}
+            {podcastUrl && (
+              <iframe width="100%" height="180" seamless src={podcastUrl} />
+            )}
+          </header>
 
-        <div className="flex flex-col gap-4">
-          <CarbonAd />
-          <MDXRemote {...post.source} components={components} />
-          <MentionsSummary mentions={mentions} />
+          <div className="flex flex-col gap-4">
+            <CarbonAd />
+            <MDXRemote {...post.source} components={components} />
+            <MentionsSummary mentions={mentions} />
+          </div>
         </div>
-      </div>
-      <PolitePop />
-    </article>
+        <PolitePop />
+      </article>
+    </>
   );
 };
 
