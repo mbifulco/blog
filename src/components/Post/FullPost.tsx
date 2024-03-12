@@ -28,7 +28,7 @@ type VideoStructuredData = {
   contentUrl: string;
   embedUrl: string;
   duration: string;
-  interactionStatistic: {
+  interactionStatistic?: {
     '@type': string;
     interactionType: { '@type': string };
     userInteractionCount: number;
@@ -81,11 +81,11 @@ const FullPost: React.FC<FullPostProps> = ({ post }) => {
       contentUrl: `https://www.youtube.com/watch?v=${youTubeId}`,
       embedUrl: `https://www.youtube.com/embed/${youTubeId}`,
       duration: 'PT1M33S',
-      interactionStatistic: {
-        '@type': 'InteractionCounter',
-        interactionType: { '@type': 'http://schema.org/WatchAction' },
-        userInteractionCount: 0,
-      },
+      // interactionStatistic: {
+      //   '@type': 'InteractionCounter',
+      //   interactionType: { '@type': 'http://schema.org/WatchAction' },
+      //   userInteractionCount: 0,
+      // },
       regionsAllowed: 'US',
     };
   }
