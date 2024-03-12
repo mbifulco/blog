@@ -72,7 +72,7 @@ const FullPost: React.FC<FullPostProps> = ({ post }) => {
   if (youTubeId) {
     coverContainer = <YouTube youTubeId={youTubeId} />;
     videoStructuredData = {
-      '@context': '<https></https>://schema.org',
+      '@context': 'https://schema.org',
       '@type': 'VideoObject',
       name: title,
       description: excerpt,
