@@ -1,3 +1,5 @@
+import { useState } from 'react';
+import type { ChangeEvent } from 'react';
 import Script from 'next/script';
 import { Button, Input, SimpleGrid } from '@chakra-ui/react';
 
@@ -6,6 +8,12 @@ type SubscriptionFormProps = {
 };
 
 const SubscriptionForm: React.FC<SubscriptionFormProps> = ({ tags: _ }) => {
+  const [email, setEmail] = useState<string>('');
+
+  const handleEmailChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setEmail(event.target.value);
+  };
+
   return (
     <div className="flex flex-col gap-2">
       <Script src="https://f.convertkit.com/ckjs/ck.5.js" />
@@ -17,7 +25,7 @@ const SubscriptionForm: React.FC<SubscriptionFormProps> = ({ tags: _ }) => {
         data-uid="be6a97481a"
         data-format="inline"
         data-version="5"
-        data-options={`{"settings":{"after_subscribe":{"action":"message","success_message":"Success! Now check your email to confirm your subscription.","redirect_url":""},"analytics":{"google":null,"fathom":"${process.env.NEXT_PUBLIC_FATHOM_ID}","facebook":null,"segment":null,"pinterest":null,"sparkloop":null,"googletagmanager":null},"modal":{"trigger":"timer","scroll_percentage":null,"timer":5,"devices":"all","show_once_every":15},"powered_by":{"show":true,"url":"https://convertkit.com/features/forms?utm_campaign=poweredby&amp;utm_content=form&amp;utm_medium=referral&amp;utm_source=dynamic"},"recaptcha":{"enabled":false},"return_visitor":{"action":"custom_content","custom_content":"Thanks for subscribing!"},"slide_in":{"display_in":"bottom_right","trigger":"timer","scroll_percentage":null,"timer":5,"devices":"all","show_once_every":15},"sticky_bar":{"display_in":"top","trigger":"timer","scroll_percentage":null,"timer":5,"devices":"all","show_once_every":15}},"version":"5"}`}
+        data-options={`{"settings":{"after_subscribe":{"action":"redirect","success_message":"Success! Now check your email to confirm your subscription.","redirect_url":"https://upscribe.page/0dcd1cd89e?email=${email}"},"analytics":{"google":null,"fathom":"${process.env.NEXT_PUBLIC_FATHOM_ID}","facebook":null,"segment":null,"pinterest":null,"sparkloop":null,"googletagmanager":null},"modal":{"trigger":"timer","scroll_percentage":null,"timer":5,"devices":"all","show_once_every":15},"powered_by":{"show":true,"url":"https://convertkit.com/features/forms?utm_campaign=poweredby&amp;utm_content=form&amp;utm_medium=referral&amp;utm_source=dynamic"},"recaptcha":{"enabled":false},"return_visitor":{"action":"custom_content","custom_content":"Thanks for subscribing!"},"slide_in":{"display_in":"bottom_right","trigger":"timer","scroll_percentage":null,"timer":5,"devices":"all","show_once_every":15},"sticky_bar":{"display_in":"top","trigger":"timer","scroll_percentage":null,"timer":5,"devices":"all","show_once_every":15}},"version":"5"}`}
         min-width="400 500 600 700 800"
         style={{ width: '100%' }}
       >
@@ -74,6 +82,8 @@ const SubscriptionForm: React.FC<SubscriptionFormProps> = ({ tags: _ }) => {
               fontWeight={400}
               width="100%"
               flexGrow={2}
+              value={email}
+              onChange={handleEmailChange}
             />
             <Button
               type="submit"
