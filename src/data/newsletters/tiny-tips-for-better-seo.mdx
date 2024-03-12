@@ -1,0 +1,109 @@
+---
+title: 3 Tiny tips for better SEO
+excerpt: "I hear from a lot of devs that they don't know where to start with SEO. Here are 3 tiny tips about to get you started."
+date: 03-12-2024
+tags: [SEO, nextjs, webdev]
+coverImagePublicId: newsletters/tiny-tips-for-better-seo/cover
+slug: tiny-tips-for-better-seo
+---
+
+<Image
+  publicId="newsletters/tiny-tips-for-better-seo/cover"
+  alt="Tiny tips for better SEO"
+/>
+
+## SEO is the growth engine for your work
+
+If you're building a brand, a business, or a personal website, taking the time to invest in SEO (Search Engine Optimization) will help your work get discovered when people search for related topics on DuckDuckGo, Bing, and Google. In my experience, developers often overlook SEO for one reason or another. But it's a critical part of building a successful website.
+
+<Aside type="note">
+
+Side note: SEO is a _massive_ topic - I'm far from an expert, but I've found it invaluable to learn a few basics. If I've got anything wrong here, or you know more than me, [I'd love to hear from you](https://threads.net/@irreverentmike)!
+
+</Aside>
+
+My position on SEO is this: it's a growth engine for your work, and when done right, it can have a flywheel effect that will put your work in front of more people over time. It's not as immediately satisfying as racking up likes on a social media post, but it persists long-term, and can help you build a sustainable audience for your work.
+
+It's slow-release dopamine, if you will.
+
+I've been publishing articles under my own name for a few years now, and a steady investment in search now sends thousands of readers a month to my work. We've also been investing in SEO at [Craftwork](https://craftwork.com), and it's been fun to learn about how focusing on search for a local business differs from a personal website - but the principles are the same.
+
+### Think about what your work will look like when it's shared
+
+When someone comes across your work and they share it on their social media feed, you want it to look good, right? It should have a catchy, meaningful title, a useful description, and an image that draws people in. This is also what will show up when your work is shared on social media, or when it shows up in search results.
+
+Functionally, this means you need to make sure your site has good metadata. Metadata is the information about your site that search engines use to understand what your site is about. It's also what social media platforms use to display your content when it's shared.
+
+Here are a few tips to get you started:
+
+- The `<title>` and `<h1>` tags on the page are most likely to be used as the title of the page in search results. Make sure they're descriptive and accurate.
+- The `<meta name="description" />` tag is used as the description of the page in search results. Try to keep it less than 150 characters, and make it a meaningful summary of the page's content.
+- The `<meta property="og:image" />` tag is used as the image that shows up when your page is shared on social media. Make sure it's a high-quality image that represents the content of the page, and that it's at least 1200x630 pixels in size with an aspect ratio of 1.91:1 so it looks good on <s>all</s> most platforms.
+
+### Use Structured Data with JSON-LD for enhanced search results
+
+Picture a list of Google search results in your head. You're probably seeing a list of blue links with a short description below them. But have you ever seen a search result with a video thumbnail, or a recipe with a picture and a list of ingredients? That's no accident - it's the result of Google's crawlers finding something called _structured data_ on the result's page.
+
+<Image
+  publicId="newsletters/tiny-tips-for-better-seo/enhanced-search-results"
+  alt="Enhanced search results"
+/>
+
+When your site shows up like this, it's called a _rich result_. It can help your site stand out in search results, and give your work a better chance of being seen.
+
+There are many types of Structured Data which are supported by Google, including:
+- Articles
+- Videos
+- Events
+- Product
+- Software App
+
+...and more. Check out Google's list of [Structured data markup that Google Search supports](https://developers.google.com/search/docs/guides/search-gallery) to see if there's a type that fits your content. If there is, you can use something called JSON-LD to pages on your site to help Google understand what your content is about.
+
+I recently did this for my website - pages that feature video now include `VideoObject` structured data. It's as simple as including a bit of JSON on the page in a `<script />` tag. Check out my recent Pull Request to see how I made it happen: [mbifulco/blog#775: Add Structured Data for Video](https://github.com/mbifulco/blog/pull/775).
+
+<Image
+  publicId="newsletters/tiny-tips-for-better-seo/video-results"
+  alt="Structured Data"
+  caption="Structured Data inspection results for a video on my site. Success! Google can see it."
+/>
+
+
+### Keyword research is a great way to understand your audience
+
+Alright, friends -- here's where I need to call _myself_ out - I'm not great at this. But I know it's important, and I'm working on it.
+
+Here's the idea: when making something new, it's reallllly helpful to make sure you're creating content about things people are actually searching for. Keyword research to understand what people are searching for, and then create content that matches those searches.
+
+<Image
+  publicId="newsletters/tiny-tips-for-better-seo/keyword-research"
+  alt="Keyword research"
+  caption="Keyword results for my site on both Google Search Console and Ahrefs Webmaster Tools"
+/>
+
+There are a lot of tools out there to help you with keyword research, but I've found that the best (free) tools for this are [Google Search Console](search.google.com/search-console) and [Ahrefs Webmaster Tools](https://ahrefs.com/webmaster-tools). Both of these tools will show you what people are searching for when they find your site, and what your site is ranking for. This can help you understand what people are looking for, and what you can do to make your site more relevant to those searches.
+
+---
+
+## Free tools to help you understand your site's SEO
+
+### Make sure those titles and descriptions are just right
+
+I really like the [SEO extension from Detailed](https://detailed.com/extension/) as a tool for inspecting the metadata on a page. It's a Chrome extension that shows you the metadata for the page you're on, and gives you a score for how well it's set up for search. It's a great way to quickly check if your titles and descriptions are set up correctly.
+
+### For Structured Data
+
+If you're adding Structured data to your site, you can use use [Google Search Central Schema Markup Testing Tool](https://developers.google.com/search/docs/appearance/structured-data) and [Schema.org's validator](https://validator.schema.org/#url=https%3A%2F%2Fmikebifulco-com-git-feat-metadata-mbifulco.vercel.app%2Fposts%2Flive-coding-satori-og-images-nextjs) to make sure your pages are set up correctly.
+
+### Learn from the best
+
+If you're looking for more, you may want to check out [Positional's fantastic SEO newsletter](https://www.positional.com/newsletter) - it's well-researched, highly informed, and a great way to learn more about SEO.
+
+---
+
+## More from me on SEO
+
+- I wrote a tutorial on setting up [Self-healing URLs on your Next.js site](https://mikebifulco.com/posts/self-healing-urls-nextjs-seo) that you might find useful.
+- Ever wonder [how to correctly add subtitles to your h1 tags](https://mikebifulco.com/posts/semantic-html-heading-subtitle)? I've got you covered.
+- These are [the SEO tools I use to grow my sites to 20k+ vistors/month](https://mikebifulco.com/posts/seo-tools-for-new-web-projects).
+
