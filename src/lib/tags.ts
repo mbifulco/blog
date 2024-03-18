@@ -32,8 +32,12 @@ export const getAllTags = async () => {
     );
   });
 
+  const allTags = new Set([...blogPostTags, ...articleTags, ...newsletterTags]);
+
+  const uniqueTags = Array.from(allTags).sort();
+
   return {
-    allTags: [...blogPostTags, ...articleTags, ...newsletterTags],
+    allTags: uniqueTags,
     postTags: blogPostTags,
     externalReferenceTags: articleTags,
     newsletterTags: newsletterTags,
