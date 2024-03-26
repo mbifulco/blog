@@ -1,7 +1,6 @@
 /* global fathom */
 
 import React, { createContext, useContext } from 'react';
-import PropTypes from 'prop-types';
 
 const AnalyticsContext = createContext({});
 
@@ -23,10 +22,6 @@ export const AnalyticsProvider: React.FC<AnalyticsProviderProps> = ({
       {children}
     </AnalyticsContext.Provider>
   );
-};
-
-AnalyticsProvider.propTypes = {
-  children: PropTypes.node,
 };
 
 export const useAnalytics = () => useContext(AnalyticsContext);
