@@ -37,7 +37,7 @@ const Navbar = () => {
               <Heading
                 as="h1"
                 className={clsxm(
-                  'text-center text-4xl text-gray-800 transition-all duration-500 ease-in-out hover:text-gray-700',
+                  'text-center text-4xl uppercase text-gray-800 transition-all duration-500 ease-in-out hover:text-gray-700',
                   'text-lg md:text-4xl'
                 )}
               >
