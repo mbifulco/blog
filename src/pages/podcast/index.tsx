@@ -1,7 +1,6 @@
 import Link from 'next/link';
 import { Popover } from '@headlessui/react';
 
-import { Heading } from '@components/Heading';
 import { NewsletterSignup } from '../../components/NewsletterSignup';
 import SEO from '../../components/seo';
 import { Subtitle } from '../../components/Subtitle';
