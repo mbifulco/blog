@@ -55,8 +55,6 @@ const FullPost: React.FC<FullPostProps> = ({ post }) => {
 
   const { data: mentions /* error */ } = useSWR(router.asPath, getMentions);
 
-  // TODO test cover image support
-
   let coverContainer: React.ReactNode = (
     <Image
       className={'mb-4 ml-0 rounded-lg object-cover object-center shadow'}
