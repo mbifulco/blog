@@ -60,8 +60,6 @@ const PodcastPage = () => {
 
       <div className="aspect-w-16 aspect-h-9 h-full">
         <iframe
-          frameBorder="no"
-          scrolling="no"
           height={390}
           width={'100%'}
           src="https://share.transistor.fm/e/tiny-improvements/playlist"
