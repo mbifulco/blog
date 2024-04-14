@@ -11,6 +11,7 @@ import { Image } from '../Image';
 import { YouTube } from '../MdxEmbed';
 import { PolitePop } from '../PolitePop';
 import { PublishDate } from '../PublishDate';
+import { Signature } from '../Signature';
 import TagsSummary from '../tagsSummary';
 import MentionsSummary from './mentionsSummary';
 
