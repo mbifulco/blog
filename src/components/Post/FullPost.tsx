@@ -102,7 +102,11 @@ const FullPost: React.FC<FullPostProps> = ({ post }) => {
           }}
         />
       )}
-      <article className={'mx-auto mb-4 w-full text-left text-base'}>
+      <article
+        className={
+          'mx-auto mb-4 w-full px-2 text-left text-base sm:px-4 md:px-10 lg:px-20 xl:px-0'
+        }
+      >
         <div className={'relative'}>
           <header className="mb-4 flex flex-col gap-2">
             <Heading as="h1" className="m-0 p-0">
