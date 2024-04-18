@@ -1,8 +1,8 @@
 import React, { Children } from 'react';
-import type { HTMLProps, ReactElement } from 'react';
+import type { ButtonHTMLAttributes, HTMLProps, ReactElement } from 'react';
 import Link from 'next/link';
 import Script from 'next/script';
-import { Button, Code, SimpleGrid } from '@chakra-ui/react';
+import { SimpleGrid } from '@chakra-ui/react';
 import { MDXProvider } from '@mdx-js/react';
 import { Highlight, themes } from 'prism-react-renderer';
 
@@ -118,15 +118,9 @@ const TextHighlight = (props: HTMLProps<HTMLElement>) => <mark {...props} />;
 
 const InlineCode = (props) => {
   return (
-    <Code
-      overscrollX={'scroll'}
-      maxW={'100%'}
-      colorScheme={'facebook'}
-      verticalAlign="middle"
-      whiteSpace="pre"
-      padding="0.1ch 1ch"
-      overflowX={'auto'}
+    <span
       {...props}
+      className="inline-block max-w-full whitespace-pre rounded-sm bg-slate-500 px-[0.5ch] py-[0.1ch]  align-text-bottom font-mono text-sm text-white"
     />
   );
 };
@@ -219,6 +213,24 @@ const ListItemComponent = ({ children, ...rest }) => (
 const HorizontalRule = () => {
   return (
     <div className="align-center mb-8 mt-12 flex w-[50%] max-w-[50%] flex-col justify-center self-center border-b-[5px] border-solid border-pink-400" />
+  );
+};
+
+const Button: React.FC<HTMLProps<HTMLButtonElement>> = ({
+  children,
+  type,
+  ...props
+}) => {
+  return (
+    <button
+      className="rounded-sm bg-pink-400 px-4 py-2 text-white shadow-md hover:bg-pink-500"
+      type={
+        (type as ButtonHTMLAttributes<HTMLButtonElement>['type']) ?? 'button'
+      }
+      {...props}
+    >
+      {children}
+    </button>
   );
 };
 
