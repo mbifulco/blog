@@ -10,7 +10,10 @@ type ConfirmButtonProps = {
   onClick?: () => void;
 };
 
-const emailIsGmail = (email: string) => email?.endsWith('@gmail.com');
+const emailIsGmail = (email?: string) => {
+  if (!email) return false;
+  return email?.endsWith('@gmail.com');
+};
 
 const ConfirmButton: React.FC<ConfirmButtonProps> = ({ email, onClick }) => {
   if (!email) return null;
