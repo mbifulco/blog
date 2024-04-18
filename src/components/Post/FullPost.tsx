@@ -9,7 +9,6 @@ import { CarbonAd } from '../CarbonAd';
 import { Heading } from '../Heading';
 import { Image } from '../Image';
 import { YouTube } from '../MdxEmbed';
-import { PolitePop } from '../PolitePop';
 import { PublishDate } from '../PublishDate';
 import TagsSummary from '../tagsSummary';
 import MentionsSummary from './mentionsSummary';
@@ -125,7 +124,6 @@ const FullPost: React.FC<FullPostProps> = ({ post }) => {
             <MentionsSummary mentions={mentions} />
           </div>
         </div>
-        <PolitePop />
       </article>
     </>
   );
