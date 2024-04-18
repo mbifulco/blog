@@ -1,6 +1,6 @@
-export type SocialIcon = React.FC<{
-  className?: string;
-}>;
+export type IconProps = React.SVGProps<SVGSVGElement>;
+
+export type Icon = React.FC<IconProps>;
 
 export { default as GitHubIcon } from './GitHubIcon';
 export { default as MastodonIcon } from './MastodonIcon';
