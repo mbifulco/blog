@@ -1,5 +1,4 @@
 import type { GetStaticProps } from 'next';
-import { SimpleGrid, Spacer } from '@chakra-ui/react';
 
 import { Heading } from '@components/Heading';
 import NewsletterItem from '../../components/NewsletterFeed/NewsletterItem';
@@ -36,7 +35,6 @@ const NewsletterPage: React.FC<NewsletterPageProps> = ({ newsletters }) => {
     <div className="mx-auto flex max-w-4xl flex-col gap-4">
       <SEO
         title="Subscribe to Tiny Improvements: a newsletter for startup founders, indiehackers, and product builders"
-
         image={
           'https://res.cloudinary.com/mikebifulco-com/image/upload/v1662476730/newsletters/cover.png'
         }
@@ -71,17 +69,16 @@ const NewsletterPage: React.FC<NewsletterPageProps> = ({ newsletters }) => {
         💌 Read the latest dispatch
       </Heading>
       <NewsletterItem newsletter={latestNewsletter} />
-      <Spacer />
 
-      <Heading as="h2" className="mb-4 mt-10 text-xl text-black" id="past">
+      <Heading as="h2" className="mb-4 mt-4 text-xl text-black" id="past">
         Read past disptaches
       </Heading>
-      <SimpleGrid minChildWidth="300px" spacing="20px" marginTop={0}>
+      <div className="grid-cols-auto-fit-min-300 grid gap-5">
         {pastNewsletters.map((newsletter) => {
           const { slug } = newsletter?.frontmatter;
           return <NewsletterItem newsletter={newsletter} key={slug} />;
         })}
-      </SimpleGrid>
+      </div>
 
       <NewsletterSignup />
     </div>
