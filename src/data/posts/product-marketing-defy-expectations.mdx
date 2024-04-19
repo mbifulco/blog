@@ -1,5 +1,5 @@
 ---
-title: "Hey, influencers: be careful with ChatGPT"
+title: 'Hey, influencers: be careful with ChatGPT'
 excerpt: 'Powerful AI tools like ChatGPT make it super easy to generate inaccurate and dangerous and inaccurate content. Relying heavily on AI to write can be messy.'
 date: 11-29-2021
 path: product-marketing-defy-expectations
@@ -75,35 +75,28 @@ In principle, the Von Restorff Effect is simple: **given a group of similar choi
 
 For an extremely simple example, let's say I gave you 10 seconds to memorize as many animals from this list as possible:
 
-<SimpleGrid minChildWidth="100px" spacing="2ch">
-  <Button>Wolf</Button>
-  <Button>Beaver</Button>
-  <Button>Camel</Button>
-  <Button>Snail</Button>
-  <Button>Llama</Button>
-  <Button>Pig</Button>
-  <Button>Mink</Button>
-  <Button>Squirrel</Button>
-  <Button
-    style={{
-      backgroundColor: 'orangered',
-      fontWeight: 'bold',
-      color: 'white',
-      padding: '0.25ch',
-    }}
-  >
-    Owl
+<div className="grid grid-cols-3 gap-2 sm:grid-cols-4 md:grid-cols-6">
+  <Button className="inline-block">Wolf</Button>
+  <Button className="inline-block">Beaver</Button>
+  <Button className="inline-block">Camel</Button>
+  <Button className="inline-block">Snail</Button>
+  <Button className="inline-block">Llama</Button>
+  <Button className="inline-block">Pig</Button>
+  <Button className="inline-block">Mink</Button>
+  <Button className="inline-block">Squirrel</Button>
+  <Button className="inline-block bg-orange-500">
+    <span>Owl</span>
   </Button>
-  <Button>Giraffe</Button>
-  <Button>Penguin</Button>
-  <Button>Eagle</Button>
-  <Button>Moth</Button>
-  <Button>Sheep</Button>
-  <Button>Camel</Button>
-  <Button>Panda</Button>
-  <Button>Koala</Button>
-  <Button>Chameleon</Button>
-</SimpleGrid>
+  <Button className="inline-block">Giraffe</Button>
+  <Button className="inline-block">Penguin</Button>
+  <Button className="inline-block">Eagle</Button>
+  <Button className="inline-block">Moth</Button>
+  <Button className="inline-block">Sheep</Button>
+  <Button className="inline-block">Camel</Button>
+  <Button className="inline-block">Panda</Button>
+  <Button className="inline-block">Koala</Button>
+  <Button className="inline-block">Chameleon</Button>
+</div>
 
 I'd put money any arbitrary person remembering _Owl_ over some of the others mentioned in there.
 

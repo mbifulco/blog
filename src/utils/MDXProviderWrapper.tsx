@@ -2,7 +2,6 @@ import React, { Children } from 'react';
 import type { ButtonHTMLAttributes, HTMLProps, ReactElement } from 'react';
 import Link from 'next/link';
 import Script from 'next/script';
-import { SimpleGrid } from '@chakra-ui/react';
 import { MDXProvider } from '@mdx-js/react';
 import { Highlight, themes } from 'prism-react-renderer';
 
@@ -217,13 +216,17 @@ const HorizontalRule = () => {
 };
 
 const Button: React.FC<HTMLProps<HTMLButtonElement>> = ({
+  className,
   children,
   type,
   ...props
 }) => {
   return (
     <button
-      className="rounded-sm bg-pink-400 px-4 py-2 text-white shadow-md hover:bg-pink-500"
+      className={clsxm(
+        'rounded-sm bg-pink-400 px-4 py-2 text-white shadow-md hover:bg-pink-500',
+        className
+      )}
       type={
         (type as ButtonHTMLAttributes<HTMLButtonElement>['type']) ?? 'button'
       }
@@ -254,7 +257,6 @@ export const customComponents = {
   p: P,
   pre: Pre,
   Script,
-  SimpleGrid,
   SponsoredSection,
   ul: UnorderedList,
   ol: OrderedList,

@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 import type { AppProps } from 'next/app';
 import { useRouter } from 'next/router';
-import { ChakraProvider } from '@chakra-ui/react';
 import * as Fathom from 'fathom-client';
 import posthog from 'posthog-js';
 import { PostHogProvider } from 'posthog-js/react';
@@ -51,11 +50,9 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <PostHogProvider client={posthog}>
       <AnalyticsProvider>
-        <ChakraProvider>
-          <DefaultLayout>
-            <Component {...pageProps} />
-          </DefaultLayout>
-        </ChakraProvider>
+        <DefaultLayout>
+          <Component {...pageProps} />
+        </DefaultLayout>
       </AnalyticsProvider>
     </PostHogProvider>
   );
