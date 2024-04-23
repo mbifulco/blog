@@ -103,7 +103,7 @@ Here's some side-by-side comparisons of the old and new site:
 
 **Home Page**
 
-<SimpleGrid columns={[1, 1, 2]} gap={4}>
+<div className="grid gap-4 md:grid-cols-2">
   <Image
     publicId="posts/migrate-gatsby-to-nextjs-apisyouwonthate-com/home-before"
     alt="Old home page design for apisyouwonthate.com"
@@ -114,11 +114,11 @@ Here's some side-by-side comparisons of the old and new site:
     alt="New home page design for apisyouwonthate.com"
     caption="After"
   />
-</SimpleGrid>
+</div>
 
 **Book feature page**
 
-<SimpleGrid columns={[1, 1, 2]} gap={4}>
+<div className="grid md:grid-cols-2 gap-4">
   <Image
     publicId="posts/migrate-gatsby-to-nextjs-apisyouwonthate-com/book-before"
     alt="Old Book feature page for apisyouwonthate.com"
@@ -130,11 +130,11 @@ Here's some side-by-side comparisons of the old and new site:
     alt="New book feature page for apisyouwonthate.com"
     caption="After"
   />
-</SimpleGrid>
+</div>
 
 **Blog landing page**
 
-<SimpleGrid columns={[1, 1, 2]} gap={4}>
+<div className="grid md:grid-cols-2 gap-4">
 <Image
   publicId="posts/migrate-gatsby-to-nextjs-apisyouwonthate-com/blog-before"
   caption="Old blog landing page for apisyouwonthate.com"
@@ -146,7 +146,7 @@ Here's some side-by-side comparisons of the old and new site:
   caption="New blog landing page for apisyouwonthate.com"
   alt="After"
 />
-</SimpleGrid>
+</div>
 
 ## Summary
 

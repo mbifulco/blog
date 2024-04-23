@@ -26,7 +26,7 @@ const NewsletterItem: React.FC<NewsletterItemProps> = ({ newsletter }) => {
         />
       </Link>
       <div className="mt-4 flex flex-col">
-        <Heading as="h2" className="text-xl text-pink-600">
+        <Heading as="h3" className="text-xl text-pink-600">
           <Link href={`/newsletter/${slug}`}>{title}</Link>
         </Heading>
         <p className="hidden text-sm uppercase text-gray-500 lg:visible">

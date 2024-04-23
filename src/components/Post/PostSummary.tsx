@@ -5,7 +5,6 @@ import clsxm from '@utils/clsxm';
 import type { BlogPost } from '../../data/content-types';
 import { Heading } from '../Heading';
 import { Image } from '../Image';
-import PolitePop from '../PolitePop/PolitePop';
 import { PublishDate } from '../PublishDate';
 import TagsSummary from '../tagsSummary';
 
@@ -64,7 +63,6 @@ const PostSummary: React.FC<PostSummaryProps> = ({ post, eager = false }) => {
           Read more →
         </Link>
       </div>
-      <PolitePop />
     </article>
   );
 };

@@ -1,7 +1,7 @@
 import clsxm from '@utils/clsxm';
-import type { SocialIcon } from '.';
+import type { Icon } from '.';
 
-const RssIcon: SocialIcon = ({ className }) => (
+const RssIcon: Icon = ({ className }) => (
   <svg
     fill="currentColor"
     preserveAspectRatio="xMidYMid meet"

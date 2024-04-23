@@ -1,5 +1,6 @@
 import Script from 'next/script';
-import { Button, Input, SimpleGrid } from '@chakra-ui/react';
+
+import Button from '@components/Button';
 
 type SubscriptionFormProps = {
   tags?: string[];
@@ -27,76 +28,40 @@ const SubscriptionForm: React.FC<SubscriptionFormProps> = ({ tags: _ }) => {
             data-element="errors"
             data-group="alert"
           ></ul>
-          <SimpleGrid
-            columns={[1, 1, 3]}
+          <div
+            className="seva-fields formkit-fields grid w-full items-center rounded md:grid-cols-3"
             data-element="fields"
             data-stacked="false"
-            className="seva-fields formkit-fields"
-            flexDir={['column', 'column', 'row']}
-            width="100%"
-            alignItems={'center'}
-            // border="1px solid #ED64A6"
-            borderRadius="4px"
           >
-            <Input
-              className="formkit-input border-pink-400"
-              backgroundColor="white"
+            <input
+              className="formkit-input h-10 w-full grow rounded-b-none rounded-t border border-b-0 border-solid border-pink-600 bg-white px-[2ch] py-[1ch] font-normal md:rounded-l md:rounded-r-none md:border-b md:border-r-0"
               aria-label="First Name"
               name="fields[first_name]"
               required
               placeholder="First Name"
               type="text"
-              border={`1px solid`}
-              borderRadius={[
-                '4px 4px 0px 0px',
-                '4px 4px 0px 0px',
-                '4px 0px 0px 4px',
-              ]}
-              borderBottomWidth={[0, 0, '1px']}
-              color="rgb(0, 0, 0)"
-              fontWeight={400}
-              padding="1ch 2ch"
-              width="100%"
-              flexGrow={1}
             />
-            <Input
-              className="formkit-input"
-              backgroundColor="white"
+            <input
+              className="formkit-input h-10 w-full grow rounded-b-none border border-b-0 border-solid border-pink-600 bg-white px-[2ch] py-[1ch] font-normal md:border-b"
               name="email_address"
               aria-label="Email Address"
               placeholder="Email Address"
               required
               type="email"
-              color="rgb(0, 0, 0)"
-              borderColor="rgb(237, 100, 166)"
-              borderRadius="0"
-              padding="1ch 2ch"
-              fontWeight={400}
-              width="100%"
-              flexGrow={2}
             />
             <Button
               type="submit"
               data-element="submit"
-              className="formkit-submit formkit-submit"
-              borderRadius={['0 0 4px 4px', '0 0 4px 4px', '0px 4px 4px 0px']}
-              style={{
-                color: 'rgb(255, 255, 255)',
-                backgroundColor: 'rgb(237, 100, 166)',
-
-                padding: '1ch 2ch',
-                fontWeight: 400,
-                flexGrow: 1,
-              }}
+              className="formkit-submit formkit-submit padding-[1ch 2ch] h-10 grow rounded-b rounded-t-none font-normal md:rounded-l-none md:rounded-r"
             >
               <div className="formkit-spinner">
                 <div></div>
                 <div></div>
                 <div></div>
               </div>
-              <span className="">💌 Subscribe</span>
+              <span>💌 Subscribe</span>
             </Button>
-          </SimpleGrid>
+          </div>
         </div>
       </form>
     </div>

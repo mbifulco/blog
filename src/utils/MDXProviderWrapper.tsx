@@ -1,8 +1,7 @@
 import React, { Children } from 'react';
-import type { HTMLProps, ReactElement } from 'react';
+import type { ButtonHTMLAttributes, HTMLProps, ReactElement } from 'react';
 import Link from 'next/link';
 import Script from 'next/script';
-import { Button, Code, SimpleGrid } from '@chakra-ui/react';
 import { MDXProvider } from '@mdx-js/react';
 import { Highlight, themes } from 'prism-react-renderer';
 
@@ -118,15 +117,9 @@ const TextHighlight = (props: HTMLProps<HTMLElement>) => <mark {...props} />;
 
 const InlineCode = (props) => {
   return (
-    <Code
-      overscrollX={'scroll'}
-      maxW={'100%'}
-      colorScheme={'facebook'}
-      verticalAlign="middle"
-      whiteSpace="pre"
-      padding="0.1ch 1ch"
-      overflowX={'auto'}
+    <span
       {...props}
+      className="inline-block max-w-full whitespace-pre rounded-sm bg-slate-500 px-[0.5ch] py-[0.1ch]  align-text-bottom font-mono text-sm text-white"
     />
   );
 };
@@ -222,6 +215,28 @@ const HorizontalRule = () => {
   );
 };
 
+const Button: React.FC<HTMLProps<HTMLButtonElement>> = ({
+  className,
+  children,
+  type,
+  ...props
+}) => {
+  return (
+    <button
+      className={clsxm(
+        'rounded-sm bg-pink-400 px-4 py-2 text-white shadow-md hover:bg-pink-500',
+        className
+      )}
+      type={
+        (type as ButtonHTMLAttributes<HTMLButtonElement>['type']) ?? 'button'
+      }
+      {...props}
+    >
+      {children}
+    </button>
+  );
+};
+
 export const customComponents = {
   Aside,
   blockquote: Blockquote,
@@ -242,7 +257,6 @@ export const customComponents = {
   p: P,
   pre: Pre,
   Script,
-  SimpleGrid,
   SponsoredSection,
   ul: UnorderedList,
   ol: OrderedList,

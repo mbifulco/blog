@@ -1,14 +1,7 @@
 /* eslint-disable jsx-a11y/alt-text */
 import { useState } from 'react';
-import {
-  Slider,
-  SliderFilledTrack,
-  SliderMark,
-  SliderThumb,
-  SliderTrack,
-  Stack,
-  Text,
-} from '@chakra-ui/react';
+
+import { Slider as LocalSlider } from '../Slider';
 
 type OrtonEffectImageProps = {
   blurRadius?: number;
@@ -29,7 +22,7 @@ export const OrtonEffectImage: React.FC<OrtonEffectImageProps> = ({
   const [blurRadius, setRedBlurRadius] = useState<number>(blurStart ?? 15);
 
   return (
-    <Stack spacing={2}>
+    <div className="flex flex-col gap-2">
       <figure>
         <img
           src={src}
@@ -45,66 +38,42 @@ export const OrtonEffectImage: React.FC<OrtonEffectImageProps> = ({
       </figure>
 
       {showControls && (
-        <Stack spacing={2}>
-          <Stack direction="row" pt={4} pb={2} mt={1}>
-            <Text width="15%" fontSize={'sm'}>
-              Opacity {opacity}%
-            </Text>
-            <Slider
-              aria-label="slider-ex-6"
-              onChange={(val) => setOpacity(val)}
-              defaultValue={opacityStart}
-              width="80%"
-            >
-              <SliderMark
-                value={opacity}
-                textAlign="center"
-                bg="blue.500"
-                color="white"
-                mt="-8"
-                ml="-5"
-                w="12"
-              >
-                {opacity}%
-              </SliderMark>
-              <SliderTrack>
-                <SliderFilledTrack />
-              </SliderTrack>
-              <SliderThumb />
-            </Slider>
-          </Stack>
+        <div className="grid grid-cols-[12ch_1fr] items-center gap-2">
+          <p className="inline-block text-right font-mono text-sm uppercase">
+            Opacity:
+          </p>
+          <div className="center grow">
+            <LocalSlider
+              aria-label="Opacity Slider"
+              onChange={([val]) => setOpacity(val)}
+              minValue={5}
+              maxValue={100}
+              value={[opacity]}
+              numberFormatter={
+                { format: (val) => `${val}%` } as Intl.NumberFormat
+              }
+              label={'%'}
+            />
+          </div>
 
-          <Stack direction="row" pb={2}>
-            <Text width="15%" fontSize={'sm'}>
-              Blur Radius {blurRadius}px
-            </Text>
-            <Slider
-              aria-label="slider-ex-6"
-              onChange={(val) => setRedBlurRadius(val)}
-              min={5}
-              max={100}
-              defaultValue={blurStart}
-              width="80%"
-            >
-              <SliderMark
-                value={blurRadius}
-                textAlign="center"
-                bg="blue.500"
-                color="white"
-                mt="-8"
-                ml="-5"
-                w="12"
-              >
-                {blurRadius}%
-              </SliderMark>
-              <SliderTrack>
-                <SliderFilledTrack />
-              </SliderTrack>
-              <SliderThumb />
-            </Slider>
-          </Stack>
-        </Stack>
+          <p className="inline-block text-right font-mono text-sm uppercase">
+            Blur Radius:
+          </p>
+          <div className="grow">
+            <LocalSlider
+              aria-label="Blur Radius Slider"
+              onChange={([val]) => setRedBlurRadius(val)}
+              minValue={5}
+              maxValue={100}
+              value={[blurRadius]}
+              numberFormatter={
+                { format: (val) => `${val}px` } as Intl.NumberFormat
+              }
+              label={'px'}
+            />
+          </div>
+        </div>
       )}
-    </Stack>
+    </div>
   );
 };

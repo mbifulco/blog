@@ -8,6 +8,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      gridTemplateColumns: {
+        'auto-fit-min-300': 'repeat(auto-fit, minmax(300px, 1fr))',
+      },
       colors: {
         // ... your color definitions
       },
