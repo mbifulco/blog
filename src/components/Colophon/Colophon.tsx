@@ -1,5 +1,3 @@
-import Flower from '@components/Colophon/Flower';
-
 const Colophon = () => {
   return (
     <div className="grid grid-cols-3">
