@@ -1,0 +1,259 @@
+---
+title: Add Structured Data to your Next.js site with JSON-LD for better SEO
+excerpt: Structured Data can be added to your site tell Google and other search engines what type of content is on each page using a metadata format called JSON-LD.
+date: 04-25-2024
+tags: [SEO, nextjs, typescript]
+path: structured-data-json-ld-for-next-js-sites
+coverImagePublicId: posts/structured-data-json-ld-for-next-js-sites/cover
+---
+
+<small>
+
+_note: This post is inspired by an article that my pal Josh Finnie wrote, showing [how he added JSON-LD to his Astro.js site](https://www.joshfinnie.com/blog/adding-json-ld-to-my-blog/): If you're an Astro-naut - give that a read. It's great!_
+
+</small>
+
+## SEO is the growth hack you're overlooking
+
+Many devs overlook the value of SEO for their work.
+
+I've long contended that learning a little bit about SEO can go a long way. It's in your best interest to configure your site so that Google, Duck Duck Go, and Bing know what your site is about, and what you're expert on.
+
+In this brief tutorial, I'll share some information about Structured Data and JSON-LD, and how you can add it to your Next.js site to improve your site's SERP (Search Engine Results Page) presentation, with just a little bit of code and configuration.
+
+## What is JSON-LD?
+
+**JSON-LD (JSON Lightweight Linked Data format) is a metadata format** which can be added to your site to tell Google and other search engines what type of content is on each page. This can help search engines understand your content better, and can lead to better search results for your site. In reality, JSON-LD is _just_ a specific format for JSON which is human readable, and is meant to describe the content on a page in a way that search engines can understand. You can read more about it here: [https://json-ld.org/](https://json-ld.org/)
+
+JSON-LD looks like this:
+
+```json
+{
+  "@context": "https://json-ld.org/contexts/person.jsonld",
+  "@id": "http://dbpedia.org/resource/John_Lennon",
+  "name": "John Lennon",
+  "born": "1940-10-09",
+  "spouse": "http://dbpedia.org/resource/Cynthia_Lennon"
+}
+```
+
+### What is Structured Data?
+
+**Structured Data is a set of search-engine specific JSON-LD templates** that search crawlers look for to understand more about the information you're sharing online. It is _optional_ for your site, but can help bring more traffic to your site by increasing the chances that your site will show up in search results.
+
+Adding the _right_ type of Structured data to your site means that when your pages come up in someone's search results, the search engine can display more information about your site, like reviews, ratings, and other rich snippets. Ever seen a recipe or a product review in a search result? That's because of structured data.
+
+<Image
+  publicId="posts/structured-data-json-ld-for-next-js-sites/apple-cobbler"
+  alt="A search result featuring apple cobbler recipes, with a star rating, time to complete, a short ingredients list, and a photo"
+  caption="Structured Data can help your site show up in search results with rich snippets like this one"
+/>
+<br />
+
+### Types of Structured Data
+
+There are many types of Structured Data you can embed on your site - [Google Search Central has a list of structured data features](https://developers.google.com/search/docs/appearance/structured-data/search-gallery) which that is worth a good look. Some examples of Structured Data include:
+
+- **Article**: For news, blog, and other article pages
+- **Events**: Showcases events like concerts, festivals, and other happenings
+- **FAQ**: Make your FAQ page more discoverable
+- **Product**: Details and information about a product you're selling
+- **Recipe**: Ingredients, cook time, and other details about a recipe
+- **Review Snippet**: A review of a product, service, or other item
+- **Video**: For pages that showcase video content
+
+Each of these formats are slightly different in content, but they use JSON-LD to describe the content in a way that search engines can understand. By way of example, this is the Structured Data for a post on my site about a livestream I did demonstrating [how to build a site with Astro, TypeScript, and React](https://mikebifulco.com/posts/live-astro-content-driven-website-rebuild):
+
+```html
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "VideoObject",
+    "name": "Rebuilding an open source content-rich site with Astro, TypeScript, and React",
+    "description": "A YouTube live coding stream, learning to build content-driven sites with the Astro Web Framework.",
+    "thumbnailUrl": "https://i.ytimg.com/vi/wyJYInvZya8/hqdefault.jpg",
+    "uploadDate": "2024-03-23T00:00:00.000Z",
+    "contentUrl": "https://www.youtube.com/watch?v=wyJYInvZya8",
+    "embedUrl": "https://www.youtube.com/embed/wyJYInvZya8",
+    "duration": "PT1M33S"
+  }
+</script>
+```
+
+Not too bad, right? This JSON-LD tells Google that this page is a video, and gives Google some information about the video, like the title, description, and thumbnail. In theory, if someone searches for the title of the video, Google might show this video in the search results, with a thumbnail and a link to the video.
+
+Once you've got Structured Data embedded on your site, you can verify that it's working using [Schema.org's Structured Data Testing Tool](https://validator.schema.org/):
+
+<Image
+  publicId="posts/structured-data-json-ld-for-next-js-sites/schema-org-validator"
+  alt="Schema.org's Structured Data Testing Tool showing that my video structured data is valid"
+/>
+
+Similarly, you can use [Google's Rich Results Test](https://search.google.com/test/rich-results):
+
+<Image
+  publicId="posts/structured-data-json-ld-for-next-js-sites/rich-results-test"
+  alt="Google's Rich Results Test showing that my video structured data is valid"
+/>
+
+If you want to poke around yourself, check out the [results for the video example above](https://search.google.com/test/rich-results/result?id=K92cqPpaYa6TcdmYuVrIzQ).
+
+Pretty cool! So - now let's talk about how it's done.
+
+## Adding Structured data to your Next.js site with JSON-LD
+
+My site is built with Next.js - the articles you read here are written in an extension of Markdown called [MDX](https://nextjs.org/docs/pages/building-your-application/configuring/mdx), and the site is statically generated.
+
+When I publish an article that features a YouTube video, I add frontmatter to the MDX file for the article that contains the ID of the video, and then I use that ID to generate the JSON-LD for the video.
+
+Again, for the page above, that looks like this:
+
+```mdx
+---
+title: 'Rebuilding an open source content-rich site with Astro, TypeScript, and React'
+excerpt: A YouTube live coding stream, learning to build content-driven sites with the Astro Web Framework.
+date: 2024-03-23
+tags: [video, nextjs, typescript, astro]
+coverImagePublicId: posts/live-astro-content-driven-website-rebuild/cover
+path: live-astro-content-driven-website-rebuild
+youTubeId: wyJYInvZya8
+---
+
+OpenApi.tools is an Open Source yada yada yada
+```
+
+When these pages are rendered, I use the `youTubeId` to generate the JSON-LD for the video. This starts by defining a TypeScript type for the video data:
+
+```tsx
+type VideoStructuredData = {
+  '@context': string;
+  '@type': string;
+  name: string;
+  description: string;
+  thumbnailUrl: string;
+  uploadDate: string;
+  contentUrl: string;
+  embedUrl: string;
+  duration: string;
+  interactionStatistic?: {
+    '@type': string;
+    interactionType: { '@type': string };
+    userInteractionCount: number;
+  };
+  regionsAllowed?: string;
+};
+```
+
+Then, I use the `youTubeId` to generate the JSON-LD for the video:
+
+```tsx
+  let videoStructuredData: VideoStructuredData | undefined = undefined;
+
+  if (youTubeId) {
+    videoStructuredData = {
+      '@context': 'https://schema.org',
+      '@type': 'VideoObject',
+      name: title,
+      description: excerpt,
+      thumbnailUrl: `https://i.ytimg.com/vi/${youTubeId}/hqdefault.jpg`, // this is the thumbnail for the video straight from youtube
+      uploadDate: new Date(date).toISOString(),
+      contentUrl: `https://www.youtube.com/watch?v=${youTubeId}`, // this is the URL for the video on youtube
+      embedUrl: `https://www.youtube.com/embed/${youTubeId}`, // this is the URL for the video embed on youtube
+      duration: 'PT1M33S', // this is the duration of the video
+
+      /*
+        note that I'm not using the entire VideoObject schema here, but
+        you could add more fields if you wanted to, like interactionStatistic
+        and regionsAllowed:
+      */
+
+      // interactionStatistic: {
+      //   '@type': 'InteractionCounter',
+      //   interactionType: { '@type': 'http://schema.org/WatchAction' },
+      //   userInteractionCount: 0,
+      // },
+      // regionsAllowed: ['US'],
+    };
+  }
+```
+
+Once this object is created, I serialize it to a string and add it to a `<script>` tag on the page - depending on when and where you generate it, you can stick this in the `<head>` of your page, or right in the body of the document, like I do:
+
+```tsx
+
+ // snip -
+
+  return (
+    <>
+      {videoStructuredData && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(videoStructuredData),
+          }}
+        />
+      )}
+      <article>
+        {/* page content goes here */}
+      </article>
+    </>
+  );
+
+```
+
+When the page is generated, you can inspect the source and see the JSON-LD embedded in the page - as in the example above.
+
+You can double-check that your Structured data is valid using one the [Schema.org Structured Data Testing Tool](https://validator.schema.org/) before publishing by copy/pasting the generated HTML for your pages into the "code snippet" tab. Once you're happy with it, you can publish your article and you're good to go!
+
+Job done, and we didn't need to use a single npm package to do it. Google's crawler will see this JSON-LD and use it to understand the content on your page better, and you'll be on your way to better search results.
+
+## Embed your Structured data server-side for best results
+
+Embedding this information on in your articles in Next.js only takes a few steps, but it's critical that you do this _server-side_ to give google the best chances of seeing it. I'm using the Next.js `/pages` directory for my site -- articles are generated statically using `getStaticPaths` and `getStaticProps`, which means that the JSON-LD is generated at build time.
+
+If you use the _App Router,_ you'll want to make sure that you embed your JSON-LD using a React Server Component (RSC), not using a client-side script.
+
+If you're using a CMS, you'll want to make sure that the JSON-LD is generated when the page is statically rendered, and not when the page is loaded in the browser.
+
+## Challenges with structured data
+
+It's worth mentioning here that even if the schema validators can read your JSON-LD, it doesn't guarantee that Google will use it in search results. Google's search algorithms are complex, and they use many signals to determine what to show in search results.
+
+I've been tweaking the implementation of Video structured data on posts like the one above, because the Google Search Console has been showing me that the structured data is valid, but it's not showing up in search results as a video:
+
+<Image
+  publicId="posts/structured-data-json-ld-for-next-js-sites/search-console-hates-me"
+  alt="Google Search Console showing that my video structured data is valid, but not showing up in search results"
+  caption="Google's crawler thinks my video isn't the main content of the page."
+/>
+
+There's still some work to do here, but I'm confident that with some more tweaking, I'll be able to get this working. If you know more about this, I'd love to hear from you! Drop me a line on [Threads @irreverentmike](https://threads.net/@irreverentmike) or email me <a href="mailto:hello@mikebifulco.com">hello@mikebifulco.com</a>.
+
+These rules are always changing, and keeping up with them is a fulltime job in itself. Nonetheless, adding structured data to your site is a good practice, and can help your site show up in more search results -- even if you can't control exactly how it shows up.
+
+## Keep adding Structured Data to your site
+
+Now's your turn - go give it a shot. You may want to start with something like the [Profile Page](https://developers.google.com/search/docs/appearance/structured-data/profile-page) structured data format, or by adding one for [Articles](https://developers.google.com/search/docs/appearance/structured-data/article) to your posts.
+
+For the amount of effort required, the payoff is worth it. Every little SEO boost you build into your site pays off in the long run. Think of it as an investment in the passive value of your content - the more you can do to make your content discoverable, the more likely it is to be found.
+
+## Resources on SEO and Structured Data
+
+As I mentioned above, this tutorial was inspired by [Josh Finnie's article on adding JSON-LD to his Astro.js site](https://www.joshfinnie.com/blog/adding-json-ld-to-my-blog/). Josh is a great developer and a good friend, and I recommend you check out his work.
+
+I've written a few articles on SEO that you may find helpful:
+
+- [3 Tiny tips for better SEO](https://mikebifulco.com/newsletter/tiny-tips-for-better-seo)
+- [How to set up self-healing URLs in Next.js for better SEO](https://mikebifulco.com/posts/self-healing-urls-nextjs-seo)
+- [SEO tools I used to grow my sites to 20k+ visitors/month](https://mikebifulco.com/posts/seo-tools-for-new-web-projects)
+- [How to reset your Open Graph embed on LinkedIn, Twitter, and Facebook](https://mikebifulco.com/posts/reset-your-open-graph-embeds-on-linkedin-twitter-facebook)
+
+And here are some tools that can help you get started with Structured Data:
+
+- [Google's Structured Data Testing Tool](https://search.google.com/structured-data/testing-tool)
+- [Google's Rich Results Test](https://search.google.com/test/rich-results)
+- [Schema.org's Structured Data Testing Tool](https://validator.schema.org/)
+
+If you found this helpful I'd love it if you shared the article with a friend.
+
+I'm also keen to hear from you. Drop me a line on [Threads @irreverentmike](https://threads.net/@irreverentmike) or email me <a href="mailto:hello@mikebifulco.com">hello@mikebifulco.com</a> if you think I missed anything, or if you have any questions!

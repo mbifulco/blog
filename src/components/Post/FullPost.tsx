@@ -32,7 +32,7 @@ type VideoStructuredData = {
     interactionType: { '@type': string };
     userInteractionCount: number;
   };
-  regionsAllowed: string;
+  regionsAllowed?: string;
 };
 
 const FullPost: React.FC<FullPostProps> = ({ post }) => {
@@ -83,7 +83,6 @@ const FullPost: React.FC<FullPostProps> = ({ post }) => {
       //   interactionType: { '@type': 'http://schema.org/WatchAction' },
       //   userInteractionCount: 0,
       // },
-      regionsAllowed: 'US',
     };
   }
 
