@@ -124,7 +124,7 @@ OpenApi.tools is an Open Source yada yada yada
 
 Google provides an npm package called [schema-dts](https://www.npmjs.com/package/schema-dts) which contains types and helpers for generating JSON-LD. Start by installing this package:
 
-```bash
+```sh
 npm install schema-dts
 # or with pnpm
 pnpm install schema-dts
@@ -137,6 +137,8 @@ bun add schema-dts
 Then, import the package and use it to generate a typed variable to contain a VideoObject's schema:
 
 ```tsx
+import type { VideoObject, WithContext } from 'schema-dts';
+
 let videoStructuredData: WithContext<VideoObject> | undefined = undefined;
 ```
 
