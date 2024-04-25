@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router';
 import { MDXRemote } from 'next-mdx-remote';
+import type { VideoObject, WithContext } from 'schema-dts';
 import useSWR from 'swr';
 
 import type { BlogPost, Newsletter } from '../../data/content-types';
@@ -15,24 +16,6 @@ import MentionsSummary from './mentionsSummary';
 
 type FullPostProps = {
   post: BlogPost | Newsletter;
-};
-
-type VideoStructuredData = {
-  '@context': string;
-  '@type': string;
-  name: string;
-  description: string;
-  thumbnailUrl: string;
-  uploadDate: string;
-  contentUrl: string;
-  embedUrl: string;
-  duration: string;
-  interactionStatistic?: {
-    '@type': string;
-    interactionType: { '@type': string };
-    userInteractionCount: number;
-  };
-  regionsAllowed?: string;
 };
 
 const FullPost: React.FC<FullPostProps> = ({ post }) => {
@@ -64,7 +47,7 @@ const FullPost: React.FC<FullPostProps> = ({ post }) => {
     />
   );
 
-  let videoStructuredData: VideoStructuredData | undefined = undefined;
+  let videoStructuredData: WithContext<VideoObject> | undefined = undefined;
 
   if (youTubeId) {
     coverContainer = <YouTube youTubeId={youTubeId} />;
@@ -77,7 +60,6 @@ const FullPost: React.FC<FullPostProps> = ({ post }) => {
       uploadDate: new Date(date).toISOString(),
       contentUrl: `https://www.youtube.com/watch?v=${youTubeId}`,
       embedUrl: `https://www.youtube.com/embed/${youTubeId}`,
-      duration: 'PT1M33S',
       // interactionStatistic: {
       //   '@type': 'InteractionCounter',
       //   interactionType: { '@type': 'http://schema.org/WatchAction' },

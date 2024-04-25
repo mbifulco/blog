@@ -122,29 +122,33 @@ youTubeId: wyJYInvZya8
 OpenApi.tools is an Open Source yada yada yada
 ```
 
-When these pages are rendered, I use the `youTubeId` to generate the JSON-LD for the video. This starts by defining a TypeScript type for the video data:
+Google provides an npm package called [schema-dts](https://www.npmjs.com/package/schema-dts) which contains types and helpers for generating JSON-LD. Start by installing this package:
 
-```tsx
-type VideoStructuredData = {
-  '@context': string;
-  '@type': string;
-  name: string;
-  description: string;
-  thumbnailUrl: string;
-  uploadDate: string;
-  contentUrl: string;
-  embedUrl: string;
-  duration: string;
-  interactionStatistic?: {
-    '@type': string;
-    interactionType: { '@type': string };
-    userInteractionCount: number;
-  };
-  regionsAllowed?: string;
-};
+```sh
+npm install schema-dts
+# or with pnpm
+pnpm install schema-dts
+# or with yarn
+yarn add schema-dts
+# or with bun
+bun add schema-dts
 ```
 
-Then, I use the `youTubeId` to generate the JSON-LD for the video:
+Then, import the package and use it to generate a typed variable to contain a VideoObject's schema:
+
+```tsx
+import type { VideoObject, WithContext } from 'schema-dts';
+
+let videoStructuredData: WithContext<VideoObject> | undefined = undefined;
+```
+
+<small className="text-xs">
+
+**Shout out** to redditor [/u/AdrnF](https://www.reddit.com/r/nextjs/comments/1ccr79j/comment/l172n31/) for the tip. I didn't know this npm package existed!
+
+</small>
+
+Next, we'll need to populate this variable with the appropriate data for the schema. In my case, I'm using the `youTubeId` from the frontmatter to generate the JSON-LD for the video, like this:
 
 ```tsx
   let videoStructuredData: VideoStructuredData | undefined = undefined;
@@ -205,7 +209,7 @@ When the page is generated, you can inspect the source and see the JSON-LD embed
 
 You can double-check that your Structured data is valid using one the [Schema.org Structured Data Testing Tool](https://validator.schema.org/) before publishing by copy/pasting the generated HTML for your pages into the "code snippet" tab. Once you're happy with it, you can publish your article and you're good to go!
 
-Job done, and we didn't need to use a single npm package to do it. Google's crawler will see this JSON-LD and use it to understand the content on your page better, and you'll be on your way to better search results.
+Job done. Google's crawler will see this JSON-LD and use it to understand the content on your page better, and you'll be on your way to better search results.
 
 ## Embed your Structured data server-side for best results
 
