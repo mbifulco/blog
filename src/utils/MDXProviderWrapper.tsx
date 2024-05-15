@@ -113,7 +113,7 @@ const Aside: React.FC<AsideProps> = ({ type = 'default', ...props }) => {
   );
 };
 
-const TextHighlight = (props: HTMLProps<HTMLElement>) => <mark {...props} />;
+const TextHighlight = (props: HTMLProps<HTMLElement>) => <mark className={clsxm("inline bg-pink-600 text-white leading-tight rounded xs px-[0.5ch]", props.className)} {...props} />;
 
 const InlineCode = (props) => {
   return (
