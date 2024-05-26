@@ -8,6 +8,10 @@ jobs:
   playwright:
     timeout-minutes: 60
     runs-on: ubuntu-latest
+    env:
+      CONVERTKIT_API_SECRET: ${{ secrets.CONVERTKIT_API_SECRET }}
+      NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME: ${{ secrets.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME }}
+      NEXT_PUBLIC_FATHOM_ID: ${{ secrets.NEXT_PUBLIC_FATHOM_ID }}
     steps:
     - uses: actions/checkout@v4
     - uses: actions/setup-node@v4
