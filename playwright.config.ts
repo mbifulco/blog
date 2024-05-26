@@ -30,6 +30,7 @@ export default defineConfig({
     trace: 'on-first-retry',
   },
 
+
   /* Configure projects for major browsers */
   projects: [
     {
@@ -73,5 +74,6 @@ export default defineConfig({
     command: 'pnpm build && pnpm start',
     url: 'http://127.0.0.1:3000',
     reuseExistingServer: !process.env.CI,
+    timeout: 10 * 60 * 1000, // 10 minutes in milliseconds
   },
 });
