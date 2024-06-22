@@ -67,7 +67,7 @@ const NewsletterPage: React.FC<NewsletterPageProps> = ({ newsletter }) => {
 
   return (
     <>
-      <div className="mx-auto flex max-w-full flex-col gap-8 xl:max-w-prose">
+      <div className="mx-auto flex max-w-full flex-col">
         <SEO
           canonical={router.asPath}
           title={`${title}`}
@@ -75,7 +75,7 @@ const NewsletterPage: React.FC<NewsletterPageProps> = ({ newsletter }) => {
           image={coverImageUrl}
           ogType="article"
         />
-        <div className="mx-auto w-full max-w-full text-ellipsis px-4 sm:px-2 lg:px-0 xl:max-w-4xl">
+        <div className="mx-auto w-full max-w-full text-ellipsis px-4 sm:px-2 lg:px-0">
           <BreadCrumbs
             crumbs={[
               {

@@ -103,9 +103,11 @@ const FullPost: React.FC<FullPostProps> = ({ post }) => {
             )}
           </header>
 
-          <div className="flex flex-col gap-4">
+          <div>
             <CarbonAd />
-            <MDXRemote {...post.source} components={components} />
+            <main className="prose xl:prose-2xl">
+              <MDXRemote {...post.source} components={components} />
+            </main>
             <MentionsSummary mentions={mentions} />
           </div>
         </div>

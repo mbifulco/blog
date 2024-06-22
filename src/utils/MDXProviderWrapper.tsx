@@ -24,11 +24,11 @@ const CustomHeading: React.FC<HeadingProps> = ({
   if (id) {
     // if we have an ID, render a "#" character before the heading on hover
     return (
-      <Link href={`#${id}`} className="hover:no-underline">
+      <Link href={`#${id}`} className="hover:no-underline no-underline">
         <Heading
           as={as}
           className={clsxm(
-            'inline tracking-normal',
+            'inline tracking-normal no-underline',
             "hover:before:relative hover:before:-ml-[1.2ch] hover:before:inline hover:before:border-b-0 hover:before:pr-[0.2ch] hover:before:text-pink-700 hover:before:no-underline hover:before:content-['#']"
           )}
           id={id}
@@ -69,7 +69,7 @@ const P = (props) => <p className="my-2 text-xl" {...props} />;
 
 const Blockquote = ({ children }) => {
   return (
-    <blockquote className="border-l-4 border-pink-400 bg-gray-100 px-3">
+    <blockquote className="border-l-4 border-pink-400 bg-gray-100 p-3">
       {children}
     </blockquote>
   );
@@ -192,13 +192,13 @@ const Pre: React.FC<PreProps> = ({ children }) => {
 };
 
 const OrderedList = ({ children, ...rest }) => (
-  <ol {...rest} className="flex list-decimal flex-col gap-3 text-xl">
+  <ol {...rest} className="list-decimal">
     {children}
   </ol>
 );
 
 const UnorderedList = ({ children, ...rest }) => (
-  <ul {...rest} className="flex list-disc flex-col gap-3 text-xl">
+  <ul {...rest} className="list-disc">
     {children}
   </ul>
 );
@@ -211,7 +211,7 @@ const ListItemComponent = ({ children, ...rest }) => (
 
 const HorizontalRule = () => {
   return (
-    <div className="align-center mb-8 mt-12 flex w-[50%] max-w-[50%] flex-col justify-center self-center border-b-[5px] border-solid border-pink-400" />
+    <div className="mx-auto mb-8 mt-12 w-[50%] max-w-[50%] border-b-[5px] border-solid border-pink-400 rounded" />
   );
 };
 
