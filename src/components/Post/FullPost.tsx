@@ -69,7 +69,7 @@ const FullPost: React.FC<FullPostProps> = ({ post }) => {
   }
 
   // no cover image for newsletters, we want it to look like an email
-  if (frontmatter?.type === 'newsletter') {
+  if (frontmatter?.type === 'newsletter' && !youTubeId) {
     coverContainer = null;
   }
 
