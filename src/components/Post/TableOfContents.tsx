@@ -9,7 +9,8 @@ type TableOfContentsProps = {
 };
 
 
-// shout out to Alex Khomenko for this hook!
+// This is a tweaked version of Alex Khomenko's useHighlighted hook.
+// Shout out to Alex for the great starting point!
 // https://claritydev.net/blog/nextjs-blog-remark-interactive-table-of-contents
 function useHighlighted(id) {
   const observer = useRef<IntersectionObserver>();
@@ -17,7 +18,7 @@ function useHighlighted(id) {
 
   useEffect(() => {
     const handleObserver = (entries: IntersectionObserverEntry[]) => {
-      entries.forEach((entry) => {
+      entries?.forEach((entry) => {
         if (entry?.isIntersecting) {
           setActiveId(entry.target.id);
         }
@@ -36,8 +37,8 @@ function useHighlighted(id) {
   return [activeId === id, setActiveId];
 }
 
-const ToCLink = ({ heading }) => {
-  const [isHighlighted, setIsHighlighted] = useHighlighted(heading.slug);
+const ToCLink: React.FC<{ heading: Heading }> = ({ heading }) => {
+  const [isHighlighted] = useHighlighted(heading.slug);
 
   return (
     <li key={heading.slug} className={clsxm("border-l-2 border-l-pink-600 pl-4 py-1 rounded-r pr-1", isHighlighted && "bg-pink-600 ")}>
