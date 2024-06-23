@@ -82,7 +82,7 @@ const FullPost: React.FC<FullPostProps> = ({ post }) => {
       <article
       >
         <header className="mb-4 flex flex-col gap-2 mx-auto">
-            <div className="max-w-[75ch]">
+            <div className="max-w-[75ch] mx-auto">
               <Heading as="h1" className="m-0 p-0">
                 {title}
               </Heading>
@@ -92,7 +92,9 @@ const FullPost: React.FC<FullPostProps> = ({ post }) => {
 
               <TagsSummary tags={tags} />
             </div>
-            {coverContainer}
+            <div className="mx-auto">
+              {coverContainer}
+            </div>
             {podcastUrl && (
               <iframe width="100%" height="180" seamless src={podcastUrl} />
             )}
