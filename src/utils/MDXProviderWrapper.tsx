@@ -29,7 +29,8 @@ const CustomHeading: React.FC<HeadingProps> = ({
           as={as}
           className={clsxm(
             'inline tracking-normal no-underline',
-            "hover:before:relative hover:before:-ml-[1.2ch] hover:before:inline hover:before:border-b-0 hover:before:pr-[0.2ch] hover:before:text-pink-700 hover:before:no-underline hover:before:content-['#']"
+            "hover:before:relative hover:before:-ml-[1.2ch] hover:before:inline hover:before:border-b-0 hover:before:pr-[0.2ch] hover:before:text-pink-700 hover:before:no-underline hover:before:content-['#']",
+            "scroll-mt-2"
           )}
           id={id}
           {...props}
@@ -145,7 +146,7 @@ const Pre: React.FC<PreProps> = ({ children }) => {
 
   return (
     <div
-      className={`rounded p-[3ch]`}
+      className={`rounded`}
       style={{
         background: themes.nightOwl.plain.backgroundColor,
       }}

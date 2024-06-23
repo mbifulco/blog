@@ -11,7 +11,7 @@ const Footer = () => {
       className="bg-gray-50 py-10"
       style={{ backgroundImage: `url(/images/wiggle.svg)` }}
     >
-      <div className="mx-auto max-w-4xl p-4 text-sm text-black xl:relative bg-white/70 rounded-xl">
+      <div className="mx-auto max-w-4xl p-4 text-sm text-black xl:relative bg-white/80 rounded-xl">
         <RelatedContentLinksByTag />
 
         <div className="grid gap-4 md:grid-cols-2">

@@ -75,20 +75,6 @@ const NewsletterPage: React.FC<NewsletterPageProps> = ({ newsletter }) => {
           image={coverImageUrl}
           ogType="article"
         />
-        <div className="mx-auto w-full max-w-full text-ellipsis px-4 sm:px-2 lg:px-0">
-          <BreadCrumbs
-            crumbs={[
-              {
-                name: '💌 Tiny Improvements',
-                href: '/newsletter',
-              },
-              {
-                name: title,
-                href: `#`,
-              },
-            ]}
-          />
-        </div>
 
         <FullPost post={newsletter} />
         <Colophon />

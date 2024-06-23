@@ -12,8 +12,6 @@ const DefaultLayout = ({ children }) => {
         <div className="mx-auto my-0 flex w-full flex-col gap-8 px-2 py-0 sm:px-4 lg:p-0">
           <Navbar />
 
-          <SiteAnnouncement />
-
           <div className="flex flex-col">
             {children}
             <Footer />
