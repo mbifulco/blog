@@ -2,7 +2,6 @@ import type { GetStaticProps } from 'next';
 import { useRouter } from 'next/router';
 
 import NewsletterHero from '@components/NewsletterSignup/NewsletterHero';
-import { BreadCrumbs } from '../../components/Breadcrumbs';
 import { Colophon } from '../../components/Colophon';
 import FullPost from '../../components/Post/FullPost';
 import SEO from '../../components/seo';

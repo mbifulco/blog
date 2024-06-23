@@ -24,7 +24,7 @@ export const getContentBySlug = async (
   const articleDate = new Date(date as string);
 
   const mdxSource = await serialize(content);
-  const headings = await getHeadings(content);
+  const headings = getHeadings(content);
 
   return {
     slug: realSlug,
