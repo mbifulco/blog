@@ -16,7 +16,7 @@ function useHighlighted(id) {
   const [activeId, setActiveId] = useState("");
 
   useEffect(() => {
-    const handleObserver = (entries) => {
+    const handleObserver = (entries: IntersectionObserverEntry[]) => {
       entries.forEach((entry) => {
         if (entry?.isIntersecting) {
           setActiveId(entry.target.id);
@@ -28,7 +28,7 @@ function useHighlighted(id) {
       rootMargin: "0% 0% -35% 0px",
     });
 
-    const elements = document.querySelectorAll("h2, h3, h4");
+    const elements = document.querySelectorAll("h1, h2, h3, h4, h5, h6");
     elements.forEach((elem) => observer.current?.observe(elem));
     return () => observer.current?.disconnect();
   }, []);
