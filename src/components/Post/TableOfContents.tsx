@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Heading as HtmlHeading } from "@components/Heading";
-import { type Heading } from "src/data/content-types";
+import type { Heading } from "src/data/content-types";
 import clsxm from "@utils/clsxm";
 import Link from "next/link";
 
