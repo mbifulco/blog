@@ -5,7 +5,7 @@ import { compareDesc } from 'date-fns';
 import matter from 'gray-matter';
 
 import type { MarkdownDocument } from '../data/content-types';
-import { serialize } from '../utils/mdx';
+import { getHeadings, serialize } from '../utils/mdx';
 import { parseTag } from './tags';
 
 export const getContentBySlug = async (
@@ -24,6 +24,7 @@ export const getContentBySlug = async (
   const articleDate = new Date(date as string);
 
   const mdxSource = await serialize(content);
+  const headings = getHeadings(content);
 
   return {
     slug: realSlug,
@@ -34,6 +35,7 @@ export const getContentBySlug = async (
       type,
     },
     content,
+    tableOfContents: headings,
     source: mdxSource,
   };
 };

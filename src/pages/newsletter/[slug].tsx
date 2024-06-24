@@ -2,7 +2,6 @@ import type { GetStaticProps } from 'next';
 import { useRouter } from 'next/router';
 
 import NewsletterHero from '@components/NewsletterSignup/NewsletterHero';
-import { BreadCrumbs } from '../../components/Breadcrumbs';
 import { Colophon } from '../../components/Colophon';
 import FullPost from '../../components/Post/FullPost';
 import SEO from '../../components/seo';
@@ -75,33 +74,9 @@ const NewsletterPage: React.FC<NewsletterPageProps> = ({ newsletter }) => {
           image={coverImageUrl}
           ogType="article"
         />
-        <div className="mx-auto w-full max-w-full text-ellipsis px-4 sm:px-2 lg:px-0">
-          <BreadCrumbs
-            crumbs={[
-              {
-                name: '💌 Tiny Improvements',
-                href: '/newsletter',
-              },
-              {
-                name: title,
-                href: `#`,
-              },
-            ]}
-          />
-        </div>
 
         <FullPost post={newsletter} />
         <Colophon />
-
-        <p className="mx-auto mt-0 max-w-full text-xl xl:max-w-4xl">
-          Thanks for reading Tiny Improvements. If you found this helpful,{' '}
-          {"I'd "}
-          love it if you shared this with a friend. It helps me out a great
-          deal.
-        </p>
-        <p className="mx-auto max-w-4xl text-xl">
-          Until next time - be excellent to each other!
-        </p>
       </div>
       <WebmentionMetadata
         coverImageUrl={coverImageUrl}

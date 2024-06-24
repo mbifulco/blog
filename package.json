@@ -81,6 +81,7 @@
     "eslint-plugin-jsx-a11y": "^6.9.0",
     "eslint-plugin-react": "^7.34.3",
     "eslint-plugin-react-hooks": "^4.6.2",
+    "github-slugger": "^2.0.0",
     "jiti": "^1.21.6",
     "next-sitemap": "^4.2.3",
     "prettier": "^3.3.2",

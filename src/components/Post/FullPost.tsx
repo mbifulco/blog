@@ -13,6 +13,7 @@ import { YouTube } from '../MdxEmbed';
 import { PublishDate } from '../PublishDate';
 import TagsSummary from '../tagsSummary';
 import MentionsSummary from './mentionsSummary';
+import TableOfContents from './TableOfContents';
 
 type FullPostProps = {
   post: BlogPost | Newsletter;
@@ -79,33 +80,38 @@ const FullPost: React.FC<FullPostProps> = ({ post }) => {
         />
       )}
       <article
-        className={
-          'mx-auto mb-4 w-full px-2 text-left text-base sm:px-4 md:px-10 lg:px-20 xl:px-0'
-        }
       >
-        <div className={'relative'}>
-          <header className="mb-4 flex flex-col gap-2">
-            <Heading as="h1" className="m-0 p-0">
-              {title}
-            </Heading>
-            <p className="text-xs text-gray-700 dark:text-gray-400">
-              <PublishDate date={date} /> {author && <>— Written by {author}</>}
-            </p>
-            <TagsSummary tags={tags} />
-            {coverContainer}
+        <header className="mb-4 flex flex-col gap-2 mx-auto">
+            <div className="max-w-[75ch] mx-auto">
+              <Heading as="h1" className="m-0 p-0">
+                {title}
+              </Heading>
+              <p className="text-xs text-gray-700 dark:text-gray-400">
+                <PublishDate date={date} /> {author && <>— Written by {author}</>}
+              </p>
+
+              <TagsSummary tags={tags} />
+            </div>
+            <div className="mx-auto">
+              {coverContainer}
+            </div>
             {podcastUrl && (
               <iframe width="100%" height="180" seamless src={podcastUrl} />
             )}
           </header>
 
-          <div>
-            <CarbonAd />
-            <main className="prose xl:prose-2xl">
-              <MDXRemote {...post.source} components={components} />
+          <div className="mx-auto w-fit">
+            <main className="flex flex-col-reverse md:flex md:flex-row gap-2 lg:gap-8">
+              <div className="prose lg:prose-xl">
+                <MDXRemote {...post.source} components={components} />
+              </div>
+              <div className="sticky top-6 w-[300px] flex flex-col gap-4 h-max">
+                <TableOfContents headings={post.tableOfContents} />
+                <CarbonAd />
+              </div>
             </main>
             <MentionsSummary mentions={mentions} />
           </div>
-        </div>
       </article>
     </>
   );
