@@ -82,23 +82,23 @@ const FullPost: React.FC<FullPostProps> = ({ post }) => {
       <article
       >
         <header className="mb-4 flex flex-col gap-2 mx-auto">
-            <div className="max-w-[75ch] mx-auto">
-              <Heading as="h1" className="m-0 p-0">
-                {title}
-              </Heading>
-              <p className="text-xs text-gray-700 dark:text-gray-400">
-                <PublishDate date={date} /> {author && <>— Written by {author}</>}
-              </p>
+          <div className="max-w-[75ch] mx-auto">
+            <Heading as="h1" className="m-0 p-0">
+              {title}
+            </Heading>
+            <p className="text-xs text-gray-700 dark:text-gray-400">
+              <PublishDate date={date} /> {author && <>— Written by {author}</>}
+            </p>
 
-              <TagsSummary tags={tags} />
-            </div>
-            <div className="mx-auto">
-              {coverContainer}
-            </div>
-            {podcastUrl && (
-              <iframe width="100%" height="180" seamless src={podcastUrl} />
-            )}
-          </header>
+            <TagsSummary tags={tags} />
+          </div>
+          <div className="mx-auto w-full min-h-52 h-auto">
+            {coverContainer}
+          </div>
+          {podcastUrl && (
+            <iframe width="100%" height="180" seamless src={podcastUrl} />
+          )}
+        </header>
 
           <div className="mx-auto w-fit">
             <main className="flex flex-col-reverse md:flex md:flex-row gap-2 lg:gap-8">
