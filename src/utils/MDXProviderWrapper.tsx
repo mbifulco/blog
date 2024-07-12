@@ -24,13 +24,13 @@ const CustomHeading: React.FC<HeadingProps> = ({
   if (id) {
     // if we have an ID, render a "#" character before the heading on hover
     return (
-      <Link href={`#${id}`} className="hover:no-underline no-underline">
+      <Link href={`#${id}`} className="no-underline hover:no-underline">
         <Heading
           as={as}
           className={clsxm(
             'inline tracking-normal no-underline',
             "hover:before:relative hover:before:-ml-[1.2ch] hover:before:inline hover:before:border-b-0 hover:before:pr-[0.2ch] hover:before:text-pink-700 hover:before:no-underline hover:before:content-['#']",
-            "scroll-mt-2"
+            'scroll-mt-2'
           )}
           id={id}
           {...props}
@@ -114,13 +114,21 @@ const Aside: React.FC<AsideProps> = ({ type = 'default', ...props }) => {
   );
 };
 
-const TextHighlight = (props: HTMLProps<HTMLElement>) => <mark className={clsxm("inline bg-pink-600 text-white leading-tight rounded xs px-[0.5ch]", props.className)} {...props} />;
+const TextHighlight = (props: HTMLProps<HTMLElement>) => (
+  <mark
+    className={clsxm(
+      'xs inline rounded bg-pink-600 px-[0.5ch] leading-tight text-white',
+      props.className
+    )}
+    {...props}
+  />
+);
 
 const InlineCode = (props) => {
   return (
     <span
       {...props}
-      className="inline-block max-w-full whitespace-pre rounded-sm bg-slate-500 px-[0.5ch] py-[0.1ch]  align-text-bottom font-mono text-sm text-white"
+      className="inline-block max-w-full whitespace-pre rounded-sm bg-slate-500 px-[0.5ch] py-[0.1ch] align-text-bottom font-mono text-sm text-white"
     />
   );
 };
@@ -212,7 +220,7 @@ const ListItemComponent = ({ children, ...rest }) => (
 
 const HorizontalRule = () => {
   return (
-    <div className="mx-auto mb-8 mt-12 w-[50%] max-w-[50%] border-b-[5px] border-solid border-pink-400 rounded" />
+    <div className="mx-auto mb-8 mt-12 w-[50%] max-w-[50%] rounded border-b-[5px] border-solid border-pink-400" />
   );
 };
 
