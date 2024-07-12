@@ -29,7 +29,7 @@ const Image: React.FC<ImageProps> = ({
   }
 
   return (
-    <figure className="-mx-1 sm:mx-0">
+    <figure className="-mx-1 flex flex-row items-center justify-center sm:mx-auto">
       <CldImage
         height={height}
         width={width}
