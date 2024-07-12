@@ -9,49 +9,61 @@ date: 07-12-2024
 
 ## Canonically Speaking: Own Your Work
 
-As a developer publishing on the internet and building your brand, taking ownership of your work is crucial. In this quick tutorial, you will learn how to use canonical tags to tell search engines that your website is the home of your original works, thereby boosting your performance on search engines, and building critical momentum for your personal brand.
+You've gone through the trouble of planning, outlining, and writing an article - the product of hours (or sometimes days) of work. After publishing your work on your own site, you take the time to cross-post it on Hashnode, Medium, Dev.to, and Reddit, to get more eyes on it.
 
-Effective use of **SEO** (Search Engine Optimization) is key to making sure your content reaches a wider audience.
+Great news: your work is a success! You're racking up likes and upvotes, and people are leaving thoughtful comments.
 
-### What is a Canonical Tag?
+Some time later, you open up an incognito window, and do a Google search for your article, and it pops up!
 
-The **canonical tag** is an HTML element that helps you prevent duplicate content issues by specifying the "canonical" or preferred version of the content on a webpage.
+...but wait, why is the top result Medium, and not `yourgreatwebsite.com`?
 
-In other, **canonical tags tell search engines which URL should be considered the original source of the content**.
+It sounds like it's time you learned about the `canonical` tag, its value for SEO, and why it matters if you're trying to build a brand for yourself, or for a product you're working on.
 
-Canonical tags go in the `<head>` section of the page, and they look like this:
+## What is a Canonical Tag?
+
+The **canonical tag** is a specially formatted `<link />` tag in HTML which lets you specify the "canonical" or original version of the content on a given page. The Google crawler and other search engines use these in combination with a few other signals to determine which domain "owns" the content being shown.
+
+In other words: **canonical tags tell search engines which URL should be considered the official home of whatever is on that page**.
+
+### Syntax for the Canonical tag
+
+Canonical tags go in the `<head>` section of an html page, and they look like this:
 
 ```html
-<link rel="canonical" href="https://www.yoursite.com/" />
+<head>
+  <!--
+    you'll probably have a bunch of other stuff here,
+    like title, stylesheet, and meta tags.
+  -->
+  <link rel="canonical" href="https://www.yoursite.com/some-article" />
+</head>
 ```
 
-### The Value of Canonical Tags
+**Important:** Your page should have _only one_ canonical tag. Adding more than one can have negative or unintended effects on your search rankings!
 
-When you have multiple versions of the same content across different URLs, the canonical tag tells search engines which version should be considered the authoritative source.
+### Some great reasons to use Canonical Tags
 
-It's particularly useful when you're cross-posting your content on different platforms to get more exposure.
+When your work is posted in multiple places online, canonical tags tells search crawlers which version should be considered the authoritative source.
 
-When the same content appears on multiple URLs, search engines might not know which version to index and rank. This can lead to lower search rankings for all versions of the content. By using a canonical tag, you specify the original source, ensuring that search engines focus on the correct URL.
+If you cross post and don't use a canonical tag, it can lead to your poor search rankings _everywhere_ for your work. This means that even if you get a boost initially from sharing on Hashnode, Medium, or Dev.to, it can actually _hurt_ your chances to rank well in the long run.
 
-After all, you woudn't want Reddit, Hashnode, Medium, or Dev.to to steal your SEO juice!
+In theory, this means that the signals search crawlers use to rank your articles (like backlinks and traffic statistics) should be attributed to the original source on your site. That's great news, because more backlinks and clicks through to your work _should_ increase visibility on search engine results pages (SERPs).
 
-Here are a few key reasons why canonical tags are valuable:
+### Another benefit: Protection Against Content Theft
 
-**Maintain Content Ownership:** By implementing canonical tags, you assert ownership of your content, even when it's cross-posted on other platforms. This is crucial for building your personal brand, as it ensures that your site gets the credit and traffic it deserves.
-
-**Improve SEO Rankings:** Canonical tags help consolidate link signals for duplicate or similar content, boosting the SEO value of the preferred version. This means that all the SEO benefits, such as backlinks and engagement metrics, are attributed to the original source (your site!), enhancing its visibility on search engine results pages (SERPs).
-
-**Protect Against Content Theft:** Eventually, your high-traffic articles will copied and republished without your permission by spammy content aggregator sites looking to build traffic for themselves.
+Eventually, your high-traffic articles will copied and republished without your permission by spammy content aggregator sites looking to build traffic for themselves.
 
 By having a canonical tag _on your site_ from the start, and having it indexed by search engines, you ensure that these spam sites don't win by stealing your content. The canonical tag helps search engines recognize your original work and prioritize it in search results.
+
+---
 
 ## Implementing Canonical Tags on your site
 
 Thankfully, it's not particularly complicated to add canonical tags to your site. The long and short of it is that you need to add a `<link>` tag to the `<head>` section of your HTML pages, specifying the canonical URL of the content.
 
-As ane example here's a simple, step-by-step guide to implementing canonical tags in a Next.js site:
+As an example here's a simple, step-by-step guide to implementing canonical tags in a Next.js site using the pages router:
 
-### Install Next.js and Create a New Project
+### Create a New Next.js project
 
 If you haven't already, you can create a new Next.js project by running the following commands in your terminal:
 
@@ -64,9 +76,11 @@ cd my-nextjs-site
 
 Next.js provides a built-in `<Head />` component to help you manage the `<head>` section of your HTML. You don't need to install anything additional for this; it's already included with Next.js.
 
+_A word of caution:_ Using a `<Head />` tag on any page in your site gives you a way to add content to the `<head />` section rendered on the final page. This is super convenient, but that also makes it easy to unintentionally include more than one of these puppies per page -- and you don't want to do that.
+
 ### Add the Canonical Tag to Your Pages
 
-Open your project in your favorite code editor and navigate to the pages directory. You'll typically want to add the canonical tag to each page. Here's an example of how to add it to a single page, like pages/index.js:
+Adding the tag to a single page is straightforward - toss it between `<Head>` tags, and make sure the `href` attribute has the _exact_ same URL as this page will. **If your site pages have a trailing slash `example.com/hello/`, make sure to include it!**
 
 ```jsx
 import Head from 'next/head';
@@ -84,13 +98,11 @@ export default function Home() {
 }
 ```
 
-The goal here is to replace `https://www.yoursite.com/` with the actual URL of your page. This tells search engines that the specified URL is the original source of the content.
+You can add the canonical tag to other pages in the same way - just make sure to replace the href value with the correct, specifc URL for each page.
 
-You can add the canonical tag to other pages in the same way - just make sure to replace the href value with the correct URL for each page.
+### Set the Canonical URL for article pages
 
-### Dynamically Set the Canonical URL (Optional)
-
-For more complex sites, especially those with dynamic content, you might want to set the canonical URL dynamically. Here's an example of how to do this using Next.js' getServerSideProps or getStaticProps:
+For more complex sites, especially those with pages generated from Markdown or a CMS, you'll likely want to set the canonical URL dynamically. Here's a simplified example of how you might accomplish this using `next/router`:
 
 ```jsx
 import Head from 'next/head';
@@ -99,10 +111,17 @@ import { useRouter } from 'next/router';
 export default function BlogPost() {
   const router = useRouter();
 
+  // ƒor https://example.com/articles/my-good-article,
+  // this will contain something like "/articles/my-good-article"
   const path = router.asPath;
 
-  // Dynamically set the canonical URL - it needs to be an absolute URL, so make sure to include the domain
-  // For example, if your site is https://www.yoursite.com and the path is /blog/my-post, the canonical URL would be https://www.yoursite.com/blog/my-post
+  /*
+    Dynamically set the canonical URL - this needs to be an absolute URL
+    so make sure to include the domain
+    For example, if your site is https://www.yoursite.com
+    and the path is /blog/my-post, the canonical URL would be
+    https://www.yoursite.com/blog/my-post
+  */
   const canonicalUrl = `https://www.yoursite.com${path}`;
 
   return (
@@ -129,6 +148,54 @@ After adding canonical tags, it's essential to verify their implementation. You 
 
 By following these steps, you'll ensure that search engines recognize your original content, helping you build your personal brand and protect your work from content theft.
 
+## Bonus points: set canonical URLs in places where you crosspost
+
+Many community blogging platforms contain tools that will let you set a canonical URL on your posts. This is a step you should absolutely take when it is available - it's a way to explicitly tell crawlers that if they're crawling your article on some other site, they should consider your original site the owner.
+
+In other words, when you post on Dev.to, you should add metadata to your post _there_ to indicate that it was _originally_ posted on `yoursite.com`.
+
+<Image
+  publicId="posts/own-your-work-with-canonical-tags/canonical-dev-to"
+  alt="A recent post of mine on Dev.to showing that it is a crosspost"
+  caption="If you do it right, dev.to will point right back to your original article"
+/>
+
+### Setting a canonical URL on Dev.to
+
+To [set the canonical URL of a post on Dev.to](https://dev.to/p/editor_guide#front-matter), add `canonical_url` to the frontmatter of your post:
+
+```md
+---
+title: Hello this is a post
+canonical_url: https://yoursite.com/article/some-article`
+---
+```
+
+### Setting a canonical URL on Medium
+
+To [set the canonical URL of a post on Medium](https://help.medium.com/hc/en-us/articles/360033930293-Set-a-canonical-link), you'll use the three dot button `...` on your post and select "This story was originally published elsewhere" from the menu
+
+### Setting a canonical URL on Hashnode
+
+In the Hashnode editor, there's a helpful menu under _Draft Settings_ for "Are you republishing?", where you can [specify your post's canonical URL](https://support.hashnode.com/en/articles/6556971-how-to-set-a-canonical-link).
+
+### Setting a canonical URL on LinkedIn
+
+LinkedIn _desperately_ wants you to use their "write an article" feature to share long form content on their site. In my opinion, this is a bad idea - **LinkedIn articles do not support canonical tags** -- and IMO, this means they're trying to take credit for your work.
+
+Instead, just share a link to your article in a regular post - it may not do as well in their feed algorithm, but at least there they'll honor your canonicals.
+
 ## Protect your work and boost your SEO with canonical tags
 
-Adding a canonical tag to your Next.js site is a straightforward yet powerful way to assert ownership of your content and improve your SEO. Whether you're building a personal brand or managing a corporate site, canonical tags can help you maintain control over your work and ensure it receives the recognition it deserves.
+All told, this is a tiny amount of work to protect your IP, send search traffic your way, and build your brand. It's one of those things that many devs overlook. Building SEO traffic for your site has compounding value over time - and learning the fundamentals goes a long way.
+
+Now get out there and add `<link rel="canonical">` to your articles, before I claim them as my own 😘
+
+## More reading on SEO
+
+I have [written _gobs_ about SEO for developers](https://mikebifulco.com/tags/seo) - if you liked this article, you may want to out these as well:
+
+- [How to set up self-healing URLs in Next.js for better SEO](https://mikebifulco.com/posts/self-healing-urls-nextjs-seo)
+- [3 Tiny Tips for better SEO](https://mikebifulco.com/newsletter/tiny-tips-for-better-seo)
+- [SEO tools I used to grow my sites to 20k+ visitors/month](https://mikebifulco.com/posts/seo-tools-for-new-web-projects)
+- [The correct semantic HTML for adding subtitles to h1 tags](https://mikebifulco.com/posts/semantic-html-heading-subtitle)
