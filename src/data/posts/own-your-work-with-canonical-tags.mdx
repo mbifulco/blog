@@ -96,7 +96,7 @@ For more complex sites, especially those with dynamic content, you might want to
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 
-export default function BlogPost({ canonicalUrl }) {
+export default function BlogPost() {
   const router = useRouter();
 
   const path = router.asPath;
@@ -121,9 +121,14 @@ export default function BlogPost({ canonicalUrl }) {
 
 After adding canonical tags, it's essential to verify their implementation. You can use tools like [Google's URL Inspection Tool](https://support.google.com/webmasters/answer/9012289?hl=en) in Search Console to check if your pages are being indexed correctly with the canonical tag.
 
+<Image
+  publicId="posts/own-your-work-with-canonical-tags/google-search-console"
+  alt="Google Search Console showing the URL Inspection Tool"
+  caption="Use Google's URL Inspection Tool to verify that your pages are being indexed correctly with the canonical tag"
+/>
+
 By following these steps, you'll ensure that search engines recognize your original content, helping you build your personal brand and protect your work from content theft.
 
 ## Protect your work and boost your SEO with canonical tags
 
 Adding a canonical tag to your Next.js site is a straightforward yet powerful way to assert ownership of your content and improve your SEO. Whether you're building a personal brand or managing a corporate site, canonical tags can help you maintain control over your work and ensure it receives the recognition it deserves.
-import { appendFile } from "fs";
