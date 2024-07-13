@@ -102,11 +102,11 @@ You can add the canonical tag to other pages in the same way - just make sure to
 
 ### Set the Canonical URL for article pages
 
-For more complex sites, especially those with pages generated from Markdown or a CMS, you'll likely want to set the canonical URL dynamically. Here's a simplified example of how you might accomplish this using `next/router`:
+For more complex sites, especially those with pages generated from Markdown or a CMS, you'll likely want to set the canonical URL dynamically. Here's a simplified example of how you might accomplish this using `next/navigation`:
 
 ```jsx
 import Head from 'next/head';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 
 export default function BlogPost() {
   const router = useRouter();
