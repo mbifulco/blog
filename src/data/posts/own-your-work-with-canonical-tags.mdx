@@ -160,6 +160,41 @@ In other words, when you post on Dev.to, you should add metadata to your post _t
   caption="If you do it right, dev.to will point right back to your original article"
 />
 
+### FWIW: Adding canonical tags with Next.js App router
+
+If your Next.js app is built using the App Router, implementation is slightly different, but also pretty straightforward. Next provides an API called [Dynamic Metadata](https://nextjs.org/docs/app/building-your-application/optimizing/metadata) on each page, which slurps up the output of a function called `generateMetadata` on your pages, and sticks the result in nicely formatted tags in the `<head />` of your document.
+
+To add a canonical tag with this method, you'll do something like this:
+
+```tsx
+import type { Metadata, ResolvingMetadata } from 'next'
+
+type Props = {
+  params: { id: string }
+  searchParams: { [key: string]: string | string[] | undefined }
+}
+
+export async function generateMetadata(
+  { params, searchParams }: Props,
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  // read route params
+  const slug = params.slug
+
+  return {
+    metadataBase: new Url('https://yoursite.com'), // Next will use this to make complete URLs from relative paths
+    alternates: {
+      canonical: `/articles/${slug}`,
+    },
+  }
+}
+
+export default function Page({ params, searchParams }: Props) {
+  /* etc */
+}
+
+```
+
 ### Setting a canonical URL on Dev.to
 
 To [set the canonical URL of a post on Dev.to](https://dev.to/p/editor_guide#front-matter), add `canonical_url` to the frontmatter of your post:
