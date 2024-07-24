@@ -56,7 +56,7 @@ const Navbar = () => {
                       'hover:no-underline',
                       link.href === router.pathname && 'text-gray-900',
                       link.badge &&
-                        'rounded-sm bg-pink-400 px-[0.5ch] py-[0.25ch] font-medium text-white hover:bg-pink-600 hover:text-white '
+                        'rounded-sm bg-pink-400 px-[0.5ch] py-[0.25ch] font-medium text-white hover:bg-pink-600 hover:text-white'
                     )}
                   >
                     {link.title}

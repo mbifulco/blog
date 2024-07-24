@@ -1,9 +1,8 @@
+import GithubSlugger from 'github-slugger';
 import { serialize as serializeMdx } from 'next-mdx-remote/serialize';
 import imageSize from 'rehype-img-size';
 import rehypeSlug from 'rehype-slug';
-import GithubSlugger from 'github-slugger'
 import type { Heading } from 'src/data/content-types';
-
 
 export const getHeadings = (source: string): Heading[] => {
   const lines = source.split('\n');
@@ -36,7 +35,6 @@ export const getHeadings = (source: string): Heading[] => {
 
   return headings;
 };
-
 
 export const serialize = async (content: string) => {
   const mdxSource = await serializeMdx(content, {

@@ -61,7 +61,7 @@ const PostPage: NextPage<PostPageProps> = ({ post }) => {
 
   return (
     <>
-      <div className="mx-auto px-4 md:px-0 w-full">
+      <div className="mx-auto w-full px-4 md:px-0">
         <SEO
           canonical={router.asPath}
           title={title}

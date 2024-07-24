@@ -28,7 +28,7 @@ const NewsletterHero = () => {
           />
           <div className="text-md flex flex-col items-center justify-center gap-10 lg:pr-12 xl:text-xl">
             <div className="relative max-w-prose space-y-4 overflow-visible rounded text-gray-300">
-              <div className="absolute -top-4 left-4 z-0 block h-full w-full  bg-[hsl(3,90%,55%)]  mix-blend-screen" />
+              <div className="absolute -top-4 left-4 z-0 block h-full w-full bg-[hsl(3,90%,55%)] mix-blend-screen" />
               {/* <div className="absolute left-0 top-0 z-0 block h-full w-full  bg-[hsl(113,90%,55%)] mix-blend-screen" /> */}
               <div className="absolute -left-4 top-4 z-0 block h-full w-full bg-[hsl(223,90%,55%)] mix-blend-screen" />
               <div className="relative z-20 flex h-full w-full flex-col gap-4 bg-[#222] p-6">

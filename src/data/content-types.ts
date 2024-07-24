@@ -1,6 +1,5 @@
 import type { MDXRemoteSerializeResult } from 'next-mdx-remote';
 
-
 export type Heading = {
   level: number;
   text: string;
