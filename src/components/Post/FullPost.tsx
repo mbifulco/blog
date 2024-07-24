@@ -79,10 +79,9 @@ const FullPost: React.FC<FullPostProps> = ({ post }) => {
           }}
         />
       )}
-      <article
-      >
-        <header className="mb-4 flex flex-col gap-2 mx-auto">
-          <div className="max-w-[75ch] mx-auto">
+      <article>
+        <header className="mx-auto mb-4 flex flex-col gap-2">
+          <div className="mx-auto max-w-[75ch]">
             <Heading as="h1" className="m-0 p-0">
               {title}
             </Heading>
@@ -92,26 +91,24 @@ const FullPost: React.FC<FullPostProps> = ({ post }) => {
 
             <TagsSummary tags={tags} />
           </div>
-          <div className="mx-auto w-full min-h-52 h-auto">
-            {coverContainer}
-          </div>
+          <div className="mx-auto h-auto min-h-52 w-full">{coverContainer}</div>
           {podcastUrl && (
             <iframe width="100%" height="180" seamless src={podcastUrl} />
           )}
         </header>
 
-          <div className="mx-auto w-fit">
-            <main className="flex flex-col-reverse md:flex md:flex-row gap-2 lg:gap-8">
-              <div className="prose lg:prose-xl">
-                <MDXRemote {...post.source} components={components} />
-              </div>
-              <div className="sticky top-6 w-[300px] flex flex-col gap-4 h-max">
-                <TableOfContents headings={post.tableOfContents} />
-                <CarbonAd />
-              </div>
-            </main>
-            <MentionsSummary mentions={mentions} />
-          </div>
+        <div className="mx-auto w-fit">
+          <main className="flex flex-col-reverse gap-2 md:flex md:flex-row lg:gap-8">
+            <div className="prose lg:prose-xl">
+              <MDXRemote {...post.source} components={components} />
+            </div>
+            <div className="sticky top-6 flex h-max w-[300px] flex-col gap-4">
+              <TableOfContents headings={post.tableOfContents} />
+              <CarbonAd />
+            </div>
+          </main>
+          <MentionsSummary mentions={mentions} />
+        </div>
       </article>
     </>
   );

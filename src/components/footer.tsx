@@ -11,11 +11,19 @@ const Footer = () => {
       className="bg-gray-50 py-10"
       style={{ backgroundImage: `url(/images/wiggle.svg)` }}
     >
-      <div className="mx-auto max-w-4xl p-4 text-sm text-black xl:relative bg-white/80 rounded-xl">
+      <div className="mx-auto max-w-4xl rounded-xl bg-white/80 p-4 text-sm text-black xl:relative">
         <RelatedContentLinksByTag />
 
         <div className="grid gap-4 md:grid-cols-2">
           <div className="flex flex-col gap-2">
+            <span>
+                <Link
+                  className="text-pink-600"
+                  href="/integrity"
+                >
+                  Sponsorships &amp; Transparency
+                </Link>
+              </span>
             <span>© 2019-{new Date().getFullYear()} Mike Bifulco</span>
 
             <SponsorCTA />
@@ -57,7 +65,7 @@ const Footer = () => {
                   GitHub
                 </Link>
                 .
-              </span>
+              </span>{' '}
             </div>
           </div>
         </div>

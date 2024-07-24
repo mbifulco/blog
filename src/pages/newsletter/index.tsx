@@ -73,7 +73,7 @@ const NewsletterPage: React.FC<NewsletterPageProps> = ({ newsletters }) => {
       <Heading as="h2" className="mb-4 mt-4 text-xl text-black" id="past">
         Read past disptaches
       </Heading>
-      <div className="grid-cols-auto-fit-min-300 grid gap-5">
+      <div className="grid grid-cols-auto-fit-min-300 gap-5">
         {pastNewsletters.map((newsletter) => {
           const { slug } = newsletter?.frontmatter;
           return <NewsletterItem newsletter={newsletter} key={slug} />;

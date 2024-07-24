@@ -26,12 +26,12 @@ const SiteAnnouncement: React.FC<SiteAnnouncementProps> = ({
       )}
       style={{ backgroundImage: `url(/images/wiggle.svg)` }}
     >
-      <div className="mx-auto flex flex-row gap-4 px-2 py-1 text-md text-black bg-white/80">
+      <div className="text-md mx-auto flex flex-row gap-4 bg-white/80 px-2 py-1 text-black">
         <p>
           Subscribe to{' '}
           <Link
             href="/newsletter"
-            className="font-bold text-pink-600 hover:no-underline hover:text-pink-900"
+            className="font-bold text-pink-600 hover:text-pink-900 hover:no-underline"
           >
             💌 Tiny Improvements
           </Link>
