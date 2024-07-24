@@ -24,7 +24,7 @@ const Shop: NextPage = () => (
         </p>
 
         <p>
-          To ensure that my reviews & sponsorships are fair, unbiased, and
+          To ensure that my reviews &amp; sponsorships are fair, unbiased, and
           trustworthy, I have established the following guidelines and
           principles that I adhere to when reviewing products or services:
         </p>
