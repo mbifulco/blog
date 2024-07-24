@@ -1,0 +1,294 @@
+---
+title: Seed your Supabase database with this simple pattern
+excerpt: 'Learn how to seed your Supabase database with this simple pattern.'
+date: 07-23-2024
+tags: [supabase, database, typescript, postgres]
+path: seed-your-supabase-database
+coverImagePublicId: posts/seed-your-supabase-database/cover
+---
+
+## Introduction
+
+When working with Supabase, you may need to seed your database with initial data. This is a common task when setting up a new develper environment, or when you need to populate your database with predictable sample data for testing purposes. In this post, I'll show you a simple pattern for seeding your Supabase database using TypeScript.
+
+## Prerequisites
+
+This post assumes you have a [Supabase](https://supabase.com) project set up and a basic understanding of TypeScript. If you're new to Supabase, you can follow the [official documentation](https://supabase.io/docs/guides) to get started.
+
+Although my site is built with [tRPC](https://trpc.io/), [Drizzle ORM](https://orm.drizzle.team/) and [Next.js]https://nextjs.org/, this pattern can be adapted for other frameworks, libraries, and databases.
+
+### Seeding the database with sample data using Faker
+
+This example uses a library called [Faker](https://fakerjs.dev/) to generate fake data. Faker is a popular library for generating random data such as names, addresses, and phone numbers. You can install it using your package manager of choice:
+
+```bash
+# note that faker is installed as a dev dependency
+pnpm install faker -D
+```
+
+## Setting up the seed data
+
+For this example, we will use a simplified Drizzle ORM Database schema with two tables - `chefs` and `recipeTypes`. Here's what the schema might look like:
+
+```ts
+// schema.ts
+
+// ...other tables and imports above
+export const chefs = createTable("chefs", {
+  id: serial("id").primaryKey(),
+  name: varchar("name", { length: 256 }).notNull(),
+  email: varchar("email", { length: 256 }).notNull(),
+  phone: varchar("phone", { length: 256 }),
+  address: text("address"),
+});
+
+export const recipeTypes = createTable("project_type", {
+  id: serial("id").primaryKey(),
+  name: varchar("name", { length: 256 }).notNull(),
+  description: text("description"),
+});
+
+export const recipes = createTable("recipes", {
+  id: serial("id").primaryKey(),
+  name: varchar("name", { length: 256 }).notNull(),
+  description: text("description"),
+  recipeTypeId: integer("recipeTypeId").references(recipeTypes.id),
+  recipeChefId: integer("recipeChefId").references(chefs.id),
+});
+```
+
+I try to keep my seed data organized in a `src/db/seed` directory. Each file in this directory contains seed data for a specific table in the database. For example, if you have a `chefs` table and a `recipeTypes` table, you would create two files: `chefs.ts` and `recipeTypes.ts`.
+
+Here's an example of what the directory structure might look like:
+
+```bash
+src
+└── db
+    ├── seed
+    │   ├── chefs.ts
+    │   ├── recipes.ts
+    │   ├── recipeTypes.ts
+    │   └── seed.ts   // this is where we collate all seed data and insert into db
+    ├── db.ts          // exports the db instance from Drizzle
+    └── schema.ts      // database schema de  ition
+```
+
+## Creating seed data
+
+This script will stick data into the `chefs`, `recipes`, and `recipeTypes` tables. To keep things neatly organized, each table is represented by its own file. Each of these files exports a function that seeds the data for that table, which is of the type:
+
+```tsx
+type SeedFunction = () => Promise<string>;
+```
+
+The string returned by each `SeedFunction`'s promise is a message that will be logged to the console when the seeding is complete. I use this to keep track of how many rows were inserted into the database.
+
+### For tables with predefined data
+
+The simplest option is tables with predefined or hand-written data. For these, I more-or-less hand-write objects to stick into the database. Here's an example of how to the `recipeTypes` table:
+
+```tsx
+import type { SeedFunction } from "../seed";
+import { recipeTypes } from "../schema";
+import db from "../db";
+
+type RecipeTypeRow = {
+  name: string;
+  description: string;
+};
+
+// note the export: we will use this later
+export const RecipeTypes: SeedFunction = {
+  "Breakfast": { id: 1,  name: "Breakfast", description: "Breakfast recipes" },
+  "Lunch": { id: 2, name: "Lunch", description: "Lunch recipes" },
+  "Dinner": { id: 3, name: "Dinner", description: "Dinner recipes" },
+} as const;
+
+const seedRecipeTypes = async () => {
+  // convert the object to an array of values
+  const data = Object.values(RecipeTypes);
+
+  await db.from(recipeTypes).insert(data);
+
+  return `${data.length} Recipe types seeded successfully`;
+};
+```
+
+Some things to note in the above code:
+
+- We're creating an array of objects with predefined data for the `recipeTypes` table.
+- We're inserting the predefined data into the `recipeTypes` table using the `db.from(recipeTypes).insert(data)` method.
+- The `return` statement at the end of the function is a string, which will be logged to the console when seeding this table is complete.
+- the `RecipeTypes` object is exported so we can use it in other seeding functions.
+
+### Generating data with Faker
+
+For tables that can use randomized data, a slightly different approach is used with the [Faker.js](https://fakerjs.dev/guide/) library, which can generate many different types of randomized data.
+
+Here's how to populate the `Chefs` table with a list of fake chefs:
+
+```tsx
+import faker from "faker";
+import { chefs } from "../schema";
+import db from "../db";
+import type { SeedFunction } from "../seed";
+
+type ChefRow = {
+  name: string;
+  email: string;
+  phone: string;
+  address: string;
+};
+
+const seedChefs: SeedFunction = async () => {
+  // generate random data for 10 people to stick into the chefs table
+  const data: ChefRow[] = Array.from({ length: 10 }, () => ({
+    name: faker.name.findName(),
+    email: faker.internet.email(),
+    phone: faker.phone.phoneNumber(),
+    address: faker.address.streetAddress(),
+  }));
+
+  await db.from(chefs).insert(data);
+
+  return `${data.length} Chefs seeded successfully`;
+};
+```
+
+### Seeding related data
+
+If you have tables with relationships, you can seed related data by using the `id` of the parent table. For example, if you have a `recipes` table that has a foreign key to the `recipeTypes` table, you can seed the `recipes` table with the `id` of the `recipeTypes` table.
+
+Here's an example of how you might seed the `recipes` table with related data:
+
+```tsx
+import { recipes } from "../schema";
+import db from "../db";
+import { RecipeTypes } from "./recipeTypes";
+import type { SeedFunction } from "../seed";
+
+type RecipeRow = {
+  name: string;
+  description: string;
+  recipeTypeId: number;
+};
+
+const seedRecipes: SeedFunction = async () => {
+  const data: RecipeRow[] = [
+    {
+      name: "Pancakes",
+      description: "Delicious pancakes",
+      // use the id from the RecipeTypes object we exported earlier
+      recipeTypeId: RecipeTypes.Breakfast.id,
+      // since it can be any chef, we'll just use the first one
+      recipeChefId: 1,
+    },
+    { name: "Spaghetti", description: "Classic spaghetti", recipeTypeId: RecipeTypes.Dinner.id, recipeChefId: 2 },
+    { name: "Roast chicken", description: "Juicy roast chicken", recipeTypeId: RecipeTypes.Dinner.id, recipeChefId: 3 },
+    { name: "Sandwich", description: "Good ol' ham & swiss", recipeTypeId: RecipeTypes.Lunch.id, recipeChefId: 4 },
+  ];
+
+  await db.from(recipes).insert(data);
+
+  return `${data.length} Recipes seeded successfully`;
+};
+```
+
+## Seed the database
+
+Now that we have a script written for each table in the database, we we need to run them each in a specific order, as some tables may depend on others. I keep a file called `seed.ts` which to run each of the seeding functions in the correct order.
+
+```tsx
+import seedChefs from "./chefs";
+import seedRecipes from "./recipes";
+import seedRecipeTypes from "./recipeTypes";
+
+const seedDb = async () => {
+  // note: this function assumes we're starting with an empty database
+
+  console.log("Seeding database...");
+
+  console.log("Adding independent data...");
+  const res = await Promise.allSettled([
+    seedRecipeTypes(),
+    seedChefs(),
+    // add more independent seeding functions here
+    // these will run in parallel
+  ]);
+
+  res.forEach((result) => {
+    if (result.status === "rejected") {
+      console.log("Error seeding database:", result.reason);
+    } else {
+      console.log(result.value);
+    }
+  });
+
+  console.log("Adding related data...");
+  const dependentTasks = [
+    seedRecipes,
+    // add more dependent tasks here, they will run in this order
+  ];
+  for (const task of dependentTasks) {
+    try {
+    const result = await task();
+    console.log(result);
+    } catch e {
+      console.log("Error seeding database:", e);
+    }
+  }
+
+  console.log("Seeding complete!");
+};
+
+seedDb()
+  .then(() => {
+    console.log("Seeding complete!");
+    process.exit(0);
+  })
+  .catch((err) => {
+    console.error("Error seeding database:", err);
+    process.exit(1);
+  });
+```
+
+You can run this script using your package manager of choice, by adding an entry to `package.json`:
+
+```json
+{
+  "scripts": {
+    // ...etc
+    "seed": "tsx --env-file=.env src/db/seed/index.ts"
+    // ...etc
+  }
+}
+```
+
+Then, run the script using:
+
+```bash
+pnpm run seed
+```
+
+This will seed your database with the sample data you've defined. Note that we're using `Promise.allSettled` to ensure that all the seeding functions run in parallel. This can be useful if you have a large amount of data to seed. It will also catch any errors that occur during seeding and log them to the console.
+
+`Promise.allSettled` returns an array of promises that are settled (either fulfilled or rejected). This allows you to handle each promise individually and log any errors that occur. It is different from `Promise.all`, which will reject the entire promise chain if any of the promises are rejected - you may want to use `Promise.all` if you want to stop seeding if any of the promises fail.
+
+When run, your script should output something like this:
+
+```bash
+Seeding Database...
+Adding independent data...
+3 Recipe types seeded successfully
+10 Chefs seeded successfully
+
+Adding related data...
+10 Recipes seeded successfully
+Seeding complete!
+```
+
+## Adapt this pattern to your needs
+
+This is a simplification of the pattern I use in my projects to seed my Supabase database. You can adapt this pattern to suit your needs by adding more tables, more data, or more complex relationships between tables. The key is to keep your seed data organized and to use a consistent pattern for seeding your database.
+
+I use this to reset my database to a known state when I'm working on new features, and to set up my test environment with fresh, predictable data. It's a simple pattern, but it's been incredibly useful for me in my projects.
