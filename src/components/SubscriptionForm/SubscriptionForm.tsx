@@ -34,7 +34,7 @@ const SubscriptionForm: React.FC<SubscriptionFormProps> = ({ tags: _ }) => {
             data-stacked="false"
           >
             <input
-              className="formkit-input h-10 w-full grow rounded-b-none rounded-t border border-b-0 border-solid border-pink-600 bg-white px-[2ch] py-[1ch] font-normal md:rounded-l md:rounded-r-none md:border-b md:border-r-0"
+              className="formkit-input h-10 w-full grow rounded-b-none rounded-t border border-b-0 border-solid border-pink-600 bg-white px-[2ch] py-[1ch] font-normal text-gray-950 md:rounded-l md:rounded-r-none md:border-b md:border-r-0"
               aria-label="First Name"
               name="fields[first_name]"
               required
@@ -42,7 +42,7 @@ const SubscriptionForm: React.FC<SubscriptionFormProps> = ({ tags: _ }) => {
               type="text"
             />
             <input
-              className="formkit-input h-10 w-full grow rounded-b-none border border-b-0 border-solid border-pink-600 bg-white px-[2ch] py-[1ch] font-normal md:border-b"
+              className="formkit-input h-10 w-full grow rounded-b-none border border-b-0 border-solid border-pink-600 bg-white px-[2ch] py-[1ch] font-normal text-gray-950 md:border-b"
               name="email_address"
               aria-label="Email Address"
               placeholder="Email Address"
