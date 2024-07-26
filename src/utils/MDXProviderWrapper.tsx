@@ -154,7 +154,7 @@ const Pre: React.FC<PreProps> = ({ children }) => {
 
   return (
     <div
-      className={`rounded`}
+      className="-mx-2 max-w-[calc(100vw_-_36px)] rounded md:mx-0"
       style={{
         background: themes.nightOwl.plain.backgroundColor,
       }}

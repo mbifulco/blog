@@ -61,11 +61,6 @@ const FullPost: React.FC<FullPostProps> = ({ post }) => {
       uploadDate: new Date(date).toISOString(),
       contentUrl: `https://www.youtube.com/watch?v=${youTubeId}`,
       embedUrl: `https://www.youtube.com/embed/${youTubeId}`,
-      // interactionStatistic: {
-      //   '@type': 'InteractionCounter',
-      //   interactionType: { '@type': 'http://schema.org/WatchAction' },
-      //   userInteractionCount: 0,
-      // },
     };
   }
 
@@ -81,7 +76,7 @@ const FullPost: React.FC<FullPostProps> = ({ post }) => {
       )}
       <article>
         <header className="mx-auto mb-4 flex flex-col gap-2">
-          <div className="mx-auto max-w-[75ch]">
+          <div className="mx-auto mb-4 max-w-[75ch]">
             <Heading as="h1" className="m-0 p-0">
               {title}
             </Heading>
@@ -98,7 +93,7 @@ const FullPost: React.FC<FullPostProps> = ({ post }) => {
         </header>
 
         <div className="mx-auto w-fit">
-          <main className="flex flex-col-reverse gap-2 md:flex md:flex-row lg:gap-8">
+          <main className="mx-auto flex flex-col-reverse content-center justify-center gap-2 md:flex md:flex-row lg:gap-8">
             <div className="prose lg:prose-xl">
               <MDXRemote {...post.source} components={components} />
             </div>
