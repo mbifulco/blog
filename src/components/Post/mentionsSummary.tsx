@@ -27,7 +27,7 @@ const MentionsSummary: React.FC<MentionsSummaryProps> = ({ mentions }) => {
   return (
     <>
       {likes.length > 0 && (
-        <div className="mt-4 flex flex-row items-center">
+        <div className="mt-4 flex flex-row items-center gap-2">
           <AvatarGroup
             people={likes.map((like) => {
               const { author } = like.data;
@@ -37,7 +37,7 @@ const MentionsSummary: React.FC<MentionsSummaryProps> = ({ mentions }) => {
                 size: 48,
               };
             })}
-            variant="lg"
+            variant="sm"
           />
 
           <span>
