@@ -1,6 +1,4 @@
-// Importing only the necessary types from 'next'
 import type { NextRequest } from 'next/server';
-import posthog from 'posthog-js';
 
 export default async function handler(req: NextRequest) {
   if (req.method !== 'POST') {
@@ -17,7 +15,10 @@ export default async function handler(req: NextRequest) {
 
   // subscribe!
   try {
-    const body = await req.json();
+    const body = (await req.json()) as {
+      email_address: string;
+      fields: { first_name?: string };
+    };
     const response = await fetch(
       `https://app.convertkit.com/forms/3923746/subscriptions`,
       {
@@ -33,7 +34,7 @@ export default async function handler(req: NextRequest) {
         }),
       }
     );
-    const data = await response.json();
+    const data = (await response.json()) as unknown;
     if (!response.ok) {
       return new Response(JSON.stringify(data), {
         status: response.status,

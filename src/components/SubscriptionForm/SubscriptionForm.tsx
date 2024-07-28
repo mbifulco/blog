@@ -1,4 +1,4 @@
-import { FormEventHandler, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import Link from 'next/link';
 import posthog from 'posthog-js';
 
@@ -21,7 +21,7 @@ const SubscriptionForm: React.FC<SubscriptionFormProps> = ({
   const emailRef = useRef<HTMLInputElement>(null);
   const firstNameRef = useRef<HTMLInputElement>(null);
 
-  const handleSubmission: FormEventHandler<HTMLFormElement> = async (e) => {
+  const handleSubmission = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const email = emailRef.current?.value;
@@ -80,7 +80,7 @@ const SubscriptionForm: React.FC<SubscriptionFormProps> = ({
           >
             hello@mikebifulco.com
           </Link>{' '}
-          and I'll help get this sorted.
+          and I&apos;ll help get this sorted.
         </p>
       </div>
     );
@@ -90,8 +90,8 @@ const SubscriptionForm: React.FC<SubscriptionFormProps> = ({
     return (
       <div className="flex flex-col gap-2">
         <p className="text-xl font-semibold text-white">
-          🪩 Success! Thanks so much for subscribing. Don't forget to check your
-          spam folder if you don't see a confirmation email in your inbox.
+          🪩 Success! Thanks so much for subscribing. Don&apos;t forget to check
+          your spam folder for emails from hello@mikebifulco.com.
         </p>
       </div>
     );
