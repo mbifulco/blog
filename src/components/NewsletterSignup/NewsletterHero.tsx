@@ -52,7 +52,7 @@ const NewsletterHero = () => {
                   Microsoft.
                 </p>
                 <div className="block w-full space-y-2">
-                  <SubscriptionForm />
+                  <SubscriptionForm source="newsletter-hero" />
                   <p className="max-w-[600px] text-lg text-gray-300">
                     Join{' '}
                     <span className="text-pink-400">
