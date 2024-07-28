@@ -1,4 +1,4 @@
-import useSWR from 'swr';
+import useSWRImmutable from 'swr/immutable';
 
 const useConvertKitStats = () => {
   // return stats from /api/newsletter/stats
@@ -9,7 +9,7 @@ const useConvertKitStats = () => {
     subscriberCount?: number;
   } & Record<string, unknown>;
 
-  const { data, error } = useSWR<StatsResult, unknown>(
+  const { data, error } = useSWRImmutable<StatsResult, unknown>(
     '/api/newsletter/stats',
     fetcher
   );
