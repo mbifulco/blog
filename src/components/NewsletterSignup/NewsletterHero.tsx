@@ -51,9 +51,9 @@ const NewsletterHero = () => {
                   startup, with past experience at Google, Stripe, and
                   Microsoft.
                 </p>
-                <div className="block w-full space-y-2">
+                <div className="block w-full space-y-2 text-gray-300">
                   <SubscriptionForm source="newsletter-hero" />
-                  <p className="max-w-[600px] text-lg text-gray-300">
+                  <p className="max-w-[600px] text-lg">
                     Join{' '}
                     <span className="text-pink-400">
                       {stats?.subscriberCount ? (

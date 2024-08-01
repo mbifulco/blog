@@ -69,8 +69,8 @@ const SubscriptionForm: React.FC<SubscriptionFormProps> = ({
   if (error) {
     return (
       <div className="flex flex-col gap-2">
-        <p className="text-xl font-semibold text-white">{error}</p>
-        <p className="text-white">
+        <p className="text-xl font-semibold text-inherit">{error}</p>
+        <p className="text-inherit">
           If you continue to have issues, please email{' '}
           <Link
             className="text-pink-600 hover:underline"
@@ -89,9 +89,10 @@ const SubscriptionForm: React.FC<SubscriptionFormProps> = ({
   if (success) {
     return (
       <div className="flex flex-col gap-2">
-        <p className="text-xl font-semibold text-white">
+        <p className="text-xl font-semibold text-inherit">
           🪩 Success! Thanks so much for subscribing. Don&apos;t forget to check
-          your spam folder for emails from hello@mikebifulco.com.
+          your spam folder for emails from{' '}
+          <span className="text-pink-600">hello@mikebifulco.com.</span>
         </p>
       </div>
     );

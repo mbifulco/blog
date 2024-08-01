@@ -51,7 +51,13 @@ const FullPost: React.FC<FullPostProps> = ({ post }) => {
   let videoStructuredData: WithContext<VideoObject> | undefined = undefined;
 
   if (youTubeId) {
-    coverContainer = <YouTube youTubeId={youTubeId} />;
+    coverContainer = (
+      <section className="bg-gray-900">
+        <main className="h-[calc(100vw * 0.725)] mx-auto max-w-full md:w-[75%]">
+          <YouTube youTubeId={youTubeId} />
+        </main>
+      </section>
+    );
     videoStructuredData = {
       '@context': 'https://schema.org',
       '@type': 'VideoObject',
