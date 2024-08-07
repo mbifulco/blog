@@ -82,7 +82,7 @@ const FullPost: React.FC<FullPostProps> = ({ post }) => {
       )}
       <article>
         <header className="mx-auto mb-4 flex flex-col gap-2">
-          <div className="mx-auto mb-4 w-full max-w-prose">
+          <div className="mx-auto mb-4 max-w-[75ch]">
             <Heading as="h1" className="m-0 p-0">
               {title}
             </Heading>
@@ -100,8 +100,8 @@ const FullPost: React.FC<FullPostProps> = ({ post }) => {
 
         <div className="mx-auto w-fit">
           <main className="mx-auto flex flex-col-reverse content-center justify-center gap-2 md:flex md:flex-row lg:gap-8">
-            <article className="w-full">
-              <div className="prose max-w-prose lg:prose-xl">
+            <article className="max-w-prose">
+              <div className="prose lg:prose-xl">
                 <MDXRemote {...post.source} components={components} />
               </div>
               {mentions && mentions.length > 0 && (
