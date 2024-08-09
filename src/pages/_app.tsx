@@ -11,6 +11,7 @@ import { AnalyticsProvider } from '../utils/analytics';
 import '../styles/globals.css';
 import '../components/CarbonAd/CarbonAd.css';
 
+import { trpc } from '@utils/trpc';
 import DefaultLayout from '../components/Layouts/DefaultLayout';
 
 // Check that PostHog is client-side (used to handle Next.js SSR)
@@ -70,4 +71,4 @@ function MyApp({ Component, pageProps }: AppProps) {
 //   return { ...appProps }
 // }
 
-export default MyApp;
+export default trpc.withTRPC(MyApp);
