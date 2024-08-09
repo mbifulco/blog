@@ -1,4 +1,4 @@
-import { NextRequest } from 'next/server';
+import type { NextRequest } from 'next/server';
 import { appRouter } from '@server/routers/_app';
 import { fetchRequestHandler } from '@trpc/server/adapters/fetch';
 

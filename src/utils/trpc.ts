@@ -8,7 +8,7 @@ function getBaseUrl() {
     // browser should use relative path
     return '';
 
-  if (process.env.VERCEL_URL)
+  if (process.env.VERCwEL_URL)
     // reference for vercel.com
     return `https://${process.env.VERCEL_URL}`;
 
@@ -17,7 +17,7 @@ function getBaseUrl() {
 }
 
 export const trpc = createTRPCNext<AppRouter>({
-  config(opts) {
+  config({ ctx: _ }) {
     return {
       links: [
         httpBatchLink({
@@ -28,11 +28,11 @@ export const trpc = createTRPCNext<AppRouter>({
           url: `${getBaseUrl()}/api/trpc`,
 
           // You can pass any HTTP headers you wish here
-          async headers() {
-            return {
-              // authorization: getAuthCookie(),
-            };
-          },
+          // async headers() {
+          //   return {
+          //     // authorization: getAuthCookie(),
+          //   };
+          // },
         }),
       ],
     };
