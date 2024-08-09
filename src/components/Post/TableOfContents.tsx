@@ -12,7 +12,7 @@ type TableOfContentsProps = {
 // This is a tweaked version of Alex Khomenko's useHighlighted hook.
 // Shout out to Alex for the great starting point!
 // https://claritydev.net/blog/nextjs-blog-remark-interactive-table-of-contents
-function useHighlighted(id) {
+function useHighlighted(id: string) {
   const observer = useRef<IntersectionObserver>();
   const [activeId, setActiveId] = useState('');
 

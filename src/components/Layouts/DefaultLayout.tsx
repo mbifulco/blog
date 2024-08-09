@@ -4,7 +4,9 @@ import MDXProviderWrapper from '../../utils/MDXProviderWrapper';
 import Footer from '../footer';
 import { PolitePop } from '../PolitePop';
 
-const DefaultLayout = ({ children }) => {
+const DefaultLayout: React.FC<{ children?: React.ReactNode }> = ({
+  children,
+}) => {
   return (
     <MDXProviderWrapper>
       <div className="absolute top-[-5px] z-[100] h-6 w-full bg-pink-400" />

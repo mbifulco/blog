@@ -1,4 +1,4 @@
-import { HTMLAttributes } from 'react';
+import type { HTMLAttributes } from 'react';
 
 import clsxm from '@utils/clsxm';
 
@@ -17,7 +17,7 @@ export const Heading: React.FC<HeadingProps> = ({
   ...props
 }) => {
   // Use the 'as' prop to dynamically determine the component type
-  const Component = as || 'h2';
+  const Component = as ?? 'h2';
 
   let headingClasses = '';
   switch (Component) {

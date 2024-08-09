@@ -1,15 +1,15 @@
-import React, { Children, type AnchorHTMLAttributes } from 'react';
+import React, { Children } from 'react';
 import type {
+  AnchorHTMLAttributes,
   ButtonHTMLAttributes,
   HTMLAttributes,
-  HtmlHTMLAttributes,
   HTMLProps,
   ReactElement,
 } from 'react';
 import Link from 'next/link';
 import Script from 'next/script';
 import { MDXProvider } from '@mdx-js/react';
-import { MDXComponents } from 'mdx/types';
+import type { MDXComponents } from 'mdx/types';
 import { Highlight, themes } from 'prism-react-renderer';
 
 import clsxm from '@utils/clsxm';
@@ -83,10 +83,6 @@ const P: React.FC<HTMLAttributes<HTMLParagraphElement>> = (props) => (
   <p className="my-2 text-xl" {...props} />
 );
 
-type BaseMdxComponentProps = {
-  children: React.ReactNode;
-};
-
 const Blockquote: React.FC<HTMLAttributes<HTMLQuoteElement>> = ({
   children,
 }) => {
@@ -97,9 +93,7 @@ const Blockquote: React.FC<HTMLAttributes<HTMLQuoteElement>> = ({
   );
 };
 
-interface CustomLinkProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
-  // custom props here if needed
-}
+type CustomLinkProps = AnchorHTMLAttributes<HTMLAnchorElement>;
 
 const CustomLink: React.FC<CustomLinkProps> = ({ children, ...props }) => {
   return <a {...props}>{children}</a>;
