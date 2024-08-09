@@ -1,21 +1,21 @@
+import { HTMLAttributes } from 'react';
+
 import clsxm from '@utils/clsxm';
 
 // Define the types of headings allowed
 type HeadingType = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
 
-export type HeadingProps = {
-  as: HeadingType;
-  children: React.ReactNode;
-  className?: string;
-  id?: string;
+export type HeadingProps = HTMLAttributes<HTMLHeadingElement> & {
+  // Add any additional props here
+  as?: HeadingType;
 };
 
-export const Heading = ({
+export const Heading: React.FC<HeadingProps> = ({
   as,
   children,
   className,
   ...props
-}: HeadingProps) => {
+}) => {
   // Use the 'as' prop to dynamically determine the component type
   const Component = as || 'h2';
 
