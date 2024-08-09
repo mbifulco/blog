@@ -6,6 +6,8 @@ export const env = createEnv({
   extends: [vercel()],
   server: {
     CONVERTKIT_API_SECRET: z.string(),
+    RESEND_API_KEY: z.string(),
+    RESEND_NEWSLETTER_AUDIENCE_ID: z.string(),
   },
   client: {
     NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME: z.string().min(1),

@@ -1,13 +1,10 @@
 import { z } from 'zod';
 
 import { procedure, router } from '../trpc';
+import { mailingListRouter } from './mailingList';
 
 export const appRouter = router({
-  hello: procedure.input(z.object({ text: z.string() })).query(({ input }) => {
-    return {
-      greeting: `hello ${input.text}`,
-    };
-  }),
+  mailingList: mailingListRouter,
 });
 
 // export type definition of API
