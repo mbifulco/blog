@@ -21,7 +21,8 @@
       "@hooks/*": ["src/hooks/*"],
       "@layouts/*": ["src/components/layouts/*"],
       "@lib/*": ["src/lib/*"],
-      "@utils/*": ["src/utils/*"]
+      "@utils/*": ["src/utils/*"],
+      "@server/*": ["src/server/*"]
     }
   },
   "include": [
