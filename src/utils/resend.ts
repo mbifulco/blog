@@ -6,24 +6,6 @@ import { env } from './env';
 
 const resend = new Resend(env.RESEND_API_KEY);
 
-export const getSubscriberCount = async () => {
-  try {
-    const audience = await resend.contacts.list({
-      audienceId: env.RESEND_NEWSLETTER_AUDIENCE_ID,
-    });
-
-    if (!audience.data) {
-      throw new Error('No audience data');
-    }
-
-    const contacts = audience.data.data;
-    return contacts.length;
-  } catch (error) {
-    console.error('Error getting subscriber count:');
-    console.error(error);
-  }
-};
-
 export const subscribeSchema = z.object({
   email: z.string().email(),
   firstName: z.string().optional(),
@@ -31,6 +13,32 @@ export const subscribeSchema = z.object({
 });
 
 type SubscribeArgs = z.infer<typeof subscribeSchema>;
+
+export const getSubscriberCount = async () => {
+  try {
+    const response = await resend.contacts.list({
+      audienceId: env.RESEND_NEWSLETTER_AUDIENCE_ID,
+    });
+
+    if (!response.data) {
+      throw new Error('No audience data');
+    }
+
+    if (response.error) {
+      throw new Error(`${response.error.name}: ${response.error.message}`);
+    }
+
+    const contacts = response.data.data;
+    // filter out unsubscribed contacts
+    const subscribedContacts = contacts.filter(
+      (contact) => contact.unsubscribed === false
+    );
+    return subscribedContacts.length;
+  } catch (error) {
+    console.error('Error getting subscriber count:');
+    console.error(error);
+  }
+};
 
 export const subscribe = async (subscriber: SubscribeArgs) => {
   try {

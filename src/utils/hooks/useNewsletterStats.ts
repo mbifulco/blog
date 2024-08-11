@@ -7,6 +7,8 @@ const useNewsletterStats = () => {
 
   const { data: subscriberCount } = subscriberCountQuery;
 
+  console.log(subscriberCount);
+
   return {
     subscriberCount: subscriberCount?.subscribers,
     refreshStats: () => {

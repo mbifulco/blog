@@ -1,6 +1,7 @@
 import type { GetStaticProps } from 'next';
 
 import { Heading } from '@components/Heading';
+import useNewsletterStats from '@utils/hooks/useNewsletterStats';
 import NewsletterItem from '../../components/NewsletterFeed/NewsletterItem';
 import { NewsletterSignup } from '../../components/NewsletterSignup';
 import SEO from '../../components/seo';
@@ -9,7 +10,6 @@ import { SubscriptionForm } from '../../components/SubscriptionForm';
 import { Subtitle } from '../../components/Subtitle';
 import config from '../../config';
 import type { Newsletter } from '../../data/content-types';
-import useConvertKitStats from '../../hooks/useConvertKitStats';
 import { getAllNewsletters } from '../../lib/newsletters';
 
 export const getStaticProps: GetStaticProps<NewsletterPageProps> = async () => {
@@ -27,7 +27,7 @@ type NewsletterPageProps = {
 };
 
 const NewsletterPage: React.FC<NewsletterPageProps> = ({ newsletters }) => {
-  const { stats } = useConvertKitStats();
+  const { subscriberCount } = useNewsletterStats();
 
   const [latestNewsletter, ...pastNewsletters] = newsletters;
 
@@ -54,7 +54,7 @@ const NewsletterPage: React.FC<NewsletterPageProps> = ({ newsletters }) => {
         <p className="text-xl">
           Join{' '}
           <span style={{ fontWeight: 'bold' }}>
-            {stats?.subscriberCount ?? 'the'} other product builders
+            {subscriberCount ?? 'the'} other product builders
           </span>{' '}
           and get it delivered straight to your inbox by filling out this happy
           lil&apos; form:

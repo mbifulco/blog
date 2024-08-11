@@ -16,6 +16,7 @@ const SubscriptionForm: React.FC<SubscriptionFormProps> = ({
   source,
 }) => {
   const addSubscriberMutation = trpc.mailingList.subscribe.useMutation();
+
   const { refreshStats } = useNewsletterStats();
 
   const formRef = useRef<HTMLFormElement>(null);
