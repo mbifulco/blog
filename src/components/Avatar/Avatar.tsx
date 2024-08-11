@@ -20,7 +20,6 @@ const Avatar: React.FC<AvatarProps> = ({
   variant = 'md',
   src,
 }) => {
-  console.log('coming atcha', src);
   return (
     <div
       className={clsxm(
