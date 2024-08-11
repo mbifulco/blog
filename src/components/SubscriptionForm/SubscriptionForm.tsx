@@ -15,7 +15,30 @@ const SubscriptionForm: React.FC<SubscriptionFormProps> = ({
   tags: _,
   source,
 }) => {
-  const addSubscriberMutation = trpc.mailingList.subscribe.useMutation();
+  const addSubscriberMutation = trpc.mailingList.subscribe.useMutation({
+    onSuccess: () => {
+      refreshStats();
+
+      const email = emailRef.current?.value;
+      const firstName = firstNameRef.current?.value;
+
+      posthog.capture('newsletter/subscribed', {
+        source,
+        email,
+        firstName,
+      });
+    },
+    onError: (error) => {
+      const email = emailRef.current?.value;
+      const firstName = firstNameRef.current?.value;
+      posthog.capture('newsletter/subscribe_error', {
+        source,
+        email,
+        firstName,
+        error,
+      });
+    },
+  });
 
   const { refreshStats } = useNewsletterStats();
 
@@ -41,22 +64,6 @@ const SubscriptionForm: React.FC<SubscriptionFormProps> = ({
       email,
       firstName,
     });
-
-    if (addSubscriberMutation.isSuccess) {
-      refreshStats();
-      posthog.capture('newsletter/subscribed', {
-        source,
-        email,
-        firstName,
-      });
-    } else if (addSubscriberMutation.error) {
-      posthog.capture('newsletter/subscribe_error', {
-        source,
-        email,
-        firstName,
-        error: addSubscriberMutation.error,
-      });
-    }
   };
 
   if (addSubscriberMutation.error) {
