@@ -1,4 +1,3 @@
-import posthog from 'posthog-js';
 import { Resend } from 'resend';
 import { z } from 'zod';
 
@@ -42,10 +41,6 @@ export const getSubscriberCount = async () => {
 
 export const subscribe = async (subscriber: SubscribeArgs) => {
   try {
-    posthog.capture('api/subscribe/try', {
-      subscriber,
-    });
-
     const res = await resend.contacts.create({
       audienceId: env.RESEND_NEWSLETTER_AUDIENCE_ID,
       ...subscriber,
@@ -57,20 +52,14 @@ export const subscribe = async (subscriber: SubscribeArgs) => {
 
     if (res.error) {
       throw new Error(`${res.error.name}: ${res.error.message}`);
-      posthog.capture('api/subscribe/error', {
-        error: res.error,
-        subscriber,
-      });
     }
 
     if (res.data) {
-      posthog.capture('api/subscribe/success', {
-        subscriber,
-      });
       return res.data;
     }
   } catch (error) {
     console.error('Error subscribing:');
     console.error(error);
+    throw error;
   }
 };

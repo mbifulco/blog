@@ -1,5 +1,6 @@
-import { httpBatchLink } from '@trpc/client';
+import { loggerLink, unstable_httpBatchStreamLink } from '@trpc/client';
 import { createTRPCNext } from '@trpc/next';
+import superjson from 'superjson';
 
 import type { AppRouter } from '../server/routers/_app';
 
@@ -17,10 +18,15 @@ function getBaseUrl() {
 }
 
 export const trpc = createTRPCNext<AppRouter>({
-  config({ ctx: _ }) {
+  config(_opts) {
     return {
       links: [
-        httpBatchLink({
+        loggerLink({
+          enabled: (opts) =>
+            process.env.NODE_ENV === 'development' ||
+            (opts.direction === 'down' && opts.result instanceof Error),
+        }),
+        unstable_httpBatchStreamLink({
           /**
            * If you want to use SSR, you need to use the server's full URL
            * @link https://trpc.io/docs/v11/ssr
@@ -33,6 +39,7 @@ export const trpc = createTRPCNext<AppRouter>({
           //     // authorization: getAuthCookie(),
           //   };
           // },
+          transformer: superjson,
         }),
       ],
     };
@@ -41,4 +48,5 @@ export const trpc = createTRPCNext<AppRouter>({
    * @link https://trpc.io/docs/v11/ssr
    **/
   ssr: false,
+  transformer: superjson,
 });
