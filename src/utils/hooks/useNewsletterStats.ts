@@ -10,7 +10,7 @@ const useNewsletterStats = () => {
   return {
     subscriberCount: subscriberCount?.subscribers,
     refreshStats: () => {
-      subscriberCountQuery.refetch();
+      void subscriberCountQuery.refetch();
     },
   };
 };

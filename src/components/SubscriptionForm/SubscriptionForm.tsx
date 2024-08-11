@@ -1,8 +1,10 @@
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 import Link from 'next/link';
 import posthog from 'posthog-js';
 
 import Button from '@components/Button';
+import useNewsletterStats from '@utils/hooks/useNewsletterStats';
+import { trpc } from '@utils/trpc';
 
 type SubscriptionFormProps = {
   tags?: string[];
@@ -13,9 +15,8 @@ const SubscriptionForm: React.FC<SubscriptionFormProps> = ({
   tags: _,
   source,
 }) => {
-  const [success, setSuccess] = useState(false);
-  const [submitting, setSubmitting] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const addSubscriberMutation = trpc.mailingList.subscribe.useMutation();
+  const { refreshStats } = useNewsletterStats();
 
   const formRef = useRef<HTMLFormElement>(null);
   const emailRef = useRef<HTMLInputElement>(null);
@@ -34,42 +35,35 @@ const SubscriptionForm: React.FC<SubscriptionFormProps> = ({
     posthog.identify(email, {
       firstName,
     });
-    posthog.capture('newsletter/subscribed', {
-      source,
+
+    await addSubscriberMutation.mutateAsync({
       email,
       firstName,
     });
 
-    setSubmitting(true);
-    const res = await fetch('/api/newsletter/subscribe', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        email_address: email,
-        fields: {
-          first_name: firstName,
-        },
-      }),
-    });
-    setSubmitting(false);
-
-    if (res.status !== 200) {
-      setError('Looks like something went wrong. Please try again.');
-      console.error('Error subscribing:', await res.json());
-      setSuccess(false);
-      return;
+    if (addSubscriberMutation.isSuccess) {
+      refreshStats();
+      posthog.capture('newsletter/subscribed', {
+        source,
+        email,
+        firstName,
+      });
+    } else if (addSubscriberMutation.error) {
+      posthog.capture('newsletter/subscribe_error', {
+        source,
+        email,
+        firstName,
+        error: addSubscriberMutation.error,
+      });
     }
-
-    setError(null);
-    setSuccess(true);
   };
 
-  if (error) {
+  if (addSubscriberMutation.error) {
     return (
       <div className="flex flex-col gap-2">
-        <p className="text-xl font-semibold text-inherit">{error}</p>
+        <p className="text-xl font-semibold text-inherit">
+          {addSubscriberMutation.error.message}
+        </p>
         <p className="text-inherit">
           If you continue to have issues, please email{' '}
           <Link
@@ -86,7 +80,7 @@ const SubscriptionForm: React.FC<SubscriptionFormProps> = ({
     );
   }
 
-  if (success) {
+  if (addSubscriberMutation.isSuccess) {
     return (
       <div className="flex flex-col gap-2">
         <p className="text-xl font-semibold text-inherit">
@@ -101,7 +95,11 @@ const SubscriptionForm: React.FC<SubscriptionFormProps> = ({
   return (
     <div className="flex flex-col gap-2">
       <form ref={formRef} className="w-full" onSubmit={handleSubmission}>
-        <fieldset disabled={submitting}>
+        <fieldset
+          disabled={
+            addSubscriberMutation.isPending || addSubscriberMutation.isSuccess
+          }
+        >
           <div data-style="clean">
             <ul
               className="formkit-alert formkit-alert-error"
