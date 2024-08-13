@@ -1,7 +1,7 @@
 import type { GetStaticProps } from 'next';
+import useNewsletterStats from '@hooks/useNewsletterStats';
 
 import { Heading } from '@components/Heading';
-import useNewsletterStats from '@utils/hooks/useNewsletterStats';
 import NewsletterItem from '../../components/NewsletterFeed/NewsletterItem';
 import { NewsletterSignup } from '../../components/NewsletterSignup';
 import SEO from '../../components/seo';
