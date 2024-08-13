@@ -1,9 +1,9 @@
 import { useRef } from 'react';
 import Link from 'next/link';
+import useNewsletterStats from '@hooks/useNewsletterStats';
 import posthog from 'posthog-js';
 
 import Button from '@components/Button';
-import useNewsletterStats from '@utils/hooks/useNewsletterStats';
 import { trpc } from '@utils/trpc';
 
 type SubscriptionFormProps = {
