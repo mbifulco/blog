@@ -1,5 +1,5 @@
+import useNewsletterStats from '@utils/hooks/useNewsletterStats';
 import config from '../../config';
-import useConvertKitStats from '../../hooks/useConvertKitStats';
 import { Heading } from '../Heading';
 import { Headshot } from '../Headshot';
 import SponsorCTA from '../SponsorCTA/SponsorCTA';
@@ -10,7 +10,7 @@ type NewsletterSignupProps = {
 };
 
 const NewsletterSignup: React.FC<NewsletterSignupProps> = ({ tags }) => {
-  const { stats } = useConvertKitStats();
+  const { subscriberCount } = useNewsletterStats();
   return (
     <div className="mb-4 flex flex-row justify-center">
       <div className="mx-auto my-0 flex max-w-[800px] flex-col justify-center border border-solid border-gray-200 bg-white px-8 py-4">
@@ -24,7 +24,7 @@ const NewsletterSignup: React.FC<NewsletterSignupProps> = ({ tags }) => {
           <p className="font-futura font-bold uppercase">
             Subscribe and join{' '}
             <span className="text-pink-600">
-              {stats?.subscriberCount ? `🔥 ${stats.subscriberCount}` : ''}
+              {subscriberCount ? `🔥 ${subscriberCount}` : ''}
             </span>{' '}
             other builders
           </p>

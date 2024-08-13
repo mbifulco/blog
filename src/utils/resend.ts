@@ -55,6 +55,7 @@ export const subscribe = async (subscriber: SubscribeArgs) => {
     }
 
     if (res.data) {
+      // TODO: fire off a welcome email!
       return res.data;
     }
   } catch (error) {

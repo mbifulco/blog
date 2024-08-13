@@ -1,16 +1,10 @@
-/**
- * v0 by Vercel.
- * @see https://v0.dev/t/kB60c2A2FTB
- */
-
-import useConvertKitStats from '@hooks/useConvertKitStats';
-
 import { Heading } from '@components/Heading';
 import { Image } from '@components/Image';
 import { SubscriptionForm } from '@components/SubscriptionForm';
+import useNewsletterStats from '@utils/hooks/useNewsletterStats';
 
 const NewsletterHero = () => {
-  const { stats } = useConvertKitStats();
+  const { subscriberCount } = useNewsletterStats();
 
   return (
     <section
@@ -56,11 +50,7 @@ const NewsletterHero = () => {
                   <p className="max-w-[600px] text-lg">
                     Join{' '}
                     <span className="text-pink-400">
-                      {stats?.subscriberCount ? (
-                        <span>{stats?.subscriberCount}</span>
-                      ) : (
-                        'the'
-                      )}{' '}
+                      {subscriberCount ? <span>{subscriberCount}</span> : 'the'}{' '}
                       other product builders
                     </span>
                     {', '}
