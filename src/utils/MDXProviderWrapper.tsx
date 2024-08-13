@@ -1,8 +1,15 @@
 import React, { Children } from 'react';
-import type { ButtonHTMLAttributes, HTMLProps, ReactElement } from 'react';
+import type {
+  AnchorHTMLAttributes,
+  ButtonHTMLAttributes,
+  HTMLAttributes,
+  HTMLProps,
+  ReactElement,
+} from 'react';
 import Link from 'next/link';
 import Script from 'next/script';
 import { MDXProvider } from '@mdx-js/react';
+import type { MDXComponents } from 'mdx/types';
 import { Highlight, themes } from 'prism-react-renderer';
 
 import clsxm from '@utils/clsxm';
@@ -53,22 +60,32 @@ const CustomHeading: React.FC<HeadingProps> = ({
  * intentionally bumps them down. Leaving a data- attribute to render in HTML
  * in case I ever run into this as a problem 🤣
  */
-const H1 = (props) => (
-  <CustomHeading
-    data-mike-h1-to-h2-in-mdxproviderwrapper
-    as="h2"
-    size="lg"
-    {...props}
-  />
+const H1: React.FC<HeadingProps> = (props) => (
+  <CustomHeading {...props} as="h2" />
 );
-const H2 = (props) => <CustomHeading as="h2" {...props} />;
-const H3 = (props) => <CustomHeading as="h3" {...props} />;
-const H4 = (props) => <CustomHeading as="h4" {...props} />;
-const H5 = (props) => <CustomHeading as="h5" {...props} />;
-const H6 = (props) => <CustomHeading as="h6" {...props} />;
-const P = (props) => <p className="my-2 text-xl" {...props} />;
+const H2: React.FC<HeadingProps> = (props) => (
+  <CustomHeading {...props} as="h2" />
+);
+const H3: React.FC<HeadingProps> = (props) => (
+  <CustomHeading {...props} as="h3" />
+);
+const H4: React.FC<HeadingProps> = (props) => (
+  <CustomHeading {...props} as="h4" />
+);
+const H5: React.FC<HeadingProps> = (props) => (
+  <CustomHeading {...props} as="h5" />
+);
+const H6: React.FC<HeadingProps> = (props) => (
+  <CustomHeading {...props} as="h6" />
+);
 
-const Blockquote = ({ children }) => {
+const P: React.FC<HTMLAttributes<HTMLParagraphElement>> = (props) => (
+  <p className="my-2 text-xl" {...props} />
+);
+
+const Blockquote: React.FC<HTMLAttributes<HTMLQuoteElement>> = ({
+  children,
+}) => {
   return (
     <blockquote className="border-l-4 border-pink-400 bg-gray-100 p-3">
       {children}
@@ -76,8 +93,10 @@ const Blockquote = ({ children }) => {
   );
 };
 
-const CustomLink = (props) => {
-  return <Link className="text-pink-600 hover:underline" {...props} />;
+type CustomLinkProps = AnchorHTMLAttributes<HTMLAnchorElement>;
+
+const CustomLink: React.FC<CustomLinkProps> = ({ children, ...props }) => {
+  return <a {...props}>{children}</a>;
 };
 
 const Colophon = () => {
@@ -124,7 +143,7 @@ const TextHighlight = (props: HTMLProps<HTMLElement>) => (
   />
 );
 
-const InlineCode = (props) => {
+const InlineCode: React.FC<HTMLAttributes<HTMLSpanElement>> = (props) => {
   return (
     <span
       {...props}
@@ -200,19 +219,28 @@ const Pre: React.FC<PreProps> = ({ children }) => {
   );
 };
 
-const OrderedList = ({ children, ...rest }) => (
+const OrderedList: React.FC<HTMLAttributes<HTMLOListElement>> = ({
+  children,
+  ...rest
+}) => (
   <ol {...rest} className="list-decimal">
     {children}
   </ol>
 );
 
-const UnorderedList = ({ children, ...rest }) => (
+const UnorderedList: React.FC<HTMLAttributes<HTMLUListElement>> = ({
+  children,
+  ...rest
+}) => (
   <ul {...rest} className="list-disc">
     {children}
   </ul>
 );
 
-const ListItemComponent = ({ children, ...rest }) => (
+const ListItemComponent: React.FC<HTMLAttributes<HTMLLIElement>> = ({
+  children,
+  ...rest
+}) => (
   <li {...rest} className="ml-5">
     {children}
   </li>
@@ -283,7 +311,7 @@ const oneOffComponentsUsedInPosts = {
   OrtonEffectImage, // used in orton-effect-css-react.mdx
 };
 
-export const components = {
+export const components: MDXComponents = {
   ...customComponents,
   ...oneOffComponentsUsedInPosts,
   Threads,
@@ -292,8 +320,8 @@ export const components = {
   Vimeo,
 };
 
-const MDXProviderWrapper = ({ children }) => (
-  <MDXProvider components={components}>{children}</MDXProvider>
-);
+const MDXProviderWrapper: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => <MDXProvider components={components}>{children}</MDXProvider>;
 
 export default MDXProviderWrapper;
