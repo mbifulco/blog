@@ -21,7 +21,7 @@ export const getHeadings = (source: string): Heading[] => {
     if (inCodeBlock) return;
 
     // Process headings outside of code blocks
-    const headingMatch = line.match(/^(#{1,6}) (.+)/);
+    const headingMatch = /^(#{1,6}) (.+)/.exec(line);
     if (headingMatch) {
       const level = headingMatch[1].length;
       const text = headingMatch[2].trim();

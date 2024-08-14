@@ -169,7 +169,7 @@ const Pre: React.FC<PreProps> = ({ children }) => {
   };
 
   const classNames = firstChildProps.className!;
-  const matches = classNames?.match(/language-(?<lang>.*)/);
+  const matches = /language-(?<lang>.*)/.exec(classNames);
 
   return (
     <div
