@@ -32,14 +32,15 @@ const SponsoredSection: React.FC<SponsoredSectionProps> = ({
           href="/sponsor"
           target="_blank"
         >
-          Thanks so much to our sponsor{' '}
-          <span className="text-bold">{sponsorName}</span>
+          Thanks you <span className="text-bold">{sponsorName}</span> for
+          sponsoring
         </Link>
         {imagePublicId && (
           <Link href={href} target="_blank">
             <Image
               publicId={imagePublicId}
               alt={`Sponsored by ${sponsorName}`}
+              className="h-48 w-48"
             />
           </Link>
         )}
