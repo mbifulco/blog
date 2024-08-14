@@ -93,14 +93,16 @@ const FullPost: React.FC<FullPostProps> = ({ post }) => {
             <TagsSummary tags={tags} />
           </div>
           <div className="mx-auto h-auto min-h-52 w-full">{coverContainer}</div>
-          {podcastUrl && (
-            <iframe width="100%" height="180" seamless src={podcastUrl} />
-          )}
         </header>
 
         <div className="mx-auto w-fit">
           <main className="mx-auto flex flex-col-reverse content-center justify-center gap-2 md:flex md:flex-row lg:gap-8">
             <article className="max-w-prose">
+              {podcastUrl && (
+                <div className="mb-8">
+                  <iframe width="100%" height="180" seamless src={podcastUrl} />
+                </div>
+              )}
               <div className="prose lg:prose-xl">
                 <MDXRemote {...post.source} components={components} />
               </div>
