@@ -18,7 +18,7 @@ export const GeneralObserver: React.FC<GeneralObserverProps> = ({
       ([entry]) => {
         if (entry.intersectionRatio > 0) {
           setIsChildVisible(true);
-          onEnter && onEnter();
+          if (onEnter) onEnter();
         }
       },
       {

@@ -4,9 +4,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import type * as trpcNext from '@trpc/server/adapters/next';
 
-type CreateContextOptions = {
-  // session: Session | null
-};
+type CreateContextOptions = object;
 
 /**
  * Inner function for `createContext` where we create the context.
