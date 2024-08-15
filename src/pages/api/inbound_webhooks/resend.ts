@@ -1,7 +1,8 @@
-import { IncomingMessage } from 'http';
+import type { IncomingMessage } from 'http';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { buffer } from 'micro';
-import { Webhook, WebhookRequiredHeaders } from 'svix';
+import { Webhook } from 'svix';
+import type { WebhookRequiredHeaders } from 'svix';
 
 import { env } from '@utils/env';
 import { sendSubscriberNotificationEmail } from '@utils/resend';
@@ -22,7 +23,7 @@ const WebhookEventTypes = {
 export type WebhookEventType =
   (typeof WebhookEventTypes)[keyof typeof WebhookEventTypes];
 
-export interface WebhookEvent {
+export type WebhookEvent = {
   created_at: string;
   data: {
     audience_id: string;
@@ -37,7 +38,7 @@ export interface WebhookEvent {
     to: string[];
   };
   type: WebhookEventType;
-}
+};
 
 export const webhook = new Webhook(env.RESEND_SIGNING_SECRET);
 
@@ -70,7 +71,9 @@ const webhooks = async (req: NextApiRequest, res: NextApiResponse) => {
           if (!data) return;
 
           const emailAddress = Array.isArray(data.to) ? data.to[0] : data.to;
-          const res = await sendSubscriberNotificationEmail({
+
+          // fire off an email to to myself!
+          await sendSubscriberNotificationEmail({
             email: emailAddress,
             firstName: data.first_name,
             lastName: data.last_name,
