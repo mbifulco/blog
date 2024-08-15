@@ -64,3 +64,19 @@ export const subscribe = async (subscriber: SubscribeArgs) => {
     throw error;
   }
 };
+
+export const sendSubscriberNotificationEmail = async (
+  subscriber: SubscribeArgs
+) => {
+  const res = await resend.emails.send({
+    to:
+      process.env.NODE_ENV === 'production'
+        ? 'hello@mikebifulco.com'
+        : 'delivered@resend.com',
+    from: '💌 Resend Notifications <noreply@mikebifulco.com>',
+    subject: `🎉 New Subscriber! ${subscriber.email}`,
+    text: `🎉 New subscriber: ${subscriber?.firstName} ${subscriber.email}`,
+  });
+
+  return res;
+};
