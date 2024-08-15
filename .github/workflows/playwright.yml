@@ -15,6 +15,7 @@ jobs:
       NEXT_PUBLIC_POSTHOG_KEY: ${{ secrets.NEXT_PUBLIC_POSTHOG_KEY }}
       RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
       RESEND_NEWSLETTER_AUDIENCE_ID: ${{ secrets.RESEND_NEWSLETTER_AUDIENCE_ID }}
+      RESEND_SIGNING_SECRET: ${{ secrets.RESEND_SIGNING_SECRET }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
