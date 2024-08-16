@@ -1,4 +1,5 @@
 import { Resend, Tag } from 'resend';
+import { ContactEvent } from 'src/pages/api/inbound_webhooks/resend';
 import { z } from 'zod';
 
 import { env } from './env';
@@ -7,8 +8,8 @@ const resend = new Resend(env.RESEND_API_KEY);
 
 const EmailTags: Record<string, Tag> = {
   SubscriberNotification: {
-    name: 'Subscriber Notification',
-    value: 'subscriber-notification',
+    name: 'category',
+    value: 'subscriber_notification',
   },
 } as const;
 
@@ -72,30 +73,36 @@ export const subscribe = async (subscriber: SubscribeArgs) => {
   }
 };
 
-export const sendSubscriberNotificationEmail = async (
-  subscriber: Partial<SubscribeArgs>
-) => {
-  if (!subscriber.email) {
+export const sendSubscriberNotificationEmail = async (event: ContactEvent) => {
+  if (!event.data.email) {
     console.error('No email provided');
     return;
   }
 
-  const firstName = subscriber.firstName ? `${subscriber.firstName} ` : '';
-  const lastName = subscriber.lastName ? `${subscriber.lastName} ` : '';
+  const email = event.data.email;
+  const firstName = event.data.first_name ? `${event.data.first_name} ` : '';
+  const lastName = event.data.last_name ? `${event.data.last_name} ` : '';
 
-  const res = await resend.emails.send(
-    {
-      to:
-        process.env.NODE_ENV === 'production'
-          ? 'hello@mikebifulco.com'
-          : 'delivered@resend.com',
-      from: '💌 Resend Notifications <notifications@mikebifulco.com>',
-      subject: `🎉 New Subscriber! ${subscriber.email}`,
-      text: `🎉 New subscriber: ${firstName}${lastName}${subscriber.email} just subscribed to Tiny Improvements`,
-      tags: [EmailTags.SubscriberNotification],
-    },
-    {}
-  );
+  const subject = `🎉 New Subscriber! ${firstName}-${email}`;
+  const body = `Congrats!: ${firstName}${lastName}${email} just subscribed to Tiny Improvements`;
 
-  return res;
+  const { data, error } = await resend.emails.send({
+    from: '💌 Resend Notifications <notifications@mikebifulco.com>',
+    to: [
+      process.env.NODE_ENV === 'production'
+        ? 'hello@mikebifulco.com'
+        : 'delivered@resend.com',
+    ],
+    subject,
+    html: body,
+    tags: [EmailTags.SubscriberNotification],
+  });
+
+  if (error) {
+    console.error('Error sending subscriber notification email:');
+    console.error(error);
+    throw error;
+  }
+
+  return data;
 };

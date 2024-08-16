@@ -23,8 +23,8 @@ const EmailEvents = {
   EmailSent: 'email.sent',
 } as const;
 
-type EmailEvent = (typeof EmailEvents)[keyof typeof EmailEvents];
-type ContactEvent = (typeof ContactEvents)[keyof typeof ContactEvents];
+type EmailEventType = (typeof EmailEvents)[keyof typeof EmailEvents];
+type ContactEventType = (typeof ContactEvents)[keyof typeof ContactEvents];
 
 /**
  * The data structure of the event payload sent by the webhook for events related to emails.
@@ -69,19 +69,36 @@ type ContactEventData = {
   updated_at: string;
 };
 
-export type WebhookEvent =
-  | {
-      created_at: string;
-      type: EmailEvent;
-      data: EmailEventData;
-    }
-  | {
-      created_at: string;
-      type: ContactEvent;
-      data: ContactEventData;
-    };
+export type EmailEvent = {
+  created_at: string;
+  type: EmailEventType;
+  data: EmailEventData;
+};
 
-export const webhook = new Webhook(env.RESEND_SIGNING_SECRET);
+export type ContactEvent = {
+  created_at: string;
+  type: ContactEventType;
+  data: ContactEventData;
+};
+
+export type WebhookEvent = EmailEvent | ContactEvent;
+
+const webhook = new Webhook(env.RESEND_SIGNING_SECRET);
+
+/**
+ * Ensures that the event data matches the current audience,
+ * to make sure we're only processing events for the current audience, since
+ * Resend doesn't support filtering webhook endpoints by audience.
+ * @param {ContactEventData} data - The event data.
+ * @returns {boolean} Whether the event data matches the current audience.
+ */
+const ensureEventForCurrentAudience = (data: ContactEventData) => {
+  if (data.audience_id !== env.RESEND_NEWSLETTER_AUDIENCE_ID) {
+    console.info("Event doesn't match current audience:", data);
+    return false;
+  }
+  return true;
+};
 
 const webhooks = async (req: NextApiRequest, res: NextApiResponse) => {
   const { method } = req;
@@ -98,19 +115,26 @@ const webhooks = async (req: NextApiRequest, res: NextApiResponse) => {
     // Verify the webhook signature and extract the event
     const event = webhook.verify(payload, headers) as WebhookEvent;
 
+    // Make sure this webhook is for the current audience.
+    // This site uses distinct Resend audiences
+    // for localdev / CI vs production, so we need to
+    // check the audience ID in the event data before processing.
+    if (event.type in ContactEvents) {
+      if (!ensureEventForCurrentAudience(event.data as ContactEventData)) {
+        return res.status(200).end();
+      }
+    }
+
     switch (event.type) {
       case ContactEvents.ContactCreated:
         try {
           // fire off an email to to myself!
-          await sendSubscriberNotificationEmail({
-            email: event.data.email,
-            firstName: event.data.first_name,
-            lastName: event.data.last_name,
-          });
+          await sendSubscriberNotificationEmail(event);
         } catch (error) {
           console.error('Error sending subscriber notification email:');
           console.error(error);
         }
+        break;
       case ContactEvents.ContactDeleted:
       case ContactEvents.ContactUpdated:
         console.log('Unhandled contact event:', event);
@@ -128,16 +152,18 @@ const webhooks = async (req: NextApiRequest, res: NextApiResponse) => {
         console.log('Unknown event type:', event);
     }
 
-    return res.status(200).end();
+    res.status(200).end();
+    return;
   } catch (error) {
-    return res.status(400).send(error);
+    res.status(400).send(error);
+    return;
   }
 };
-
-export default webhooks;
 
 export const config = {
   api: {
     bodyParser: false,
   },
 };
+
+export default webhooks;
