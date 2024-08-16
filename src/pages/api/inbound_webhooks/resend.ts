@@ -5,47 +5,28 @@ import { Webhook } from 'svix';
 import type { WebhookRequiredHeaders } from 'svix';
 
 import { env } from '@utils/env';
-import { sendSubscriberNotificationEmail } from '@utils/resend';
+import {
+  ContactEvents,
+  EmailEvents,
+  sendSubscriberNotificationEmail,
+} from '@utils/resend';
+import type { ContactEventData, WebhookEvent } from '@utils/resend';
 
-const WebhookEventTypes = {
-  ContactCreated: 'contact.created',
-  ContactDeleted: 'contact.deleted',
-  ContactUpdated: 'contact.updated',
-  EmailBounced: 'email.bounced',
-  EmailClicked: 'email.clicked',
-  EmailComplained: 'email.complained',
-  EmailDelivered: 'email.delivered',
-  EmailDeliveryDelayed: 'email.delivery_delayed',
-  EmailOpened: 'email.opened',
-  EmailSent: 'email.sent',
-} as const;
+const webhook = new Webhook(env.RESEND_SIGNING_SECRET);
 
-export type WebhookEventType =
-  (typeof WebhookEventTypes)[keyof typeof WebhookEventTypes];
-
-export type WebhookEvent = {
-  created_at: string;
-  data: {
-    audience_id: string;
-    created_at: string;
-    email?: string;
-    email_id?: string;
-    first_name?: string;
-    last_name?: string;
-    updated_at?: string;
-    from: string;
-    subject: string;
-    to: string[];
-  };
-  type: WebhookEventType;
-};
-
-export const webhook = new Webhook(env.RESEND_SIGNING_SECRET);
-
-export const config = {
-  api: {
-    bodyParser: false,
-  },
+/**
+ * Ensures that the event data matches the current audience,
+ * to make sure we're only processing events for the current audience, since
+ * Resend doesn't support filtering webhook endpoints by audience.
+ * @param {ContactEventData} data - The event data.
+ * @returns {boolean} Whether the event data matches the current audience.
+ */
+const ensureEventForCurrentAudience = (data: ContactEventData) => {
+  if (data.audience_id !== env.RESEND_NEWSLETTER_AUDIENCE_ID) {
+    console.info("Event doesn't match current audience:", data);
+    return false;
+  }
+  return true;
 };
 
 const webhooks = async (req: NextApiRequest, res: NextApiResponse) => {
@@ -60,38 +41,58 @@ const webhooks = async (req: NextApiRequest, res: NextApiResponse) => {
     const headers = req.headers as IncomingMessage['headers'] &
       WebhookRequiredHeaders;
 
+    // Verify the webhook signature and extract the event
     const event = webhook.verify(payload, headers) as WebhookEvent;
 
+    // Make sure this webhook is for the current audience.
+    // This site uses distinct Resend audiences
+    // for localdev / CI vs production, so we need to
+    // check the audience ID in the event data before processing.
+    if (event.type in ContactEvents) {
+      if (!ensureEventForCurrentAudience(event.data as ContactEventData)) {
+        return res.status(200).end();
+      }
+    }
+
     switch (event.type) {
-      case WebhookEventTypes.ContactCreated:
-        console.log('event:', event);
-
+      case ContactEvents.ContactCreated:
         try {
-          const { data } = event;
-          if (!data) return;
-
-          const emailAddress = Array.isArray(data.to) ? data.to[0] : data.to;
-
           // fire off an email to to myself!
-          await sendSubscriberNotificationEmail({
-            email: emailAddress,
-            firstName: data.first_name,
-            lastName: data.last_name,
-          });
+          await sendSubscriberNotificationEmail(event);
         } catch (error) {
           console.error('Error sending subscriber notification email:');
           console.error(error);
         }
-
+        break;
+      case ContactEvents.ContactDeleted:
+      case ContactEvents.ContactUpdated:
+        console.log('Unhandled contact event:', event);
+        break;
+      case EmailEvents.EmailBounced:
+      case EmailEvents.EmailClicked:
+      case EmailEvents.EmailComplained:
+      case EmailEvents.EmailDelivered:
+      case EmailEvents.EmailDeliveryDelayed:
+      case EmailEvents.EmailOpened:
+      case EmailEvents.EmailSent:
+        console.log('Unhandled email event:', event);
         break;
       default:
-        console.log('Unknown event type:', event.type);
+        console.log('Unknown event type:', event);
     }
 
-    return res.status(200).end();
+    res.status(200).end();
+    return;
   } catch (error) {
-    return res.status(400).send(error);
+    res.status(400).send(error);
+    return;
   }
+};
+
+export const config = {
+  api: {
+    bodyParser: false,
+  },
 };
 
 export default webhooks;
