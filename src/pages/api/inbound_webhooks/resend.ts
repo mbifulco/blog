@@ -7,10 +7,13 @@ import type { WebhookRequiredHeaders } from 'svix';
 import { env } from '@utils/env';
 import { sendSubscriberNotificationEmail } from '@utils/resend';
 
-const WebhookEventTypes = {
+const ContactEvents = {
   ContactCreated: 'contact.created',
   ContactDeleted: 'contact.deleted',
   ContactUpdated: 'contact.updated',
+} as const;
+
+const EmailEvents = {
   EmailBounced: 'email.bounced',
   EmailClicked: 'email.clicked',
   EmailComplained: 'email.complained',
@@ -20,33 +23,65 @@ const WebhookEventTypes = {
   EmailSent: 'email.sent',
 } as const;
 
-export type WebhookEventType =
-  (typeof WebhookEventTypes)[keyof typeof WebhookEventTypes];
+type EmailEvent = (typeof EmailEvents)[keyof typeof EmailEvents];
+type ContactEvent = (typeof ContactEvents)[keyof typeof ContactEvents];
 
-export type WebhookEvent = {
+/**
+ * The data structure of the event payload sent by the webhook for events related to emails.
+ * @typedef EmailEventData
+ * @type {object}
+ * @property {string} created_at - The timestamp when the event occurred.
+ * @property {string} email_id - The ID of the email.
+ * @property {string} from - The email address of the sender.
+ * @property {string} subject - The subject of the email.
+ * @property {string[]} to - The email address(es) of the recipient(s).
+ */
+type EmailEventData = {
   created_at: string;
-  data: {
-    audience_id: string;
-    created_at: string;
-    email?: string;
-    email_id?: string;
-    first_name?: string;
-    last_name?: string;
-    updated_at?: string;
-    from: string;
-    subject: string;
-    to: string[];
-  };
-  type: WebhookEventType;
+  email_id: string;
+  from: string;
+  subject: string;
+  to: string[];
 };
+
+/**
+ * The data structure of the event payload sent by the webhook for events related to contacts.
+ * @typedef ContactEventData
+ * @type {object}
+ * @property {string} audience_id - The ID of the audience.
+ * @property {string} created_at - The timestamp when the event occurred.
+ * @property {string} email - The email address of the contact.
+ * @property {string} first_name - The first name of the contact.
+ * @property {string} last_name - The last name of the contact.
+ * @property {string} id - The Resend ID of the contact.
+ * @property {boolean} unsubscribed - Whether the contact has unsubscribed.
+ * @property {string} updated_at - The timestamp when the contact was last updated.
+ *
+ */
+type ContactEventData = {
+  audience_id: string;
+  created_at: string;
+  email: string;
+  first_name?: string;
+  last_name?: string;
+  id: string;
+  unsubscribed: boolean;
+  updated_at: string;
+};
+
+export type WebhookEvent =
+  | {
+      created_at: string;
+      type: EmailEvent;
+      data: EmailEventData;
+    }
+  | {
+      created_at: string;
+      type: ContactEvent;
+      data: ContactEventData;
+    };
 
 export const webhook = new Webhook(env.RESEND_SIGNING_SECRET);
-
-export const config = {
-  api: {
-    bodyParser: false,
-  },
-};
 
 const webhooks = async (req: NextApiRequest, res: NextApiResponse) => {
   const { method } = req;
@@ -60,32 +95,37 @@ const webhooks = async (req: NextApiRequest, res: NextApiResponse) => {
     const headers = req.headers as IncomingMessage['headers'] &
       WebhookRequiredHeaders;
 
+    // Verify the webhook signature and extract the event
     const event = webhook.verify(payload, headers) as WebhookEvent;
 
     switch (event.type) {
-      case WebhookEventTypes.ContactCreated:
-        console.log('event:', event);
-
+      case ContactEvents.ContactCreated:
         try {
-          const { data } = event;
-          if (!data) return;
-
-          const emailAddress = Array.isArray(data.to) ? data.to[0] : data.to;
-
           // fire off an email to to myself!
           await sendSubscriberNotificationEmail({
-            email: emailAddress,
-            firstName: data.first_name,
-            lastName: data.last_name,
+            email: event.data.email,
+            firstName: event.data.first_name,
+            lastName: event.data.last_name,
           });
         } catch (error) {
           console.error('Error sending subscriber notification email:');
           console.error(error);
         }
-
+      case ContactEvents.ContactDeleted:
+      case ContactEvents.ContactUpdated:
+        console.log('Unhandled contact event:', event);
+        break;
+      case EmailEvents.EmailBounced:
+      case EmailEvents.EmailClicked:
+      case EmailEvents.EmailComplained:
+      case EmailEvents.EmailDelivered:
+      case EmailEvents.EmailDeliveryDelayed:
+      case EmailEvents.EmailOpened:
+      case EmailEvents.EmailSent:
+        console.log('Unhandled email event:', event);
         break;
       default:
-        console.log('Unknown event type:', event.type);
+        console.log('Unknown event type:', event);
     }
 
     return res.status(200).end();
@@ -95,3 +135,9 @@ const webhooks = async (req: NextApiRequest, res: NextApiResponse) => {
 };
 
 export default webhooks;
+
+export const config = {
+  api: {
+    bodyParser: false,
+  },
+};

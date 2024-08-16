@@ -1,9 +1,16 @@
-import { Resend } from 'resend';
+import { Resend, Tag } from 'resend';
 import { z } from 'zod';
 
 import { env } from './env';
 
 const resend = new Resend(env.RESEND_API_KEY);
+
+const EmailTags: Record<string, Tag> = {
+  SubscriberNotification: {
+    name: 'Subscriber Notification',
+    value: 'subscriber-notification',
+  },
+} as const;
 
 export const subscribeSchema = z.object({
   email: z.string().email(),
@@ -66,17 +73,29 @@ export const subscribe = async (subscriber: SubscribeArgs) => {
 };
 
 export const sendSubscriberNotificationEmail = async (
-  subscriber: SubscribeArgs
+  subscriber: Partial<SubscribeArgs>
 ) => {
-  const res = await resend.emails.send({
-    to:
-      process.env.NODE_ENV === 'production'
-        ? 'hello@mikebifulco.com'
-        : 'delivered@resend.com',
-    from: '💌 Resend Notifications <noreply@mikebifulco.com>',
-    subject: `🎉 New Subscriber! ${subscriber.email}`,
-    text: `🎉 New subscriber: ${subscriber?.firstName} ${subscriber.email}`,
-  });
+  if (!subscriber.email) {
+    console.error('No email provided');
+    return;
+  }
+
+  const firstName = subscriber.firstName ? `${subscriber.firstName} ` : '';
+  const lastName = subscriber.lastName ? `${subscriber.lastName} ` : '';
+
+  const res = await resend.emails.send(
+    {
+      to:
+        process.env.NODE_ENV === 'production'
+          ? 'hello@mikebifulco.com'
+          : 'delivered@resend.com',
+      from: '💌 Resend Notifications <notifications@mikebifulco.com>',
+      subject: `🎉 New Subscriber! ${subscriber.email}`,
+      text: `🎉 New subscriber: ${firstName}${lastName}${subscriber.email} just subscribed to Tiny Improvements`,
+      tags: [EmailTags.SubscriberNotification],
+    },
+    {}
+  );
 
   return res;
 };
