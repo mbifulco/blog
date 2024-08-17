@@ -1,6 +1,7 @@
 import type { IncomingMessage } from 'http';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { buffer } from 'micro';
+import { PostHog } from 'posthog-node';
 import { Webhook } from 'svix';
 import type { WebhookRequiredHeaders } from 'svix';
 
@@ -8,9 +9,17 @@ import { env } from '@utils/env';
 import {
   ContactEvents,
   EmailEvents,
+  isContactEvent,
+  isEmailEvent,
   sendSubscriberNotificationEmail,
 } from '@utils/resend';
 import type { ContactEventData, WebhookEvent } from '@utils/resend';
+
+const ph = new PostHog(env.NEXT_PUBLIC_POSTHOG_KEY, {
+  host: 'https://us.i.posthog.com',
+  flushAt: 1, // flush immediately since this is a serverless function
+  flushInterval: 0, // disable periodic flush as well
+});
 
 const webhook = new Webhook(env.RESEND_SIGNING_SECRET);
 
@@ -44,17 +53,38 @@ const webhooks = async (req: NextApiRequest, res: NextApiResponse) => {
     // Verify the webhook signature and extract the event
     const event = webhook.verify(payload, headers) as WebhookEvent;
 
-    // Make sure this webhook is for the current audience.
-    // This site uses distinct Resend audiences
-    // for localdev / CI vs production, so we need to
-    // check the audience ID in the event data before processing.
-    if (event.type in ContactEvents) {
-      if (!ensureEventForCurrentAudience(event.data as ContactEventData)) {
+    if (isEmailEvent(event)) {
+      const id = Array.isArray(event.data.to)
+        ? event.data.to[0]
+        : event.data.to;
+      ph.capture({
+        distinctId: id,
+        event: `resend/${event.type}`,
+        properties: event.data,
+      });
+      await ph.flush();
+    }
+
+    if (isContactEvent(event)) {
+      // Make sure this webhook is for the current audience.
+      // This site uses distinct Resend audiences
+      // for localdev / CI vs production, so we need to
+      // check the audience ID in the event data before processing.
+      if (!ensureEventForCurrentAudience(event.data)) {
         return res.status(200).end();
       }
+
+      // Track the contact event in PostHog
+      ph.capture({
+        distinctId: event.data.email ?? event.data.id,
+        event: `resend/${event.type}`,
+        properties: event.data,
+      });
+      await ph.flush();
     }
 
     switch (event.type) {
+      // Contact events
       case ContactEvents.ContactCreated:
         try {
           // fire off an email to to myself!
@@ -66,8 +96,9 @@ const webhooks = async (req: NextApiRequest, res: NextApiResponse) => {
         break;
       case ContactEvents.ContactDeleted:
       case ContactEvents.ContactUpdated:
-        console.log('Unhandled contact event:', event);
         break;
+
+      // Email events
       case EmailEvents.EmailBounced:
       case EmailEvents.EmailClicked:
       case EmailEvents.EmailComplained:
@@ -75,7 +106,6 @@ const webhooks = async (req: NextApiRequest, res: NextApiResponse) => {
       case EmailEvents.EmailDeliveryDelayed:
       case EmailEvents.EmailOpened:
       case EmailEvents.EmailSent:
-        console.log('Unhandled email event:', event);
         break;
       default:
         console.log('Unknown event type:', event);
@@ -86,6 +116,10 @@ const webhooks = async (req: NextApiRequest, res: NextApiResponse) => {
   } catch (error) {
     res.status(400).send(error);
     return;
+  } finally {
+    // see https://github.com/PostHog/posthog/issues/13092#issuecomment-1342966441
+    await ph.shutdown();
+    await new Promise((r) => setTimeout(r, 500));
   }
 };
 
