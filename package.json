@@ -52,6 +52,7 @@
     "pluralize": "^8.0.0",
     "postcss": "^8.4.41",
     "posthog-js": "^1.155.4",
+    "posthog-node": "^4.1.0",
     "prism-react-renderer": "^2.3.1",
     "prop-types": "^15.8.1",
     "react": "^18.3.1",

@@ -70,18 +70,42 @@ export type ContactEventData = {
 };
 
 export type EmailEvent = {
-  created_at: string;
   type: EmailEventType;
   data: EmailEventData;
 };
 
 export type ContactEvent = {
-  created_at: string;
   type: ContactEventType;
   data: ContactEventData;
 };
 
 export type WebhookEvent = EmailEvent | ContactEvent;
+
+export function isContactEvent(event: WebhookEvent): event is ContactEvent {
+  if (
+    event.type === ContactEvents.ContactCreated ||
+    event.type === ContactEvents.ContactUpdated ||
+    event.type === ContactEvents.ContactDeleted
+  ) {
+    return true;
+  }
+  return false;
+}
+
+export function isEmailEvent(event: WebhookEvent): event is EmailEvent {
+  if (
+    event.type === EmailEvents.EmailBounced ||
+    event.type === EmailEvents.EmailClicked ||
+    event.type === EmailEvents.EmailComplained ||
+    event.type === EmailEvents.EmailDelivered ||
+    event.type === EmailEvents.EmailDeliveryDelayed ||
+    event.type === EmailEvents.EmailOpened ||
+    event.type === EmailEvents.EmailSent
+  ) {
+    return true;
+  }
+  return false;
+}
 
 const EmailTags: Record<string, Tag> = {
   SubscriberNotification: {
