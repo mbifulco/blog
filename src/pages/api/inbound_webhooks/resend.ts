@@ -62,7 +62,7 @@ const webhooks = async (req: NextApiRequest, res: NextApiResponse) => {
         event: `resend/${event.type}`,
         properties: event.data,
       });
-      ph.flush();
+      await ph.flush();
     }
 
     if (isContactEvent(event)) {
@@ -70,7 +70,7 @@ const webhooks = async (req: NextApiRequest, res: NextApiResponse) => {
       // This site uses distinct Resend audiences
       // for localdev / CI vs production, so we need to
       // check the audience ID in the event data before processing.
-      if (!ensureEventForCurrentAudience(event.data as ContactEventData)) {
+      if (!ensureEventForCurrentAudience(event.data)) {
         return res.status(200).end();
       }
 
@@ -80,7 +80,7 @@ const webhooks = async (req: NextApiRequest, res: NextApiResponse) => {
         event: `resend/${event.type}`,
         properties: event.data,
       });
-      ph.flush();
+      await ph.flush();
     }
 
     switch (event.type) {
