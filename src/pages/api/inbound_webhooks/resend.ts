@@ -5,13 +5,14 @@ import { PostHog } from 'posthog-node';
 import { Webhook } from 'svix';
 import type { WebhookRequiredHeaders } from 'svix';
 
+import { sendSubscriberNotificationEmail } from '@utils/emails/sendSubscriberNotificationEmail';
+import { sendWelcomeEmail } from '@utils/emails/sendWelcomeEmail';
 import { env } from '@utils/env';
 import {
   ContactEvents,
   EmailEvents,
   isContactEvent,
   isEmailEvent,
-  sendSubscriberNotificationEmail,
 } from '@utils/resend';
 import type { ContactEventData, WebhookEvent } from '@utils/resend';
 
@@ -88,9 +89,19 @@ const webhooks = async (req: NextApiRequest, res: NextApiResponse) => {
       case ContactEvents.ContactCreated:
         try {
           // fire off an email to to myself!
-          await sendSubscriberNotificationEmail(event);
+          const responses = await Promise.allSettled([
+            sendSubscriberNotificationEmail(event),
+            sendWelcomeEmail({
+              email: event.data.email,
+              firstName: event.data.first_name,
+            }),
+          ]);
+          if (responses.some((r) => r.status === 'rejected')) {
+            console.error('Error sending new subscriber emails:');
+            console.error(responses);
+          }
         } catch (error) {
-          console.error('Error sending subscriber notification email:');
+          console.error('Error sending new subscriber emails:');
           console.error(error);
         }
         break;
