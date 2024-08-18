@@ -227,7 +227,7 @@ export const sendWelcomeEmail = async ({
   const { data, error } = await resend.emails.send({
     from: '💌 Tiny Improvements <hello@mikebifulco.com>',
     to: [email],
-    subject: 'Tiny Improvements - thanks for subscribing!',
+    subject: "Subscription confirmed. I'm so glad you're here!",
     react: WelcomeEmail({ firstName }),
   });
 
