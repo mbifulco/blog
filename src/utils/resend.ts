@@ -2,6 +2,7 @@ import { Resend } from 'resend';
 import type { Tag } from 'resend';
 import { z } from 'zod';
 
+import WelcomeEmail from '../../transactional/emails/WelcomeEmail';
 import { env } from './env';
 
 const resend = new Resend(env.RESEND_API_KEY);
@@ -164,7 +165,11 @@ export const subscribe = async (subscriber: SubscribeArgs) => {
     }
 
     if (res.data) {
-      // TODO: fire off a welcome email!
+      await sendWelcomeEmail({
+        firstName: subscriber.firstName,
+        email: subscriber.email,
+      });
+
       return res.data;
     }
   } catch (error) {
@@ -201,6 +206,33 @@ export const sendSubscriberNotificationEmail = async (event: ContactEvent) => {
 
   if (error) {
     console.error('Error sending subscriber notification email:');
+    console.error(error);
+  }
+
+  return data;
+};
+
+export const sendWelcomeEmail = async ({
+  firstName,
+  email,
+}: {
+  firstName?: string;
+  email: string;
+}) => {
+  if (!email) {
+    console.error('No email provided');
+    return;
+  }
+
+  const { data, error } = await resend.emails.send({
+    from: '💌 Tiny Improvements <hello@mikebifulco.com>',
+    to: [email],
+    subject: 'Tiny Improvements - thanks for subscribing!',
+    react: WelcomeEmail({ firstName }),
+  });
+
+  if (error) {
+    console.error('Error sending welcome email:');
     console.error(error);
   }
 
