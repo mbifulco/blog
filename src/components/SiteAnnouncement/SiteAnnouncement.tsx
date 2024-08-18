@@ -1,7 +1,7 @@
 import Link from 'next/link';
+import useNewsletterStats from '@hooks/useNewsletterStats';
 
 import clsxm from '@utils/clsxm';
-import config from '../../config';
 
 type SiteAnnouncementProps = {
   className?: string;
@@ -11,11 +11,17 @@ const SiteAnnouncement: React.FC<SiteAnnouncementProps> = ({
   className = '',
   sticky = false,
 }) => {
-  let { shortDescription } = config.newsletter;
+  const { subscriberCount } = useNewsletterStats();
 
-  // make first character lower case
-  shortDescription =
-    shortDescription.charAt(0).toLowerCase() + shortDescription.slice(1);
+  const socialProof = subscriberCount && subscriberCount > 0 && (
+    <>
+      Ready to build better products? Join{' '}
+      <span className="font-bold text-pink-600">
+        {' '}
+        {subscriberCount ?? 'other'} builders{' '}
+      </span>
+    </>
+  );
 
   return (
     <div
@@ -24,25 +30,20 @@ const SiteAnnouncement: React.FC<SiteAnnouncementProps> = ({
         sticky && 'sticky top-0 z-[100]',
         className
       )}
-      style={{ backgroundImage: `url(/images/wiggle.svg)` }}
+      // style={{ backgroundImage: `url(/images/wiggle.svg)` }}
     >
-      <div className="text-md mx-auto flex flex-row gap-4 bg-white/80 px-2 py-1 text-black">
-        <p>
-          Subscribe to{' '}
-          <Link
-            href="/newsletter"
-            className="font-bold text-pink-600 hover:text-pink-900 hover:no-underline"
-          >
-            💌 Tiny Improvements
-          </Link>
-          , {shortDescription}
-        </p>
-      </div>
-      {/* <button
-        className="mr-4 text-white hover:text-pink-300"
+      <Link
+        href="/newsletter"
+        className="text-md mx-auto flex flex-row gap-4 px-2 py-1 text-black"
       >
-        <XMarkIcon className="block h-6 w-6" aria-hidden="true" />
-      </button> */}
+        <p>
+          {socialProof} by subscribing to{' '}
+          <span className="font-bold text-pink-600 hover:text-pink-900 hover:no-underline">
+            💌 Tiny Improvements
+          </span>
+          - it&apos;s free!
+        </p>
+      </Link>
     </div>
   );
 };
