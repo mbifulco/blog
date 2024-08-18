@@ -95,7 +95,11 @@ export const WelcomeEmail = ({ firstName }: WelcomeEmailProps) => {
                   className="flex flex-col justify-center pb-8"
                   align="center"
                 >
-                  <Button style={button} className="mx-auto w-fit">
+                  <Button
+                    style={button}
+                    className="mx-auto w-fit"
+                    href="https://mikebifulco.com/newsletter"
+                  >
                     Read the latest dispatch
                   </Button>
                 </Column>
