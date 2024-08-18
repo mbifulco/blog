@@ -5,8 +5,8 @@ import { PostHog } from 'posthog-node';
 import { Webhook } from 'svix';
 import type { WebhookRequiredHeaders } from 'svix';
 
-import { sendSubscriberNotificationEmail } from '@utils/emails/sendSubscriberNotificationEmail';
-import { sendWelcomeEmail } from '@utils/emails/sendWelcomeEmail';
+import { sendSubscriberNotificationEmail } from '@utils/email/sendSubscriberNotificationEmail';
+import { sendWelcomeEmail } from '@utils/email/sendWelcomeEmail';
 import { env } from '@utils/env';
 import {
   ContactEvents,

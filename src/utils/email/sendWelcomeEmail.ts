@@ -1,5 +1,5 @@
-import { WelcomeEmail } from '../../../transactional/emails/WelcomeEmail';
 import { resend } from '../resend';
+import { WelcomeEmail } from './templates/WelcomeEmail';
 
 export const sendWelcomeEmail = async ({
   firstName,
