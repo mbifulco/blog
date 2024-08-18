@@ -96,7 +96,7 @@ const FullPost: React.FC<FullPostProps> = ({ post }) => {
         </header>
 
         <div className="mx-auto w-fit">
-          <main className="mx-auto flex flex-col-reverse content-center justify-center gap-2 md:flex md:flex-row lg:gap-8">
+          <main className="mx-auto flex flex-col-reverse content-center justify-center gap-4 md:flex md:flex-row lg:gap-8">
             <article className="max-w-prose">
               {podcastUrl && (
                 <div className="mb-8">
