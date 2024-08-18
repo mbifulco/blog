@@ -30,7 +30,7 @@ export const WelcomeEmail = ({ firstName }: WelcomeEmailProps) => {
       <Preview>🧋 Let's build things that matter</Preview>
 
       <Tailwind>
-        <Body className="mx-auto my-auto bg-[#fafafa] px-2 font-sans">
+        <Body className="mx-auto my-auto bg-[#fafafa] px-2 font-sans text-xl">
           <Container>
             <Section style={logo} align="center">
               <Row align="center">
@@ -124,7 +124,6 @@ export const WelcomeEmail = ({ firstName }: WelcomeEmailProps) => {
               <Link href="https://mikebifulco.com" className="text-pink-600">
                 mikebifulco.com
               </Link>{' '}
-              | Not getting what you need? Unsubscribe any time
             </Text>
           </Container>
         </Body>
