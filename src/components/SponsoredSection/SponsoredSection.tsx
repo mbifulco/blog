@@ -22,7 +22,7 @@ const SponsoredSection: React.FC<SponsoredSectionProps> = ({
     <div className="overflow-x-hidden md:overflow-x-visible">
       <section
         className={clsxm(
-          'sponsored-section text-md -mx-4 my-4 rounded-sm border border-solid px-8 py-4',
+          'sponsored-section text-md my-4 rounded-sm border border-solid px-8 py-4',
           'before:height-[3px] before:width-[33%] before:background-pink-400 before:position-relative before:top-[calc(-1em_-_3px)] before:ml-auto before:mr-auto before:content-["_"]',
           'after:height-[3px] after:width-[33%] after:background-pink-400 after:position-relative after:top-[calc(-1em_-_3px)] after:ml-auto after:mr-auto after:content-["_"]'
         )}
