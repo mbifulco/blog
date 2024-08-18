@@ -1,10 +1,9 @@
 import { Resend } from 'resend';
-import type { Tag } from 'resend';
 import { z } from 'zod';
 
 import { env } from './env';
 
-const resend = new Resend(env.RESEND_API_KEY);
+export const resend = new Resend(env.RESEND_API_KEY);
 
 export const ContactEvents = {
   ContactCreated: 'contact.created',
@@ -107,13 +106,6 @@ export function isEmailEvent(event: WebhookEvent): event is EmailEvent {
   return false;
 }
 
-const EmailTags: Record<string, Tag> = {
-  SubscriberNotification: {
-    name: 'category',
-    value: 'subscriber_notification',
-  },
-} as const;
-
 export const subscribeSchema = z.object({
   email: z.string().email(),
   firstName: z.string().optional(),
@@ -163,46 +155,10 @@ export const subscribe = async (subscriber: SubscribeArgs) => {
       throw new Error(`${res.error.name}: ${res.error.message}`);
     }
 
-    if (res.data) {
-      // TODO: fire off a welcome email!
-      return res.data;
-    }
+    return res.data;
   } catch (error) {
     console.error('Error subscribing:');
     console.error(error);
     throw error;
   }
-};
-
-export const sendSubscriberNotificationEmail = async (event: ContactEvent) => {
-  if (!event.data.email) {
-    console.error('No email provided');
-    return;
-  }
-
-  const email = event.data.email;
-  const firstName = event.data.first_name ? `${event.data.first_name} ` : '';
-  const lastName = event.data.last_name ? `${event.data.last_name} ` : '';
-
-  const subject = `🎉 New Subscriber! ${firstName}-${email}`;
-  const body = `Congrats!: ${firstName}${lastName}${email} just subscribed to Tiny Improvements`;
-
-  const { data, error } = await resend.emails.send({
-    from: '💌 Resend Notifications <notifications@mikebifulco.com>',
-    to: [
-      process.env.NODE_ENV === 'production'
-        ? 'hello@mikebifulco.com'
-        : 'delivered@resend.com',
-    ],
-    subject,
-    html: body,
-    tags: [EmailTags.SubscriberNotification],
-  });
-
-  if (error) {
-    console.error('Error sending subscriber notification email:');
-    console.error(error);
-  }
-
-  return data;
 };
