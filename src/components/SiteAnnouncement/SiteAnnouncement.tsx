@@ -41,7 +41,7 @@ const SiteAnnouncement: React.FC<SiteAnnouncementProps> = ({
           <span className="font-bold text-pink-600 hover:text-pink-900 hover:no-underline">
             💌 Tiny Improvements
           </span>
-          - it's free!
+          - it&apos;s free!
         </p>
       </Link>
     </div>
