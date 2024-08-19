@@ -1,8 +1,8 @@
 // Components
 import type { GetStaticProps, NextPage } from 'next';
 
+import NewsletterSignup from '@components/NewsletterSignup/NewsletterBannerFancy';
 import { Heading } from '../../components/Heading';
-import { NewsletterHero } from '../../components/NewsletterSignup';
 import SEO from '../../components/seo';
 import Tag from '../../components/tag';
 import { getAllTags } from '../../lib/tags';
@@ -37,7 +37,7 @@ const TagsPage: NextPage<TagsPageProps> = ({ tags }) => {
           ))}
         </div>
       </main>
-      <NewsletterHero />
+      <NewsletterSignup />
     </>
   );
 };

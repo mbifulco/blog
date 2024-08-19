@@ -2,7 +2,7 @@ import type { NextPage } from 'next';
 import type { MDXRemoteSerializeResult } from 'next-mdx-remote';
 import { MDXRemote } from 'next-mdx-remote';
 
-import { NewsletterHero } from '../../components/NewsletterSignup';
+import NewsletterSignup from '@components/NewsletterSignup/NewsletterBannerFancy';
 import SEO from '../../components/seo';
 import { serialize } from '../../utils/mdx';
 import { components } from '../../utils/MDXProviderWrapper';
@@ -38,7 +38,7 @@ const AboutPage: NextPage<AboutPageProps> = ({ mdxSource }) => (
         <MDXRemote {...mdxSource} components={components} />
       </div>
     </main>
-    <NewsletterHero />
+    <NewsletterSignup />
   </>
 );
 

@@ -1,7 +1,7 @@
 import type { GetStaticProps } from 'next';
 import { useRouter } from 'next/router';
 
-import NewsletterHero from '@components/NewsletterSignup/NewsletterHero';
+import { NewsletterSignup } from '@components/NewsletterSignup';
 import { Colophon } from '../../components/Colophon';
 import FullPost from '../../components/Post/FullPost';
 import SEO from '../../components/seo';
@@ -86,7 +86,7 @@ const NewsletterPage: React.FC<NewsletterPageProps> = ({ newsletter }) => {
         title={title}
       />
       <div className="mt-10" />
-      <NewsletterHero />
+      <NewsletterSignup />
     </>
   );
 };

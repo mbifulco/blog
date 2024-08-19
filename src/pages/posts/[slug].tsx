@@ -1,8 +1,8 @@
 import type { GetStaticProps, NextPage } from 'next';
 import { useRouter } from 'next/router';
 
+import NewsletterSignup from '@components/NewsletterSignup/NewsletterBannerFancy';
 import { Colophon } from '../../components/Colophon';
-import { NewsletterHero } from '../../components/NewsletterSignup';
 import { BlogPost as Post } from '../../components/Post';
 import SEO from '../../components/seo';
 import WebmentionMetadata from '../../components/webmentionMetadata';
@@ -85,7 +85,7 @@ const PostPage: NextPage<PostPageProps> = ({ post }) => {
         />
         <Colophon />
       </div>
-      <NewsletterHero />
+      <NewsletterSignup />
     </>
   );
 };
