@@ -76,6 +76,14 @@ const config = {
     ];
   },
   skipTrailingSlashRedirect: true,
+  async headers() {
+    return [
+      {
+        key: 'X-Frame-Options',
+        value: 'SAMEORIGIN',
+      },
+    ];
+  },
 };
 
 export default withBundleAnalyzer({ enabled: process.env.ANALYZE === true })(
