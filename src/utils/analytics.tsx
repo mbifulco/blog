@@ -12,7 +12,7 @@ export const AnalyticsProvider: React.FC<AnalyticsProviderProps> = ({
   children,
 }) => {
   const logClicks = (goalId: string, valueInCents = 0) => {
-    if (fathom?.trackGoal) {
+    if (typeof fathom !== 'undefined') {
       fathom.trackGoal(goalId, valueInCents);
     }
   };

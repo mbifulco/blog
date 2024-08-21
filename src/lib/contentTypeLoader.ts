@@ -31,7 +31,7 @@ export const getContentBySlug = async (
     frontmatter: {
       ...data,
       date: articleDate.toUTCString(),
-      tags: (tags as string[])?.map((tag: string) => parseTag(tag)) || [],
+      tags: [...(tags as string[])].map((tag: string) => parseTag(tag)),
       type,
     },
     content,
@@ -51,15 +51,8 @@ export async function getAllContentFromDirectory(
 
   // sort posts by date,  newest first
   articles.sort((a, b) =>
-    compareDesc(new Date(a?.frontmatter?.date), new Date(b?.frontmatter?.date))
+    compareDesc(new Date(a.frontmatter.date), new Date(b.frontmatter.date))
   );
-
-  /// filter out drafts for production
-  if (process.env.NODE_ENV === 'production') {
-    return articles.filter(
-      (article) => article.frontmatter?.published !== false
-    );
-  }
 
   return articles;
 }

@@ -16,7 +16,7 @@ import DefaultLayout from '../components/Layouts/DefaultLayout';
 
 // Check that PostHog is client-side (used to handle Next.js SSR)
 if (typeof window !== 'undefined') {
-  posthog.init(process.env.NEXT_PUBLIC_POSTHOG_KEY!, {
+  posthog.init(process.env.NEXT_PUBLIC_POSTHOG_KEY, {
     api_host: 'https://mikebifulco.com/ingest',
     ui_host: 'https://app.posthog.com',
     // Enable debug mode in development
@@ -38,7 +38,9 @@ function MyApp({ Component, pageProps }: AppProps) {
 
     function onRouteChangeComplete() {
       Fathom.trackPageview();
-      posthog?.capture('$pageview');
+      if (typeof posthog !== 'undefined') {
+        posthog.capture('$pageview');
+      }
     }
     // Record a pageview when route changes
     router.events.on('routeChangeComplete', onRouteChangeComplete);

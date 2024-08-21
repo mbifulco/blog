@@ -9,7 +9,7 @@ const twttrLoad = () => {
   if (
     typeof window.twttr !== `undefined` &&
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-    window?.twttr?.widgets &&
+    window.twttr?.widgets &&
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
     typeof window.twttr.widgets.load === `function`
   ) {

@@ -14,13 +14,16 @@
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
     "start": "next start",
     "test": "pnpm exec playwright test",
-    "lint": "next lint",
+    "lint": "eslint ./src ",
+    "lint-fix": "eslint ./src --fix",
     "eslint-check": "eslint --print-config . | eslint-config-prettier-check"
   },
   "dependencies": {
     "@cloudinary/url-gen": "^1.20.0",
     "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
+    "@eslint/compat": "^1.1.1",
+    "@eslint/js": "^9.9.0",
     "@headlessui/react": "^2.1.2",
     "@heroicons/react": "^2.1.5",
     "@mdx-js/loader": "^3.0.1",
@@ -75,6 +78,7 @@
     "svix": "^1.30.0",
     "swr": "^2.2.5",
     "tailwind-merge": "^2.5.2",
+    "typescript-eslint": "^8.2.0",
     "zod": "^3.23.8"
   },
   "devDependencies": {
@@ -87,14 +91,14 @@
     "@types/react": "^18.3.4",
     "@typescript-eslint/eslint-plugin": "^8.2.0",
     "@typescript-eslint/parser": "^8.2.0",
-    "eslint": "8.57.0",
+    "eslint": "9.9.0",
     "eslint-config-next": "^14.2.5",
     "eslint-config-prettier": "^9.1.0",
     "eslint-config-turbo": "^2.0.14",
     "eslint-plugin-import": "^2.29.1",
     "eslint-plugin-jsx-a11y": "^6.9.0",
     "eslint-plugin-react": "^7.35.0",
-    "eslint-plugin-react-hooks": "^4.6.2",
+    "eslint-plugin-react-hooks": "rc",
     "github-slugger": "^2.0.0",
     "jiti": "^1.21.6",
     "next-sitemap": "^4.2.3",
@@ -114,7 +118,7 @@
   "eslintConfig": {
     "root": true,
     "extends": [
-      "./eslint.config.js"
+      "./eslint.config.mjs"
     ]
   }
 }

@@ -18,8 +18,8 @@ function useHighlighted(id: string) {
 
   useEffect(() => {
     const handleObserver = (entries: IntersectionObserverEntry[]) => {
-      entries?.forEach((entry) => {
-        if (entry?.isIntersecting) {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
           setActiveId(entry.target.id);
         }
       });
@@ -61,13 +61,13 @@ const ToCLink: React.FC<{ heading: Heading }> = ({ heading }) => {
 
 const TableOfContents: React.FC<TableOfContentsProps> = ({ headings }) => {
   if (!headings) return null;
-  if (!headings?.length) return null;
+  if (!headings.length) return null;
 
   return (
     <nav className="hidden flex-col gap-2.5 rounded border px-4 py-3 text-sm shadow md:visible md:flex">
       <HtmlHeading as="h3">In this article</HtmlHeading>
       <ol>
-        {headings?.map((heading) => (
+        {headings.map((heading) => (
           <ToCLink heading={heading} key={heading.slug} />
         ))}
       </ol>

@@ -32,7 +32,6 @@ const WebmentionMetadata: React.FC<WebmentionMetadataProps> = ({
       <article className="h-card h-entry">
         <header>
           {coverImageUrl && (
-            // eslint-disable-next-line @next/next/no-img-element
             <img className="u-photo" src={coverImageUrl} alt="Hero" />
           )}
           <div className="p-name">{title}</div>

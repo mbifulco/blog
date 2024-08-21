@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/alt-text */
 import { useState } from 'react';
 
 import { Slider as LocalSlider } from '../Slider';
@@ -10,7 +9,7 @@ type OrtonEffectImageProps = {
   src: string;
   alt?: string;
 };
-/* eslint-disable @next/next/no-img-element */
+
 export const OrtonEffectImage: React.FC<OrtonEffectImageProps> = ({
   blurRadius: blurStart,
   opacity: opacityStart,

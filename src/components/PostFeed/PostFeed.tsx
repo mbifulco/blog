@@ -14,7 +14,7 @@ const PostFeed: React.FC<PostFeedProps> = ({ posts }) => (
       if (idx === 1) {
         return (
           <div key="newsletter-wrapper">
-            {idx === 1 && <NewsletterSignup key="newsletter" />}
+            <NewsletterSignup key="newsletter" />
             {postEl}
           </div>
         );

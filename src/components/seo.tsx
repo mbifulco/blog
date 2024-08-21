@@ -103,7 +103,7 @@ const SEO: React.FC<SEOProps> = ({
         name="monetization"
         content="$twitter.xrptipbot.com/irreverentmike"
       />
-      {keywords && keywords?.length > 0 && (
+      {keywords && keywords.length > 0 && (
         <meta name="keywords" content={keywords.join(', ')} />
       )}
       <meta
