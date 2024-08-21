@@ -16,7 +16,7 @@ import DefaultLayout from '../components/Layouts/DefaultLayout';
 
 // Check that PostHog is client-side (used to handle Next.js SSR)
 if (typeof window !== 'undefined') {
-  posthog.init(process.env.NEXT_PUBLIC_POSTHOG_KEY, {
+  posthog.init(env.NEXT_PUBLIC_POSTHOG_KEY, {
     api_host: 'https://mikebifulco.com/ingest',
     ui_host: 'https://app.posthog.com',
     // Enable debug mode in development
