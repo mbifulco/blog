@@ -1,4 +1,4 @@
-import GeneralObserver from './general-observer';
+import { GeneralObserver } from './general-observer';
 import { getPadding } from './utils';
 
 type YouTubeProps = {

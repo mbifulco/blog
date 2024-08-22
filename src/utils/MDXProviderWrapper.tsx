@@ -168,7 +168,7 @@ const Pre: React.FC<PreProps> = ({ children }) => {
     children?: React.ReactNode;
   };
 
-  const classNames = firstChildProps.className!;
+  const classNames = firstChildProps.className ?? '';
   const matches = /language-(?<lang>.*)/.exec(classNames);
 
   return (
@@ -180,7 +180,7 @@ const Pre: React.FC<PreProps> = ({ children }) => {
     >
       <Highlight
         theme={themes.nightOwl}
-        code={firstChildProps?.children as string}
+        code={firstChildProps.children as string}
         language={matches?.groups?.lang ?? ''}
       >
         {({ className, style, tokens, getLineProps, getTokenProps }) => (

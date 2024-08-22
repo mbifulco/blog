@@ -13,7 +13,7 @@ const SiteAnnouncement: React.FC<SiteAnnouncementProps> = ({
 }) => {
   const { subscriberCount } = useNewsletterStats();
 
-  const socialProof = subscriberCount && subscriberCount > 0 && (
+  const socialProof = (
     <>
       Ready to build better products? Join{' '}
       <span className="font-bold text-pink-600">

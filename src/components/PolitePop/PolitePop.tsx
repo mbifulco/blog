@@ -12,7 +12,7 @@ type ConfirmButtonProps = {
 
 const emailIsGmail = (email?: string) => {
   if (!email) return false;
-  return email?.endsWith('@gmail.com');
+  return email.endsWith('@gmail.com');
 };
 
 const ConfirmButton: React.FC<ConfirmButtonProps> = ({ email, onClick }) => {
@@ -149,9 +149,7 @@ const PolitePopEmbed = ({ debug = false }) => {
                           Confirm your address by clicking the link I sent to
                           <span className="font-bold">
                             {' '}
-                            {subscribeEvent?.email
-                              ? subscribeEvent?.email
-                              : 'your inbox'}
+                            {subscribeEvent?.email ?? 'your inbox'}
                           </span>
                           .
                         </p>

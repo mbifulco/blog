@@ -1,17 +1,21 @@
-import { useEffect, useRef, useState } from 'react';
+import type { FunctionComponent, RefObject } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
-type GeneralObserverProps = {
+type IGeneralObserverProps = {
+  /** React Children */
   children: React.ReactNode;
-  onEnter?: () => void;
+  /** Fires when IntersectionObserver enters viewport */
+  onEnter?: (id?: string) => void;
+  /** The height of the placeholder div before the component renders in */
   height?: number;
 };
 
-export const GeneralObserver: React.FC<GeneralObserverProps> = ({
+export const GeneralObserver: FunctionComponent<IGeneralObserverProps> = ({
   children,
   onEnter,
   height = 0,
 }) => {
-  const ref = useRef(null);
+  const ref = useRef<HTMLElement>(null);
   const [isChildVisible, setIsChildVisible] = useState(false);
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -27,16 +31,18 @@ export const GeneralObserver: React.FC<GeneralObserverProps> = ({
         threshold: 0,
       }
     );
-    if (ref?.current) {
+    if (ref.current) {
       observer.observe(ref.current);
     }
   }, [ref, onEnter]);
 
   return (
-    <div ref={ref} data-testid="general-observer" className="mdx-embed">
+    <div
+      ref={ref as RefObject<HTMLDivElement>}
+      data-testid="general-observer"
+      className="mdx-embed"
+    >
       {isChildVisible ? children : <div style={{ height, width: '100%' }} />}
     </div>
   );
 };
-
-export default GeneralObserver;

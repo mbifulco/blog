@@ -38,7 +38,7 @@ const WorkPage: NextPage<WorkPageProps> = ({ articles }) => {
           </p>
         </div>
         <div className="flex flex-col gap-8">
-          {articles?.map((article) => (
+          {articles.map((article) => (
             <ExternalWorkItem article={article} key={article.slug} />
           ))}
         </div>
