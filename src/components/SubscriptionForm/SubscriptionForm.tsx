@@ -115,12 +115,12 @@ const SubscriptionForm: React.FC<SubscriptionFormProps> = ({
               data-group="alert"
             ></ul>
             <div
-              className="seva-fields formkit-fields grid w-full items-center rounded md:grid-cols-3"
+              className="seva-fields formkit-fields grid w-full items-center rounded"
               data-element="fields"
               data-stacked="false"
             >
               <input
-                className="formkit-input h-10 w-full grow rounded-b-none rounded-t border border-b-0 border-solid border-pink-600 bg-white px-[2ch] py-[1ch] font-normal text-gray-950 md:rounded-l md:rounded-r-none md:border-b md:border-r-0"
+                className="formkit-input h-10 w-full grow rounded-b-none rounded-t border border-b-0 border-solid border-pink-600 bg-white px-[2ch] py-[1ch] font-normal text-gray-950"
                 aria-label="First Name"
                 name="fields[first_name]"
                 required
@@ -129,7 +129,7 @@ const SubscriptionForm: React.FC<SubscriptionFormProps> = ({
                 ref={firstNameRef}
               />
               <input
-                className="formkit-input h-10 w-full grow rounded-b-none border border-b-0 border-solid border-pink-600 bg-white px-[2ch] py-[1ch] font-normal text-gray-950 md:border-b"
+                className="formkit-input h-10 w-full grow rounded-b-none border border-b-0 border-solid border-pink-600 bg-white px-[2ch] py-[1ch] font-normal text-gray-950"
                 name="email_address"
                 aria-label="Email Address"
                 placeholder="Email Address"
@@ -140,7 +140,7 @@ const SubscriptionForm: React.FC<SubscriptionFormProps> = ({
               <Button
                 type="submit"
                 data-element="submit"
-                className="formkit-submit formkit-submit padding-[1ch 2ch] h-10 grow rounded-b rounded-t-none font-normal md:rounded-l-none md:rounded-r"
+                className="formkit-submit formkit-submit padding-[1ch 2ch] h-10 grow rounded-b rounded-t-none font-normal"
               >
                 <div className="formkit-spinner">
                   <div></div>
