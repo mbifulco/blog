@@ -13,36 +13,31 @@ const SiteAnnouncement: React.FC<SiteAnnouncementProps> = ({
 }) => {
   const { subscriberCount } = useNewsletterStats();
 
-  const socialProof = subscriberCount && subscriberCount > 0 && (
-    <>
-      Ready to build better products? Join{' '}
-      <span className="font-bold text-pink-600">
-        {' '}
-        {subscriberCount ?? 'other'} builders{' '}
-      </span>
-    </>
-  );
-
   return (
     <div
       className={clsxm(
-        'flex w-screen max-w-full items-center justify-center bg-gray-50 transition-all duration-500 ease-in-out',
-        sticky && 'sticky top-0 z-[100]',
+        'flex w-screen max-w-full items-center justify-center bg-pink-400 transition-all duration-500 ease-in-out',
+        'sticky top-0 z-[100] py-1',
         className
       )}
-      // style={{ backgroundImage: `url(/images/wiggle.svg)` }}
+      style={{
+        backgroundImage: `url(/images/wiggle.svg)`,
+        backgroundBlendMode: 'color-burn',
+      }}
     >
       <Link
         href="/newsletter"
-        className="text-md mx-auto flex flex-row gap-4 px-2 py-1 text-black"
+        className="text-md group mx-auto flex flex-row gap-4 rounded bg-white/90 px-2 py-1 text-black hover:bg-pink-400 hover:text-white hover:no-underline"
       >
-        <p>
-          {socialProof} by subscribing to{' '}
-          <span className="font-bold text-pink-600 hover:text-pink-900 hover:no-underline">
-            💌 Tiny Improvements
+        <span>
+          Join
+          <span className="group-hover:text-white-200 font-bold text-pink-600">
+            {' '}
+            {subscriberCount ?? 'other'} builders{' '}
           </span>
-          - it&apos;s free!
-        </p>
+          &mdash; Get tips from a YC startup founder & ex-Googler. Subscribe to
+          💌 Tiny Improvements
+        </span>
       </Link>
     </div>
   );
