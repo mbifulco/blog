@@ -17,7 +17,7 @@ const SiteAnnouncement: React.FC<SiteAnnouncementProps> = ({
     <div
       className={clsxm(
         'flex w-screen max-w-full items-center justify-center bg-pink-400 transition-all duration-500 ease-in-out',
-        'sticky top-0 z-[100] py-1',
+        'sticky top-0 z-[100] py-1 opacity-90',
         className
       )}
       style={{
@@ -27,11 +27,14 @@ const SiteAnnouncement: React.FC<SiteAnnouncementProps> = ({
     >
       <Link
         href="/newsletter"
-        className="text-md group mx-auto flex flex-row gap-4 rounded bg-white/90 px-2 py-1 text-black hover:bg-pink-400 hover:text-white hover:no-underline"
+        className={clsxm(
+          'text-md group mx-auto flex flex-row gap-4 rounded bg-white/90 px-2 py-1 text-black',
+          'hover:bg-pink-50 hover:no-underline hover:ring-1 hover:ring-pink-600'
+        )}
       >
         <span>
           Join
-          <span className="group-hover:text-white-200 font-bold text-pink-600">
+          <span className="font-bold text-pink-600">
             {' '}
             {subscriberCount ?? 'other'} builders{' '}
           </span>
