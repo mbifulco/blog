@@ -110,7 +110,7 @@ const FullPost: React.FC<FullPostProps> = ({ post }) => {
                 <MentionsSummary mentions={mentions} />
               )}
             </article>
-            <div className="sticky top-6 flex h-max w-[300px] flex-col gap-4">
+            <div className="sticky top-12 flex h-max w-[300px] flex-col gap-4">
               <TableOfContents headings={post.tableOfContents} />
               <CarbonAd />
             </div>
