@@ -5,12 +5,8 @@ import clsxm from '@utils/clsxm';
 
 type SiteAnnouncementProps = {
   className?: string;
-  sticky?: boolean;
 };
-const SiteAnnouncement: React.FC<SiteAnnouncementProps> = ({
-  className = '',
-  sticky = false,
-}) => {
+const SiteAnnouncement: React.FC<SiteAnnouncementProps> = ({ className }) => {
   const { subscriberCount } = useNewsletterStats();
 
   return (
