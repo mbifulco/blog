@@ -12,8 +12,8 @@ const SiteAnnouncement: React.FC<SiteAnnouncementProps> = ({ className }) => {
   return (
     <div
       className={clsxm(
-        'flex w-screen max-w-full items-center justify-center bg-pink-400 transition-all duration-500 ease-in-out',
-        'sticky top-0 z-[100] py-1 opacity-90',
+        'relative flex w-screen max-w-full items-center justify-center bg-pink-400',
+        'mt:10 z-[100] py-1 opacity-90 md:sticky md:top-0',
         className
       )}
       style={{
@@ -24,7 +24,7 @@ const SiteAnnouncement: React.FC<SiteAnnouncementProps> = ({ className }) => {
       <Link
         href="/newsletter"
         className={clsxm(
-          'text-md group mx-auto flex flex-row gap-4 rounded bg-white/90 px-2 py-1 text-black',
+          'text-md group mx-auto flex flex-row gap-4 bg-white/90 px-2 py-1 text-black md:rounded',
           'hover:bg-pink-50 hover:no-underline hover:ring-1 hover:ring-pink-600'
         )}
       >
