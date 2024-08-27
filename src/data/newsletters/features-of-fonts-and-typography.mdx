@@ -1,0 +1,83 @@
+---
+title: 'Inter and the Power of Fonts: Why Typefaces Matter More Than You Think'
+excerpt: Open up the potential of your designs with a deeper understanding of what variable fonts like Inter can do.
+tags: [dev, ux, design]
+date: 2024-08-27
+slug: features-of-fonts-and-typography
+coverImagePublicId: newsletters/features-of-fonts-and-typography/cover
+---
+
+## The big idea
+
+Fonts are way more than just a stylistic choice — they're a critical element that influences readability, usability, and the overall effectiveness of your design.
+
+## Font vs. Typeface - what's the difference?
+
+Let's get the designer-snark out of the way first: we often think of _fonts_ as the different styles of alphabets available on in apps like Word and Figma. There will no-doubt be someone reading this who wants me to explain that _fonts_ are the files on your computer, and _typefaces_ are the designs that those files represent. Neat.
+
+For the sake of this article, I'm going to use the terms interchangeably.
+
+### Why Fonts Matter
+
+It's easy to think of a font as just a branding tool, but they're much more than that. Fonts influence readability, usability, and how users interact with your content. For example, certain fonts are easier to read at different sizes, or if they're printed vs on a screen.
+
+Choosing the right font isn't just about aesthetics; it's about making your content accessible and engaging.
+
+### Serif vs. Sans Serif
+
+Serifs are the tiny lines on the edges of certain characters in some fonts (like Times New Roman). Serif fonts date back hundreds of years, and may have originally been used to make printed fonts easier to read. Sans-serif fonts, which lack these lines, are popular for their clean, modern look, serifs still have their place in designs that require a touch of tradition and readability in dense text.
+
+### Font Pairings
+
+Like picking the right wine with a meal, or dark chocolate and coffee, pairing fonts effectively can be surprisingly impactful.
+
+A strong body font paired with a complementary header font can create a harmonious and impactful visual hierarchy. You may even see serif and sans-serif fonts used together in the same design to create contrast and visual interest.
+
+Tools like [Monotype's font pairing tool](https://www.monotype.com/font-pairing#/playground?fontPair1=NimbusRomNo9T-Reg&fontPair2=Devoid) can help you experiment with different combinations to find the perfect match.
+
+### The Versatility of Inter
+
+Inter is more than just a popular typeface; it's a versatile tool that showcases the potential of modern typography. As a [variable font](https://fonts.google.com/knowledge/introducing_type/introducing_variable_fonts), Inter offers infinite adjustability, allowing designers to tweak weight, width, and other characteristics to fit their needs precisely. The Inter typeface even [has its own website](https://rsms.me/inter/) to showcase its comprehensive feature set.
+
+### Variable Fonts
+
+Variable fonts like Inter are offer more flexibility and customization than just **bold** and _italics_. They allow you to adjust the weight, width, slant, and other characteristics of a font dynamically, giving you more control over how your text looks.
+
+Tools like [v-fonts.com](https://v-fonts.com/) help explore the full range of what variable fonts can do.
+
+While [Tailwind doesn't yet offer full support](https://github.com/tailwindlabs/tailwindcss/discussions/3225) for variable fonts, with raw CSS, you can harness their power to create truly unique and dynamic designs.
+
+```css
+@font-face {
+  font-family: 'SlantFont';
+  font-style: oblique -15 15;
+  src: url('https://mdn.github.io/shared-assets/fonts/font_with_slant_axis.woff2')
+    format('woff2');
+}
+```
+
+For more on using variable fonts with CSS, check out [this guide](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_fonts/Variable_fonts_guide) on MDN.
+
+The control this gives you over the way your interfaces looks is _really_ impactful - designing for different screen sizes and resolutions has a whole new dimension when you can adjust the font to fit the space perfectly.
+
+## The bottom line
+
+Modern font families have many loads of features that you may not know about. It goes far beyond style x— fonts are designed for function, usability, and aesthetics, and there's hundreds of years of history behind the fonts we see today. Spending a little time giving your font choices some thought can make a big difference in the impact of your work.
+
+---
+
+## More resources for the fontheads out there
+
+- [Inter's website](https://rsms.me/inter/) is beautiful, thoughtful, and a great example of how to showcase a typeface. The source code for the typeface is also [available on GitHub](https://github.com/rsms/inter) if you're really interested in how it all works.
+
+- [Thinking with Type](https://amzn.to/4dGghUk) by Ellen Lupton is the textbook on typography that opened my eyes to how much goes into designing a typeface, and how much it can influence the way we read and interact with content.
+
+- The YouTube channel [Pimp my Type](https://www.youtube.com/watch?v=_WBGIbRwYd8&) from typographer Oliver Schöndorfer has monthly videos on modern fonts that are digestible and informative. Highly recommend a binge-watch.
+
+## My work this week
+
+I've been putting out YouTube videos on my [YouTube Channel @mikebifulco](https://youtube.com/@mikebifulco?sub_confirmation=1) - if you're a visual learner, I'd love it if you considered [subscribing](https://youtube.com/@mikebifulco?sub_confirmation=1).
+
+- [Overcoming Imposter Syndrome: 3 Simple Steps to Push Through Doubt](https://youtu.be/cFtmaF3i3jQ) is a video-edition of a recent newsletter, where I talk about how to push through self-doubt and keep creating. This one resonated with a lot of people, and I felt like it was worth sharing in a new format.
+
+- [Product Analytics: A/B testing my next.js site for max growth](https://youtu.be/2hVHjSwYoU8) is the latest in a series of videos I've produced on taking an analytical look at site performance and growth. Thinking about marketing as a measurable science has been a game-changer for me, and I hope it can be for you too.
