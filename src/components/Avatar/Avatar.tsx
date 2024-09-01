@@ -4,8 +4,8 @@ import clsxm from '@utils/clsxm';
 
 export type AvatarBaseProps = {
   name?: string;
-  src: string;
-};
+  src?: string;
+} & React.HTMLAttributes<HTMLDivElement>;
 
 export type AvatarSizeVariant = 'sm' | 'md' | 'lg' | 'xl';
 
@@ -15,6 +15,7 @@ type AvatarProps = AvatarBaseProps & {
 };
 
 const Avatar: React.FC<AvatarProps> = ({
+  children,
   className,
   name,
   variant = 'md',
@@ -60,7 +61,9 @@ const Avatar: React.FC<AvatarProps> = ({
             variant === 'xl' && 'h-14 w-14',
             className
           )}
-        />
+        >
+          {children}
+        </div>
       )}
     </div>
   );
