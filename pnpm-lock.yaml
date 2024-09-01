@@ -95,6 +95,9 @@ importers:
       gray-matter:
         specifier: ^4.0.3
         version: 4.0.3
+      lucide-react:
+        specifier: ^0.438.0
+        version: 0.438.0(react@18.3.1)
       micro:
         specifier: ^10.0.1
         version: 10.0.1
@@ -3866,6 +3869,11 @@ packages:
 
   lru-cache@5.1.1:
     resolution: {integrity: sha512-KpNARQA3Iwv+jTA0utUVVbrh+Jlrr1Fv0e56GGzAFOXN7dk/FviaDW8LHmK52DlcH4WP2n6gI8vN1aesBFgo9w==}
+
+  lucide-react@0.438.0:
+    resolution: {integrity: sha512-uq6yCB+IzVfgIPMK8ibkecXSWTTSOMs9UjUgZigfrDCVqgdwkpIgYg1fSYnf0XXF2AoSyCJZhoZXQwzoai7VGw==}
+    peerDependencies:
+      react: ^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0-rc
 
   markdown-extensions@2.0.0:
     resolution: {integrity: sha512-o5vL7aDWatOTX8LzaS1WMoaoxIiLRQJuIKKe2wAw6IeULDHaqbiqiggmx+pKvZDb1Sj+pE46Sn1T7lCqfFtg1Q==}
@@ -9666,6 +9674,10 @@ snapshots:
   lru-cache@5.1.1:
     dependencies:
       yallist: 3.1.1
+
+  lucide-react@0.438.0(react@18.3.1):
+    dependencies:
+      react: 18.3.1
 
   markdown-extensions@2.0.0: {}
 
