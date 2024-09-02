@@ -1,14 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import Head from 'next/head';
 import useNewsletterStats from '@hooks/useNewsletterStats';
-import {
-  ArrowRight,
-  Code,
-  CornerDownRight,
-  CornerRightDown,
-  Rocket,
-  Zap,
-} from 'lucide-react';
+import { Code, CornerRightDown, Rocket, Zap } from 'lucide-react';
 import { usePostHog } from 'posthog-js/react';
 
 import { Avatar } from '@components/Avatar';
