@@ -3,7 +3,7 @@ import useNewsletterStats from '@hooks/useNewsletterStats';
 
 import { Heading } from '@components/Heading';
 import NewsletterItem from '../../components/NewsletterFeed/NewsletterItem';
-import { NewsletterSignup } from '../../components/NewsletterSignup';
+import NewsletterSignup from '../../components/NewsletterSignup';
 import SEO from '../../components/seo';
 import SponsorCTA from '../../components/SponsorCTA/SponsorCTA';
 import { SubscriptionForm } from '../../components/SubscriptionForm';

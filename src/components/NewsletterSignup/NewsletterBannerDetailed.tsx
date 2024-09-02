@@ -1,7 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import Head from 'next/head';
 import useNewsletterStats from '@hooks/useNewsletterStats';
-import { ArrowRight, Code, Rocket, Zap } from 'lucide-react';
+import {
+  ArrowRight,
+  Code,
+  CornerDownRight,
+  CornerRightDown,
+  Rocket,
+  Zap,
+} from 'lucide-react';
 import { usePostHog } from 'posthog-js/react';
 
 import { Avatar } from '@components/Avatar';
@@ -67,7 +74,7 @@ const NewsletterBannerDetailed = () => {
 
   return (
     <div className="mx-auto max-w-4xl p-6 md:p-8">
-      <div className="rounded-lg border border-pink-200 bg-gradient-to-br from-pink-50 to-gray-100 p-6 text-gray-800 shadow-lg md:p-8">
+      <div className="rounded-lg border p-6 text-gray-800 shadow-lg md:p-8">
         <div className="flex flex-col items-center gap-8 md:flex-row">
           <div className="w-full md:w-2/3">
             <h2 className="mb-2 text-3xl font-extrabold tracking-tight text-gray-800 md:text-4xl">
@@ -76,7 +83,18 @@ const NewsletterBannerDetailed = () => {
             <p className="mb-0 text-xl text-gray-600">
               {titleOptions[titleIndex].tagline}
             </p>
-            <p className="mb-6 text-gray-500">
+            <div className="mb-6 flex items-center space-x-4">
+              <Avatar variant="lg">
+                <Headshot />
+              </Avatar>
+              <div>
+                <p className="font-semibold text-gray-800">Mike Bifulco</p>
+                <p className="text-sm text-gray-600">
+                  CTO Craftwork (S23), Ex-Google/Stripe/Microsoft
+                </p>
+              </div>
+            </div>
+            <p className="mb-2 text-gray-500">
               Join{' '}
               <span className="font-bold text-pink-600">
                 {subscriberCount ?? 'thousands of'}
@@ -84,23 +102,12 @@ const NewsletterBannerDetailed = () => {
               developers, founders, and product builders getting smarter every
               week.
             </p>
-            <div className="mb-6 flex items-center space-x-4">
-              <Avatar variant="lg">
-                <Headshot />
-              </Avatar>
-              <div>
-                <p className="font-semibold text-gray-800">Your Name</p>
-                <p className="text-sm text-gray-600">
-                  CTO @ YC Startup, Ex-Google/Stripe/Microsoft
-                </p>
-              </div>
-            </div>
             <div className="mb-6 flex flex-wrap gap-2">
               <Badge
                 variant="secondary"
                 className="bg-pink-100 text-xs text-pink-800"
               >
-                <Code className="mr-1 h-3 w-3" /> Front-End Tips
+                <Code className="mr-1 h-3 w-3" /> Front-End Dev
               </Badge>
               <Badge
                 variant="secondary"
@@ -112,14 +119,15 @@ const NewsletterBannerDetailed = () => {
                 variant="secondary"
                 className="bg-green-100 text-xs text-green-800"
               >
-                <Rocket className="mr-1 h-3 w-3" /> Startup Insights
+                <Rocket className="mr-1 h-3 w-3" /> Founder Tips
               </Badge>
             </div>
           </div>
           <div className="w-full md:w-1/3">
-            <div className="bg-white p-4">
-              <h3 className="mb-2 font-bold text-gray-800">
-                Get Weekly Insights
+            <div className="">
+              <h3 className="mb-2 text-gray-800">
+                Next issue drops <span className="font-bold">{daysText}!</span>
+                <CornerRightDown className="mr-2 mt-2 inline-block h-4 w-4" />
               </h3>
               <SubscriptionForm
                 source="newsletter-cta-v5"
@@ -130,10 +138,6 @@ const NewsletterBannerDetailed = () => {
               </p>
             </div>
           </div>
-        </div>
-        <div className="mt-6 flex items-center text-sm text-gray-600">
-          <ArrowRight className="mr-2 h-4 w-4" />
-          <span>Next issue drops {daysText}. Don't miss out!</span>
         </div>
       </div>
     </div>

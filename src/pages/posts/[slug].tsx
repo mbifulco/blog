@@ -1,7 +1,7 @@
 import type { GetStaticProps, NextPage } from 'next';
 import { useRouter } from 'next/router';
 
-import NewsletterSignup from '@components/NewsletterSignup/NewsletterBannerFancy';
+import { NewsletterSignup } from '@components/NewsletterSignup';
 import { Colophon } from '../../components/Colophon';
 import { BlogPost as Post } from '../../components/Post';
 import SEO from '../../components/seo';
