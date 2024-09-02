@@ -1,9 +1,9 @@
 import React from 'react';
 import { PostHogFeature } from 'posthog-js/react';
 
+import Detailed from './NewsletterBannerDetailed';
 import Fancy from './NewsletterBannerFancy';
 import Simple from './NewsletterBannerSimple';
-import Hero from './NewsletterHero';
 
 const NEWSLETTER_EXPERIMENT_NAME = 'newsletter-banner-treatments';
 const NewsletterExperiementVariants = {
@@ -12,7 +12,7 @@ const NewsletterExperiementVariants = {
   Hero: 'hero',
 } as const;
 
-const NewsletterSignup: React.FC = () => {
+export const NewsletterSignup: React.FC = () => {
   return (
     <>
       <PostHogFeature
@@ -34,11 +34,10 @@ const NewsletterSignup: React.FC = () => {
         match={NewsletterExperiementVariants.Hero}
         fallback={null}
       >
-        <Hero />
+        <Detailed />
       </PostHogFeature>
     </>
   );
 };
 
-export { default as NewsletterHero } from './NewsletterHero';
-export { NewsletterSignup };
+export default NewsletterSignup;

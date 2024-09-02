@@ -9,11 +9,13 @@ import { trpc } from '@utils/trpc';
 type SubscriptionFormProps = {
   tags?: string[];
   source?: string;
+  buttonText?: string;
 };
 
 const SubscriptionForm: React.FC<SubscriptionFormProps> = ({
   tags: _,
   source,
+  buttonText = 'Subscribe',
 }) => {
   const addSubscriberMutation = trpc.mailingList.subscribe.useMutation({
     onSuccess: () => {
@@ -147,7 +149,7 @@ const SubscriptionForm: React.FC<SubscriptionFormProps> = ({
                   <div></div>
                   <div></div>
                 </div>
-                <span>💌 Subscribe</span>
+                <span>💌 {buttonText}</span>
               </Button>
             </div>
           </div>

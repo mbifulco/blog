@@ -1,5 +1,5 @@
 import type { BlogPost } from '../../data/content-types';
-import { NewsletterSignup } from '../NewsletterSignup';
+import NewsletterSignup from '../NewsletterSignup';
 import { BlogPost as Post } from '../Post';
 
 type PostFeedProps = {

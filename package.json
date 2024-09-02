@@ -47,6 +47,7 @@
     "feed": "^4.2.2",
     "framer-motion": "^11.3.28",
     "gray-matter": "^4.0.3",
+    "lucide-react": "^0.438.0",
     "micro": "^10.0.1",
     "next": "^14.2.5",
     "next-cloudinary": "^6.10.0",
