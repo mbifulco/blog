@@ -1,10 +1,10 @@
 import type { GetStaticPaths, GetStaticProps } from 'next';
 
-import { ExternalWorkItem } from '../../components/ExternalWork';
-import { Heading } from '../../components/Heading';
-import NewsletterItem from '../../components/NewsletterFeed/NewsletterItem';
-import { BlogPost as Post } from '../../components/Post';
-import SEO from '../../components/seo';
+import { ExternalWorkItem } from '@/components/ExternalWork';
+import { Heading } from '@/components/Heading';
+import NewsletterItem from '@/components/NewsletterFeed/NewsletterItem';
+import { BlogPost as Post } from '@/components/Post';
+import SEO from '@/components/seo';
 import type { Article, BlogPost, Newsletter } from '../../data/content-types';
 import { getAllPostsByTag } from '../../lib/blog';
 import { getAllExternalReferencesByTag } from '../../lib/external-references';

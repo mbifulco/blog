@@ -1,6 +1,7 @@
 import type { NextRequest } from 'next/server';
-import { appRouter } from '@server/routers/_app';
 import { fetchRequestHandler } from '@trpc/server/adapters/fetch';
+
+import { appRouter } from '@/server/routers/_app';
 
 export default async function handler(req: NextRequest) {
   return fetchRequestHandler({

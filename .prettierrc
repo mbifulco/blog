@@ -16,10 +16,10 @@
     "<THIRD_PARTY_MODULES>",
     "",
     "^@craftwork/(.*)$",
-    "^@components/(.*)$",
-    "^@layouts/(.*)$",
+    "^@/components/(.*)$",
+    "^@/layouts/(.*)$",
     "^@ui/(.*)$",
-    "^@utils/(.*)$",
+    "^@/utils/(.*)$",
     "^@styles/(.*)$",
     "^@/(.*)$",
     "^[./]"

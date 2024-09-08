@@ -1,9 +1,9 @@
 import Link from 'next/link';
 import { Popover } from '@headlessui/react';
 
-import NewsletterSignup from '../../components/NewsletterSignup';
-import SEO from '../../components/seo';
-import { Subtitle } from '../../components/Subtitle';
+import NewsletterSignup from '@/components/NewsletterSignup';
+import SEO from '@/components/seo';
+import { Subtitle } from '@/components/Subtitle';
 
 const Eponymous = () => {
   return (

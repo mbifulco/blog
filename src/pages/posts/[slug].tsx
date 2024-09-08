@@ -1,14 +1,14 @@
 import type { GetStaticProps, NextPage } from 'next';
 import { useRouter } from 'next/router';
 
-import { NewsletterSignup } from '@components/NewsletterSignup';
-import { Colophon } from '../../components/Colophon';
-import { BlogPost as Post } from '../../components/Post';
-import SEO from '../../components/seo';
-import WebmentionMetadata from '../../components/webmentionMetadata';
+import { Colophon } from '@/components/Colophon';
+import { NewsletterSignup } from '@/components/NewsletterSignup';
+import { BlogPost as Post } from '@/components/Post';
+import SEO from '@/components/seo';
+import WebmentionMetadata from '@/components/webmentionMetadata';
+import { getCloudinaryImageUrl } from '@/utils/images';
 import type { BlogPost } from '../../data/content-types';
 import { getAllPosts, getPostBySlug } from '../../lib/blog';
-import { getCloudinaryImageUrl } from '../../utils/images';
 
 type PostPageParams = {
   slug: string;

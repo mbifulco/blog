@@ -2,10 +2,10 @@ import type { NextPage } from 'next';
 import type { MDXRemoteSerializeResult } from 'next-mdx-remote';
 import { MDXRemote } from 'next-mdx-remote';
 
-import NewsletterSignup from '@components/NewsletterSignup/NewsletterBannerFancy';
-import SEO from '../../components/seo';
-import { serialize } from '../../utils/mdx';
-import { components } from '../../utils/MDXProviderWrapper';
+import NewsletterSignup from '@/components/NewsletterSignup/NewsletterBannerFancy';
+import SEO from '@/components/seo';
+import { serialize } from '@/utils/mdx';
+import { components } from '@/utils/MDXProviderWrapper';
 
 // fetch my bio from github and return it as mdx in getserversideprops
 export async function getStaticProps() {

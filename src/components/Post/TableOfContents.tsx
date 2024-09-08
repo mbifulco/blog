@@ -2,8 +2,8 @@ import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import type { Heading } from 'src/data/content-types';
 
-import { Heading as HtmlHeading } from '@components/Heading';
-import clsxm from '@utils/clsxm';
+import { Heading as HtmlHeading } from '@/components/Heading';
+import clsxm from '@/utils/clsxm';
 
 type TableOfContentsProps = {
   headings?: Heading[];

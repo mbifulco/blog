@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import useNewsletterStats from '@hooks/useNewsletterStats';
 import { Code, CornerRightDown, Rocket, Zap } from 'lucide-react';
 import { usePostHog } from 'posthog-js/react';
 
-import { Avatar } from '@components/Avatar';
-import { Badge } from '@components/Badge';
-import { Headshot } from '@components/Headshot';
-import { SubscriptionForm } from '@components/SubscriptionForm';
+import { Avatar } from '@/components/Avatar';
+import { Badge } from '@/components/Badge';
+import { Headshot } from '@/components/Headshot';
+import { SubscriptionForm } from '@/components/SubscriptionForm';
+import useNewsletterStats from '@/hooks/useNewsletterStats';
 
 const NewsletterBannerDetailed = () => {
   const posthog = usePostHog();

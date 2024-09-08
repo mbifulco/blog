@@ -12,15 +12,15 @@ import { MDXProvider } from '@mdx-js/react';
 import type { MDXComponents } from 'mdx/types';
 import { Highlight, themes } from 'prism-react-renderer';
 
-import clsxm from '@utils/clsxm';
 // one off component imports
-import { CenteredTextDemo } from '../components/demos/CenteredTextDemo';
-import { OrtonEffectImage } from '../components/demos/OrtonEffectImage';
-import type { HeadingProps } from '../components/Heading';
-import { Heading } from '../components/Heading';
-import { Image } from '../components/Image';
-import { Threads, Tweet, Vimeo, YouTube } from '../components/MdxEmbed';
-import { SponsoredSection } from '../components/SponsoredSection';
+import { CenteredTextDemo } from '@/components/demos/CenteredTextDemo';
+import { OrtonEffectImage } from '@/components/demos/OrtonEffectImage';
+import type { HeadingProps } from '@/components/Heading';
+import { Heading } from '@/components/Heading';
+import { Image } from '@/components/Image';
+import { Threads, Tweet, Vimeo, YouTube } from '@/components/MdxEmbed';
+import { SponsoredSection } from '@/components/SponsoredSection';
+import clsxm from '@/utils/clsxm';
 
 const CustomHeading: React.FC<HeadingProps> = ({
   as,

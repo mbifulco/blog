@@ -1,7 +1,7 @@
 import Link from 'next/link';
-import useNewsletterStats from '@hooks/useNewsletterStats';
 
-import clsxm from '@utils/clsxm';
+import useNewsletterStats from '@/hooks/useNewsletterStats';
+import clsxm from '@/utils/clsxm';
 
 type SiteAnnouncementProps = {
   className?: string;

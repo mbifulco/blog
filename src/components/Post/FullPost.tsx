@@ -3,9 +3,9 @@ import { MDXRemote } from 'next-mdx-remote';
 import type { VideoObject, WithContext } from 'schema-dts';
 import useSWR from 'swr';
 
+import { components } from '@/utils/MDXProviderWrapper';
+import { getMentions } from '@/utils/webmentions';
 import type { BlogPost, Newsletter } from '../../data/content-types';
-import { components } from '../../utils/MDXProviderWrapper';
-import { getMentions } from '../../utils/webmentions';
 import { CarbonAd } from '../CarbonAd';
 import { Heading } from '../Heading';
 import { Image } from '../Image';

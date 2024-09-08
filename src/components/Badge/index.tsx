@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import clsxm from '@utils/clsxm';
+import clsxm from '@/utils/clsxm';
 
 const badgeVariants = (variant?: BadgeVariant) =>
   clsxm(

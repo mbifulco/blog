@@ -39,7 +39,7 @@ Here's how you can set this up:
 
 ```jsx
 // For sake of example, we'll use a Layout component to represent the visual layout of the page
-import Layout from '../components/Layout';
+import Layout from '@/components/Layout';
 
 export default function About({ source }) {
   return <Layout>{/* content from GitHub will go here */}</Layout>;
@@ -68,7 +68,7 @@ So, back in `pages/about.jsx`:
 import { serialize } from 'next-mdx-remote/serialize';
 
 // For sake of example, we'll use a Layout component to represent the visual layout of the page
-import Layout from '../components/Layout';
+import Layout from '@/components/Layout';
 
 // fetch personal README from github and return it as mdx in getserversideprops
 export async function getStaticProps() {
@@ -98,14 +98,13 @@ To get the raw URL for your README, go to your GitHub profile, and click on the 
 5. Finally, you can render your README in your About page using MDX Remote.
 
 ```jsx
+// If you want to have MDX render custom components, you can import them here
+import { components } from '~/utils/mdx-components';
 import { MDXRemote } from 'next-mdx-remote';
 import { serialize } from 'next-mdx-remote/serialize';
 
 // For sake of example, we'll use a Layout component to represent the visual layout of the page
-import Layout from '../components/Layout';
-
-// If you want to have MDX render custom components, you can import them here
-import { components } from '~/utils/mdx-components';
+import Layout from '@/components/Layout';
 
 export async function getStaticProps() {
   // fetch personal README from github

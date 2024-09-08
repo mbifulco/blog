@@ -1,7 +1,7 @@
 import pluralize from 'pluralize';
 
-import formatDate from '../../utils/format-date';
-import type { WebMention } from '../../utils/webmentions';
+import formatDate from '@/utils/format-date';
+import type { WebMention } from '@/utils/webmentions';
 import { Avatar, AvatarGroup } from '../Avatar';
 
 type MentionsSummaryProps = {

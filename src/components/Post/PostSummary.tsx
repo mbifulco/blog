@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 
-import clsxm from '@utils/clsxm';
+import clsxm from '@/utils/clsxm';
 import type { BlogPost } from '../../data/content-types';
 import { Heading } from '../Heading';
 import { Image } from '../Image';

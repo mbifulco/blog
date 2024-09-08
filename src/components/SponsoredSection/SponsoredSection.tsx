@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-import clsxm from '@utils/clsxm';
+import clsxm from '@/utils/clsxm';
 import { Image } from '../Image';
 
 type SponsoredSectionProps = {

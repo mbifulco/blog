@@ -1,7 +1,7 @@
 import { MDXRemote } from 'next-mdx-remote';
 
+import { components } from '@/utils/MDXProviderWrapper';
 import type { Article } from '../../data/content-types';
-import { components } from '../../utils/MDXProviderWrapper';
 import { Heading } from '../Heading';
 import { PublishDate } from '../PublishDate';
 import TagsSummary from '../tagsSummary';

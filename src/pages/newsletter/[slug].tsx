@@ -1,15 +1,15 @@
 import type { GetStaticProps } from 'next';
 import { useRouter } from 'next/router';
 
-import { NewsletterSignup } from '@components/NewsletterSignup';
-import { Colophon } from '../../components/Colophon';
-import FullPost from '../../components/Post/FullPost';
-import SEO from '../../components/seo';
-import WebmentionMetadata from '../../components/webmentionMetadata';
+import { Colophon } from '@/components/Colophon';
+import { NewsletterSignup } from '@/components/NewsletterSignup';
+import FullPost from '@/components/Post/FullPost';
+import SEO from '@/components/seo';
+import WebmentionMetadata from '@/components/webmentionMetadata';
+import { getCloudinaryImageUrl } from '@/utils/images';
+import { serialize } from '@/utils/mdx';
 import type { Newsletter } from '../../data/content-types';
 import { getAllNewsletters, getNewsletterBySlug } from '../../lib/newsletters';
-import { getCloudinaryImageUrl } from '../../utils/images';
-import { serialize } from '../../utils/mdx';
 
 type NewsletterPageParams = {
   slug: string;

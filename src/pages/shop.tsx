@@ -1,9 +1,9 @@
 import type { NextPage } from 'next';
 
-import { Heading } from '../components/Heading';
-import { Image } from '../components/Image';
-import SEO from '../components/seo';
-import SoldOut from '../components/soldOut';
+import { Heading } from '@/components/Heading';
+import { Image } from '@/components/Image';
+import SEO from '@/components/seo';
+import SoldOut from '@/components/soldOut';
 
 const Shop: NextPage = () => (
   <>

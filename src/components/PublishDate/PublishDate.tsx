@@ -1,4 +1,4 @@
-import formatDate from '../../utils/format-date';
+import formatDate from '@/utils/format-date';
 
 type PublishDateProps = {
   date: string | Date | number;

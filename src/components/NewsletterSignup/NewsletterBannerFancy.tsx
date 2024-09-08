@@ -1,5 +1,4 @@
-import useNewsletterStats from '@hooks/useNewsletterStats';
-
+import useNewsletterStats from '@/hooks/useNewsletterStats';
 import config from '../../config';
 import { Heading } from '../Heading';
 import { Headshot } from '../Headshot';
