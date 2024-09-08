@@ -1,4 +1,4 @@
-import clsxm from '@/utils/clsxm';
+import { cn } from '@/lib/utils';
 import type { Icon } from '.';
 
 const RssIcon: Icon = ({ className }) => (
@@ -6,7 +6,7 @@ const RssIcon: Icon = ({ className }) => (
     fill="currentColor"
     preserveAspectRatio="xMidYMid meet"
     viewBox="0 0 40 40"
-    className={clsxm('h-4 w-4', className)}
+    className={cn('h-4 w-4', className)}
   >
     <g
       id="Page-1"

@@ -4,7 +4,7 @@ import { Disclosure } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 
 import { Heading } from '@/components/Heading';
-import clsxm from '@/utils/clsxm';
+import { cn } from '@/lib/utils';
 
 const NavLinks: { title: string; href: string; badge?: boolean }[] = [
   {
@@ -36,7 +36,7 @@ const Navbar = () => {
             <Link href="/" className="hover:no-underline">
               <Heading
                 as="h1"
-                className={clsxm(
+                className={cn(
                   'text-center text-4xl uppercase text-gray-800 transition-all duration-500 ease-in-out hover:text-gray-700',
                   'text-lg md:text-4xl'
                 )}
@@ -51,7 +51,7 @@ const Navbar = () => {
                   <Link
                     href={link.href}
                     key={link.href}
-                    className={clsxm(
+                    className={cn(
                       'hover:textfont-extrabold inline-flex items-center px-1 pt-1 font-futura text-sm font-semibold uppercase text-gray-700 hover:border-gray-300',
                       'hover:no-underline',
                       link.href === router.pathname && 'text-gray-900',
@@ -86,7 +86,7 @@ const Navbar = () => {
                   as={Link}
                   href={link.href}
                   key={link.href}
-                  className={clsxm(
+                  className={cn(
                     'block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700',
                     link.href === router.pathname &&
                       'border-pink-500 bg-pink-50 text-pink-700',

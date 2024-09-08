@@ -1,4 +1,4 @@
-import clsxm from '@/utils/clsxm';
+import { cn } from '@/lib/utils';
 
 type InputProps = {
   id: string;
@@ -16,7 +16,7 @@ const Input: React.FC<InputProps> = ({
   ...props
 }) => (
   <input
-    className={clsxm(
+    className={cn(
       'block w-full rounded-lg border-zinc-300 shadow-sm focus:border-zinc-500 focus:ring-zinc-500 sm:text-sm',
       className
     )}

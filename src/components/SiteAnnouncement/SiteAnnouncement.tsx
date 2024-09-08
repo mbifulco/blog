@@ -1,7 +1,7 @@
 import Link from 'next/link';
 
 import useNewsletterStats from '@/hooks/useNewsletterStats';
-import clsxm from '@/utils/clsxm';
+import { cn } from '@/lib/utils';
 
 type SiteAnnouncementProps = {
   className?: string;
@@ -11,7 +11,7 @@ const SiteAnnouncement: React.FC<SiteAnnouncementProps> = ({ className }) => {
 
   return (
     <div
-      className={clsxm(
+      className={cn(
         'relative flex w-screen max-w-full items-center justify-center bg-pink-400',
         'mt:10 z-[100] py-1 opacity-90 md:sticky md:top-0',
         className
@@ -23,7 +23,7 @@ const SiteAnnouncement: React.FC<SiteAnnouncementProps> = ({ className }) => {
     >
       <Link
         href="/newsletter"
-        className={clsxm(
+        className={cn(
           'text-md group mx-auto flex flex-row gap-4 bg-white/90 px-2 py-1 text-black md:rounded',
           'hover:bg-pink-50 hover:no-underline hover:ring-1 hover:ring-pink-600'
         )}

@@ -1,4 +1,4 @@
-import clsxm from '@/utils/clsxm';
+import { cn } from '@/lib/utils';
 import type { Icon } from '.';
 
 const PatreonIcon: Icon = ({ className }) => (
@@ -7,7 +7,7 @@ const PatreonIcon: Icon = ({ className }) => (
     preserveAspectRatio="xMidYMid meet"
     viewBox="0 0 436 476"
     style={{ verticalAlign: 'middle' }}
-    className={clsxm('h-4 w-4', className)}
+    className={cn('h-4 w-4', className)}
   >
     <title>Patreon logo</title>
     <path

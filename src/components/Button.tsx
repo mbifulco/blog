@@ -1,4 +1,4 @@
-import clsxm from '@/utils/clsxm';
+import { cn } from '@/lib/utils';
 
 type ButtonProps = {
   children: React.ReactNode;
@@ -8,7 +8,7 @@ type ButtonProps = {
 
 const Button: React.FC<ButtonProps> = ({ children, className, ...props }) => (
   <button
-    className={clsxm(
+    className={cn(
       'inline-flex items-center justify-center rounded-md border border-transparent bg-pink-500 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-pink-700 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2',
       className
     )}

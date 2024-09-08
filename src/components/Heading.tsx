@@ -1,6 +1,6 @@
 import type { HTMLAttributes } from 'react';
 
-import clsxm from '@/utils/clsxm';
+import { cn } from '@/lib/utils';
 
 // Define the types of headings allowed
 type HeadingType = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
@@ -47,7 +47,7 @@ export const Heading: React.FC<HeadingProps> = ({
   return (
     <Component
       {...props}
-      className={clsxm(
+      className={cn(
         'font-futura font-bold text-pink-600',
         headingClasses,
         className
