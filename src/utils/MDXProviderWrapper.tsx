@@ -20,7 +20,7 @@ import { Heading } from '@/components/Heading';
 import { Image } from '@/components/Image';
 import { Threads, Tweet, Vimeo, YouTube } from '@/components/MdxEmbed';
 import { SponsoredSection } from '@/components/SponsoredSection';
-import clsxm from '@/utils/clsxm';
+import { cn } from '@/lib/utils';
 
 const CustomHeading: React.FC<HeadingProps> = ({
   as,
@@ -34,7 +34,7 @@ const CustomHeading: React.FC<HeadingProps> = ({
       <Link href={`#${id}`} className="block no-underline hover:no-underline">
         <Heading
           as={as}
-          className={clsxm(
+          className={cn(
             'inline tracking-normal no-underline',
             "hover:before:relative hover:before:-ml-[1.2ch] hover:before:inline hover:before:border-b-0 hover:before:pr-[0.2ch] hover:before:text-pink-700 hover:before:no-underline hover:before:content-['#']",
             'scroll-mt-2'
@@ -120,7 +120,7 @@ type AsideProps = HTMLProps<HTMLDivElement> & {
 const Aside: React.FC<AsideProps> = ({ type = 'default', ...props }) => {
   return (
     <aside
-      className={clsxm(
+      className={cn(
         'my-8 -ml-8 border-l-8 border-solid px-8 py-4',
         type === 'default' && 'border-pink-400 bg-pink-50 text-pink-900',
         type === 'info' && 'border-yellow-400 bg-yellow-50 text-yellow-900',
@@ -135,7 +135,7 @@ const Aside: React.FC<AsideProps> = ({ type = 'default', ...props }) => {
 
 const TextHighlight = ({ key: _, ...rest }: HTMLProps<HTMLElement>) => (
   <mark
-    className={clsxm(
+    className={cn(
       'xs inline rounded bg-pink-600 px-[0.5ch] leading-tight text-white',
       rest.className
     )}
@@ -260,7 +260,7 @@ const Button: React.FC<HTMLProps<HTMLButtonElement>> = ({
 }) => {
   return (
     <button
-      className={clsxm(
+      className={cn(
         'rounded-sm bg-pink-400 px-4 py-2 text-white shadow-md hover:bg-pink-500',
         className
       )}

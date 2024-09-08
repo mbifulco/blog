@@ -17,6 +17,7 @@
     "target": "ES2022",
     "baseUrl": ".",
     "paths": {
+      "@/*": ["./src/*"],
       "@/components/*": ["src/components/*"],
       "@/hooks/*": ["src/hooks/*"],
       "@/layouts/*": ["src/components/layouts/*"],

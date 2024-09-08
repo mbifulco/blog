@@ -3,7 +3,7 @@ import Link from 'next/link';
 import type { Heading } from 'src/data/content-types';
 
 import { Heading as HtmlHeading } from '@/components/Heading';
-import clsxm from '@/utils/clsxm';
+import { cn } from '@/lib/utils';
 
 type TableOfContentsProps = {
   headings?: Heading[];
@@ -43,12 +43,12 @@ const ToCLink: React.FC<{ heading: Heading }> = ({ heading }) => {
   return (
     <li
       key={heading.slug}
-      className={clsxm('rounded-r py-1 pr-1 text-gray-600')}
+      className={cn('rounded-r py-1 pr-1 text-gray-600')}
       style={{ paddingLeft: `${Math.max(heading.level - 2, 0)}ch` }}
     >
       <Link
         href={`#${heading.slug}`}
-        className={clsxm(
+        className={cn(
           'font-medium text-gray-700',
           isHighlighted && 'text-pink-600 underline hover:italic'
         )}
