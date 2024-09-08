@@ -2,20 +2,20 @@ import type { NextPage } from 'next';
 import Link from 'next/link';
 import { startOfToday } from 'date-fns';
 
-import { Colophon } from '../components/Colophon';
-import { Heading } from '../components/Heading';
-import { Headshot } from '../components/Headshot';
-import NewsletterItem from '../components/NewsletterFeed/NewsletterItem';
-import { PostFeed } from '../components/PostFeed';
-import SEO from '../components/seo';
-import { Subtitle } from '../components/Subtitle';
-import WebmentionMetadata from '../components/webmentionMetadata';
+import { Colophon } from '@/components/Colophon';
+import { Heading } from '@/components/Heading';
+import { Headshot } from '@/components/Headshot';
+import NewsletterItem from '@/components/NewsletterFeed/NewsletterItem';
+import { PostFeed } from '@/components/PostFeed';
+import SEO from '@/components/seo';
+import { Subtitle } from '@/components/Subtitle';
+import WebmentionMetadata from '@/components/webmentionMetadata';
+import { getCloudinaryImageUrl } from '@/utils/images';
+import { generateRSSFeed } from '@/utils/rss';
 import config from '../config';
 import type { BlogPost, Newsletter } from '../data/content-types';
 import { getAllPosts } from '../lib/blog';
 import { getAllNewsletters } from '../lib/newsletters';
-import { getCloudinaryImageUrl } from '../utils/images';
-import { generateRSSFeed } from '../utils/rss';
 
 export async function getStaticProps() {
   const posts = await getAllPosts();

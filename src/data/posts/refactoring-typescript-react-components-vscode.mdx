@@ -13,8 +13,8 @@ published: true
 I am brand new to TypeScript, and far from an expert. So far, I really enjoy using it to build React apps with Next.js. As I'm growing the skills I'll need to be a better TypeScript developer, I'm finding that a fairly typical chore for me is to refactor my code to extract types from a JavaScript object. For example, I often find myself writing code in react components that looks a lot like this:
 
 ```tsx
-import Footer from '@components/Footer';
-import Header from '@components/Header';
+import Footer from '@/components/Footer';
+import Header from '@/components/Header';
 
 const PageLayout = ({ children }) => {
   return (
@@ -36,8 +36,8 @@ There is no type-checking going on in this code as it is written. I've been writ
 Eventually during implementation I get to the point where adding some complexity to the component requires me to add some type-checking. At that point, I usually refactor the component to lambda syntax, and add a type annotation to the component:
 
 ```tsx
-import Footer from '@components/Footer';
-import Header from '@components/Header';
+import Footer from '@/components/Footer';
+import Header from '@/components/Header';
 
 const PageLayout = ({ children }) => {
   return (
@@ -57,8 +57,8 @@ export default PageLayout;
 Next, I'll add a type annotation to the `children` prop:
 
 ```tsx
-import Footer from '@components/Footer';
-import Header from '@components/Header';
+import Footer from '@/components/Footer';
+import Header from '@/components/Header';
 
 const PageLayout = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -76,8 +76,8 @@ const PageLayout = ({ children }: { children: React.ReactNode }) => {
 Taking it a step further, I'll give the function a return type signature, using `React.FC` and generics to define the props:
 
 ```tsx
-import Footer from '@components/Footer';
-import Header from '@components/Header';
+import Footer from '@/components/Footer';
+import Header from '@/components/Header';
 
 const PageLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return (
@@ -95,8 +95,8 @@ const PageLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 Up to this point, I don't really mind the way this component was written in any of the previous refactors. It's clearly getting more complex, but I can still understand what's going on. But what if I wanted to add a `variant` prop to the component? I'd have to add another type annotation to the function signature:
 
 ```tsx
-import Footer from '@components/Footer';
-import Header from '@components/Header';
+import Footer from '@/components/Footer';
+import Header from '@/components/Header';
 
 const PageLayout: React.FC<{
   children: React.ReactNode;
@@ -117,8 +117,8 @@ const PageLayout: React.FC<{
 Even with a little prettier formatting, this is getting a little hard to read. This is where I usually extract the props into a type, and then use that type in the function signature:
 
 ```tsx
-import Footer from '@components/Footer';
-import Header from '@components/Header';
+import Footer from '@/components/Footer';
+import Header from '@/components/Header';
 
 type PageLayoutProps = {
   children: React.ReactNode;
@@ -171,8 +171,8 @@ In this case, we can extract types from our component's signature in a few steps
 If you want to take it further, you can add a JSDoc comment to the type definition to add some documentation. This is a good way to document your code, and it's also a good way to get better intellisense for your code if it's supported in your editor:
 
 ```tsx
-import Footer from "@components/Footer";
-import Header from "@components/Header";
+import Footer from "@/components/Footer";
+import Header from "@/components/Header";
 
 type PageLayoutProps = {
   children: React.ReactNode;

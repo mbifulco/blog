@@ -1,4 +1,4 @@
-import clsxm from '@utils/clsxm';
+import clsxm from '@/utils/clsxm';
 import Avatar from './Avatar';
 import type { AvatarBaseProps, AvatarSizeVariant } from './Avatar';
 

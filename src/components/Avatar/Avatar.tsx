@@ -1,6 +1,6 @@
 import Image from 'next/image';
 
-import clsxm from '@utils/clsxm';
+import clsxm from '@/utils/clsxm';
 
 export type AvatarBaseProps = {
   name?: string;

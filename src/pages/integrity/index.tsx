@@ -1,7 +1,7 @@
 import type { NextPage } from 'next';
 
-import { Heading } from '@components/Heading';
-import SEO from '@components/seo';
+import { Heading } from '@/components/Heading';
+import SEO from '@/components/seo';
 
 const Shop: NextPage = () => (
   <>

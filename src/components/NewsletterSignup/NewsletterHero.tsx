@@ -1,8 +1,7 @@
-import useNewsletterStats from '@hooks/useNewsletterStats';
-
-import { Heading } from '@components/Heading';
-import { Image } from '@components/Image';
-import { SubscriptionForm } from '@components/SubscriptionForm';
+import { Heading } from '@/components/Heading';
+import { Image } from '@/components/Image';
+import { SubscriptionForm } from '@/components/SubscriptionForm';
+import useNewsletterStats from '@/hooks/useNewsletterStats';
 
 const NewsletterHero = () => {
   const { subscriberCount } = useNewsletterStats();

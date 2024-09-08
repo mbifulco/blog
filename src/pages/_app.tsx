@@ -5,14 +5,14 @@ import * as Fathom from 'fathom-client';
 import posthog from 'posthog-js';
 import { PostHogProvider } from 'posthog-js/react';
 
-import { env } from '@utils/env';
-import { AnalyticsProvider } from '../utils/analytics';
+import { AnalyticsProvider } from '@/utils/analytics';
+import { env } from '@/utils/env';
 
 import '../styles/globals.css';
-import '../components/CarbonAd/CarbonAd.css';
+import '@/components/CarbonAd/CarbonAd.css';
 
-import { trpc } from '@utils/trpc';
-import DefaultLayout from '../components/Layouts/DefaultLayout';
+import DefaultLayout from '@/components/Layouts/DefaultLayout';
+import { trpc } from '@/utils/trpc';
 
 // Check that PostHog is client-side (used to handle Next.js SSR)
 if (typeof window !== 'undefined') {

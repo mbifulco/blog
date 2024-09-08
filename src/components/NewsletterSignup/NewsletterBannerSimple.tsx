@@ -1,6 +1,6 @@
 import React from 'react';
-import useNewsletterStats from '@hooks/useNewsletterStats';
 
+import useNewsletterStats from '@/hooks/useNewsletterStats';
 import config from '../../config';
 import { SubscriptionForm } from '../SubscriptionForm';
 

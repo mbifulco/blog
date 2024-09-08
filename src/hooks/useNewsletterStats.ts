@@ -1,4 +1,4 @@
-import { trpc } from '@utils/trpc';
+import { trpc } from '@/utils/trpc';
 
 const useNewsletterStats = () => {
   const subscriberCountQuery = trpc.mailingList.stats.useQuery(undefined, {

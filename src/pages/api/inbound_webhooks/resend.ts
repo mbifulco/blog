@@ -5,16 +5,16 @@ import { PostHog } from 'posthog-node';
 import { Webhook } from 'svix';
 import type { WebhookRequiredHeaders } from 'svix';
 
-import { sendSubscriberNotificationEmail } from '@utils/email/sendSubscriberNotificationEmail';
-import { sendWelcomeEmail } from '@utils/email/sendWelcomeEmail';
-import { env } from '@utils/env';
+import { sendSubscriberNotificationEmail } from '@/utils/email/sendSubscriberNotificationEmail';
+import { sendWelcomeEmail } from '@/utils/email/sendWelcomeEmail';
+import { env } from '@/utils/env';
 import {
   ContactEvents,
   EmailEvents,
   isContactEvent,
   isEmailEvent,
-} from '@utils/resend';
-import type { ContactEventData, WebhookEvent } from '@utils/resend';
+} from '@/utils/resend';
+import type { ContactEventData, WebhookEvent } from '@/utils/resend';
 
 const ph = new PostHog(env.NEXT_PUBLIC_POSTHOG_KEY, {
   host: 'https://us.i.posthog.com',

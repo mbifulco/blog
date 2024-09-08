@@ -1,4 +1,4 @@
-import { getSubscriberCount, subscribe, subscribeSchema } from '@utils/resend';
+import { getSubscriberCount, subscribe, subscribeSchema } from '@/utils/resend';
 import { procedure, router } from '../trpc';
 
 export const mailingListRouter = router({

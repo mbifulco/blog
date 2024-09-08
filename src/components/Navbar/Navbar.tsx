@@ -3,8 +3,8 @@ import { useRouter } from 'next/router';
 import { Disclosure } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 
-import { Heading } from '@components/Heading';
-import clsxm from '@utils/clsxm';
+import { Heading } from '@/components/Heading';
+import clsxm from '@/utils/clsxm';
 
 const NavLinks: { title: string; href: string; badge?: boolean }[] = [
   {

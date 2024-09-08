@@ -2,9 +2,9 @@ import React from 'react';
 import type { NextPage } from 'next';
 import Link from 'next/link';
 
-import { Heading } from '../components/Heading';
-import { Image } from '../components/Image';
-import SEO from '../components/seo';
+import { Heading } from '@/components/Heading';
+import { Image } from '@/components/Image';
+import SEO from '@/components/seo';
 
 const NotFoundPage: NextPage = () => {
   return (

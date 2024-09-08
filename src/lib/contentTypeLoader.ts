@@ -4,8 +4,8 @@ import { join } from 'path';
 import { compareDesc } from 'date-fns';
 import matter from 'gray-matter';
 
+import { getHeadings, serialize } from '@/utils/mdx';
 import type { MarkdownDocument } from '../data/content-types';
-import { getHeadings, serialize } from '../utils/mdx';
 import { parseTag } from './tags';
 
 export const getContentBySlug = async (

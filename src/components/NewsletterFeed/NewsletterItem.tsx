@@ -1,8 +1,8 @@
 import Link from 'next/link';
 
+import formatDate from '@/utils/format-date';
+import { getCloudinaryImageUrl } from '@/utils/images';
 import type { NewsletterItemProps } from '../../data/content-types';
-import formatDate from '../../utils/format-date';
-import { getCloudinaryImageUrl } from '../../utils/images';
 import { Heading } from '../Heading';
 import TagsSummary from '../tagsSummary';
 

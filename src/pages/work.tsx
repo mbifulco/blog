@@ -1,7 +1,7 @@
 import type { GetStaticProps, NextPage } from 'next';
 
-import { ExternalWorkItem } from '../components/ExternalWork';
-import SEO from '../components/seo';
+import { ExternalWorkItem } from '@/components/ExternalWork';
+import SEO from '@/components/seo';
 import type { Article } from '../data/content-types';
 import { getAllExternalReferences } from '../lib/external-references';
 

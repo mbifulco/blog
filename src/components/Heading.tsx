@@ -1,6 +1,6 @@
 import type { HTMLAttributes } from 'react';
 
-import clsxm from '@utils/clsxm';
+import clsxm from '@/utils/clsxm';
 
 // Define the types of headings allowed
 type HeadingType = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';

@@ -1,8 +1,8 @@
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 
+import { getCloudinaryImageUrl } from '@/utils/images';
 import config from '../config';
-import { getCloudinaryImageUrl } from '../utils/images';
 
 const baseUrl = config.siteUrl;
 
