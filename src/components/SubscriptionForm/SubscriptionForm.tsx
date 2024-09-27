@@ -134,7 +134,7 @@ const SubscriptionForm: React.FC<SubscriptionFormProps> = ({
                 aria-label="Last Name"
                 ref={honeypotRef}
                 style={{ display: 'none' }}
-                name="full-on-pooh-bear"
+                name="fields[last_name]"
               />
               <input
                 className="formkit-input h-10 w-full grow rounded-b-none rounded-t border border-b-0 border-solid border-pink-600 bg-white px-[2ch] py-[1ch] font-normal text-gray-950"
