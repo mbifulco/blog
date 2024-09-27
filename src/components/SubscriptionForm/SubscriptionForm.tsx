@@ -1,8 +1,6 @@
-import { get } from 'http';
 import { useRef, useState } from 'react';
 import Link from 'next/link';
 import useNewsletterStats from '@hooks/useNewsletterStats';
-import { set } from 'date-fns';
 import posthog from 'posthog-js';
 
 import Button from '@components/Button';
