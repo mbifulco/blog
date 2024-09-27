@@ -18,10 +18,9 @@ export const mailingListRouter = router({
         firstName,
         lastName,
       });
-
       return res;
-    } catch (error) {
-      throw new TRPCError({message: 'Error subscribing', code: "BAD_REQUEST"  });
+    } catch (_error) {
+      throw new TRPCError({message: 'Error subscribing', code: "BAD_REQUEST"});
     }
   }),
 });
