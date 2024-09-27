@@ -47,12 +47,18 @@ const SubscriptionForm: React.FC<SubscriptionFormProps> = ({
   const formRef = useRef<HTMLFormElement>(null);
   const emailRef = useRef<HTMLInputElement>(null);
   const firstNameRef = useRef<HTMLInputElement>(null);
+  const honeypotRef = useRef<HTMLInputElement>(null);
 
   const handleSubmission = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const email = emailRef.current?.value;
     const firstName = firstNameRef.current?.value;
+    const honeypot = honeypotRef.current?.value;
+
+    if (honeypot) {
+      return;
+    }
 
     if (!email) {
       return;
@@ -121,6 +127,13 @@ const SubscriptionForm: React.FC<SubscriptionFormProps> = ({
               data-element="fields"
               data-stacked="false"
             >
+              <input
+                type="text"
+                aria-label="Last Name"
+                ref={honeypotRef}
+                style={{ display: 'none' }}
+                name="full-on-pooh-bear"
+              />
               <input
                 className="formkit-input h-10 w-full grow rounded-b-none rounded-t border border-b-0 border-solid border-pink-600 bg-white px-[2ch] py-[1ch] font-normal text-gray-950"
                 aria-label="First Name"
