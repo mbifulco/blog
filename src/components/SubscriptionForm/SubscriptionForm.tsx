@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import Link from 'next/link';
 import useNewsletterStats from '@hooks/useNewsletterStats';
 import posthog from 'posthog-js';
@@ -17,6 +17,7 @@ const SubscriptionForm: React.FC<SubscriptionFormProps> = ({
   source,
   buttonText = 'Subscribe',
 }) => {
+  const [getHoneypottedNerd, setGetHoneypottedNerd] = useState<boolean>(false);
   const addSubscriberMutation = trpc.mailingList.subscribe.useMutation({
     onSuccess: () => {
       refreshStats();
@@ -47,12 +48,19 @@ const SubscriptionForm: React.FC<SubscriptionFormProps> = ({
   const formRef = useRef<HTMLFormElement>(null);
   const emailRef = useRef<HTMLInputElement>(null);
   const firstNameRef = useRef<HTMLInputElement>(null);
+  const honeypotRef = useRef<HTMLInputElement>(null);
 
   const handleSubmission = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const email = emailRef.current?.value;
     const firstName = firstNameRef.current?.value;
+    const honeypot = honeypotRef.current?.value;
+
+    if (honeypot) {
+      setGetHoneypottedNerd(true);
+      return;
+    }
 
     if (!email) {
       return;
@@ -90,7 +98,7 @@ const SubscriptionForm: React.FC<SubscriptionFormProps> = ({
     );
   }
 
-  if (addSubscriberMutation.isSuccess) {
+  if (addSubscriberMutation.isSuccess || getHoneypottedNerd) {
     return (
       <div className="flex flex-col gap-2">
         <p className="text-xl font-semibold text-inherit">
@@ -121,6 +129,13 @@ const SubscriptionForm: React.FC<SubscriptionFormProps> = ({
               data-element="fields"
               data-stacked="false"
             >
+              <input
+                type="text"
+                aria-label="Last Name"
+                ref={honeypotRef}
+                style={{ display: 'none' }}
+                name="fields[last_name]"
+              />
               <input
                 className="formkit-input h-10 w-full grow rounded-b-none rounded-t border border-b-0 border-solid border-pink-600 bg-white px-[2ch] py-[1ch] font-normal text-gray-950"
                 aria-label="First Name"

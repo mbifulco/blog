@@ -3,6 +3,9 @@ import { z } from 'zod';
 
 import { env } from './env';
 
+import mailchecker from 'mailchecker';
+
+
 export const resend = new Resend(env.RESEND_API_KEY);
 
 export const ContactEvents = {
@@ -141,6 +144,11 @@ export const getSubscriberCount = async () => {
 };
 
 export const subscribe = async (subscriber: SubscribeArgs) => {
+  // first: check to see if this is a fake/spam/invalid email
+  if (!mailchecker.isValid(subscriber.email)) {
+    throw new Error('Invalid email address');
+  }
+
   try {
     const res = await resend.contacts.create({
       audienceId: env.RESEND_NEWSLETTER_AUDIENCE_ID,
