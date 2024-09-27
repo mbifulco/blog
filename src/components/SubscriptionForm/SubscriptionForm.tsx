@@ -1,6 +1,8 @@
-import { useRef } from 'react';
+import { get } from 'http';
+import { useRef, useState } from 'react';
 import Link from 'next/link';
 import useNewsletterStats from '@hooks/useNewsletterStats';
+import { set } from 'date-fns';
 import posthog from 'posthog-js';
 
 import Button from '@components/Button';
@@ -17,6 +19,7 @@ const SubscriptionForm: React.FC<SubscriptionFormProps> = ({
   source,
   buttonText = 'Subscribe',
 }) => {
+  const [getHoneypottedNerd, setGetHoneypottedNerd] = useState<boolean>(false);
   const addSubscriberMutation = trpc.mailingList.subscribe.useMutation({
     onSuccess: () => {
       refreshStats();
@@ -57,6 +60,7 @@ const SubscriptionForm: React.FC<SubscriptionFormProps> = ({
     const honeypot = honeypotRef.current?.value;
 
     if (honeypot) {
+      setGetHoneypottedNerd(true);
       return;
     }
 
@@ -96,7 +100,7 @@ const SubscriptionForm: React.FC<SubscriptionFormProps> = ({
     );
   }
 
-  if (addSubscriberMutation.isSuccess) {
+  if (addSubscriberMutation.isSuccess || getHoneypottedNerd) {
     return (
       <div className="flex flex-col gap-2">
         <p className="text-xl font-semibold text-inherit">
