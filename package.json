@@ -42,7 +42,7 @@
     "airtable": "^0.12.2",
     "autoprefixer": "^10.4.20",
     "clsx": "^2.1.1",
-    "date-fns": "^3.6.0",
+    "date-fns": "^4.1.0",
     "fathom-client": "^3.7.2",
     "feed": "^4.2.2",
     "framer-motion": "^11.5.6",
