@@ -37,7 +37,7 @@ const Navbar = () => {
               <Heading
                 as="h1"
                 className={clsxm(
-                  'text-center text-4xl text-gray-800 transition-all duration-500 ease-in-out hover:text-gray-700',
+                  'text-center text-4xl uppercase text-gray-800 transition-all duration-500 ease-in-out hover:text-gray-700',
                   'text-lg md:text-4xl'
                 )}
               >
@@ -56,7 +56,7 @@ const Navbar = () => {
                       'hover:no-underline',
                       link.href === router.pathname && 'text-gray-900',
                       link.badge &&
-                        'rounded-sm bg-pink-400 px-[0.5ch] py-[0.25ch] font-medium text-white hover:bg-pink-600 hover:text-white '
+                        'rounded-sm bg-pink-400 px-[0.5ch] py-[0.25ch] font-medium text-white hover:bg-pink-600 hover:text-white'
                     )}
                   >
                     {link.title}

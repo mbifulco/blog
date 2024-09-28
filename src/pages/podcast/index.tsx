@@ -1,52 +1,35 @@
 import Link from 'next/link';
-import {
-  Box,
-  Popover,
-  PopoverArrow,
-  PopoverBody,
-  PopoverCloseButton,
-  PopoverContent,
-  PopoverHeader,
-  PopoverTrigger,
-  Stack,
-  Text,
-} from '@chakra-ui/react';
+import { Popover } from '@headlessui/react';
 
-import { Heading } from '@components/Heading';
-import { NewsletterSignup } from '../../components/NewsletterSignup';
+import NewsletterSignup from '../../components/NewsletterSignup';
 import SEO from '../../components/seo';
 import { Subtitle } from '../../components/Subtitle';
 
 const Eponymous = () => {
   return (
-    <Popover trigger="hover">
-      <PopoverTrigger>
-        <span className="cursor-pointer border-b border-dashed border-pink-400">
-          eponymous
-        </span>
-      </PopoverTrigger>
-      <PopoverContent boxShadow="lg">
-        <PopoverArrow />
-        <PopoverCloseButton />
-        <PopoverHeader>
-          <dl>
-            <dt style={{ fontWeight: 600 }}>e·pon·y·mous</dt>{' '}
-            <dd>
-              <small>
-                <em>adj.</em>- of or having the same name.
-              </small>{' '}
-            </dd>
-          </dl>
-        </PopoverHeader>
-        <PopoverBody fontSize={'sm'}>
-          {"That's"} right, my newsletter is also called{' '}
+    <Popover className="relative inline" as="div">
+      <Popover.Button
+        className={`cursor-pointer border-b border-dashed border-pink-400`}
+        as="span"
+      >
+        eponymous
+      </Popover.Button>
+      <Popover.Panel className="absolute left-3 z-10 max-w-md rounded-lg border border-gray-200 bg-white p-4 shadow-lg">
+        <dl>
+          <dt className="font-semibold">e·pon·y·mous</dt>
+          <dd className="text-sm">
+            <em>adj.</em> - of or having the same name.
+          </dd>
+        </dl>
+        <p className="mt-2 text-sm">
+          That&apos;s right, my newsletter is also called{' '}
           <em>Tiny Improvements</em>. Sound interesting? Check it out{' '}
-          <Link className="text-pink-600 hover:underline" href="/newsletter">
+          <Link href="/newsletter" className="text-pink-600 hover:underline">
             here
           </Link>
           .
-        </PopoverBody>
-      </PopoverContent>
+        </p>
+      </Popover.Panel>
     </Popover>
   );
 };
@@ -61,32 +44,27 @@ const PodcastPage = () => {
         }
       />
 
-      <Stack>
-        <Box as="header">
-          <Heading as="h1">Tiny Improvements</Heading>
-          <Subtitle>🎙️ The Podcast</Subtitle>
-        </Box>
-        <Text fontSize={'xl'}>
-          Occasionally, {"I'll"} write something I like <em>so much</em> that I
-          record it as a podcast. Think of them short-form audio essays,
-          published under the same title as my <Eponymous />{' '}
-          <Link className="text-pink-600 hover:underline" href="/newsletter">
-            newsletter
-          </Link>
-          .
-        </Text>
-      </Stack>
+      <header className="space-y-2">
+        <h1 className="text-4xl font-bold">Tiny Improvements</h1>
+        <Subtitle>🎙️ The Podcast</Subtitle>
+      </header>
+      <div className="text-xl">
+        Occasionally, {"I'll"} write something I like <em>so much</em> that I
+        record it as a podcast. Think of them as short-form audio essays,
+        published under the same title as my <Eponymous />{' '}
+        <Link className="text-pink-600 hover:underline" href="/newsletter">
+          newsletter
+        </Link>
+        .
+      </div>
 
-      <Stack direction={'column'} spacing={'0'}>
+      <div className="aspect-w-16 aspect-h-9 h-full">
         <iframe
-          width="100%"
-          height="390"
-          frameBorder="no"
-          scrolling="no"
-          seamless
+          height={390}
+          width={'100%'}
           src="https://share.transistor.fm/e/tiny-improvements/playlist"
         ></iframe>
-      </Stack>
+      </div>
 
       <NewsletterSignup />
     </div>

@@ -12,9 +12,12 @@ This is a [NextJS](https://nextjs.org) site... migrated from a Gatsby site.
 - [ ] image hosting on cloudinary
 - [ ] analytics with Fathom
 - [ ] RSS feed (/rss.xml)
+- [ ] Podcast page (/podcast)
 - [ ] ConvertKit newsletter
 - [ ] web monetization
 - [ ] web mentions
 - [ ] SEO via react-helmet
-- [ ] TODO: dynamic images for OpenGraph shares
-- [ ] automated build / deploy with Netlify
+- [ ] CI with GitHub Actions
+- [ ] automated build / deploy with Vercel
+- [ ] TailwindCSS
+- [ ] TypeScript

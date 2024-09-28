@@ -5,7 +5,6 @@ import clsxm from '@utils/clsxm';
 import type { BlogPost } from '../../data/content-types';
 import { Heading } from '../Heading';
 import { Image } from '../Image';
-import PolitePop from '../PolitePop/PolitePop';
 import { PublishDate } from '../PublishDate';
 import TagsSummary from '../tagsSummary';
 
@@ -38,10 +37,10 @@ const PostSummary: React.FC<PostSummaryProps> = ({ post, eager = false }) => {
   );
 
   return (
-    <article>
+    <article className="max-w-[100vw]">
       <div className="relative">
         <header className="flex flex-col gap-1">
-          <Heading as={'h2'} className="m-0 p-0 uppercase">
+          <Heading as={'h2'} className="m-0 p-0">
             <Link
               className="text-pink-600 no-underline hover:underline"
               href={postPath}
@@ -64,7 +63,6 @@ const PostSummary: React.FC<PostSummaryProps> = ({ post, eager = false }) => {
           Read more →
         </Link>
       </div>
-      <PolitePop />
     </article>
   );
 };

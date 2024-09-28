@@ -22,7 +22,7 @@ const SponsoredSection: React.FC<SponsoredSectionProps> = ({
     <div className="overflow-x-hidden md:overflow-x-visible">
       <section
         className={clsxm(
-          'sponsored-section text-md -mx-8 my-4 rounded-sm border border-solid border-gray-300 px-8 py-4',
+          'sponsored-section text-md my-4 flex flex-col rounded-sm border border-solid px-8 py-4',
           'before:height-[3px] before:width-[33%] before:background-pink-400 before:position-relative before:top-[calc(-1em_-_3px)] before:ml-auto before:mr-auto before:content-["_"]',
           'after:height-[3px] after:width-[33%] after:background-pink-400 after:position-relative after:top-[calc(-1em_-_3px)] after:ml-auto after:mr-auto after:content-["_"]'
         )}
@@ -32,27 +32,36 @@ const SponsoredSection: React.FC<SponsoredSectionProps> = ({
           href="/sponsor"
           target="_blank"
         >
-          Thanks so much to our sponsor{' '}
-          <span className="text-bold">{sponsorName}</span>
+          Thank you <span className="text-bold">{sponsorName}</span> for
+          sponsoring
         </Link>
-        {imagePublicId && (
-          <Link href={href} target="_blank">
-            <Image
-              publicId={imagePublicId}
-              alt={`Sponsored by ${sponsorName}`}
-            />
-          </Link>
-        )}
+        <div className="grid grid-cols-[192px_1fr] gap-8">
+          {imagePublicId && (
+            <Link
+              href={href}
+              target="_blank"
+              className="h-[192px] w-[192px] flex-grow"
+            >
+              <Image
+                publicId={imagePublicId}
+                alt={`Sponsored by ${sponsorName}`}
+                className="inline-block h-auto w-full"
+              />
+            </Link>
+          )}
 
-        {children}
+          <div>
+            {children}
 
-        <div className="flex flex-col content-center gap-4">
-          <Link
-            className="self-center rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 hover:text-white hover:no-underline active:bg-blue-800"
-            href={href}
-          >
-            {CTAtext}
-          </Link>
+            <div className="flex flex-col content-center gap-4">
+              <Link
+                className="self-center rounded bg-pink-600 px-4 py-2 text-white no-underline hover:bg-pink-700 hover:text-white hover:no-underline active:bg-blue-800"
+                href={href}
+              >
+                {CTAtext}
+              </Link>
+            </div>
+          </div>
         </div>
       </section>
     </div>

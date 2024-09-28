@@ -3,7 +3,7 @@
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
-    "strict": false,
+    "strict": true,
     "forceConsistentCasingInFileNames": true,
     "noEmit": true,
     "incremental": true,
@@ -14,14 +14,15 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "strictNullChecks": true,
-    "target": "ES2017",
+    "target": "ES2022",
     "baseUrl": ".",
     "paths": {
       "@components/*": ["src/components/*"],
       "@hooks/*": ["src/hooks/*"],
       "@layouts/*": ["src/components/layouts/*"],
       "@lib/*": ["src/lib/*"],
-      "@utils/*": ["src/utils/*"]
+      "@utils/*": ["src/utils/*"],
+      "@server/*": ["src/server/*"]
     }
   },
   "include": [

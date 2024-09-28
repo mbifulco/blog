@@ -4,6 +4,7 @@ import Link from 'next/link';
 import {
   GitHubIcon,
   MastodonIcon,
+  PatreonIcon,
   RssIcon,
   ThreadsIcon,
   TwitchIcon,
@@ -13,6 +14,15 @@ import {
 
 const SocialLinks = () => (
   <div className="flex flex-row items-center gap-6">
+    <Link
+      className="m-1 h-4 w-4 transition-all duration-200 hover:scale-125 hover:text-pink-600"
+      href="https://patreon.com/tinyimprovements"
+      target="_blank"
+      rel="noopener noreferrer me"
+      aria-label="💌 Tiny Improvements on Patreon"
+    >
+      <PatreonIcon />
+    </Link>
     <Link
       className="m-1 h-4 w-4 transition-all duration-200 hover:scale-125 hover:text-pink-600"
       href="https://threads.net/@irreverentmike"

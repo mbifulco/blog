@@ -1,16 +1,11 @@
-/**
- * v0 by Vercel.
- * @see https://v0.dev/t/kB60c2A2FTB
- */
-
-import useConvertKitStats from '@hooks/useConvertKitStats';
+import useNewsletterStats from '@hooks/useNewsletterStats';
 
 import { Heading } from '@components/Heading';
 import { Image } from '@components/Image';
 import { SubscriptionForm } from '@components/SubscriptionForm';
 
 const NewsletterHero = () => {
-  const { stats } = useConvertKitStats();
+  const { subscriberCount } = useNewsletterStats();
 
   return (
     <section
@@ -28,7 +23,7 @@ const NewsletterHero = () => {
           />
           <div className="text-md flex flex-col items-center justify-center gap-10 lg:pr-12 xl:text-xl">
             <div className="relative max-w-prose space-y-4 overflow-visible rounded text-gray-300">
-              <div className="absolute -top-4 left-4 z-0 block h-full w-full  bg-[hsl(3,90%,55%)]  mix-blend-screen" />
+              <div className="absolute -top-4 left-4 z-0 block h-full w-full bg-[hsl(3,90%,55%)] mix-blend-screen" />
               {/* <div className="absolute left-0 top-0 z-0 block h-full w-full  bg-[hsl(113,90%,55%)] mix-blend-screen" /> */}
               <div className="absolute -left-4 top-4 z-0 block h-full w-full bg-[hsl(223,90%,55%)] mix-blend-screen" />
               <div className="relative z-20 flex h-full w-full flex-col gap-4 bg-[#222] p-6">
@@ -51,16 +46,12 @@ const NewsletterHero = () => {
                   startup, with past experience at Google, Stripe, and
                   Microsoft.
                 </p>
-                <div className="block w-full space-y-2">
-                  <SubscriptionForm />
-                  <p className="max-w-[600px] text-lg text-gray-300">
+                <div className="block w-full space-y-2 text-gray-300">
+                  <SubscriptionForm source="newsletter-hero" />
+                  <p className="max-w-[600px] text-lg">
                     Join{' '}
                     <span className="text-pink-400">
-                      {stats?.subscriberCount ? (
-                        <span>{stats?.subscriberCount}</span>
-                      ) : (
-                        'the'
-                      )}{' '}
+                      {subscriberCount ? <span>{subscriberCount}</span> : 'the'}{' '}
                       other product builders
                     </span>
                     {', '}

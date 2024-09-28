@@ -1,8 +1,8 @@
 import type { GetStaticProps, NextPage } from 'next';
 import { useRouter } from 'next/router';
 
+import { NewsletterSignup } from '@components/NewsletterSignup';
 import { Colophon } from '../../components/Colophon';
-import { NewsletterHero } from '../../components/NewsletterSignup';
 import { BlogPost as Post } from '../../components/Post';
 import SEO from '../../components/seo';
 import WebmentionMetadata from '../../components/webmentionMetadata';
@@ -61,8 +61,7 @@ const PostPage: NextPage<PostPageProps> = ({ post }) => {
 
   return (
     <>
-      <div className="mx-auto flex max-w-full flex-col xl:max-w-4xl">
-        {/* TODO image url to SEO */}
+      <div className="mx-auto w-full px-4 md:px-0">
         <SEO
           canonical={router.asPath}
           title={title}
@@ -86,7 +85,7 @@ const PostPage: NextPage<PostPageProps> = ({ post }) => {
         />
         <Colophon />
       </div>
-      <NewsletterHero />
+      <NewsletterSignup />
     </>
   );
 };

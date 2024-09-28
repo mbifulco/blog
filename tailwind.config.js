@@ -8,6 +8,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      gridTemplateColumns: {
+        'auto-fit-min-300': 'repeat(auto-fit, minmax(300px, 1fr))',
+      },
       colors: {
         // ... your color definitions
       },
@@ -19,12 +22,11 @@ module.exports = {
           css: {
             'h1, h2, h3, h4, h5, h6': {
               fontFamily: `${theme('fontFamily.futura')}`,
-              textTransform: 'uppercase',
             },
           },
         },
       }),
     },
   },
-  plugins: ['@tailwindcss/typography'],
+  plugins: [require('@tailwindcss/typography')],
 };

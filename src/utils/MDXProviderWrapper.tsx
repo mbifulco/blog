@@ -1,9 +1,15 @@
 import React, { Children } from 'react';
-import type { HTMLProps, ReactElement } from 'react';
+import type {
+  AnchorHTMLAttributes,
+  ButtonHTMLAttributes,
+  HTMLAttributes,
+  HTMLProps,
+  ReactElement,
+} from 'react';
 import Link from 'next/link';
 import Script from 'next/script';
-import { Button, Code, SimpleGrid } from '@chakra-ui/react';
 import { MDXProvider } from '@mdx-js/react';
+import type { MDXComponents } from 'mdx/types';
 import { Highlight, themes } from 'prism-react-renderer';
 
 import clsxm from '@utils/clsxm';
@@ -25,12 +31,13 @@ const CustomHeading: React.FC<HeadingProps> = ({
   if (id) {
     // if we have an ID, render a "#" character before the heading on hover
     return (
-      <Link href={`#${id}`} className="hover:no-underline">
+      <Link href={`#${id}`} className="block no-underline hover:no-underline">
         <Heading
           as={as}
           className={clsxm(
-            'inline tracking-normal',
-            "hover:before:relative hover:before:-ml-[1.2ch] hover:before:inline hover:before:border-b-0 hover:before:pr-[0.2ch] hover:before:text-pink-700 hover:before:no-underline hover:before:content-['#']"
+            'inline tracking-normal no-underline',
+            "hover:before:relative hover:before:-ml-[1.2ch] hover:before:inline hover:before:border-b-0 hover:before:pr-[0.2ch] hover:before:text-pink-700 hover:before:no-underline hover:before:content-['#']",
+            'scroll-mt-2'
           )}
           id={id}
           {...props}
@@ -53,31 +60,43 @@ const CustomHeading: React.FC<HeadingProps> = ({
  * intentionally bumps them down. Leaving a data- attribute to render in HTML
  * in case I ever run into this as a problem 🤣
  */
-const H1 = (props) => (
-  <CustomHeading
-    data-mike-h1-to-h2-in-mdxproviderwrapper
-    as="h2"
-    size="lg"
-    {...props}
-  />
+const H1: React.FC<HeadingProps> = (props) => (
+  <CustomHeading {...props} as="h2" />
 );
-const H2 = (props) => <CustomHeading as="h2" {...props} />;
-const H3 = (props) => <CustomHeading as="h3" {...props} />;
-const H4 = (props) => <CustomHeading as="h4" {...props} />;
-const H5 = (props) => <CustomHeading as="h5" {...props} />;
-const H6 = (props) => <CustomHeading as="h6" {...props} />;
-const P = (props) => <p className="my-2 text-xl" {...props} />;
+const H2: React.FC<HeadingProps> = (props) => (
+  <CustomHeading {...props} as="h2" />
+);
+const H3: React.FC<HeadingProps> = (props) => (
+  <CustomHeading {...props} as="h3" />
+);
+const H4: React.FC<HeadingProps> = (props) => (
+  <CustomHeading {...props} as="h4" />
+);
+const H5: React.FC<HeadingProps> = (props) => (
+  <CustomHeading {...props} as="h5" />
+);
+const H6: React.FC<HeadingProps> = (props) => (
+  <CustomHeading {...props} as="h6" />
+);
 
-const Blockquote = ({ children }) => {
+const P: React.FC<HTMLAttributes<HTMLParagraphElement>> = (props) => (
+  <p className="my-2 text-xl" {...props} />
+);
+
+const Blockquote: React.FC<HTMLAttributes<HTMLQuoteElement>> = ({
+  children,
+}) => {
   return (
-    <blockquote className="border-l-4 border-pink-400 bg-gray-100 px-3">
+    <blockquote className="border-l-4 border-pink-400 bg-gray-100 p-3">
       {children}
     </blockquote>
   );
 };
 
-const CustomLink = (props) => {
-  return <Link className="text-pink-600 hover:underline" {...props} />;
+type CustomLinkProps = AnchorHTMLAttributes<HTMLAnchorElement>;
+
+const CustomLink: React.FC<CustomLinkProps> = ({ children, ...props }) => {
+  return <a {...props}>{children}</a>;
 };
 
 const Colophon = () => {
@@ -114,19 +133,21 @@ const Aside: React.FC<AsideProps> = ({ type = 'default', ...props }) => {
   );
 };
 
-const TextHighlight = (props: HTMLProps<HTMLElement>) => <mark {...props} />;
+const TextHighlight = ({ key: _, ...rest }: HTMLProps<HTMLElement>) => (
+  <mark
+    className={clsxm(
+      'xs inline rounded bg-pink-600 px-[0.5ch] leading-tight text-white',
+      rest.className
+    )}
+    {...rest}
+  />
+);
 
-const InlineCode = (props) => {
+const InlineCode: React.FC<HTMLAttributes<HTMLSpanElement>> = (props) => {
   return (
-    <Code
-      overscrollX={'scroll'}
-      maxW={'100%'}
-      colorScheme={'facebook'}
-      verticalAlign="middle"
-      whiteSpace="pre"
-      padding="0.1ch 1ch"
-      overflowX={'auto'}
+    <span
       {...props}
+      className="inline-block max-w-full whitespace-pre rounded-sm bg-slate-500 px-[0.5ch] py-[0.1ch] align-text-bottom font-mono text-sm text-white"
     />
   );
 };
@@ -148,11 +169,11 @@ const Pre: React.FC<PreProps> = ({ children }) => {
   };
 
   const classNames = firstChildProps.className!;
-  const matches = classNames?.match(/language-(?<lang>.*)/);
+  const matches = /language-(?<lang>.*)/.exec(classNames);
 
   return (
     <div
-      className={`rounded p-[3ch]`}
+      className="-mx-2 max-w-[calc(100vw_-_36px)] rounded md:mx-0"
       style={{
         background: themes.nightOwl.plain.backgroundColor,
       }}
@@ -198,19 +219,28 @@ const Pre: React.FC<PreProps> = ({ children }) => {
   );
 };
 
-const OrderedList = ({ children, ...rest }) => (
-  <ol {...rest} className="flex list-decimal flex-col gap-3 text-xl">
+const OrderedList: React.FC<HTMLAttributes<HTMLOListElement>> = ({
+  children,
+  ...rest
+}) => (
+  <ol {...rest} className="list-decimal">
     {children}
   </ol>
 );
 
-const UnorderedList = ({ children, ...rest }) => (
-  <ul {...rest} className="flex list-disc flex-col gap-3 text-xl">
+const UnorderedList: React.FC<HTMLAttributes<HTMLUListElement>> = ({
+  children,
+  ...rest
+}) => (
+  <ul {...rest} className="list-disc">
     {children}
   </ul>
 );
 
-const ListItemComponent = ({ children, ...rest }) => (
+const ListItemComponent: React.FC<HTMLAttributes<HTMLLIElement>> = ({
+  children,
+  ...rest
+}) => (
   <li {...rest} className="ml-5">
     {children}
   </li>
@@ -218,7 +248,29 @@ const ListItemComponent = ({ children, ...rest }) => (
 
 const HorizontalRule = () => {
   return (
-    <div className="align-center mb-8 mt-12 flex w-[50%] max-w-[50%] flex-col justify-center self-center border-b-[5px] border-solid border-pink-400" />
+    <div className="mx-auto mb-8 mt-12 w-[50%] max-w-[50%] rounded border-b-[5px] border-solid border-pink-400" />
+  );
+};
+
+const Button: React.FC<HTMLProps<HTMLButtonElement>> = ({
+  className,
+  children,
+  type,
+  ...props
+}) => {
+  return (
+    <button
+      className={clsxm(
+        'rounded-sm bg-pink-400 px-4 py-2 text-white shadow-md hover:bg-pink-500',
+        className
+      )}
+      type={
+        (type as ButtonHTMLAttributes<HTMLButtonElement>['type']) ?? 'button'
+      }
+      {...props}
+    >
+      {children}
+    </button>
   );
 };
 
@@ -242,7 +294,6 @@ export const customComponents = {
   p: P,
   pre: Pre,
   Script,
-  SimpleGrid,
   SponsoredSection,
   ul: UnorderedList,
   ol: OrderedList,
@@ -260,7 +311,7 @@ const oneOffComponentsUsedInPosts = {
   OrtonEffectImage, // used in orton-effect-css-react.mdx
 };
 
-export const components = {
+export const components: MDXComponents = {
   ...customComponents,
   ...oneOffComponentsUsedInPosts,
   Threads,
@@ -269,8 +320,8 @@ export const components = {
   Vimeo,
 };
 
-const MDXProviderWrapper = ({ children }) => (
-  <MDXProvider components={components}>{children}</MDXProvider>
-);
+const MDXProviderWrapper: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => <MDXProvider components={components}>{children}</MDXProvider>;
 
 export default MDXProviderWrapper;

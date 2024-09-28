@@ -1,7 +1,7 @@
 import clsxm from '@utils/clsxm';
-import type { SocialIcon } from '.';
+import type { Icon } from '.';
 
-const YouTubeIcon: SocialIcon = ({ className }) => (
+const YouTubeIcon: Icon = ({ className }) => (
   <svg
     fill="currentColor"
     preserveAspectRatio="xMidYMid meet"

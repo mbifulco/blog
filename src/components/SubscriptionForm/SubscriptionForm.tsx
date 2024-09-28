@@ -1,103 +1,174 @@
-import Script from 'next/script';
-import { Button, Input, SimpleGrid } from '@chakra-ui/react';
+import { useRef, useState } from 'react';
+import Link from 'next/link';
+import useNewsletterStats from '@hooks/useNewsletterStats';
+import posthog from 'posthog-js';
+
+import Button from '@components/Button';
+import { trpc } from '@utils/trpc';
 
 type SubscriptionFormProps = {
   tags?: string[];
+  source?: string;
+  buttonText?: string;
 };
 
-const SubscriptionForm: React.FC<SubscriptionFormProps> = ({ tags: _ }) => {
+const SubscriptionForm: React.FC<SubscriptionFormProps> = ({
+  tags: _,
+  source,
+  buttonText = 'Subscribe',
+}) => {
+  const [getHoneypottedNerd, setGetHoneypottedNerd] = useState<boolean>(false);
+  const addSubscriberMutation = trpc.mailingList.subscribe.useMutation({
+    onSuccess: () => {
+      refreshStats();
+
+      const email = emailRef.current?.value;
+      const firstName = firstNameRef.current?.value;
+
+      posthog.capture('newsletter/subscribed', {
+        source,
+        email,
+        firstName,
+      });
+    },
+    onError: (error) => {
+      const email = emailRef.current?.value;
+      const firstName = firstNameRef.current?.value;
+      posthog.capture('newsletter/subscribe_error', {
+        source,
+        email,
+        firstName,
+        error,
+      });
+    },
+  });
+
+  const { refreshStats } = useNewsletterStats();
+
+  const formRef = useRef<HTMLFormElement>(null);
+  const emailRef = useRef<HTMLInputElement>(null);
+  const firstNameRef = useRef<HTMLInputElement>(null);
+  const honeypotRef = useRef<HTMLInputElement>(null);
+
+  const handleSubmission = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const email = emailRef.current?.value;
+    const firstName = firstNameRef.current?.value;
+    const honeypot = honeypotRef.current?.value;
+
+    if (honeypot) {
+      setGetHoneypottedNerd(true);
+      return;
+    }
+
+    if (!email) {
+      return;
+    }
+
+    posthog.identify(email, {
+      firstName,
+    });
+
+    await addSubscriberMutation.mutateAsync({
+      email,
+      firstName,
+    });
+  };
+
+  if (addSubscriberMutation.error) {
+    return (
+      <div className="flex flex-col gap-2">
+        <p className="text-xl font-semibold text-inherit">
+          {addSubscriberMutation.error.message}
+        </p>
+        <p className="text-inherit">
+          If you continue to have issues, please email{' '}
+          <Link
+            className="text-pink-600 hover:underline"
+            href="mailto:hello@mikebifulco.com"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            hello@mikebifulco.com
+          </Link>{' '}
+          and I&apos;ll help get this sorted.
+        </p>
+      </div>
+    );
+  }
+
+  if (addSubscriberMutation.isSuccess || getHoneypottedNerd) {
+    return (
+      <div className="flex flex-col gap-2">
+        <p className="text-xl font-semibold text-inherit">
+          🪩 Success! Thanks so much for subscribing. Don&apos;t forget to check
+          your spam folder for emails from{' '}
+          <span className="text-pink-600">hello@mikebifulco.com.</span>
+        </p>
+      </div>
+    );
+  }
+
   return (
     <div className="flex flex-col gap-2">
-      <Script src="https://f.convertkit.com/ckjs/ck.5.js" />
-      <form
-        action="https://app.convertkit.com/forms/3923746/subscriptions"
-        className="seva-form formkit-form"
-        method="post"
-        data-sv-form="3923746"
-        data-uid="be6a97481a"
-        data-format="inline"
-        data-version="5"
-        data-options={`{"settings":{"after_subscribe":{"action":"message","success_message":"Success! Now check your email to confirm your subscription.","redirect_url":""},"analytics":{"google":null,"fathom":"${process.env.NEXT_PUBLIC_FATHOM_ID}","facebook":null,"segment":null,"pinterest":null,"sparkloop":null,"googletagmanager":null},"modal":{"trigger":"timer","scroll_percentage":null,"timer":5,"devices":"all","show_once_every":15},"powered_by":{"show":true,"url":"https://convertkit.com/features/forms?utm_campaign=poweredby&amp;utm_content=form&amp;utm_medium=referral&amp;utm_source=dynamic"},"recaptcha":{"enabled":false},"return_visitor":{"action":"custom_content","custom_content":"Thanks for subscribing!"},"slide_in":{"display_in":"bottom_right","trigger":"timer","scroll_percentage":null,"timer":5,"devices":"all","show_once_every":15},"sticky_bar":{"display_in":"top","trigger":"timer","scroll_percentage":null,"timer":5,"devices":"all","show_once_every":15}},"version":"5"}`}
-        min-width="400 500 600 700 800"
-        style={{ width: '100%' }}
-      >
-        <div data-style="clean">
-          <ul
-            className="formkit-alert formkit-alert-error"
-            data-element="errors"
-            data-group="alert"
-          ></ul>
-          <SimpleGrid
-            columns={[1, 1, 3]}
-            data-element="fields"
-            data-stacked="false"
-            className="seva-fields formkit-fields"
-            flexDir={['column', 'column', 'row']}
-            width="100%"
-            alignItems={'center'}
-            // border="1px solid #ED64A6"
-            borderRadius="4px"
-          >
-            <Input
-              className="formkit-input border-pink-400"
-              backgroundColor="white"
-              aria-label="First Name"
-              name="fields[first_name]"
-              required
-              placeholder="First Name"
-              type="text"
-              border={`1px solid`}
-              borderRadius={[
-                '4px 4px 0px 0px',
-                '4px 4px 0px 0px',
-                '4px 0px 0px 4px',
-              ]}
-              borderBottomWidth={[0, 0, '1px']}
-              color="rgb(0, 0, 0)"
-              fontWeight={400}
-              padding="1ch 2ch"
-              width="100%"
-              flexGrow={1}
-            />
-            <Input
-              className="formkit-input"
-              backgroundColor="white"
-              name="email_address"
-              aria-label="Email Address"
-              placeholder="Email Address"
-              required
-              type="email"
-              color="rgb(0, 0, 0)"
-              borderColor="rgb(237, 100, 166)"
-              borderRadius="0"
-              padding="1ch 2ch"
-              fontWeight={400}
-              width="100%"
-              flexGrow={2}
-            />
-            <Button
-              type="submit"
-              data-element="submit"
-              className="formkit-submit formkit-submit"
-              borderRadius={['0 0 4px 4px', '0 0 4px 4px', '0px 4px 4px 0px']}
-              style={{
-                color: 'rgb(255, 255, 255)',
-                backgroundColor: 'rgb(237, 100, 166)',
-
-                padding: '1ch 2ch',
-                fontWeight: 400,
-                flexGrow: 1,
-              }}
+      <form ref={formRef} className="w-full" onSubmit={handleSubmission}>
+        <fieldset
+          disabled={
+            addSubscriberMutation.isPending || addSubscriberMutation.isSuccess
+          }
+        >
+          <div data-style="clean">
+            <ul
+              className="formkit-alert formkit-alert-error"
+              data-element="errors"
+              data-group="alert"
+            ></ul>
+            <div
+              className="seva-fields formkit-fields grid w-full items-center rounded"
+              data-element="fields"
+              data-stacked="false"
             >
-              <div className="formkit-spinner">
-                <div></div>
-                <div></div>
-                <div></div>
-              </div>
-              <span className="">💌 Subscribe</span>
-            </Button>
-          </SimpleGrid>
-        </div>
+              <input
+                type="text"
+                aria-label="Last Name"
+                ref={honeypotRef}
+                style={{ display: 'none' }}
+                name="fields[last_name]"
+              />
+              <input
+                className="formkit-input h-10 w-full grow rounded-b-none rounded-t border border-b-0 border-solid border-pink-600 bg-white px-[2ch] py-[1ch] font-normal text-gray-950"
+                aria-label="First Name"
+                name="fields[first_name]"
+                required
+                placeholder="First Name"
+                type="text"
+                ref={firstNameRef}
+              />
+              <input
+                className="formkit-input h-10 w-full grow rounded-b-none border border-b-0 border-solid border-pink-600 bg-white px-[2ch] py-[1ch] font-normal text-gray-950"
+                name="email_address"
+                aria-label="Email Address"
+                placeholder="Email Address"
+                required
+                type="email"
+                ref={emailRef}
+              />
+              <Button
+                type="submit"
+                data-element="submit"
+                className="formkit-submit formkit-submit padding-[1ch 2ch] h-10 grow rounded-b rounded-t-none font-normal"
+              >
+                <div className="formkit-spinner">
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                </div>
+                <span>💌 {buttonText}</span>
+              </Button>
+            </div>
+          </div>
+        </fieldset>
       </form>
     </div>
   );

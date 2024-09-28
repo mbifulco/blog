@@ -1,5 +1,11 @@
 import type { MDXRemoteSerializeResult } from 'next-mdx-remote';
 
+export type Heading = {
+  level: number;
+  text: string;
+  slug: string;
+};
+
 type Frontmatter = {
   date: string | number | Date;
   tags?: string[];
@@ -12,6 +18,7 @@ type Frontmatter = {
 export type MarkdownDocument = {
   frontmatter: Frontmatter; // Use intersection type to combine BaseFrontmatter with generic T
   content: string;
+  tableOfContents?: Heading[];
   slug: string;
   source: MDXRemoteSerializeResult; // Define what 'source' should contain more specifically if possible
 };

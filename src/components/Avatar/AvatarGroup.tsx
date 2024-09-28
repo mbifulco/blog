@@ -9,7 +9,7 @@ type AvatarGroupProps = {
 
 const AvatarGroup: React.FC<AvatarGroupProps> = ({ people, variant }) => {
   return (
-    <div className="isolate flex -space-x-2 overflow-hidden">
+    <div className="isolate flex -space-x-4 overflow-hidden">
       {people.map((person, idx) => {
         return (
           <Avatar

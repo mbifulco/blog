@@ -1,0 +1,83 @@
+---
+title: Debug tips from a lifetime newbie
+date: 08-06-2024
+excerpt: >-
+  Debugging problems with code (especially production code) is something that is
+  rarely taught in university classes or code schools. Here are some tips that
+  I've come across from watching smarter people than me debug problems.
+tags: [dev, devx, indiehacker]
+slug: what-to-do-when-your-product-breaks
+coverImagePublicId: newsletters/what-to-do-when-your-product-breaks/cover
+---
+
+## The worst time to learn how to deal with a crisis is during a crisis
+
+How's that for self-evident? But -- it's true.
+
+You should have a plan for when things go wrong. This is especially true in software development.
+
+The first time you're dealing with a production issue is _not_ the time to learn how to deal with one. You need to have a plan in place for when things go wrong, and you should be ready to roll when the time comes.
+
+### Tooling is gives you sensory feedback
+
+Lucky for you, there's loads of tools that can make life easier when everything comes crashing down. You'll want to be able to reliably see what's going on in your system, and to be able to quickly identify what's going wrong.
+
+At [Craftwork](https://craftwork.com), our current debug stack uses [PostHog](https://posthog.com) for session replay and product analytics, [Sentry](https://sentry.io) for error tracking, and Slack webhooks for alerting the team.
+
+### Testing your code is a baseline
+
+If you're not testing your code, you're going to have a bad time. Having tests written for your software is a baseline requirement - great tests prevent you from shipping flawed features, and help you understand when new features break old expectations. At a minimum, write tests for the features and scenarios in your software that are critical to your business, and build the habit of adding more over time.
+
+I have been _really_ impressed with the devX of writing tests for Ruby on Rails - and there is literally no-one better to learn from than my pal and colleague CJ Avilla - he's done a whole series on [testing rails with RSpec](https://www.youtube.com/playlist?list=PLS6F722u-R6Ik3fbeLXbSclWkT6Qsp9ng) that I highly recommend, _even if you're not a Ruby developer_.
+
+It's that good.
+
+### Don't be afraid to ask for help
+
+If you're stuck, ask for help. There's no shame in asking for help; you should view it as a _strength_ to know when a second set of eyes are what you need.
+
+If you're working on a larger team, you'll get a feel for how long you should work on a problem before asking for help (the more severe the problem, the shorter this time should be).
+
+If you're a solo founder or an indiehacker, this is one of the best things about finding community online. There's always smart people willing to help you out.
+
+But -- and I can't emphasize this enough -- **the worst time to start building a community is when you need help.**
+
+[The best time to start is now](https://mikebifulco.com/newsletter/today-is-your-day-to-start).
+
+### Close the loop with affected users
+
+Here's the secret sauce: Once you've found and fixed a problem in production, get in touch with affected users and let them know what happened, and how you fixed it. They'll love you for it, and you'll build trust with them. This is a great way to turn a negative experience into a positive one, and to build a relationship with your users.
+
+Especially if you're a solo founder or indiehacker, vulnerability and transparency are what will make people believe in you. It's a superpower that is waiting for you to use it. Don't squander the chance!
+
+## Get the ball rolling now
+
+The great thing about these problem solving techniques is that each one adds value to the others, and they can be added incrementally. You don't need to have a perfect system in place to start - you just need to start.
+
+---
+
+## More of my work on this topic
+
+As it works out, I've got a few more resources on this topic that you might find interesting:
+
+### Product Analytics for engineers
+
+I've been experiencing a downturn in newsletter subscribers through the form on my website recently. Ironically, if you're reading this, you're probably already subscribed. Rather than just throwing up my hands and saying "oh well", I decided to dig into the data and see what was going on, and I thought it would be a good opportunity to showcase the process I use for debugging web app problems that aren't as simple as "this page is crashing".
+
+Check out [Product Analytics for engineers](https://www.youtube.com/watch?v=4nWcB1a8M1s) on YouTube for the first part of the adventure.
+
+### Automate your SaaS product's crisis response
+
+As it works out, this topic is something I've got some experience with. Back in 2020, just after my previous startup smpl was acquired, I was applying to devrel jobs at Google. As part of the interview process, I put together a talk about how to automate your SaaS product's crisis process, based on my experience at smpl.
+
+While the information might be a bit dated, the principles are sound, and these slides landed me a job running Developer Advocacy for Google Assistant. Check out the slides here: [Automate your SaaS product's crisis response](https://github.com/mbifulco/talks/tree/main/01-automate-your-saas-products-crisis-response-process).
+
+---
+
+## Don't take my word for it
+
+There's loads of great resources out there for debugging, problem solving, and customer support for product builders. Here's a few that I've found helpful recently:
+
+- Kent C. Dodds has a great series of blog posts on testing javascript apps. A great place to start is [Write tests. Not too many. Mostly integration.](https://kentcdodds.com/blog/write-tests)
+
+- PastMaps founder Craig Campbell has shared some incredible stories about proactive and reactive user research in his journey to to growing a sustainable business. I highly recommend following him on Threads for [gems like this one](https://www.threads.net/@that.map.guy.craig/post/C8u9Fn1yIzq).
