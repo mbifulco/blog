@@ -66,9 +66,14 @@ export const NewsletterToast = () => {
     if (showToast) {
       posthog.capture('newsletter-toast/show');
       toast({
-        title: '💌 Sharpen your founder toolkit',
-        description:
-          'Level up your work with bite-sized tips from a YC founder.',
+        title: '💌 Tiny Improvements, Big Impact',
+        description: (
+          <span>
+            Get short, digestable tips to help you build and grow your product
+            directly in your inbox. Join {subscriberCount} founders and builders
+            getting smarter every week.
+          </span>
+        ),
         action: (
           <Button
             onClick={() => {
@@ -77,9 +82,10 @@ export const NewsletterToast = () => {
             }}
             className="bg-pink-600 hover:bg-pink-700"
           >
-            Subscribe
+            Let's go!
           </Button>
         ),
+
         duration: Infinity,
       });
     }
