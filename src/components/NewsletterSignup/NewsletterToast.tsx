@@ -20,10 +20,8 @@ export const NewsletterToast = () => {
   const { toast } = useToast();
 
   useEffect(() => {
-    let timeoutId: NodeJS.Timeout;
-
     // Show toast after 15 seconds if not already displayed
-    timeoutId = setTimeout(() => {
+    const timeoutId: NodeJS.Timeout = setTimeout(() => {
       if (!showToast) {
         setShowToast(true);
       }
@@ -82,14 +80,14 @@ export const NewsletterToast = () => {
             }}
             className="bg-pink-600 hover:bg-pink-700"
           >
-            Let's go!
+            Let&apos;s go!
           </Button>
         ),
 
         duration: Infinity,
       });
     }
-  }, [showToast, toast]);
+  }, [showToast, toast, subscriberCount]);
 
   return (
     <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
