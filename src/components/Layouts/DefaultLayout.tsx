@@ -1,9 +1,9 @@
+import Footer from '@/components/footer';
 import Navbar from '@/components/Navbar/Navbar';
+import NewsletterToast from '@/components/NewsletterSignup/NewsletterToast';
 import { SiteAnnouncement } from '@/components/SiteAnnouncement';
 import { Toaster } from '@/components/ui/toaster';
 import MDXProviderWrapper from '@/utils/MDXProviderWrapper';
-import Footer from '../footer';
-import NewsletterToast from '../PolitePop/NewsletterToast';
 
 const DefaultLayout: React.FC<{ children?: React.ReactNode }> = ({
   children,
