@@ -60,7 +60,7 @@ const webhooks = async (req: NextApiRequest, res: NextApiResponse) => {
         } = event.data;
 
         try {
-          const res = await resend.contacts.create({
+          await resend.contacts.create({
             audienceId: env.RESEND_NEWSLETTER_AUDIENCE_ID,
             email,
             firstName,
