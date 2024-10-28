@@ -1,5 +1,4 @@
 import { resend } from '../resend';
-import type { ContactEvent } from '../resend';
 import { EmailTags } from './tags';
 
 export const sendSubscriberNotificationEmail = async ({ email, firstName, lastName }: {
