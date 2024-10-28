@@ -1,18 +1,18 @@
 import { resend } from '../resend';
-import type { ContactEvent } from '../resend';
 import { EmailTags } from './tags';
 
-export const sendSubscriberNotificationEmail = async (event: ContactEvent) => {
-  if (!event.data.email) {
-    console.error('No email provided');
-    return;
+export const sendSubscriberNotificationEmail = async ({ email, firstName, lastName }: {
+  email: string;
+  firstName?: string;
+  lastName?: string;
+  }) => {
+    if (!email) {
+      console.error('No email provided');
+      return;
   }
 
-  const email = event.data.email;
-  const firstName = event.data.first_name ? `${event.data.first_name} ` : '';
-  const lastName = event.data.last_name ? `${event.data.last_name} ` : '';
 
-  const subject = `🎉 New Subscriber! ${firstName}-${email}`;
+  const subject = `🎉 New Subscriber! ${firstName} <${email}>`;
   const body = `Congrats!: ${firstName}${lastName}${email} just subscribed to Tiny Improvements`;
 
   const { data, error } = await resend.emails.send({

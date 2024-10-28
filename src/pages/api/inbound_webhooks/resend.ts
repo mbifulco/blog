@@ -90,7 +90,11 @@ const webhooks = async (req: NextApiRequest, res: NextApiResponse) => {
         try {
           // fire off an email to to myself!
           const responses = await Promise.allSettled([
-            sendSubscriberNotificationEmail(event),
+            sendSubscriberNotificationEmail({
+              email: event.data.email,
+              firstName: event.data.first_name,
+              lastName: event.data.last_name,
+            }),
             sendWelcomeEmail({
               email: event.data.email,
               firstName: event.data.first_name,
