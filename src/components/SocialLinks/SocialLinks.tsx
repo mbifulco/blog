@@ -2,6 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 
 import {
+  BlueskyIcon,
   GitHubIcon,
   MastodonIcon,
   PatreonIcon,
@@ -22,6 +23,15 @@ const SocialLinks = () => (
       aria-label="💌 Tiny Improvements on Patreon"
     >
       <PatreonIcon />
+    </Link>
+    <Link
+      className="m-1 h-4 w-4 transition-all duration-200 hover:scale-125 hover:text-pink-600"
+      href="https://bsky.app/profile/mikebifulco.com"
+      target="_blank"
+      rel="noopener noreferrer me"
+      aria-label="Buy me a coffee"
+    >
+      <BlueskyIcon />
     </Link>
     <Link
       className="m-1 h-4 w-4 transition-all duration-200 hover:scale-125 hover:text-pink-600"

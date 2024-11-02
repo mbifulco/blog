@@ -1,19 +1,22 @@
 import { resend } from '../resend';
 import { EmailTags } from './tags';
 
-export const sendSubscriberNotificationEmail = async ({ email, firstName, lastName }: {
+export const sendSubscriberNotificationEmail = async ({
+  email,
+  firstName,
+  lastName,
+}: {
   email: string;
   firstName?: string;
   lastName?: string;
-  }) => {
-    if (!email) {
-      console.error('No email provided');
-      return;
+}) => {
+  if (!email) {
+    console.error('No email provided');
+    return;
   }
 
-
   const subject = `🎉 New Subscriber! ${firstName} <${email}>`;
-  const body = `Congrats!: ${firstName}${lastName}${email} just subscribed to Tiny Improvements`;
+  const body = `Congrats! ${[firstName, lastName].filter(Boolean).join(' ')} <${email}> just subscribed to Tiny Improvements`;
 
   const { data, error } = await resend.emails.send({
     from: '💌 Resend Notifications <notifications@mikebifulco.com>',

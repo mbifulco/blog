@@ -17,13 +17,10 @@ const Footer = () => {
         <div className="grid gap-4 md:grid-cols-2">
           <div className="flex flex-col gap-2">
             <span>
-                <Link
-                  className="text-pink-600"
-                  href="/integrity"
-                >
-                  Sponsorships &amp; Transparency
-                </Link>
-              </span>
+              <Link className="text-pink-600" href="/integrity">
+                Sponsorships &amp; Transparency
+              </Link>
+            </span>
             <span>© 2019-{new Date().getFullYear()} Mike Bifulco</span>
 
             <SponsorCTA />

@@ -1,10 +1,8 @@
+import mailchecker from 'mailchecker';
 import { Resend } from 'resend';
 import { z } from 'zod';
 
 import { env } from './env';
-
-import mailchecker from 'mailchecker';
-
 
 export const resend = new Resend(env.RESEND_API_KEY);
 

@@ -2,6 +2,7 @@ export type IconProps = React.SVGProps<SVGSVGElement>;
 
 export type Icon = React.FC<IconProps>;
 
+export { default as BlueskyIcon } from './BlueskyIcon';
 export { default as GitHubIcon } from './GitHubIcon';
 export { default as MastodonIcon } from './MastodonIcon';
 export { default as PatreonIcon } from './PatreonIcon';
