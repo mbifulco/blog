@@ -1,6 +1,7 @@
+import { TRPCError } from '@trpc/server';
+
 import { getSubscriberCount, subscribe, subscribeSchema } from '@utils/resend';
 import { procedure, router } from '../trpc';
-import { TRPCError } from '@trpc/server';
 
 export const mailingListRouter = router({
   stats: procedure.query(async () => {
@@ -20,7 +21,11 @@ export const mailingListRouter = router({
       });
       return res;
     } catch (e) {
-      throw new TRPCError({message: 'Error subscribing', code: "BAD_REQUEST", cause: (e as Error).message || undefined});
+      throw new TRPCError({
+        message: 'Error subscribing',
+        code: 'BAD_REQUEST',
+        cause: (e as Error).message || undefined,
+      });
     }
   }),
 });

@@ -7,7 +7,6 @@ import type { WebhookRequiredHeaders } from 'svix';
 import { env } from '@utils/env';
 import { resend } from '@utils/resend';
 
-
 type ConvertKitWebhookEvent = {
   data: {
     type: 'subscriber.subscriber_activate';
@@ -44,20 +43,15 @@ const webhooks = async (req: NextApiRequest, res: NextApiResponse) => {
     // Verify the webhook signature and extract the event
     const event = JSON.parse(payload) as ConvertKitWebhookEvent;
 
-
     if (!event.data.type) {
       console.error('ConvertKit webhook received with no event type');
       return res.status(400).end('No event type');
     }
 
     switch (event.data.type) {
-      case "subscriber.subscriber_activate":
+      case 'subscriber.subscriber_activate':
         // new converkit subscriber, sub 'em to Resend
-        const {
-          email,
-          firstName,
-          lastName,
-        } = event.data;
+        const { email, firstName, lastName } = event.data;
 
         try {
           await resend.contacts.create({
