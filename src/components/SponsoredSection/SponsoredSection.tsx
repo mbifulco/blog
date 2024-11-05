@@ -28,14 +28,14 @@ const SponsoredSection: React.FC<SponsoredSectionProps> = ({
         )}
       >
         <Link
-          className="thank-you mb-[2ch] block text-sm uppercase text-gray-500"
+          className="thank-you block text-sm uppercase text-gray-500"
           href="/sponsor"
           target="_blank"
         >
           Thank you <span className="text-bold">{sponsorName}</span> for
           sponsoring
         </Link>
-        <div className="grid grid-cols-[192px_1fr] gap-8">
+        <div className="grid grid-cols-[192px_1fr] gap-4">
           {imagePublicId && (
             <Link
               href={href}
@@ -50,7 +50,7 @@ const SponsoredSection: React.FC<SponsoredSectionProps> = ({
             </Link>
           )}
 
-          <div>
+          <div className="block">
             {children}
 
             <div className="flex flex-col content-center gap-4">
