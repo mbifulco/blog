@@ -80,7 +80,7 @@ const H6: React.FC<HeadingProps> = (props) => (
 );
 
 const P: React.FC<HTMLAttributes<HTMLParagraphElement>> = (props) => (
-  <p className="my-2 text-xl" {...props} />
+  <p className="text-xl" {...props} />
 );
 
 const Blockquote: React.FC<HTMLAttributes<HTMLQuoteElement>> = ({
