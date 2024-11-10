@@ -55,7 +55,7 @@
     "next-mdx-remote": "5.0.0",
     "pluralize": "^8.0.0",
     "postcss": "^8.4.47",
-    "posthog-js": "^1.180.1",
+    "posthog-js": "^1.181.0",
     "posthog-node": "^4.2.1",
     "prism-react-renderer": "^2.4.0",
     "prop-types": "^15.8.1",
@@ -74,7 +74,7 @@
     "sass": "^1.80.6",
     "sharp": "^0.33.5",
     "superjson": "^2.2.1",
-    "svix": "^1.37.0",
+    "svix": "^1.39.0",
     "swr": "^2.2.5",
     "tailwind-merge": "^2.5.4",
     "zod": "^3.23.8"
