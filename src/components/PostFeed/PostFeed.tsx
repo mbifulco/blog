@@ -1,5 +1,5 @@
 import type { BlogPost } from '../../data/content-types';
-import { NewsletterSignup } from '../NewsletterSignup';
+import NewsletterSignup from '../NewsletterSignup';
 import { BlogPost as Post } from '../Post';
 
 type PostFeedProps = {
@@ -14,7 +14,11 @@ const PostFeed: React.FC<PostFeedProps> = ({ posts }) => (
       if (idx === 1) {
         return (
           <div key="newsletter-wrapper">
-            <NewsletterSignup key="newsletter" />
+            {idx === 1 && (
+              <div className="max-w-full">
+                <NewsletterSignup key="newsletter" />
+              </div>
+            )}
             {postEl}
           </div>
         );

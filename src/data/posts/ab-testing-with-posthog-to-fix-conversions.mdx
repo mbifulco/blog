@@ -1,0 +1,164 @@
+---
+title: 'Unlocking A/B Testing with PostHog: Improving Newsletter Signups'
+excerpt: Optimizing signups by testing, trusting statistics, and fine-tuning UX
+date: 08-26-2024
+coverImagePublicId:
+tags: [posthog, video, tutorial, dev, founder]
+path: ab-testing-with-posthog-to-fix-conversions
+youTubeId: 2hVHjSwYoU8
+---
+
+## Test, trust the data, and optimize your site for better results
+
+In this video, I dive into A/B testing with PostHog to boost newsletter signups on my site. I walk you through my process—from identifying issues with signups, switching email platforms, to experimenting with different UX elements. I'll show you how to set up and run A/B tests, and explain why trusting the data is crucial for making smart, data-driven decisions. If you're a developer or UX enthusiast, this video will help you refine your own website's user experience.
+
+The code for my site is available on github - you can see the Pull Request for the changes associated with this video here: https://github.com/mbifulco/blog/pull/832
+
+## Watch the first two episodes in this series:
+
+1. [Product Analytics for engineers: Debugging a conversion problem on my next.js site](https://mikebifulco.com/posts/debugging-a-conversion-problem-on-my-nextjs-site)
+2. [Fixing the bug behind my Conversion Problem](https://mikebifulco.com/posts/fixing-my-conversion-problem)
+
+## Video Timestamps
+
+- 00:00 Introduction and Series Overview
+- 00:35 Identifying the Signup Problem
+- 00:59 Switching to Resend
+- 01:11 Exploring AB Testing
+- 01:19 Sponsorship by PostHog
+- 02:11 Website Elements and Hypotheses
+- 04:07 Implementing AB Tests
+- 05:03 Setting Up PostHog Experiments
+- 07:20 PostHog Implementation Details
+- 08:31 Testing and Analyzing Results
+- 10:52 Tell me what you think!
+
+<details>
+
+  <summary>
+
+    <b>Transcript</b>
+
+  </summary>
+
+[00:00:00] **Mike Bifulco:** Hello, and welcome back to tiny improvements. My name is Mike And since we last talked, I've been working on a problem on my website. This is the third video in a series that I'm doing on trying to get people, to sign up for my newsletter.
+
+[00:00:11] If you're new here, I read a weekly newsletter called tiny improvements.
+
+[00:00:13] That is meant for product developers, startup founders, indie hackers, people who are interested in building products. Where I share the things that I've learned, building products that companies like Google and Stripe and Microsoft, and more recently building a venture capital backed startup I'm co-founder of a company called Craftwork. We went through Y Combinator last summer. And so this is my way of giving back. I'm trying to give away the things that I know for free, because I've been really lucky in my career.
+
+[00:00:34] And I want you to be as lucky as I have been. So since you're here, let's talk about where we've been in the first video. I discovered that I had a problem with signups and people weren't subscribing. I was using convert kit for my newsletter at the time and was having some sort of mystery problem with signups.
+
+[00:00:47] So I added a bunch of telemetry to show me when signups were happening and to try and detect failures from that experience, I found that. I was getting some mystery failures with convert kit in my implementation of my newsletter signup form. And that's [00:01:00] what led me to what I did in the second video, which is where I replaced convert kit with Resend.
+
+[00:01:03] So now I use Resend email platform for both sending my newsletters and getting people to sign up for my mailing list. That's been really nice so far. In this video I'm exploring the next thing I wanted to get into, which is AB testing stuff on my site.
+
+[00:01:16] So let's take a look at that and see what that actually means in practice.
+
+## Sponsored by Posthog
+
+[00:01:19] **Mike Bifulco:** Hey, all this video series is sponsored by PostHog. After seeing my first video, they reached out about a sponsorship, which is really cool.
+
+[00:01:25] And frankly, I'm flattered to see it. I was planning on making these videos either way and that's because I really enjoy PostHog. I also really enjoy building products and seeing things improve over time. . I wouldn't take a sponsorship from something that I don't believe in and don't use, I hope you're enjoying this series and I hope you're learning something.
+
+[00:01:39] If you're really into it, it might also be worth giving. PostHog a shot. One of my favorite things about the platform is that they're free tiers, unbelievably generous. You can get a whole lot out of PostHog for free before paying anything to decide if it's worth it for you.
+
+[00:01:50] There's also a self host option. If you want to go that route and PostHog also has a ton of open source software, which means you can have influence over the product itself.
+
+[00:01:58] I think that's really amazing. And the team has been [00:02:00] super responsive so far. So if you want to check it out, go to PostHog dot com slash Mike Bifulco. There'll be a link in the description. It will let them know I sent you and it means a lot to me.
+
+[00:02:09] Thanks so much. I hope you enjoy the rest of the video.
+
+[00:02:11] Okay, this is my site and this is one of the things that I'm interested in testing to see if I can make a difference in the amount of people signing up.
+
+[00:02:17] When you visit my site, read one of my newsletters or any of the articles on my site. There's a bunch of things that are made available at the top of the pages, a cover image and a title things you're probably used to seeing, I have this nice dynamic. Table of contents, which is really helpful I also record audio versions of some posts, which is why we see this podcast embedded here. if we scroll through the post, when you get towards the end of it, a couple of things happen.
+
+[00:02:36] This pop-up, that just flew in from the left is a thing called polite pop. This is where the first call to action typically comes for someone to subscribe to my newsletter. I've got a couple of hypotheses on how we can do better here. What I want to do is test the copy.
+
+[00:02:48] That's rendered here to see if there's maybe a different treatment, that we can show. To people to get them more compelled to sign up. I might also choose to remove this. It kind of is just an ag and I think people are really well-trained to just dismiss pop-ups and [00:03:00] try and get them out of their face.
+
+[00:03:01] And it's a little bit of a rude experience while you're on a site. I see loads of people coming to my site and clicking this. No thanks button. I've got tons of telemetry on that. That may not be long for this world.
+
+[00:03:09] The other thing that I see, and I think this is worth testing straight away is at the bottom of each post.
+
+[00:03:14] I have this giant banner, which is this big striking thing that says ship products that matter. And I really like this. This is something I workshopped for awhile, trying to come up with a slogan or phrase, something that was sort of attention grabbing. That's supposed to give people a reason to sign up.
+
+[00:03:28] However, I think what I've done here is I built something that is so different from everything else. That's that seen on my site that. By the time you get down here, as you scroll down and you get this great big dark banner that appears, it's pretty obvious that the article is over and then I'm not giving you any more value here. And so what I want to test is if I can replace this with something that's a little more subtle.
+
+[00:03:47] So maybe not a giant banner like this, but something that says, Hey, I write this cool newsletter. I think you might like it. Please subscribe. And maybe Tiki into people's psychology a little bit to keep them reading on the page. watching back some replays of people visiting the site. [00:04:00] It's pretty common to see someone get to about here and go away.
+
+[00:04:02] And if they leave before they get down here, I've lost. So. we're going to try a couple of things here and that's. Where AB testing comes in.
+
+## A-B Testing in PostHog
+
+[00:04:08] an AB test is exactly what it sounds like. I have version a version B and sometimes C D E F a number of different versions of one bit of user experience that I want to test against each other to see how they perform. The idea here is to see that if I do this versus that is one going to get me more people signing up for my newsletter or not.
+
+[00:04:24] **Mike Bifulco:** And we can kind of test some hypothesis from there. Now there's some really important statistics involved in how this works. What I really like is that when you collect data, the math will tell a story. And if you're willing to trust the math and listen to what the statistics say, you can probably make a good data driven decision to move yourself from doing well, to doing better and incremental change over time will do really well.
+
+[00:04:46] But you have to be comfortable with trusting what the statistics say. And let me be the first to tell you that there's a lot to learn about that, and it can be really counter-intuitive. I am far from a statistics expert. I have learned a lot of mathematics in my life.
+
+[00:04:57] You have to learn to trust the statistics. [00:05:00] And so that's what we're going to try to do here. Let me get off my high horse. Let's talk about this. So this is my first experiment is called newsletter banner treatments. So you give it a name, which is a human readable thing, and then our feature flag key.
+
+[00:05:10] So this is the key that we'll use programmatically to make decisions based on this experiment. So I gave it newsletter banner treatments as the key. The description here again is a human readable thing. It's meant for me when I go review these later on to see what this experiment was all about.
+
+[00:05:23] So I may fill this in with more detail, but the idea is I want to test different UX presentations of the newsletter banner that appears at the bottom of articles. To see which one performs best.
+
+[00:05:32] By default PostHog will give you a control, which is the fallback value. So the control is meant to be in scientific method speak.
+
+[00:05:39] That means the thing that we know how it performs and the baseline for the experience right now, that's that big dark banner that I show on my site that I was just showing you that people sort of. Seem to scatter away from. I'm running two tests against that in this case. So I'm going to test a simple implementation and a hero implementation. Those are bits of UI that I've built alternatives for.
+
+[00:05:58] And I'll show you what they look like. [00:06:00] So if I come through and I hit, continue on this experiment, we'll see that PostHog does a little bit of thinking. And it goes to do some give me some numbers on roughly what this would look like. And what I want to check is my newsletter subscribed event.
+
+[00:06:11] So I'm hoping to see more of these newsletter subscribed things happening. With one variant of this versus the other, they'll probably all perform slightly differently. We're going to pick the one that wins out of the three. So. I've picked the event that I want to use. If I go to the next page here, what I get is the goal for the experiment.
+
+[00:06:28] So this now shows me everything in one view. What it's saying at the very top is this is a draft. I haven't actually started it yet. By results are not significant, meaning I haven't collected enough data to make a decision. And the feature flags name is here.
+
+[00:06:39] Down here, we get implementation details from PostHog, which is literally code snippets that you can use in your application. So you can switch through these and see what they look like.
+
+[00:06:47] There's react native there's no, there's Ruby, all kinds of stuff in here. What's really cool is they show you exactly how to do this. So you load the feature flag using the feature flags name. If you have a user ID, like an email address, if someone's logged in, you can pass that [00:07:00] into, they always get a consistent experience per user. And then you make a decision based on what comes back. So the feature flag will say for this person render a simple one. It might come back and say for this person render a hero one and you do different things based on that. So what I'll do is I'll hit launch on this thing, It'll sort of thing for a second and go live and I'll, show you what the implementation looks like, next.
+
+[00:07:20] Okay, implementation time. So I'm using post hogs library called PostHog JS.
+
+[00:07:26] Thanks sports, some really nice react components, which I'm using in this implementation here. So this experiment name, newsletter, banner treatments is what we just saw on the site. These are the three different experiment variants.
+
+[00:07:35] So these are the things that the experiment will tell me to render for different users. And we'll collect data on that. And I'm using a thing called PostHog feature, which is a react component exported by post hog, which takes in the name of the flag. As well as the part of the experiment to match.
+
+[00:07:50] So what this is saying is we're going to do this with the newsletter experiment. So if it comes back and says control, we're going to render this thing, the fancy component, which is the newsletter banner that's currently shown on [00:08:00] the site with the dark background.
+
+[00:08:01] I've created two other variants. The simple one here is based on a fairly standard tailwind component library. And this one called hero is one that I was using on other pages on my site, but wasn't consistently showing on the bottom of articles.
+
+[00:08:13] now I'm taking all three of these things. And for about a third of users, I'll show each one of these and we'll track. How many of them convert to newsletter subscriptions over the next. Week or so, and we'll see what comes back.
+
+[00:08:23] Next thing to see is what this looks like in the browser, because PostHog also provides some tools for you to be able to poke around with these and make sure it works well before you roll it out to your users.
+
+## PostHog's A-B Testing tools in the browser
+
+[00:08:31] **Mike Bifulco:** All right back here on post-talk and here's what I want to show you.
+
+[00:08:35] from any page on PostHog, you can get to this handy thing called toolbar. If I click into this, this gives me the ability to launch a PostHog specific toolbar within the context of my site. So it doesn't really fancy injection of content. And it renders PostHog using what I believe is a Chrome extension.
+
+[00:08:50] And so if I click on this, it's going to load my local host, which I've told is where I'm running my site. This is what the tool bar looks like.
+
+[00:08:55] Typically you'll see it. Like this, when it first comes up and we're really interested in this [00:09:00] feature flags. Functionality here. So there's a bunch of things here. You can do actions and heat maps and all kinds of stuff like that. But let's take a look at feature flags first. I'm going to navigate to one of my newsletters, the most recent one, we were just checking this out and I'm going to scroll to the bottom and I'm going to go to this feature flags thing here and already something looks different, This is not the banner that was showing before. And this is a sign that my experiment is working. you can see here, I can manually override the experiments that I'm seeing personally in development.
+
+[00:09:25] And as I toggle through these, I get three different presentations. this one might look familiar. This is the hero one I had before. This is the simple implementation that I wanted to take a look at. And then here's the control implementation. the important thing to test here is we're trying to test things that could produce the same output against each other. When users come to this page, I want to make sure they can submit this form and get the output that I want from each of them, which is that newsletter subscribed event.
+
+[00:09:46] So from this control one, This is a newsletter subscription form. First name and email address is exactly what we want to see the simple form, same thing. First name, email address, and then the hero form. Once again, first name and email address. So. [00:10:00] All the primitives are here. I have three different variants of this thing.
+
+[00:10:03] The next thing to do is to set this live and just record some traffic for awhile. there are some statistical minimums. We have to get a certain amount of users interacting with each one of these, to be able to say whether it worked or not. And the next part is just waiting. So we're going to spin this up on PostHog.
+
+[00:10:17] We're going to collect some data over the next week or two, however long it takes, and then we'll start to make some decisions based on that and go into the next step from there.
+
+[00:10:23] So that's all there is to it. It's a little bit of implementation. It's a little bit of work to set up the three different variants, but now I need to trust the statistics. I need to listen to what comes back from post-hoc as the experiment runs. And tweak my site design based on the data that comes back. My guess is it'll probably take about two weeks for this to come back with meaningful results. But lucky for me, I can run a couple of experiments in parallel, as long as the two different experiments don't interfere with each other. I can probably still draw a valid conclusion from it. So over the next week or so I'll watch this and I'll see what happens.
+
+## What do you think?
+
+[00:10:52] **Mike Bifulco:** If you've been hanging on for the whole series so far, I'm really curious what you think of this.
+
+[00:10:55] Is this something you would find useful for your site? Do you have an idea of experiments you'd like to run? Do you have [00:11:00] questions about this stuff?
+
+[00:11:01] I spent a bunch of my career working in design and user experience. So this sort of thing is a process that I really enjoy, but I can understand that it might be frustrating too, especially if you just want to get to results.
+
+[00:11:10] If you have questions for me, feel free to drop them in the comments. . Your ideas are always welcome here. There's no criticism too big or too small. I'd love to hear what you're thinking. Thanks so much. My name is Mike bi-fold co this is tiny improvements and we'll catch up for the next one.
+
+</details>

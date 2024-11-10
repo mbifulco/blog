@@ -80,7 +80,7 @@ const H6: React.FC<HeadingProps> = (props) => (
 );
 
 const P: React.FC<HTMLAttributes<HTMLParagraphElement>> = (props) => (
-  <p className="my-2 text-xl" {...props} />
+  <p className="text-xl" {...props} />
 );
 
 const Blockquote: React.FC<HTMLAttributes<HTMLQuoteElement>> = ({
@@ -133,13 +133,13 @@ const Aside: React.FC<AsideProps> = ({ type = 'default', ...props }) => {
   );
 };
 
-const TextHighlight = (props: HTMLProps<HTMLElement>) => (
+const TextHighlight = ({ key: _, ...rest }: HTMLProps<HTMLElement>) => (
   <mark
     className={clsxm(
       'xs inline rounded bg-pink-600 px-[0.5ch] leading-tight text-white',
-      props.className
+      rest.className
     )}
-    {...props}
+    {...rest}
   />
 );
 

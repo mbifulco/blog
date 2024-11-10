@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import Link from 'next/link';
 import useNewsletterStats from '@hooks/useNewsletterStats';
 import posthog from 'posthog-js';
@@ -9,12 +9,15 @@ import { trpc } from '@utils/trpc';
 type SubscriptionFormProps = {
   tags?: string[];
   source?: string;
+  buttonText?: string;
 };
 
 const SubscriptionForm: React.FC<SubscriptionFormProps> = ({
   tags: _,
   source,
+  buttonText = 'Subscribe',
 }) => {
+  const [getHoneypottedNerd, setGetHoneypottedNerd] = useState<boolean>(false);
   const addSubscriberMutation = trpc.mailingList.subscribe.useMutation({
     onSuccess: () => {
       refreshStats();
@@ -45,12 +48,19 @@ const SubscriptionForm: React.FC<SubscriptionFormProps> = ({
   const formRef = useRef<HTMLFormElement>(null);
   const emailRef = useRef<HTMLInputElement>(null);
   const firstNameRef = useRef<HTMLInputElement>(null);
+  const honeypotRef = useRef<HTMLInputElement>(null);
 
   const handleSubmission = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const email = emailRef.current?.value;
     const firstName = firstNameRef.current?.value;
+    const honeypot = honeypotRef.current?.value;
+
+    if (honeypot) {
+      setGetHoneypottedNerd(true);
+      return;
+    }
 
     if (!email) {
       return;
@@ -88,7 +98,7 @@ const SubscriptionForm: React.FC<SubscriptionFormProps> = ({
     );
   }
 
-  if (addSubscriberMutation.isSuccess) {
+  if (addSubscriberMutation.isSuccess || getHoneypottedNerd) {
     return (
       <div className="flex flex-col gap-2">
         <p className="text-xl font-semibold text-inherit">
@@ -115,12 +125,19 @@ const SubscriptionForm: React.FC<SubscriptionFormProps> = ({
               data-group="alert"
             ></ul>
             <div
-              className="seva-fields formkit-fields grid w-full items-center rounded md:grid-cols-3"
+              className="seva-fields formkit-fields grid w-full items-center rounded"
               data-element="fields"
               data-stacked="false"
             >
               <input
-                className="formkit-input h-10 w-full grow rounded-b-none rounded-t border border-b-0 border-solid border-pink-600 bg-white px-[2ch] py-[1ch] font-normal text-gray-950 md:rounded-l md:rounded-r-none md:border-b md:border-r-0"
+                type="text"
+                aria-label="Last Name"
+                ref={honeypotRef}
+                style={{ display: 'none' }}
+                name="fields[last_name]"
+              />
+              <input
+                className="formkit-input h-10 w-full grow rounded-b-none rounded-t border border-b-0 border-solid border-pink-600 bg-white px-[2ch] py-[1ch] font-normal text-gray-950"
                 aria-label="First Name"
                 name="fields[first_name]"
                 required
@@ -129,7 +146,7 @@ const SubscriptionForm: React.FC<SubscriptionFormProps> = ({
                 ref={firstNameRef}
               />
               <input
-                className="formkit-input h-10 w-full grow rounded-b-none border border-b-0 border-solid border-pink-600 bg-white px-[2ch] py-[1ch] font-normal text-gray-950 md:border-b"
+                className="formkit-input h-10 w-full grow rounded-b-none border border-b-0 border-solid border-pink-600 bg-white px-[2ch] py-[1ch] font-normal text-gray-950"
                 name="email_address"
                 aria-label="Email Address"
                 placeholder="Email Address"
@@ -140,14 +157,14 @@ const SubscriptionForm: React.FC<SubscriptionFormProps> = ({
               <Button
                 type="submit"
                 data-element="submit"
-                className="formkit-submit formkit-submit padding-[1ch 2ch] h-10 grow rounded-b rounded-t-none font-normal md:rounded-l-none md:rounded-r"
+                className="formkit-submit formkit-submit padding-[1ch 2ch] h-10 grow rounded-b rounded-t-none font-normal"
               >
                 <div className="formkit-spinner">
                   <div></div>
                   <div></div>
                   <div></div>
                 </div>
-                <span>💌 Subscribe</span>
+                <span>💌 {buttonText}</span>
               </Button>
             </div>
           </div>

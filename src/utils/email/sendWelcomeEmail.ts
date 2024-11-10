@@ -6,6 +6,7 @@ export const sendWelcomeEmail = async ({
   email,
 }: {
   firstName?: string;
+  lastName?: string;
   email: string;
 }) => {
   if (!email) {
