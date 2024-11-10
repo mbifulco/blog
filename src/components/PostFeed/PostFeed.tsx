@@ -14,11 +14,9 @@ const PostFeed: React.FC<PostFeedProps> = ({ posts }) => (
       if (idx === 1) {
         return (
           <div key="newsletter-wrapper">
-            {idx === 1 && (
-              <div className="max-w-full">
-                <NewsletterSignup key="newsletter" />
-              </div>
-            )}
+            <div className="max-w-full">
+              <NewsletterSignup key="newsletter" />
+            </div>
             {postEl}
           </div>
         );
