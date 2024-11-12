@@ -29,5 +29,14 @@ export const getAllPosts = async () => {
 export const getAllPostsByTag = async (tag: string) => {
   const posts = await getAllPosts();
 
-  return posts.filter((post) => post?.frontmatter?.tags?.includes(tag)) || [];
+  if (!tag) {
+    return [];
+  }
+
+  return posts.filter((post) => {
+    if (post.frontmatter.tags) {
+      return post.frontmatter.tags.includes(tag);
+    }
+    return false;
+  });
 };

@@ -9,7 +9,7 @@ import { resend } from '@utils/resend';
 
 type ConvertKitWebhookEvent = {
   data: {
-    type: 'subscriber.subscriber_activate';
+    type?: 'subscriber.subscriber_activate';
     email: string;
     firstName: string;
     lastName: string;
@@ -48,25 +48,19 @@ const webhooks = async (req: NextApiRequest, res: NextApiResponse) => {
       return res.status(400).end('No event type');
     }
 
-    switch (event.data.type) {
-      case 'subscriber.subscriber_activate':
-        // new converkit subscriber, sub 'em to Resend
-        const { email, firstName, lastName } = event.data;
+    // new converkit subscriber, sub 'em to Resend
+    const { email, firstName, lastName } = event.data;
 
-        try {
-          await resend.contacts.create({
-            audienceId: env.RESEND_NEWSLETTER_AUDIENCE_ID,
-            email,
-            firstName,
-            lastName,
-          });
-        } catch (error) {
-          console.error('Error subscribing ConvertKit subscriber to Resend:');
-          console.error(error);
-        }
-        break;
-      default:
-        console.error('ConvertKit Webhook received unknown event type:', event);
+    try {
+      await resend.contacts.create({
+        audienceId: env.RESEND_NEWSLETTER_AUDIENCE_ID,
+        email,
+        firstName,
+        lastName,
+      });
+    } catch (error) {
+      console.error('Error subscribing ConvertKit subscriber to Resend:');
+      console.error(error);
     }
 
     res.status(200).end();

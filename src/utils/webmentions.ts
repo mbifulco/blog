@@ -5,7 +5,7 @@ export type WebMention = {
   id: number;
   private: boolean;
   data: {
-    author: {
+    author?: {
       name: string;
       url: string;
       photo: string;

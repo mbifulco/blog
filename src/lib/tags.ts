@@ -17,17 +17,17 @@ export const getAllTags = async () => {
   const allNewsletters = await getAllNewsletters();
 
   allPosts.forEach((post) => {
-    post?.frontmatter?.tags?.forEach((tag) => blogPostTags.add(parseTag(tag)));
+    post.frontmatter.tags?.forEach((tag) => blogPostTags.add(parseTag(tag)));
   });
 
   allExternalReferences.forEach((externalReference: MarkdownDocument) => {
-    externalReference?.frontmatter?.tags?.forEach((tag) =>
+    externalReference.frontmatter.tags?.forEach((tag) =>
       articleTags.add(parseTag(tag))
     );
   });
 
   allNewsletters.forEach((newsletter: Newsletter) => {
-    newsletter?.frontmatter?.tags.forEach((tag) =>
+    newsletter.frontmatter.tags.forEach((tag) =>
       newsletterTags.add(parseTag(tag))
     );
   });

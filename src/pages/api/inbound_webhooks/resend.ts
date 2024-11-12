@@ -77,7 +77,7 @@ const webhooks = async (req: NextApiRequest, res: NextApiResponse) => {
 
       // Track the contact event in PostHog
       ph.capture({
-        distinctId: event.data.email ?? event.data.id,
+        distinctId: event.data.email,
         event: `resend/${event.type}`,
         properties: event.data,
       });
