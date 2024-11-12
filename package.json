@@ -5,6 +5,10 @@
   "author": "Mike Bifulco <hello@mikebifulco.com>",
   "license": "MIT",
   "packageManager": "pnpm@9.6.0",
+  "engines": {
+    "node": ">=20.10.0",
+    "pnpm": ">=9.6.0"
+  },
   "scripts": {
     "analyze": "ANALYZE=true next build",
     "build": "next build && next-sitemap",
@@ -15,8 +19,7 @@
     "start": "next start",
     "test": "pnpm exec playwright test",
     "lint": "eslint ./src ",
-    "lint-fix": "eslint ./src --fix",
-    "eslint-check": "eslint --print-config . | eslint-config-prettier-check"
+    "lint-fix": "eslint ./src --fix"
   },
   "dependencies": {
     "@cloudinary/url-gen": "^1.21.0",
