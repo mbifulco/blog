@@ -14,8 +14,7 @@
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
     "start": "next start",
     "test": "pnpm exec playwright test",
-    "lint": "eslint .",
-    "eslint-check": "eslint --print-config . | eslint-config-prettier-check"
+    "lint": "eslint ."
   },
   "dependencies": {
     "@cloudinary/url-gen": "^1.21.0",
