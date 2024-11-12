@@ -14,7 +14,7 @@
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
     "start": "next start",
     "test": "pnpm exec playwright test",
-    "lint": "next lint",
+    "lint": "eslint .",
     "eslint-check": "eslint --print-config . | eslint-config-prettier-check"
   },
   "dependencies": {
