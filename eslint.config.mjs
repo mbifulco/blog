@@ -29,7 +29,7 @@ export default [
     ],
   },
   ...compat.extends(
-    'next/core-web-vitals',
+    'plugin:@next/next/recommended',
     'plugin:@typescript-eslint/recommended-type-checked',
     'plugin:@typescript-eslint/stylistic-type-checked',
     'prettier'
@@ -37,7 +37,7 @@ export default [
   {
     plugins: {
       '@typescript-eslint': typescriptEslint,
-      'eslint-plugin-import': fixupPluginRules(_import),
+      import: fixupPluginRules(_import),
     },
 
     linterOptions: {
