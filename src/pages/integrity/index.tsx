@@ -110,7 +110,7 @@ const Shop: NextPage = () => (
             </p>
 
             <Heading as="h2" id="sponsorships">
-              Let's work together
+              Let&apos;s work together
             </Heading>
             <p>
               If you made it this far, and our values align, I&apos;d love to
