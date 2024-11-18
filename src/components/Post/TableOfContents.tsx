@@ -7,6 +7,7 @@ import clsxm from '@utils/clsxm';
 
 type TableOfContentsProps = {
   headings?: Heading[];
+  title?: string;
 };
 
 // This is a tweaked version of Alex Khomenko's useHighlighted hook.
@@ -59,13 +60,16 @@ const ToCLink: React.FC<{ heading: Heading }> = ({ heading }) => {
   );
 };
 
-const TableOfContents: React.FC<TableOfContentsProps> = ({ headings }) => {
+const TableOfContents: React.FC<TableOfContentsProps> = ({
+  headings,
+  title = 'In this article',
+}) => {
   if (!headings) return null;
   if (!headings?.length) return null;
 
   return (
     <nav className="hidden flex-col gap-2.5 rounded border px-4 py-3 text-sm shadow md:visible md:flex">
-      <HtmlHeading as="h3">In this article</HtmlHeading>
+      <HtmlHeading as="h3">{title}</HtmlHeading>
       <ol>
         {headings?.map((heading) => (
           <ToCLink heading={heading} key={heading.slug} />
