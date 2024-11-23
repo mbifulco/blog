@@ -16,8 +16,7 @@ type PostSummaryProps = {
 const PostSummary: React.FC<PostSummaryProps> = ({ post, eager = false }) => {
   const { frontmatter } = post;
 
-  const { author, coverImagePublicId, date, excerpt, path, tags, title } =
-    frontmatter;
+  const { coverImagePublicId, date, excerpt, path, tags, title } = frontmatter;
 
   const postPath = `/posts/${path}`;
 
@@ -49,7 +48,7 @@ const PostSummary: React.FC<PostSummaryProps> = ({ post, eager = false }) => {
             </Link>
           </Heading>
           <p className="text-gray-700">
-            <PublishDate date={date} /> {author && <>— Written by {author}</>}
+            <PublishDate date={date} />
           </p>
           <TagsSummary tags={tags} />
           {coverContainer}
