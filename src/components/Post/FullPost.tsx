@@ -23,7 +23,6 @@ const FullPost: React.FC<FullPostProps> = ({ post }) => {
   const { frontmatter } = post;
 
   const {
-    author,
     coverImagePublicId,
     date,
     excerpt,
@@ -87,7 +86,7 @@ const FullPost: React.FC<FullPostProps> = ({ post }) => {
               {title}
             </Heading>
             <p className="text-xs text-gray-700 dark:text-gray-400">
-              <PublishDate date={date} /> {author && <>— Written by {author}</>}
+              <PublishDate date={date} />{' '}
             </p>
 
             <TagsSummary tags={tags} />

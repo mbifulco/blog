@@ -49,7 +49,6 @@ export type BlogPost = MarkdownDocument & {
     date: string;
     excerpt: string;
     content: string;
-    author?: string;
     coverImagePublicId: string;
     published: boolean;
     path: string;
