@@ -6,7 +6,6 @@ import { getAllTags } from '@lib/tags';
 import { BASE_SITE_URL } from '@/config';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  // Define your base URL
   const baseUrl = BASE_SITE_URL;
 
   const newsletters = await getAllNewsletters();
