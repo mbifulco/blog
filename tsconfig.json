@@ -22,8 +22,14 @@
       "@layouts/*": ["src/components/layouts/*"],
       "@lib/*": ["src/lib/*"],
       "@utils/*": ["src/utils/*"],
-      "@server/*": ["src/server/*"]
-    }
+      "@server/*": ["src/server/*"],
+      "@/config": ["src/config.ts"]
+    },
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
   },
   "include": [
     "fathom.d.ts",
@@ -33,7 +39,8 @@
     "**/*.ts",
     "**/*.tsx",
     "tailwind.config.js",
-    "next.config.js"
+    "next.config.js",
+    ".next/types/**/*.ts"
   ],
   "exclude": ["node_modules"]
 }
