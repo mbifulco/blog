@@ -8,6 +8,18 @@ const noIndexPaths = [
 ];
 
 export default function robots(): MetadataRoute.Robots {
+  // if this is not a production environment, disallow all requests
+  if (process.env.NODE_ENV !== 'production') {
+    return {
+      rules: [
+        {
+          userAgent: '*',
+          disallow: '*',
+        },
+      ],
+    };
+  }
+
   return {
     rules: [
       {
