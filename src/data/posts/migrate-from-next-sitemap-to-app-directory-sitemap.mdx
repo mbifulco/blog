@@ -1,0 +1,321 @@
+---
+title: Migrate from next-sitemap to the Next.js App Directory's sitemap
+date: 2024-11-23
+tags: ['next.js', 'seo']
+path: migrate-from-next-sitemap-to-app-directory-sitemap
+coverImagePublicId: posts/migrate-from-next-sitemap-to-app-directory-sitemap/cover
+excerpt: This post walks through the process of migrating from the next-sitemap library to the Next.js App Directory's sitemap.
+---
+
+
+## Transitioning from next-sitemap to Next.js's Built-in Sitemap.xml and Robots.txt APIs
+In this post, I'll walk you through the process of migrating from the next-sitemap npm package to using Next.js's built-in API for generating sitemap.xml and robots.txt files. This transition not only simplifies our codebase but also leverages the capabilities of Next.js to enhance our SEO strategy.
+
+### Why Migrate?
+The [next-sitemap npm package](https://github.com/iamvishnusankar/next-sitemap) was a great tool for generating sitemaps, but as Next.js has evolved, it has introduced built-in support for sitemap and robots file generation. This change allows for a more streamlined approach, reducing dependencies and improving maintainability.
+
+Admittedly, I have also been a bit of a laggard in updating my site to the new app directory - this is actually the _very first_ use of App Router on this site!
+
+## What is a sitemap?
+
+A sitemap is a file that lists all the URLs on your site, helping search engines discover and index your content. It provides a roadmap for search engine crawlers to navigate your site and understand its structure. They're also used by other services like Google Search Console to understand your site's structure. If you haven't used Google Search Console,  it's an invaluable resource for measuring your site's search engine performance.
+
+I've written at length about the value of SEO, including the [SEO tools I used to grow my sites to 20k+ visitors/month](https://mikebifulco.com/posts/seo-tools-for-new-projects).
+
+## What is a robots.txt file?
+
+The robots.txt file is a configuration file used to instruct web crawlers (like Googlebot) on how to crawl your site. It allows you to specify which pages should be indexed and which should be excluded, helping control the visibility of your content to search engines. In this case, we're using robots.txt to stop search engines from indexing URLs that we don't want to show up in search results, like Next.js API routes, and other pages that are generated dynamically.
+
+## Removing the next-sitemap dependency
+
+The first step is to remove the next-sitemap dependency from your project:
+1. remove `next-sitemap` from your package.json file - make sure to check both `"scripts"` and `"devDependencies"`, and remove it from both places.
+2. run `npm install` (or `yarn install` or `pnpm install`) to update your lockfile
+3. delete your `next-sitemap.config.js` file if it exists
+4. **Important:** If you have `sitemap.xml`, `sitemap-0.xml`, etc. files in the `/public` directory of your repo, delete any that exist. Next won't generate a sitemap file if these are already there - and it can be tricky to debug!
+
+Side note: [`next-sitemap`](https://www.npmjs.com/package/next-sitemap) was a fantastic tool, and served me for quite a long time. I'm super thankful to the maintainers for their work on the package - it filled an important need for a _very_ long time!
+
+## Generating a sitemap.xml file with Next.js
+
+
+Next.js has a great built-in API for generating sitemaps and robots files. We'll use this API to generate our sitemap.xml and robots.txt files. The API is simple to use and allows for customization of the sitemap and robots file generation process.
+
+There are a couple choices for [creating a sitemap with Next.js](https://nextjs.org/docs/app/api-reference/file-conventions/metadata/sitemap#generating-a-sitemap-using-code-js-ts):
+
+1. **Write and maintain the XML for your sitemap yourself** - this may be okay for really small sites, but you will need to add an entry to this file for _every_ page you want search engines to know about. This quickly becomes cumbersome for sites with dynamic content, or even just a lot of pages.
+2. **Use Next.js's built-in API to generate the sitemap.xml file** - I am going to opt for the built-in API because my site has hundreds of pages published, and I don't want to have to maintain a sitemap file with an entry for every single page.
+
+### Configuring the sitemap.xml file
+
+Create a new file in the App directory called `sitemap.ts`:
+
+```tsx
+import type { MetadataRoute } from 'next';
+
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  return [
+    // TODO: one entry for every page you want search engines to know about
+  ];
+}
+```
+
+This file is where you will add an entry for every page you want search engines to know about. The goal is to return an array of objects of the following type:
+
+```tsx
+type SitemapFile = Array<{
+  url: string;
+  lastModified?: string | Date;
+  changeFrequency?: 'always' | 'hourly' | 'daily' | 'weekly' | 'monthly' | 'yearly' | 'never';
+  priority?: number;
+  alternates?: {
+    languages?: Languages<string>;
+  };
+}>;
+```
+
+A couple things to note here, from the [sitemap spec](https://www.sitemaps.org/protocol.html#xmlTagDefinitions):
+
+1. The `url` property is required and should be the full URL to the page you want to include in the sitemap.
+2. The `changeFrequency` property is optional and can be one of the following values: `always`, `hourly`, `daily`, `weekly`, `monthly`, `yearly`, or `never`. This is a _hint_ to search engines about how often the page is likely to change. Google and other search engines may choose to use different values than you specify if it becomes clear that your page changes at a different rate than you specify.
+3. The `priority` property is "The priority of this URL relative to other URLs on your site." It is an optional property and can be any number between 0 and 1. If you don't include it, it will default to 0.5 for every page. I recommend setting this to 1 for your homepage, and cascading it down to 0.5 for other pages, depending on their relative importance to your site. It may not actually influence search engine behavior - and it's not a guarantee that a page will rank higher just because it has a higher priority - but it is a useful hint for search engines.
+4. `alternates.languages` is a feature of Next.js that allows you to specify alternate versions of your page in different languages. This is useful if you have a blog post that is published in multiple languages, and you want to include all of the versions in your sitemap. I only publish in English (_en este momento!_), so I haven't tested this yet, and it isn't included in this tutorial.
+
+### Populating your sitemap.ts file
+
+#### Static pages
+
+For static pages on my site, I opted for a semi-manual approach to adding them to the sitemap. I created an array of strings that represent the routes I want to include in the sitemap, and then mapped over that array to create the sitemap entries.
+
+```tsx
+  // Define your static routes
+  const routes: string[] = [
+    '', // home page
+    '/about',
+    '/integrity',
+    '/newsletter',
+    '/podcast',
+    '/posts',
+    '/tags',
+    '/work',
+    '/shop',
+  ];
+
+  // Create sitemap entries for static routes
+  const staticRoutesSitemap = routes.map((route) => ({
+    url: `${baseUrl}${route}`,
+    lastModified: new Date(),
+    changeFrequency: 'weekly' as const,
+    priority: route === '' ? 1 : 0.8,
+  }));
+```
+When run, this will generate an array of sitemap entries for each of the routes in the `routes` array - note that the homepage has a priority of 1, and all other pages have a priority of 0.8.
+
+
+#### Dynamic pages
+
+For pages that are generated dynamically, or hosted by your CMS, the process isn't too different. You will need to fetch the URL of each page you want to include in the sitemap, and then create a sitemap entry for each one. In my case, I have 3 different sources of dynamic content:
+
+1. Newsletters: these are dispatches of my newsletter [💌 Tiny Improvements](https://mikebifulco.com/newsletter), which I send out every week.
+2. Blog posts: these are the blog posts I publish on this site (you're reading one right now!).
+3. Tags: These are metadata tags I use to categorize my blog posts and newsletters issues. I generate a list of all tags on the site, and then map over that list to create a sitemap entry for each one.
+
+I write all my site content in [`MDX`](https://mdxjs.com/docs/what-is-mdx/), and save them as files in my site's repo under the `src/data/` directory.
+
+I used a utility function to grab all of the newsletter issues, blog posts, and tags from the `src/data/` directory, and then mapped over each one to create a sitemap entry. For newsletters, that looks like this:
+
+```tsx
+  // this is a helper function used across my site.
+  // replace with whatever is needed to fetch from the CMS you use
+  const newsletters = await getAllNewsletters();
+
+  // create a sitemap entry for each newsletter
+  const newslettersSitemap = newsletters.map((newsletter) => ({
+    url: `${baseUrl}/newsletter/${newsletter.slug}`,
+    lastModified: new Date(newsletter.frontmatter.date),
+    changeFrequency: 'weekly' as const,
+    priority: 0.8,
+  }));
+```
+
+The same pattern is used for blog posts and tags.
+
+## Sitemap.ts: The complete file
+
+```tsx
+import type { MetadataRoute } from 'next';
+import { getAllPosts } from '@lib/blog';
+import { getAllNewsletters } from '@lib/newsletters';
+import { getAllTags } from '@lib/tags';
+
+import { BASE_SITE_URL } from '@/config';
+
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const baseUrl = BASE_SITE_URL;
+
+  const newsletters = await getAllNewsletters();
+  const newslettersSitemap = newsletters.map((newsletter) => ({
+    url: `${baseUrl}/newsletter/${newsletter.slug}`,
+    lastModified: new Date(newsletter.frontmatter.date),
+    changeFrequency: 'weekly' as const,
+    priority: 0.8,
+  }));
+
+  const posts = await getAllPosts();
+  const postsSitemap = posts.map((post) => ({
+    url: `${baseUrl}/blog/${post.slug}`,
+    lastModified: new Date(post.frontmatter.date),
+    changeFrequency: 'weekly' as const,
+    priority: 0.8,
+  }));
+
+  const { allTags } = await getAllTags();
+  const tagsSitemap = allTags.map((tag) => ({
+    url: `${baseUrl}/tags/${tag}`,
+    lastModified: new Date(),
+    changeFrequency: 'weekly' as const,
+    priority: 0.5,
+  }));
+
+  // Define your static routes
+  const routes: string[] = [
+    '', // home page
+    '/about',
+    '/integrity',
+    '/newsletter',
+    '/podcast',
+    '/posts',
+    '/tags',
+    '/work',
+    '/shop',
+  ];
+
+  // Create sitemap entries for static routes
+  const staticRoutesSitemap = routes.map((route) => ({
+    url: `${baseUrl}${route}`,
+    lastModified: new Date(),
+    changeFrequency: 'weekly' as const,
+    priority: route === '' ? 1 : 0.8,
+  }));
+
+  // combine all the sitemap entries into a single array
+  return [
+    ...staticRoutesSitemap,
+    ...newslettersSitemap,
+    ...postsSitemap,
+    ...tagsSitemap,
+  ];
+}
+```
+
+### Testing your sitemap
+
+Fire up `next dev` and navigate to `/sitemap.xml` - you should see your sitemap! Make double and triple sure that your sitemap has an entry for every single page you want search engines to know about. You may also want to check that it _updates_ correctly by adding a new page and checking that it appears in the sitemap.
+
+<Aside type="warning">
+
+  If it doesn't seem like your sitemap is updating correctly, **remember to check your `/public` directory for sitemap.xml files** that may have been generated by `next-sitemap`, and delete them!
+
+</Aside>
+
+
+## Creating a robots.txt file
+
+Next up, robots.txt. This is a _very_ similar process - we will follow the [docs for robots.txt](https://nextjs.org/docs/app/api-reference/file-conventions/metadata/robots) from Next.js.
+
+This is a deceptively important file for your website's SEO. It is a really good idea to familiarize yourself with the [robots.txt file format](https://www.robotstxt.org/robotstxt.html), and to understand the meaning of each rule you set.
+
+### Disallow everything for non-production environments
+
+**🚨 Important: ** If you are running a non-production environment, you will need to add a check to your robots.ts file to disallow all requests. This is because non-production environments often have URLs that you don't want search engines to index - it would be bad news if Google decided that a deploy preview of your site should rank higher than your production site!
+
+
+### Robots.ts: The complete file
+
+Much like static pages for the sitemap, you will need to add an entry for every path you don't want search engines to index.
+In my case, I have a reverse proxy in front of my site that handles analytics and logging with PostHog, and I don't want search engines to index those URLs.
+You'll see that handled below with `noIndexPaths`.
+
+```tsx
+import type { MetadataRoute } from 'next';
+
+import { BASE_SITE_URL } from '@/config';
+
+const noIndexPaths = [
+  '/ingest', // posthog's reverse proxy
+  '/ingest/*', // posthog's reverse proxy
+];
+
+export default function robots(): MetadataRoute.Robots {
+  // 🚨 IMPORTANT: if this is not a production environment, disallow all requests
+  if (
+    // Vercel-specific environment variable. Please check the docs for your hosting provider!
+    env.VERCEL_ENV !== 'production' ||
+    // for a generic node environment
+    process.env.NODE_ENV !== 'production'
+  ) {
+    return {
+      rules: [
+        {
+          userAgent: '*',
+          disallow: '*',
+        },
+      ],
+    };
+  }
+
+  return {
+    rules: [
+      {
+        userAgent: '*',
+        disallow: '/api/', // Next.js API routes
+      },
+      {
+        userAgent: '*',
+        disallow: '/_next/', // Next.js build output
+      },
+      {
+        userAgent: '*',
+        disallow: '/public/', // static files like css, images, fonts. This one's up to you!
+      },
+      ...noIndexPaths.map((path) => ({
+        userAgent: '*',
+        disallow: path,
+      })),
+    ],
+    sitemap: `${BASE_SITE_URL}/sitemap.xml`,
+  };
+}
+```
+
+A few important callouts here: `BASE_SITE_URL` is a variable I set in my site's config, and it is the full URL to the root of my site (`https://mikebifulco.com`). You will need to replace it with the actual URL of your site.
+
+## Deployment checklist
+
+Now that everything's done, make absolutely sure you've got everything configured correctly. Here's a quick checklist I used to verify that my new sitemap and robots.txt were set up correctly:
+
+
+**Before going live**, verify that:
+- robots.txt
+  - [ ] visit `/robots.txt` and verify that it exists
+  - [ ] check that there is an entry for your sitemap that contains a full URL, including the protocol (`https://`)
+  - [ ] read through the disallow rules to make sure they make sense for your site. If you're using next.js, this will include `/_next/` at a minimum, and possibly `api/` and `public/` if don't want those directories indexed.
+- sitemap.xml
+  - [ ] visit `/sitemap.xml` and verify that it exists
+  - check that it contains the correct entries for all:
+    - [ ] static pages
+    - [ ] dynamic pages (newsletters, blog posts, tags)
+
+**While testing deploy previews of your site**, verify that:
+- [ ] your sitemap is being generated correctly
+- [ ] your robots.txt is being generated so that it **disallows all requests** in deploy previews
+
+**After going live**, check that:
+- [ ] your sitemap is being picked up and read by [Google Search Console](https://search.google.com/search-console)
+- [ ] use something like the [Ahrefs Webmaster Tools Site Audit](https://ahrefs.com/signup?plan=awt&return=website-checker) to scan your site and verify that it is indexed correctly and that there aren't any issues.
+
+And that's it! You've successfully migrated from the next-sitemap library to Next.js's built-in sitemap and robots.txt APIs.
+
+## See the code changes I made to my site
+
+If you're curious to see the code changes I made to my site to implement this, you can [view the diff on GitHub](https://github.com/mbifulco/blog/pull/894/files).
