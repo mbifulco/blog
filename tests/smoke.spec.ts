@@ -19,3 +19,13 @@ test('tags smoke test', async ({ page }) => {
   await page.goto('/tags');
   expect(true).toBe(true);
 });
+
+test('sitemap smoke test', async ({ page }) => {
+  await page.goto('/sitemap.xml');
+  expect(true).toBe(true);
+});
+
+test('robots smoke test', async ({ page }) => {
+  await page.goto('/robots.txt');
+  expect(true).toBe(true);
+});
