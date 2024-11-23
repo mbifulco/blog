@@ -1,4 +1,4 @@
-const BASE_SITE_URL = 'https://mikebifulco.com';
+export const BASE_SITE_URL = 'https://mikebifulco.com';
 
 const config = {
   employer: {

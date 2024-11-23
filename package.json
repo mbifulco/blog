@@ -7,8 +7,7 @@
   "packageManager": "pnpm@9.6.0",
   "scripts": {
     "analyze": "ANALYZE=true next build",
-    "build": "next build && next-sitemap",
-    "postbuild": "next-sitemap",
+    "build": "next build",
     "dev": "NODE_OPTIONS='--inspect' next dev --turbo",
     "email": "email dev --dir ./src/utils/email/templates",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
@@ -99,7 +98,6 @@
     "eslint-plugin-react-hooks": "^5.0.0",
     "github-slugger": "^2.0.0",
     "jiti": "^2.4.0",
-    "next-sitemap": "^4.2.3",
     "prettier": "^3.3.3",
     "prettier-plugin-tailwindcss": "^0.6.9",
     "schema-dts": "^1.1.2",
