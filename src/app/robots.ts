@@ -1,5 +1,6 @@
 import type { MetadataRoute } from 'next';
 
+import { env } from '@utils/env';
 import { BASE_SITE_URL } from '@/config';
 
 const noIndexPaths = [
@@ -9,7 +10,10 @@ const noIndexPaths = [
 
 export default function robots(): MetadataRoute.Robots {
   // if this is not a production environment, disallow all requests
-  if (process.env.NODE_ENV !== 'production') {
+  if (
+    env.VERCEL_ENV !== 'production' ||
+    process.env.NODE_ENV !== 'production'
+  ) {
     return {
       rules: [
         {
