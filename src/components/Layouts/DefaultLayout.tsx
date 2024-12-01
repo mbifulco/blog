@@ -1,3 +1,5 @@
+'use client';
+
 import Navbar from '@components/Navbar/Navbar';
 import { SiteAnnouncement } from '@components/SiteAnnouncement';
 import MDXProviderWrapper from '../../utils/MDXProviderWrapper';
@@ -8,7 +10,7 @@ const DefaultLayout: React.FC<{ children?: React.ReactNode }> = ({
   children,
 }) => {
   return (
-    <MDXProviderWrapper>
+    <main>
       <div className="absolute top-[-5px] z-[100] h-6 w-full bg-pink-400" />
       <SiteAnnouncement />
       <div className="w-full pt-8 md:pt-14">
@@ -16,13 +18,13 @@ const DefaultLayout: React.FC<{ children?: React.ReactNode }> = ({
           <Navbar />
 
           <div className="flex flex-col">
-            {children}
+            <MDXProviderWrapper>{children}</MDXProviderWrapper>
             <Footer />
           </div>
         </div>
       </div>
       <PolitePop />
-    </MDXProviderWrapper>
+    </main>
   );
 };
 

@@ -1,4 +1,6 @@
 /* eslint-disable jsx-a11y/alt-text */
+'use client';
+
 import { useState } from 'react';
 
 import { Slider as LocalSlider } from '../Slider';
