@@ -1,18 +1,14 @@
-import { useEffect } from 'react';
 import type { AppProps } from 'next/app';
-import { useRouter } from 'next/router';
-import * as Fathom from 'fathom-client';
 import posthog from 'posthog-js';
 import { PostHogProvider } from 'posthog-js/react';
 
+import FathomAnalytics from '@components/Analytics/Fathom';
+import DefaultLayout from '@components/Layouts/DefaultLayout';
 import { env } from '@utils/env';
-import { AnalyticsProvider } from '../utils/analytics';
+import { trpc } from '@utils/trpc';
 
 import '../styles/globals.css';
 import '../components/CarbonAd/CarbonAd.css';
-
-import { trpc } from '@utils/trpc';
-import DefaultLayout from '../components/Layouts/DefaultLayout';
 
 // Check that PostHog is client-side (used to handle Next.js SSR)
 if (typeof window !== 'undefined') {
@@ -27,35 +23,12 @@ if (typeof window !== 'undefined') {
 }
 
 function MyApp({ Component, pageProps }: AppProps) {
-  const router = useRouter();
-
-  useEffect(() => {
-    if (process.env.NODE_ENV !== 'production') return;
-    Fathom.load(env.NEXT_PUBLIC_FATHOM_ID, {
-      includedDomains: ['mikebifulco.com', 'www.mikebifulco.com'],
-      url: 'https://cdn.usefathom.com/script.js',
-    });
-
-    function onRouteChangeComplete() {
-      Fathom.trackPageview();
-      posthog?.capture('$pageview');
-    }
-    // Record a pageview when route changes
-    router.events.on('routeChangeComplete', onRouteChangeComplete);
-
-    // Unassign event listener
-    return () => {
-      router.events.off('routeChangeComplete', onRouteChangeComplete);
-    };
-  });
-
   return (
     <PostHogProvider client={posthog}>
-      <AnalyticsProvider>
-        <DefaultLayout>
-          <Component {...pageProps} />
-        </DefaultLayout>
-      </AnalyticsProvider>
+      <DefaultLayout>
+        <FathomAnalytics siteId={env.NEXT_PUBLIC_FATHOM_ID} />
+        <Component {...pageProps} />
+      </DefaultLayout>
     </PostHogProvider>
   );
 }
