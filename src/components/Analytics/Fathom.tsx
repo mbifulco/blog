@@ -18,7 +18,6 @@ const FathomPagesRouter = ({ siteId }: { siteId: string }) => {
       includedDomains: FATHOM_DOMAINS,
       url: 'https://cdn.usefathom.com/script.js',
     });
-    console.log('Fathom loaded pages router');
     function onRouteChangeComplete() {
       Fathom.trackPageview();
       posthog?.capture('$pageview');
@@ -76,7 +75,6 @@ type FathomAnalyticsProps = {
 };
 export const FathomAnalytics = ({ siteId }: FathomAnalyticsProps) => {
   const routerType = useRouterType();
-  console.log('routerType', routerType);
   if (routerType === 'pages') {
     return <FathomPagesRouter siteId={siteId} />;
   }
