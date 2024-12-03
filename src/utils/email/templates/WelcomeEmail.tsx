@@ -61,7 +61,7 @@ export const WelcomeEmail = ({ firstName }: WelcomeEmailProps) => {
                       better products.
                     </li>
                     <li style={paragraph}>
-                      <b>Straight Talk:</b>I keep things honest and practical,
+                      <b>Straight Talk:</b> I keep things honest and practical,
                       based on my experience as a startup founder, and working
                       at companies like Google, Stripe, and Microsoft.
                     </li>
