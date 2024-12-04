@@ -1,3 +1,5 @@
+import { render } from '@react-email/render';
+
 import { resend } from '../resend';
 import { WelcomeEmail } from './templates/WelcomeEmail';
 
@@ -14,11 +16,13 @@ export const sendWelcomeEmail = async ({
     return;
   }
 
+  const WelcomeMessage = <WelcomeEmail firstName={firstName} />;
   const { data, error } = await resend.emails.send({
     from: '💌 Tiny Improvements <hello@mikebifulco.com>',
     to: [email],
     subject: "Subscription confirmed. I'm so glad you're here!",
-    react: WelcomeEmail({ firstName }),
+    react: WelcomeMessage,
+    text: await render(WelcomeMessage, { plainText: true }),
   });
 
   if (error) {
