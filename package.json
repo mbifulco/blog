@@ -28,6 +28,7 @@
     "@next/bundle-analyzer": "^14.2.15",
     "@next/mdx": "^15.0.3",
     "@react-email/components": "^0.0.28",
+    "@react-email/render": "^1.0.3",
     "@t3-oss/env-core": "^0.11.1",
     "@t3-oss/env-nextjs": "^0.11.1",
     "@tailwindcss/typography": "^0.5.15",
