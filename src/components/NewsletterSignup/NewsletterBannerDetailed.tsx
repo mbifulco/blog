@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import useNewsletterStats from '@hooks/useNewsletterStats';
 import { Code, CornerRightDown, Rocket, Zap } from 'lucide-react';
 import { usePostHog } from 'posthog-js/react';
 
@@ -11,7 +10,6 @@ import SubscriberCount from './SubscriberCount';
 
 const NewsletterBannerDetailed = () => {
   const posthog = usePostHog();
-  const { subscriberCount } = useNewsletterStats();
   const [titleIndex, setTitleIndex] = useState(0);
 
   // calculate the number of days until the next Tuesday
