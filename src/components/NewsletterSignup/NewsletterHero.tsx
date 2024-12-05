@@ -1,12 +1,9 @@
-import useNewsletterStats from '@hooks/useNewsletterStats';
-
 import { Heading } from '@components/Heading';
 import { Image } from '@components/Image';
 import { SubscriptionForm } from '@components/SubscriptionForm';
+import SubscriberCount from './SubscriberCount';
 
 const NewsletterHero = () => {
-  const { subscriberCount } = useNewsletterStats();
-
   return (
     <section
       className="-ml-4 w-screen bg-gray-950 py-0"
@@ -51,8 +48,7 @@ const NewsletterHero = () => {
                   <p className="max-w-[600px] text-lg">
                     Join{' '}
                     <span className="text-pink-400">
-                      {subscriberCount ? <span>{subscriberCount}</span> : 'the'}{' '}
-                      other product builders
+                      <SubscriberCount /> other product builders
                     </span>
                     {', '}
                     and start shipping today!

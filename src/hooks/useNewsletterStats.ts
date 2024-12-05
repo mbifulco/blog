@@ -8,7 +8,7 @@ const useNewsletterStats = () => {
   const { data: subscriberCount } = subscriberCountQuery;
 
   return {
-    subscriberCount: subscriberCount?.subscribers,
+    subscriberCount: subscriberCount?.subscribers ?? 900,
     refreshStats: () => {
       void subscriberCountQuery.refetch();
     },

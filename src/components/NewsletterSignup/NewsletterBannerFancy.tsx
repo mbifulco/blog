@@ -1,13 +1,11 @@
-import useNewsletterStats from '@hooks/useNewsletterStats';
-
 import config from '../../config';
 import { Heading } from '../Heading';
 import { Headshot } from '../Headshot';
 import SponsorCTA from '../SponsorCTA/SponsorCTA';
 import { SubscriptionForm } from '../SubscriptionForm';
+import SubscriberCount from './SubscriberCount';
 
 const NewsletterSignup: React.FC = () => {
-  const { subscriberCount } = useNewsletterStats();
   return (
     <div className="mb-4 flex flex-row text-justify">
       <div className="mx-auto my-0 flex max-w-[800px] flex-col justify-center border border-solid border-gray-200 bg-white px-8 py-4">
@@ -21,7 +19,7 @@ const NewsletterSignup: React.FC = () => {
           <p className="font-futura font-bold uppercase">
             Subscribe and join{' '}
             <span className="text-pink-600">
-              {subscriberCount ? `🔥 ${subscriberCount}` : ''}
+              🔥 <SubscriberCount />{' '}
             </span>{' '}
             other builders
           </p>
