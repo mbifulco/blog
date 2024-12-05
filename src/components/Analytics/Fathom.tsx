@@ -43,7 +43,7 @@ export const TrackPageView = ({ siteId }: { siteId: string }) => {
     Fathom.load(siteId, {
       auto: false,
     });
-  }, []);
+  });
 
   // Record a pageview when route changes
   useEffect(() => {
