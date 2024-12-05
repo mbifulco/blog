@@ -1,11 +1,10 @@
 import React from 'react';
-import useNewsletterStats from '@hooks/useNewsletterStats';
 
 import config from '../../config';
 import { SubscriptionForm } from '../SubscriptionForm';
+import SubscriberCount from './SubscriberCount';
 
 const SimpleNewsletterBanner: React.FC = () => {
-  const { subscriberCount } = useNewsletterStats();
   return (
     <div className="mx-auto max-w-screen-xl py-8">
       <div className="items-center justify-between gap-16 rounded-lg bg-gray-700 p-8 text-white lg:flex lg:gap-24">
@@ -17,7 +16,7 @@ const SimpleNewsletterBanner: React.FC = () => {
             <p>
               Join{' '}
               <span className="text-xl font-extrabold text-pink-600">
-                {subscriberCount ?? ''}
+                <SubscriberCount />
               </span>{' '}
               other product builders, indie hackers, and startup founders.
             </p>

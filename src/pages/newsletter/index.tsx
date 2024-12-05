@@ -1,13 +1,13 @@
 import type { GetStaticProps } from 'next';
-import useNewsletterStats from '@hooks/useNewsletterStats';
 
 import { Heading } from '@components/Heading';
-import NewsletterItem from '../../components/NewsletterFeed/NewsletterItem';
-import NewsletterSignup from '../../components/NewsletterSignup';
-import SEO from '../../components/seo';
-import SponsorCTA from '../../components/SponsorCTA/SponsorCTA';
-import { SubscriptionForm } from '../../components/SubscriptionForm';
-import { Subtitle } from '../../components/Subtitle';
+import NewsletterItem from '@components/NewsletterFeed/NewsletterItem';
+import NewsletterSignup from '@components/NewsletterSignup';
+import SubscriberCount from '@components/NewsletterSignup/SubscriberCount';
+import SEO from '@components/seo';
+import SponsorCTA from '@components/SponsorCTA/SponsorCTA';
+import { SubscriptionForm } from '@components/SubscriptionForm';
+import { Subtitle } from '@components/Subtitle';
 import config from '../../config';
 import type { Newsletter } from '../../data/content-types';
 import { getAllNewsletters } from '../../lib/newsletters';
@@ -27,8 +27,6 @@ type NewsletterPageProps = {
 };
 
 const NewsletterPage: React.FC<NewsletterPageProps> = ({ newsletters }) => {
-  const { subscriberCount } = useNewsletterStats();
-
   const [latestNewsletter, ...pastNewsletters] = newsletters;
 
   return (
@@ -54,7 +52,7 @@ const NewsletterPage: React.FC<NewsletterPageProps> = ({ newsletters }) => {
         <p className="text-xl">
           Join{' '}
           <span style={{ fontWeight: 'bold' }}>
-            {subscriberCount ?? 'the'} other product builders
+            <SubscriberCount /> other product builders
           </span>{' '}
           and get it delivered straight to your inbox by filling out this happy
           lil&apos; form:

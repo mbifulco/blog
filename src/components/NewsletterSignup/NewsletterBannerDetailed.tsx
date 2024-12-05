@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import useNewsletterStats from '@hooks/useNewsletterStats';
 import { Code, CornerRightDown, Rocket, Zap } from 'lucide-react';
 import { usePostHog } from 'posthog-js/react';
 
@@ -7,10 +6,10 @@ import { Avatar } from '@components/Avatar';
 import { Badge } from '@components/Badge';
 import { Headshot } from '@components/Headshot';
 import { SubscriptionForm } from '@components/SubscriptionForm';
+import SubscriberCount from './SubscriberCount';
 
 const NewsletterBannerDetailed = () => {
   const posthog = usePostHog();
-  const { subscriberCount } = useNewsletterStats();
   const [titleIndex, setTitleIndex] = useState(0);
 
   // calculate the number of days until the next Tuesday
@@ -89,7 +88,7 @@ const NewsletterBannerDetailed = () => {
             <p className="mb-2 text-gray-500">
               Join{' '}
               <span className="font-bold text-pink-600">
-                {subscriberCount ?? 'thousands of'}
+                <SubscriberCount />
               </span>{' '}
               developers, founders, and product builders getting smarter every
               week.

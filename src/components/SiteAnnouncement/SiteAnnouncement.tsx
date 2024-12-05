@@ -1,14 +1,12 @@
 import Link from 'next/link';
-import useNewsletterStats from '@hooks/useNewsletterStats';
 
+import SubscriberCount from '@components/NewsletterSignup/SubscriberCount';
 import clsxm from '@utils/clsxm';
 
 type SiteAnnouncementProps = {
   className?: string;
 };
 const SiteAnnouncement: React.FC<SiteAnnouncementProps> = ({ className }) => {
-  const { subscriberCount } = useNewsletterStats();
-
   return (
     <div
       className={clsxm(
@@ -32,7 +30,7 @@ const SiteAnnouncement: React.FC<SiteAnnouncementProps> = ({ className }) => {
           Join
           <span className="font-bold text-pink-600">
             {' '}
-            {subscriberCount ?? 'other'} builders{' '}
+            <SubscriberCount /> other builders{' '}
           </span>
           &mdash; Get tips from a YC startup founder & ex-Googler. Subscribe to
           💌 Tiny Improvements
