@@ -7,12 +7,24 @@ const useNewsletterStats = () => {
 
   const { data: subscriberCount } = subscriberCountQuery;
 
+  const randomMax = 987;
+  const randomMin = 931;
+  const COUNT_TO_SHOW_WHILE_LOADING = getRandomNumberBetween(
+    randomMin,
+    randomMax
+  );
+
   return {
-    subscriberCount: subscriberCount?.subscribers ?? 900,
+    subscriberCount:
+      subscriberCount?.subscribers ?? COUNT_TO_SHOW_WHILE_LOADING,
     refreshStats: () => {
       void subscriberCountQuery.refetch();
     },
   };
+};
+
+const getRandomNumberBetween = (min: number, max: number) => {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 
 export default useNewsletterStats;
