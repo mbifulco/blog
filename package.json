@@ -91,7 +91,7 @@
     "@typescript-eslint/eslint-plugin": "^8.17.0",
     "@typescript-eslint/parser": "^8.17.0",
     "eslint": "8.57.0",
-    "eslint-config-next": "^14.2.15",
+    "eslint-config-next": "^15.0.4",
     "eslint-config-prettier": "^9.1.0",
     "eslint-config-turbo": "^2.3.3",
     "eslint-plugin-import": "^2.31.0",
