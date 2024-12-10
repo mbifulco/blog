@@ -157,7 +157,7 @@ type PreProps = {
 };
 
 const Pre: React.FC<PreProps> = ({ children }) => {
-  const firstChild = Children.toArray(children)[0] as ReactElement;
+  const firstChild = Children.toArray(children)[0] as ReactElement<unknown>;
 
   if (!React.isValidElement(firstChild)) {
     return null;
