@@ -81,6 +81,7 @@
     "zod": "^3.24.0"
   },
   "devDependencies": {
+    "@eslint/js": "^9.16.0",
     "@ianvs/prettier-plugin-sort-imports": "^4.4.0",
     "@next/eslint-plugin-next": "15.1.0",
     "@playwright/test": "^1.49.1",
@@ -90,21 +91,24 @@
     "@types/react": "19.0.1",
     "@typescript-eslint/eslint-plugin": "^8.18.0",
     "@typescript-eslint/parser": "^8.18.0",
-    "eslint": "8.57.0",
+    "eslint": "9.16.0",
     "eslint-config-next": "15.1.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-config-turbo": "^2.3.3",
     "eslint-plugin-import": "^2.31.0",
     "eslint-plugin-jsx-a11y": "^6.10.2",
     "eslint-plugin-react": "^7.37.2",
+    "eslint-plugin-react-compiler": "19.0.0-beta-37ed2a7-20241206",
     "eslint-plugin-react-hooks": "^5.1.0",
+    "eslint-plugin-unused-imports": "^4.1.4",
     "github-slugger": "^2.0.0",
     "jiti": "^2.4.1",
     "prettier": "^3.4.2",
     "prettier-plugin-tailwindcss": "^0.6.9",
     "schema-dts": "^1.1.2",
     "tailwindcss": "^3.4.16",
-    "typescript": "5.7.2"
+    "typescript": "5.7.2",
+    "typescript-eslint": "^8.18.0"
   },
   "repository": {
     "type": "git",

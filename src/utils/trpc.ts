@@ -18,7 +18,7 @@ function getBaseUrl() {
 }
 
 export const trpc = createTRPCNext<AppRouter>({
-  config(_opts) {
+  config(/* opts */) {
     return {
       links: [
         loggerLink({
