@@ -49,7 +49,7 @@ const webhooks = async (req: NextApiRequest, res: NextApiResponse) => {
     }
 
     switch (event.data.type) {
-      case 'subscriber.subscriber_activate':
+      case 'subscriber.subscriber_activate': {
         // new converkit subscriber, sub 'em to Resend
         const { email, firstName, lastName } = event.data;
 
@@ -65,6 +65,7 @@ const webhooks = async (req: NextApiRequest, res: NextApiResponse) => {
           console.error(error);
         }
         break;
+      }
       default:
         console.error('ConvertKit Webhook received unknown event type:', event);
     }

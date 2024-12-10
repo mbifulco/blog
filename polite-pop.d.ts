@@ -1,4 +1,4 @@
-declare function PolitePop(config: any): any;
+declare function PolitePop(config: unknown): unknown;
 declare namespace PolitePop {
-  function onNewEmailSignup(callback: any): void;
+  function onNewEmailSignup(callback: unknown): void;
 }

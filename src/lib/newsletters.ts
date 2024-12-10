@@ -32,5 +32,5 @@ export const getAllNewsletters = async () => {
 export const getAllNewslettersByTag = async (tag: string) => {
   const refs = await getAllNewsletters();
 
-  return refs.filter((article) => [...article.frontmatter?.tags].includes(tag));
+  return refs.filter((article) => [...article.frontmatter.tags].includes(tag));
 };
