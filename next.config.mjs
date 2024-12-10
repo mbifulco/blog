@@ -1,5 +1,5 @@
 import withBundleAnalyzer from '@next/bundle-analyzer';
-import createJiti from 'jiti';
+import { createJiti } from 'jiti';
 
 const jiti = createJiti(new URL(import.meta.url).pathname);
 
