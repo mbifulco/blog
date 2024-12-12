@@ -21,10 +21,16 @@ export const getNewsletterBySlug = async (slug: string) => {
 };
 
 export const getAllNewsletters = async () => {
-  const newsletters = (await getAllContentFromDirectory(
+  let newsletters = (await getAllContentFromDirectory(
     newslettersDirectory,
     NEWSLETTERS_CONTENT_TYPE
   )) as Newsletter[];
+
+  // filter out newsletters that don't have a slug
+  newsletters = newsletters.filter(
+    (newsletter) => newsletter.frontmatter?.slug
+  );
+  console.log(`returned ${newsletters.length} newsletters`);
 
   return newsletters;
 };
