@@ -7,7 +7,6 @@ coverImagePublicId: posts/self-healing-urls-nextjs-seo/cover
 path: self-healing-urls-nextjs-seo
 ---
 
-
 <small>
 
 _note: This post is inspired by a great video from YouTuber Aaron Francis: [Make self-healing URLs with Laravel](https://www.youtube.com/watch?v=a6lnfyES-LA). For all my PHP homies - go check that video out. It's great!_
@@ -117,7 +116,7 @@ export const getAllPosts = async () => {
   // this is just a placeholder, replace with your own data
   // shout out to https://jsonplaceholder.typicode.com/ - what a great service!
   const postsResponse = await fetch(
-    'https://jsonplaceholder.typicode.com/posts',
+    'https://jsonplaceholder.typicode.com/posts'
   );
   const posts = (await postsResponse.json()) as Post[];
 
@@ -169,7 +168,6 @@ export const getPostSlug = (post: Post) => {
 
 // given any slug, try to extract an id from it
 export const getIdFromSlug = (slug: string) => slug.split('-').pop();
-
 ```
 
 ### Generate a sitemap with the correct canonical URL for each post
@@ -186,12 +184,12 @@ A canonical tag looks like this:
 <link rel="canonical" href="https://example.com/foo/bar" />
 ```
 
-
 So, this is what sitemap.ts looks like:
 
 ```ts
-import { getAllPosts, getPostSlug } from '@/utils/posts';
 import { MetadataRoute } from 'next';
+
+import { getAllPosts, getPostSlug } from '@/utils/posts';
 
 export default async function sitemap(): MetadataRoute.Sitemap {
   const allPosts = await getAllPosts();
@@ -212,7 +210,6 @@ export default async function sitemap(): MetadataRoute.Sitemap {
 
 Now, if you run your app and visit `https://localhost:3000/sitemap.xml`, you should see a sitemap that includes an entry for each post, with the correct canonical URL specified.
 
-
 ### Setting up page.tsx: where the magic happens
 
 In the file `app/posts/[slug]/page.tsx`, we use the [Next.js App Router's `generateStaticParams` function](https://nextjs.org/docs/app/building-your-application/routing/dynamic-routes#generating-static-params) to generate URLs for all posts. This function is called at build time, and it returns an array of objects that contain the `slug` for each post. The `slug` is used to generate the URL for each post page.
@@ -220,7 +217,6 @@ In the file `app/posts/[slug]/page.tsx`, we use the [Next.js App Router's `gener
 Then, in the server function which renders the post page, we check whether the current URL's readable portion matches the post's actual slug. If not, we redirect to the correct URL.
 
 We also use the [Next.js App Router's `generateMetadata` function](https://nextjs.org/docs/app/next-script#generating-metadata) to generate metadata for each post. This function is called at build time, and it returns an object that contains the `title` and `alternates` for each post. The `alternates` object contains the `canonical` URL for each post, which is used to tell search engines which URL is the correct one for each post. **This is critical for SEO purposes** - it helps Google verify that when your page loads, the URL in the address bar matches the URL that Google has indexed for that page.
-
 
 ```tsx
 import { Metadata, ResolvingMetadata } from 'next';
@@ -301,8 +297,6 @@ Another important note - _entire_ component is rendered server-side - visitors t
 
 Instead of a screen flash, your users get a great experience: they can try to load an incorrect URL, and as long as the URL ends with a hyphen followed by the `id`, they'll be redirected to the correct URL seamlessly, like magic. If the URL doesn't match the pattern, they'll be redirected to the 404 page.
 
-
-
 ### Not Found: a 404 page for posts that don't exist
 
 In `app/not-found.tsx`, create a 404 page that will render if someone tries to visit a post page with an id that doesn't exist in the url. [Next provides a `notFound` function](https://nextjs.org/docs/app/api-reference/functions/not-found) that will return a 404 page. We used this in page.tsx to return a 404 page if the post doesn't exist. You'll want to make this page look nice and include some helpful text, but for the sake of this example, we'll keep it simple:
@@ -343,7 +337,6 @@ Because making this work is dependent on your specific setup, I'm not going to i
 - It's a good to make sure that you don't accidentally create a redirect loop. If the new URL for a given path is the same as any of the prior URLs, don't add a new redirect, and remove any existing redirects for that path.
 - You may need to kick off a rebuild of your site to make sure that the new redirect is picked up by your app. If you're using Vercel, you can use their [API to trigger a rebuild](https://vercel.com/docs/api#endpoints/deployments/redeploy-all-deployments) when a post is saved.
 
-
 ## Summary: self-healing URLs in Next.js
 
 In this post, we learned how to set up self-healing URLs in Next.js. We used the App Router to generate URLs for all posts, and we used the App Router's `generateMetadata` function to generate metadata for each post. This function is called at build time, and it returns an object that contains the `title` and `alternates` for each post. The `alternates` object contains the `canonical` URL for each post, which is used to tell search engines which URL is the correct one for each post. **This is great for SEO purposes** - it helps Google verify that when your page loads, the URL in the address bar matches the URL that Google has indexed for that page. It also has usability benefits: if your post's title ever changes, the URL will magically update itself to match the new title. Additionally, people who visit your page while using a screen reader will have a better experience, because the URL will always match the content on the page.
@@ -354,9 +347,6 @@ Not too shabby!
 
 You can find the code for this tutorial on [GitHub at mbifulco/next-self-healing-urls-app-router](https://github.com/mbifulco/next-self-healing-urls-app-router). If you enjoyed this post, please consider giving it a star ⭐️ on GitHub!
 
-
 ## PS: What about using the Next.js Pages router?
 
 This post _started_ as a tutorial for using the Next.js Pages router to create self-healing URLs, but I ran into a few issues that would make it really challenging to recommend going down this path if you're using the pages router (which is actually what [mikebifulco.com uses](https://github.com/mbifulco/blog)!). For that reason, I think **this is a feature you should only add if you're using the App Router**. I'm including the draft of my original post here [in a gist](https://gist.github.com/mbifulco/daf23aed0d827ec6317962691cb9cd0d) in case anyone wants to take a stab at it. If you figure it out, please let me know!
-
-

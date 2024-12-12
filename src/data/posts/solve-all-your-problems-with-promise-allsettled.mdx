@@ -1,8 +1,8 @@
 ---
-title: "Solve* all your problems with Promise.allSettled()"
-type: post
+title: 'Solve* all your problems with Promise.allSettled()'
+
 date: 04-12-2019
-excerpt: "Promise.allSettled() is a new API coming to the JavaScript / ES6 standard which can help you more efficiently build node applications that make simultaneous asynchronous API calls"
+excerpt: 'Promise.allSettled() is a new API coming to the JavaScript / ES6 standard which can help you more efficiently build node applications that make simultaneous asynchronous API calls'
 published: true
 path: solve-all-your-problems-with-promise-allsettled
 tags: [javascript, dev, react]
@@ -15,36 +15,37 @@ Of late, I've found myself building JavaScript web applications with increasing 
 Check out this somewhat-contrived example, wherein we asynchronously load comments on a blog post:
 
 ```js
-  const loadComments = new Promise((resolve, reject) => {
-    // run an asynchronous API call
-    BlogEngine.loadCommentsForPost({ id: '12345' })
-      .then(comments => {
-    // Everything worked! Return this promise with the comments we got back.
-    resolve(comments)
-      })
-      .error(err => {
-    // something went wrong - send the error back
-    reject(new Error(err))
-      })
-  })
+const loadComments = new Promise((resolve, reject) => {
+  // run an asynchronous API call
+  BlogEngine.loadCommentsForPost({ id: '12345' })
+    .then((comments) => {
+      // Everything worked! Return this promise with the comments we got back.
+      resolve(comments);
+    })
+    .error((err) => {
+      // something went wrong - send the error back
+      reject(new Error(err));
+    });
+});
 ```
 
 There's also an alternative syntax pattern, `async` / `await`, which lets you write promises in a more legible, pseudo-serial form:
 
 ```js
-  const loadComments = async () => {
-    try {
-      const comments = await BlogEngine.loadCommentsForPost({ id: '12345' })
-      return comments
-    } catch (err) {
-      return new Error(err)
-    }
+const loadComments = async () => {
+  try {
+    const comments = await BlogEngine.loadCommentsForPost({ id: '12345' });
+    return comments;
+  } catch (err) {
+    return new Error(err);
   }
+};
 ```
 
 ## Dealing with multiple promises
 
 Inevitably, you'll find yourself in situations where you need to execute multiple promises. Let's start off simply:
+
 ```js
   const postIds = ['1', '2', '3', '4', '5'];
   postIds.each((id) => {
@@ -93,9 +94,9 @@ You see, `Promise.allSettled()`  does exactly what we'd like in the example abo
 (this code sample is cribbed from the github proposal - go give it a look for more detail)
 
 ```js
-  const promises = [fetch('index.html'), fetch('https://does-not-exist/')]
-  const results = await Promise.allSettled(promises)
-  const successfulPromises = results.filter(p => p.status === 'fulfilled')
+const promises = [fetch('index.html'), fetch('https://does-not-exist/')];
+const results = await Promise.allSettled(promises);
+const successfulPromises = results.filter((p) => p.status === 'fulfilled');
 ```
 
 ## **Using** `**Promise.All()**` ** now (updated!)**
@@ -105,7 +106,7 @@ You see, `Promise.allSettled()`  does exactly what we'd like in the example abo
 Install the [`core-js`](https://github.com/zloirock/core-js) package and include this somewhere in your codebase:
 
 ```js
-  import 'core-js/proposals/promise-all-settled'
+import 'core-js/proposals/promise-all-settled';
 ```
 
 **Original post:**

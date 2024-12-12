@@ -90,9 +90,8 @@ it focused on data loading logic._
 
 ```jsx
 import { useLoaderData } from '@remix-run/react';
-
+import { NewsletterCTA, NewsletterListItem } from '~/components';
 import { getAllNewsletters } from '~/lib/util/convertKit.server';
-import { NewsletterListItem, NewsletterCTA } from '~/components';
 
 export const loader = async ({ params, request }) => {
   return {
@@ -127,13 +126,12 @@ Now that we have a page listing all published newsletters, we need to create a p
 
 ```jsx
 import { useLoaderData } from '@remix-run/react';
+import NewsletterCTA from '~/components';
+import config from '~/config';
 import {
   broadcastTemplateParse,
   newsletterHasValidThumbnail,
 } from '~/lib/util/convertKit';
-import NewsletterCTA from '~/components';
-import config from '~/config';
-
 import { getNewsletter } from '~/lib/util/convertKit.server';
 
 // render meta tags on page for SEO
@@ -201,6 +199,7 @@ We're also using 2 helper functions, which are defined in `/app/lib/util/convert
 
 ```js
 import { Liquid } from 'liquidjs';
+
 const engine = new Liquid();
 
 export const broadcastTemplateParse = ({ template, data }) => {

@@ -93,8 +93,8 @@ it focused on data loading logic._
 
 ```jsx
 import { Link } from 'next/link';
-import { getAllNewsletters } from '../../utils/convertKit';
 
+import { getAllNewsletters } from '../../utils/convertKit';
 import slugify from '../../utils/slugify';
 
 export const getStaticProps = async () => {
@@ -159,6 +159,7 @@ Now that we have a page listing all published newsletters, we need to create a p
 
 ```jsx
 import { useEffect } from 'react';
+
 import {
   broadcastTemplateParse,
   getAllNewsletters,
@@ -227,6 +228,7 @@ We're also using 2 helper functions, which are defined in `/src/utils/convertKit
 
 ```js
 import { Liquid } from 'liquidjs';
+
 const engine = new Liquid();
 
 export const broadcastTemplateParse = ({ template, data }) => {

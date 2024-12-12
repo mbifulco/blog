@@ -7,18 +7,19 @@ coverImagePublicId: posts/migrate-from-next-sitemap-to-app-directory-sitemap/cov
 excerpt: This post walks through the process of migrating from the next-sitemap library to the Next.js App Directory's sitemap.
 ---
 
-
 ## Transitioning from next-sitemap to Next.js's Built-in Sitemap.xml and Robots.txt APIs
+
 In this post, I'll walk you through the process of migrating from the next-sitemap npm package to using Next.js's built-in API for generating sitemap.xml and robots.txt files. This transition not only simplifies our codebase but also leverages the capabilities of Next.js to enhance our SEO strategy.
 
 ### Why Migrate?
+
 The [next-sitemap npm package](https://github.com/iamvishnusankar/next-sitemap) was a great tool for generating sitemaps, but as Next.js has evolved, it has introduced built-in support for sitemap and robots file generation. This change allows for a more streamlined approach, reducing dependencies and improving maintainability.
 
 Admittedly, I have also been a bit of a laggard in updating my site to the new app directory - this is actually the _very first_ use of App Router on this site!
 
 ## What is a sitemap?
 
-A sitemap is a file that lists all the URLs on your site, helping search engines discover and index your content. It provides a roadmap for search engine crawlers to navigate your site and understand its structure. They're also used by other services like Google Search Console to understand your site's structure. If you haven't used Google Search Console,  it's an invaluable resource for measuring your site's search engine performance.
+A sitemap is a file that lists all the URLs on your site, helping search engines discover and index your content. It provides a roadmap for search engine crawlers to navigate your site and understand its structure. They're also used by other services like Google Search Console to understand your site's structure. If you haven't used Google Search Console, it's an invaluable resource for measuring your site's search engine performance.
 
 I've written at length about the value of SEO, including the [SEO tools I used to grow my sites to 20k+ visitors/month](https://mikebifulco.com/posts/seo-tools-for-new-projects).
 
@@ -29,6 +30,7 @@ The robots.txt file is a configuration file used to instruct web crawlers (like 
 ## Removing the next-sitemap dependency
 
 The first step is to remove the next-sitemap dependency from your project:
+
 1. remove `next-sitemap` from your package.json file - make sure to check both `"scripts"` and `"devDependencies"`, and remove it from both places.
 2. run `npm install` (or `yarn install` or `pnpm install`) to update your lockfile
 3. delete your `next-sitemap.config.js` file if it exists
@@ -37,7 +39,6 @@ The first step is to remove the next-sitemap dependency from your project:
 Side note: [`next-sitemap`](https://www.npmjs.com/package/next-sitemap) was a fantastic tool, and served me for quite a long time. I'm super thankful to the maintainers for their work on the package - it filled an important need for a _very_ long time!
 
 ## Generating a sitemap.xml file with Next.js
-
 
 Next.js has a great built-in API for generating sitemaps and robots files. We'll use this API to generate our sitemap.xml and robots.txt files. The API is simple to use and allows for customization of the sitemap and robots file generation process.
 
@@ -66,7 +67,14 @@ This file is where you will add an entry for every page you want search engines 
 type SitemapFile = Array<{
   url: string;
   lastModified?: string | Date;
-  changeFrequency?: 'always' | 'hourly' | 'daily' | 'weekly' | 'monthly' | 'yearly' | 'never';
+  changeFrequency?:
+    | 'always'
+    | 'hourly'
+    | 'daily'
+    | 'weekly'
+    | 'monthly'
+    | 'yearly'
+    | 'never';
   priority?: number;
   alternates?: {
     languages?: Languages<string>;
@@ -88,29 +96,29 @@ A couple things to note here, from the [sitemap spec](https://www.sitemaps.org/p
 For static pages on my site, I opted for a semi-manual approach to adding them to the sitemap. I created an array of strings that represent the routes I want to include in the sitemap, and then mapped over that array to create the sitemap entries.
 
 ```tsx
-  // Define your static routes
-  const routes: string[] = [
-    '', // home page
-    '/about',
-    '/integrity',
-    '/newsletter',
-    '/podcast',
-    '/posts',
-    '/tags',
-    '/work',
-    '/shop',
-  ];
+// Define your static routes
+const routes: string[] = [
+  '', // home page
+  '/about',
+  '/integrity',
+  '/newsletter',
+  '/podcast',
+  '/posts',
+  '/tags',
+  '/work',
+  '/shop',
+];
 
-  // Create sitemap entries for static routes
-  const staticRoutesSitemap = routes.map((route) => ({
-    url: `${baseUrl}${route}`,
-    lastModified: new Date(),
-    changeFrequency: 'weekly' as const,
-    priority: route === '' ? 1 : 0.8,
-  }));
+// Create sitemap entries for static routes
+const staticRoutesSitemap = routes.map((route) => ({
+  url: `${baseUrl}${route}`,
+  lastModified: new Date(),
+  changeFrequency: 'weekly' as const,
+  priority: route === '' ? 1 : 0.8,
+}));
 ```
-When run, this will generate an array of sitemap entries for each of the routes in the `routes` array - note that the homepage has a priority of 1, and all other pages have a priority of 0.8.
 
+When run, this will generate an array of sitemap entries for each of the routes in the `routes` array - note that the homepage has a priority of 1, and all other pages have a priority of 0.8.
 
 #### Dynamic pages
 
@@ -125,17 +133,17 @@ I write all my site content in [`MDX`](https://mdxjs.com/docs/what-is-mdx/), and
 I used a utility function to grab all of the newsletter issues, blog posts, and tags from the `src/data/` directory, and then mapped over each one to create a sitemap entry. For newsletters, that looks like this:
 
 ```tsx
-  // this is a helper function used across my site.
-  // replace with whatever is needed to fetch from the CMS you use
-  const newsletters = await getAllNewsletters();
+// this is a helper function used across my site.
+// replace with whatever is needed to fetch from the CMS you use
+const newsletters = await getAllNewsletters();
 
-  // create a sitemap entry for each newsletter
-  const newslettersSitemap = newsletters.map((newsletter) => ({
-    url: `${baseUrl}/newsletter/${newsletter.slug}`,
-    lastModified: new Date(newsletter.frontmatter.date),
-    changeFrequency: 'weekly' as const,
-    priority: 0.8,
-  }));
+// create a sitemap entry for each newsletter
+const newslettersSitemap = newsletters.map((newsletter) => ({
+  url: `${baseUrl}/newsletter/${newsletter.slug}`,
+  lastModified: new Date(newsletter.frontmatter.date),
+  changeFrequency: 'weekly' as const,
+  priority: 0.8,
+}));
 ```
 
 The same pattern is used for blog posts and tags.
@@ -214,10 +222,9 @@ Fire up `next dev` and navigate to `/sitemap.xml` - you should see your sitemap!
 
 <Aside type="warning">
 
-  If it doesn't seem like your sitemap is updating correctly, **remember to check your `/public` directory for sitemap.xml files** that may have been generated by `next-sitemap`, and delete them!
+If it doesn't seem like your sitemap is updating correctly, **remember to check your `/public` directory for sitemap.xml files** that may have been generated by `next-sitemap`, and delete them!
 
 </Aside>
-
 
 ## Creating a robots.txt file
 
@@ -228,7 +235,6 @@ This is a deceptively important file for your website's SEO. It is a really good
 ### Disallow everything for non-production environments
 
 **🚨 Important: ** If you are running a non-production environment, you will need to add a check to your robots.ts file to disallow all requests. This is because non-production environments often have URLs that you don't want search engines to index - it would be bad news if Google decided that a deploy preview of your site should rank higher than your production site!
-
 
 ### Robots.ts: The complete file
 
@@ -296,6 +302,7 @@ Now that everything's done, make absolutely sure you've got everything configure
 
 ```md
 **Before going live**, verify that:
+
 - robots.txt
   - [ ] visit `/robots.txt` and verify that it exists
   - [ ] check that there is an entry for your sitemap that contains a full URL, including the protocol (`https://`)
@@ -307,10 +314,12 @@ Now that everything's done, make absolutely sure you've got everything configure
     - [ ] dynamic pages (newsletters, blog posts, tags)
 
 **While testing deploy previews of your site**, verify that:
+
 - [ ] your sitemap is being generated correctly
 - [ ] your robots.txt is being generated so that it **disallows all requests** in deploy previews
 
 **After going live**, check that:
+
 - [ ] your sitemap is being picked up and read by [Google Search Console](https://search.google.com/search-console)
 - [ ] use something like the [Ahrefs Webmaster Tools Site Audit](https://ahrefs.com/signup?plan=awt&return=website-checker) to scan your site and verify that it is indexed correctly and that there aren't any issues.
 ```

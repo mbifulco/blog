@@ -34,26 +34,26 @@ For this example, we will use a simplified Drizzle ORM Database schema with two 
 // schema.ts
 
 // ...other tables and imports above
-export const chefs = createTable("chefs", {
-  id: serial("id").primaryKey(),
-  name: varchar("name", { length: 256 }).notNull(),
-  email: varchar("email", { length: 256 }).notNull(),
-  phone: varchar("phone", { length: 256 }),
-  address: text("address"),
+export const chefs = createTable('chefs', {
+  id: serial('id').primaryKey(),
+  name: varchar('name', { length: 256 }).notNull(),
+  email: varchar('email', { length: 256 }).notNull(),
+  phone: varchar('phone', { length: 256 }),
+  address: text('address'),
 });
 
-export const recipeTypes = createTable("project_type", {
-  id: serial("id").primaryKey(),
-  name: varchar("name", { length: 256 }).notNull(),
-  description: text("description"),
+export const recipeTypes = createTable('project_type', {
+  id: serial('id').primaryKey(),
+  name: varchar('name', { length: 256 }).notNull(),
+  description: text('description'),
 });
 
-export const recipes = createTable("recipes", {
-  id: serial("id").primaryKey(),
-  name: varchar("name", { length: 256 }).notNull(),
-  description: text("description"),
-  recipeTypeId: integer("recipeTypeId").references(recipeTypes.id),
-  recipeChefId: integer("recipeChefId").references(chefs.id),
+export const recipes = createTable('recipes', {
+  id: serial('id').primaryKey(),
+  name: varchar('name', { length: 256 }).notNull(),
+  description: text('description'),
+  recipeTypeId: integer('recipeTypeId').references(recipeTypes.id),
+  recipeChefId: integer('recipeChefId').references(chefs.id),
 });
 ```
 
@@ -88,9 +88,9 @@ The string returned by each `SeedFunction`'s promise is a message that will be l
 The simplest option is tables with predefined or hand-written data. For these, I more-or-less hand-write objects to stick into the database. Here's an example of how to the `recipeTypes` table:
 
 ```tsx
-import type { SeedFunction } from "../seed";
-import { recipeTypes } from "../schema";
-import db from "../db";
+import db from '../db';
+import { recipeTypes } from '../schema';
+import type { SeedFunction } from '../seed';
 
 type RecipeTypeRow = {
   name: string;
@@ -99,9 +99,9 @@ type RecipeTypeRow = {
 
 // note the export: we will use this later
 export const RecipeTypes: SeedFunction = {
-  "Breakfast": { id: 1,  name: "Breakfast", description: "Breakfast recipes" },
-  "Lunch": { id: 2, name: "Lunch", description: "Lunch recipes" },
-  "Dinner": { id: 3, name: "Dinner", description: "Dinner recipes" },
+  Breakfast: { id: 1, name: 'Breakfast', description: 'Breakfast recipes' },
+  Lunch: { id: 2, name: 'Lunch', description: 'Lunch recipes' },
+  Dinner: { id: 3, name: 'Dinner', description: 'Dinner recipes' },
 } as const;
 
 const seedRecipeTypes = async () => {
@@ -128,10 +128,11 @@ For tables that can use randomized data, a slightly different approach is used w
 Here's how to populate the `Chefs` table with a list of fake chefs:
 
 ```tsx
-import faker from "faker";
-import { chefs } from "../schema";
-import db from "../db";
-import type { SeedFunction } from "../seed";
+import faker from 'faker';
+
+import db from '../db';
+import { chefs } from '../schema';
+import type { SeedFunction } from '../seed';
 
 type ChefRow = {
   name: string;
@@ -162,10 +163,10 @@ If you have tables with relationships, you can seed related data by using the `i
 Here's an example of how you might seed the `recipes` table with related data:
 
 ```tsx
-import { recipes } from "../schema";
-import db from "../db";
-import { RecipeTypes } from "./recipeTypes";
-import type { SeedFunction } from "../seed";
+import db from '../db';
+import { recipes } from '../schema';
+import type { SeedFunction } from '../seed';
+import { RecipeTypes } from './recipeTypes';
 
 type RecipeRow = {
   name: string;
@@ -176,16 +177,31 @@ type RecipeRow = {
 const seedRecipes: SeedFunction = async () => {
   const data: RecipeRow[] = [
     {
-      name: "Pancakes",
-      description: "Delicious pancakes",
+      name: 'Pancakes',
+      description: 'Delicious pancakes',
       // use the id from the RecipeTypes object we exported earlier
       recipeTypeId: RecipeTypes.Breakfast.id,
       // since it can be any chef, we'll just use the first one
       recipeChefId: 1,
     },
-    { name: "Spaghetti", description: "Classic spaghetti", recipeTypeId: RecipeTypes.Dinner.id, recipeChefId: 2 },
-    { name: "Roast chicken", description: "Juicy roast chicken", recipeTypeId: RecipeTypes.Dinner.id, recipeChefId: 3 },
-    { name: "Sandwich", description: "Good ol' ham & swiss", recipeTypeId: RecipeTypes.Lunch.id, recipeChefId: 4 },
+    {
+      name: 'Spaghetti',
+      description: 'Classic spaghetti',
+      recipeTypeId: RecipeTypes.Dinner.id,
+      recipeChefId: 2,
+    },
+    {
+      name: 'Roast chicken',
+      description: 'Juicy roast chicken',
+      recipeTypeId: RecipeTypes.Dinner.id,
+      recipeChefId: 3,
+    },
+    {
+      name: 'Sandwich',
+      description: "Good ol' ham & swiss",
+      recipeTypeId: RecipeTypes.Lunch.id,
+      recipeChefId: 4,
+    },
   ];
 
   await db.from(recipes).insert(data);
