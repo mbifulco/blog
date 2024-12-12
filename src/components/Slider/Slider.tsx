@@ -16,7 +16,7 @@ const Thumb = (props: {
   label?: string;
   index: number;
   state: SliderState;
-  trackRef: React.RefObject<React.ElementRef<'div'>>;
+  trackRef: React.RefObject<React.ElementRef<'div'> | null>;
   isFocusVisible: boolean;
   focusProps: ReturnType<typeof useFocusRing>['focusProps'];
   onChangeStart?: () => void;

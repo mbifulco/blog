@@ -98,14 +98,13 @@ To get the raw URL for your README, go to your GitHub profile, and click on the 
 5. Finally, you can render your README in your About page using MDX Remote.
 
 ```jsx
+// If you want to have MDX render custom components, you can import them here
+import { components } from '~/utils/mdx-components';
 import { MDXRemote } from 'next-mdx-remote';
 import { serialize } from 'next-mdx-remote/serialize';
 
 // For sake of example, we'll use a Layout component to represent the visual layout of the page
 import Layout from '../components/Layout';
-
-// If you want to have MDX render custom components, you can import them here
-import { components } from '~/utils/mdx-components';
 
 export async function getStaticProps() {
   // fetch personal README from github
