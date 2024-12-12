@@ -12,7 +12,7 @@ export const getStaticProps: GetStaticProps = async () => {
   // const tags = await getAllTags();
   return {
     props: {
-      tags: ['nextjs'],
+      tags: [],
       // tags: Array.from(tags.allTags).sort(),
     },
   };
@@ -26,13 +26,16 @@ const TagsPage: NextPage<TagsPageProps> = ({ tags }) => {
   return (
     <>
       <main className="mx-auto flex max-w-5xl flex-col gap-8">
-        <SEO title="Browse all tags used on articles" />
+        <SEO
+          title="Browse all tags used on articles"
+          description="Browse all tags used on articles across the site"
+        />
         <Heading as="h1">
           All <span className="text-gray-400">#</span>
           tags used on articles across the site
         </Heading>
         <div className="mb-20 flex flex-row flex-wrap gap-2 text-xl">
-          {tags.map((tag) => (
+          {tags?.map((tag) => (
             <Tag key={`tag-cloud-${tag}`} url={`/tags/${tag}/`}>
               {tag}
             </Tag>
