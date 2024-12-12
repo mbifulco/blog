@@ -122,10 +122,5 @@
     "extends": [
       "./eslint.config.js"
     ]
-  },
-  "pnpm": {
-    "overrides": {
-      "@types/react": "19.0.1"
-    }
   }
 }
