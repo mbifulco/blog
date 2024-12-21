@@ -281,6 +281,7 @@ export const customComponents = {
   Colophon,
   Highlight: TextHighlight,
   Image,
+  Link,
   code: InlineCode,
   a: CustomLink,
   h1: H1,
