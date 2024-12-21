@@ -32,7 +32,7 @@ export const getAllExternalReferences = async () => {
   )) as Article[];
 
   // filter out articles that don't have a slug
-  articles = articles.filter((article) => article.frontmatter?.slug);
+  articles = articles?.filter((article) => article.frontmatter?.slug);
 
   return articles;
 };

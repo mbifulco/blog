@@ -27,10 +27,9 @@ export const getAllNewsletters = async () => {
   )) as Newsletter[];
 
   // filter out newsletters that don't have a slug
-  newsletters = newsletters.filter(
+  newsletters = newsletters?.filter(
     (newsletter) => newsletter.frontmatter?.slug
   );
-  console.log(`returned ${newsletters.length} newsletters`);
 
   return newsletters;
 };
