@@ -6,7 +6,7 @@ import {
   getContentBySlug,
 } from './contentTypeLoader';
 
-// directory reference to `src/content/external-references`
+// directory reference to `src/content/newsletters`
 const newslettersDirectory = join(process.cwd(), 'src', 'data', 'newsletters');
 
 const NEWSLETTERS_CONTENT_TYPE = 'newsletter';
