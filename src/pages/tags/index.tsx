@@ -11,7 +11,7 @@ export const getStaticProps: GetStaticProps = async () => {
   const tags = await getAllTags();
   return {
     props: {
-      tags: Array.from(tags.allTags).sort(),
+      tags: Array.from(tags).sort(),
     },
   };
 };

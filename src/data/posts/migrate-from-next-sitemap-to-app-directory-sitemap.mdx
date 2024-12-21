@@ -177,7 +177,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.8,
   }));
 
-  const { allTags } = await getAllTags();
+  const allTags = await getAllTags();
   const tagsSitemap = allTags.map((tag) => ({
     url: `${baseUrl}/tags/${tag}`,
     lastModified: new Date(),
