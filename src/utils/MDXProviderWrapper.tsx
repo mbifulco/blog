@@ -87,7 +87,7 @@ const Blockquote: React.FC<HTMLAttributes<HTMLQuoteElement>> = ({
   children,
 }) => {
   return (
-    <blockquote className="border-l-4 border-pink-400 bg-gray-100 p-3">
+    <blockquote className="text-balance border-l-4 border-pink-400 bg-gray-100 p-3">
       {children}
     </blockquote>
   );
