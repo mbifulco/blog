@@ -58,6 +58,13 @@ For all content on my site, my authoring workflow looks like this:
 1. I use [Squoosh](https://squoosh.app) to compress and optimize any included images, and then upload them to [Cloudinary](https://cloudinary.com) as `.webp` files.
 
 ### Commit, merge, and publish
+
+<Image
+  publicId="posts/content-creation-workflow-my-writing-process/pull-request"
+  alt="A screenshot of a pull request for this very post in GitHub"
+  caption="This is what a pull request looks like for this very post."
+/>
+
 1. When I'm done writing and ready for a newsletter to go live on my site, I commit the changes to a new branch, and open a pull request _to myself_ to merge the changes into the `main` branch. This generates a preview build of the new page on Vercel, where I can check out the changes and make sure everything looks good before merging.
 1. After the PR is merged, Vercel automatically builds the site and deploys the changes, and the article is live in a few minutes.
 
