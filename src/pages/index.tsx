@@ -64,7 +64,7 @@ const HomePage: NextPage<HomePageProps> = ({ posts, newsletter }) => {
             >
               {config.employer.name}
             </Link>{' '}
-            &mdash; I'm a founder &amp; product builder with background in
+            &mdash; I&apos;m a founder &amp; product builder with background in
             design and development.
           </p>
           <p className="m-0 text-xl font-normal">
