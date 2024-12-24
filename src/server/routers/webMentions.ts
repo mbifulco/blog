@@ -1,7 +1,6 @@
 import { TRPCError } from '@trpc/server';
 import { z } from 'zod';
 
-import { getSubscriberCount, subscribe, subscribeSchema } from '@utils/resend';
 import getMentions from '@utils/webmentions';
 import { procedure, router } from '../trpc';
 

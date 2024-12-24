@@ -1,8 +1,8 @@
 import { useRouter } from 'next/router';
+import { useWebMentions } from '@hooks/useWebMentions';
 import pluralize from 'pluralize';
 
 import formatDate from '@utils/format-date';
-import { trpc } from '@utils/trpc';
 import type { WebMention } from '@utils/webmentions';
 import { Avatar, AvatarGroup } from '../Avatar';
 
@@ -20,14 +20,7 @@ const mySocialHandleUrls = [
 
 const MentionsSummary: React.FC<MentionsSummaryProps> = () => {
   const router = useRouter();
-  const { data: mentions } = trpc.webMentions.getMentionsForPath.useQuery(
-    {
-      path: router.asPath,
-    },
-    {
-      staleTime: 1000 * 60 * 60, // 1 hour
-    }
-  );
+  const { data: mentions } = useWebMentions(router.asPath);
 
   if (!mentions || mentions.length === 0) return null;
 

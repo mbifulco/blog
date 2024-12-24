@@ -1,4 +1,3 @@
-import { useRouter } from 'next/router';
 import { MDXRemote } from 'next-mdx-remote';
 import type { VideoObject, WithContext } from 'schema-dts';
 
@@ -30,8 +29,6 @@ const FullPost: React.FC<FullPostProps> = ({ post }) => {
     title,
     youTubeId,
   } = frontmatter;
-
-  const router = useRouter();
 
   let coverContainer: React.ReactNode = (
     <Image
