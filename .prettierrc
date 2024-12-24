@@ -17,6 +17,7 @@
     "",
     "^@craftwork/(.*)$",
     "^@components/(.*)$",
+    "^@data/(.*)$",
     "^@layouts/(.*)$",
     "^@ui/(.*)$",
     "^@utils/(.*)$",
