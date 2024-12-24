@@ -1,11 +1,8 @@
-import { useRouter } from 'next/router';
 import { MDXRemote } from 'next-mdx-remote';
 import type { VideoObject, WithContext } from 'schema-dts';
-import useSWR from 'swr';
 
-import type { BlogPost, Newsletter } from '../../data/content-types';
-import { components } from '../../utils/MDXProviderWrapper';
-import { getMentions } from '../../utils/webmentions';
+import type { BlogPost, Newsletter } from '@data/content-types';
+import { components } from '@utils/MDXProviderWrapper';
 import { CarbonAd } from '../CarbonAd';
 import { Heading } from '../Heading';
 import { Image } from '../Image';
@@ -32,10 +29,6 @@ const FullPost: React.FC<FullPostProps> = ({ post }) => {
     title,
     youTubeId,
   } = frontmatter;
-
-  const router = useRouter();
-
-  const { data: mentions /* error */ } = useSWR(router.asPath, getMentions);
 
   let coverContainer: React.ReactNode = (
     <Image
@@ -105,9 +98,7 @@ const FullPost: React.FC<FullPostProps> = ({ post }) => {
               <div className="prose lg:prose-xl">
                 <MDXRemote {...post.source} components={components} />
               </div>
-              {mentions && mentions.length > 0 && (
-                <MentionsSummary mentions={mentions} />
-              )}
+              <MentionsSummary />
             </article>
             <div className="sticky top-12 flex h-max w-[300px] flex-col gap-4">
               <TableOfContents headings={post.tableOfContents} />
