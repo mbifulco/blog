@@ -3,6 +3,7 @@
   "ignores": [
     "@eslint/js",
     "@ianvs/prettier-plugin-sort-imports",
+    "@next/bundle-analyzer",
     "@next/eslint-plugin-next",
     "@prettier/plugin-ruby",
     "@tailwindcss/forms",
@@ -26,13 +27,13 @@
     "tailwindcss",
     "typescript-eslint",
 
-    "@server/*",
+    "@/config",
     "@components/*",
     "@hooks/*",
     "@layouts/*",
     "@lib/*",
+    "@server/*",
     "@utils/*",
-    "@/config",
 
     "mdx",
     "src"
