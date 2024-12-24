@@ -47,9 +47,7 @@ export const getStaticProps: GetStaticProps<
 };
 
 export const getStaticPaths: GetStaticPaths<TagPageParams> = async () => {
-  const tags = await getAllTags();
-
-  const { allTags } = tags;
+  const allTags = await getAllTags();
 
   return {
     paths: allTags.map((tag) => ({

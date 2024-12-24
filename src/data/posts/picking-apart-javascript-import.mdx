@@ -1,6 +1,6 @@
 ---
 title: 'Picking apart JavaScript import syntax'
-type: post
+
 date: 04-17-2019
 excerpt: 'Part 2 in a series of posts on destructuring syntax for JavaScript and Node.'
 published: true
@@ -43,6 +43,7 @@ This line of code creates a reference to everything made available in the `momen
 
 ```js
 import moment from 'moment';
+
 console.log(moment().get('year'));
 // 2019
 ```
@@ -55,6 +56,7 @@ It may be confusing, but you absolutely could do this, if the this name made mor
 
 ```js
 import ThatReallyUsefulDateLibrary from 'moment';
+
 console.log(ThatReallyUsefulDateLibrary().get('year'));
 // 2019
 ```
@@ -143,7 +145,7 @@ import { Layout, Button as SuperButton } from '../components';
 The best isn't alway last, but this is certainly the last example I've got to share today:
 
 ```js
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 ```
 
 If you've been playing along at home, this should all be familiar now - we're grabbing the default export from `react`, which we've put into the variable `react`.  We also destructured `useState` and `useEffect` from _the same library_.  If you're asking yourself "Well couldn't we also access `useState` as a child of `React`"? The answer is - well, actually, yeah!

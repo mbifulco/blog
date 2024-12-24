@@ -151,34 +151,34 @@ let videoStructuredData: WithContext<VideoObject> | undefined = undefined;
 Next, we'll need to populate this variable with the appropriate data for the schema. In my case, I'm using the `youTubeId` from the frontmatter to generate the JSON-LD for the video, like this:
 
 ```tsx
-  let videoStructuredData: VideoStructuredData | undefined = undefined;
+let videoStructuredData: VideoStructuredData | undefined = undefined;
 
-  if (youTubeId) {
-    videoStructuredData = {
-      '@context': 'https://schema.org',
-      '@type': 'VideoObject',
-      name: title,
-      description: excerpt,
-      thumbnailUrl: `https://i.ytimg.com/vi/${youTubeId}/hqdefault.jpg`, // this is the thumbnail for the video straight from youtube
-      uploadDate: new Date(date).toISOString(),
-      contentUrl: `https://www.youtube.com/watch?v=${youTubeId}`, // this is the URL for the video on youtube
-      embedUrl: `https://www.youtube.com/embed/${youTubeId}`, // this is the URL for the video embed on youtube
-      duration: 'PT1M33S', // this is the duration of the video
+if (youTubeId) {
+  videoStructuredData = {
+    '@context': 'https://schema.org',
+    '@type': 'VideoObject',
+    name: title,
+    description: excerpt,
+    thumbnailUrl: `https://i.ytimg.com/vi/${youTubeId}/hqdefault.jpg`, // this is the thumbnail for the video straight from youtube
+    uploadDate: new Date(date).toISOString(),
+    contentUrl: `https://www.youtube.com/watch?v=${youTubeId}`, // this is the URL for the video on youtube
+    embedUrl: `https://www.youtube.com/embed/${youTubeId}`, // this is the URL for the video embed on youtube
+    duration: 'PT1M33S', // this is the duration of the video
 
-      /*
+    /*
         note that I'm not using the entire VideoObject schema here, but
         you could add more fields if you wanted to, like interactionStatistic
         and regionsAllowed:
       */
 
-      // interactionStatistic: {
-      //   '@type': 'InteractionCounter',
-      //   interactionType: { '@type': 'http://schema.org/WatchAction' },
-      //   userInteractionCount: 0,
-      // },
-      // regionsAllowed: ['US'],
-    };
-  }
+    // interactionStatistic: {
+    //   '@type': 'InteractionCounter',
+    //   interactionType: { '@type': 'http://schema.org/WatchAction' },
+    //   userInteractionCount: 0,
+    // },
+    // regionsAllowed: ['US'],
+  };
+}
 ```
 
 Once this object is created, I serialize it to a string and add it to a `<script>` tag on the page - depending on when and where you generate it, you can stick this in the `<head>` of your page, or right in the body of the document, like I do:

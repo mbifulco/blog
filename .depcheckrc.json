@@ -1,0 +1,49 @@
+{
+  "ignorePatterns": [],
+  "ignores": [
+    "@eslint/js",
+    "@ianvs/prettier-plugin-sort-imports",
+    "@next/eslint-plugin-next",
+    "@prettier/plugin-ruby",
+    "@tailwindcss/forms",
+    "@tailwindcss/typography",
+    "@types/eslint",
+    "@typescript-eslint",
+    "@typescript-eslint/eslint-plugin",
+    "@typescript-eslint/parser",
+    "autoprefixer",
+    "depcheck",
+    "eslint-*",
+    "eslint",
+    "jiti",
+    "playwright",
+    "postcss-import",
+    "postcss",
+    "prettier-plugin-tailwindcss",
+    "prettier",
+    "react-email",
+    "tailwindcss",
+    "typescript-eslint",
+
+    "@server/*",
+    "@components/*",
+    "@hooks/*",
+    "@layouts/*",
+    "@lib/*",
+    "@utils/*",
+    "@/config"
+  ],
+  "parsers": {
+    "**/*.{ts,tsx}": ["typescript"]
+  },
+  "aliases": {
+    "@components": "./src/components",
+    "@hooks": "./src/hooks",
+    "@layouts": "./src/components/layouts",
+    "@lib": "./src/lib",
+    "@utils": "./src/utils",
+    "@server": "./src/server",
+    "@/config": "./src/config.ts"
+  },
+  "specials": ["depcheck.special.eslint", "depcheck.special.webpack"]
+}

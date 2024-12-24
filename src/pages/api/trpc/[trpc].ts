@@ -10,8 +10,3 @@ export default async function handler(req: NextRequest) {
     createContext: () => ({}),
   });
 }
-
-// Use the edgeruntime
-export const config = {
-  runtime: 'edge',
-};
