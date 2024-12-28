@@ -1,7 +1,9 @@
 import { MDXRemote } from 'next-mdx-remote';
 import type { VideoObject, WithContext } from 'schema-dts';
 
+import { SeriesNavigation } from '@components/Series/SeriesNavigation';
 import type { BlogPost, Newsletter } from '@data/content-types';
+import type { Series } from '@lib/series';
 import { components } from '@utils/MDXProviderWrapper';
 import { CarbonAd } from '../CarbonAd';
 import { Heading } from '../Heading';
@@ -14,9 +16,10 @@ import TableOfContents from './TableOfContents';
 
 type FullPostProps = {
   post: BlogPost | Newsletter;
+  series?: Series | null;
 };
 
-const FullPost: React.FC<FullPostProps> = ({ post }) => {
+const FullPost: React.FC<FullPostProps> = ({ post, series }) => {
   const { frontmatter } = post;
 
   const {
@@ -75,6 +78,15 @@ const FullPost: React.FC<FullPostProps> = ({ post }) => {
       <article>
         <header className="mx-auto mb-4 flex flex-col gap-2">
           <div className="mx-auto mb-4 max-w-[75ch]">
+            {series && (
+              <p className="mb-2 text-sm uppercase text-gray-600 dark:text-gray-400">
+                <em>Part of the </em>
+                <span className="0font-medium">
+                  {frontmatter?.series && frontmatter.series}
+                </span>
+                <em> Series</em>
+              </p>
+            )}
             <Heading as="h1" className="m-0 p-0">
               {title}
             </Heading>
@@ -87,9 +99,18 @@ const FullPost: React.FC<FullPostProps> = ({ post }) => {
           <div className="mx-auto h-auto min-h-52 w-full">{coverContainer}</div>
         </header>
 
-        <div className="mx-auto w-fit">
+        <div className="mx-auto flex w-fit flex-col gap-4">
           <main className="mx-auto flex flex-col-reverse content-center justify-center gap-4 md:flex md:flex-row lg:gap-8">
             <article className="max-w-prose">
+              {series && (
+                <div className="mb-6">
+                  <SeriesNavigation
+                    series={series.name}
+                    posts={series?.posts}
+                    newsletters={series?.newsletters}
+                  />
+                </div>
+              )}
               {podcastUrl && (
                 <div className="mb-8">
                   <iframe width="100%" height="180" seamless src={podcastUrl} />

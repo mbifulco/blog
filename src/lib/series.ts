@@ -1,7 +1,7 @@
 // get metadata about post series
 import { compareAsc } from 'date-fns';
 import slugify from 'slugify';
-import { BlogPost, Newsletter } from 'src/data/content-types';
+import type { BlogPost, Newsletter } from 'src/data/content-types';
 
 import { getAllPosts } from './blog';
 import { getAllNewsletters } from './newsletters';
@@ -17,7 +17,7 @@ const getAllSeries = async () => {
     (newsletter) => newsletter.frontmatter.series !== undefined
   );
 
-  let seriesNames = [...postsInAnySeries, ...newslettersInAnySeries]
+  const seriesNames = [...postsInAnySeries, ...newslettersInAnySeries]
     .map((item) => item.frontmatter.series)
     .filter((series) => series !== undefined);
 
@@ -26,24 +26,36 @@ const getAllSeries = async () => {
   ];
 
   const seriesMap = uniqueSeries.map((series) => {
+    const posts = postsInAnySeries
+      .filter(
+        (post) =>
+          post.frontmatter.series &&
+          getSlugForSeries(post.frontmatter.series) === series
+      )
+      .sort((a, b) => {
+        return compareAsc(
+          new Date(b.frontmatter.date),
+          new Date(a.frontmatter.date)
+        );
+      });
+
+    const newsletters = newslettersInAnySeries
+      .filter(
+        (newsletter) =>
+          newsletter.frontmatter.series &&
+          getSlugForSeries(newsletter.frontmatter.series) === series
+      )
+      .sort((a, b) => {
+        return compareAsc(
+          new Date(b.frontmatter.date),
+          new Date(a.frontmatter.date)
+        );
+      });
     return {
       name: series,
-      posts: postsInAnySeries
-        .filter((post) => post.frontmatter.series === series)
-        .sort((a, b) => {
-          return compareAsc(
-            new Date(b.frontmatter.date),
-            new Date(a.frontmatter.date)
-          );
-        }),
-      newsletters: newslettersInAnySeries
-        .filter((newsletter) => newsletter.frontmatter.series === series)
-        .sort((a, b) => {
-          return compareAsc(
-            new Date(b.frontmatter.date),
-            new Date(a.frontmatter.date)
-          );
-        }),
+      posts: posts,
+      newsletters: newsletters,
+      length: posts.length + newsletters.length,
     };
   });
 
@@ -69,16 +81,30 @@ export const isInSpecificSeries = (
   return getSlugForSeries(post.frontmatter.series) === seriesName;
 };
 
+export type Series = {
+  name: string;
+  posts: BlogPost[];
+  newsletters: Newsletter[];
+  length: number;
+};
+
 /**
  * Get all posts for a series based on its long or slugified name
  */
 export const getAllPostsForSeries = async (seriesName: string) => {
   const allSeries = await getAllSeries();
-  return allSeries.find(
+
+  const postsInSeries = allSeries.find(
     (series) => getSlugForSeries(series.name) === getSlugForSeries(seriesName)
   );
+
+  console.log(
+    `Found ${postsInSeries?.posts.length} posts in "${seriesName}" series`
+  );
+
+  return postsInSeries;
 };
 
 export const getSlugForSeries = (seriesName: string) => {
-  return slugify(seriesName);
+  return slugify(seriesName.toLowerCase());
 };

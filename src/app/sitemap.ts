@@ -1,8 +1,8 @@
 import type { MetadataRoute } from 'next';
+
 import { getAllPosts } from '@lib/blog';
 import { getAllNewsletters } from '@lib/newsletters';
 import { getAllTags } from '@lib/tags';
-
 import { BASE_SITE_URL } from '@/config';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
