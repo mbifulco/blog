@@ -2,7 +2,7 @@ import type { GetStaticProps } from 'next';
 import { useRouter } from 'next/router';
 
 import { NewsletterSignup } from '@components/NewsletterSignup';
-import { getAllPostsForSeries } from '@lib/series';
+import { getSeries } from '@lib/series';
 import type { Series } from '@lib/series';
 import { Colophon } from '../../components/Colophon';
 import FullPost from '../../components/Post/FullPost';
@@ -30,7 +30,7 @@ export const getStaticProps: GetStaticProps<
   const mdxSource = await serialize(newsletter.content);
 
   const series = newsletter.frontmatter.series
-    ? await getAllPostsForSeries(newsletter.frontmatter.series)
+    ? await getSeries(newsletter.frontmatter.series)
     : undefined;
 
   return {

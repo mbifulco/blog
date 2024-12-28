@@ -2,7 +2,7 @@ import type { GetStaticProps, NextPage } from 'next';
 import { useRouter } from 'next/router';
 
 import { NewsletterSignup } from '@components/NewsletterSignup';
-import { getAllPostsForSeries } from '@lib/series';
+import { getSeries } from '@lib/series';
 import type { Series } from '@lib/series';
 import { Colophon } from '../../components/Colophon';
 import { BlogPost as Post } from '../../components/Post';
@@ -32,7 +32,7 @@ export const getStaticProps: GetStaticProps<
   const post = await getPostBySlug(params.slug);
 
   const series = post.frontmatter.series
-    ? await getAllPostsForSeries(post.frontmatter.series)
+    ? await getSeries(post.frontmatter.series)
     : undefined;
 
   return {

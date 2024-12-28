@@ -104,11 +104,7 @@ const FullPost: React.FC<FullPostProps> = ({ post, series }) => {
             <article className="max-w-prose">
               {series && (
                 <div className="mb-6">
-                  <SeriesNavigation
-                    series={series.name}
-                    posts={series?.posts}
-                    newsletters={series?.newsletters}
-                  />
+                  <SeriesNavigation series={series} />
                 </div>
               )}
               {podcastUrl && (

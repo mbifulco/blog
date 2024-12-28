@@ -1,36 +1,33 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import type { BlogPost, Newsletter } from 'src/data/content-types';
 
 import { Heading } from '@components/Heading';
+import type { Series } from '@lib/series';
 import clsxm from '@utils/clsxm';
 
 type SeriesNavigationProps = {
-  series: string;
-  posts?: BlogPost[];
-  newsletters?: Newsletter[];
+  series: Series;
 };
 
-export const SeriesNavigation = ({
+export const SeriesNavigation: React.FC<SeriesNavigationProps> = ({
   series,
-  posts,
-  newsletters,
-}: SeriesNavigationProps) => {
+}) => {
   const router = useRouter();
 
-  const orderedContent = [...(posts ?? []), ...(newsletters ?? [])].sort(
-    (a, b) => {
-      return (
-        new Date(a.frontmatter.date).getTime() -
-        new Date(b.frontmatter.date).getTime()
-      );
-    }
-  );
+  const orderedContent = [
+    ...(series.posts ?? []),
+    ...(series.newsletters ?? []),
+  ].sort((a, b) => {
+    return (
+      new Date(a.frontmatter.date).getTime() -
+      new Date(b.frontmatter.date).getTime()
+    );
+  });
 
   return (
     <div className="mt-6 rounded-lg border border-gray-200 bg-white p-4">
       <Heading as="h3" className="text-s mb-3 text-sm font-semibold capitalize">
-        {series} ({orderedContent.length} Part Series)
+        {series.name} ({orderedContent.length} Part Series)
       </Heading>
       <ul className="m-0 list-none p-0">
         {orderedContent.map((post, index) => {

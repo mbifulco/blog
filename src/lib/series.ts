@@ -6,7 +6,7 @@ import type { BlogPost, Newsletter } from 'src/data/content-types';
 import { getAllPosts } from './blog';
 import { getAllNewsletters } from './newsletters';
 
-const getAllSeries = async () => {
+const getAllSeries = async (): Promise<Series[]> => {
   const allPosts = await getAllPosts();
   const allNewsletters = await getAllNewsletters();
 
@@ -53,6 +53,7 @@ const getAllSeries = async () => {
       });
     return {
       name: series,
+      slug: getSlugForSeries(series),
       posts: posts,
       newsletters: newsletters,
       length: posts.length + newsletters.length,
@@ -83,6 +84,7 @@ export const isInSpecificSeries = (
 
 export type Series = {
   name: string;
+  slug: string;
   posts: BlogPost[];
   newsletters: Newsletter[];
   length: number;
@@ -91,7 +93,9 @@ export type Series = {
 /**
  * Get all posts for a series based on its long or slugified name
  */
-export const getAllPostsForSeries = async (seriesName: string) => {
+export const getSeries = async (
+  seriesName: string
+): Promise<Series | undefined> => {
   const allSeries = await getAllSeries();
 
   const postsInSeries = allSeries.find(
