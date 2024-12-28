@@ -19,18 +19,19 @@ const getAllSeries = async (): Promise<Series[]> => {
 
   const seriesNames = [...postsInAnySeries, ...newslettersInAnySeries]
     .map((item) => item.frontmatter.series)
-    .filter((series) => series !== undefined);
+    .filter((seriesName) => seriesName !== undefined);
 
   const uniqueSeries = [
-    ...new Set(seriesNames.map((series) => getSlugForSeries(series))),
+    ...new Set(seriesNames.map((seriesName) => seriesName)),
   ];
 
-  const seriesMap = uniqueSeries.map((series) => {
+  const seriesMap = uniqueSeries.map((seriesName) => {
+    const slug = getSlugForSeries(seriesName);
     const posts = postsInAnySeries
       .filter(
         (post) =>
           post.frontmatter.series &&
-          getSlugForSeries(post.frontmatter.series) === series
+          getSlugForSeries(post.frontmatter.series) === slug
       )
       .sort((a, b) => {
         return compareAsc(
@@ -43,7 +44,7 @@ const getAllSeries = async (): Promise<Series[]> => {
       .filter(
         (newsletter) =>
           newsletter.frontmatter.series &&
-          getSlugForSeries(newsletter.frontmatter.series) === series
+          getSlugForSeries(newsletter.frontmatter.series) === slug
       )
       .sort((a, b) => {
         return compareAsc(
@@ -51,9 +52,10 @@ const getAllSeries = async (): Promise<Series[]> => {
           new Date(a.frontmatter.date)
         );
       });
+
     return {
-      name: series,
-      slug: getSlugForSeries(series),
+      name: seriesName,
+      slug,
       posts: posts,
       newsletters: newsletters,
       length: posts.length + newsletters.length,
