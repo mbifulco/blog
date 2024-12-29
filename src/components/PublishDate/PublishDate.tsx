@@ -1,17 +1,23 @@
-import formatDate from '../../utils/format-date';
+import { formatRelative } from 'date-fns';
+
+import clsxm from '@utils/clsxm';
 
 type PublishDateProps = {
   date: string | Date | number;
+  className?: string;
 };
 
-const PublishDate: React.FC<PublishDateProps> = ({ date }) => {
+const PublishDate: React.FC<PublishDateProps> = ({ date, className }) => {
   const formattedDate = new Date(date);
   if (isNaN(formattedDate.getTime())) {
     return null;
   }
   return (
-    <time className="text-lg" dateTime={formattedDate.toUTCString()}>
-      {formatDate(date, 'MMMM dd, yyyy')}
+    <time
+      className={clsxm('text-lg', className)}
+      dateTime={formattedDate.toUTCString()}
+    >
+      {formatRelative(date, new Date())}
     </time>
   );
 };
