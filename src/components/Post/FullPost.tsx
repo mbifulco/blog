@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { MDXRemote } from 'next-mdx-remote';
 
 import { SeriesNavigation } from '@components/Series/SeriesNavigation';
@@ -70,18 +71,18 @@ const FullPost: React.FC<FullPostProps> = ({ post, series }) => {
       <article>
         <header className="mx-auto mb-4 flex flex-col gap-2">
           <div className="mx-auto mb-4 max-w-[75ch]">
-            {series && (
-              <p className="mb-2 text-sm uppercase text-gray-600 dark:text-gray-400">
-                <em>Part of the </em>
-                <span className="0font-medium">
-                  {frontmatter?.series && frontmatter.series}
-                </span>
-                <em> Series</em>
-              </p>
-            )}
             <Heading as="h1" className="m-0 p-0">
               {title}
             </Heading>
+            {series && (
+              <p className="my-2 text-sm uppercase italic text-gray-700">
+                <span>Part of the </span>
+                <Link href={`/series/${series.slug}`} className="font-medium">
+                  {series.name}
+                </Link>
+                <span> Series</span>
+              </p>
+            )}
             <p className="text-xs text-gray-700 dark:text-gray-400">
               <PublishDate date={date} />{' '}
             </p>

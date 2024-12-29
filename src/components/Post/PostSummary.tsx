@@ -39,19 +39,18 @@ const PostSummary: React.FC<PostSummaryProps> = ({ post, eager = false }) => {
     <article className="max-w-[100vw]">
       <div className="relative">
         <header className="flex flex-col gap-1">
-          <Heading as={'h2'} className="m-0 p-0">
+          {coverContainer}
+          <Heading as={'h2'} className="m-0 p-0 text-xl md:text-xl">
             <Link
-              className="text-pink-600 no-underline hover:underline"
+              className="text-xl text-pink-600 no-underline hover:underline"
               href={postPath}
             >
               {title}
             </Link>
           </Heading>
-          <p className="text-gray-700">
-            <PublishDate date={date} />
+          <p>
+            <PublishDate date={date} className="text-sm text-gray-500" />
           </p>
-          <TagsSummary tags={tags} />
-          {coverContainer}
         </header>
 
         <p className="text-balance text-xl">{excerpt}</p>

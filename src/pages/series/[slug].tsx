@@ -88,9 +88,11 @@ const SeriesPage: NextPage<SeriesPageProps> = ({ series }) => {
         <StructuredData structuredData={generateSeriesStructuredData(series)} />
 
         <main className="mx-auto grid max-w-full gap-8 lg:grid-cols-3">
-          {series?.posts.map((post) => (
-            <Post post={post} series={series} summary key={post.slug} />
-          ))}
+          {series?.posts
+            .sort((a, b) => compareAsc(a.frontmatter.date, b.frontmatter.date))
+            .map((post) => (
+              <Post post={post} series={series} summary key={post.slug} />
+            ))}
           {series?.newsletters.map((newsletter) => (
             <NewsletterItem
               newsletter={newsletter}
