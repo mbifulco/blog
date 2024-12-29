@@ -27,7 +27,9 @@ export const SeriesNavigation: React.FC<SeriesNavigationProps> = ({
   return (
     <div className="mt-6 rounded-lg border border-gray-200 bg-white p-4">
       <Heading as="h3" className="text-s mb-3 text-sm font-semibold capitalize">
-        {series.name} ({orderedContent.length} Part Series)
+        <Link href={`/series/${series.slug}`}>
+          {series.name} ({orderedContent.length} Part Series)
+        </Link>
       </Heading>
       <ul className="m-0 list-none p-0">
         {orderedContent.map((post, index) => {
@@ -45,7 +47,7 @@ export const SeriesNavigation: React.FC<SeriesNavigationProps> = ({
             <li
               key={index}
               className={clsxm(
-                `flex items-center rounded-md px-3 py-2 transition-colors`,
+                `flex items-center rounded-md py-2 transition-colors`,
                 isActivePage && 'font-bold',
                 !isActivePage && 'hover:bg-gray-200'
               )}

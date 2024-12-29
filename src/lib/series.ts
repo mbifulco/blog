@@ -6,7 +6,7 @@ import type { BlogPost, Newsletter } from 'src/data/content-types';
 import { getAllPosts } from './blog';
 import { getAllNewsletters } from './newsletters';
 
-const getAllSeries = async (): Promise<Series[]> => {
+export const getAllSeries = async (): Promise<Series[]> => {
   const allPosts = await getAllPosts();
   const allNewsletters = await getAllNewsletters();
 

@@ -1,9 +1,10 @@
 import { MDXRemote } from 'next-mdx-remote';
-import type { VideoObject, WithContext } from 'schema-dts';
 
 import { SeriesNavigation } from '@components/Series/SeriesNavigation';
+import { StructuredData } from '@components/StructuredData';
 import type { BlogPost, Newsletter } from '@data/content-types';
 import type { Series } from '@lib/series';
+import { generatePostStructuredData } from '@utils/generateStructuredData';
 import { components } from '@utils/MDXProviderWrapper';
 import { CarbonAd } from '../CarbonAd';
 import { Heading } from '../Heading';
@@ -43,8 +44,6 @@ const FullPost: React.FC<FullPostProps> = ({ post, series }) => {
     />
   );
 
-  let videoStructuredData: WithContext<VideoObject> | undefined = undefined;
-
   if (youTubeId) {
     coverContainer = (
       <section className="bg-gray-900">
@@ -53,28 +52,21 @@ const FullPost: React.FC<FullPostProps> = ({ post, series }) => {
         </main>
       </section>
     );
-    videoStructuredData = {
-      '@context': 'https://schema.org',
-      '@type': 'VideoObject',
-      name: title,
-      description: excerpt,
-      thumbnailUrl: `https://i.ytimg.com/vi/${youTubeId}/hqdefault.jpg`,
-      uploadDate: new Date(date).toISOString(),
-      contentUrl: `https://www.youtube.com/watch?v=${youTubeId}`,
-      embedUrl: `https://www.youtube.com/embed/${youTubeId}`,
-    };
   }
+
+  const pageStructuredData = generatePostStructuredData({
+    post,
+    series,
+  });
 
   return (
     <>
-      {videoStructuredData && (
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(videoStructuredData),
-          }}
+      {pageStructuredData.map((structuredData) => (
+        <StructuredData
+          structuredData={structuredData}
+          key={`structuredData-${structuredData['@type']}-${post.frontmatter.path || post.frontmatter.slug}`}
         />
-      )}
+      ))}
       <article>
         <header className="mx-auto mb-4 flex flex-col gap-2">
           <div className="mx-auto mb-4 max-w-[75ch]">

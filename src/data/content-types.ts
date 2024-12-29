@@ -1,5 +1,7 @@
 import type { MDXRemoteSerializeResult } from 'next-mdx-remote';
 
+import { Series } from '@lib/series';
+
 export type Heading = {
   level: number;
   text: string;
@@ -40,7 +42,7 @@ export type Newsletter = {
 
 export type NewsletterItemProps = {
   newsletter: Newsletter;
-  compact?: boolean;
+  series?: Series;
 };
 
 export type BlogPost = MarkdownDocument & {
