@@ -9,13 +9,9 @@ import { StructuredData } from '@components/StructuredData';
 import { getAllSeries, getSeries } from '@lib/series';
 import type { Series } from '@lib/series';
 import { generateSeriesStructuredData } from '@utils/generateStructuredData';
-import { Colophon } from '../../components/Colophon';
 import { BlogPost as Post } from '../../components/Post';
 import SEO from '../../components/seo';
 import WebmentionMetadata from '../../components/webmentionMetadata';
-import type { BlogPost } from '../../data/content-types';
-import { getAllPosts, getPostBySlug } from '../../lib/blog';
-import { getCloudinaryImageUrl } from '../../utils/images';
 
 type SeriesPageParams = {
   slug: string;
@@ -109,7 +105,6 @@ const SeriesPage: NextPage<SeriesPageProps> = ({ series }) => {
           tags={allTags.filter((tag) => tag !== undefined)}
           title={pageTitle}
         />
-        <Colophon />
       </div>
     </>
   );

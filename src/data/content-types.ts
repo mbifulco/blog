@@ -1,6 +1,6 @@
 import type { MDXRemoteSerializeResult } from 'next-mdx-remote';
 
-import { Series } from '@lib/series';
+import type { Series } from '@lib/series';
 
 export type Heading = {
   level: number;
