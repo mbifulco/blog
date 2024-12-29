@@ -58,11 +58,11 @@ export async function getStaticPaths() {
 }
 
 const SeriesPage: NextPage<SeriesPageProps> = ({ series }) => {
+  const router = useRouter();
+
   if (!series) {
     return null;
   }
-
-  const router = useRouter();
 
   const sortedContent = [
     ...(series?.posts || []),
