@@ -10,12 +10,18 @@ const badgeVariants = (variant?: BadgeVariant) =>
         'border-transparent bg-pink-600 text-white shadow hover:bg-primary/80'),
     variant === 'secondary' &&
       'border-transparent bg-gray-200 text-gray-600 hover:bg-gray-200/80',
+    variant === 'brand' && 'bg-pink-400 text-white border-0',
     variant === 'destructive' &&
       'border-transparent bg-red-600 text-white shadow hover:bg-red-700',
     variant === 'outline' && 'text-foreground'
   );
 
-type BadgeVariant = 'default' | 'secondary' | 'destructive' | 'outline';
+type BadgeVariant =
+  | 'default'
+  | 'secondary'
+  | 'destructive'
+  | 'outline'
+  | 'brand';
 
 type BadgeProps = {
   variant?: BadgeVariant;

@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { MDXRemote } from 'next-mdx-remote';
 
+import { Badge } from '@components/Badge';
 import { SeriesNavigation } from '@components/Series/SeriesNavigation';
 import { StructuredData } from '@components/StructuredData';
 import type { BlogPost, Newsletter } from '@data/content-types';
@@ -19,6 +20,25 @@ import TableOfContents from './TableOfContents';
 type FullPostProps = {
   post: BlogPost | Newsletter;
   series?: Series | null;
+};
+
+// Add these type guard functions
+function isBlogPost(post: BlogPost | Newsletter): post is BlogPost {
+  return 'frontmatter' in post && 'path' in post.frontmatter;
+}
+
+function isNewsletter(post: BlogPost | Newsletter): post is Newsletter {
+  return 'frontmatter' in post && 'slug' in post.frontmatter;
+}
+
+const TitleBadge = ({ post }: { post: BlogPost | Newsletter }) => {
+  if (isBlogPost(post)) {
+    return <Badge>Article</Badge>;
+  }
+  if (isNewsletter(post)) {
+    return <Badge>💌 Tiny Improvements</Badge>;
+  }
+  return null;
 };
 
 const FullPost: React.FC<FullPostProps> = ({ post, series }) => {
@@ -71,7 +91,8 @@ const FullPost: React.FC<FullPostProps> = ({ post, series }) => {
       <article>
         <header className="mx-auto mb-4 flex flex-col gap-2">
           <div className="mx-auto mb-4 max-w-[75ch]">
-            <Heading as="h1" className="m-0 p-0">
+            <TitleBadge post={post} />
+            <Heading as="h1" className="m-0 mt-2 p-0">
               {title}
             </Heading>
             {series && (
