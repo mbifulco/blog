@@ -70,7 +70,7 @@ const HomePage: NextPage<HomePageProps> = ({ posts, newsletter }) => {
           <p className="m-0 text-xl font-normal">
             Find me on Bluesky{' '}
             <Link
-              href="https://bsky.app/profile/irreverentmike"
+              href="https://bsky.app/profile/mikebifulco.com"
               target="_blank"
               rel="noopener noreferrer"
               className="text-pink-600 hover:underline"
