@@ -2,6 +2,7 @@ import type { MetadataRoute } from 'next';
 
 import { getAllPosts } from '@lib/blog';
 import { getAllNewsletters } from '@lib/newsletters';
+import { getAllSeries } from '@lib/series';
 import { getAllTags } from '@lib/tags';
 import { BASE_SITE_URL } from '@/config';
 
@@ -32,6 +33,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.5,
   }));
 
+  const series = await getAllSeries();
+  const seriesSitemap = series.map((series) => ({
+    url: `${baseUrl}/series/${series.slug}`,
+    lastModified: new Date(),
+    changeFrequency: 'weekly' as const,
+    priority: 0.5,
+  }));
+
   // Define your static routes
   const routes: string[] = [
     '', // home page
@@ -57,6 +66,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...staticRoutesSitemap,
     ...newslettersSitemap,
     ...postsSitemap,
+    ...seriesSitemap,
     ...tagsSitemap,
   ];
 }
