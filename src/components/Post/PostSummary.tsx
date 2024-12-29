@@ -6,7 +6,6 @@ import type { BlogPost } from '../../data/content-types';
 import { Heading } from '../Heading';
 import { Image } from '../Image';
 import { PublishDate } from '../PublishDate';
-import TagsSummary from '../tagsSummary';
 
 type PostSummaryProps = {
   post: BlogPost;
@@ -16,7 +15,7 @@ type PostSummaryProps = {
 const PostSummary: React.FC<PostSummaryProps> = ({ post, eager = false }) => {
   const { frontmatter } = post;
 
-  const { coverImagePublicId, date, excerpt, path, tags, title } = frontmatter;
+  const { coverImagePublicId, date, excerpt, path, title } = frontmatter;
 
   const postPath = `/posts/${path}`;
 
