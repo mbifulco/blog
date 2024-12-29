@@ -2,6 +2,7 @@ import type { GetStaticProps, NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { compareAsc } from 'date-fns';
 
+import { Badge } from '@components/Badge';
 import { Heading } from '@components/Heading';
 import NewsletterItem from '@components/NewsletterFeed/NewsletterItem';
 import { NewsletterSignup } from '@components/NewsletterSignup';
@@ -81,13 +82,22 @@ const SeriesPage: NextPage<SeriesPageProps> = ({ series }) => {
       <div className="mx-auto flex max-w-6xl flex-col gap-4">
         <SEO canonical={router.asPath} title={pageTitle} ogType="article" />
 
-        <Heading as="h1" className="mb-12 text-center uppercase text-black">
-          The <em>{series?.name}</em> series - {series?.length} parts
-        </Heading>
+        <header className="mb-6 w-fit max-w-[75ch]">
+          <Badge>Post Series</Badge>
+          <Heading
+            as="h1"
+            className="w-fit max-w-[60ch] text-3xl uppercase text-black md:text-5xl"
+          >
+            <em>{series?.name}</em>
+          </Heading>
+          <span className="text-lg text-gray-500">
+            A series in {series?.length} parts
+          </span>
+        </header>
 
         <StructuredData structuredData={generateSeriesStructuredData(series)} />
 
-        <main className="mx-auto grid max-w-full gap-8 lg:grid-cols-3">
+        <main className="mx-auto grid max-w-full gap-8 gap-y-12 lg:grid-cols-3">
           {series?.posts
             .sort((a, b) => compareAsc(a.frontmatter.date, b.frontmatter.date))
             .map((post) => (

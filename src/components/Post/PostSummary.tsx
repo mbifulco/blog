@@ -52,13 +52,7 @@ const PostSummary: React.FC<PostSummaryProps> = ({ post, eager = false }) => {
           </p>
         </header>
 
-        <p className="text-balance text-xl">{excerpt}</p>
-        <Link
-          className="text-pink-600 no-underline hover:underline"
-          href={postPath}
-        >
-          Read more →
-        </Link>
+        <p className="text-md text-balance">{excerpt}</p>
       </div>
     </article>
   );
