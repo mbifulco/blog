@@ -26,12 +26,14 @@ export const getContentBySlug = async (
   const mdxSource = await serialize(content);
   const headings = getHeadings(content);
 
+  let tagsArray = (tags ?? []) as string[];
+
   return {
     slug: realSlug,
     frontmatter: {
       ...data,
       date: articleDate.toUTCString(),
-      tags: (tags as string[])?.map((tag: string) => parseTag(tag)) || [],
+      tags: tagsArray?.map((tag: string) => parseTag(tag)) || [],
       type,
     },
     content,
