@@ -26,7 +26,7 @@ export const getContentBySlug = async (
   const mdxSource = await serialize(content);
   const headings = getHeadings(content);
 
-  let tagsArray = (tags ?? []) as string[];
+  const tagsArray = (tags ?? []) as string[];
 
   return {
     slug: realSlug,
