@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
+import { useWebMentions } from '@hooks/useWebMentions';
 import pluralize from 'pluralize';
 
-import { useWebMentions } from '@hooks/useWebMentions';
 import formatDate from '@utils/format-date';
 import type { WebMention } from '@utils/webmentions';
 import { Avatar, AvatarGroup } from '../Avatar';

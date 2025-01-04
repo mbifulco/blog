@@ -1,12 +1,9 @@
-'use client';
-
 import { useRef, useState } from 'react';
 import Link from 'next/link';
+import useNewsletterStats from '@hooks/useNewsletterStats';
 import posthog from 'posthog-js';
 
 import Button from '@components/Button';
-import { useLocalStorage } from '@hooks/useLocalStorage';
-import useNewsletterStats from '@hooks/useNewsletterStats';
 import { trpc } from '@utils/trpc';
 
 type SubscriptionFormProps = {
@@ -15,19 +12,11 @@ type SubscriptionFormProps = {
   buttonText?: string;
 };
 
-type SubscriptionRecord = {
-  email?: string;
-  firstName?: string;
-  date?: string;
-};
-
 const SubscriptionForm: React.FC<SubscriptionFormProps> = ({
   tags: _,
   source,
   buttonText = 'Subscribe',
 }) => {
-  const [subscriptionRecord, setSubscriptionRecord] =
-    useLocalStorage<SubscriptionRecord>('tiny-improvements-subscribed', {});
   const [getHoneypottedNerd, setGetHoneypottedNerd] = useState<boolean>(false);
   const addSubscriberMutation = trpc.mailingList.subscribe.useMutation({
     onSuccess: () => {
@@ -40,12 +29,6 @@ const SubscriptionForm: React.FC<SubscriptionFormProps> = ({
         source,
         email,
         firstName,
-      });
-
-      setSubscriptionRecord({
-        email,
-        firstName,
-        date: new Date().toISOString(),
       });
     },
     onError: (error) => {
@@ -115,16 +98,12 @@ const SubscriptionForm: React.FC<SubscriptionFormProps> = ({
     );
   }
 
-  if (
-    addSubscriberMutation.isSuccess ||
-    getHoneypottedNerd ||
-    subscriptionRecord?.date
-  ) {
+  if (addSubscriberMutation.isSuccess || getHoneypottedNerd) {
     return (
       <div className="flex flex-col gap-2">
-        <p className="text-xl font-medium text-inherit">
-          🪩 Thanks so much for subscribing. Don&apos;t forget to check your
-          spam folder for emails from{' '}
+        <p className="text-xl font-semibold text-inherit">
+          🪩 Success! Thanks so much for subscribing. Don&apos;t forget to check
+          your spam folder for emails from{' '}
           <span className="text-pink-600">hello@mikebifulco.com.</span>
         </p>
       </div>
@@ -136,9 +115,7 @@ const SubscriptionForm: React.FC<SubscriptionFormProps> = ({
       <form ref={formRef} className="w-full" onSubmit={handleSubmission}>
         <fieldset
           disabled={
-            subscriptionRecord?.date !== undefined ||
-            addSubscriberMutation.isPending ||
-            addSubscriberMutation.isSuccess
+            addSubscriberMutation.isPending || addSubscriberMutation.isSuccess
           }
         >
           <div data-style="clean">
