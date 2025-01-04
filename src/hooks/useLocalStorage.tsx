@@ -29,7 +29,7 @@ const useLocalStorageSubscribe = (callback: (event: StorageEvent) => void) => {
 
 const getLocalStorageServerSnapshot = () => {
   // throw Error('useLocalStorage is a client-only hook');
-  return '{}';
+  return null;
 };
 
 export function useLocalStorage<T>(key: string, initialValue: T) {
