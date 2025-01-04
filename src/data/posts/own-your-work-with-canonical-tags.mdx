@@ -167,32 +167,31 @@ If your Next.js app is built using the App Router, implementation is slightly di
 To add a canonical tag with this method, you'll do something like this:
 
 ```tsx
-import type { Metadata, ResolvingMetadata } from 'next'
+import type { Metadata, ResolvingMetadata } from 'next';
 
 type Props = {
-  params: { id: string }
-  searchParams: { [key: string]: string | string[] | undefined }
-}
+  params: { id: string };
+  searchParams: { [key: string]: string | string[] | undefined };
+};
 
 export async function generateMetadata(
   { params, searchParams }: Props,
   parent: ResolvingMetadata
 ): Promise<Metadata> {
   // read route params
-  const slug = params.slug
+  const slug = params.slug;
 
   return {
     metadataBase: new Url('https://yoursite.com'), // Next will use this to make complete URLs from relative paths
     alternates: {
       canonical: `/articles/${slug}`,
     },
-  }
+  };
 }
 
 export default function Page({ params, searchParams }: Props) {
   /* etc */
 }
-
 ```
 
 ### Setting a canonical URL on Dev.to

@@ -7,6 +7,7 @@ import { Heading } from '../Heading';
 import TagsSummary from '../tagsSummary';
 
 const NewsletterItem: React.FC<NewsletterItemProps> = ({ newsletter }) => {
+  if (!newsletter) return null;
   const { coverImagePublicId, date, excerpt, slug, tags, title } =
     newsletter.frontmatter;
 
