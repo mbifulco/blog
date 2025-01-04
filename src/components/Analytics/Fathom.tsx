@@ -3,9 +3,10 @@
 import { Suspense, useEffect } from 'react';
 import { usePathname, useSearchParams } from 'next/navigation';
 import { useRouter } from 'next/router';
-import { useRouterType } from '@hooks/useRouterType';
 import * as Fathom from 'fathom-client';
 import posthog from 'posthog-js';
+
+import { useRouterType } from '@hooks/useRouterType';
 
 const FATHOM_DOMAINS = ['mikebifulco.com', 'www.mikebifulco.com'];
 

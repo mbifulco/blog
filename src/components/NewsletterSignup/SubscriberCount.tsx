@@ -1,5 +1,6 @@
-import useNewsletterStats from '@hooks/useNewsletterStats';
 import NumberFlow from '@number-flow/react';
+
+import useNewsletterStats from '@hooks/useNewsletterStats';
 
 type SubscriberCountProps = {
   label?: string;
