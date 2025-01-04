@@ -54,7 +54,7 @@ export function useLocalStorage<T>(key: string, initialValue: T) {
         /* eslint-disable @typescript-eslint/no-unsafe-call */
         // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         const nextState =
-          typeof v === 'function' ? v(JSON.parse(store || '{}')) : v;
+          typeof v === 'function' ? v(JSON.parse(store ?? '{}')) : v;
         /* eslint-enable @typescript-eslint/no-unsafe-call */
 
         if (nextState === undefined || nextState === null) {
