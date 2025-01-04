@@ -3,6 +3,7 @@
   "ignores": [
     "@eslint/js",
     "@ianvs/prettier-plugin-sort-imports",
+    "@next/bundle-analyzer",
     "@next/eslint-plugin-next",
     "@prettier/plugin-ruby",
     "@tailwindcss/forms",
@@ -22,22 +23,29 @@
     "prettier-plugin-tailwindcss",
     "prettier",
     "react-email",
+    "sharp",
     "tailwindcss",
     "typescript-eslint",
 
-    "@server/*",
+    "@/config",
     "@components/*",
+    "@data/*",
     "@hooks/*",
     "@layouts/*",
     "@lib/*",
+    "@server/*",
+    "@server/*",
     "@utils/*",
-    "@/config"
+
+    "mdx",
+    "src"
   ],
   "parsers": {
     "**/*.{ts,tsx}": ["typescript"]
   },
   "aliases": {
     "@components": "./src/components",
+    "@data": "./src/data",
     "@hooks": "./src/hooks",
     "@layouts": "./src/components/layouts",
     "@lib": "./src/lib",

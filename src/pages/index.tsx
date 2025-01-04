@@ -47,39 +47,14 @@ const HomePage: NextPage<HomePageProps> = ({ posts, newsletter }) => {
         image={headshotPublicUrl}
       />
       <div className="my-4 items-start gap-4 md:flex">
-        <div className="mr-0 lg:mr-4">
+        <div className="mr-0 overflow-clip rounded-xl lg:mr-4">
           <Headshot size={250} />
         </div>
-        <div className="max-w-[50ch]">
+        <div className="prose prose-xl max-w-[50ch]">
           <Heading as="h2" className="m-0 mb-2 text-4xl font-bold">
             Oh, hello
           </Heading>
-          <p className="m-0 text-xl font-normal">
-            {"I'm"} a startup founder, a designer, and a maker. I share my
-            writing on this site, but you can also find me on threads{' '}
-            <Link
-              href="https://threads.net/@irrevernemikt"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              @irreverentmike
-            </Link>{' '}
-            <Link
-              className="text-pink-600 hover:underline"
-              href="https://hachyderm.io/@irreverentmike"
-            >
-              Mastodon
-            </Link>{' '}
-            and{' '}
-            <Link
-              className="text-pink-600 hover:underline"
-              href="https://github.com/mbifulco"
-            >
-              GitHub
-            </Link>
-            .
-          </p>
-          <p className="mx-0 mb-0 mt-4 text-xl font-normal italic">
+          <p className="text-xl font-normal italic">
             I work as a {config.employer.role} at{' '}
             <Link
               href={config.employer.url}
@@ -89,8 +64,41 @@ const HomePage: NextPage<HomePageProps> = ({ posts, newsletter }) => {
             >
               {config.employer.name}
             </Link>{' '}
-            &mdash; however, the things I post here are my own, and {"don't "}
-            necessarily reflect the views or opinions of {config.employer.name}.
+            &mdash; I&apos;m a founder &amp; product builder with background in
+            design and development.
+          </p>
+          <p className="m-0 text-xl font-normal">
+            Find me on Bluesky{' '}
+            <Link
+              href="https://bsky.app/profile/mikebifulco.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-pink-600 hover:underline"
+            >
+              @mikebifulco.com
+            </Link>
+            {', '}Threads{' '}
+            <Link
+              href="https://threads.net/@irreverentmike"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-pink-600 hover:underline"
+            >
+              @irreverentmike
+            </Link>{' '}
+            or{' '}
+            <Link
+              className="text-pink-600 hover:underline"
+              href="https://hachyderm.io/@irreverentmike"
+            >
+              Mastodon
+            </Link>
+            .
+          </p>
+          <p className="text-sm italic">
+            What you see here are my own thoughts, and don&apos;t necessarily
+            reflect the views or opinions of {config.employer.name} or you, or
+            anyone else.
           </p>
         </div>
       </div>

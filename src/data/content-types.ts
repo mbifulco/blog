@@ -1,5 +1,7 @@
 import type { MDXRemoteSerializeResult } from 'next-mdx-remote';
 
+import type { Series } from '@lib/series';
+
 export type Heading = {
   level: number;
   text: string;
@@ -13,6 +15,7 @@ type Frontmatter = {
   slug?: string;
   podcastUrl?: string;
   youTubeId?: string;
+  series?: string;
 } & Record<string, string | number | boolean | Date | string[]>;
 // Extend MarkdownDocument to include common frontmatter fields and other fields as needed
 export type MarkdownDocument = {
@@ -39,7 +42,7 @@ export type Newsletter = {
 
 export type NewsletterItemProps = {
   newsletter: Newsletter;
-  compact?: boolean;
+  series?: Series;
 };
 
 export type BlogPost = MarkdownDocument & {

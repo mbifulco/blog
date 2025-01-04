@@ -22,7 +22,7 @@ export const Heading: React.FC<HeadingProps> = ({
   let headingClasses = '';
   switch (Component) {
     case 'h1':
-      headingClasses = 'text-2xl md:text-4xl';
+      headingClasses = 'text-2xl md:text-4xl uppercase italic';
       break;
     case 'h2':
       headingClasses = 'text-2xl md:text-3xl';
@@ -49,6 +49,7 @@ export const Heading: React.FC<HeadingProps> = ({
       {...props}
       className={clsxm(
         'font-futura font-bold text-pink-600',
+        'text-balance', // oh yes, my babies 🧘
         headingClasses,
         className
       )}

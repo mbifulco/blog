@@ -1,26 +1,36 @@
+import { useRouter } from 'next/router';
 import pluralize from 'pluralize';
 
-import formatDate from '../../utils/format-date';
-import type { WebMention } from '../../utils/webmentions';
+import { useWebMentions } from '@hooks/useWebMentions';
+import formatDate from '@utils/format-date';
+import type { WebMention } from '@utils/webmentions';
 import { Avatar, AvatarGroup } from '../Avatar';
 
 type MentionsSummaryProps = {
   mentions?: WebMention[];
 };
-const MentionsSummary: React.FC<MentionsSummaryProps> = ({ mentions }) => {
+
+const mySocialHandleUrls = [
+  'https://twitter.com/irreverentmike',
+  'https://reddit.com/user/irreverentmike/',
+  'https://hachyderm.io/@irreverentmike',
+  'https://threads.net/@irreverentmike',
+  'https://bsky.app/profile/mikebifulco.com',
+];
+
+const MentionsSummary: React.FC<MentionsSummaryProps> = () => {
+  const router = useRouter();
+  const { data: mentions } = useWebMentions(router.asPath);
+
   if (!mentions || mentions.length === 0) return null;
 
   const likes = mentions.filter((mention) => mention.activity.type === 'like');
   const someoneMentioned = mentions.filter((mention) => {
+    // likes don't indicate a mention
     if (mention.activity.type === 'like') return false;
-    if (
-      mention?.data?.author?.url === 'https://reddit.com/user/irreverentmike/'
-    )
-      return false;
-    if (mention?.data?.author?.url === 'https://hachyderm.io/@irreverentmike')
-      return false;
-    if (mention?.data?.author?.url === 'https://twitter.com/irreverentmike')
-      return false;
+
+    // make sure this isn't a mention from me
+    if (mySocialHandleUrls.includes(mention?.data?.author?.url)) return false;
     return true;
   });
 

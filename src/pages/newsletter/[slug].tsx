@@ -2,6 +2,8 @@ import type { GetStaticProps } from 'next';
 import { useRouter } from 'next/router';
 
 import { NewsletterSignup } from '@components/NewsletterSignup';
+import { getSeries } from '@lib/series';
+import type { Series } from '@lib/series';
 import { Colophon } from '../../components/Colophon';
 import FullPost from '../../components/Post/FullPost';
 import SEO from '../../components/seo';
@@ -27,12 +29,17 @@ export const getStaticProps: GetStaticProps<
 
   const mdxSource = await serialize(newsletter.content);
 
+  const series = newsletter.frontmatter.series
+    ? await getSeries(newsletter.frontmatter.series)
+    : undefined;
+
   return {
     props: {
       newsletter: {
         ...newsletter,
         source: mdxSource,
       },
+      series: series ?? null,
     },
   };
 };
@@ -52,9 +59,13 @@ export async function getStaticPaths() {
 
 type NewsletterPageProps = {
   newsletter: Newsletter;
+  series?: Series | null;
 };
 
-const NewsletterPage: React.FC<NewsletterPageProps> = ({ newsletter }) => {
+const NewsletterPage: React.FC<NewsletterPageProps> = ({
+  newsletter,
+  series,
+}) => {
   const { frontmatter } = newsletter;
 
   const { coverImagePublicId, date, tags, title, excerpt, path } = frontmatter;
@@ -75,7 +86,7 @@ const NewsletterPage: React.FC<NewsletterPageProps> = ({ newsletter }) => {
           ogType="article"
         />
 
-        <FullPost post={newsletter} />
+        <FullPost post={newsletter} series={series} />
         <Colophon />
       </div>
       <WebmentionMetadata

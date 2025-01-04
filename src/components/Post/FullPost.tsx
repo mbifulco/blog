@@ -1,11 +1,13 @@
-import { useRouter } from 'next/router';
+import Link from 'next/link';
 import { MDXRemote } from 'next-mdx-remote';
-import type { VideoObject, WithContext } from 'schema-dts';
-import useSWR from 'swr';
 
-import type { BlogPost, Newsletter } from '../../data/content-types';
-import { components } from '../../utils/MDXProviderWrapper';
-import { getMentions } from '../../utils/webmentions';
+import { Badge } from '@components/Badge';
+import { SeriesNavigation } from '@components/Series/SeriesNavigation';
+import { StructuredData } from '@components/StructuredData';
+import type { BlogPost, Newsletter } from '@data/content-types';
+import type { Series } from '@lib/series';
+import { generatePostStructuredData } from '@utils/generateStructuredData';
+import { components } from '@utils/MDXProviderWrapper';
 import { CarbonAd } from '../CarbonAd';
 import { Heading } from '../Heading';
 import { Image } from '../Image';
@@ -17,9 +19,29 @@ import TableOfContents from './TableOfContents';
 
 type FullPostProps = {
   post: BlogPost | Newsletter;
+  series?: Series | null;
 };
 
-const FullPost: React.FC<FullPostProps> = ({ post }) => {
+// Add these type guard functions
+function isBlogPost(post: BlogPost | Newsletter): post is BlogPost {
+  return 'frontmatter' in post && 'path' in post.frontmatter;
+}
+
+function isNewsletter(post: BlogPost | Newsletter): post is Newsletter {
+  return 'frontmatter' in post && 'slug' in post.frontmatter;
+}
+
+const TitleBadge = ({ post }: { post: BlogPost | Newsletter }) => {
+  if (isBlogPost(post)) {
+    return <Badge>Article</Badge>;
+  }
+  if (isNewsletter(post)) {
+    return <Badge>💌 Tiny Improvements</Badge>;
+  }
+  return null;
+};
+
+const FullPost: React.FC<FullPostProps> = ({ post, series }) => {
   const { frontmatter } = post;
 
   const {
@@ -33,10 +55,6 @@ const FullPost: React.FC<FullPostProps> = ({ post }) => {
     youTubeId,
   } = frontmatter;
 
-  const router = useRouter();
-
-  const { data: mentions /* error */ } = useSWR(router.asPath, getMentions);
-
   let coverContainer: React.ReactNode = (
     <Image
       className={'mb-4 ml-0 rounded-lg object-cover object-center shadow'}
@@ -47,8 +65,6 @@ const FullPost: React.FC<FullPostProps> = ({ post }) => {
     />
   );
 
-  let videoStructuredData: WithContext<VideoObject> | undefined = undefined;
-
   if (youTubeId) {
     coverContainer = (
       <section className="bg-gray-900">
@@ -57,34 +73,37 @@ const FullPost: React.FC<FullPostProps> = ({ post }) => {
         </main>
       </section>
     );
-    videoStructuredData = {
-      '@context': 'https://schema.org',
-      '@type': 'VideoObject',
-      name: title,
-      description: excerpt,
-      thumbnailUrl: `https://i.ytimg.com/vi/${youTubeId}/hqdefault.jpg`,
-      uploadDate: new Date(date).toISOString(),
-      contentUrl: `https://www.youtube.com/watch?v=${youTubeId}`,
-      embedUrl: `https://www.youtube.com/embed/${youTubeId}`,
-    };
   }
+
+  const pageStructuredData = generatePostStructuredData({
+    post,
+    series,
+  });
 
   return (
     <>
-      {videoStructuredData && (
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(videoStructuredData),
-          }}
+      {pageStructuredData.map((structuredData) => (
+        <StructuredData
+          structuredData={structuredData}
+          key={`structuredData-${structuredData['@type']}-${post.frontmatter.path || post.frontmatter.slug}`}
         />
-      )}
+      ))}
       <article>
         <header className="mx-auto mb-4 flex flex-col gap-2">
           <div className="mx-auto mb-4 max-w-[75ch]">
-            <Heading as="h1" className="m-0 p-0">
+            <TitleBadge post={post} />
+            <Heading as="h1" className="m-0 mt-2 p-0">
               {title}
             </Heading>
+            {series && (
+              <p className="my-2 text-sm uppercase italic text-gray-700">
+                <span>Part of the </span>
+                <Link href={`/series/${series.slug}`} className="font-medium">
+                  {series.name}
+                </Link>
+                <span> Series</span>
+              </p>
+            )}
             <p className="text-xs text-gray-700 dark:text-gray-400">
               <PublishDate date={date} />{' '}
             </p>
@@ -94,9 +113,14 @@ const FullPost: React.FC<FullPostProps> = ({ post }) => {
           <div className="mx-auto h-auto min-h-52 w-full">{coverContainer}</div>
         </header>
 
-        <div className="mx-auto w-fit">
+        <div className="mx-auto flex w-fit flex-col gap-4">
           <main className="mx-auto flex flex-col-reverse content-center justify-center gap-4 md:flex md:flex-row lg:gap-8">
             <article className="max-w-prose">
+              {series && (
+                <div className="mb-6">
+                  <SeriesNavigation series={series} />
+                </div>
+              )}
               {podcastUrl && (
                 <div className="mb-8">
                   <iframe width="100%" height="180" seamless src={podcastUrl} />
@@ -105,9 +129,7 @@ const FullPost: React.FC<FullPostProps> = ({ post }) => {
               <div className="prose lg:prose-xl">
                 <MDXRemote {...post.source} components={components} />
               </div>
-              {mentions && mentions.length > 0 && (
-                <MentionsSummary mentions={mentions} />
-              )}
+              <MentionsSummary />
             </article>
             <div className="sticky top-12 flex h-max w-[300px] flex-col gap-4">
               <TableOfContents headings={post.tableOfContents} />

@@ -1,0 +1,85 @@
+---
+title: "Content creation workflow: my writing process"
+excerpt: Learn how I write and publish content on my Next.js site using Markdown and MDX, and a custom content creation workflow.
+tags: ['nextjs', 'design', 'newsletter']
+date: 12-22-2024
+path: content-creation-workflow-my-writing-process
+coverImagePublicId: posts/content-creation-workflow-my-writing-process/cover
+series: "Content creation workflow: Writing"
+---
+
+## My writing workflow
+I have worked diligently to develop a writing workflow that keeps me productive and focused on writing, rather than getting hung up on the tools I use to write.
+
+### A little about me
+
+I'm Mike Bifulco, a software engineer and designer. I work as CTO and Cofounder of [Craftwork](https://craftwork.com) (Y Combinator S23), and I publish a weekly newsletter called Tiny Improvements to a focused audience of startup founders, product builders, and indiehackers.
+
+I have worked in developer relations and content creation since about 2017, and have been publishing content on [mikebifulco.com](https://mikebifulco.com) since 2019.
+
+Along the way, I've learned a lot about how to write and publish content, and I've developed a workflow that keeps me productive and focused on writing, rather than getting hung up on the tools I use to write.
+
+My site is built with Next.js, and I use Markdown (and something called MDX) to write posts.
+
+Sharing my work online has created endless connections and opportunities for me; if I had never hit the `pulish` button on my work, I would not be where I am today.
+
+### Why workflow matters
+
+Time and time again, I've seen aspiring writers, devrel-ists, and content creators waste weeks, months, and sometimes years trying to get everything _just right_ before they share their work with the world. That is a waste of time, and it's a shame.
+
+Regardless of who you are, the tools you use, and what you're writing about, landing on a workflow that works for you is the first step to getting started.
+
+If the work you're creating is good, you've got a great foundation to stand on. Sharing your expertise and knowledge with your community starts there - the rest is just details.
+
+
+## How I publish content on my Next.js site with Markdown and MDX
+
+For all content on my site, my authoring workflow looks like this:
+
+### Write in Markdown
+<Image
+  publicId="posts/content-creation-workflow-my-writing-process/writing-screenshot"
+  alt="A screenshot of my IDE with a Markdown file open"
+  caption={<span>writing new posts looks a whole lot like <a href="https://mikebifulco.com/posts/self-healing-urls-nextjs-seo">this</a>.</span>}
+/>
+
+1. I write in [Markdown](https://daringfireball.net/projects/markdown/). This makes it easy to write without distraction, and keeps my writing process focused on _what_ I should be saying, rather than how it looks.
+1. I create a file for each new post in [the source code for my site](https://github.com/mikebifulco/blog) under the `src/data/newsletters` directory, as a single `.mdx` file with a small amount of frontmatter (title, desctiption, tags, slug, and a cover image).
+
+
+### Every article needs a cover image
+
+<Image
+  publicId="posts/content-creation-workflow-my-writing-process/figma"
+  alt="A screenshot of a Figma file with a cover image for an article"
+  caption={<span><a href="https://mikebifulco.com/newsletter/open-sourcing-my-design-system">I use Figma</a> to create cover images for all of my articles.</span>}
+/>
+
+1. For every article, I create a `1200 x 630px` cover image in [Figma](https://mikebifulco.com/newsletter/open-sourcing-my-design-system). This is the image you'll see on social media sites when a link to my articles is shared. Any other images included in the body of a post are created the same way, and are generally the same size.
+1. I use [Squoosh](https://squoosh.app) to compress and optimize any included images, and then upload them to [Cloudinary](https://cloudinary.com) as `.webp` files.
+
+### Commit, merge, and publish
+
+<Image
+  publicId="posts/content-creation-workflow-my-writing-process/pull-request"
+  alt="A screenshot of a pull request for this very post in GitHub"
+  caption="This is what a pull request looks like for this very post."
+/>
+
+1. When I'm done writing and ready for a newsletter to go live on my site, I commit the changes to a new branch, and open a pull request _to myself_ to merge the changes into the `main` branch. This generates a preview build of the new page on Vercel, where I can check out the changes and make sure everything looks good before merging.
+1. After the PR is merged, Vercel automatically builds the site and deploys the changes, and the article is live in a few minutes.
+
+## After I publish: sharing my work
+**The most critical part of this process is sharing my work with the world.**
+
+Once a post goes live, I run off to social media and start _sharing my work_ with the world - on Bluesky, on Threads, on LinkedIn, and on Reddit. The ins and outs of that process is a whole other article, but I'll say this: it's just as important as _actually publishing something_.
+
+## Go hone your process
+
+Here's the thing: this is _my_ workflow - it works great for me, because I built it around my own preferences and needs. As you're designing your workflow for publishing, take advantage of the things your brain likes.
+
+Is it easier for you to write in Notion? Great! Start there. Is Markdown a pain in the butt? Skip it and use something that you like better. There's no right anwers here - the only thing that matters is that you actually get over the hump and _publish something_.
+
+Once you've published something, you can iterate from there.
+
+Good luck!

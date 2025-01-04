@@ -15,7 +15,10 @@ const Tag: React.FC<TagProps> = ({ children, url }) => {
 
   if (url) {
     tag = (
-      <Link href={url} className="text-gray text-md hover:underline">
+      <Link
+        href={url}
+        className="text-gray text-md cursor-pointer hover:underline"
+      >
         {tag}
       </Link>
     );

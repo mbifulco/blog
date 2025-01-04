@@ -2,6 +2,8 @@ import type { GetStaticProps, NextPage } from 'next';
 import { useRouter } from 'next/router';
 
 import { NewsletterSignup } from '@components/NewsletterSignup';
+import { getSeries } from '@lib/series';
+import type { Series } from '@lib/series';
 import { Colophon } from '../../components/Colophon';
 import { BlogPost as Post } from '../../components/Post';
 import SEO from '../../components/seo';
@@ -16,6 +18,7 @@ type PostPageParams = {
 
 type PostPageProps = {
   post: BlogPost;
+  series?: Series | null;
 };
 
 export const getStaticProps: GetStaticProps<
@@ -28,9 +31,14 @@ export const getStaticProps: GetStaticProps<
 
   const post = await getPostBySlug(params.slug);
 
+  const series = post.frontmatter.series
+    ? await getSeries(post.frontmatter.series)
+    : undefined;
+
   return {
     props: {
       post,
+      series: series ?? null,
     },
   };
 };
@@ -48,7 +56,7 @@ export async function getStaticPaths() {
   };
 }
 
-const PostPage: NextPage<PostPageProps> = ({ post }) => {
+const PostPage: NextPage<PostPageProps> = ({ post, series }) => {
   const { frontmatter } = post;
 
   const { coverImagePublicId, published, date, tags, title, excerpt, path } =
@@ -75,7 +83,7 @@ const PostPage: NextPage<PostPageProps> = ({ post }) => {
           </div>
         )}
 
-        <Post post={post} />
+        <Post post={post} series={series} />
         <WebmentionMetadata
           coverImageUrl={coverImageUrl}
           summary={excerpt}
