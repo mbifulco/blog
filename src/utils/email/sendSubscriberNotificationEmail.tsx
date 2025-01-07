@@ -19,7 +19,7 @@ export const sendSubscriberNotificationEmail = async ({
   const body = `Congrats! ${[firstName, lastName].filter(Boolean).join(' ')} <${email}> just subscribed to Tiny Improvements`;
 
   const { data, error } = await resend.emails.send({
-    from: '💌 Resend Notifications <notifications@mikebifulco.com>',
+    from: '💌 Tiny Improvements Notifications <notifications@mikebifulco.com>',
     to: [
       process.env.NODE_ENV === 'production'
         ? 'hello@mikebifulco.com'
