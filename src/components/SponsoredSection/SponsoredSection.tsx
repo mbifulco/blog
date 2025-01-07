@@ -57,6 +57,7 @@ const SponsoredSection: React.FC<SponsoredSectionProps> = ({
               <Link
                 className="self-center rounded bg-pink-600 px-4 py-2 text-white no-underline hover:bg-pink-700 hover:text-white hover:no-underline active:bg-blue-800"
                 href={href}
+                rel="sponsored"
               >
                 {CTAtext}
               </Link>
