@@ -15,7 +15,7 @@ export const sendSubscriberNotificationEmail = async ({
     return;
   }
 
-  const subject = `🎉 New Subscriber! ${firstName} <${email}>`;
+  const subject = `🎉 New Subscriber! ${firstName ?? ''} <${email}>`;
   const body = `Congrats! ${[firstName, lastName].filter(Boolean).join(' ')} <${email}> just subscribed to Tiny Improvements`;
 
   const { data, error } = await resend.emails.send({
