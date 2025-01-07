@@ -1,19 +1,21 @@
 import { CldImage } from 'next-cloudinary';
 
 type ImageProps = {
+  alt?: string;
+  bare?: boolean;
   caption?: React.ReactNode;
+  className?: string;
+  height?: number;
+  loading?: 'lazy' | 'eager';
+  priority?: boolean;
   publicId?: string;
   transformations?: string[];
   width?: number;
-  height?: number;
-  alt?: string;
-  loading?: 'lazy' | 'eager';
-  className?: string;
-  priority?: boolean;
 };
 
 const Image: React.FC<ImageProps> = ({
   alt,
+  bare = false,
   caption,
   className,
   height = 630,
@@ -28,19 +30,27 @@ const Image: React.FC<ImageProps> = ({
     return null;
   }
 
+  const renderedImage = (
+    <CldImage
+      height={height}
+      width={width}
+      src={publicId}
+      alt={alt ?? publicId}
+      loading={loading}
+      className={className}
+      transformations={transformations}
+      {...rest}
+    />
+  );
+
+  if (bare) {
+    return renderedImage;
+  }
+
   return (
-    <figure className="-mx-1 flex flex-col items-center justify-center sm:mx-auto">
-      <CldImage
-        height={height}
-        width={width}
-        src={publicId}
-        alt={alt ?? publicId}
-        loading={loading}
-        className={className}
-        transformations={transformations}
-        {...rest}
-      />
-      <figcaption>{caption}</figcaption>
+    <figure className="-mx-1 my-0 flex flex-col items-center justify-center sm:mx-auto">
+      {renderedImage}
+      {caption && <figcaption>{caption}</figcaption>}
     </figure>
   );
 };
