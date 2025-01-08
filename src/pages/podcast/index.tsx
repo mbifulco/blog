@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { Popover } from '@headlessui/react';
 
+import config from '@/config';
 import NewsletterSignup from '../../components/NewsletterSignup';
 import SEO from '../../components/seo';
 import { Subtitle } from '../../components/Subtitle';
@@ -38,7 +39,8 @@ const PodcastPage = () => {
   return (
     <div className="mx-auto flex max-w-4xl flex-col gap-4">
       <SEO
-        title="Subscribe to Tiny Improvements: articles software dev, design, and climate"
+        title="Tiny Improvements, the Podcast"
+        description={config.podcast.description}
         image={
           'https://res.cloudinary.com/mikebifulco-com/image/upload/v1662476730/newsletters/cover.png'
         }
