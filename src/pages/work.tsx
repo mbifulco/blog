@@ -22,7 +22,11 @@ type WorkPageProps = {
 const WorkPage: NextPage<WorkPageProps> = ({ articles }) => {
   return (
     <>
-      <SEO title="My work from around the web" canonical="/work" />
+      <SEO
+        title="My work from around the web"
+        canonical="/work"
+        description="Some samples of my work online"
+      />
       <div className="flex flex-row gap-4">
         <h1 className="text-4xl font-bold">Some samples of my work online</h1>
         <div>

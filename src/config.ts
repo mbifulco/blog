@@ -47,6 +47,10 @@ const config = {
     Tiny Improvements is written by Mike Bifulco. Mike was the founder of Smpl (acquired 2020), a coworking management application, a co-founder of APIs You Won’t Hate, the largest community of API developers on the web, and has held engineering leadership roles at Stripe, Google, and Microsoft. He is currently a Developer Advocate, helping developers build great products. Find more of Mike's writing at mikebifulco.com.
     `,
   },
+  podcast: {
+    description:
+      'Bite sized product advice for founders, indiehackers, and makers from Mike Bifulco, CTO and Cofounder of Craftwork',
+  },
   description: `Resources for modern software designers and developers.  Tips and walkthroughs on using developer tools like React, node, and javascript.`,
   image_url: `${BASE_SITE_URL}/icons/icon-512x512.png`, // used for RSS feed image
   logoText: 'Mike Bifulco',
