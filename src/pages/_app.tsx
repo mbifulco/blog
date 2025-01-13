@@ -1,4 +1,5 @@
 import type { AppProps } from 'next/app';
+import localFont from 'next/font/local';
 import posthog from 'posthog-js';
 import { PostHogProvider } from 'posthog-js/react';
 
@@ -9,6 +10,18 @@ import { trpc } from '@utils/trpc';
 
 import '../styles/globals.css';
 import '../components/CarbonAd/CarbonAd.css';
+
+const quickdraw = localFont({
+  src: '../../public/fonts/TAYQuickDraw.woff',
+  variable: '--font-quickdraw',
+});
+
+const dumpling = localFont({
+  src: '../../public/fonts/TAYDumpling.woff',
+  variable: '--font-dumpling',
+});
+
+const fontVariables = [quickdraw.variable, dumpling.variable].join(' ');
 
 // Check that PostHog is client-side (used to handle Next.js SSR)
 if (typeof window !== 'undefined') {
@@ -25,10 +38,12 @@ if (typeof window !== 'undefined') {
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <PostHogProvider client={posthog}>
-      <DefaultLayout>
-        <FathomAnalytics siteId={env.NEXT_PUBLIC_FATHOM_ID} />
-        <Component {...pageProps} />
-      </DefaultLayout>
+      <div className={fontVariables}>
+        <DefaultLayout>
+          <FathomAnalytics siteId={env.NEXT_PUBLIC_FATHOM_ID} />
+          <Component {...pageProps} />
+        </DefaultLayout>
+      </div>
     </PostHogProvider>
   );
 }

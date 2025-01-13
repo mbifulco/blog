@@ -34,13 +34,13 @@ const Navbar = () => {
     <Disclosure as="nav" className="w-full bg-white">
       {({ open }) => (
         <>
-          <div className="flex w-full flex-row gap-6 sm:mx-auto sm:flex-col">
+          <div className="flex w-full flex-row gap-3 sm:mx-auto sm:flex-col">
             <Link href="/" className="hover:no-underline">
               <Heading
                 as="h1"
                 className={clsxm(
                   'text-center text-4xl uppercase text-gray-800 transition-all duration-500 ease-in-out hover:text-gray-700',
-                  'text-lg md:text-4xl'
+                  'font-dumpling -my-2 text-lg md:text-4xl'
                 )}
               >
                 Mike Bifulco
@@ -54,7 +54,7 @@ const Navbar = () => {
                     href={link.href}
                     key={link.href}
                     className={clsxm(
-                      'hover:textfont-extrabold inline-flex items-center px-1 pt-1 font-futura text-sm font-semibold uppercase text-gray-700 hover:border-gray-300',
+                      'hover:textfont-extrabold inline-flex items-center px-1 pt-1 text-sm font-semibold uppercase text-gray-700 hover:border-gray-300',
                       'hover:no-underline',
                       link.href === router.pathname && 'text-gray-900',
                       link.badge &&
