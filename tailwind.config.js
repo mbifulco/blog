@@ -16,12 +16,29 @@ module.exports = {
       },
       fontFamily: {
         futura: ['Futura', 'Trebuchet MS', 'Arial', 'sans-serif'], // Custom Futura font
+        quickdraw: ['var(--font-quickdraw)'],
+        dumpling: ['var(--font-dumpling)'],
       },
       typography: (theme) => ({
         DEFAULT: {
           css: {
-            'h1, h2, h3, h4, h5, h6': {
-              fontFamily: `${theme('fontFamily.futura')}`,
+            h1: {
+              fontFamily: `${theme('fontFamily.dumpling')}`,
+            },
+            h2: {
+              fontFamily: `${theme('fontFamily.dumpling')}`,
+            },
+            h3: {
+              fontFamily: `${theme('fontFamily.dumpling')}`,
+            },
+            h4: {
+              fontFamily: `${theme('fontFamily.dumpling')}`,
+            },
+            h5: {
+              fontFamily: `${theme('fontFamily.dumpling')}`,
+            },
+            h6: {
+              fontFamily: `${theme('fontFamily.dumpling')}`,
             },
           },
         },
