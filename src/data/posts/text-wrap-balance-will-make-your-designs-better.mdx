@@ -1,0 +1,181 @@
+---
+title: "CSS Tips - text-wrap:balance will make your sites feel better"
+excerpt: "CSS text-wrap:balance will make your sites feel better"
+tags: [css, video]
+path: text-wrap-balance-will-make-your-designs-better
+coverImagePulicId: posts/text-wrap-balance-will-make-your-designs-better/cover
+youTubeId: y4f8zl1j8UA
+date: 12-23-2024
+---
+
+## A Quick Win with text-wrap: balance
+
+Here's a ludicrously simple tip to make your website more readable: use the `text-wrap: balance` CSS property. It's one line of CSS, but it makes a noticeable difference in how text appears, especially for headings.
+
+### Why Use text-wrap: balance?
+
+When text breaks across multiple lines, it often creates uneven line lengths, which can feel awkward to read. The `text-wrap: balance` property ensures that text lines are balanced, creating a more visually pleasing and readable layout.
+
+Take a look at these two versions of a heading:
+
+**Before:**
+
+
+### What is text-wrap: balance?
+
+`text-wrap: balance` is a CSS property designed to improve the visual balance of text that spans multiple lines. By default, when a block of text wraps onto a new line, the lengths of those lines can vary significantly, creating uneven and sometimes awkward breaks.
+
+With `text-wrap: balance`, the browser automatically adjusts the wrapping of text so that the lines are as close to equal length as possible. This makes the text easier to read, and looks great - particularly for headings, short paragraphs, and blockquotes.
+
+### Key Points:
+- **Purpose**: Ensures evenly distributed line lengths in multi-line text.
+- **Use Case**: Best suited for headings, short paragraphs, or any text that benefits from visual balance.
+- **Compatibility**: Works on most modern browsers and gracefully falls back to default text wrapping behavior where unsupported.
+
+By enhancing the balance of text, this property helps to create a polished and professional design with minimal effort.
+
+## See text-wrap: balance in action
+
+Here's a quick side by side example of a heading before and after using `text-wrap: balance`:
+
+<heading className="text-3xl font-bold text-purple-700">This is a heading that doesn't have the rule applied; text will break onto a new line unevenly</heading>
+
+<br />
+
+And by contrast -
+
+<br />
+
+<heading className="text-balance text-3xl font-bold text-purple-700">This is a heading that will feel nicely balanced if it spills onto a new line</heading>
+
+
+
+(Note: you may need to resize your browser window to see the difference)
+
+
+
+
+## How to use it: CSS
+
+One little line of CSS does the trick:
+
+```css
+h1, h2, h3, h4, h5, h6 {
+  text-wrap: balance;
+}
+```
+
+## How to use it: Tailwind
+
+Recent releases of Tailwind have built-in support for `text-wrap: balance`. You can start using it with the `text-wrap-balance` class.
+
+```
+<h1 class="text-wrap-balance">
+  This is a heading taht will feel nicely balanced if it spills onto a new line
+</h1>
+```
+
+### Browser Support
+According to Can I Use, `text-wrap: balance` is supported by approximately 90% of browsers. While there are exceptions (e.g., IE11, Opera Mini, and some niche mobile browsers), the fallback is harmless: the text will wrap as it normally would without the property.
+
+### Why It Matters
+Legibility and readability are critical for user experience. There's even a psychological principle—the Aesthetic Usability Effect—that suggests people perceive more attractive designs as easier to use. Balancing your text lines is a subtle but effective way to make your site look polished and professional.
+
+
+## Try It Today
+Improving the look and feel of your site doesn't have to involve a complete overhaul. Small changes like text-wrap: balance can make a big difference. Add it to your site, and give your visitors a better reading experience—one balanced line at a time.
+
+
+
+<details>
+  <summary className="text-lg font-bold inline ml-4 cursor-pointer text-pink-600">
+      Video Transcript
+  </summary>
+
+  [00:00:00] **Mike Bifulco:** Hey, what's up friends. This is Mike from tiny improvements. I have a ludicrously simple tip for you.
+
+  [00:00:03] That's going to make your sites look better with one line of CSS. And I cannot believe how easy this is, which is why I'm making a video about it.
+
+
+  Side by side Demo: Single post
+
+  [00:00:10] **Mike Bifulco:** What we're looking at here is my website. I've made a change. That is exactly one line of CSS between this and the version you're about to see.
+
+  [00:00:16] And I think the change is tremendous. Take a look at this.
+
+  [00:00:21] Again, version one. Version two.
+
+  [00:00:23] Version one. Version two. Version one. How to set up self healing, URLs, and next JS for better. SEO. Version two, how to set up self healing, URLs, and next JS for better SEO. I think that's a little more readable. Don't you?
+
+  [00:00:38] Maybe he doesn't pronounce enough here. Let's look at a more detailed example.
+
+
+  Side by Side example: Lots of posts
+
+  [00:00:41] **Mike Bifulco:** this is my newsletter page, where I list off many newsletters that I've written in the past.
+
+
+  Subscribe to 💌 Tiny Improvements
+
+  [00:00:45] **Mike Bifulco:** If you're watching this and you don't subscribe already I would love it if you did. I write a weekly newsletter called tiny improvements with product tips for startup founders, product builders, and indie hackers, based on my experience, building startups in the past and currently building my startup Craftwork, which is a Y [00:01:00] Combinator backed startup.
+
+
+  Looking at the change
+
+  [00:01:00] **Mike Bifulco:** now let's take a look at this change here.
+
+  [00:01:02] It's much more pronounced when you see it multiple times.
+
+  [00:01:04] So, what we're looking at is CSS change that brings balance to text when it breaks across lines. And that is almost exactly what the change is. It is CSS, text balance.
+
+  [00:01:14] If I pull this up on the Chrome for developers site, you can see from my pal, Adam Argyle, a super straight forward tutorial on what this thing looks like.
+
+  [00:01:24] And the change is pretty easy to see when it's animated like this. Although it's a little hard to describe what's happening is the balanced version is trying to make the text break into lines that are roughly evenly sized.
+
+  [00:01:33] So it has a lot more visual balance. It's a little easier to parse because your eyes and jumping from one line to the next isn't quite as far of a distance on the balanced version versus the unbalanced version. It also works with Arabic text, right to left left to right. It doesn't matter.
+
+  [00:01:46] There are some limitations here.
+
+  [00:01:48] This balance rule works on up to six lines, which means that if you apply it to everything, it won't work for long paragraphs, for example. But the nature of this rule really applies to headings. This is more or less the way that this should be applied [00:02:00] and I'll show you how I did it on my site.
+
+  [00:02:01] Next.
+
+
+  Implementation details in Next.js with Tailwind
+
+  [00:02:01] **Mike Bifulco:** This is what you have to do to make this thing happen on your site, where you're implementing headings. You need to add a text balance rule to it. This has done with tailwind. So it's applying the text wrap, colon balance CSS property to my headings. And this component happens to apply to all the headings on my site. So it was super easy to do, but if you had to do it somewhere else, it would look something like this. Const balanced, heading. Equals. Return H one style equals there you go.
+
+  [00:02:31] Tax rate balance. This would do it. If you need to do it, one-off for some reason, but you could also apply this to block quotes. Like the Google article explained. So const balanced block quote equals tax wrap balance, or in tailwind land, you could do. Class name equals text balance, not work just as well.
+
+  [00:02:51] Matter of fact, let's go do this for the block quote on my site too.
+
+  [00:02:53] I have this. Lovely block quote, component that I use to render block quotes on my site. And I think it's a reasonable thing [00:03:00] to add text balance here as well. So we're going to do that and that will improve the aesthetics of my site. That's super nice. It's very subtle. People may never notice that this happens, but it should make it so that when your title's going to a second line, the look that much nicer, pretty cool, right? I thought so.
+
+
+  ## Can I use it yet though?
+
+  [00:03:13] **Mike Bifulco:** Last thing I know what you're thinking. Is this something that I can actually use yet? Well, the good news is pretty much, yes. According to can I use this is used by almost 90% of browsers on the internet, which is fantastic. My apologies to people who use IE 11 opera mini UC browser for Android QQ, browser, Baidu browser, or Caio S browser.
+
+  [00:03:32] You're going to have to wait a little bit longer to see nice titles on my site, but in the meanwhile, the fallbacks. All back scenario for this is that your text will rep as it used to, if you're using this rule. So I consider this relatively safe to use.
+
+  [00:03:44] It's also already supported by tailwind, which is fantastic.
+
+  [00:03:47] I think you should go add this to your site and give it a shot. Legibility and readability are really important for user experience. And there's this thing called the aesthetic usability effect that the better looking your site is the better looking your product is.
+
+  [00:03:58] The more people will [00:04:00] inherently like it. It's a scientifically proven thing that, the better looking something is the more people put value in it.
+
+  [00:04:05] So why not? I don't want line change like this.
+
+  [00:04:07] That gets you some real wins for free.
+
+  [00:04:09] All right.
+
+  [00:04:09] That's a quick tip. I hope it's helpful for you until next time.
+
+  [00:04:12] My name is Mike Bifulco. This is a tiny improvements. Give them hell out there.
+
+  [00:04:15] ​
+
+
+
+</details>
