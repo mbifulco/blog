@@ -10,3 +10,10 @@ export default async function handler(req: NextRequest) {
     createContext: () => ({}),
   });
 }
+
+// We're using the edge-runtime
+// NOTE: if you don't want to use the edge runtime, the adapter above will need to be removed
+// see https://trpc.io/docs/client/nextjs/setup#3-create-a-trpc-router for the alternate implementation
+export const config = {
+  runtime: 'edge',
+};
