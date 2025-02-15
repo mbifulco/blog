@@ -48,7 +48,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     '/integrity',
     '/newsletter',
     '/podcast',
-    '/posts',
+    // '/posts', // this is just the home page, /posts does not exist
     '/tags',
     '/work',
     '/shop',

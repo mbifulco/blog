@@ -18,7 +18,6 @@
     "^@craftwork/(.*)$",
     "^@components/(.*)$",
     "^@data/(.*)$",
-    "^@hooks/(.*)$",
     "^@layouts/(.*)$",
     "^@lib/(.*)$",
     "^@ui/(.*)$",
