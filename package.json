@@ -42,7 +42,6 @@
     "feed": "^4.2.2",
     "gray-matter": "^4.0.3",
     "lucide-react": "^0.475.0",
-    "mailchecker": "^6.0.15",
     "micro": "^10.0.1",
     "next": "15.1.7",
     "next-cloudinary": "^6.16.0",
