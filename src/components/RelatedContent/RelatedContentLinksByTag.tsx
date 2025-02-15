@@ -19,7 +19,7 @@ const RelatedContentLinksByTag = ({ tags = DEFAULT_TAGS_TO_DISPLAY }) => {
   return (
     <div className="pb-20 pt-8">
       <p className="font-bold">More great resources</p>
-      <grid className="grid grid-cols-1 text-lg sm:grid-cols-2">
+      <div className="grid grid-cols-1 text-lg sm:grid-cols-2">
         {tags.map((tag) => {
           const tagInformation = getTagInformation(tag);
           if (!tagInformation) return null;
@@ -37,7 +37,7 @@ const RelatedContentLinksByTag = ({ tags = DEFAULT_TAGS_TO_DISPLAY }) => {
         <Link className="text-pink underline hover:no-underline" href={`/tags`}>
           Browse all topics &rarr;
         </Link>
-      </grid>
+      </div>
     </div>
   );
 };

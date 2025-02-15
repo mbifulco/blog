@@ -1,4 +1,10 @@
-const tags = [
+type TagMetadata = {
+  name: string;
+  id: string;
+  label: string;
+};
+
+const tags: TagMetadata[] = [
   {
     name: 'react',
     id: '3175424',
@@ -22,7 +28,7 @@ const tags = [
   {
     name: 'creators',
     id: '3175431',
-    lavel: 'for creators',
+    label: 'for creators',
   },
   {
     name: 'developer',
@@ -76,6 +82,7 @@ const tags = [
   },
 ];
 
-export const getTagInformation = (tag) => tags.find((t) => t.name === tag);
+export const getTagInformation = (tag: string) =>
+  tags.find((t) => t.name === tag);
 
 export default tags;
