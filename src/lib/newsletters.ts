@@ -21,55 +21,17 @@ export const getNewsletterBySlug = async (slug: string) => {
 };
 
 export const getAllNewsletters = async () => {
-  try {
-    console.log('Starting getAllNewsletters...');
+  let newsletters = (await getAllContentFromDirectory(
+    newslettersDirectory,
+    NEWSLETTERS_CONTENT_TYPE
+  )) as Newsletter[];
 
-    const newsletters = (await getAllContentFromDirectory(
-      newslettersDirectory,
-      NEWSLETTERS_CONTENT_TYPE
-    )) as Newsletter[];
+  // filter out newsletters that don't have a slug
+  newsletters = newsletters?.filter(
+    (newsletter) => newsletter.frontmatter?.slug
+  );
 
-    console.log(`Retrieved ${newsletters?.length ?? 0} raw newsletters`);
-
-    if (!newsletters) {
-      console.warn('getAllNewsletters: newsletters is null or undefined');
-      return [];
-    }
-
-    if (!Array.isArray(newsletters)) {
-      console.warn(
-        `getAllNewsletters: newsletters is not an array, got ${typeof newsletters}`
-      );
-      return [];
-    }
-
-    // filter out newsletters that don't have a slug
-    const filteredNewsletters = newsletters.filter((newsletter) => {
-      if (!newsletter) {
-        console.warn(
-          'getAllNewsletters: found null/undefined newsletter entry'
-        );
-        return false;
-      }
-
-      if (!newsletter.frontmatter?.slug) {
-        console.warn(
-          'getAllNewsletters: found newsletter without slug:',
-          JSON.stringify(newsletter.frontmatter, null, 2)
-        );
-        return false;
-      }
-
-      return true;
-    });
-
-    console.log(`Returning ${filteredNewsletters.length} valid newsletters`);
-    return filteredNewsletters;
-  } catch (error) {
-    console.error('Error in getAllNewsletters:', error);
-    // Re-throw the error to be handled by the page's error boundary
-    throw error;
-  }
+  return newsletters;
 };
 
 export const getAllNewslettersByTag = async (tag: string) => {
