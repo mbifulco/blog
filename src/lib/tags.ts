@@ -6,14 +6,37 @@ export const parseTag = (tag: string) => {
 };
 
 export const getAllTags = async () => {
-  const allTags = new Set<string>();
-  const allContent = [...(await getAllPosts()), ...(await getAllNewsletters())];
+  try {
+    // Safely fetch content with fallbacks
+    const posts = await getAllPosts().catch(() => []);
+    const newsletters = await getAllNewsletters().catch(() => []);
 
-  allContent.forEach((content) => {
-    content?.frontmatter?.tags?.forEach((tag) => allTags.add(parseTag(tag)));
-  });
+    const allTags = new Set<string>();
+    const allContent = [...posts, ...newsletters];
 
-  const uniqueTags = Array.from(allTags).sort();
+    // More defensive processing of content
+    allContent.forEach((content) => {
+      const tags = content?.frontmatter?.tags;
+      if (!tags) return;
 
-  return uniqueTags;
+      if (!Array.isArray(tags)) return;
+
+      tags.forEach((tag) => {
+        if (typeof tag === 'string') {
+          const parsedTag = parseTag(tag);
+          if (parsedTag) {
+            allTags.add(parsedTag);
+          }
+        }
+      });
+    });
+
+    // Convert to array and sort
+    const uniqueTags = Array.from(allTags).filter(Boolean).sort();
+
+    return uniqueTags;
+  } catch (error) {
+    console.error('Error in getAllTags:', error);
+    return [];
+  }
 };
