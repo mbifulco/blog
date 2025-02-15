@@ -3,68 +3,55 @@ import { join } from 'path';
 import { compareDesc } from 'date-fns';
 import matter from 'gray-matter';
 
-import type { Frontmatter, MarkdownDocument } from '../data/content-types';
+import type { MarkdownDocument } from '../data/content-types';
 import { getHeadings, serialize } from '../utils/mdx';
 import { parseTag } from './tags';
-
-const parseFrontmatterDate = (date: Frontmatter['date']): string => {
-  try {
-    // Use new Date() for all cases since it handles all our input types
-    // (Date objects, timestamps, and date strings)
-    const parsedDate = new Date(date);
-
-    // Validate that we got a valid date
-    if (isNaN(parsedDate.getTime())) {
-      throw new Error('Invalid date');
-    }
-
-    return parsedDate.toUTCString();
-  } catch (error) {
-    throw new Error(
-      `Invalid date format in frontmatter: ${date} \n Error: ${error}`
-    );
-  }
-};
 
 export const getContentBySlug = async (
   slug: string,
   directory: fs.PathLike,
   type: string
 ): Promise<MarkdownDocument> => {
-  if (!slug || !directory || !type) {
-    throw new Error('Missing required parameters');
-  }
-
-  const realSlug = slug.replace(/\.mdx$/, '');
-  const fullPath = join(directory.toString(), `${realSlug}.mdx`);
-
   try {
-    const fileContents = fs.readFileSync(fullPath, 'utf8');
-    const { data, content } = matter(fileContents);
-    const frontmatter = data as Frontmatter;
+    const realSlug = slug.replace(/\.mdx$/, '');
+    const fullPath = join(directory.toString(), `${realSlug}.mdx`);
 
-    const parsedDate = parseFrontmatterDate(frontmatter.date);
-    const parsedTags = (frontmatter.tags ?? []).map(parseTag);
+    if (!fs.existsSync(fullPath)) {
+      console.error(`getContentBySlug: File not found at path: ${fullPath}`);
+      throw new Error(`File not found: ${fullPath}`);
+    }
+
+    const fileContents = fs.readFileSync(fullPath, 'utf8');
+
+    const { data, content } = matter(fileContents);
+
+    const { date, tags } = data;
+    const articleDate = new Date(date as string);
+
+    if (isNaN(articleDate.getTime())) {
+      console.warn(`getContentBySlug: Invalid date for ${realSlug}: ${date}`);
+    }
 
     const mdxSource = await serialize(content);
     const headings = getHeadings(content);
+    const tagsArray = (tags ?? []) as string[];
 
     return {
       slug: realSlug,
       frontmatter: {
-        ...frontmatter,
-        date: parsedDate,
-        tags: parsedTags,
+        ...data,
+        date: articleDate.toUTCString(),
+        tags: tagsArray?.map((tag: string) => parseTag(tag)) || [],
         type,
+        title: data.title,
+        slug: realSlug,
       },
       content,
       tableOfContents: headings,
       source: mdxSource,
     };
   } catch (error) {
-    if (error instanceof Error) {
-      throw new Error(`Error processing ${fullPath}: ${error.message}`);
-    }
+    console.error(`getContentBySlug: Error processing ${slug}:`, error);
     throw error;
   }
 };
@@ -73,36 +60,69 @@ export async function getAllContentFromDirectory(
   directory: fs.PathLike,
   type: string
 ) {
-  if (!directory || !type) {
-    throw new Error('Directory and type are required');
-  }
-
   try {
-    const slugs = await safeReadDirectory(directory.toString());
-    const contentItems = await Promise.all(
-      slugs.map((slug) => getContentBySlug(slug, directory, type))
-    );
-
-    // Sort content by date, newest first
-    const sortedContent = contentItems.sort((a, b) =>
-      compareDesc(
-        new Date(a?.frontmatter?.date),
-        new Date(b?.frontmatter?.date)
-      )
-    );
-
-    // Filter out drafts in production
-    if (process.env.NODE_ENV === 'production') {
-      return sortedContent.filter(
-        (item) => item.frontmatter?.published !== false
+    if (!fs.existsSync(directory)) {
+      console.error(
+        `getAllContentFromDirectory: Directory not found: ${directory}`
       );
+      throw new Error(`Directory not found: ${directory}`);
     }
 
-    return sortedContent;
-  } catch (error) {
-    if (error instanceof Error) {
-      throw new Error(`Error reading directory ${directory}: ${error.message}`);
+    const slugs = fs.readdirSync(directory);
+
+    const articles = await Promise.all(
+      slugs.map(async (slug) => {
+        try {
+          return await getContentBySlug(slug, directory, type);
+        } catch (error) {
+          console.error(
+            `getAllContentFromDirectory: Error processing ${slug}:`,
+            error
+          );
+          return null;
+        }
+      })
+    );
+
+    // Filter out null entries from failed processing
+    const validArticles = articles.filter(
+      (article): article is MarkdownDocument => {
+        if (!article) {
+          console.warn('getAllContentFromDirectory: Filtered out null article');
+          return false;
+        }
+        return true;
+      }
+    );
+
+    // sort posts by date, newest first
+    validArticles.sort((a, b) => {
+      const dateA = new Date(a?.frontmatter?.date);
+      const dateB = new Date(b?.frontmatter?.date);
+
+      if (isNaN(dateA.getTime())) {
+        console.warn(`Invalid date for article: ${a?.frontmatter?.slug}`);
+        return 1;
+      }
+      if (isNaN(dateB.getTime())) {
+        console.warn(`Invalid date for article: ${b?.frontmatter?.slug}`);
+        return -1;
+      }
+
+      return compareDesc(dateA, dateB);
+    });
+
+    /// filter out drafts for production
+    if (process.env.NODE_ENV === 'production') {
+      const publishedArticles = validArticles.filter(
+        (article) => article.frontmatter?.published !== false
+      );
+      return publishedArticles;
     }
+
+    return validArticles;
+  } catch (error) {
+    console.error(`getAllContentFromDirectory: Error loading ${type}:`, error);
     throw error;
   }
 }
