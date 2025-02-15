@@ -35,10 +35,14 @@ export const getAllNewsletters = async () => {
 };
 
 export const getAllNewslettersByTag = async (tag: string) => {
-  const refs = await getAllNewsletters();
-
-  return refs.filter((article) => {
-    const tags = article.frontmatter?.tags ?? [];
-    return tags.includes(tag);
-  });
+  try {
+    // Use the safe directory reader
+    const newsletters = await getAllNewsletters();
+    return newsletters.filter((newsletter) =>
+      newsletter.frontmatter.tags?.includes(tag)
+    );
+  } catch (error) {
+    console.error('Error getting newsletters by tag:', error);
+    return [];
+  }
 };

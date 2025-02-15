@@ -2,71 +2,104 @@ import type { MDXRemoteSerializeResult } from 'next-mdx-remote';
 
 import type { Series } from '@lib/series';
 
+/**
+ * Represents a heading in MDX content with its hierarchy level,
+ * display text, and URL-safe slug
+ */
 export type Heading = {
-  level: number;
-  text: string;
-  slug: string;
+  level: number; // h1 = 1, h2 = 2, etc.
+  text: string; // Display text
+  slug: string; // URL-safe identifier
 };
 
-type Frontmatter = {
+/**
+ * Base properties that all content types share in their frontmatter
+ */
+export type BaseFrontmatter = {
   date: string | number | Date;
+  title: string;
+  slug: string;
   tags?: string[];
   published?: boolean;
-  slug?: string;
+};
+
+/**
+ * Additional frontmatter fields that may appear in any content type
+ */
+export type OptionalFrontmatter = {
   podcastUrl?: string;
   youTubeId?: string;
   series?: string;
-} & Record<string, string | number | boolean | Date | string[]>;
-// Extend MarkdownDocument to include common frontmatter fields and other fields as needed
+  excerpt?: string;
+  coverImagePublicId?: string;
+  path?: string;
+  url?: string;
+  content?: string;
+};
+
+/**
+ * Complete frontmatter type that combines base and optional fields
+ */
+export type Frontmatter = BaseFrontmatter & OptionalFrontmatter;
+
+/**
+ * Core document structure for all markdown content
+ */
 export type MarkdownDocument = {
-  frontmatter: Frontmatter; // Use intersection type to combine BaseFrontmatter with generic T
+  // we add a type to the frontmatter to help with type inference
+  frontmatter: Frontmatter & { type: string };
   content: string;
   tableOfContents?: Heading[];
   slug: string;
-  source: MDXRemoteSerializeResult; // Define what 'source' should contain more specifically if possible
+  source: MDXRemoteSerializeResult;
 };
 
-type NewsletterMetadata = {
+/**
+ * Newsletter-specific metadata requirements
+ */
+export type NewsletterMetadata = BaseFrontmatter & {
   coverImagePublicId: string;
-  date: string | number | Date;
   excerpt: string;
-  slug: string;
-  tags: string[];
-  title: string;
   path: string;
 };
 
-export type Newsletter = {
+/**
+ * Complete Newsletter type including content and metadata
+ */
+export type Newsletter = MarkdownDocument & {
   frontmatter: NewsletterMetadata;
-} & MarkdownDocument;
+};
 
 export type NewsletterItemProps = {
   newsletter: Newsletter;
   series?: Series;
 };
 
+/**
+ * Blog post type with specific frontmatter requirements
+ */
 export type BlogPost = MarkdownDocument & {
   frontmatter: {
-    slug: string;
-    title: string;
-    date: string;
+    coverImagePublicId: string;
     excerpt: string;
     content: string;
-    coverImagePublicId: string;
-    published: boolean;
     path: string;
-    tags?: Tag[];
-  };
+    published: boolean;
+  } & BaseFrontmatter;
 };
 
+/**
+ * External article reference type
+ */
 export type Article = MarkdownDocument & {
   frontmatter: {
-    date: string;
     url: string;
-    title: string;
-    tags: string[];
-    slug: string;
-  };
+  } & BaseFrontmatter;
 };
 
 export type Tag = string;
+
+/**
+ * Union type of all possible frontmatter shapes
+ */
+export type ContentFrontmatter = NewsletterMetadata | Article['frontmatter'];

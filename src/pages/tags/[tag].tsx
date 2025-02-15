@@ -32,18 +32,30 @@ export const getStaticProps: GetStaticProps<
 
   const { tag } = params;
 
-  const posts = await getAllPostsByTag(tag);
-  const articles = await getAllExternalReferencesByTag(tag);
-  const newsletters = await getAllNewslettersByTag(tag);
+  try {
+    const posts = await getAllPostsByTag(tag);
+    const articles = await getAllExternalReferencesByTag(tag);
+    const newsletters = await getAllNewslettersByTag(tag);
 
-  return {
-    props: {
-      tag,
-      posts,
-      articles,
-      newsletters,
-    },
-  };
+    return {
+      props: {
+        tag,
+        posts,
+        articles,
+        newsletters,
+      },
+    };
+  } catch (error) {
+    console.error('Error in getStaticProps:', error);
+    return {
+      props: {
+        tag,
+        posts: [],
+        articles: [],
+        newsletters: [],
+      },
+    };
+  }
 };
 
 export const getStaticPaths: GetStaticPaths<TagPageParams> = async () => {
