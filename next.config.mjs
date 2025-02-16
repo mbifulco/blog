@@ -3,7 +3,6 @@ import { createJiti } from 'jiti';
 
 const jiti = createJiti(new URL(import.meta.url).pathname);
 
-// Use the recommended import() method instead of direct call
 await jiti.import('./src/utils/env');
 
 /**
