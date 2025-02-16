@@ -2,10 +2,8 @@
 import { join } from 'path';
 
 import type { BlogPost } from '../data/content-types';
-import {
-  getAllContentFromDirectory,
-  getContentBySlug,
-} from './contentTypeLoader';
+import { getAllContentFromDirectory } from './content-loaders/getAllContentFromDirectory';
+import { getContentBySlug } from './content-loaders/getContentBySlug';
 
 // Add markdown files in `src/content/blog`
 const postsDirectory = join(process.cwd(), 'src', 'data', 'posts');

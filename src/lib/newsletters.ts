@@ -1,10 +1,8 @@
 import { join } from 'path';
 
 import type { Newsletter } from '../data/content-types';
-import {
-  getAllContentFromDirectory,
-  getContentBySlug,
-} from './contentTypeLoader';
+import { getAllContentFromDirectory } from './content-loaders/getAllContentFromDirectory';
+import { getContentBySlug } from './content-loaders/getContentBySlug';
 
 // directory reference to `src/content/newsletters`
 const newslettersDirectory = join(process.cwd(), 'src', 'data', 'newsletters');
