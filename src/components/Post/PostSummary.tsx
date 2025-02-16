@@ -15,9 +15,9 @@ type PostSummaryProps = {
 const PostSummary: React.FC<PostSummaryProps> = ({ post, eager = false }) => {
   const { frontmatter } = post;
 
-  const { coverImagePublicId, date, excerpt, path, title } = frontmatter;
+  const { coverImagePublicId, date, excerpt, slug, title } = frontmatter;
 
-  const postPath = `/posts/${path}`;
+  const postPath = `/posts/${slug}`;
 
   const coverContainer = (
     <Link href={postPath}>
@@ -25,7 +25,7 @@ const PostSummary: React.FC<PostSummaryProps> = ({ post, eager = false }) => {
         className={clsxm(
           '-mx-2 mb-4 object-cover object-center shadow sm:mx-0 sm:rounded-lg'
         )}
-        publicId={coverImagePublicId || `posts/${path}/cover`}
+        publicId={coverImagePublicId || `posts/${slug}/cover`}
         alt={excerpt || title}
         height={630}
         width={1200}

@@ -48,7 +48,7 @@ const FullPost: React.FC<FullPostProps> = ({ post, series }) => {
     coverImagePublicId,
     date,
     excerpt,
-    path,
+    slug,
     podcastUrl,
     tags,
     title,
@@ -58,7 +58,7 @@ const FullPost: React.FC<FullPostProps> = ({ post, series }) => {
   let coverContainer: React.ReactNode = (
     <Image
       className={'mb-4 ml-0 rounded-lg object-cover object-center shadow'}
-      publicId={coverImagePublicId || `posts/${path}/cover`}
+      publicId={coverImagePublicId || `posts/${slug}/cover`}
       alt={excerpt}
       loading="eager"
       priority
