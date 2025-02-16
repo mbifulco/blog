@@ -8,7 +8,7 @@
   "scripts": {
     "analyze": "ANALYZE=true next build",
     "build": "next build",
-    "dev": "NODE_OPTIONS='--inspect' next dev --turbopack",
+    "dev": "NODE_OPTIONS='--inspect' next dev",
     "depcheck": "depcheck",
     "email": "email dev --dir ./src/utils/email/templates",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md,mdx}\"",
