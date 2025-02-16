@@ -1,5 +1,6 @@
 import fs from 'fs';
 import { join } from 'path';
+import { compile } from '@mdx-js/mdx';
 import { compareDesc } from 'date-fns';
 import matter from 'gray-matter';
 
@@ -30,6 +31,16 @@ export const getContentBySlug = async (
 
     if (isNaN(articleDate.getTime())) {
       console.warn(`getContentBySlug: Invalid date for ${realSlug}: ${date}`);
+    }
+
+    // Validate MDX syntax before serializing
+    try {
+      await compile(content);
+    } catch (error: unknown) {
+      console.error(`MDX syntax error in ${fullPath}:`, error);
+      throw new Error(
+        `MDX syntax error in ${fullPath}: ${error instanceof Error ? error.message : String(error)}`
+      );
     }
 
     const mdxSource = await serialize(content);
@@ -84,16 +95,8 @@ export async function getAllContentFromDirectory(
       })
     );
 
-    // Filter out null entries from failed processing
-    const validArticles = articles.filter(
-      (article): article is MarkdownDocument => {
-        if (!article) {
-          console.warn('getAllContentFromDirectory: Filtered out null article');
-          return false;
-        }
-        return true;
-      }
-    );
+    // filter out null entries from failed processing
+    const validArticles = articles.filter((article) => article !== null);
 
     // sort posts by date, newest first
     validArticles.sort((a, b) => {
