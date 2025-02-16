@@ -11,7 +11,6 @@ import { processMDXFileContent } from './processMDXFileContent';
  * @returns Promise<MarkdownDocument[]> - Array of processed content items, sorted by date
  * @throws Error if directory doesn't exist or content processing fails
  */
-
 export const getAllContentFromDirectory = async (
   directory: fs.PathLike,
   type: string
