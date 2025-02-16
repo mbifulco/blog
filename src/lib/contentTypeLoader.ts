@@ -8,69 +8,70 @@ import type { MarkdownDocument } from '../data/content-types';
 import { getHeadings, serialize } from '../utils/mdx';
 import { parseTag } from './tags';
 
-export const getContentBySlug = async (
-  slug: string,
-  directory: fs.PathLike,
+/**
+ * Processes an MDX file and returns a structured MarkdownDocument
+ * @param fullPath - The complete file system path to the MDX file
+ * @param realSlug - The slug for the content (filename without .mdx extension)
+ * @param type - The type of content (e.g., 'post', 'newsletter')
+ * @returns Promise<MarkdownDocument> - Processed content with frontmatter, source, and metadata
+ * @throws Error if MDX compilation fails or file cannot be read
+ */
+const processContent = async (
+  fullPath: string,
+  realSlug: string,
   type: string
 ): Promise<MarkdownDocument> => {
-  try {
-    const realSlug = slug.replace(/\.mdx$/, '');
-    const fullPath = join(directory.toString(), `${realSlug}.mdx`);
+  const fileContents = fs.readFileSync(fullPath, 'utf8');
+  const { data, content } = matter(fileContents);
 
-    if (!fs.existsSync(fullPath)) {
-      console.error(`getContentBySlug: File not found at path: ${fullPath}`);
-      throw new Error(`File not found: ${fullPath}`);
-    }
+  const { date, tags } = data;
+  const articleDate = new Date(date as string);
 
-    const fileContents = fs.readFileSync(fullPath, 'utf8');
-
-    const { data, content } = matter(fileContents);
-
-    const { date, tags } = data;
-    const articleDate = new Date(date as string);
-
-    if (isNaN(articleDate.getTime())) {
-      console.warn(`getContentBySlug: Invalid date for ${realSlug}: ${date}`);
-    }
-
-    // Validate MDX syntax before serializing
-    try {
-      await compile(content);
-    } catch (error: unknown) {
-      console.error(`MDX syntax error in ${fullPath}:`, error);
-      throw new Error(
-        `MDX syntax error in ${fullPath}: ${error instanceof Error ? error.message : String(error)}`
-      );
-    }
-
-    const mdxSource = await serialize(content);
-    const headings = getHeadings(content);
-    const tagsArray = (tags ?? []) as string[];
-
-    return {
-      slug: realSlug,
-      frontmatter: {
-        ...data,
-        date: articleDate.toUTCString(),
-        tags: tagsArray?.map((tag: string) => parseTag(tag)) || [],
-        type,
-        title: data.title,
-        slug: realSlug,
-      },
-      content,
-      tableOfContents: headings,
-      source: mdxSource,
-    };
-  } catch (error) {
-    console.error(`getContentBySlug: Error processing ${slug}:`, error);
-    throw error;
+  if (isNaN(articleDate.getTime())) {
+    console.warn(`processContent: Invalid date for ${realSlug}: ${date}`);
   }
+
+  // Validate MDX syntax before serializing
+  try {
+    await compile(content);
+  } catch (error: unknown) {
+    console.error(`MDX syntax error in ${fullPath}:`, error);
+    throw new Error(
+      `MDX syntax error in ${fullPath}: ${error instanceof Error ? error.message : String(error)}`
+    );
+  }
+
+  const mdxSource = await serialize(content);
+  const headings = getHeadings(content);
+  const tagsArray = (tags ?? []) as string[];
+
+  return {
+    slug: realSlug,
+    frontmatter: {
+      ...data,
+      date: articleDate.toUTCString(),
+      tags: tagsArray?.map((tag: string) => parseTag(tag)) || [],
+      type,
+      title: data.title,
+      slug: realSlug,
+    },
+    content,
+    tableOfContents: headings,
+    source: mdxSource,
+  };
 };
 
-export async function getAllContentFromDirectory(
+/**
+ * Retrieves and processes all MDX files from a specified directory
+ * @param directory - The file system path to the content directory
+ * @param type - The type of content being processed (e.g., 'post', 'newsletter')
+ * @returns Promise<MarkdownDocument[]> - Array of processed content items, sorted by date
+ * @throws Error if directory doesn't exist or content processing fails
+ */
+export const getAllContentFromDirectory = async (
   directory: fs.PathLike,
   type: string
-) {
+) => {
   try {
     if (!fs.existsSync(directory)) {
       console.error(
@@ -80,11 +81,12 @@ export async function getAllContentFromDirectory(
     }
 
     const slugs = fs.readdirSync(directory);
-
     const articles = await Promise.all(
       slugs.map(async (slug) => {
         try {
-          return await getContentBySlug(slug, directory, type);
+          const realSlug = slug.replace(/\.mdx$/, '');
+          const fullPath = join(directory.toString(), `${realSlug}.mdx`);
+          return await processContent(fullPath, realSlug, type);
         } catch (error) {
           console.error(
             `getAllContentFromDirectory: Error processing ${slug}:`,
@@ -115,12 +117,11 @@ export async function getAllContentFromDirectory(
       return compareDesc(dateA, dateB);
     });
 
-    /// filter out drafts for production
+    // filter out drafts for production
     if (process.env.NODE_ENV === 'production') {
-      const publishedArticles = validArticles.filter(
+      return validArticles.filter(
         (article) => article.frontmatter?.published !== false
       );
-      return publishedArticles;
     }
 
     return validArticles;
@@ -128,8 +129,44 @@ export async function getAllContentFromDirectory(
     console.error(`getAllContentFromDirectory: Error loading ${type}:`, error);
     throw error;
   }
-}
+};
 
+/**
+ * Retrieves and processes a single MDX file by its slug
+ * @param slug - The slug (filename without .mdx) of the content to retrieve
+ * @param directory - The file system path to the content directory
+ * @param type - The type of content being processed (e.g., 'post', 'newsletter')
+ * @returns Promise<MarkdownDocument> - Processed content with frontmatter, source, and metadata
+ * @throws Error if file doesn't exist or content processing fails
+ */
+export const getContentBySlug = async (
+  slug: string,
+  directory: fs.PathLike,
+  type: string
+): Promise<MarkdownDocument> => {
+  try {
+    const realSlug = slug.replace(/\.mdx$/, '');
+    const fullPath = join(directory.toString(), `${realSlug}.mdx`);
+
+    if (!fs.existsSync(fullPath)) {
+      console.error(`getContentBySlug: File not found at path: ${fullPath}`);
+      throw new Error(`File not found: ${fullPath}`);
+    }
+
+    return await processContent(fullPath, realSlug, type);
+  } catch (error) {
+    console.error(`getContentBySlug: Error processing ${slug}:`, error);
+    throw error;
+  }
+};
+
+/**
+ * Safely reads a directory and returns its contents
+ * @param dirPath - The file system path to read
+ * @returns Promise<string[]> - Array of filenames in the directory
+ * @description Uses dynamic import for fs/promises to ensure proper initialization.
+ * Returns empty array if directory cannot be read.
+ */
 export const safeReadDirectory = async (dirPath: string) => {
   try {
     // Ensure all imports are at the top and properly initialized
