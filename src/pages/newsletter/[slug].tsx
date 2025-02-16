@@ -68,11 +68,11 @@ const NewsletterPage: React.FC<NewsletterPageProps> = ({
 }) => {
   const { frontmatter } = newsletter;
 
-  const { coverImagePublicId, date, tags, title, excerpt, path } = frontmatter;
+  const { coverImagePublicId, date, tags, title, excerpt, slug } = frontmatter;
 
   const router = useRouter();
 
-  const postImagePublicId = coverImagePublicId || `posts/${path}/cover`;
+  const postImagePublicId = coverImagePublicId || `newsletters/${slug}/cover`;
   const coverImageUrl = getCloudinaryImageUrl(postImagePublicId);
 
   return (

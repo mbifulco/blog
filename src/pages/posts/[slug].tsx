@@ -59,12 +59,12 @@ export async function getStaticPaths() {
 const PostPage: NextPage<PostPageProps> = ({ post, series }) => {
   const { frontmatter } = post;
 
-  const { coverImagePublicId, published, date, tags, title, excerpt, path } =
+  const { coverImagePublicId, published, date, tags, title, excerpt, slug } =
     frontmatter;
 
   const router = useRouter();
 
-  const postImagePublicId = coverImagePublicId || `posts/${path}/cover`;
+  const postImagePublicId = coverImagePublicId || `posts/${slug}/cover`;
   const coverImageUrl = getCloudinaryImageUrl(postImagePublicId);
 
   return (
