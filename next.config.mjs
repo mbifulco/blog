@@ -35,6 +35,7 @@ const config = {
       },
     ],
   },
+  swcMinify: false,
   productionBrowserSourceMaps: true,
   skipTrailingSlashRedirect: true,
   redirects: async () => [
@@ -73,6 +74,12 @@ const config = {
       destination: 'https://us.i.posthog.com/decide',
     },
   ],
+  webpack: (config, { dev, isServer }) => {
+    if (!dev) {
+      config.optimization.minimize = false;
+    }
+    return config;
+  },
 };
 
 export default withBundleAnalyzer({ enabled: process.env.ANALYZE === true })(
