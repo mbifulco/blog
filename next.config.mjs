@@ -35,7 +35,6 @@ const config = {
       },
     ],
   },
-  swcMinify: false,
   productionBrowserSourceMaps: true,
   skipTrailingSlashRedirect: true,
   redirects: async () => [
