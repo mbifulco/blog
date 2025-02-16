@@ -1,3 +1,5 @@
+import { ContentTypes } from '@data/content-types';
+
 export const BASE_SITE_URL = 'https://mikebifulco.com';
 
 const config = {
@@ -56,6 +58,29 @@ const config = {
   logoText: 'Mike Bifulco',
   defaultTheme: 'light',
   siteUrl: BASE_SITE_URL,
+};
+
+export const ContentDefinitions = {
+  [ContentTypes.Post]: {
+    directory: 'src/data/posts',
+    contentType: ContentTypes.Post,
+    path: 'post',
+    description: 'Blog posts about design, development, and other topics',
+  },
+  [ContentTypes.Newsletter]: {
+    directory: 'src/data/newsletters',
+    contentType: ContentTypes.Newsletter,
+    path: 'newsletter',
+    description:
+      'Weekly newsletter about design, development, and other topics',
+  },
+  [ContentTypes.Article]: {
+    directory: 'src/data/external-references',
+    contentType: ContentTypes.Article,
+    path: 'article',
+    description:
+      'External reference articles about design, development, and other topics',
+  },
 };
 
 export default config;
