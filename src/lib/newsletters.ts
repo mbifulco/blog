@@ -1,5 +1,6 @@
 import { join } from 'path';
 
+import { ContentTypes } from '../data/content-types';
 import type { MarkdownDocument, Newsletter } from '../data/content-types';
 import { getAllContentFromDirectory } from './content-loaders/getAllContentFromDirectory';
 import { getContentBySlug } from './content-loaders/getContentBySlug';
@@ -11,8 +12,6 @@ export const newslettersDirectory = join(
   'data',
   'newsletters'
 );
-
-export const NEWSLETTERS_CONTENT_TYPE = 'newsletter';
 
 // Helper function to safely process raw content into newsletters
 export const processNewslettersContent = (
@@ -55,7 +54,7 @@ export const getNewsletterBySlug = async (slug: string) => {
   const reference = await getContentBySlug(
     slug,
     newslettersDirectory,
-    NEWSLETTERS_CONTENT_TYPE
+    ContentTypes.Newsletter
   );
   return reference as Newsletter;
 };
@@ -64,7 +63,7 @@ export const getAllNewsletters = async () => {
   try {
     const rawContent = await getAllContentFromDirectory(
       newslettersDirectory,
-      NEWSLETTERS_CONTENT_TYPE
+      ContentTypes.Newsletter
     );
     return processNewslettersContent(rawContent);
   } catch (error) {

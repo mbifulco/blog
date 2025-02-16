@@ -1,5 +1,6 @@
 import { join } from 'path';
 
+import { ContentTypes } from '../data/content-types';
 import type { Article } from '../data/content-types';
 import { getAllContentFromDirectory } from './content-loaders/getAllContentFromDirectory';
 import { getContentBySlug } from './content-loaders/getContentBySlug';
@@ -12,13 +13,11 @@ const externalReferencesDirectory = join(
   'external-references'
 );
 
-const EXTERNAL_REFERENCES_CONTENT_TYPE = 'article';
-
 export const getExternalReferenceBySlug = async (slug: string) => {
   const reference = await getContentBySlug(
     slug,
     externalReferencesDirectory,
-    EXTERNAL_REFERENCES_CONTENT_TYPE
+    ContentTypes.Article
   );
   return reference as Article;
 };
@@ -26,7 +25,7 @@ export const getExternalReferenceBySlug = async (slug: string) => {
 export const getAllExternalReferences = async () => {
   let articles = (await getAllContentFromDirectory(
     externalReferencesDirectory,
-    EXTERNAL_REFERENCES_CONTENT_TYPE
+    ContentTypes.Article
   )) as Article[];
 
   // filter out articles that don't have a slug
