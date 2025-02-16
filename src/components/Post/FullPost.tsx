@@ -85,7 +85,7 @@ const FullPost: React.FC<FullPostProps> = ({ post, series }) => {
       {pageStructuredData.map((structuredData) => (
         <StructuredData
           structuredData={structuredData}
-          key={`structuredData-${structuredData['@type']}-${post.frontmatter.path || post.frontmatter.slug}`}
+          key={`structuredData-${structuredData['@type']}-${post.frontmatter.slug}`}
         />
       ))}
       <article>

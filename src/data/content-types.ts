@@ -32,7 +32,6 @@ export type OptionalFrontmatter = {
   series?: string;
   excerpt?: string;
   coverImagePublicId?: string;
-  path?: string;
   url?: string;
   content?: string;
 };
@@ -60,7 +59,6 @@ export type MarkdownDocument = {
 export type NewsletterMetadata = BaseFrontmatter & {
   coverImagePublicId: string;
   excerpt: string;
-  path: string;
 };
 
 /**
@@ -83,7 +81,6 @@ export type BlogPost = MarkdownDocument & {
     coverImagePublicId: string;
     excerpt: string;
     content: string;
-    path: string;
     published: boolean;
   } & BaseFrontmatter;
 };

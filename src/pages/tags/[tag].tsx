@@ -101,7 +101,7 @@ const TagPage: React.FC<TagPageProps> = ({
             case 'newsletter': {
               return (
                 <NewsletterItem
-                  key={`newsletter-${content.frontmatter.path as string}`}
+                  key={`newsletter-${content.frontmatter.slug as string}`}
                   newsletter={content as Newsletter}
                 />
               );
@@ -110,7 +110,7 @@ const TagPage: React.FC<TagPageProps> = ({
               return (
                 <Post
                   post={content as BlogPost}
-                  key={`post-${content.frontmatter.path as string}`}
+                  key={`post-${content.frontmatter.slug as string}`}
                   summary
                 />
               );

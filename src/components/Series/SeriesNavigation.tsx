@@ -33,10 +33,8 @@ export const SeriesNavigation: React.FC<SeriesNavigationProps> = ({
       </Heading>
       <ul className="m-0 list-none p-0">
         {orderedContent.map((post, index) => {
-          // if it comes in .path it is a post
-          // if it comes in .slug it is a newsletter
           const postPath =
-            post.frontmatter.path && `/posts/${post.frontmatter.path}`;
+            post.frontmatter.slug && `/posts/${post.frontmatter.slug}`;
           const newsletterPath =
             post.frontmatter.slug && `/newsletters/${post.frontmatter.slug}`;
           const isActivePage =
