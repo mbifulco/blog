@@ -3,7 +3,6 @@ import { join } from 'path';
 import type { MarkdownDocument, Newsletter } from '../data/content-types';
 import { getAllContentFromDirectory } from './content-loaders/getAllContentFromDirectory';
 import { getContentBySlug } from './content-loaders/getContentBySlug';
-import { getContentSlugsForTag } from './tags';
 
 // directory reference to `src/content/newsletters`
 export const newslettersDirectory = join(
@@ -72,18 +71,5 @@ export const getAllNewsletters = async () => {
     console.error('Error in getAllNewsletters:', error);
     // Re-throw the error to be handled by the page's error boundary
     throw error;
-  }
-};
-
-export const getAllNewslettersByTag = async (tag: string) => {
-  try {
-    const newsletters = await getAllNewsletters();
-    const slugsForTag = await getContentSlugsForTag(tag);
-    return newsletters.filter((newsletter) =>
-      slugsForTag.includes(newsletter.slug)
-    );
-  } catch (error) {
-    console.error('Error getting newsletters by tag:', error);
-    return [];
   }
 };

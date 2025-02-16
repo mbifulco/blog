@@ -1,15 +1,15 @@
 import type { GetStaticPaths, GetStaticProps } from 'next';
 
+import { getPostBySlug } from '@lib/blog';
+import { getNewsletterBySlug } from '@lib/newsletters';
 import { ExternalWorkItem } from '../../components/ExternalWork';
 import { Heading } from '../../components/Heading';
 import NewsletterItem from '../../components/NewsletterFeed/NewsletterItem';
 import { BlogPost as Post } from '../../components/Post';
 import SEO from '../../components/seo';
 import type { Article, BlogPost, Newsletter } from '../../data/content-types';
-import { getAllPostsByTag } from '../../lib/blog';
-import { getAllExternalReferencesByTag } from '../../lib/external-references';
-import { getAllNewslettersByTag } from '../../lib/newsletters';
-import { getAllTags } from '../../lib/tags';
+import { getExternalReferenceBySlug as getArticleBySlug } from '../../lib/external-references';
+import { getAllTags, getContentForTag } from '../../lib/tags';
 
 type TagPageParams = {
   tag: string;
@@ -33,9 +33,13 @@ export const getStaticProps: GetStaticProps<
   const { tag } = params;
 
   try {
-    const posts = await getAllPostsByTag(tag);
-    const articles = await getAllExternalReferencesByTag(tag);
-    const newsletters = await getAllNewslettersByTag(tag);
+    const content = await getContentForTag(tag);
+
+    const [posts, articles, newsletters] = await Promise.all([
+      Promise.all(content.post.map((slug) => getPostBySlug(slug))),
+      Promise.all(content.article.map((slug) => getArticleBySlug(slug))),
+      Promise.all(content.newsletter.map((slug) => getNewsletterBySlug(slug))),
+    ]);
 
     return {
       props: {

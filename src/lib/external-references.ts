@@ -3,7 +3,6 @@ import { join } from 'path';
 import type { Article } from '../data/content-types';
 import { getAllContentFromDirectory } from './content-loaders/getAllContentFromDirectory';
 import { getContentBySlug } from './content-loaders/getContentBySlug';
-import { getContentSlugsForTag } from './tags';
 
 // directory reference to `src/content/external-references`
 const externalReferencesDirectory = join(
@@ -21,7 +20,7 @@ export const getExternalReferenceBySlug = async (slug: string) => {
     externalReferencesDirectory,
     EXTERNAL_REFERENCES_CONTENT_TYPE
   );
-  return reference;
+  return reference as Article;
 };
 
 export const getAllExternalReferences = async () => {
@@ -34,15 +33,4 @@ export const getAllExternalReferences = async () => {
   articles = articles?.filter((article) => article.frontmatter?.slug);
 
   return articles;
-};
-
-export const getAllExternalReferencesByTag = async (tag: string) => {
-  try {
-    const refs = await getAllExternalReferences();
-    const slugsForTag = await getContentSlugsForTag(tag);
-    return refs.filter((article) => slugsForTag.includes(article.slug));
-  } catch (error) {
-    console.error('Error getting external references by tag:', error);
-    return [];
-  }
 };

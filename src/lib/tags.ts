@@ -1,171 +1,161 @@
-import fs from 'fs';
-import path from 'path';
+import { join } from 'path';
 
-import type { MarkdownDocument } from '../data/content-types';
-
-const CACHE_FILE = path.join(
-  process.cwd(),
-  '.next',
-  'cache',
-  'tag-registry.json'
-);
+import { ContentTypes } from '@data/content-types';
+import type { ContentType, MarkdownDocument } from '@data/content-types';
+import { getAllContentFromDirectory } from './content-loaders/getAllContentFromDirectory';
 
 export const parseTag = (tag: string) => {
   return tag.split(' ').join('-').toLocaleLowerCase();
 };
 
-type TagMap = {
-  [tag: string]: string[]; // tag -> array of content slugs
+export const getAllTags = async () => {
+  const tagRegistry = await getTagRegistryForAllContent();
+  // Convert to array and sort
+  const uniqueTags = tagRegistry.getAllTags();
+
+  return uniqueTags;
 };
 
-// Singleton to manage tags across the application
-class TagRegistry {
-  private static instance: TagRegistry;
-  private tagMap: Map<string, Set<string>> = new Map(); // tag -> set of content slugs
-  private initialized = false;
+export const getContentForTag = async (tag: string) => {
+  const tagRegistry = await getTagRegistryForAllContent();
 
-  private constructor() {}
+  return tagRegistry.getContentForTag(tag);
+};
 
-  static getInstance(): TagRegistry {
-    if (!TagRegistry.instance) {
-      TagRegistry.instance = new TagRegistry();
-    }
-    return TagRegistry.instance;
-  }
+const getTagRegistryForAllContent = async () => {
+  const tagRegistry = new TagRegistry();
 
-  private registerContentTags(content: MarkdownDocument) {
+  // helper function to extract tags from a content item
+  const extractTags = (content: MarkdownDocument) => {
+    if (!content) return [];
+
     const tags = content?.frontmatter?.tags;
-    if (!tags || !Array.isArray(tags)) return;
+    if (!tags) return [];
 
-    const slug = content.frontmatter.slug;
-    if (!slug) return;
+    if (!Array.isArray(tags)) return [];
 
-    tags.forEach((tag) => {
-      if (typeof tag !== 'string') return;
-      const parsedTag = parseTag(tag);
-      if (!parsedTag) return;
+    return tags;
+  };
 
-      if (!this.tagMap.has(parsedTag)) {
-        this.tagMap.set(parsedTag, new Set());
-      }
-      this.tagMap.get(parsedTag)?.add(slug);
+  // Get all posts and extract tags
+  try {
+    const postsDir = join(process.cwd(), 'src', 'data', 'posts');
+    const posts = await getAllContentFromDirectory(postsDir, 'post');
+
+    posts.forEach((post) => {
+      const postTags = extractTags(post);
+      if (!postTags) return;
+
+      postTags.forEach((tag) =>
+        tagRegistry.addTag(tag, post.slug, ContentTypes.Post)
+      );
     });
+  } catch (error) {
+    console.error('Error in getAllTags for posts:', error);
   }
 
-  registerContent(content: MarkdownDocument[]) {
-    content.forEach((item) => this.registerContentTags(item));
-    this.initialized = true;
-  }
+  // Get all newsletters and extract tags
+  try {
+    const newslettersDir = join(process.cwd(), 'src', 'data', 'newsletters');
+    const newsletters = await getAllContentFromDirectory(
+      newslettersDir,
+      'newsletter'
+    );
 
-  isInitialized(): boolean {
-    return this.initialized;
-  }
+    newsletters.forEach((newsletter) => {
+      const newsletterTags = extractTags(newsletter);
+      if (!newsletterTags) return;
 
-  getAllTags(): string[] {
-    return Array.from(this.tagMap.keys()).sort();
-  }
-
-  getContentSlugsForTag(tag: string): string[] {
-    const parsedTag = parseTag(tag);
-    return Array.from(this.tagMap.get(parsedTag) || []);
-  }
-
-  hasTag(tag: string): boolean {
-    return this.tagMap.has(parseTag(tag));
-  }
-
-  // Save the current state to disk
-  saveToCache(): void {
-    const cacheDir = path.dirname(CACHE_FILE);
-    if (!fs.existsSync(cacheDir)) {
-      fs.mkdirSync(cacheDir, { recursive: true });
-    }
-
-    const serializedMap: TagMap = {};
-    this.tagMap.forEach((slugs, tag) => {
-      serializedMap[tag] = Array.from(slugs);
+      newsletterTags.forEach((tag) =>
+        tagRegistry.addTag(tag, newsletter.slug, ContentTypes.Newsletter)
+      );
     });
-
-    fs.writeFileSync(CACHE_FILE, JSON.stringify(serializedMap, null, 2));
+  } catch (error) {
+    console.error('Error in getAllTags for newsletters:', error);
   }
 
-  // Load state from disk
-  loadFromCache(): boolean {
-    try {
-      if (!fs.existsSync(CACHE_FILE)) {
-        return false;
-      }
+  // Get all external reference articles and extract tags
+  try {
+    const articlesDir = join(
+      process.cwd(),
+      'src',
+      'data',
+      'external-references'
+    );
+    const articles = await getAllContentFromDirectory(articlesDir, 'article');
 
-      const data = JSON.parse(fs.readFileSync(CACHE_FILE, 'utf-8')) as TagMap;
-      this.tagMap.clear();
+    articles.forEach((article) => {
+      const articleTags = extractTags(article);
+      if (!articleTags) return;
 
-      Object.entries(data).forEach(([tag, slugs]) => {
-        this.tagMap.set(tag, new Set(slugs));
-      });
+      articleTags.forEach((tag) =>
+        tagRegistry.addTag(tag, article.slug, ContentTypes.Article)
+      );
+    });
+  } catch (error) {
+    console.error(
+      'Error in getAllTags for external reference articles:',
+      error
+    );
+  }
 
-      this.initialized = true;
-      return true;
-    } catch (error) {
-      console.error('Error loading tag registry cache:', error);
-      return false;
-    }
+  return tagRegistry;
+};
+
+type TaggedContentSlugs = Record<ContentType, string[]>;
+
+type TagRegistryStorage = {
+  [tag: string]: TaggedContentSlugs;
+};
+
+/*
+
+Tag library looks like this:
+{
+  "tag1": {
+    "post": ["slug1", "slug2"],
+    "newsletter": ["slug3", "slug4"]
+  },
+  "tag2": {
+    "post": ["slug1", "slug2"],
+    "newsletter": ["slug3", "slug4"]
   }
 }
+*/
 
-// Export functions that use the registry
-export const initializeTagRegistry = async (content: MarkdownDocument[]) => {
-  try {
-    const registry = TagRegistry.getInstance();
+class TagRegistry {
+  // Map of tag name to content paths
+  private tags: TagRegistryStorage = {};
 
-    // Try to load from cache first
-    if (!registry.isInitialized() && !registry.loadFromCache()) {
-      // If cache doesn't exist or is invalid, rebuild and save
-      registry.registerContent(content);
-      registry.saveToCache();
-    }
-  } catch (error) {
-    console.error('Error initializing tag registry:', error);
+  constructor() {
+    this.tags = {};
   }
-};
 
-export const getAllTags = async () => {
-  try {
-    const registry = TagRegistry.getInstance();
-    if (!registry.isInitialized() && !registry.loadFromCache()) {
-      console.warn('Tag registry accessed before initialization');
-      return [];
-    }
-    return registry.getAllTags();
-  } catch (error) {
-    console.error('Error in getAllTags:', error);
-    return [];
-  }
-};
+  addTag(tag: string, slug: string, contentType: ContentType) {
+    // Initialize the array if it doesn't exist
+    this.tags[tag] = this.tags[tag] || {
+      post: [],
+      article: [],
+      newsletter: [],
+    };
 
-export const getContentSlugsForTag = async (tag: string) => {
-  try {
-    const registry = TagRegistry.getInstance();
-    if (!registry.isInitialized() && !registry.loadFromCache()) {
-      console.warn('Tag registry accessed before initialization');
-      return [];
-    }
-    return registry.getContentSlugsForTag(tag);
-  } catch (error) {
-    console.error('Error getting content for tag:', error);
-    return [];
+    // Add the slug to the tag
+    this.tags[tag][contentType].push(slug);
   }
-};
 
-export const hasTag = async (tag: string) => {
-  try {
-    const registry = TagRegistry.getInstance();
-    if (!registry.isInitialized() && !registry.loadFromCache()) {
-      console.warn('Tag registry accessed before initialization');
-      return false;
-    }
-    return registry.hasTag(tag);
-  } catch (error) {
-    console.error('Error checking tag existence:', error);
-    return false;
+  // Return a list of content paths for a given tag
+  getContentForTag(tag: string) {
+    const content = this.tags[tag] || {
+      post: [],
+      article: [],
+      newsletter: [],
+    };
+
+    return content;
   }
-};
+
+  // Return a list of all tags sorted alphabetically
+  getAllTags() {
+    return Object.keys(this.tags).sort();
+  }
+}
