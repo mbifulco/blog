@@ -100,3 +100,14 @@ export type Tag = string;
  * Union type of all possible frontmatter shapes
  */
 export type ContentFrontmatter = NewsletterMetadata | Article['frontmatter'];
+
+export const ContentTypes = {
+  Post: 'post',
+  Newsletter: 'newsletter',
+  Article: 'article',
+} as const;
+
+/**
+ * Union type of all content types on the site
+ */
+export type ContentType = (typeof ContentTypes)[keyof typeof ContentTypes];
