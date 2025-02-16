@@ -1,9 +1,9 @@
 import { join } from 'path';
 
+import { ContentTypes } from '../data/content-types';
 import type { Article } from '../data/content-types';
 import { getAllContentFromDirectory } from './content-loaders/getAllContentFromDirectory';
 import { getContentBySlug } from './content-loaders/getContentBySlug';
-import { getContentSlugsForTag } from './tags';
 
 // directory reference to `src/content/external-references`
 const externalReferencesDirectory = join(
@@ -13,36 +13,23 @@ const externalReferencesDirectory = join(
   'external-references'
 );
 
-const EXTERNAL_REFERENCES_CONTENT_TYPE = 'article';
-
 export const getExternalReferenceBySlug = async (slug: string) => {
   const reference = await getContentBySlug(
     slug,
     externalReferencesDirectory,
-    EXTERNAL_REFERENCES_CONTENT_TYPE
+    ContentTypes.Article
   );
-  return reference;
+  return reference as Article;
 };
 
 export const getAllExternalReferences = async () => {
   let articles = (await getAllContentFromDirectory(
     externalReferencesDirectory,
-    EXTERNAL_REFERENCES_CONTENT_TYPE
+    ContentTypes.Article
   )) as Article[];
 
   // filter out articles that don't have a slug
   articles = articles?.filter((article) => article.frontmatter?.slug);
 
   return articles;
-};
-
-export const getAllExternalReferencesByTag = async (tag: string) => {
-  try {
-    const refs = await getAllExternalReferences();
-    const slugsForTag = await getContentSlugsForTag(tag);
-    return refs.filter((article) => slugsForTag.includes(article.slug));
-  } catch (error) {
-    console.error('Error getting external references by tag:', error);
-    return [];
-  }
 };

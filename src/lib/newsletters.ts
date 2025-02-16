@@ -1,9 +1,9 @@
 import { join } from 'path';
 
+import { ContentTypes } from '../data/content-types';
 import type { MarkdownDocument, Newsletter } from '../data/content-types';
 import { getAllContentFromDirectory } from './content-loaders/getAllContentFromDirectory';
 import { getContentBySlug } from './content-loaders/getContentBySlug';
-import { getContentSlugsForTag } from './tags';
 
 // directory reference to `src/content/newsletters`
 export const newslettersDirectory = join(
@@ -12,8 +12,6 @@ export const newslettersDirectory = join(
   'data',
   'newsletters'
 );
-
-export const NEWSLETTERS_CONTENT_TYPE = 'newsletter';
 
 // Helper function to safely process raw content into newsletters
 export const processNewslettersContent = (
@@ -56,7 +54,7 @@ export const getNewsletterBySlug = async (slug: string) => {
   const reference = await getContentBySlug(
     slug,
     newslettersDirectory,
-    NEWSLETTERS_CONTENT_TYPE
+    ContentTypes.Newsletter
   );
   return reference as Newsletter;
 };
@@ -65,25 +63,12 @@ export const getAllNewsletters = async () => {
   try {
     const rawContent = await getAllContentFromDirectory(
       newslettersDirectory,
-      NEWSLETTERS_CONTENT_TYPE
+      ContentTypes.Newsletter
     );
     return processNewslettersContent(rawContent);
   } catch (error) {
     console.error('Error in getAllNewsletters:', error);
     // Re-throw the error to be handled by the page's error boundary
     throw error;
-  }
-};
-
-export const getAllNewslettersByTag = async (tag: string) => {
-  try {
-    const newsletters = await getAllNewsletters();
-    const slugsForTag = await getContentSlugsForTag(tag);
-    return newsletters.filter((newsletter) =>
-      slugsForTag.includes(newsletter.slug)
-    );
-  } catch (error) {
-    console.error('Error getting newsletters by tag:', error);
-    return [];
   }
 };

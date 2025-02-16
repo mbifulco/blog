@@ -1,7 +1,7 @@
 import fs from 'fs';
 import { join } from 'path/posix';
 
-import type { MarkdownDocument } from '@data/content-types';
+import type { ContentType, MarkdownDocument } from '@data/content-types';
 import { processMDXFileContent } from './processMDXFileContent';
 
 /**
@@ -16,7 +16,7 @@ import { processMDXFileContent } from './processMDXFileContent';
 export const getContentBySlug = async (
   slug: string,
   directory: fs.PathLike,
-  type: string
+  type: ContentType
 ): Promise<MarkdownDocument> => {
   try {
     const realSlug = slug.replace(/\.mdx$/, '');
