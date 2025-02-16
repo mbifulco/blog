@@ -1,13 +1,56 @@
 import { join } from 'path';
 
-import type { Newsletter } from '../data/content-types';
+import type { MarkdownDocument, Newsletter } from '../data/content-types';
 import { getAllContentFromDirectory } from './content-loaders/getAllContentFromDirectory';
 import { getContentBySlug } from './content-loaders/getContentBySlug';
+import { getContentSlugsForTag } from './tags';
 
 // directory reference to `src/content/newsletters`
-const newslettersDirectory = join(process.cwd(), 'src', 'data', 'newsletters');
+export const newslettersDirectory = join(
+  process.cwd(),
+  'src',
+  'data',
+  'newsletters'
+);
 
-const NEWSLETTERS_CONTENT_TYPE = 'newsletter';
+export const NEWSLETTERS_CONTENT_TYPE = 'newsletter';
+
+// Helper function to safely process raw content into newsletters
+export const processNewslettersContent = (
+  rawContent: MarkdownDocument[]
+): Newsletter[] => {
+  if (!rawContent) {
+    console.warn('processNewslettersContent: content is null or undefined');
+    return [];
+  }
+
+  if (!Array.isArray(rawContent)) {
+    console.warn(
+      `processNewslettersContent: content is not an array, got ${typeof rawContent}`
+    );
+    return [];
+  }
+
+  // filter out newsletters that don't have a slug
+  return rawContent.filter((newsletter) => {
+    if (!newsletter) {
+      console.warn(
+        'processNewslettersContent: found null/undefined newsletter entry'
+      );
+      return false;
+    }
+
+    if (!newsletter.frontmatter?.slug) {
+      console.warn(
+        'processNewslettersContent: found newsletter without slug:',
+        JSON.stringify(newsletter.frontmatter, null, 2)
+      );
+      return false;
+    }
+
+    return true;
+  }) as Newsletter[];
+};
 
 export const getNewsletterBySlug = async (slug: string) => {
   const reference = await getContentBySlug(
@@ -20,44 +63,11 @@ export const getNewsletterBySlug = async (slug: string) => {
 
 export const getAllNewsletters = async () => {
   try {
-    const newsletters = (await getAllContentFromDirectory(
+    const rawContent = await getAllContentFromDirectory(
       newslettersDirectory,
       NEWSLETTERS_CONTENT_TYPE
-    )) as Newsletter[];
-
-    if (!newsletters) {
-      console.warn('getAllNewsletters: newsletters is null or undefined');
-      return [];
-    }
-
-    if (!Array.isArray(newsletters)) {
-      console.warn(
-        `getAllNewsletters: newsletters is not an array, got ${typeof newsletters}`
-      );
-      return [];
-    }
-
-    // filter out newsletters that don't have a slug
-    const filteredNewsletters = newsletters.filter((newsletter) => {
-      if (!newsletter) {
-        console.warn(
-          'getAllNewsletters: found null/undefined newsletter entry'
-        );
-        return false;
-      }
-
-      if (!newsletter.frontmatter?.slug) {
-        console.warn(
-          'getAllNewsletters: found newsletter without slug:',
-          JSON.stringify(newsletter.frontmatter, null, 2)
-        );
-        return false;
-      }
-
-      return true;
-    });
-
-    return filteredNewsletters;
+    );
+    return processNewslettersContent(rawContent);
   } catch (error) {
     console.error('Error in getAllNewsletters:', error);
     // Re-throw the error to be handled by the page's error boundary
@@ -67,10 +77,10 @@ export const getAllNewsletters = async () => {
 
 export const getAllNewslettersByTag = async (tag: string) => {
   try {
-    // Use the safe directory reader
     const newsletters = await getAllNewsletters();
+    const slugsForTag = await getContentSlugsForTag(tag);
     return newsletters.filter((newsletter) =>
-      newsletter.frontmatter.tags?.includes(tag)
+      slugsForTag.includes(newsletter.slug)
     );
   } catch (error) {
     console.error('Error getting newsletters by tag:', error);
