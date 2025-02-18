@@ -1,0 +1,111 @@
+---
+title: "AI is your intern (not your boss)"
+excerpt: Learn how to steer AI tools like Copilot and Cursor, avoid mistakes, and write better tests to ship reliable code.
+tags: [ai, tools, productivity]
+date: 02-18-2025
+coverImagePublicId: newsletters/ai-is-your-intern-not-your-boss/cover
+slug: ai-is-your-intern-not-your-boss
+---
+
+## The Big Idea
+
+LLM tools like ChatGPT, Copilot, and Cursor are great at helping you build, but they are a second brain - not a first one. Used well, they are an intern that speeds up your work. Used poorly, they are a liability. The trick? Give them context, direction, and oversight.
+
+<a href="https://www.paddle.com/resources/mobile-app-monetization-guide?utm_medium=website&utm_source=partner&utm_campaign=core_conversions_fy2025_web_monetization_brand_awareness&utm_content=tiny-improvements" className="text-xs lg:text-xs xl:text-xs">
+  Brought to you by Paddle
+</a>
+
+---
+
+### AI Works Best When You Steer It
+
+Most AI tools (Cursor, GitHub Copilot, ChatGPT) aren't great at figuring everything out on their own. They do best when you provide them with context. Although this guide is focused on software development with Cursor, the same principles apply to other tools and domains.
+
+I have found that the best way to use LLMs is to treat them like an intern:
+
+1. Tell them the goal. Spell out what you're building.
+1. Give them the pieces. Feed them relevant files, not just one at a time.
+1. Make a checklist. Break the work into steps you can track.
+
+Here's an example of a recent set of instructions I gave to Cursor, while working on a new feature for Craftwork:
+
+```
+take a look at @timesheets_spec.rb - I need to produce an updated version of our timesheets API under the v2 namespace. It should use all of the same patterns as the other endpoints in @v2 do, and should use a new controller namespaced under api::v2 at `controllers/api/v2/timesheets_controller.rb`.
+
+It needs a list view that can be filtered by a craftworker's id, by timesheet state (approved/inprogress/etc), and by production lead id.
+
+The show view should return details for a single timesheet.
+
+The update view should allow me to approve a timesheet, edit values, etc
+```
+
+That was enough to get me started working with Cursor, and it helped orient the LLM while building out the new feature. It had enough context for me to ask questions as I worked, and sped things up nicely.
+
+### AI Will Get It Wrong (And That's Fine)
+
+For any instructions you give 'em, LLMs will [confidently spit out answers](https://mikebifulco.com/posts/product-marketing-defy-expectations), regardless of how correct they are.
+
+If you don't understand what they're doing, you're trusting a bad intern to run your company.
+
+That's why you need to:
+- Spot bad logic. If something seems off, it probably is.
+- Debug iteratively. AI is great for refactoring—ask it to explain itself.
+- Know when to take over. Sometimes, the best fix is writing the code yourself.
+
+In the case of the Craftwork timesheets, I was able to spot a few issues, and after making some changes, steered the LLM to the right path (my typoes included -- LLMs actually deal with these really well!):
+
+```
+great, now can you llook at the controller and add any helpful missing scopes? You may want to peek at other controllers in the @v2 folder, as well as @timesheets_controller.rb
+
+Alsothe .d.ts type definition declarations you made arne't needed - see @tsconfig.json and @javascript - they're likely in another folder already configured with typescript paths. If the components don't exist they'll need to be created
+```
+
+If you've ever onboarded a new teammate to a codebase, this kind of steering is not at all uncommon - you're helping them understand the codebase, and the context of the changes they're making.
+
+### Tests Are More Important Than Ever
+
+If you're letting AI write code, you better be _damn sure_ it works as expected. That means writing great tests before shipping anything.
+
+- Test like a skeptic. Assume AI-generated code is flawed.
+- Write failure cases. If AI wrote the function, you should write the test.
+- Use AI to help debug. It's great at explaining why tests fail (sometimes).
+
+
+## The Bottom Line
+
+AI is a force multiplier - but only if you use it right. Treat it like an intern:
+
+- Give it structure.
+- Question everything.
+- Make sure the work holds up.
+
+Most importantly, remember that your great, big, juicy brain still need to do some work. Don't blindly trust the output of your copilot-of-choice - that's a hell of a lot to ask of an intern.
+
+
+---
+
+## Tests? What tests?
+
+Most of us (hello, yes, me included) aren't great at writing tests -- but writing software tests is a skillset that is absolutely worth investing in. Here's some resources I've found helpful:
+
+- (React) [Testing Library](https://testing-library.com/) provides documentation and set of tools for testing web applications, in a variety of frameworks. Whether you're a fan of react or svelte or vue or solidjs, this is a great resource.
+
+- One of my favorite things about building with Ruby on Rails is the framework's first-class support for great testing. There are _so_ many thoughtful features for writing great tests for rails apps. Even if you're not a rails developer, it's worth giving their docs a look: [Rails Testing Guide](https://guides.rubyonrails.org/testing.html)
+
+---
+
+## Stop paying the app store tax.
+
+Sell your app on the web with lower fees and full control. As a merchant of record, Paddle handles payments, taxes, and compliance — so you can focus on what matters: building your app.
+
+Paddle acts as the reseller of your app, offering a solution similar to the App Store or Google Play Store but optimized for successfully selling your mobile app on the web, with significantly lower fees.
+
+[Start selling smarter with Paddle.](https://www.paddle.com/resources/mobile-app-monetization-guide?utm_medium=website&utm_source=partner&utm_campaign=core_conversions_fy2025_web_monetization_brand_awareness&utm_content=tiny-improvements)
+
+---
+
+## Thinking about automation
+
+I've spent a bunch of time working on small scripts to automate manual tasks lately - and I'm working on a couple quick video tutorial showing how you might use tools like Puppeteer, Faker, Skyvern and your copilot-of-choice to get things done more quickly than ever before.
+
+If that sounds interesting, go chase me down on youtube at [@mikebifulco](https://www.youtube.com/@mikebifulco?sub_confirmation=1).
