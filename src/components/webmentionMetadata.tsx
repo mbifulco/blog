@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { useRouter } from 'next/router';
 
 type WebmentionMetadataProps = {
@@ -32,8 +33,14 @@ const WebmentionMetadata: React.FC<WebmentionMetadataProps> = ({
       <article className="h-card h-entry">
         <header>
           {coverImageUrl && (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img className="u-photo" src={coverImageUrl} alt="Hero" />
+            <Image
+              unoptimized
+              className="u-photo h-10 w-10 rounded-full"
+              src={coverImageUrl}
+              alt="Hero"
+              height={128}
+              width={128}
+            />
           )}
           <div className="p-name">{title}</div>
         </header>
