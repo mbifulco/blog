@@ -50,6 +50,7 @@ const Avatar: React.FC<AvatarProps> = ({
             variant === 'lg' && '48px', // h-12
             variant === 'xl' && '56px' // h-14
           )}
+          unoptimized
         />
       ) : (
         <div

@@ -12,6 +12,7 @@ const Headshot: React.FC<{
     alt="Mike Bifulco headshot"
     className={`headshot ${className}`}
     priority={priority}
+    unoptimized
   />
 );
 
