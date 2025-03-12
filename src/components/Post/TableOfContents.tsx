@@ -68,7 +68,7 @@ const TableOfContents: React.FC<TableOfContentsProps> = ({
   if (!headings?.length) return null;
 
   return (
-    <nav className="hidden flex-col gap-2.5 rounded border px-4 py-3 text-sm shadow md:visible md:flex">
+    <nav className="hidden flex-col gap-2.5 rounded-sm border px-4 py-3 text-sm shadow-sm md:visible md:flex">
       <HtmlHeading as="h3">{title}</HtmlHeading>
       <ol>
         {headings?.map((heading) => (

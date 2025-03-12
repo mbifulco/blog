@@ -136,18 +136,20 @@ const Aside: React.FC<AsideProps> = ({ type = 'default', ...props }) => {
 const TextHighlight = ({ key: _, ...rest }: HTMLProps<HTMLElement>) => (
   <mark
     className={clsxm(
-      'xs inline rounded bg-pink-600 px-[0.5ch] leading-tight text-white',
+      'xs inline rounded-sm bg-pink-600 px-[0.5ch] leading-tight text-white',
       rest.className
     )}
     {...rest}
   />
 );
 
-const InlineCode: React.FC<HTMLAttributes<HTMLSpanElement>> = (props) => {
+const InlineCode: React.FC<HTMLAttributes<HTMLSpanElement>> = ({
+  ...props
+}) => {
   return (
     <span
       {...props}
-      className="inline-block max-w-full whitespace-pre rounded-sm bg-slate-500 px-[0.5ch] py-[0.1ch] align-text-bottom font-mono text-sm text-white"
+      className="inline-block max-w-full whitespace-pre rounded-xs bg-slate-500 px-[0.5ch] py-[0.1ch] align-text-bottom font-mono text-sm text-white"
     />
   );
 };
@@ -173,7 +175,7 @@ const Pre: React.FC<PreProps> = ({ children }) => {
 
   return (
     <div
-      className="-mx-2 max-w-[calc(100vw_-_36px)] rounded md:mx-0"
+      className="-mx-2 max-w-[calc(100vw_-_36px)] rounded-sm md:mx-0"
       style={{
         background: themes.nightOwl.plain.backgroundColor,
       }}
@@ -244,7 +246,7 @@ const ListItemComponent: React.FC<HTMLAttributes<HTMLLIElement>> = ({
 
 const HorizontalRule = () => {
   return (
-    <div className="mx-auto mb-8 mt-12 w-[50%] max-w-[50%] rounded border-b-[5px] border-solid border-pink-400" />
+    <div className="mx-auto mb-8 mt-12 w-[50%] max-w-[50%] rounded-sm border-b-[5px] border-solid border-pink-400" />
   );
 };
 
@@ -257,7 +259,7 @@ const Button: React.FC<HTMLProps<HTMLButtonElement>> = ({
   return (
     <button
       className={clsxm(
-        'rounded-sm bg-pink-400 px-4 py-2 text-white shadow-md hover:bg-pink-500',
+        'rounded-xs bg-pink-400 px-4 py-2 text-white shadow-md hover:bg-pink-500',
         className
       )}
       type={

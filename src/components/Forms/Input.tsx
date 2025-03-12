@@ -17,7 +17,7 @@ const Input: React.FC<InputProps> = ({
 }) => (
   <input
     className={clsxm(
-      'block w-full rounded-lg border-zinc-300 shadow-sm focus:border-zinc-500 focus:ring-zinc-500 sm:text-sm',
+      'block w-full rounded-lg border-zinc-300 shadow-xs focus:border-zinc-500 focus:ring-zinc-500 sm:text-sm',
       className
     )}
     id={id}

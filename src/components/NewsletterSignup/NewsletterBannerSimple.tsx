@@ -6,7 +6,7 @@ import SubscriberCount from './SubscriberCount';
 
 const SimpleNewsletterBanner: React.FC = () => {
   return (
-    <div className="mx-auto max-w-screen-xl py-8">
+    <div className="mx-auto max-w-(--breakpoint-xl) py-8">
       <div className="items-center justify-between gap-16 rounded-lg bg-gray-700 p-8 text-white lg:flex lg:gap-24">
         <div className="w-full">
           <header>

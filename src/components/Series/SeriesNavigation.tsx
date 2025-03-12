@@ -56,7 +56,7 @@ export const SeriesNavigation: React.FC<SeriesNavigationProps> = ({
               >
                 <span
                   className={clsxm(
-                    `flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full text-sm font-semibold`,
+                    `flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-sm font-semibold`,
                     isActivePage && 'bg-pink-500 text-white',
                     !isActivePage && 'bg-gray-500 text-white'
                   )}
