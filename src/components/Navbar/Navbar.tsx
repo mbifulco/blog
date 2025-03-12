@@ -58,7 +58,7 @@ const Navbar = () => {
                       'hover:no-underline',
                       link.href === router.pathname && 'text-gray-900',
                       link.badge &&
-                        'rounded-sm bg-pink-400 px-[0.5ch] py-[0.25ch] font-medium text-white hover:bg-pink-600 hover:text-white'
+                        'rounded-xs bg-pink-400 px-[0.5ch] py-[0.25ch] font-medium text-white hover:bg-pink-600 hover:text-white'
                     )}
                   >
                     {link.title}
@@ -67,7 +67,7 @@ const Navbar = () => {
               </div>
               <div className="-mr-2 flex items-center sm:hidden">
                 {/* Mobile menu button */}
-                <Disclosure.Button className="hover:bg--100 relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-pink-500">
+                <Disclosure.Button className="hover:bg--100 relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:text-gray-500 focus:outline-hidden focus:ring-2 focus:ring-inset focus:ring-pink-500">
                   <span className="absolute -inset-0.5" />
                   <span className="sr-only">Open main menu</span>
                   {open ? (
@@ -93,7 +93,7 @@ const Navbar = () => {
                     link.href === router.pathname &&
                       'border-pink-500 bg-pink-50 text-pink-700',
                     link.badge &&
-                      'rounded-sm bg-pink-400 px-[0.5ch] py-[0.25ch] text-white hover:bg-pink-600 hover:text-white'
+                      'rounded-xs bg-pink-400 px-[0.5ch] py-[0.25ch] text-white hover:bg-pink-600 hover:text-white'
                   )}
                 >
                   {link.title}

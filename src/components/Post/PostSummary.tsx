@@ -23,7 +23,7 @@ const PostSummary: React.FC<PostSummaryProps> = ({ post, eager = false }) => {
     <Link href={postPath}>
       <Image
         className={clsxm(
-          '-mx-2 mb-4 object-cover object-center shadow sm:mx-0 sm:rounded-lg'
+          '-mx-2 mb-4 object-cover object-center shadow-sm sm:mx-0 sm:rounded-lg'
         )}
         publicId={coverImagePublicId || `posts/${slug}/cover`}
         alt={excerpt || title}

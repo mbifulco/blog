@@ -125,7 +125,7 @@ const SubscriptionForm: React.FC<SubscriptionFormProps> = ({
               data-group="alert"
             ></ul>
             <div
-              className="seva-fields formkit-fields grid w-full items-center rounded"
+              className="seva-fields formkit-fields grid w-full items-center rounded-sm"
               data-element="fields"
               data-stacked="false"
             >

@@ -4,15 +4,15 @@ import clsxm from '@utils/clsxm';
 
 const badgeVariants = (variant?: BadgeVariant) =>
   clsxm(
-    'inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2',
+    'inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-hidden focus:ring-2 focus:ring-ring focus:ring-offset-2',
     !variant ||
       (variant === 'default' &&
-        'border-transparent bg-pink-600 text-white shadow hover:bg-primary/80'),
+        'border-transparent bg-pink-600 text-white shadow-sm hover:bg-primary/80'),
     variant === 'secondary' &&
       'border-transparent bg-gray-200 text-gray-600 hover:bg-gray-200/80',
     variant === 'brand' && 'bg-pink-400 text-white border-0',
     variant === 'destructive' &&
-      'border-transparent bg-red-600 text-white shadow hover:bg-red-700',
+      'border-transparent bg-red-600 text-white shadow-sm hover:bg-red-700',
     variant === 'outline' && 'text-foreground'
   );
 

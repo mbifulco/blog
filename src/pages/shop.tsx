@@ -14,7 +14,7 @@ const Shop: NextPage = () => (
     <main className={'mx-auto mb-5 w-full max-w-3xl p-5 text-left'}>
       <h1 className="justify-center">Shop</h1>
 
-      <article className={'relative max-w-[45%] rounded bg-gray-50 p-2'}>
+      <article className={'relative max-w-[45%] rounded-sm bg-gray-50 p-2'}>
         <SoldOut />
         <Heading as="h2" className="m-0" id="angry-little-egg">
           Angry little egg
