@@ -3,7 +3,7 @@
 import { Fragment, useState } from 'react';
 import Script from 'next/script';
 import { Dialog, Transition } from '@headlessui/react';
-import { CheckIcon, XMarkIcon } from '@heroicons/react/24/outline';
+import { Check, X } from 'lucide-react';
 
 import GmailIcon from '../icons/GmailIcon';
 
@@ -99,7 +99,7 @@ const PolitePopEmbed = ({ debug = false }) => {
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+            <div className="bg-opacity-75 fixed inset-0 bg-gray-500 transition-opacity" />
           </Transition.Child>
 
           <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
@@ -113,15 +113,15 @@ const PolitePopEmbed = ({ debug = false }) => {
                 leaveFrom="opacity-100 translate-y-0 sm:scale-100"
                 leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
               >
-                <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-sm sm:p-6">
-                  <div className="absolute right-0 top-0 hidden pr-4 pt-4 sm:block">
+                <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white px-4 pt-5 pb-4 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-sm sm:p-6">
+                  <div className="absolute top-0 right-0 hidden pt-4 pr-4 sm:block">
                     <button
                       type="button"
-                      className="rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-hidden focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                      className="rounded-md bg-white text-gray-400 hover:text-gray-500 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:outline-hidden"
                       onClick={onClose}
                     >
                       <span className="sr-only">Close</span>
-                      <XMarkIcon className="h-6 w-6" aria-hidden="true" />
+                      <X className="h-6 w-6" aria-hidden="true" />
                     </button>
                   </div>
                   <div>
@@ -129,7 +129,7 @@ const PolitePopEmbed = ({ debug = false }) => {
                       {emailIsGmail(subscribeEvent?.email) ? (
                         <GmailIcon />
                       ) : (
-                        <CheckIcon
+                        <Check
                           className="h-6 w-6 font-bold text-green-600"
                           aria-hidden="true"
                         />
@@ -138,7 +138,7 @@ const PolitePopEmbed = ({ debug = false }) => {
                     <div className="mt-3 sm:mt-5">
                       <Dialog.Title
                         as="h3"
-                        className="text-base font-semibold leading-6 text-gray-900"
+                        className="text-base leading-6 font-semibold text-gray-900"
                       >
                         Almost done
                         {subscribeEvent?.firstName
