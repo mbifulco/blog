@@ -39,7 +39,7 @@
     "fathom-client": "^3.7.2",
     "feed": "^4.2.2",
     "gray-matter": "^4.0.3",
-    "lucide-react": "^0.483.0",
+    "lucide-react": "^0.484.0",
     "micro": "^10.0.1",
     "next": "15.2.4",
     "next-cloudinary": "^6.16.0",
@@ -94,9 +94,9 @@
     "prettier": "^3.5.3",
     "prettier-plugin-tailwindcss": "^0.6.11",
     "schema-dts": "^1.1.5",
-    "tailwindcss": "^4.0.13",
+    "tailwindcss": "^4.0.16",
     "typescript": "5.8.2",
-    "typescript-eslint": "^8.26.0"
+    "typescript-eslint": "^8.28.0"
   },
   "repository": {
     "type": "git",
