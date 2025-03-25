@@ -5,20 +5,19 @@ import eslint from '@eslint/js';
 import tsParser from '@typescript-eslint/parser';
 import reactCompiler from 'eslint-plugin-react-compiler';
 import unusedImports from 'eslint-plugin-unused-imports';
-import tseslint from 'typescript-eslint';
+import { configs } from 'typescript-eslint';
 
 const compat = new FlatCompat({
   baseDirectory: import.meta.dirname,
 });
 
-const nextEslintConfig = [
-  ...compat.extends('next/core-web-vitals', 'next/typescript'),
-];
+// Import Next.js config via compatibility layer
+const nextEslintConfig = compat.extends('next/core-web-vitals');
 
-export default tseslint.config(
-  nextEslintConfig,
+export default [
+  ...nextEslintConfig,
   eslint.configs.recommended,
-  tseslint.configs.recommended,
+  ...configs.recommended,
   {
     ignores: [
       '**/**/node_modules',
@@ -67,5 +66,5 @@ export default tseslint.config(
       ],
       'import/consistent-type-specifier-style': ['error', 'prefer-top-level'],
     },
-  }
-);
+  },
+];
