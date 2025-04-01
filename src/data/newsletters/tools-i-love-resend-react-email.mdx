@@ -1,0 +1,86 @@
+---
+title: Tools I Love - Resend and React Email
+description: A collection of tools I love to use with Resend and React Email.
+date: 04-01-2025
+slug: tools-i-love-resend-react-email
+tags: [tools, founder, indiehackers]
+---
+
+## The Big Idea
+
+The best developer tools make you faster and make you look good. Resend does both - for email, of all things.
+
+## Let's talk about tools
+
+I've had a few conversations lately with other founders and indie hackers about the stack behind my site—and one thing always comes up: how I send emails.
+
+To be clear: **this isn't a sponsored post**. Nobody paid me to write this. I just really like using Resend, and I think more developers should know it exists.
+
+As a startup founder, every one of my days is time-constrained. I’ve always got too much to do, and too little time to do it. That’s why I’m a sucker for tools that do two things at once: save me time and help me look polished.
+
+[Resend](https://resend.com) is one of those rare tools. It makes sending beautiful, functional emails from your app almost feel… fun? Which, if you’ve ever wrestled with email templates, you’ll know is not a word we usually associate with this stuff.
+
+## Why the heck is email so hard?
+
+If you've never tried designing email, it sounds simple—just HTML and CSS, right?
+
+Not quite.
+
+Email clients (Gmail, Apple Mail, Outlook) all render things differently. There’s no real standard, and the rules are weird and inconsistent.
+
+Why? Because email is ancient tech. Email has been morphing and evolving since the 1980s - and once you start trying to send nice-looking emails, you will feel it.
+
+### Resend to the rescue
+
+I use Resend to send my newsletter, as well as transactional emails -- like the confirmation message that new subscribers get. I designed my email templates in Figma like I would any other interface, and use Resend's open source [React Email](https://react.email/) library to bring it to life in code.
+
+<Image
+  publicId="newsletters/tools-i-love-resend-react-email/figma-template"
+  caption="My transactional email template started in Figma"
+  alt="My transactional email template in Figma"
+/>
+
+I cannot overstate how difficult this process _used_ to be. That 👆🏾 is an extremely ambitious email format to build from scratch.
+
+In the new world of Resend, it's a familiar pattern:
+
+<Image
+  publicId="newsletters/tools-i-love-resend-react-email/code-snippet"
+  alt="My transactional email template in React Email"
+/>
+
+The code to ship it off to your inbox isn't bad either:
+
+```tsx
+const WelcomeMessage = <WelcomeEmail firstName={firstName} />;
+const { data, error } = await resend.emails.send({
+  from: '💌 Tiny Improvements <hello@mikebifulco.com>',
+  to: [email],
+  subject: "Subscription confirmed. I'm so glad you're here!",
+  react: WelcomeMessage,
+  text: await render(WelcomeMessage, { plainText: true }),
+});
+```
+
+My next.js site is also set up to listen to a few webhooks from Resend, where I can track things like subscription events, opens, unsubscribes, and more.
+
+There's more to it than that, and if you're interested in the nitty-gritty, my site's source code is [available on GitHub for you to check out](https://github.com/mbifulco/blog).
+
+---
+
+## What tools make you look good?
+
+Tips, tricks, and recommendations from my dev-pals is something that I've always loved. When I get around to it, I've got a whole list of recommendations that I'm planning to share -- like the shortcuts I find most helpful with [Raycast](https://www.raycast.com/), and the process I'm using to make Cursor smarter while I code.
+
+I'm really keen to hear from you.
+
+What tools make you look good? What saves you time and makes your life easier? Hit reply and send me a note. I'm all ears!
+
+---
+
+## Some links to keep your brain wrinkling
+
+I'll cop to it: I haven't had a lot of time for things other than work lately. When I have had some time to relax, these videos have stood out from the pack.
+
+-  [Frozen orange juice is actually super weird](https://www.youtube.com/watch?v=9wSQ9Zk_9gQ) is a fascinating video essay from Phil Edwards about the surprising economics of something that seems so simple.
+- [How do we feel the wind?](https://www.youtube.com/watch?v=Q0_W4SWHeWY) - part of Complexly's recent video series where people ask Hank Green... well, anything. In this edition, musical supergenuis Jacob Collier does the asking. Really, really interesting to see to _absolutely brilliant_ people interact so candidly.
