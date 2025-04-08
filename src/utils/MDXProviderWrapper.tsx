@@ -21,6 +21,7 @@ import { Heading } from '../components/Heading';
 import { Image } from '../components/Image';
 import { Threads, Tweet, Vimeo, YouTube } from '../components/MdxEmbed';
 import { SponsoredSection } from '../components/SponsoredSection';
+import { PullQuote } from '@components/PullQuote';
 
 const CustomHeading: React.FC<HeadingProps> = ({
   as,
@@ -275,6 +276,7 @@ const Button: React.FC<HTMLProps<HTMLButtonElement>> = ({
 export const customComponents = {
   Aside,
   blockquote: Blockquote,
+  PullQuote,
   Button,
   Colophon,
   Highlight: TextHighlight,
