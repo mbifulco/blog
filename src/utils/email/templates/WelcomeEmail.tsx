@@ -62,8 +62,8 @@ export const WelcomeEmail = ({ firstName }: WelcomeEmailProps) => {
                     </li>
                     <li style={paragraph}>
                       <b>Straight Talk:</b> I keep things honest and practical,
-                      based on my experience as a startup founder, and working
-                      at companies like Google, Stripe, and Microsoft.
+                      based on my experience as founder of a Y Combinator Startup,
+                      and working at companies like Google, Stripe, and Microsoft.
                     </li>
                   </ol>
 
@@ -78,6 +78,18 @@ export const WelcomeEmail = ({ firstName }: WelcomeEmailProps) => {
                     to your contacts. And if Tiny Improvements isn&apos;t your
                     thing, you can unsubscribe anytime — no hard feelings.
                   </Text>
+
+                  <Text style={paragraph}>
+                    <b>Become a paid subscriber</b> <br />Consider becoming a{' '}
+                    <Link
+                      href="https://patreon.com/tinyimprovements?utm_medium=email&utm_source=newsletter&utm_campaign=welcome_email&utm_content=patreon_support"
+                      className="text-pink-600"
+                    >
+                      paid subscriber on Patreon
+                    </Link>. Your support helps me continue sharing my
+                    experience and knowledge with aspiring founders and indiehackers like you!
+                  </Text>
+
                   <Text style={paragraph}>
                     Thanks again for joining Tiny Improvements. I can&apos;t
                     wait to see what you build!
@@ -92,7 +104,7 @@ export const WelcomeEmail = ({ firstName }: WelcomeEmailProps) => {
               </Row>
               <Row>
                 <Column
-                  className="flex flex-col justify-center pb-8"
+                  className="pb-8"
                   align="center"
                 >
                   <Button
