@@ -92,7 +92,7 @@ export const WelcomeEmail = ({ firstName }: WelcomeEmailProps) => {
               </Row>
               <Row>
                 <Column
-                  className="flex flex-col justify-center pb-8"
+                  className="pb-8"
                   align="center"
                 >
                   <Button
