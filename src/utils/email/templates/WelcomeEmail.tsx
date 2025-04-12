@@ -62,8 +62,8 @@ export const WelcomeEmail = ({ firstName }: WelcomeEmailProps) => {
                     </li>
                     <li style={paragraph}>
                       <b>Straight Talk:</b> I keep things honest and practical,
-                      based on my experience as a startup founder, and working
-                      at companies like Google, Stripe, and Microsoft.
+                      based on my experience as founder of a Y Combinator Startup,
+                      and working at companies like Google, Stripe, and Microsoft.
                     </li>
                   </ol>
 
