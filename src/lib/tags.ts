@@ -2,11 +2,13 @@ import { join } from 'path';
 
 import { ContentTypes } from '@data/content-types';
 import type { ContentType, MarkdownDocument } from '@data/content-types';
-import { getAllContentFromDirectory } from './content-loaders/getAllContentFromDirectory';
 
 export const parseTag = (tag: string) => {
   return tag.split(' ').join('-').toLocaleLowerCase();
 };
+
+// Import moved here to avoid circular dependency
+import { getAllContentFromDirectory } from './content-loaders/getAllContentFromDirectory';
 
 export const getAllTags = async () => {
   const tagRegistry = await getTagRegistryForAllContent();
