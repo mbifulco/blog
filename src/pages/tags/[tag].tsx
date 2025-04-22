@@ -2,6 +2,7 @@ import type { GetStaticPaths, GetStaticProps } from 'next';
 
 import { getPostBySlug } from '@lib/blog';
 import { getNewsletterBySlug } from '@lib/newsletters';
+import { getAllTags, getContentForTag } from '@lib/tags';
 import { ExternalWorkItem } from '../../components/ExternalWork';
 import { Heading } from '../../components/Heading';
 import NewsletterItem from '../../components/NewsletterFeed/NewsletterItem';
@@ -9,7 +10,6 @@ import { BlogPost as Post } from '../../components/Post';
 import SEO from '../../components/seo';
 import type { Article, BlogPost, Newsletter } from '../../data/content-types';
 import { getExternalReferenceBySlug as getArticleBySlug } from '../../lib/external-references';
-import { getAllTags, getContentForTag } from '../../lib/tags';
 
 type TagPageParams = {
   tag: string;
