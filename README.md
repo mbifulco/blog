@@ -8,16 +8,17 @@ This is a [NextJS](https://nextjs.org) site... migrated from a Gatsby site.
 
 # Site feature checklist (please add tests for these one day, Mike)
 
-- [ ] Publishing with MDX
-- [ ] image hosting on cloudinary
-- [ ] analytics with Fathom
-- [ ] RSS feed (/rss.xml)
-- [ ] Podcast page (/podcast)
-- [ ] ConvertKit newsletter
-- [ ] web monetization
-- [ ] web mentions
-- [ ] SEO via react-helmet
-- [ ] CI with GitHub Actions
-- [ ] automated build / deploy with Vercel
-- [ ] TailwindCSS
-- [ ] TypeScript
+- [x] Publishing with MDX
+- [x] image hosting on cloudinary
+- [x] analytics with Fathom
+- [x] RSS feed (/rss.xml)
+- [x] Podcast page (/podcast)
+- [x] Resend newsletter
+- [x] web monetization
+- [x] web mentions
+- [x] Opengraph images + data
+- [x] CI with GitHub Actions
+- [x] automated build / deploy with Vercel
+- [x] TailwindCSS
+- [x] TypeScript
+- [x] JSON-LD structured data
