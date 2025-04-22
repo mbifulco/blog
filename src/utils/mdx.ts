@@ -2,6 +2,7 @@ import GithubSlugger from 'github-slugger';
 import { serialize as serializeMdx } from 'next-mdx-remote/serialize';
 import imageSize from 'rehype-img-size';
 import rehypeSlug from 'rehype-slug';
+import remarkGfm from 'remark-gfm';
 import type { Heading } from 'src/data/content-types';
 
 export const getHeadings = (source: string): Heading[] => {
@@ -39,6 +40,9 @@ export const getHeadings = (source: string): Heading[] => {
 export const serialize = async (content: string) => {
   const mdxSource = await serializeMdx(content, {
     mdxOptions: {
+      remarkPlugins: [
+        remarkGfm, // Add GitHub Flavored Markdown support (tables, strikethrough, etc.)
+      ],
       rehypePlugins: [
         [imageSize, { dir: 'public' }],
         rehypeSlug, // add IDs to any h1-h6 tag that doesn't have one, using a slug made from its text

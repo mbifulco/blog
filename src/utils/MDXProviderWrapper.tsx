@@ -251,6 +251,10 @@ const HorizontalRule = () => {
   );
 };
 
+const Strikethrough: React.FC<HTMLAttributes<HTMLElement>> = ({ children, ...props }) => {
+  return <del className="line-through" {...props}>{children}</del>;
+};
+
 const Button: React.FC<HTMLProps<HTMLButtonElement>> = ({
   className,
   children,
@@ -298,6 +302,8 @@ export const customComponents = {
   SponsoredSection,
   ul: UnorderedList,
   ol: OrderedList,
+  del: Strikethrough,
+  s: Strikethrough,
 };
 
 /*
