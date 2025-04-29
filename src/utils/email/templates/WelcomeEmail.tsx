@@ -47,7 +47,7 @@ export const WelcomeEmail = ({ firstName }: WelcomeEmailProps) => {
                   <Text style={paragraph}>Hi {firstName ?? 'friend'},</Text>
 
                   <Text style={paragraph}>
-                    Thanks for trusting me with a spot in your inbox—I&apos;m
+                    Thanks for trusting me with a spot in your inbox-I&apos;m
                     thrilled to have you here!
                   </Text>
                   <Text style={paragraph}>
@@ -76,7 +76,7 @@ export const WelcomeEmail = ({ firstName }: WelcomeEmailProps) => {
                       hello@mikebifulco.com
                     </Link>{' '}
                     to your contacts. And if Tiny Improvements isn&apos;t your
-                    thing, you can unsubscribe anytime — no hard feelings.
+                    thing, you can unsubscribe anytime - no hard feelings.
                   </Text>
 
                   <Text style={paragraph}>
