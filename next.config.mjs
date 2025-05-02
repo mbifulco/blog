@@ -5,6 +5,39 @@ const jiti = createJiti(new URL(import.meta.url).pathname);
 
 await jiti.import('./src/utils/env');
 
+// Redirect legacy post paths to the new pattern
+const oldPostPaths = [
+  '/why-fathom-analytics',
+  '/on-normalcy',
+  '/plan-for-things-to-go-wrong-in-your-web-app',
+  '/are-you-suddenly-a-remote-worker',
+  '/crosspost-introducing-pistola',
+  '/gatsby-dev-to-cross-poster-brainstorm',
+  '/i-have-to-tell-you-about-dependabot',
+  '/all-about-ch',
+  '/promise-all-settled-pt-2-its-partly-settled',
+  '/picking-apart-javascript-import',
+  '/solve-all-your-problems-with-promise-allsettled',
+  '/reclaimed-10gb-of-disk-space-from-node-modules',
+  '/sticker-update-we-raised-176-nzd',
+  '/deconfusing-javascript-destructuring-syntax',
+  '/quick-tip-uninstall-postgres-from-your-mac',
+  '/egg-them-all',
+  '/chrome-extensions-i-use',
+  '/my-favorite-design-problem-microphones',
+  '/embracing-prettier',
+  '/it-was-time',
+  '/tech-product-growth-wabi-sabi',
+  '/naming-your-product-kiki-bouba',
+  '/design-decisions-cafe-tables',
+];
+
+const postRedirects = oldPostPaths.map((path) => ({
+  source: path,
+  destination: `/posts${path}`,
+  permanent: false,
+}));
+
 /**
  * @type {import('next').NextConfig}
  **/
@@ -57,6 +90,7 @@ const config = {
       destination: '/newsletter',
       permanent: false,
     },
+    ...postRedirects,
   ],
   rewrites: async () => [
     {
