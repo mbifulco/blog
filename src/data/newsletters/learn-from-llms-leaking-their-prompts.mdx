@@ -1,0 +1,96 @@
+---
+title: AI Prompt Secrets - what the leaks tell us
+excerpt: Popular AI tools like Claude, v0, and Cursor can be coaxed into revealing their prompts. Here's what I learned from a deep dive into some of the most successful prompts in the world.
+tags: [tools, ai llms]
+slug: learn-from-llms-leaking-their-prompts
+coverImagePublicId: newsletters/learn-from-llms-leaking-their-prompts/cover
+date: 2025-05-13
+---
+
+## The Big Idea
+
+The secret sauce of successful AI prompts is out in the open, and comes down to job, context, capabilities, constraints, and flavor. What sets apart the winners, though, is User Experience.
+
+### LLMs are spilling their guts
+
+Every week or so lately, I've seen a headline about one of the popular LLMs leaking its prompts - whether it's Claude, v0, Cursor, or something else. This is a side-effect of the way that LLMs work. There's no guarantee that they take instructions from [someone], and do their best to follow them.
+
+As such, there are hordes of clever people out there trying to get LLMs to leak their own instructions to the world... and from time to time, they're succeeding.
+
+Here's some snippets cribbed from (supposedly*) leaked prompts (github repos linked below) that I found interesting:
+
+From a leak of ChatGPT's prompts, on image generation:
+```md
+Not Allowed: Giving away or revealing the identity or name of real people in images, even if they are famous - you should NOT identify real people (just say you don't know).
+```
+
+Manus's approach to breaking down specific tasks:
+```md
+## Task Approach Methodology
+
+### Understanding Requirements
+- Analyzing user requests to identify core needs
+- Asking clarifying questions when requirements are ambiguous
+- Breaking down complex requests into manageable components
+- Identifying potential challenges before beginning work
+```
+
+_Ask clarifying questions_ - I can't tell you how many times _that_ has been an important unlock while doing UX work!
+
+
+
+### The basic shape of great prompts:
+
+- **Job**: _You are a [coding assistant] from [company name], using [some LLM technology] to [help people do some thing]_
+- **Context**: _This is your goal, and this is why your human counterpart is using you_
+- **Capabilities**: _You have these tools at your disposal (edit, code reference, image generation, etc.)_
+- **Constraints**: _Always do this, never do that_
+- **Flavor**: _You are [casual, friendly, professional, etc.]_
+
+Of these ingredients, it's impossible to say which is the _most_ important, but it's clear that the combination of all of them makes for a successful prompt.
+
+I do find it charming that so many prompts feature very-human-sounding language like "you're _the best in the world_ at..." -- part of me feels like this is developers trying to affirm their own value.
+
+Part prompt, part therapy - why not!
+
+### These are secrets of the past
+
+The companies that builds these LLM tools and prompts are _constantly_ improving them. They use sophisticated observability tooling like [Langchain](https://www.langchain.com/) to measure the success of their prompts and iterate on them.
+
+There are teams of engineers and linguists (and probably also other LLMs) working on these prompts, making countless of small changes to make them work better, more safely, and more effectively.
+
+The prompts you've found online were likely out of date the instant they were leaked. In fact, it's possible (if not likely) that at least some of these _leaked_ prompts are themselves hallucinations; results that _look_ believable, but are not entirely correct. That's the nature of LLM technology.
+
+### Prompt engineering and the LLM ecosystem
+
+The wildest thing about all of this is that you can just _take_ these right now. You can start using all or part of any of them within your LLM workflows. Claude, ChatGPT, Gemini, and others will all take custom instructions; you can just copy and paste the parts you like into your tool of choice.
+
+"Prompt engineering" is the term that has been coined for folks who spend their days figuring out how to squeeze a little more juice out of LLMs by writing custom instructions. It's interesting to me that this has become so same-y; this convergence across corporations is a likely indication that we've reached a point of diminishing returns. You're unlikely to prompt your way to the next echelon of functionality with the current generation of LLMs.
+
+### For product builders, it comes down to UX
+
+The tools that rise to prominence are those that have been built around great user experience - the ones that are most pleasant for us meatbags to use ergonomically to get our work done.
+
+If you're setting out to add AI magic to a product that you're building, I'd advise you to borrow _heavily_ from what's been leaked in these prompts. Spend 80% of your time making it _really nice_ to use your AI tools, and the other 20% iterating on your prompt.
+
+You'll do best if you can measure the success of your prompt by the number of people who actually use it, the number of times they use it, and how often they come back vs. drop off.
+
+### We're all fighting our own laziness
+
+For me, the most revealing thing about all these leaked prompts is just _how long_ they all are. LLMs can process so much more context now than they could a few years ago.I think OpenAI's models were limited to something like 1000 tokens in 2021. Now, instructions alone are crossing 50k tokens!
+
+When you're working with an LLM, your laziness is a likely failure point. LLMs aren't magic, they're just _really well informed_ word-guessers. The more context you give them, the better they'll do.
+
+If you're providing two sentence instructions to the tools you're using, you'll get two sentence responses.
+
+So, treat them like you would treat a new teammate, or like you would want to be treated when you're learning something new: the more detailed instructions you can provide, the better chance they have of doing a decent job.
+
+---
+
+## Go read some prompts
+
+- [Claude's prompt](https://github.com/asgeirtj/system_prompts_leaks/blob/main/claude.txt) is about 24k tokens long, and is stored alongside a collection of other leaked LLM prompts in this repo from GitHub user `@asgeirtj`
+- You can read v0's [model and prompts](https://github.com/x1xhlol/system-prompts-and-models-of-ai-tools/tree/main/v0%20Prompts%20and%20Tools) thanks to another repo from GitHub user `@x1xhlol`
+
+
+That's all for me this week, gang - if you found this useful, I'd love it if you shared it with your people.
