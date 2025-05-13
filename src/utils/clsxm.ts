@@ -7,4 +7,7 @@ const clsxm = (...classes: ClassValue[]) => {
   return twMerge(clsx(...classes));
 };
 
+// Export cn as an alias for clsxm
+export const cn = clsxm;
+
 export default clsxm;

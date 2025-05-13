@@ -10,9 +10,15 @@ import {
 import { Menu, X } from 'lucide-react';
 
 import { Heading } from '@components/Heading';
+import { SearchInput } from '@components/Search/SearchInput';
 import clsxm from '@utils/clsxm';
 
 const NavLinks: { title: string; href: string; badge?: boolean }[] = [
+  {
+    title: '💌 Tiny Improvements',
+    href: '/newsletter',
+    badge: true,
+  },
   {
     title: 'Articles',
     href: '/',
@@ -24,11 +30,6 @@ const NavLinks: { title: string; href: string; badge?: boolean }[] = [
   {
     title: 'About',
     href: '/about',
-  },
-  {
-    title: '💌 Tiny Improvements',
-    href: '/newsletter',
-    badge: true,
   },
 ];
 
@@ -68,6 +69,9 @@ const Navbar = () => {
                     {link.title}
                   </Link>
                 ))}
+                <div className="ml-4">
+                  <SearchInput />
+                </div>
               </div>
               <div className="-mr-2 flex items-center sm:hidden">
                 {/* Mobile menu button */}
@@ -103,6 +107,9 @@ const Navbar = () => {
                   {link.title}
                 </DisclosureButton>
               ))}
+              <div className="px-4 py-2">
+                <SearchInput />
+              </div>
             </div>
           </DisclosurePanel>
         </>
