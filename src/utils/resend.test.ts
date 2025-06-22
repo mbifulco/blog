@@ -15,6 +15,7 @@ vi.mock('resend', () => ({
     contacts: {
       create: vi.fn(),
       list: vi.fn(),
+      get: vi.fn(),
     },
   })),
 }));
@@ -407,12 +408,15 @@ describe('subscribe', () => {
     expect(resend.contacts.create).not.toHaveBeenCalled();
   });
 
-  it('should create contact for legitimate emails', async () => {
+  it('should create contact for legitimate emails when contact does not exist', async () => {
     const legitimateSubscriber = {
       email: 'user@example.com',
       firstName: 'John',
       lastName: 'Doe',
     };
+
+    // Mock contact.get to return "not found" error
+    vi.mocked(resend.contacts.get).mockRejectedValue(new Error('not_found'));
 
     const mockResponse = {
       data: { id: 'real-contact-id' },
@@ -422,7 +426,11 @@ describe('subscribe', () => {
     vi.mocked(resend.contacts.create).mockResolvedValue(mockResponse);
 
     const result = await subscribe(legitimateSubscriber);
-    expect(result).toEqual({ id: 'real-contact-id' });
+    expect(result).toEqual(mockResponse);
+    expect(resend.contacts.get).toHaveBeenCalledWith({
+      email: 'user@example.com',
+      audienceId: 'test-audience-id',
+    });
     expect(resend.contacts.create).toHaveBeenCalledWith({
       audienceId: 'test-audience-id',
       email: 'user@example.com',
@@ -431,11 +439,48 @@ describe('subscribe', () => {
     });
   });
 
-  it('should handle API errors when subscribing legitimate emails', async () => {
+  it('should return already subscribed message when contact exists and is not unsubscribed', async () => {
+    const existingSubscriber = {
+      email: 'existing@example.com',
+      firstName: 'Jane',
+    };
+
+    // Mock contact.get to return existing contact
+    const mockExistingContact = {
+      data: {
+        id: 'existing-contact-id',
+        email: 'existing@example.com',
+        first_name: 'Jane',
+        unsubscribed: false,
+      },
+      error: null,
+    };
+
+    vi.mocked(resend.contacts.get).mockResolvedValue(mockExistingContact);
+
+    const result = await subscribe(existingSubscriber);
+    expect(result).toEqual({
+      data: null,
+      error: {
+        name: 'already_subscribed',
+        message: "You're already subscribed with existing@example.com! Check your inbox for previous newsletters.",
+      },
+    });
+    expect(resend.contacts.get).toHaveBeenCalledWith({
+      email: 'existing@example.com',
+      audienceId: 'test-audience-id',
+    });
+    expect(resend.contacts.create).not.toHaveBeenCalled();
+  });
+
+    it('should handle API errors when subscribing legitimate emails', async () => {
     const legitimateSubscriber = {
       email: 'user@example.com',
       firstName: 'John',
     };
+
+    // Mock contact.get to return "not found" error so we proceed to create
+    vi.mocked(resend.contacts.get).mockRejectedValue(new Error('not_found'));
 
     const mockErrorResponse = {
       data: null,
@@ -455,10 +500,13 @@ describe('subscribe', () => {
     consoleSpy.mockRestore();
   });
 
-  it('should handle network errors when subscribing', async () => {
+    it('should handle network errors when subscribing', async () => {
     const legitimateSubscriber = {
       email: 'user@example.com',
     };
+
+    // Mock contact.get to return "not found" error so we proceed to create
+    vi.mocked(resend.contacts.get).mockRejectedValue(new Error('not_found'));
 
     const networkError = new Error('Network failure');
     vi.mocked(resend.contacts.create).mockRejectedValue(networkError);
