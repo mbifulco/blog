@@ -145,7 +145,8 @@ export const emailIsBad = (email: string) => {
   const badDomains = [
     'mailinator.com',
   ];
-  return badDomains.includes(email.split('@')[1]);
+  const domain = email.split('@')[1]?.toLowerCase();
+  return badDomains.includes(domain);
 };
 
 /**
@@ -155,7 +156,8 @@ export const fakeSubscribe = async (subscriber: SubscribeArgs) => {
   const badDomains = [
     'mailinator.com',
   ];
-  if (badDomains.includes(subscriber.email.split('@')[1])) {
+  const domain = subscriber.email.split('@')[1]?.toLowerCase();
+  if (badDomains.includes(domain)) {
     return {
       success: true,
     };

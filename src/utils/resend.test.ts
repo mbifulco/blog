@@ -52,9 +52,9 @@ describe('emailIsBad', () => {
     });
   });
 
-  it('should handle case sensitivity correctly', () => {
+  it('should handle case insensitivity correctly', () => {
     const result = emailIsBad('test@MAILINATOR.COM');
-    expect(result).toBe(false); // Should be case-sensitive
+    expect(result).toBe(true); // Domains are case-insensitive, so this should be caughtt
   });
 
   it('should handle emails with subdomains', () => {
@@ -129,14 +129,16 @@ describe('fakeSubscribe', () => {
     expect(result).toBeUndefined();
   });
 
-  it('should handle case sensitivity in domain checking', async () => {
+  it('should handle case insensitivity in domain checking', async () => {
     const badSubscriber = {
       email: 'test@MAILINATOR.COM',
       firstName: 'Test',
     };
 
     const result = await fakeSubscribe(badSubscriber);
-    expect(result).toBeUndefined(); // Should be case-sensitive
+    expect(result).toEqual({
+      success: true,
+    }); // Domains are case-insensitive, so this should be caught
   });
 
   it('should handle multiple bad domains correctly', async () => {
