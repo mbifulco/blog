@@ -1,3 +1,4 @@
+import type { CreateContactResponse } from 'resend';
 import { Resend } from 'resend';
 import { z } from 'zod';
 
@@ -140,7 +141,42 @@ export const getSubscriberCount = async () => {
   }
 };
 
+export const emailIsBad = (email: string) => {
+  const badDomains = [
+    'mailinator.com',
+  ];
+  const domain = email.split('@')[1]?.toLowerCase();
+  return badDomains.includes(domain);
+};
+
+/**
+ * return a "success" response in cases where the email is from a bad domain
+ */
+export const fakeSubscribe = async (subscriber: SubscribeArgs) => {
+  const badDomains = [
+    'mailinator.com',
+  ];
+  const domain = subscriber.email.split('@')[1]?.toLowerCase();
+  if (badDomains.includes(domain)) {
+    return {
+      success: true,
+    };
+  }
+};
+
 export const subscribe = async (subscriber: SubscribeArgs) => {
+
+  // if the email is from a bad domain, return a fake response
+  // so the form looks happy and the abuser can buzz off thinking they were successful
+  if (emailIsBad(subscriber.email)) {
+    return {
+      data: {
+        id: '123',
+      },
+      error: null,
+    } as CreateContactResponse;
+  }
+
   try {
     const res = await resend.contacts.create({
       audienceId: env.RESEND_NEWSLETTER_AUDIENCE_ID,
