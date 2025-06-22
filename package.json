@@ -14,8 +14,11 @@
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md,mdx}\"",
     "start": "next start",
     "test": "pnpm run test:unit && pnpm run test:e2e",
-    "test:unit": "vitest",
-    "test:e2e": "pnpm exec playwright test",
+    "test:unit": "vitest run",
+    "test:unit:watch": "vitest",
+    "test:unit:coverage": "vitest run --coverage",
+    "test:e2e": "playwright test",
+    "test:e2e:headed": "playwright test --headed",
     "lint": "pnpm eslint .",
     "eslint-check": "pnpm eslint --print-config . | pnpm eslint-config-prettier-check"
   },
