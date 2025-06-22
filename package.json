@@ -78,8 +78,6 @@
     "@next/eslint-plugin-next": "^15.3.4",
     "@playwright/test": "^1.53.1",
     "@tailwindcss/postcss": "^4.1.10",
-    "@testing-library/dom": "^10.4.0",
-    "@testing-library/react": "^16.3.0",
     "@types/eslint": "^9.6.1",
     "@types/node": "^24.0.3",
     "@types/pluralize": "^0.0.33",
