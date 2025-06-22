@@ -2,6 +2,7 @@ import { useRef, useState } from 'react';
 import Link from 'next/link';
 import useNewsletterStats from '@hooks/useNewsletterStats';
 import posthog from 'posthog-js';
+import { toast } from 'sonner';
 
 import Button from '@components/Button';
 import { trpc } from '@utils/trpc';
@@ -18,12 +19,50 @@ const SubscriptionForm: React.FC<SubscriptionFormProps> = ({
   buttonText = 'Subscribe',
 }) => {
   const [getHoneypottedNerd, setGetHoneypottedNerd] = useState<boolean>(false);
+  const [alreadySubscribed, setAlreadySubscribed] = useState<boolean>(false);
   const addSubscriberMutation = trpc.mailingList.subscribe.useMutation({
-    onSuccess: () => {
+    onSuccess: (data) => {
+      // Check if this is the "already subscribed" case
+      if (data?.error?.name === 'already_subscribed') {
+        const email = emailRef.current?.value;
+        const firstName = firstNameRef.current?.value;
+
+        setAlreadySubscribed(true);
+
+        // Clear the form for potential different email entry
+        if (emailRef.current) emailRef.current.value = '';
+        if (firstNameRef.current) firstNameRef.current.value = '';
+
+        toast.success('Already subscribed! 🎉', {
+          description: data.error.message,
+          duration: 5000,
+        });
+
+        posthog.capture('newsletter/already_subscribed', {
+          source,
+          email,
+          firstName,
+        });
+
+        // Reset state after a brief delay so user can try with different email
+        setTimeout(() => {
+          setAlreadySubscribed(false);
+        }, 100);
+
+        return;
+      }
+
+      // Normal successful subscription
       refreshStats();
 
       const email = emailRef.current?.value;
       const firstName = firstNameRef.current?.value;
+
+      toast.success('Successfully subscribed! 🪩', {
+        description: `Thanks for subscribing! Check your inbox for emails from hello@mikebifulco.com`,
+        duration: 5000,
+        position: 'top-center',
+      });
 
       posthog.capture('newsletter/subscribed', {
         source,
@@ -34,6 +73,12 @@ const SubscriptionForm: React.FC<SubscriptionFormProps> = ({
     onError: (error) => {
       const email = emailRef.current?.value;
       const firstName = firstNameRef.current?.value;
+
+      toast.error('Subscription failed', {
+        description: 'Please try again or contact hello@mikebifulco.com for help.',
+        duration: 5000,
+      });
+
       posthog.capture('newsletter/subscribe_error', {
         source,
         email,
@@ -98,7 +143,7 @@ const SubscriptionForm: React.FC<SubscriptionFormProps> = ({
     );
   }
 
-  if (addSubscriberMutation.isSuccess || getHoneypottedNerd) {
+  if ((addSubscriberMutation.isSuccess && !alreadySubscribed) || getHoneypottedNerd) {
     return (
       <div className="flex flex-col gap-2">
         <p className="text-xl font-semibold text-inherit">
@@ -109,6 +154,8 @@ const SubscriptionForm: React.FC<SubscriptionFormProps> = ({
       </div>
     );
   }
+
+
 
   return (
     <div className="flex flex-col gap-2">

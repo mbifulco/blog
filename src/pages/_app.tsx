@@ -2,6 +2,7 @@ import type { AppProps } from 'next/app';
 import localFont from 'next/font/local';
 import posthog from 'posthog-js';
 import { PostHogProvider } from 'posthog-js/react';
+import { Toaster } from 'sonner';
 
 import FathomAnalytics from '@components/Analytics/Fathom';
 import DefaultLayout from '@components/Layouts/DefaultLayout';
@@ -42,6 +43,16 @@ function MyApp({ Component, pageProps }: AppProps) {
         <DefaultLayout>
           <FathomAnalytics siteId={env.NEXT_PUBLIC_FATHOM_ID} />
           <Component {...pageProps} />
+          <Toaster
+            position="top-right"
+            toastOptions={{
+              style: {
+                background: 'white',
+                border: '1px solid #e5e5e5',
+                color: '#333',
+              },
+            }}
+          />
         </DefaultLayout>
       </div>
     </PostHogProvider>

@@ -1,4 +1,13 @@
 import type { CreateContactResponse } from 'resend';
+
+// Custom response type to handle already subscribed case
+export type SubscribeResponse = CreateContactResponse | {
+  data: null;
+  error: {
+    name: 'already_subscribed';
+    message: string;
+  };
+};
 import { Resend } from 'resend';
 import { z } from 'zod';
 
@@ -164,7 +173,7 @@ export const fakeSubscribe = async (subscriber: SubscribeArgs) => {
   }
 };
 
-export const subscribe = async (subscriber: SubscribeArgs) => {
+export const subscribe = async (subscriber: SubscribeArgs): Promise<SubscribeResponse> => {
 
   // if the email is from a bad domain, return a fake response
   // so the form looks happy and the abuser can buzz off thinking they were successful
@@ -178,6 +187,25 @@ export const subscribe = async (subscriber: SubscribeArgs) => {
   }
 
   try {
+    // First, check if the contact already exists
+    const existingContact = await resend.contacts.get({
+      email: subscriber.email,
+      audienceId: env.RESEND_NEWSLETTER_AUDIENCE_ID,
+    });
+
+    // If contact exists and is not unsubscribed, return a special response
+    if (existingContact.data && !existingContact.data.unsubscribed) {
+      return {
+        data: null,
+        error: {
+          name: 'already_subscribed' as const,
+          message: `You're already subscribed with ${subscriber.email}! Check your inbox for previous newsletters.`,
+        },
+      };
+    }
+
+    // If contact exists but is unsubscribed, we could potentially update them
+    // For now, we'll proceed with creating/updating the contact
     const res = await resend.contacts.create({
       audienceId: env.RESEND_NEWSLETTER_AUDIENCE_ID,
       ...subscriber,
@@ -187,8 +215,29 @@ export const subscribe = async (subscriber: SubscribeArgs) => {
       throw new Error(`${res.error.name}: ${res.error.message}`);
     }
 
-    return res.data;
-  } catch (error) {
+    return res;
+  } catch (error: unknown) {
+    // If the error is that the contact doesn't exist, that's fine - proceed with creation
+    const errorObj = error as Error;
+    if (errorObj?.message?.includes('not_found') || errorObj?.name === 'not_found') {
+      try {
+        const res = await resend.contacts.create({
+          audienceId: env.RESEND_NEWSLETTER_AUDIENCE_ID,
+          ...subscriber,
+        });
+
+        if (res.error) {
+          throw new Error(`${res.error.name}: ${res.error.message}`);
+        }
+
+        return res;
+      } catch (createError) {
+        console.error('Error creating contact:');
+        console.error(createError);
+        throw createError;
+      }
+    }
+
     console.error('Error subscribing:');
     console.error(error);
     throw error;
