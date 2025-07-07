@@ -107,7 +107,7 @@ const config = {
     },
   ],
   webpack: (config, { dev, isServer }) => {
-    if (!dev) {
+    if (dev) {
       config.optimization.minimize = false;
     }
     return config;
