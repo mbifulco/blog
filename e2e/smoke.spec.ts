@@ -29,3 +29,11 @@ test('robots smoke test', async ({ page }) => {
   await page.goto('/robots.txt');
   expect(true).toBe(true);
 });
+
+test('404 error page smoke test', async ({ page }) => {
+  const response = await page.goto('/non-existent-page');
+  expect(response?.status()).toBe(404);
+  
+  await expect(page.locator('h1')).toContainText('404');
+  await expect(page.locator('text=Page not found')).toBeVisible();
+});
