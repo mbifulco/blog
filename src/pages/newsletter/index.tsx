@@ -64,15 +64,15 @@ const NewsletterPage: React.FC<NewsletterPageProps> = ({ newsletters }) => {
         <SponsorCTA />
       </div>
 
-      <Heading as="h2" className="mb-4 mt-10 text-xl text-black" id="latest">
+      <Heading as="h2" className="mt-10 mb-4 text-xl text-black" id="latest">
         💌 Read the latest dispatch
       </Heading>
       <NewsletterItem newsletter={latestNewsletter} />
 
-      <Heading as="h2" className="mb-4 mt-4 text-xl text-black" id="past">
+      <Heading as="h2" className="mt-4 mb-4 text-xl text-black" id="past">
         Read past disptaches
       </Heading>
-      <div className="grid grid-cols-auto-fit-min-300 gap-5">
+      <div className="grid-cols-auto-fit-min-300 grid gap-5">
         {pastNewsletters.map((newsletter) => {
           if (!newsletter || !newsletter.frontmatter) return null;
           const { slug } = newsletter.frontmatter;

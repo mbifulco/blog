@@ -20,7 +20,8 @@ const soldOut = () => {
           justify-content: center;
           position: absolute;
           z-index: 1;
-          font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+          font-family:
+            Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
           font-size: 36px;
 
           &:hover {

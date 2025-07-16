@@ -2,7 +2,7 @@
 title: Migrate from next-sitemap to the Next.js App Directory's sitemap
 date: 2024-11-23
 tags: ['next.js', 'seo']
-slug:  migrate-from-next-sitemap-to-app-directory-sitemap
+slug: migrate-from-next-sitemap-to-app-directory-sitemap
 coverImagePublicId: posts/migrate-from-next-sitemap-to-app-directory-sitemap/cover
 excerpt: This post walks through the process of migrating from the next-sitemap library to the Next.js App Directory's sitemap.
 ---
@@ -152,10 +152,10 @@ The same pattern is used for blog posts and tags.
 
 ```tsx
 import type { MetadataRoute } from 'next';
+
 import { getAllPosts } from '@lib/blog';
 import { getAllNewsletters } from '@lib/newsletters';
 import { getAllTags } from '@lib/tags';
-
 import { BASE_SITE_URL } from '@/config';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {

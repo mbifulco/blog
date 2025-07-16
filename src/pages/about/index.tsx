@@ -15,12 +15,14 @@ export async function getStaticProps() {
       'https://raw.githubusercontent.com/mbifulco/mbifulco/main/README.md',
       {
         headers: { 'Cache-Control': 'no-cache' },
-        next: { revalidate: 15 * 60 } // For Next.js 13+ cache control
+        next: { revalidate: 15 * 60 }, // For Next.js 13+ cache control
       }
     );
 
     if (!res.ok) {
-      throw new Error(`Failed to fetch content: ${res.status} ${res.statusText}`);
+      throw new Error(
+        `Failed to fetch content: ${res.status} ${res.statusText}`
+      );
     }
 
     const content = await res.text();
@@ -40,7 +42,9 @@ export async function getStaticProps() {
     // Return a fallback or last cached version
     return {
       props: {
-        mdxSource: await serialize('# Error loading content\nPlease check back later.'),
+        mdxSource: await serialize(
+          '# Error loading content\nPlease check back later.'
+        ),
         error: true,
       },
       revalidate: 60, // Try again more frequently when errors occur
@@ -60,9 +64,9 @@ const AboutPage: NextPage<AboutPageProps> = ({ mdxSource, error }) => (
       title="About Mike Bifulco - founder, developer advocate, designer, writer"
       description="Mike Bifulco is a serial entrepreneur, author, and software developer, and former Stripe, Google, and Microsoft employee, working to build great products."
     />
-    <main className="mx-auto max-w-4xl mb-8">
+    <main className="mx-auto mb-8 max-w-4xl">
       {error && (
-        <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-6">
+        <div className="mb-6 border-l-4 border-yellow-400 bg-yellow-50 p-4">
           <p className="text-yellow-700">
             Content is temporarily unavailable. Showing cached version.
           </p>

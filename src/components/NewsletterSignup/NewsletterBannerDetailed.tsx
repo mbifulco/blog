@@ -118,7 +118,7 @@ const NewsletterBannerDetailed = () => {
             <div className="">
               <h3 className="mb-2 text-gray-800">
                 Next issue drops <span className="font-bold">{daysText}!</span>
-                <CornerRightDown className="mr-2 mt-2 inline-block h-4 w-4" />
+                <CornerRightDown className="mt-2 mr-2 inline-block h-4 w-4" />
               </h3>
               <SubscriptionForm
                 source="newsletter-cta-v5"
