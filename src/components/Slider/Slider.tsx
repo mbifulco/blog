@@ -79,7 +79,7 @@ export const Slider = (
   return (
     <div
       {...groupProps}
-      className="relative inset-x-0 bottom-full top-0 flex flex-auto touch-none items-center gap-6"
+      className="relative inset-x-0 top-0 bottom-full flex flex-auto touch-none items-center gap-6"
     >
       {props.label && (
         <label className="sr-only" {...labelProps}>

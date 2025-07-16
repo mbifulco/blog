@@ -1,4 +1,17 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+
+import {
+  ContactEvents,
+  EmailEvents,
+  emailIsBad,
+  fakeSubscribe,
+  getSubscriberCount,
+  isContactEvent,
+  isEmailEvent,
+  resend,
+  subscribe,
+  subscribeSchema,
+} from './resend';
 
 // Mock the env module to avoid environment variable validation issues
 vi.mock('./env', () => ({
@@ -6,7 +19,7 @@ vi.mock('./env', () => ({
     RESEND_API_KEY: 'test-resend-key',
     RESEND_NEWSLETTER_AUDIENCE_ID: 'test-audience-id',
     RESEND_SIGNING_SECRET: 'test-signing-secret',
-  }
+  },
 }));
 
 // Mock the Resend SDK
@@ -19,19 +32,6 @@ vi.mock('resend', () => ({
     },
   })),
 }));
-
-import {
-  emailIsBad,
-  fakeSubscribe,
-  isContactEvent,
-  isEmailEvent,
-  ContactEvents,
-  EmailEvents,
-  subscribeSchema,
-  getSubscriberCount,
-  subscribe,
-  resend,
-} from './resend';
 
 describe('emailIsBad', () => {
   it('should return true for mailinator.com domain', () => {
@@ -47,7 +47,7 @@ describe('emailIsBad', () => {
       'contact@domain.net',
     ];
 
-    legitimateEmails.forEach(email => {
+    legitimateEmails.forEach((email) => {
       const result = emailIsBad(email);
       expect(result).toBe(false);
     });
@@ -362,7 +362,9 @@ describe('getSubscriberCount', () => {
   });
 
   it('should handle network errors gracefully', async () => {
-    vi.mocked(resend.contacts.list).mockRejectedValue(new Error('Network error'));
+    vi.mocked(resend.contacts.list).mockRejectedValue(
+      new Error('Network error')
+    );
 
     const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
 
@@ -374,7 +376,10 @@ describe('getSubscriberCount', () => {
   });
 
   it('should handle missing data gracefully', async () => {
-    vi.mocked(resend.contacts.list).mockResolvedValue({ data: null, error: null });
+    vi.mocked(resend.contacts.list).mockResolvedValue({
+      data: null,
+      error: null,
+    });
 
     const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
 
@@ -463,7 +468,8 @@ describe('subscribe', () => {
       data: null,
       error: {
         name: 'already_subscribed',
-        message: "You're already subscribed with existing@example.com! Check your inbox for previous newsletters.",
+        message:
+          "You're already subscribed with existing@example.com! Check your inbox for previous newsletters.",
       },
     });
     expect(resend.contacts.get).toHaveBeenCalledWith({
@@ -473,7 +479,7 @@ describe('subscribe', () => {
     expect(resend.contacts.create).not.toHaveBeenCalled();
   });
 
-    it('should handle API errors when subscribing legitimate emails', async () => {
+  it('should handle API errors when subscribing legitimate emails', async () => {
     const legitimateSubscriber = {
       email: 'user@example.com',
       firstName: 'John',
@@ -494,13 +500,15 @@ describe('subscribe', () => {
 
     const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
 
-    await expect(subscribe(legitimateSubscriber)).rejects.toThrow('VALIDATION_ERROR: Invalid email format');
+    await expect(subscribe(legitimateSubscriber)).rejects.toThrow(
+      'VALIDATION_ERROR: Invalid email format'
+    );
     expect(consoleSpy).toHaveBeenCalled();
 
     consoleSpy.mockRestore();
   });
 
-    it('should handle network errors when subscribing', async () => {
+  it('should handle network errors when subscribing', async () => {
     const legitimateSubscriber = {
       email: 'user@example.com',
     };
@@ -513,7 +521,9 @@ describe('subscribe', () => {
 
     const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
 
-    await expect(subscribe(legitimateSubscriber)).rejects.toThrow('Network failure');
+    await expect(subscribe(legitimateSubscriber)).rejects.toThrow(
+      'Network failure'
+    );
     expect(consoleSpy).toHaveBeenCalled();
 
     consoleSpy.mockRestore();

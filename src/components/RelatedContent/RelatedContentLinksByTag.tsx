@@ -17,7 +17,7 @@ const DEFAULT_TAGS_TO_DISPLAY = [
 
 const RelatedContentLinksByTag = ({ tags = DEFAULT_TAGS_TO_DISPLAY }) => {
   return (
-    <div className="pb-20 pt-8">
+    <div className="pt-8 pb-20">
       <p className="font-bold">More great resources</p>
       <div className="grid grid-cols-1 text-lg sm:grid-cols-2">
         {tags.map((tag) => {

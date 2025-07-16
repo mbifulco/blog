@@ -12,6 +12,7 @@ import { MDXProvider } from '@mdx-js/react';
 import type { MDXComponents } from 'mdx/types';
 import { Highlight, themes } from 'prism-react-renderer';
 
+import { PullQuote } from '@components/PullQuote';
 import clsxm from '@utils/clsxm';
 // one off component imports
 import { CenteredTextDemo } from '../components/demos/CenteredTextDemo';
@@ -21,7 +22,6 @@ import { Heading } from '../components/Heading';
 import { Image } from '../components/Image';
 import { Threads, Tweet, Vimeo, YouTube } from '../components/MdxEmbed';
 import { SponsoredSection } from '../components/SponsoredSection';
-import { PullQuote } from '@components/PullQuote';
 
 const CustomHeading: React.FC<HeadingProps> = ({
   as,
@@ -88,7 +88,7 @@ const Blockquote: React.FC<HTMLAttributes<HTMLQuoteElement>> = ({
   children,
 }) => {
   return (
-    <blockquote className="text-balance border-l-4 border-pink-400 bg-gray-100 p-3">
+    <blockquote className="border-l-4 border-pink-400 bg-gray-100 p-3 text-balance">
       {children}
     </blockquote>
   );
@@ -103,7 +103,7 @@ const CustomLink: React.FC<CustomLinkProps> = ({ children, ...props }) => {
 const Colophon = () => {
   return (
     <div
-      className="mb-6 mt-12 flex flex-row gap-2 font-bold text-pink-400"
+      className="mt-12 mb-6 flex flex-row gap-2 font-bold text-pink-400"
       aria-hidden
     >
       <div className="flex flex-row gap-5">
@@ -150,7 +150,7 @@ const InlineCode: React.FC<HTMLAttributes<HTMLSpanElement>> = ({
   return (
     <span
       {...props}
-      className="inline-block max-w-full whitespace-pre rounded-xs bg-slate-500 px-[0.5ch] py-[0.1ch] align-text-bottom font-mono text-sm text-white"
+      className="inline-block max-w-full rounded-xs bg-slate-500 px-[0.5ch] py-[0.1ch] align-text-bottom font-mono text-sm whitespace-pre text-white"
     />
   );
 };
@@ -247,12 +247,19 @@ const ListItemComponent: React.FC<HTMLAttributes<HTMLLIElement>> = ({
 
 const HorizontalRule = () => {
   return (
-    <div className="mx-auto mb-8 mt-12 w-[50%] max-w-[50%] rounded-sm border-b-[5px] border-solid border-pink-400" />
+    <div className="mx-auto mt-12 mb-8 w-[50%] max-w-[50%] rounded-sm border-b-[5px] border-solid border-pink-400" />
   );
 };
 
-const Strikethrough: React.FC<HTMLAttributes<HTMLElement>> = ({ children, ...props }) => {
-  return <del className="line-through" {...props}>{children}</del>;
+const Strikethrough: React.FC<HTMLAttributes<HTMLElement>> = ({
+  children,
+  ...props
+}) => {
+  return (
+    <del className="line-through" {...props}>
+      {children}
+    </del>
+  );
 };
 
 const Button: React.FC<HTMLProps<HTMLButtonElement>> = ({
