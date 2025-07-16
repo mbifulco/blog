@@ -9,7 +9,6 @@ import {
 } from '@headlessui/react';
 import { Menu, X } from 'lucide-react';
 
-import { Heading } from '@components/Heading';
 import clsxm from '@utils/clsxm';
 
 const NavLinks: { title: string; href: string; badge?: boolean }[] = [
@@ -40,15 +39,14 @@ const Navbar = () => {
         <>
           <div className="flex w-full flex-row gap-3 sm:mx-auto sm:flex-col">
             <Link href="/" className="hover:no-underline">
-              <Heading
-                as="h1"
+              <div
                 className={clsxm(
                   'text-center text-4xl text-gray-800 uppercase transition-all duration-500 ease-in-out hover:text-gray-700',
                   'font-dumpling -my-2 text-lg md:text-4xl'
                 )}
               >
                 Mike Bifulco
-              </Heading>
+              </div>
             </Link>
             <div className="ml-auto sm:ml-0 sm:justify-center">
               <div className="hidden items-center justify-center sm:ml-6 sm:flex sm:space-x-8">
