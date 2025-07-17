@@ -9,6 +9,9 @@ jobs:
   playwright:
     timeout-minutes: 7
     runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/playwright:v1.54.1-noble
+      options: --user 1001
     env:
       CONVERTKIT_API_SECRET: ${{ secrets.CONVERTKIT_API_SECRET }}
       CONVERTKIT_WEBHOOK_SECRET: ${{ secrets.CONVERTKIT_WEBHOOK_SECRET }}
@@ -28,25 +31,10 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: lts/*
+          cache: 'pnpm'
 
-      - name: Get pnpm store directory
-        id: pnpm-cache
-        run: |
-          echo "pnpm_cache_dir=$(pnpm store path)" >> $GITHUB_OUTPUT
-
-      - name: Setup pnpm cache
-        uses: actions/cache@v4
-        with:
-          path: ${{ steps.pnpm-cache.outputs.pnpm_cache_dir }}
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-store-
-
-      - name: Install deps (with cache)
+      - name: Install deps
         run: pnpm install
-
-      - name: Install Playwright Browsers
-        run: pnpm exec playwright install --with-deps
 
       - name: Run Playwright tests
         run: pnpm exec playwright test
