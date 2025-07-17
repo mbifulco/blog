@@ -3,14 +3,10 @@
 // Having this file ensures that any request to /newsletter/page (with or without trailing slash) is handled gracefully in all environments, never returns a 404, and always redirects to /newsletter.
 
 import type { GetServerSideProps } from 'next';
+import { createPaginationRedirectProps } from '../../../utils/pagination-redirects';
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  return {
-    redirect: {
-      destination: '/newsletter',
-      permanent: false,
-    },
-  };
+  return createPaginationRedirectProps('/newsletter');
 };
 
 const NewsletterPageRedirect = () => null;

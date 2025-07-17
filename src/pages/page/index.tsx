@@ -3,14 +3,10 @@
 // Having this file ensures that any request to /page (with or without trailing slash) is handled gracefully in all environments, never returns a 404, and always redirects to the home page.
 
 import type { GetServerSideProps } from 'next';
+import { createPaginationRedirectProps } from '../../utils/pagination-redirects';
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  return {
-    redirect: {
-      destination: '/',
-      permanent: false,
-    },
-  };
+  return createPaginationRedirectProps('/');
 };
 
 const PageRedirect = () => null;
