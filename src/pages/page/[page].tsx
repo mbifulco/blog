@@ -1,4 +1,4 @@
-import type { GetServerSideProps, NextPage } from 'next';
+import type { NextPage } from 'next';
 import Link from 'next/link';
 import { startOfToday } from 'date-fns';
 
@@ -16,58 +16,55 @@ import type { BlogPost, Newsletter } from '../../data/content-types';
 import { getPaginatedPosts } from '../../lib/blog';
 import { getAllNewsletters } from '../../lib/newsletters';
 import { getCloudinaryImageUrl } from '../../utils/images';
+import { generatePaginatedPaths, handlePaginatedStaticProps } from '../../utils/pagination';
 
-export const getServerSideProps: GetServerSideProps = async ({ params }) => {
-  const pageParam = params?.page as string;
-  const page = parseInt(pageParam, 10);
-
-  // Get total pages to determine max page
-  const totalPagesResult = await getPaginatedPosts({ limit: 10 });
-  const totalPages = totalPagesResult.totalPages;
-
-  // Handle invalid page parameters (non-numeric, negative, etc.)
-  if (isNaN(page) || page < 1 || !pageParam.match(/^\d+$/)) {
-    return {
-      notFound: true,
-    };
-  }
-
-  // Handle page number too high - redirect to home
-  if (page > totalPages) {
-    return {
-      redirect: {
-        destination: '/',
-        permanent: false,
-      },
-    };
-  }
-
-  // Handle page 1 - should be at root instead
-  if (page === 1) {
-    return {
-      redirect: {
-        destination: '/',
-        permanent: false,
-      },
-    };
-  }
-
-  const paginatedPosts = await getPaginatedPosts({ page, limit: 10 });
-  const newsletters = await getAllNewsletters();
-
-  return {
-    props: {
-      posts: paginatedPosts.items,
-      newsletter: newsletters[0],
-      pagination: {
-        currentPage: paginatedPosts.currentPage,
-        totalPages: paginatedPosts.totalPages,
-        hasNextPage: paginatedPosts.hasNextPage,
-        hasPreviousPage: paginatedPosts.hasPreviousPage,
-      },
-    },
+// We use fallback: 'blocking' so that getStaticProps runs for any page param, allowing us to handle invalid page numbers (non-numeric, out-of-range, etc.) with redirects or 404s, while still statically generating valid pages after the first request.
+export async function getStaticPaths() {
+  const getTotalPages = async (limit: number) => {
+    const { totalPages } = await getPaginatedPosts({ limit });
+    return { totalPages };
   };
-};
+  const paths = await generatePaginatedPaths(getTotalPages, 10);
+  return { paths, fallback: 'blocking' };
+}
+
+export async function getStaticProps({ params }: { params: { page: string } }) {
+  const getTotalPages = async (limit: number) => {
+    const { totalPages } = await getPaginatedPosts({ limit });
+    return { totalPages };
+  };
+  return handlePaginatedStaticProps<{
+    posts: BlogPost[];
+    newsletter: Newsletter;
+    pagination: {
+      currentPage: number;
+      totalPages: number;
+      hasNextPage: boolean;
+      hasPreviousPage: boolean;
+    };
+  }>({
+    params,
+    getTotalPages,
+    limit: 10,
+    redirectBase: '/',
+    getPageProps: async (page) => {
+      const paginatedPosts = await getPaginatedPosts({ page, limit: 10 });
+      const newsletters = await getAllNewsletters();
+      return {
+        props: {
+          posts: paginatedPosts.items,
+          newsletter: newsletters[0],
+          pagination: {
+            currentPage: paginatedPosts.currentPage,
+            totalPages: paginatedPosts.totalPages,
+            hasNextPage: paginatedPosts.hasNextPage,
+            hasPreviousPage: paginatedPosts.hasPreviousPage,
+          },
+        },
+      };
+    },
+  });
+}
 
 const headshotPublicId = 'mike-headshot-square';
 const headshotPublicUrl = getCloudinaryImageUrl(headshotPublicId);

@@ -1,5 +1,3 @@
-import type { GetServerSideProps } from 'next';
-
 import { Heading } from '@components/Heading';
 import NewsletterItem from '@components/NewsletterFeed/NewsletterItem';
 import NewsletterSignup from '@components/NewsletterSignup';
@@ -12,61 +10,52 @@ import PaginationWrapper from '../../../components/Pagination';
 import config from '../../../config';
 import type { Newsletter } from '../../../data/content-types';
 import { getPaginatedNewsletters } from '../../../lib/newsletters';
+import { generatePaginatedPaths, handlePaginatedStaticProps } from '../../../utils/pagination';
 
-export const getServerSideProps: GetServerSideProps<
-  NewsletterPageProps
-> = async ({ params }) => {
-  const pageParam = params?.page as string;
-  const page = parseInt(pageParam, 10);
-
-  // Get total pages to determine max page
-  const totalPagesResult = await getPaginatedNewsletters({ limit: 12 });
-  const totalPages = totalPagesResult.totalPages;
-
-  // Handle invalid page parameters (non-numeric, negative, etc.)
-  if (isNaN(page) || page < 1 || !pageParam.match(/^\d+$/)) {
-    return {
-      notFound: true,
-    };
-  }
-
-  // Handle page number too high - redirect to newsletter home
-  if (page > totalPages) {
-    return {
-      redirect: {
-        destination: '/newsletter',
-        permanent: false,
-      },
-    };
-  }
-
-  // Handle page 1 - should be at newsletter root instead
-  if (page === 1) {
-    return {
-      redirect: {
-        destination: '/newsletter',
-        permanent: false,
-      },
-    };
-  }
-
-  const paginatedNewsletters = await getPaginatedNewsletters({
-    page,
-    limit: 12,
-  });
-
-  return {
-    props: {
-      newsletters: paginatedNewsletters.items,
-      pagination: {
-        currentPage: paginatedNewsletters.currentPage,
-        totalPages: paginatedNewsletters.totalPages,
-        hasNextPage: paginatedNewsletters.hasNextPage,
-        hasPreviousPage: paginatedNewsletters.hasPreviousPage,
-      },
-    },
+// We use fallback: 'blocking' so that getStaticProps runs for any page param, allowing us to handle invalid page numbers (non-numeric, out-of-range, etc.) with redirects or 404s, while still statically generating valid pages after the first request.
+export async function getStaticPaths() {
+  const getTotalPages = async (limit: number) => {
+    const { totalPages } = await getPaginatedNewsletters({ limit });
+    return { totalPages };
   };
-};
+  const paths = await generatePaginatedPaths(getTotalPages, 12);
+  return { paths, fallback: 'blocking' };
+}
+
+export async function getStaticProps({ params }: { params: { page: string } }) {
+  const getTotalPages = async (limit: number) => {
+    const { totalPages } = await getPaginatedNewsletters({ limit });
+    return { totalPages };
+  };
+  return handlePaginatedStaticProps<{
+    newsletters: Newsletter[];
+    pagination: {
+      currentPage: number;
+      totalPages: number;
+      hasNextPage: boolean;
+      hasPreviousPage: boolean;
+    };
+  }>({
+    params,
+    getTotalPages,
+    limit: 12,
+    redirectBase: '/newsletter',
+    getPageProps: async (page) => {
+      const paginatedNewsletters = await getPaginatedNewsletters({ page, limit: 12 });
+      return {
+        props: {
+          newsletters: paginatedNewsletters.items,
+          pagination: {
+            currentPage: paginatedNewsletters.currentPage,
+            totalPages: paginatedNewsletters.totalPages,
+            hasNextPage: paginatedNewsletters.hasNextPage,
+            hasPreviousPage: paginatedNewsletters.hasPreviousPage,
+          },
+        },
+      };
+    },
+  });
+}
 
 type NewsletterPageProps = {
   newsletters: Newsletter[];
