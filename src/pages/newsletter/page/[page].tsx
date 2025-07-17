@@ -1,4 +1,4 @@
-import type { GetStaticProps } from 'next';
+import type { GetServerSideProps } from 'next';
 
 import { Heading } from '@components/Heading';
 import NewsletterItem from '@components/NewsletterFeed/NewsletterItem';
@@ -8,13 +8,47 @@ import SEO from '@components/seo';
 import SponsorCTA from '@components/SponsorCTA/SponsorCTA';
 import { SubscriptionForm } from '@components/SubscriptionForm';
 import { Subtitle } from '@components/Subtitle';
-import config from '../../config';
-import type { Newsletter } from '../../data/content-types';
-import { getPaginatedNewsletters } from '../../lib/newsletters';
-import PaginationWrapper from '../../components/Pagination';
+import config from '../../../config';
+import type { Newsletter } from '../../../data/content-types';
+import { getPaginatedNewsletters } from '../../../lib/newsletters';
+import PaginationWrapper from '../../../components/Pagination';
 
-export const getStaticProps: GetStaticProps<NewsletterPageProps> = async () => {
-  const paginatedNewsletters = await getPaginatedNewsletters({ limit: 12 });
+export const getServerSideProps: GetServerSideProps<NewsletterPageProps> = async ({ params }) => {
+  const pageParam = params?.page as string;
+  const page = parseInt(pageParam, 10);
+  
+  // Get total pages to determine max page
+  const totalPagesResult = await getPaginatedNewsletters({ limit: 12 });
+  const totalPages = totalPagesResult.totalPages;
+  
+  // Handle invalid page parameters (non-numeric, negative, etc.)
+  if (isNaN(page) || page < 1 || !pageParam.match(/^\d+$/)) {
+    return {
+      notFound: true,
+    };
+  }
+  
+  // Handle page number too high - redirect to newsletter home
+  if (page > totalPages) {
+    return {
+      redirect: {
+        destination: '/newsletter',
+        permanent: false,
+      },
+    };
+  }
+  
+  // Handle page 1 - should be at newsletter root instead
+  if (page === 1) {
+    return {
+      redirect: {
+        destination: '/newsletter',
+        permanent: false,
+      },
+    };
+  }
+  
+  const paginatedNewsletters = await getPaginatedNewsletters({ page, limit: 12 });
 
   return {
     props: {
@@ -77,16 +111,20 @@ const NewsletterPage: React.FC<NewsletterPageProps> = ({ newsletters, pagination
         <SponsorCTA />
       </div>
 
-      <Heading as="h2" className="mt-10 mb-4 text-xl text-black" id="latest">
-        💌 Read the latest dispatch
-      </Heading>
-      <NewsletterItem newsletter={latestNewsletter} />
+      {pagination.currentPage === 1 && (
+        <>
+          <Heading as="h2" className="mt-10 mb-4 text-xl text-black" id="latest">
+            💌 Read the latest dispatch
+          </Heading>
+          <NewsletterItem newsletter={latestNewsletter} />
+        </>
+      )}
 
       <Heading as="h2" className="mt-4 mb-4 text-xl text-black" id="past">
         Read past disptaches
       </Heading>
       <div className="grid-cols-auto-fit-min-300 grid gap-5">
-        {pastNewsletters.map((newsletter) => {
+        {(pagination.currentPage === 1 ? pastNewsletters : newsletters).map((newsletter) => {
           if (!newsletter || !newsletter.frontmatter) return null;
           const { slug } = newsletter.frontmatter;
           return <NewsletterItem newsletter={newsletter} key={slug} />;

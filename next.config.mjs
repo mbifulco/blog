@@ -90,6 +90,16 @@ const config = {
       destination: '/newsletter',
       permanent: false,
     },
+    {
+      source: '/page',
+      destination: '/',
+      permanent: true,
+    },
+    {
+      source: '/newsletter/page',
+      destination: '/newsletter',
+      permanent: true,
+    },
     ...postRedirects,
   ],
   rewrites: async () => [

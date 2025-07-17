@@ -5,6 +5,8 @@ import { ContentTypes } from '../data/content-types';
 import type { BlogPost } from '../data/content-types';
 import { getAllContentFromDirectory } from './content-loaders/getAllContentFromDirectory';
 import { getContentBySlug } from './content-loaders/getContentBySlug';
+import { paginate } from '../utils/pagination';
+import type { PaginationOptions, PaginatedResult } from '../utils/pagination';
 
 // Add markdown files in `src/content/blog`
 const postsDirectory = join(process.cwd(), 'src', 'data', 'posts');
@@ -22,4 +24,9 @@ export const getAllPosts = async () => {
   )) as BlogPost[];
 
   return allPosts;
+};
+
+export const getPaginatedPosts = async (options: PaginationOptions = {}): Promise<PaginatedResult<BlogPost>> => {
+  const allPosts = await getAllPosts();
+  return paginate(allPosts, options);
 };
