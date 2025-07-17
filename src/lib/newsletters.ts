@@ -2,6 +2,8 @@ import { join } from 'path';
 
 import { ContentTypes } from '../data/content-types';
 import type { MarkdownDocument, Newsletter } from '../data/content-types';
+import type { PaginatedResult, PaginationOptions } from '../utils/pagination';
+import { paginate } from '../utils/pagination';
 import { getAllContentFromDirectory } from './content-loaders/getAllContentFromDirectory';
 import { getContentBySlug } from './content-loaders/getContentBySlug';
 
@@ -71,4 +73,11 @@ export const getAllNewsletters = async () => {
     // Re-throw the error to be handled by the page's error boundary
     throw error;
   }
+};
+
+export const getPaginatedNewsletters = async (
+  options: PaginationOptions = {}
+): Promise<PaginatedResult<Newsletter>> => {
+  const allNewsletters = await getAllNewsletters();
+  return paginate(allNewsletters, options);
 };

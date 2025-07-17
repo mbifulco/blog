@@ -8,25 +8,41 @@ import SEO from '@components/seo';
 import SponsorCTA from '@components/SponsorCTA/SponsorCTA';
 import { SubscriptionForm } from '@components/SubscriptionForm';
 import { Subtitle } from '@components/Subtitle';
+import PaginationWrapper from '../../components/Pagination';
 import config from '../../config';
 import type { Newsletter } from '../../data/content-types';
-import { getAllNewsletters } from '../../lib/newsletters';
+import { getPaginatedNewsletters } from '../../lib/newsletters';
 
 export const getStaticProps: GetStaticProps<NewsletterPageProps> = async () => {
-  const newsletters = await getAllNewsletters();
+  const paginatedNewsletters = await getPaginatedNewsletters({ limit: 12 });
 
   return {
     props: {
-      newsletters,
+      newsletters: paginatedNewsletters.items,
+      pagination: {
+        currentPage: paginatedNewsletters.currentPage,
+        totalPages: paginatedNewsletters.totalPages,
+        hasNextPage: paginatedNewsletters.hasNextPage,
+        hasPreviousPage: paginatedNewsletters.hasPreviousPage,
+      },
     },
   };
 };
 
 type NewsletterPageProps = {
   newsletters: Newsletter[];
+  pagination: {
+    currentPage: number;
+    totalPages: number;
+    hasNextPage: boolean;
+    hasPreviousPage: boolean;
+  };
 };
 
-const NewsletterPage: React.FC<NewsletterPageProps> = ({ newsletters }) => {
+const NewsletterPage: React.FC<NewsletterPageProps> = ({
+  newsletters,
+  pagination,
+}) => {
   const [latestNewsletter, ...pastNewsletters] = newsletters;
 
   return (
@@ -79,6 +95,14 @@ const NewsletterPage: React.FC<NewsletterPageProps> = ({ newsletters }) => {
           return <NewsletterItem newsletter={newsletter} key={slug} />;
         })}
       </div>
+
+      <PaginationWrapper
+        currentPage={pagination.currentPage}
+        totalPages={pagination.totalPages}
+        hasNextPage={pagination.hasNextPage}
+        hasPreviousPage={pagination.hasPreviousPage}
+        basePath="/newsletter"
+      />
 
       <NewsletterSignup />
     </div>

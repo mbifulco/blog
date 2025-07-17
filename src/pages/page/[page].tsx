@@ -2,40 +2,68 @@ import type { NextPage } from 'next';
 import Link from 'next/link';
 import { startOfToday } from 'date-fns';
 
-import { Colophon } from '../components/Colophon';
-import { Heading } from '../components/Heading';
-import { Headshot } from '../components/Headshot';
-import NewsletterItem from '../components/NewsletterFeed/NewsletterItem';
-import PaginationWrapper from '../components/Pagination';
-import { PostFeed } from '../components/PostFeed';
-import SEO from '../components/seo';
-import { Subtitle } from '../components/Subtitle';
-import WebmentionMetadata from '../components/webmentionMetadata';
-import config from '../config';
-import type { BlogPost, Newsletter } from '../data/content-types';
-import { getPaginatedPosts } from '../lib/blog';
-import { getAllNewsletters } from '../lib/newsletters';
-import { getCloudinaryImageUrl } from '../utils/images';
-import { generateRSSFeed } from '../utils/rss';
+import { Colophon } from '../../components/Colophon';
+import { Heading } from '../../components/Heading';
+import { Headshot } from '../../components/Headshot';
+import NewsletterItem from '../../components/NewsletterFeed/NewsletterItem';
+import PaginationWrapper from '../../components/Pagination';
+import { PostFeed } from '../../components/PostFeed';
+import SEO from '../../components/seo';
+import { Subtitle } from '../../components/Subtitle';
+import WebmentionMetadata from '../../components/webmentionMetadata';
+import config from '../../config';
+import type { BlogPost, Newsletter } from '../../data/content-types';
+import { getPaginatedPosts } from '../../lib/blog';
+import { getAllNewsletters } from '../../lib/newsletters';
+import { getCloudinaryImageUrl } from '../../utils/images';
+import { generatePaginatedPaths, handlePaginatedStaticProps } from '../../utils/pagination';
 
-export async function getStaticProps() {
-  const paginatedPosts = await getPaginatedPosts({ limit: 10 });
-  const newsletters = await getAllNewsletters();
-
-  generateRSSFeed(paginatedPosts.items, newsletters);
-
-  return {
-    props: {
-      posts: paginatedPosts.items,
-      newsletter: newsletters[0],
-      pagination: {
-        currentPage: paginatedPosts.currentPage,
-        totalPages: paginatedPosts.totalPages,
-        hasNextPage: paginatedPosts.hasNextPage,
-        hasPreviousPage: paginatedPosts.hasPreviousPage,
-      },
-    },
+// We use fallback: 'blocking' so that getStaticProps runs for any page param, allowing us to handle invalid page numbers (non-numeric, out-of-range, etc.) with redirects or 404s, while still statically generating valid pages after the first request.
+export async function getStaticPaths() {
+  const getTotalPages = async (limit: number) => {
+    const { totalPages } = await getPaginatedPosts({ limit });
+    return { totalPages };
   };
+  const paths = await generatePaginatedPaths(getTotalPages, 10);
+  return { paths, fallback: 'blocking' };
+}
+
+export async function getStaticProps({ params }: { params: { page: string } }) {
+  const getTotalPages = async (limit: number) => {
+    const { totalPages } = await getPaginatedPosts({ limit });
+    return { totalPages };
+  };
+  return handlePaginatedStaticProps<{
+    posts: BlogPost[];
+    newsletter: Newsletter;
+    pagination: {
+      currentPage: number;
+      totalPages: number;
+      hasNextPage: boolean;
+      hasPreviousPage: boolean;
+    };
+  }>({
+    params,
+    getTotalPages,
+    limit: 10,
+    redirectBase: '/',
+    getPageProps: async (page) => {
+      const paginatedPosts = await getPaginatedPosts({ page, limit: 10 });
+      const newsletters = await getAllNewsletters();
+      return {
+        props: {
+          posts: paginatedPosts.items,
+          newsletter: newsletters[0],
+          pagination: {
+            currentPage: paginatedPosts.currentPage,
+            totalPages: paginatedPosts.totalPages,
+            hasNextPage: paginatedPosts.hasNextPage,
+            hasPreviousPage: paginatedPosts.hasPreviousPage,
+          },
+        },
+      };
+    },
+  });
 }
 
 const headshotPublicId = 'mike-headshot-square';
