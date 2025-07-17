@@ -110,7 +110,19 @@ const config = {
       destination: 'https://us.i.posthog.com/decide',
     },
   ],
-  webpack: (config, { dev, isServer }) => {
+  turbopack: {
+    rules: {
+      '*.js': {
+        loaders: [],
+        as: '*.js',
+      },
+    },
+  },
+  webpack: (config, { dev, isServer: _ }) => {
+    // Only apply webpack config when not using turbopack
+    if (!dev) {
+      return config;
+    }
     if (dev) {
       config.optimization.minimize = false;
     }
