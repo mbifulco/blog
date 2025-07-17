@@ -52,7 +52,11 @@ type HomePageProps = {
   };
 };
 
-const HomePage: NextPage<HomePageProps> = ({ posts, newsletter, pagination }) => {
+const HomePage: NextPage<HomePageProps> = ({
+  posts,
+  newsletter,
+  pagination,
+}) => {
   return (
     <div className="mx-auto mb-10 flex max-w-4xl flex-col gap-12">
       <SEO

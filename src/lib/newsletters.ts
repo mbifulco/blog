@@ -2,10 +2,10 @@ import { join } from 'path';
 
 import { ContentTypes } from '../data/content-types';
 import type { MarkdownDocument, Newsletter } from '../data/content-types';
+import type { PaginatedResult, PaginationOptions } from '../utils/pagination';
+import { paginate } from '../utils/pagination';
 import { getAllContentFromDirectory } from './content-loaders/getAllContentFromDirectory';
 import { getContentBySlug } from './content-loaders/getContentBySlug';
-import type  { PaginationOptions, PaginatedResult } from '../utils/pagination';
-import { paginate } from '../utils/pagination';
 
 // directory reference to `src/content/newsletters`
 export const newslettersDirectory = join(
@@ -75,7 +75,9 @@ export const getAllNewsletters = async () => {
   }
 };
 
-export const getPaginatedNewsletters = async (options: PaginationOptions = {}): Promise<PaginatedResult<Newsletter>> => {
+export const getPaginatedNewsletters = async (
+  options: PaginationOptions = {}
+): Promise<PaginatedResult<Newsletter>> => {
   const allNewsletters = await getAllNewsletters();
   return paginate(allNewsletters, options);
 };

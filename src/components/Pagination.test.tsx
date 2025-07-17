@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
+
 import PaginationWrapper from './Pagination';
 
 describe('PaginationWrapper', () => {
@@ -76,7 +77,9 @@ describe('PaginationWrapper', () => {
   it('should not show previous button when hasPreviousPage is false', () => {
     render(<PaginationWrapper {...defaultProps} hasPreviousPage={false} />);
 
-    expect(screen.queryByLabelText('Go to previous page')).not.toBeInTheDocument();
+    expect(
+      screen.queryByLabelText('Go to previous page')
+    ).not.toBeInTheDocument();
   });
 
   it('should not show next button when hasNextPage is false', () => {
@@ -84,7 +87,6 @@ describe('PaginationWrapper', () => {
 
     expect(screen.queryByLabelText('Go to next page')).not.toBeInTheDocument();
   });
-
 
   it('should not render when totalPages is 1', () => {
     render(<PaginationWrapper {...defaultProps} totalPages={1} />);
@@ -107,7 +109,9 @@ describe('PaginationWrapper', () => {
       />
     );
 
-    expect(screen.queryByLabelText('Go to previous page')).not.toBeInTheDocument();
+    expect(
+      screen.queryByLabelText('Go to previous page')
+    ).not.toBeInTheDocument();
     expect(screen.getByLabelText('Go to next page')).toBeInTheDocument();
   });
 
@@ -126,11 +130,7 @@ describe('PaginationWrapper', () => {
 
   it('should handle edge case with currentPage at beginning of large range', () => {
     render(
-      <PaginationWrapper
-        {...defaultProps}
-        currentPage={2}
-        totalPages={10}
-      />
+      <PaginationWrapper {...defaultProps} currentPage={2} totalPages={10} />
     );
 
     // Should show: 1 2 3 4 ... 10
@@ -143,11 +143,7 @@ describe('PaginationWrapper', () => {
 
   it('should handle edge case with currentPage at end of large range', () => {
     render(
-      <PaginationWrapper
-        {...defaultProps}
-        currentPage={9}
-        totalPages={10}
-      />
+      <PaginationWrapper {...defaultProps} currentPage={9} totalPages={10} />
     );
 
     // Should show: 1 ... 7 8 9 10

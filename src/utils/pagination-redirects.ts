@@ -6,7 +6,7 @@ export type PaginationRoute = {
   basePath: string;
   /** The pagination path pattern (e.g., '/page', '/newsletter/page') */
   paginationPath: string;
-}
+};
 
 export const PAGINATION_ROUTES: PaginationRoute[] = [
   {
@@ -33,7 +33,9 @@ export function generatePaginationConfigRedirects() {
 /**
  * Handles pagination redirects in middleware
  */
-export function handlePaginationRedirects(request: NextRequest): NextResponse | null {
+export function handlePaginationRedirects(
+  request: NextRequest
+): NextResponse | null {
   const { pathname } = request.nextUrl;
 
   for (const { basePath, paginationPath } of PAGINATION_ROUTES) {
@@ -70,7 +72,9 @@ export function handlePaginationRedirects(request: NextRequest): NextResponse | 
  * Generates middleware matcher patterns for pagination routes
  */
 export function generatePaginationMatchers(): string[] {
-  return PAGINATION_ROUTES.map(({ paginationPath }) => `${paginationPath}/:path*`);
+  return PAGINATION_ROUTES.map(
+    ({ paginationPath }) => `${paginationPath}/:path*`
+  );
 }
 
 /**

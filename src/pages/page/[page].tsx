@@ -20,18 +20,18 @@ import { getCloudinaryImageUrl } from '../../utils/images';
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   const pageParam = params?.page as string;
   const page = parseInt(pageParam, 10);
-  
+
   // Get total pages to determine max page
   const totalPagesResult = await getPaginatedPosts({ limit: 10 });
   const totalPages = totalPagesResult.totalPages;
-  
+
   // Handle invalid page parameters (non-numeric, negative, etc.)
   if (isNaN(page) || page < 1 || !pageParam.match(/^\d+$/)) {
     return {
       notFound: true,
     };
   }
-  
+
   // Handle page number too high - redirect to home
   if (page > totalPages) {
     return {
@@ -41,7 +41,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
       },
     };
   }
-  
+
   // Handle page 1 - should be at root instead
   if (page === 1) {
     return {
@@ -51,7 +51,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
       },
     };
   }
-  
+
   const paginatedPosts = await getPaginatedPosts({ page, limit: 10 });
   const newsletters = await getAllNewsletters();
 
@@ -83,7 +83,11 @@ type HomePageProps = {
   };
 };
 
-const HomePage: NextPage<HomePageProps> = ({ posts, newsletter, pagination }) => {
+const HomePage: NextPage<HomePageProps> = ({
+  posts,
+  newsletter,
+  pagination,
+}) => {
   return (
     <div className="mx-auto mb-10 flex max-w-4xl flex-col gap-12">
       <SEO

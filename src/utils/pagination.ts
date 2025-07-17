@@ -1,7 +1,7 @@
 export type PaginationOptions = {
   page?: number;
   limit?: number;
-}
+};
 
 export type PaginatedResult<T> = {
   items: T[];
@@ -10,7 +10,7 @@ export type PaginatedResult<T> = {
   currentPage: number;
   hasNextPage: boolean;
   hasPreviousPage: boolean;
-}
+};
 
 export function paginate<T>(
   items: T[],

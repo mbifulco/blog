@@ -33,7 +33,7 @@ const PaginationWrapper: React.FC<PaginationWrapperProps> = ({
   const generatePageNumbers = () => {
     const pages: number[] = [];
     const maxVisible = 7;
-    
+
     if (totalPages <= maxVisible) {
       for (let i = 1; i <= totalPages; i++) {
         pages.push(i);
@@ -41,18 +41,18 @@ const PaginationWrapper: React.FC<PaginationWrapperProps> = ({
     } else {
       const startPage = Math.max(1, currentPage - 2);
       const endPage = Math.min(totalPages, currentPage + 2);
-      
+
       if (startPage > 1) {
         pages.push(1);
         if (startPage > 2) {
           pages.push(-1); // Represents ellipsis
         }
       }
-      
+
       for (let i = startPage; i <= endPage; i++) {
         pages.push(i);
       }
-      
+
       if (endPage < totalPages) {
         if (endPage < totalPages - 1) {
           pages.push(-1); // Represents ellipsis
@@ -60,7 +60,7 @@ const PaginationWrapper: React.FC<PaginationWrapperProps> = ({
         pages.push(totalPages);
       }
     }
-    
+
     return pages;
   };
 
@@ -78,7 +78,7 @@ const PaginationWrapper: React.FC<PaginationWrapperProps> = ({
             <PaginationPrevious href={createPageUrl(currentPage - 1)} />
           </PaginationItem>
         )}
-        
+
         {pageNumbers.map((page, index) => {
           if (page === -1) {
             return (
@@ -87,9 +87,9 @@ const PaginationWrapper: React.FC<PaginationWrapperProps> = ({
               </PaginationItem>
             );
           }
-          
+
           const isActive = page === currentPage;
-          
+
           return (
             <PaginationItem key={page}>
               <PaginationLink href={createPageUrl(page)} isActive={isActive}>
@@ -98,7 +98,7 @@ const PaginationWrapper: React.FC<PaginationWrapperProps> = ({
             </PaginationItem>
           );
         })}
-        
+
         {hasNextPage && (
           <PaginationItem>
             <PaginationNext href={createPageUrl(currentPage + 1)} />

@@ -8,10 +8,10 @@ import SEO from '@components/seo';
 import SponsorCTA from '@components/SponsorCTA/SponsorCTA';
 import { SubscriptionForm } from '@components/SubscriptionForm';
 import { Subtitle } from '@components/Subtitle';
+import PaginationWrapper from '../../components/Pagination';
 import config from '../../config';
 import type { Newsletter } from '../../data/content-types';
 import { getPaginatedNewsletters } from '../../lib/newsletters';
-import PaginationWrapper from '../../components/Pagination';
 
 export const getStaticProps: GetStaticProps<NewsletterPageProps> = async () => {
   const paginatedNewsletters = await getPaginatedNewsletters({ limit: 12 });
@@ -39,7 +39,10 @@ type NewsletterPageProps = {
   };
 };
 
-const NewsletterPage: React.FC<NewsletterPageProps> = ({ newsletters, pagination }) => {
+const NewsletterPage: React.FC<NewsletterPageProps> = ({
+  newsletters,
+  pagination,
+}) => {
   const [latestNewsletter, ...pastNewsletters] = newsletters;
 
   return (
