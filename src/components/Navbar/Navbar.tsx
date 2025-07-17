@@ -7,8 +7,9 @@ import {
   DisclosureButton,
   DisclosurePanel,
 } from '@headlessui/react';
-import { Menu, X } from 'lucide-react';
+import { Menu, Search, X } from 'lucide-react';
 
+import { useSearch } from '@components/SearchProvider';
 import clsxm from '@utils/clsxm';
 
 const NavLinks: { title: string; href: string; badge?: boolean }[] = [
@@ -33,6 +34,8 @@ const NavLinks: { title: string; href: string; badge?: boolean }[] = [
 
 const Navbar = () => {
   const router = useRouter();
+  const { openSearch } = useSearch();
+
   return (
     <Disclosure as="nav" className="w-full bg-white">
       {({ open }) => (
@@ -66,8 +69,24 @@ const Navbar = () => {
                     {link.title}
                   </Link>
                 ))}
+                {/* Search Button */}
+                <button
+                  onClick={openSearch}
+                  className="inline-flex items-center px-1 pt-1 text-sm font-semibold text-gray-700 hover:text-gray-900 hover:no-underline transition-colors"
+                  aria-label="Search articles"
+                >
+                  <Search className="h-5 w-5" />
+                </button>
               </div>
               <div className="-mr-2 flex items-center sm:hidden">
+                {/* Mobile search button */}
+                <button
+                  onClick={openSearch}
+                  className="mr-2 inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:text-gray-500 focus:ring-2 focus:ring-pink-500 focus:outline-hidden focus:ring-inset"
+                  aria-label="Search articles"
+                >
+                  <Search className="h-6 w-6" />
+                </button>
                 {/* Mobile menu button */}
                 <DisclosureButton className="hover:bg--100 relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:text-gray-500 focus:ring-2 focus:ring-pink-500 focus:outline-hidden focus:ring-inset">
                   <span className="absolute -inset-0.5" />
@@ -84,6 +103,15 @@ const Navbar = () => {
 
           <DisclosurePanel className="sm:hidden">
             <div className="space-y-1 pt-2 pb-3">
+              {/* Search option in mobile menu */}
+              <DisclosureButton
+                as="button"
+                onClick={openSearch}
+                className="flex w-full items-center border-l-4 border-transparent py-2 pr-4 pl-3 text-base font-medium text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700"
+              >
+                <Search className="mr-3 h-5 w-5" />
+                Search Articles
+              </DisclosureButton>
               {/* Current: "bg-indigo-50 border-indigo-500 text-indigo-700", Default: "border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700" */}
               {NavLinks.map((link) => (
                 <DisclosureButton
