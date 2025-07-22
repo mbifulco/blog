@@ -29,6 +29,7 @@
 
     "@/config",
     "@components/*",
+    "@ui/*",
     "@data/*",
     "@hooks/*",
     "@layouts/*",
