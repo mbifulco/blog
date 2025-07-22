@@ -213,6 +213,9 @@ importers:
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7
+      dotenv:
+        specifier: ^17.2.0
+        version: 17.2.0
       eslint:
         specifier: 9.31.0
         version: 9.31.0(jiti@2.4.2)
@@ -2971,6 +2974,10 @@ packages:
 
   dotenv@16.0.3:
     resolution: {integrity: sha512-7GO6HghkA5fYG9TYnNxi14/7K9f5occMlp3zXAuSxn7CKCxt9xbNWG7yF8hTCSUchlfWSe3uLmlPfigevRItzQ==}
+    engines: {node: '>=12'}
+
+  dotenv@17.2.0:
+    resolution: {integrity: sha512-Q4sgBT60gzd0BB0lSyYD3xM4YxrXA9y4uBDof1JNYGzOXrQdQ6yX+7XIAqoFOGQFOTK1D3Hts5OllpxMDZFONQ==}
     engines: {node: '>=12'}
 
   dunder-proto@1.0.1:
@@ -8597,6 +8604,8 @@ snapshots:
       domhandler: 5.0.3
 
   dotenv@16.0.3: {}
+
+  dotenv@17.2.0: {}
 
   dunder-proto@1.0.1:
     dependencies:
