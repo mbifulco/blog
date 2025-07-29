@@ -237,7 +237,7 @@ describe('NewsletterSignupPage', () => {
       name: /I'll never sell your contact info/i,
     });
     expect(privacyLink).toBeInTheDocument();
-    expect(privacyLink).toHaveAttribute('href', '/integrtity');
+    expect(privacyLink).toHaveAttribute('href', '/integrity');
   });
 
   it('should have proper SEO meta tags', () => {
