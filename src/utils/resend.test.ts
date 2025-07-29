@@ -322,11 +322,32 @@ describe('getSubscriberCount', () => {
   it('should return count of subscribed contacts', async () => {
     const mockData = {
       data: {
+        object: 'list' as const,
         data: [
-          { email: 'user1@example.com', unsubscribed: false },
-          { email: 'user2@example.com', unsubscribed: false },
-          { email: 'user3@example.com', unsubscribed: true }, // This should be filtered out
-          { email: 'user4@example.com', unsubscribed: false },
+          {
+            id: 'contact-1',
+            email: 'user1@example.com',
+            unsubscribed: false,
+            created_at: '2023-01-01T00:00:00Z',
+          },
+          {
+            id: 'contact-2',
+            email: 'user2@example.com',
+            unsubscribed: false,
+            created_at: '2023-01-01T00:00:00Z',
+          },
+          {
+            id: 'contact-3',
+            email: 'user3@example.com',
+            unsubscribed: true, // This should be filtered out
+            created_at: '2023-01-01T00:00:00Z',
+          },
+          {
+            id: 'contact-4',
+            email: 'user4@example.com',
+            unsubscribed: false,
+            created_at: '2023-01-01T00:00:00Z',
+          },
         ],
       },
       error: null,
@@ -345,7 +366,7 @@ describe('getSubscriberCount', () => {
     const mockError = {
       data: null,
       error: {
-        name: 'API_ERROR',
+        name: 'validation_error' as const,
         message: 'Something went wrong',
       },
     };
@@ -378,7 +399,10 @@ describe('getSubscriberCount', () => {
   it('should handle missing data gracefully', async () => {
     vi.mocked(resend.contacts.list).mockResolvedValue({
       data: null,
-      error: null,
+      error: {
+        name: 'not_found' as const,
+        message: 'Data not found',
+      },
     });
 
     const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
@@ -424,7 +448,10 @@ describe('subscribe', () => {
     vi.mocked(resend.contacts.get).mockRejectedValue(new Error('not_found'));
 
     const mockResponse = {
-      data: { id: 'real-contact-id' },
+      data: {
+        id: 'real-contact-id',
+        object: 'contact' as const,
+      },
       error: null,
     };
 
@@ -457,6 +484,8 @@ describe('subscribe', () => {
         email: 'existing@example.com',
         first_name: 'Jane',
         unsubscribed: false,
+        created_at: '2023-01-01T00:00:00Z',
+        object: 'contact' as const,
       },
       error: null,
     };
@@ -491,7 +520,7 @@ describe('subscribe', () => {
     const mockErrorResponse = {
       data: null,
       error: {
-        name: 'VALIDATION_ERROR',
+        name: 'validation_error' as const,
         message: 'Invalid email format',
       },
     };
@@ -501,7 +530,7 @@ describe('subscribe', () => {
     const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
 
     await expect(subscribe(legitimateSubscriber)).rejects.toThrow(
-      'VALIDATION_ERROR: Invalid email format'
+      'validation_error: Invalid email format'
     );
     expect(consoleSpy).toHaveBeenCalled();
 

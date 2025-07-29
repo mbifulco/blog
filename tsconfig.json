@@ -24,7 +24,8 @@
       "@lib/*": ["src/lib/*"],
       "@utils/*": ["src/utils/*"],
       "@server/*": ["src/server/*"],
-      "@/config": ["src/config.ts"]
+      "@/config": ["src/config.ts"],
+      "@ui/*": ["src/components/ui/*"]
     },
     "plugins": [
       {

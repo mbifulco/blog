@@ -245,3 +245,6 @@ $RECYCLE.BIN/
 
 # Million Lint
 .million
+
+# tsc
+tsconfig.tsbuildinfo

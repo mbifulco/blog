@@ -36,7 +36,9 @@ export function paginate<T>(
   };
 }
 
-export type GetTotalPagesFn = (limit: number) => Promise<{ totalPages: number }>;
+export type GetTotalPagesFn = (
+  limit: number
+) => Promise<{ totalPages: number }>;
 
 export async function generatePaginatedPaths(
   getTotalPages: GetTotalPagesFn,
@@ -62,7 +64,11 @@ export async function handlePaginatedStaticProps<T>({
   limit: number;
   redirectBase: string;
   getPageProps: (page: number) => Promise<{ props: T }>;
-}): Promise<{ props: T } | { notFound: true } | { redirect: { destination: string; permanent: boolean } }> {
+}): Promise<
+  | { props: T }
+  | { notFound: true }
+  | { redirect: { destination: string; permanent: boolean } }
+> {
   const pageParam = params?.page;
   const page = parseInt(pageParam, 10);
 

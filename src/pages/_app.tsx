@@ -7,7 +7,7 @@ import { Toaster } from 'sonner';
 import FathomAnalytics from '@components/Analytics/Fathom';
 import DefaultLayout from '@components/Layouts/DefaultLayout';
 import { env } from '@utils/env';
-import { trpc } from '@utils/trpc';
+import { trpcPages } from '@utils/trpc';
 
 import '../styles/globals.css';
 import '../components/CarbonAd/CarbonAd.css';
@@ -76,4 +76,4 @@ function MyApp({ Component, pageProps }: AppProps) {
 //   return { ...appProps }
 // }
 
-export default trpc.withTRPC(MyApp);
+export default trpcPages.withTRPC(MyApp);

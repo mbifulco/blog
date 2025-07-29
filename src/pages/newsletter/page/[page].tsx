@@ -10,7 +10,10 @@ import PaginationWrapper from '../../../components/Pagination';
 import config from '../../../config';
 import type { Newsletter } from '../../../data/content-types';
 import { getPaginatedNewsletters } from '../../../lib/newsletters';
-import { generatePaginatedPaths, handlePaginatedStaticProps } from '../../../utils/pagination';
+import {
+  generatePaginatedPaths,
+  handlePaginatedStaticProps,
+} from '../../../utils/pagination';
 
 // We use fallback: 'blocking' so that getStaticProps runs for any page param, allowing us to handle invalid page numbers (non-numeric, out-of-range, etc.) with redirects or 404s, while still statically generating valid pages after the first request.
 export async function getStaticPaths() {
@@ -41,7 +44,10 @@ export async function getStaticProps({ params }: { params: { page: string } }) {
     limit: 12,
     redirectBase: '/newsletter',
     getPageProps: async (page) => {
-      const paginatedNewsletters = await getPaginatedNewsletters({ page, limit: 12 });
+      const paginatedNewsletters = await getPaginatedNewsletters({
+        page,
+        limit: 12,
+      });
       return {
         props: {
           newsletters: paginatedNewsletters.items,

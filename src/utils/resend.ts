@@ -132,12 +132,12 @@ export const getSubscriberCount = async () => {
       audienceId: env.RESEND_NEWSLETTER_AUDIENCE_ID,
     });
 
-    if (!response.data) {
-      throw new Error('No audience data');
-    }
-
     if (response.error) {
       throw new Error(`${response.error.name}: ${response.error.message}`);
+    }
+
+    if (!response.data) {
+      throw new Error('No audience data');
     }
 
     const contacts = response.data.data;

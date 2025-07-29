@@ -4,7 +4,6 @@ import Navbar from '@components/Navbar/Navbar';
 import { SiteAnnouncement } from '@components/SiteAnnouncement';
 import MDXProviderWrapper from '../../utils/MDXProviderWrapper';
 import Footer from '../footer';
-import { PolitePop } from '../PolitePop';
 
 const DefaultLayout: React.FC<{ children?: React.ReactNode }> = ({
   children,
@@ -23,7 +22,6 @@ const DefaultLayout: React.FC<{ children?: React.ReactNode }> = ({
           </div>
         </div>
       </div>
-      <PolitePop />
     </main>
   );
 };
