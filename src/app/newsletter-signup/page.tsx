@@ -26,6 +26,8 @@ export default function NewsletterSignupPage() {
 
   const addSubscriberMutation = trpc.mailingList.subscribe.useMutation({
     onSuccess: (data) => {
+      reset();
+
       if (data?.error?.name === 'already_subscribed') {
         toast.success('Already subscribed! 🎉', {
           description: data.error.message,
@@ -40,7 +42,6 @@ export default function NewsletterSignupPage() {
       }
 
       setIsSubmitted(true);
-      reset();
 
       toast.success('Successfully subscribed! 🪩', {
         description: `Thanks for subscribing! Check your inbox for emails from hello@mikebifulco.com`,
@@ -53,6 +54,8 @@ export default function NewsletterSignupPage() {
       });
     },
     onError: (error) => {
+      reset();
+
       toast.error('Subscription failed', {
         description: 'Please try again or contact hello@mikebifulco.com for help.',
         duration: 5000,
@@ -70,10 +73,18 @@ export default function NewsletterSignupPage() {
       firstName: data.firstName,
     });
 
-    await addSubscriberMutation.mutateAsync({
-      email: data.email,
-      firstName: data.firstName,
-    });
+    try {
+      await addSubscriberMutation.mutateAsync({
+        email: data.email,
+        firstName: data.firstName,
+      });
+    } catch (error) {
+      // Handle TRPC input validation errors or other errors that don't trigger onError
+      console.error('Form submission error:', error);
+    }
+    
+    // Always reset the form after submission attempt, regardless of outcome
+    reset();
   };
 
   if (isSubmitted) {
@@ -127,7 +138,7 @@ export default function NewsletterSignupPage() {
           </CardHeader>
 
           <CardContent>
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4" noValidate>
               <div>
                 <Label htmlFor="firstName" className="sr-only">First Name</Label>
                 <Input
@@ -148,11 +159,7 @@ export default function NewsletterSignupPage() {
                   type="email"
                   placeholder="Email Address"
                   {...register('email', {
-                    required: 'Email is required',
-                    pattern: {
-                      value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                      message: 'Please enter a valid email address'
-                    }
+                    required: 'Email is required'
                   })}
                 />
                 {errors.email && (
