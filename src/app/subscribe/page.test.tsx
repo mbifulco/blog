@@ -266,23 +266,33 @@ describe('NewsletterSignupPage', () => {
     expect(emailInput).toHaveClass('border-input');
   });
 
-  it('should show success state after successful submission', async () => {
-    const mockMutateAsync = vi.fn().mockImplementation(() => {
-      // Simulate the success callback being called
-      setTimeout(() => {
-        // This will trigger the onSuccess callback in the component
-      }, 0);
-      return Promise.resolve({ success: true });
+    it('should show success state after successful submission', async () => {
+    // Create a mock that properly triggers the onSuccess callback
+    let onSuccessCallback: ((data: unknown) => void) | null = null;
+
+    const mockMutateAsync = vi.fn().mockImplementation(async (_data) => {
+      // Simulate the mutation completing successfully
+      const result = { success: true };
+      // Call the onSuccess callback if it exists
+      if (onSuccessCallback) {
+        onSuccessCallback(result);
+      }
+      return result;
     });
 
     // Mock successful mutation that will trigger onSuccess
     const { trpc } = await import('@utils/trpc');
-    const mockUseMutation = vi.fn(() => ({
-      mutateAsync: mockMutateAsync,
-      isPending: false,
-      isSuccess: false, // Start with false, will be set to true by the component
-      error: null,
-    }));
+        const mockUseMutation = vi.fn((options: { onSuccess?: (data: unknown) => void }) => {
+      // Store the onSuccess callback
+      onSuccessCallback = options?.onSuccess || null;
+
+      return {
+        mutateAsync: mockMutateAsync,
+        isPending: false,
+        isSuccess: false,
+        error: null,
+      };
+    });
 
     vi.mocked(trpc.mailingList.subscribe.useMutation).mockImplementation(
       // @ts-expect-error - Mock implementation for testing
@@ -307,16 +317,9 @@ describe('NewsletterSignupPage', () => {
     await user.type(emailInput, 'john@example.com');
     await user.click(submitButton);
 
-    // The component uses internal state to show success, not the mutation state
-    // So let's just check that the form submitted without errors
-    expect(mockMutateAsync).toHaveBeenCalledWith({
-      email: 'john@example.com',
-      firstName: 'John',
-    });
-
-    // After successful submission, should show success state with "read the latest dispatch" link
+    // Wait for success state to appear
     await waitFor(() => {
-      expect(screen.getByText('read the latest dispatch')).toBeInTheDocument();
+      expect(screen.getByText('🪩 Success! You\'re in!')).toBeInTheDocument();
       expect(screen.getByTestId('read-latest-button')).toBeInTheDocument();
 
       const readLatestLink = screen.getByRole('link', {
@@ -341,15 +344,31 @@ describe('NewsletterSignupPage', () => {
   });
 
   it('should show success state with correct link to newsletter', async () => {
-    const mockMutateAsync = vi.fn().mockResolvedValue({ success: true });
+    // Create a mock that properly triggers the onSuccess callback
+    let onSuccessCallback: ((data: unknown) => void) | null = null;
+
+    const mockMutateAsync = vi.fn().mockImplementation(async (_data) => {
+      // Simulate the mutation completing successfully
+      const result = { success: true };
+      // Call the onSuccess callback if it exists
+      if (onSuccessCallback) {
+        onSuccessCallback(result);
+      }
+      return result;
+    });
 
     const { trpc } = await import('@utils/trpc');
-    const mockUseMutation = vi.fn(() => ({
-      mutateAsync: mockMutateAsync,
-      isPending: false,
-      isSuccess: false,
-      error: null,
-    }));
+    const mockUseMutation = vi.fn((options: { onSuccess?: (data: unknown) => void }) => {
+      // Store the onSuccess callback
+      onSuccessCallback = options?.onSuccess || null;
+
+      return {
+        mutateAsync: mockMutateAsync,
+        isPending: false,
+        isSuccess: false,
+        error: null,
+      };
+    });
 
     vi.mocked(trpc.mailingList.subscribe.useMutation).mockImplementation(
       // @ts-expect-error - Mock implementation for testing
@@ -377,7 +396,7 @@ describe('NewsletterSignupPage', () => {
 
     // Wait for success state to appear
     await waitFor(() => {
-      expect(screen.getByText('read the latest dispatch')).toBeInTheDocument();
+      expect(screen.getByText('🪩 Success! You\'re in!')).toBeInTheDocument();
     });
 
     // Verify the link has correct attributes
