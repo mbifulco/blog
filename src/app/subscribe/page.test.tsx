@@ -80,7 +80,7 @@ vi.mock('next/router', () => ({
   },
 }));
 
-vi.mock('../trpc-provider', () => ({
+vi.mock('@utils/trpc', () => ({
   trpc: {
     mailingList: {
       subscribe: {
@@ -131,15 +131,15 @@ describe('NewsletterSignupPage', () => {
       </TestWrapper>
     );
 
-    expect(screen.getByText('Get the newsletter')).toBeInTheDocument();
+    expect(screen.getByText('💌 Get the newsletter')).toBeInTheDocument();
     expect(screen.getByText('💌 Tiny Improvements')).toBeInTheDocument();
     expect(
-      screen.getByText('Straight to your inbox, once a week')
+      screen.getByText('One sharp idea each week to help you ship smarter and faster.')
     ).toBeInTheDocument();
     expect(screen.getByPlaceholderText('First Name')).toBeInTheDocument();
-    expect(screen.getByPlaceholderText('Email Address')).toBeInTheDocument();
+    expect(screen.getByPlaceholderText('you@example.com')).toBeInTheDocument();
     expect(
-      screen.getByRole('button', { name: /💌 Subscribe/i })
+      screen.getByRole('button', { name: /💌 Get the newsletter/i })
     ).toBeInTheDocument();
   });
 
@@ -164,7 +164,7 @@ describe('NewsletterSignupPage', () => {
       </TestWrapper>
     );
 
-    const submitButton = screen.getByRole('button', { name: /💌 Subscribe/i });
+    const submitButton = screen.getByRole('button', { name: /💌 Get the newsletter/i });
     await user.click(submitButton);
 
     await waitFor(() => {
@@ -182,7 +182,7 @@ describe('NewsletterSignupPage', () => {
       </TestWrapper>
     );
 
-    const emailInput = screen.getByPlaceholderText('Email Address');
+    const emailInput = screen.getByPlaceholderText('you@example.com');
 
     // Verify input has correct type for basic HTML5 validation
     expect(emailInput).toHaveAttribute('type', 'email');
@@ -202,7 +202,7 @@ describe('NewsletterSignupPage', () => {
     );
 
     const firstNameInput = screen.getByPlaceholderText('First Name');
-    const emailInput = screen.getByPlaceholderText('Email Address');
+    const emailInput = screen.getByPlaceholderText('you@example.com');
 
     await user.type(firstNameInput, 'John');
     await user.type(emailInput, 'john@example.com');
@@ -228,11 +228,14 @@ describe('NewsletterSignupPage', () => {
       screen.getByText("I'll never sell your contact info.")
     ).toBeInTheDocument();
 
-    const unsubscribeLink = screen.getByRole('link', {
-      name: /unsubscribe any time/i,
+    expect(
+      screen.getByText('Unsubscribe any time.')
+    ).toBeInTheDocument();
+    const privacyLink = screen.getByRole('link', {
+      name: /I'll never sell your contact info/i,
     });
-    expect(unsubscribeLink).toBeInTheDocument();
-    expect(unsubscribeLink).toHaveAttribute('href', '/newsletter');
+    expect(privacyLink).toBeInTheDocument();
+    expect(privacyLink).toHaveAttribute('href', '/integrtity');
   });
 
   it('should have proper SEO meta tags', () => {
@@ -244,7 +247,7 @@ describe('NewsletterSignupPage', () => {
 
     // The SEO component should be rendered (we can't easily test the actual meta tags in jsdom)
     // But we can verify the component is present by checking if the page renders without errors
-    expect(screen.getByText('Get the newsletter')).toBeInTheDocument();
+    expect(screen.getByText('💌 Get the newsletter')).toBeInTheDocument();
   });
 
   it('should apply correct styling classes', () => {
@@ -257,7 +260,7 @@ describe('NewsletterSignupPage', () => {
     const firstNameInput = screen.getByPlaceholderText('First Name');
     expect(firstNameInput).toHaveClass('border-input');
 
-    const emailInput = screen.getByPlaceholderText('Email Address');
+    const emailInput = screen.getByPlaceholderText('you@example.com');
     expect(emailInput).toHaveClass('border-input');
   });
 
@@ -271,7 +274,7 @@ describe('NewsletterSignupPage', () => {
     });
 
     // Mock successful mutation that will trigger onSuccess
-    const { trpc } = await import('../trpc-provider');
+    const { trpc } = await import('@utils/trpc');
     const mockUseMutation = vi.fn(() => ({
       mutateAsync: mockMutateAsync,
       isPending: false,
@@ -280,8 +283,8 @@ describe('NewsletterSignupPage', () => {
     }));
 
     vi.mocked(trpc.mailingList.subscribe.useMutation).mockImplementation(
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      mockUseMutation as any
+      // @ts-expect-error - Mock implementation for testing
+      mockUseMutation
     );
 
     const user = userEvent.setup();
@@ -293,8 +296,8 @@ describe('NewsletterSignupPage', () => {
     );
 
     const firstNameInput = screen.getByPlaceholderText('First Name');
-    const emailInput = screen.getByPlaceholderText('Email Address');
-    const submitButton = screen.getByRole('button', { name: /💌 Subscribe/i });
+    const emailInput = screen.getByPlaceholderText('you@example.com');
+    const submitButton = screen.getByRole('button', { name: /💌 Get the newsletter/i });
 
     await user.type(firstNameInput, 'John');
     await user.type(emailInput, 'john@example.com');
@@ -326,15 +329,15 @@ describe('NewsletterSignupPage', () => {
     );
 
     // Verify initial form state
-    expect(screen.getByText('Get the newsletter')).toBeInTheDocument();
+    expect(screen.getByText('💌 Get the newsletter')).toBeInTheDocument();
     expect(screen.getByPlaceholderText('First Name')).toBeInTheDocument();
-    expect(screen.getByPlaceholderText('Email Address')).toBeInTheDocument();
+    expect(screen.getByPlaceholderText('you@example.com')).toBeInTheDocument();
   });
 
   it('should show success state with correct link to newsletter', async () => {
     const mockMutateAsync = vi.fn().mockResolvedValue({ success: true });
 
-    const { trpc } = await import('../trpc-provider');
+    const { trpc } = await import('@utils/trpc');
     const mockUseMutation = vi.fn(() => ({
       mutateAsync: mockMutateAsync,
       isPending: false,
@@ -343,8 +346,8 @@ describe('NewsletterSignupPage', () => {
     }));
 
     vi.mocked(trpc.mailingList.subscribe.useMutation).mockImplementation(
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      mockUseMutation as any
+      // @ts-expect-error - Mock implementation for testing
+      mockUseMutation
     );
 
     const user = userEvent.setup();
@@ -357,8 +360,8 @@ describe('NewsletterSignupPage', () => {
 
     // Fill and submit form
     const firstNameInput = screen.getByPlaceholderText('First Name');
-    const emailInput = screen.getByPlaceholderText('Email Address');
-    const submitButton = screen.getByRole('button', { name: /💌 Subscribe/i });
+    const emailInput = screen.getByPlaceholderText('you@example.com');
+    const submitButton = screen.getByRole('button', { name: /💌 Get the newsletter/i });
 
     await user.type(firstNameInput, 'John');
     await user.type(emailInput, 'john@example.com');

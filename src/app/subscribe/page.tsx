@@ -13,7 +13,8 @@ import { Card, CardContent, CardHeader } from '@ui/card';
 import { Input } from '@ui/input';
 import { Label } from '@ui/label';
 import { PostHogPageview } from '../posthog-provider';
-import { trpc } from '../trpc-provider';
+import { trpc } from '@utils/trpc';
+import type { SubscribeResponse } from '@utils/resend';
 
 type FormData = {
   firstName: string;
@@ -31,7 +32,7 @@ export default function NewsletterSignupPage() {
   } = useForm<FormData>();
 
   const addSubscriberMutation = trpc.mailingList.subscribe.useMutation({
-    onSuccess: (data) => {
+    onSuccess: (data: SubscribeResponse) => {
       reset();
 
       if (data?.error?.name === 'already_subscribed') {
