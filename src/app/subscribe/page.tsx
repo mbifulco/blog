@@ -242,7 +242,7 @@ export default function NewsletterSignupPage() {
             <div className="mt-2 text-xs text-gray-500">
               <p>
                 <Link
-                  href="/integrtity"
+                  href="/integrity"
                   className="text-xs text-gray-500"
                   data-testid="privacy-link"
                 >
