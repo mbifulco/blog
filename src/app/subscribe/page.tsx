@@ -12,9 +12,9 @@ import { Button } from '@ui/button';
 import { Card, CardContent, CardHeader } from '@ui/card';
 import { Input } from '@ui/input';
 import { Label } from '@ui/label';
-import { PostHogPageview } from '../posthog-provider';
-import { trpc } from '@utils/trpc';
 import type { SubscribeResponse } from '@utils/resend';
+import { trpc } from '@utils/trpc';
+import { PostHogPageview } from '../posthog-provider';
 
 type FormData = {
   firstName: string;
@@ -22,7 +22,6 @@ type FormData = {
 };
 
 export default function NewsletterSignupPage() {
-
   const [isSubmitted, setIsSubmitted] = useState(false);
   const {
     register,
@@ -103,10 +102,16 @@ export default function NewsletterSignupPage() {
           <Card className="w-full max-w-md bg-white">
             <CardContent className="bg-white pt-6">
               <div className="flex flex-col gap-4">
-                <h1 className="text-2xl font-bold text-gray-900" data-testid="success-title">
+                <h1
+                  className="text-2xl font-bold text-gray-900"
+                  data-testid="success-title"
+                >
                   🪩 Success! You&apos;re in!
                 </h1>
-                <p className="bg-white text-gray-600" data-testid="success-message">
+                <p
+                  className="bg-white text-gray-600"
+                  data-testid="success-message"
+                >
                   Thanks so much for subscribing. Don&apos;t forget to check
                   your spam folder for emails from{' '}
                   <span className="font-medium text-pink-600">
@@ -136,14 +141,20 @@ export default function NewsletterSignupPage() {
         <Card className="w-full max-w-md bg-white">
           <CardHeader className="pb-4 text-left">
             <header className="flex flex-col gap-1 text-left">
-              <h1 className="mb-1 text-3xl font-bold text-balance text-pink-600" data-testid="newsletter-title">
+              <h1
+                className="mb-1 text-3xl font-bold text-balance text-pink-600"
+                data-testid="newsletter-title"
+              >
                 Join{' '}
                 <span className="text-pink-600">
                   <SubscriberCount />
                 </span>{' '}
                 devs &amp; founders building better.
               </h1>
-              <p className="text-muted-foreground mb-2 text-lg" data-testid="newsletter-description">
+              <p
+                className="text-muted-foreground mb-2 text-lg"
+                data-testid="newsletter-description"
+              >
                 One sharp idea each week to help you ship smarter and faster.
               </p>
             </header>
@@ -230,10 +241,17 @@ export default function NewsletterSignupPage() {
 
             <div className="mt-2 text-xs text-gray-500">
               <p>
-                <Link href="/integrtity" className="text-xs text-gray-500" data-testid="privacy-link">
+                <Link
+                  href="/integrtity"
+                  className="text-xs text-gray-500"
+                  data-testid="privacy-link"
+                >
                   I&apos;ll never sell your contact info.
                 </Link>{' '}
-                <span className="font-medium text-pink-600" data-testid="unsubscribe-text">
+                <span
+                  className="font-medium text-pink-600"
+                  data-testid="unsubscribe-text"
+                >
                   Unsubscribe any time.
                 </span>
               </p>

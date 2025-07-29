@@ -134,7 +134,9 @@ describe('NewsletterSignupPage', () => {
     expect(screen.getByText('💌 Get the newsletter')).toBeInTheDocument();
     expect(screen.getByText('💌 Tiny Improvements')).toBeInTheDocument();
     expect(
-      screen.getByText('One sharp idea each week to help you ship smarter and faster.')
+      screen.getByText(
+        'One sharp idea each week to help you ship smarter and faster.'
+      )
     ).toBeInTheDocument();
     expect(screen.getByPlaceholderText('First Name')).toBeInTheDocument();
     expect(screen.getByPlaceholderText('you@example.com')).toBeInTheDocument();
@@ -164,7 +166,9 @@ describe('NewsletterSignupPage', () => {
       </TestWrapper>
     );
 
-    const submitButton = screen.getByRole('button', { name: /💌 Get the newsletter/i });
+    const submitButton = screen.getByRole('button', {
+      name: /💌 Get the newsletter/i,
+    });
     await user.click(submitButton);
 
     await waitFor(() => {
@@ -228,9 +232,7 @@ describe('NewsletterSignupPage', () => {
       screen.getByText("I'll never sell your contact info.")
     ).toBeInTheDocument();
 
-    expect(
-      screen.getByText('Unsubscribe any time.')
-    ).toBeInTheDocument();
+    expect(screen.getByText('Unsubscribe any time.')).toBeInTheDocument();
     const privacyLink = screen.getByRole('link', {
       name: /I'll never sell your contact info/i,
     });
@@ -297,7 +299,9 @@ describe('NewsletterSignupPage', () => {
 
     const firstNameInput = screen.getByPlaceholderText('First Name');
     const emailInput = screen.getByPlaceholderText('you@example.com');
-    const submitButton = screen.getByRole('button', { name: /💌 Get the newsletter/i });
+    const submitButton = screen.getByRole('button', {
+      name: /💌 Get the newsletter/i,
+    });
 
     await user.type(firstNameInput, 'John');
     await user.type(emailInput, 'john@example.com');
@@ -315,7 +319,9 @@ describe('NewsletterSignupPage', () => {
       expect(screen.getByText('read the latest dispatch')).toBeInTheDocument();
       expect(screen.getByTestId('read-latest-button')).toBeInTheDocument();
 
-      const readLatestLink = screen.getByRole('link', { name: /read the latest dispatch/i });
+      const readLatestLink = screen.getByRole('link', {
+        name: /read the latest dispatch/i,
+      });
       expect(readLatestLink).toHaveAttribute('href', '/newsletter');
     });
   });
@@ -361,7 +367,9 @@ describe('NewsletterSignupPage', () => {
     // Fill and submit form
     const firstNameInput = screen.getByPlaceholderText('First Name');
     const emailInput = screen.getByPlaceholderText('you@example.com');
-    const submitButton = screen.getByRole('button', { name: /💌 Get the newsletter/i });
+    const submitButton = screen.getByRole('button', {
+      name: /💌 Get the newsletter/i,
+    });
 
     await user.type(firstNameInput, 'John');
     await user.type(emailInput, 'john@example.com');
@@ -373,7 +381,9 @@ describe('NewsletterSignupPage', () => {
     });
 
     // Verify the link has correct attributes
-    const readLatestLink = screen.getByRole('link', { name: /read the latest dispatch/i });
+    const readLatestLink = screen.getByRole('link', {
+      name: /read the latest dispatch/i,
+    });
     expect(readLatestLink).toHaveAttribute('href', '/newsletter');
     expect(screen.getByTestId('read-latest-button')).toBeInTheDocument();
   });

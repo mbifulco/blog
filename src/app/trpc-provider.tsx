@@ -2,7 +2,8 @@
 
 import { useState } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { trpcReact as trpc, createTRPCClient } from '@lib/trpc';
+
+import { createTRPCClient, trpcReact as trpc } from '@lib/trpc';
 
 export default function TRPCProvider({
   children,

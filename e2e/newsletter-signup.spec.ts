@@ -30,7 +30,9 @@ test.describe('Newsletter Signup Page', () => {
     page,
   }) => {
     // Check page elements are visible
-    await expect(page.getByTestId('newsletter-title')).toContainText(' devs & founders building better.');
+    await expect(page.getByTestId('newsletter-title')).toContainText(
+      ' devs & founders building better.'
+    );
 
     // Check form elements
     await expect(page.getByTestId('first-name-input')).toBeVisible();
@@ -112,7 +114,6 @@ test.describe('Newsletter Signup Page', () => {
     ).not.toBeVisible();
   });
 
-
   test('should have proper form accessibility', async ({ page }) => {
     // Check form labels are properly associated
     const firstNameInput = page.getByTestId('first-name-input');
@@ -151,7 +152,9 @@ test.describe('Newsletter Signup Page', () => {
     await page.setViewportSize({ width: 375, height: 667 }); // iPhone SE size
 
     // Check that elements are still visible and properly arranged
-    await expect(page.getByTestId('newsletter-title')).toContainText('devs & founders building better.');
+    await expect(page.getByTestId('newsletter-title')).toContainText(
+      'devs & founders building better.'
+    );
     await expect(page.getByTestId('first-name-input')).toBeVisible();
     await expect(page.getByTestId('email-input')).toBeVisible();
     await expect(page.getByTestId('submit-button')).toBeVisible();
