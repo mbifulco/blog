@@ -5,8 +5,6 @@ import { z } from 'zod';
 export const env = createEnv({
   extends: [vercel()],
   server: {
-    CONVERTKIT_API_SECRET: z.string(),
-    CONVERTKIT_WEBHOOK_SECRET: z.string(),
     RESEND_API_KEY: z.string(),
     RESEND_NEWSLETTER_AUDIENCE_ID: z.string(),
     RESEND_SIGNING_SECRET: z.string(),

@@ -5,6 +5,7 @@ import posthog from 'posthog-js';
 import { toast } from 'sonner';
 
 import Button from '@components/Button';
+import { Input } from '@ui/input';
 import { trpc } from '@utils/trpc';
 
 type SubscriptionFormProps = {
@@ -178,15 +179,15 @@ const SubscriptionForm: React.FC<SubscriptionFormProps> = ({
               data-element="fields"
               data-stacked="false"
             >
-              <input
+              <Input
                 type="text"
                 aria-label="Last Name"
                 ref={honeypotRef}
                 style={{ display: 'none' }}
                 name="fields[last_name]"
               />
-              <input
-                className="formkit-input h-10 w-full grow rounded-t rounded-b-none border border-b-0 border-solid border-pink-600 bg-white px-[2ch] py-[1ch] font-normal text-gray-950"
+              <Input
+                className="h-10 w-full grow rounded-t rounded-b-none border border-b-0 border-solid border-pink-600 bg-white px-[2ch] py-[1ch] font-normal text-gray-950"
                 aria-label="First Name"
                 name="fields[first_name]"
                 required
@@ -194,8 +195,8 @@ const SubscriptionForm: React.FC<SubscriptionFormProps> = ({
                 type="text"
                 ref={firstNameRef}
               />
-              <input
-                className="formkit-input h-10 w-full grow rounded-b-none border border-b-0 border-solid border-pink-600 bg-white px-[2ch] py-[1ch] font-normal text-gray-950"
+              <Input
+                className="h-10 w-full grow rounded-b-none border border-b-0 border-solid border-pink-600 bg-white px-[2ch] py-[1ch] font-normal text-gray-950"
                 name="email_address"
                 aria-label="Email Address"
                 placeholder="Email Address"
