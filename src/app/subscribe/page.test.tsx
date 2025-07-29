@@ -91,6 +91,13 @@ vi.mock('../trpc-provider', () => ({
           error: null,
         })),
       },
+      stats: {
+        useQuery: vi.fn(() => ({
+          data: { subscribers: 1234 },
+          isLoading: false,
+          error: null,
+        })),
+      },
     },
   },
   default: ({ children }: { children: React.ReactNode }) => (
@@ -299,6 +306,15 @@ describe('NewsletterSignupPage', () => {
       email: 'john@example.com',
       firstName: 'John',
     });
+
+    // After successful submission, should show success state with "read the latest dispatch" link
+    await waitFor(() => {
+      expect(screen.getByText('read the latest dispatch')).toBeInTheDocument();
+      expect(screen.getByTestId('read-latest-button')).toBeInTheDocument();
+
+      const readLatestLink = screen.getByRole('link', { name: /read the latest dispatch/i });
+      expect(readLatestLink).toHaveAttribute('href', '/newsletter');
+    });
   });
 
   it('should render initial form state correctly', () => {
@@ -313,5 +329,49 @@ describe('NewsletterSignupPage', () => {
     expect(screen.getByText('Get the newsletter')).toBeInTheDocument();
     expect(screen.getByPlaceholderText('First Name')).toBeInTheDocument();
     expect(screen.getByPlaceholderText('Email Address')).toBeInTheDocument();
+  });
+
+  it('should show success state with correct link to newsletter', async () => {
+    const mockMutateAsync = vi.fn().mockResolvedValue({ success: true });
+
+    const { trpc } = await import('../trpc-provider');
+    const mockUseMutation = vi.fn(() => ({
+      mutateAsync: mockMutateAsync,
+      isPending: false,
+      isSuccess: false,
+      error: null,
+    }));
+
+    vi.mocked(trpc.mailingList.subscribe.useMutation).mockImplementation(
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      mockUseMutation as any
+    );
+
+    const user = userEvent.setup();
+
+    render(
+      <TestWrapper>
+        <NewsletterSignupPage />
+      </TestWrapper>
+    );
+
+    // Fill and submit form
+    const firstNameInput = screen.getByPlaceholderText('First Name');
+    const emailInput = screen.getByPlaceholderText('Email Address');
+    const submitButton = screen.getByRole('button', { name: /💌 Subscribe/i });
+
+    await user.type(firstNameInput, 'John');
+    await user.type(emailInput, 'john@example.com');
+    await user.click(submitButton);
+
+    // Wait for success state to appear
+    await waitFor(() => {
+      expect(screen.getByText('read the latest dispatch')).toBeInTheDocument();
+    });
+
+    // Verify the link has correct attributes
+    const readLatestLink = screen.getByRole('link', { name: /read the latest dispatch/i });
+    expect(readLatestLink).toHaveAttribute('href', '/newsletter');
+    expect(screen.getByTestId('read-latest-button')).toBeInTheDocument();
   });
 });

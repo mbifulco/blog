@@ -99,11 +99,11 @@ export default function NewsletterSignupPage() {
       <>
         <PostHogPageview />
         <div className="flex min-h-screen items-center justify-center p-4">
-          <Card className="w-full max-w-md bg-white text-center">
+          <Card className="w-full max-w-md bg-white">
             <CardContent className="bg-white pt-6">
               <div className="flex flex-col gap-4">
                 <h1 className="text-2xl font-bold text-gray-900" data-testid="success-title">
-                  🪩 Success!
+                  🪩 Success! You&apos;re in!
                 </h1>
                 <p className="bg-white text-gray-600" data-testid="success-message">
                   Thanks so much for subscribing. Don&apos;t forget to check
@@ -113,12 +113,12 @@ export default function NewsletterSignupPage() {
                   </span>
                 </p>
                 <Button
-                  onClick={() => setIsSubmitted(false)}
+                  asChild
                   variant="outline"
                   className="mt-4"
-                  data-testid="subscribe-another-button"
+                  data-testid="read-latest-button"
                 >
-                  Subscribe Another Email
+                  <Link href="/newsletter">Read the latest dispatch</Link>
                 </Button>
               </div>
             </CardContent>
