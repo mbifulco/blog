@@ -37,8 +37,6 @@ test('404 error page smoke test', async ({ page }) => {
   // Check for the default Next.js 404 page in development mode
   await expect(page.locator('h1')).toContainText('404');
   await expect(
-    page.locator(
-      "text=This page could not be found."
-    )
+    page.locator('text=This page could not be found.')
   ).toBeVisible();
 });

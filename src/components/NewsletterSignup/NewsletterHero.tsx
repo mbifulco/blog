@@ -27,7 +27,7 @@ const NewsletterHero = () => {
                 <Heading
                   as="h2"
                   className="lg-text-2xl text-white xl:text-7xl"
-                  id="newsletter-signup"
+                  id="subscribe"
                 >
                   SHIP PRODUCTS <br />
                   THAT <span className="text-pink-600">MATTER</span>

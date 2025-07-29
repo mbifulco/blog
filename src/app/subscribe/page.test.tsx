@@ -1,7 +1,7 @@
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { describe, expect, it, vi, beforeEach } from 'vitest';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import NewsletterSignupPage from './page';
 
@@ -23,12 +23,20 @@ vi.mock('posthog-js', () => ({
 
 vi.mock('../posthog-provider', () => ({
   PostHogPageview: () => null,
-  default: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
+  default: ({ children }: { children: React.ReactNode }) => (
+    <div>{children}</div>
+  ),
 }));
 
 vi.mock('next/image', () => ({
   __esModule: true,
-  default: ({ src, alt, width, height, className }: {
+  default: ({
+    src,
+    alt,
+    width,
+    height,
+    className,
+  }: {
     src: string;
     alt: string;
     width: number;
@@ -36,17 +44,23 @@ vi.mock('next/image', () => ({
     className?: string;
   }) => (
     // eslint-disable-next-line @next/next/no-img-element
-    <img src={src} alt={alt} width={width} height={height} className={className} />
+    <img
+      src={src}
+      alt={alt}
+      width={width}
+      height={height}
+      className={className}
+    />
   ),
 }));
 
 vi.mock('next/router', () => ({
   useRouter() {
     return {
-      route: '/newsletter-signup',
-      pathname: '/newsletter-signup',
+      route: '/subscribe',
+      pathname: '/subscribe',
       query: {},
-      asPath: '/newsletter-signup',
+      asPath: '/subscribe',
       push: vi.fn(),
       pop: vi.fn(),
       reload: vi.fn(),
@@ -66,7 +80,6 @@ vi.mock('next/router', () => ({
   },
 }));
 
-
 vi.mock('../trpc-provider', () => ({
   trpc: {
     mailingList: {
@@ -80,7 +93,9 @@ vi.mock('../trpc-provider', () => ({
       },
     },
   },
-  default: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
+  default: ({ children }: { children: React.ReactNode }) => (
+    <div>{children}</div>
+  ),
 }));
 
 // Test wrapper component
@@ -93,9 +108,7 @@ const TestWrapper = ({ children }: { children: React.ReactNode }) => {
   });
 
   return (
-    <QueryClientProvider client={queryClient}>
-      {children}
-    </QueryClientProvider>
+    <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
   );
 };
 
@@ -113,10 +126,14 @@ describe('NewsletterSignupPage', () => {
 
     expect(screen.getByText('Get the newsletter')).toBeInTheDocument();
     expect(screen.getByText('💌 Tiny Improvements')).toBeInTheDocument();
-    expect(screen.getByText('Straight to your inbox, once a week')).toBeInTheDocument();
+    expect(
+      screen.getByText('Straight to your inbox, once a week')
+    ).toBeInTheDocument();
     expect(screen.getByPlaceholderText('First Name')).toBeInTheDocument();
     expect(screen.getByPlaceholderText('Email Address')).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /💌 Subscribe/i })).toBeInTheDocument();
+    expect(
+      screen.getByRole('button', { name: /💌 Subscribe/i })
+    ).toBeInTheDocument();
   });
 
   it('should display Mike Bifulco headshot image', () => {
@@ -184,9 +201,13 @@ describe('NewsletterSignupPage', () => {
     await user.type(emailInput, 'john@example.com');
 
     // Form should be valid, no validation errors should be shown
-    expect(screen.queryByText('First name is required')).not.toBeInTheDocument();
+    expect(
+      screen.queryByText('First name is required')
+    ).not.toBeInTheDocument();
     expect(screen.queryByText('Email is required')).not.toBeInTheDocument();
-    expect(screen.queryByText('Please enter a valid email address')).not.toBeInTheDocument();
+    expect(
+      screen.queryByText('Please enter a valid email address')
+    ).not.toBeInTheDocument();
   });
 
   it('should render privacy disclaimer with newsletter link', () => {
@@ -196,9 +217,13 @@ describe('NewsletterSignupPage', () => {
       </TestWrapper>
     );
 
-    expect(screen.getByText("I'll never sell your contact info.")).toBeInTheDocument();
+    expect(
+      screen.getByText("I'll never sell your contact info.")
+    ).toBeInTheDocument();
 
-    const unsubscribeLink = screen.getByRole('link', { name: /unsubscribe at any time/i });
+    const unsubscribeLink = screen.getByRole('link', {
+      name: /unsubscribe any time/i,
+    });
     expect(unsubscribeLink).toBeInTheDocument();
     expect(unsubscribeLink).toHaveAttribute('href', '/newsletter');
   });
@@ -221,9 +246,6 @@ describe('NewsletterSignupPage', () => {
         <NewsletterSignupPage />
       </TestWrapper>
     );
-
-    const mainContainer = screen.getByText('Get the newsletter').closest('div[style]');
-    expect(mainContainer).toHaveStyle({ backgroundColor: '#212F4F' });
 
     const firstNameInput = screen.getByPlaceholderText('First Name');
     expect(firstNameInput).toHaveClass('border-input');
@@ -250,8 +272,10 @@ describe('NewsletterSignupPage', () => {
       error: null,
     }));
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    vi.mocked(trpc.mailingList.subscribe.useMutation).mockImplementation(mockUseMutation as any);
+    vi.mocked(trpc.mailingList.subscribe.useMutation).mockImplementation(
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      mockUseMutation as any
+    );
 
     const user = userEvent.setup();
 

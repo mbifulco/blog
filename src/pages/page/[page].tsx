@@ -16,7 +16,10 @@ import type { BlogPost, Newsletter } from '../../data/content-types';
 import { getPaginatedPosts } from '../../lib/blog';
 import { getAllNewsletters } from '../../lib/newsletters';
 import { getCloudinaryImageUrl } from '../../utils/images';
-import { generatePaginatedPaths, handlePaginatedStaticProps } from '../../utils/pagination';
+import {
+  generatePaginatedPaths,
+  handlePaginatedStaticProps,
+} from '../../utils/pagination';
 
 // We use fallback: 'blocking' so that getStaticProps runs for any page param, allowing us to handle invalid page numbers (non-numeric, out-of-range, etc.) with redirects or 404s, while still statically generating valid pages after the first request.
 export async function getStaticPaths() {

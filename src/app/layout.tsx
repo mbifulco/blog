@@ -2,9 +2,9 @@ import localFont from 'next/font/local';
 import { Toaster } from 'sonner';
 
 import FathomAnalytics from '@components/Analytics/Fathom';
+import { env } from '@utils/env';
 import PostHogProvider from './posthog-provider';
 import TRPCProvider from './trpc-provider';
-import { env } from '@utils/env';
 
 import '../styles/globals.css';
 import '../components/CarbonAd/CarbonAd.css';

@@ -1,22 +1,22 @@
 import Link from 'next/link';
 
 const tagLabels: Record<string, string> = {
-  'react': 'about React.js',
-  'remix': 'about Remix.run',
-  'nextjs': 'about Next.js',
-  'founders': 'for startup founders',
-  'creators': 'for creators',
-  'developer': 'for developers',
-  'gatsby': 'about Gatsby',
-  'css': 'about CSS',
-  'ux': 'about User Experience (UX)',
-  'designer': 'for designers',
-  'productivity': 'about productivity',
-  'tools': 'about tools I use',
-  'cycling': 'about cycling',
-  'javascript': 'for JavaScript developers',
+  react: 'about React.js',
+  remix: 'about Remix.run',
+  nextjs: 'about Next.js',
+  founders: 'for startup founders',
+  creators: 'for creators',
+  developer: 'for developers',
+  gatsby: 'about Gatsby',
+  css: 'about CSS',
+  ux: 'about User Experience (UX)',
+  designer: 'for designers',
+  productivity: 'about productivity',
+  tools: 'about tools I use',
+  cycling: 'about cycling',
+  javascript: 'for JavaScript developers',
   'mental health': 'mental health and mindfulness',
-  'design': 'about design',
+  design: 'about design',
 };
 
 const getTagInformation = (tag: string) => ({

@@ -1,8 +1,8 @@
 'use client';
 
+import { useEffect } from 'react';
 import posthog from 'posthog-js';
 import { PostHogProvider as PHProvider } from 'posthog-js/react';
-import { useEffect } from 'react';
 
 // Initialize PostHog for App Router
 if (typeof window !== 'undefined') {
