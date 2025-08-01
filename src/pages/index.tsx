@@ -2,21 +2,23 @@ import type { NextPage } from 'next';
 import Link from 'next/link';
 import { startOfToday } from 'date-fns';
 
-import { Colophon } from '../components/Colophon';
-import { Heading } from '../components/Heading';
-import { Headshot } from '../components/Headshot';
-import NewsletterItem from '../components/NewsletterFeed/NewsletterItem';
+import { Colophon } from '@components/Colophon';
+import { Heading } from '@components/Heading';
+import { Headshot } from '@components/Headshot';
+import NewsletterItem from '@components/NewsletterFeed/NewsletterItem';
+import { PostFeed } from '@components/PostFeed';
+import SEO from '@components/seo';
+import StructuredData from '@components/StructuredData/StructuredData';
+import { Subtitle } from '@components/Subtitle';
+import WebmentionMetadata from '@components/webmentionMetadata';
+import type { BlogPost, Newsletter } from '@data/content-types';
+import { getPaginatedPosts } from '@lib/blog';
+import { getAllNewsletters } from '@lib/newsletters';
+import { getCloudinaryImageUrl } from '@utils/images';
+import { personStructuredData } from '@utils/mikePersonStructuredData';
+import { generateRSSFeed } from '@utils/rss';
+import config from '@/config';
 import PaginationWrapper from '../components/Pagination';
-import { PostFeed } from '../components/PostFeed';
-import SEO from '../components/seo';
-import { Subtitle } from '../components/Subtitle';
-import WebmentionMetadata from '../components/webmentionMetadata';
-import config from '../config';
-import type { BlogPost, Newsletter } from '../data/content-types';
-import { getPaginatedPosts } from '../lib/blog';
-import { getAllNewsletters } from '../lib/newsletters';
-import { getCloudinaryImageUrl } from '../utils/images';
-import { generateRSSFeed } from '../utils/rss';
 
 export async function getStaticProps() {
   const paginatedPosts = await getPaginatedPosts({ limit: 10 });
@@ -63,6 +65,7 @@ const HomePage: NextPage<HomePageProps> = ({
         title="Latest articles on design, development, and the world around me"
         image={headshotPublicUrl}
       />
+      <StructuredData structuredData={personStructuredData} />
       <div className="my-4 items-start gap-4 md:flex">
         <div className="mr-0 overflow-clip rounded-xl lg:mr-4">
           <Headshot size={250} />
