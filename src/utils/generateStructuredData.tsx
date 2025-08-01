@@ -9,18 +9,19 @@ import type {
 
 import type { BlogPost, Newsletter } from '@data/content-types';
 import type { Series } from '@lib/series';
+import config, { BASE_SITE_URL } from '@/config';
 
 const AUTHOR_DATA: Person = {
   '@type': 'Person',
-  name: 'Mike Bifulco',
-  brand: ['Tiny Improvements', 'Craftwork'],
-  email: 'hello@mikebifulco.com',
+  name: config.author.name.replace(' @irreverentmike', ''),
+  brand: [config.newsletter.title.replace('💌 ', ''), config.employer.name],
+  email: config.author.email,
   gender: 'male',
-  jobTitle: 'Founder and CTO',
-  url: 'https://mikebifulco.com',
+  jobTitle: config.employer.role,
+  url: BASE_SITE_URL,
   sameAs: [
-    'https://twitter.com/irreverentmike',
-    'https://github.com/mbifulco',
+    `https://twitter.com/${config.social.twitter}`,
+    `https://github.com/${config.social.github}`,
     'https://bsky.com/profile/mikebifulco.com',
     'https://threads.net/@irreverentmike',
     'https://www.linkedin.com/in/mbifulco',
@@ -77,7 +78,7 @@ export const generatePostStructuredData = ({
       ? {
           '@type': 'CreativeWorkSeries',
           name: post.frontmatter.series,
-          url: `https://mikebifulco.com/series/${post.frontmatter.series}`,
+          url: `${BASE_SITE_URL}/series/${post.frontmatter.series}`,
         }
       : undefined,
   };
@@ -96,7 +97,7 @@ export const generateSeriesStructuredData = (series: Series) => {
     '@context': 'https://schema.org',
     '@type': 'CreativeWorkSeries',
     name: series.name,
-    url: `https://mikebifulco.com/series/${series.name}`,
+    url: `${BASE_SITE_URL}/series/${series.name}`,
   };
 
   return structuredData;

@@ -266,7 +266,7 @@ describe('NewsletterSignupPage', () => {
     expect(emailInput).toHaveClass('border-input');
   });
 
-    it('should show success state after successful submission', async () => {
+  it('should show success state after successful submission', async () => {
     // Create a mock that properly triggers the onSuccess callback
     let onSuccessCallback: ((data: unknown) => void) | null = null;
 
@@ -282,17 +282,19 @@ describe('NewsletterSignupPage', () => {
 
     // Mock successful mutation that will trigger onSuccess
     const { trpc } = await import('@utils/trpc');
-        const mockUseMutation = vi.fn((options: { onSuccess?: (data: unknown) => void }) => {
-      // Store the onSuccess callback
-      onSuccessCallback = options?.onSuccess || null;
+    const mockUseMutation = vi.fn(
+      (options: { onSuccess?: (data: unknown) => void }) => {
+        // Store the onSuccess callback
+        onSuccessCallback = options?.onSuccess || null;
 
-      return {
-        mutateAsync: mockMutateAsync,
-        isPending: false,
-        isSuccess: false,
-        error: null,
-      };
-    });
+        return {
+          mutateAsync: mockMutateAsync,
+          isPending: false,
+          isSuccess: false,
+          error: null,
+        };
+      }
+    );
 
     vi.mocked(trpc.mailingList.subscribe.useMutation).mockImplementation(
       // @ts-expect-error - Mock implementation for testing
@@ -319,7 +321,7 @@ describe('NewsletterSignupPage', () => {
 
     // Wait for success state to appear
     await waitFor(() => {
-      expect(screen.getByText('🪩 Success! You\'re in!')).toBeInTheDocument();
+      expect(screen.getByText("🪩 Success! You're in!")).toBeInTheDocument();
       expect(screen.getByTestId('read-latest-button')).toBeInTheDocument();
 
       const readLatestLink = screen.getByRole('link', {
@@ -358,17 +360,19 @@ describe('NewsletterSignupPage', () => {
     });
 
     const { trpc } = await import('@utils/trpc');
-    const mockUseMutation = vi.fn((options: { onSuccess?: (data: unknown) => void }) => {
-      // Store the onSuccess callback
-      onSuccessCallback = options?.onSuccess || null;
+    const mockUseMutation = vi.fn(
+      (options: { onSuccess?: (data: unknown) => void }) => {
+        // Store the onSuccess callback
+        onSuccessCallback = options?.onSuccess || null;
 
-      return {
-        mutateAsync: mockMutateAsync,
-        isPending: false,
-        isSuccess: false,
-        error: null,
-      };
-    });
+        return {
+          mutateAsync: mockMutateAsync,
+          isPending: false,
+          isSuccess: false,
+          error: null,
+        };
+      }
+    );
 
     vi.mocked(trpc.mailingList.subscribe.useMutation).mockImplementation(
       // @ts-expect-error - Mock implementation for testing
@@ -396,7 +400,7 @@ describe('NewsletterSignupPage', () => {
 
     // Wait for success state to appear
     await waitFor(() => {
-      expect(screen.getByText('🪩 Success! You\'re in!')).toBeInTheDocument();
+      expect(screen.getByText("🪩 Success! You're in!")).toBeInTheDocument();
     });
 
     // Verify the link has correct attributes

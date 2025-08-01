@@ -4,14 +4,16 @@ import { Heading } from '@components/Heading';
 import NewsletterItem from '@components/NewsletterFeed/NewsletterItem';
 import NewsletterSignup from '@components/NewsletterSignup';
 import SubscriberCount from '@components/NewsletterSignup/SubscriberCount';
+import PaginationWrapper from '@components/Pagination';
 import SEO from '@components/seo';
 import SponsorCTA from '@components/SponsorCTA/SponsorCTA';
+import StructuredData from '@components/StructuredData/StructuredData';
 import { SubscriptionForm } from '@components/SubscriptionForm';
 import { Subtitle } from '@components/Subtitle';
-import PaginationWrapper from '../../components/Pagination';
-import config from '../../config';
-import type { Newsletter } from '../../data/content-types';
-import { getPaginatedNewsletters } from '../../lib/newsletters';
+import type { Newsletter } from '@data/content-types';
+import { getPaginatedNewsletters } from '@lib/newsletters';
+import { tinyImprovementsBlogStructuredData } from '@utils/newsletterStructuredData';
+import config from '@/config';
 
 export const getStaticProps: GetStaticProps<NewsletterPageProps> = async () => {
   const paginatedNewsletters = await getPaginatedNewsletters({ limit: 12 });
@@ -48,21 +50,17 @@ const NewsletterPage: React.FC<NewsletterPageProps> = ({
   return (
     <div className="mx-auto flex max-w-4xl flex-col gap-4">
       <SEO
-        title="💌 Tiny Improvements: a newsletter for startup founders, indiehackers, and product builders"
+        title={`${config.newsletter.title}: a newsletter for startup founders, indiehackers, and product builders`}
         description={config.newsletter.shortDescription}
         image={
           'https://res.cloudinary.com/mikebifulco-com/image/upload/v1662476730/newsletters/cover.png'
         }
       />
+      <StructuredData structuredData={tinyImprovementsBlogStructuredData} />
 
       <div className="flex flex-col gap-4">
         <header>
-          <Heading as="h1">
-            <span role="img" aria-label="heart envelope emoji">
-              💌
-            </span>{' '}
-            Tiny Improvements
-          </Heading>
+          <Heading as="h1">{config.newsletter.title}</Heading>
           <Subtitle>{config.newsletter.tagline}</Subtitle>
         </header>
         <p className="text-xl">{config.newsletter.shortDescription}</p>
