@@ -4,16 +4,16 @@ import { Heading } from '@components/Heading';
 import NewsletterItem from '@components/NewsletterFeed/NewsletterItem';
 import NewsletterSignup from '@components/NewsletterSignup';
 import SubscriberCount from '@components/NewsletterSignup/SubscriberCount';
+import PaginationWrapper from '@components/Pagination';
 import SEO from '@components/seo';
 import SponsorCTA from '@components/SponsorCTA/SponsorCTA';
 import StructuredData from '@components/StructuredData/StructuredData';
 import { SubscriptionForm } from '@components/SubscriptionForm';
 import { Subtitle } from '@components/Subtitle';
-import PaginationWrapper from '@components/Pagination';
-import config from '@/config';
 import type { Newsletter } from '@data/content-types';
 import { getPaginatedNewsletters } from '@lib/newsletters';
 import { tinyImprovementsBlogStructuredData } from '@utils/newsletterStructuredData';
+import config from '@/config';
 
 export const getStaticProps: GetStaticProps<NewsletterPageProps> = async () => {
   const paginatedNewsletters = await getPaginatedNewsletters({ limit: 12 });
@@ -60,9 +60,7 @@ const NewsletterPage: React.FC<NewsletterPageProps> = ({
 
       <div className="flex flex-col gap-4">
         <header>
-          <Heading as="h1">
-            {config.newsletter.title}
-          </Heading>
+          <Heading as="h1">{config.newsletter.title}</Heading>
           <Subtitle>{config.newsletter.tagline}</Subtitle>
         </header>
         <p className="text-xl">{config.newsletter.shortDescription}</p>
