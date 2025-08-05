@@ -145,7 +145,7 @@ test.describe('Newsletter Signup Page', () => {
   test('should have correct page title and meta description', async ({
     page,
   }) => {
-    await expect(page).toHaveTitle(/Newsletter Signup - Mike Bifulco/);
+    await expect(page).toHaveTitle("💌 Tiny Improvements Newsletter, from Mike Bifulco");
   });
 
   test('should be responsive on mobile viewport', async ({ page }) => {
