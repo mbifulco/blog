@@ -15,12 +15,26 @@ export const metadata: Metadata = {
     description:
       'Subscribe to 💌 Tiny Improvements - weekly newsletter for startup founders, indiehackers, and product builders',
     type: 'website',
+    images: [
+      {
+        url: 'hhttps://asset.cloudinary.com/mikebifulco-com/b4c9d86b86a1c54aa0edd9592eb2475e',
+        width: 1200,
+        height: 700,
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
     title: '💌 Tiny Improvements Newsletter, from Mike Bifulco',
     description:
       'Subscribe to 💌 Tiny Improvements - weekly newsletter for startup founders, indiehackers, and product builders',
+    images: [
+      {
+        url: 'hhttps://asset.cloudinary.com/mikebifulco-com/b4c9d86b86a1c54aa0edd9592eb2475e',
+        width: 1200,
+        height: 700,
+      },
+    ],
   },
 };
 
