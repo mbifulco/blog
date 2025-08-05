@@ -3,24 +3,24 @@ import type { Metadata } from 'next';
 import { cn } from '@utils/cn';
 
 export const metadata: Metadata = {
-  title: 'Newsletter Signup - Mike Bifulco',
+  title: '💌 Tiny Improvements Newsletter, from Mike Bifulco',
   description:
-    'Subscribe to Tiny Improvements - weekly newsletter for startup founders, indiehackers, and product builders',
+    'Subscribe to 💌 Tiny Improvements - weekly newsletter for startup founders, indiehackers, and product builders',
   robots: {
     index: true,
     follow: true,
   },
   openGraph: {
-    title: 'Newsletter Signup - Mike Bifulco',
+    title: '💌 Tiny Improvements Newsletter, from Mike Bifulco',
     description:
-      'Subscribe to Tiny Improvements - weekly newsletter for startup founders, indiehackers, and product builders',
+      'Subscribe to 💌 Tiny Improvements - weekly newsletter for startup founders, indiehackers, and product builders',
     type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Newsletter Signup - Mike Bifulco',
+    title: '💌 Tiny Improvements Newsletter, from Mike Bifulco',
     description:
-      'Subscribe to Tiny Improvements - weekly newsletter for startup founders, indiehackers, and product builders',
+      'Subscribe to 💌 Tiny Improvements - weekly newsletter for startup founders, indiehackers, and product builders',
   },
 };
 
