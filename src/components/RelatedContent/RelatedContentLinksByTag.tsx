@@ -1,6 +1,28 @@
 import Link from 'next/link';
 
-import { getTagInformation } from '../../data/ConvertKitTags';
+const tagLabels: Record<string, string> = {
+  react: 'about React.js',
+  remix: 'about Remix.run',
+  nextjs: 'about Next.js',
+  founders: 'for startup founders',
+  creators: 'for creators',
+  developer: 'for developers',
+  gatsby: 'about Gatsby',
+  css: 'about CSS',
+  ux: 'about User Experience (UX)',
+  designer: 'for designers',
+  productivity: 'about productivity',
+  tools: 'about tools I use',
+  cycling: 'about cycling',
+  javascript: 'for JavaScript developers',
+  'mental health': 'mental health and mindfulness',
+  design: 'about design',
+};
+
+const getTagInformation = (tag: string) => ({
+  name: tag,
+  label: tagLabels[tag] || `about ${tag}`,
+});
 
 const DEFAULT_TAGS_TO_DISPLAY = [
   'react',
@@ -17,7 +39,7 @@ const DEFAULT_TAGS_TO_DISPLAY = [
 
 const RelatedContentLinksByTag = ({ tags = DEFAULT_TAGS_TO_DISPLAY }) => {
   return (
-    <div className="pb-20 pt-8">
+    <div className="pt-8 pb-20">
       <p className="font-bold">More great resources</p>
       <div className="grid grid-cols-1 text-lg sm:grid-cols-2">
         {tags.map((tag) => {

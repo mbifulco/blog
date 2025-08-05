@@ -5,6 +5,9 @@ const jiti = createJiti(new URL(import.meta.url).pathname);
 
 await jiti.import('./src/utils/env');
 
+// Import centralized pagination redirect logic
+const { generatePaginationConfigRedirects } = await jiti.import('./src/utils/pagination-redirects');
+
 // Redirect legacy post paths to the new pattern
 const oldPostPaths = [
   '/why-fathom-analytics',
@@ -90,6 +93,7 @@ const config = {
       destination: '/newsletter',
       permanent: false,
     },
+    ...generatePaginationConfigRedirects(),
     ...postRedirects,
   ],
   rewrites: async () => [
@@ -106,7 +110,19 @@ const config = {
       destination: 'https://us.i.posthog.com/decide',
     },
   ],
-  webpack: (config, { dev, isServer }) => {
+  turbopack: {
+    rules: {
+      '*.js': {
+        loaders: [],
+        as: '*.js',
+      },
+    },
+  },
+  webpack: (config, { dev, isServer: _ }) => {
+    // Only apply webpack config when not using turbopack
+    if (!dev) {
+      return config;
+    }
     if (dev) {
       config.optimization.minimize = false;
     }

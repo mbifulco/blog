@@ -3,7 +3,7 @@ title: Add Structured Data to your Next.js site with JSON-LD for better SEO
 excerpt: Structured Data can be added to your site tell Google and other search engines what type of content is on each page using a metadata format called JSON-LD.
 date: 04-25-2024
 tags: [SEO, nextjs, typescript]
-slug:  structured-data-json-ld-for-next-js-sites
+slug: structured-data-json-ld-for-next-js-sites
 coverImagePublicId: posts/structured-data-json-ld-for-next-js-sites/cover
 ---
 
@@ -115,7 +115,7 @@ excerpt: A YouTube live coding stream, learning to build content-driven sites wi
 date: 2024-03-23
 tags: [video, nextjs, typescript, astro]
 coverImagePublicId: posts/live-astro-content-driven-website-rebuild/cover
-slug:  live-astro-content-driven-website-rebuild
+slug: live-astro-content-driven-website-rebuild
 youTubeId: wyJYInvZya8
 ---
 
@@ -184,25 +184,21 @@ if (youTubeId) {
 Once this object is created, I serialize it to a string and add it to a `<script>` tag on the page - depending on when and where you generate it, you can stick this in the `<head>` of your page, or right in the body of the document, like I do:
 
 ```tsx
+// snip -
 
- // snip -
-
-  return (
-    <>
-      {videoStructuredData && (
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(videoStructuredData),
-          }}
-        />
-      )}
-      <article>
-        {/* page content goes here */}
-      </article>
-    </>
-  );
-
+return (
+  <>
+    {videoStructuredData && (
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(videoStructuredData),
+        }}
+      />
+    )}
+    <article>{/* page content goes here */}</article>
+  </>
+);
 ```
 
 When the page is generated, you can inspect the source and see the JSON-LD embedded in the page - as in the example above.

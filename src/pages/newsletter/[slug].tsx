@@ -1,17 +1,19 @@
 import type { GetStaticProps } from 'next';
 import { useRouter } from 'next/router';
 
+import { Colophon } from '@components/Colophon';
 import { NewsletterSignup } from '@components/NewsletterSignup';
+import FullPost from '@components/Post/FullPost';
+import SEO from '@components/seo';
+import StructuredData from '@components/StructuredData/StructuredData';
+import WebmentionMetadata from '@components/webmentionMetadata';
+import type { Newsletter } from '@data/content-types';
+import { getAllNewsletters, getNewsletterBySlug } from '@lib/newsletters';
 import { getSeries } from '@lib/series';
 import type { Series } from '@lib/series';
-import { Colophon } from '../../components/Colophon';
-import FullPost from '../../components/Post/FullPost';
-import SEO from '../../components/seo';
-import WebmentionMetadata from '../../components/webmentionMetadata';
-import type { Newsletter } from '../../data/content-types';
-import { getAllNewsletters, getNewsletterBySlug } from '../../lib/newsletters';
-import { getCloudinaryImageUrl } from '../../utils/images';
-import { serialize } from '../../utils/mdx';
+import { getCloudinaryImageUrl } from '@utils/images';
+import { serialize } from '@utils/mdx';
+import { generateNewsletterBlogPostingStructuredData } from '../../utils/newsletterStructuredData';
 
 type NewsletterPageParams = {
   slug: string;
@@ -75,6 +77,9 @@ const NewsletterPage: React.FC<NewsletterPageProps> = ({
   const postImagePublicId = coverImagePublicId || `newsletters/${slug}/cover`;
   const coverImageUrl = getCloudinaryImageUrl(postImagePublicId);
 
+  const blogPostingStructuredData =
+    generateNewsletterBlogPostingStructuredData(newsletter);
+
   return (
     <>
       <div className="mx-auto flex max-w-full flex-col">
@@ -85,6 +90,7 @@ const NewsletterPage: React.FC<NewsletterPageProps> = ({
           image={coverImageUrl}
           ogType="article"
         />
+        <StructuredData structuredData={blogPostingStructuredData} />
 
         <FullPost post={newsletter} series={series} />
         <Colophon />

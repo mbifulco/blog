@@ -96,7 +96,7 @@ const FullPost: React.FC<FullPostProps> = ({ post, series }) => {
               {title}
             </Heading>
             {series && (
-              <p className="my-2 text-sm uppercase italic text-gray-700">
+              <p className="my-2 text-sm text-gray-700 uppercase italic">
                 <span>Part of the </span>
                 <Link href={`/series/${series.slug}`} className="font-medium">
                   {series.name}

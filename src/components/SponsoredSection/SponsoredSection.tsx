@@ -21,7 +21,7 @@ const SponsoredSection: React.FC<SponsoredSectionProps> = ({
   return (
     <div className="overflow-x-hidden pb-8 md:overflow-x-visible">
       <Link
-        className="thank-you mb-1 block text-sm uppercase italic text-gray-600 no-underline"
+        className="thank-you mb-1 block text-sm text-gray-600 uppercase italic no-underline"
         href="/sponsor"
         target="_blank"
         // see: https://developers.google.com/search/docs/essentials/spam-policies#link-spam
@@ -32,8 +32,8 @@ const SponsoredSection: React.FC<SponsoredSectionProps> = ({
       <section
         className={clsxm(
           'sponsored-section text-md mt-1 flex flex-col rounded-xs border border-solid border-pink-300 bg-pink-50/50 p-4',
-          'before:height-[3px] before:width-[33%] before:background-pink-400 before:position-relative before:top-[calc(-1em_-_3px)] before:ml-auto before:mr-auto before:content-["_"]',
-          'after:height-[3px] after:width-[33%] after:background-pink-400 after:position-relative after:top-[calc(-1em_-_3px)] after:ml-auto after:mr-auto after:content-["_"]'
+          'before:height-[3px] before:width-[33%] before:background-pink-400 before:position-relative before:top-[calc(-1em_-_3px)] before:mr-auto before:ml-auto before:content-["_"]',
+          'after:height-[3px] after:width-[33%] after:background-pink-400 after:position-relative after:top-[calc(-1em_-_3px)] after:mr-auto after:ml-auto after:content-["_"]'
         )}
       >
         <div className="flex flex-col space-y-4">

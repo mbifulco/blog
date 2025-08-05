@@ -86,7 +86,7 @@ const SeriesPage: NextPage<SeriesPageProps> = ({ series }) => {
           <Badge>Post Series</Badge>
           <Heading
             as="h1"
-            className="w-fit max-w-[60ch] text-3xl uppercase text-black md:text-5xl"
+            className="w-fit max-w-[60ch] text-3xl text-black uppercase md:text-5xl"
           >
             <em>{series?.name}</em>
           </Heading>

@@ -5,6 +5,7 @@ import posthog from 'posthog-js';
 import { toast } from 'sonner';
 
 import Button from '@components/Button';
+import { Input } from '@ui/input';
 import { trpc } from '@utils/trpc';
 
 type SubscriptionFormProps = {
@@ -75,7 +76,8 @@ const SubscriptionForm: React.FC<SubscriptionFormProps> = ({
       const firstName = firstNameRef.current?.value;
 
       toast.error('Subscription failed', {
-        description: 'Please try again or contact hello@mikebifulco.com for help.',
+        description:
+          'Please try again or contact hello@mikebifulco.com for help.',
         duration: 5000,
       });
 
@@ -143,7 +145,10 @@ const SubscriptionForm: React.FC<SubscriptionFormProps> = ({
     );
   }
 
-  if ((addSubscriberMutation.isSuccess && !alreadySubscribed) || getHoneypottedNerd) {
+  if (
+    (addSubscriberMutation.isSuccess && !alreadySubscribed) ||
+    getHoneypottedNerd
+  ) {
     return (
       <div className="flex flex-col gap-2">
         <p className="text-xl font-semibold text-inherit">
@@ -154,8 +159,6 @@ const SubscriptionForm: React.FC<SubscriptionFormProps> = ({
       </div>
     );
   }
-
-
 
   return (
     <div className="flex flex-col gap-2">
@@ -176,15 +179,15 @@ const SubscriptionForm: React.FC<SubscriptionFormProps> = ({
               data-element="fields"
               data-stacked="false"
             >
-              <input
+              <Input
                 type="text"
                 aria-label="Last Name"
                 ref={honeypotRef}
                 style={{ display: 'none' }}
                 name="fields[last_name]"
               />
-              <input
-                className="formkit-input h-10 w-full grow rounded-b-none rounded-t border border-b-0 border-solid border-pink-600 bg-white px-[2ch] py-[1ch] font-normal text-gray-950"
+              <Input
+                className="h-10 w-full grow rounded-t rounded-b-none border border-b-0 border-solid border-pink-600 bg-white px-[2ch] py-[1ch] font-normal text-gray-950"
                 aria-label="First Name"
                 name="fields[first_name]"
                 required
@@ -192,8 +195,8 @@ const SubscriptionForm: React.FC<SubscriptionFormProps> = ({
                 type="text"
                 ref={firstNameRef}
               />
-              <input
-                className="formkit-input h-10 w-full grow rounded-b-none border border-b-0 border-solid border-pink-600 bg-white px-[2ch] py-[1ch] font-normal text-gray-950"
+              <Input
+                className="h-10 w-full grow rounded-b-none border border-b-0 border-solid border-pink-600 bg-white px-[2ch] py-[1ch] font-normal text-gray-950"
                 name="email_address"
                 aria-label="Email Address"
                 placeholder="Email Address"
@@ -204,7 +207,7 @@ const SubscriptionForm: React.FC<SubscriptionFormProps> = ({
               <Button
                 type="submit"
                 data-element="submit"
-                className="formkit-submit formkit-submit padding-[1ch 2ch] h-10 grow rounded-b rounded-t-none font-normal"
+                className="formkit-submit formkit-submit padding-[1ch 2ch] h-10 grow rounded-t-none rounded-b font-normal"
               >
                 <div className="formkit-spinner">
                   <div></div>

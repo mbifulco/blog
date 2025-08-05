@@ -30,7 +30,7 @@ const NewsletterItem: React.FC<NewsletterItemProps> = ({ newsletter }) => {
         <Heading as="h3" className="text-xl text-pink-600">
           <Link href={`/newsletter/${slug}`}>{title}</Link>
         </Heading>
-        <p className="hidden text-sm uppercase text-gray-500 lg:visible">
+        <p className="hidden text-sm text-gray-500 uppercase lg:visible">
           {formatDate(date)}
         </p>
         <p className="line-clamp-3 overflow-y-hidden text-ellipsis text-gray-600">

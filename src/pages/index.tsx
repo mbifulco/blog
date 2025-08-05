@@ -2,31 +2,40 @@ import type { NextPage } from 'next';
 import Link from 'next/link';
 import { startOfToday } from 'date-fns';
 
-import { Colophon } from '../components/Colophon';
-import { Heading } from '../components/Heading';
-import { Headshot } from '../components/Headshot';
-import NewsletterItem from '../components/NewsletterFeed/NewsletterItem';
-import { PostFeed } from '../components/PostFeed';
-import SEO from '../components/seo';
-import { Subtitle } from '../components/Subtitle';
-import WebmentionMetadata from '../components/webmentionMetadata';
-import config from '../config';
-import type { BlogPost, Newsletter } from '../data/content-types';
-import { getAllPosts } from '../lib/blog';
-import { getAllNewsletters } from '../lib/newsletters';
-import { getCloudinaryImageUrl } from '../utils/images';
-import { generateRSSFeed } from '../utils/rss';
+import { Colophon } from '@components/Colophon';
+import { Heading } from '@components/Heading';
+import { Headshot } from '@components/Headshot';
+import NewsletterItem from '@components/NewsletterFeed/NewsletterItem';
+import { PostFeed } from '@components/PostFeed';
+import SEO from '@components/seo';
+import StructuredData from '@components/StructuredData/StructuredData';
+import { Subtitle } from '@components/Subtitle';
+import WebmentionMetadata from '@components/webmentionMetadata';
+import type { BlogPost, Newsletter } from '@data/content-types';
+import { getPaginatedPosts } from '@lib/blog';
+import { getAllNewsletters } from '@lib/newsletters';
+import { getCloudinaryImageUrl } from '@utils/images';
+import { personStructuredData } from '@utils/mikePersonStructuredData';
+import { generateRSSFeed } from '@utils/rss';
+import config from '@/config';
+import PaginationWrapper from '../components/Pagination';
 
 export async function getStaticProps() {
-  const posts = await getAllPosts();
+  const paginatedPosts = await getPaginatedPosts({ limit: 10 });
   const newsletters = await getAllNewsletters();
 
-  generateRSSFeed(posts, newsletters);
+  generateRSSFeed(paginatedPosts.items, newsletters);
 
   return {
     props: {
-      posts,
+      posts: paginatedPosts.items,
       newsletter: newsletters[0],
+      pagination: {
+        currentPage: paginatedPosts.currentPage,
+        totalPages: paginatedPosts.totalPages,
+        hasNextPage: paginatedPosts.hasNextPage,
+        hasPreviousPage: paginatedPosts.hasPreviousPage,
+      },
     },
   };
 }
@@ -37,15 +46,26 @@ const headshotPublicUrl = getCloudinaryImageUrl(headshotPublicId);
 type HomePageProps = {
   posts: BlogPost[];
   newsletter: Newsletter;
+  pagination: {
+    currentPage: number;
+    totalPages: number;
+    hasNextPage: boolean;
+    hasPreviousPage: boolean;
+  };
 };
 
-const HomePage: NextPage<HomePageProps> = ({ posts, newsletter }) => {
+const HomePage: NextPage<HomePageProps> = ({
+  posts,
+  newsletter,
+  pagination,
+}) => {
   return (
     <div className="mx-auto mb-10 flex max-w-4xl flex-col gap-12">
       <SEO
         title="Latest articles on design, development, and the world around me"
         image={headshotPublicUrl}
       />
+      <StructuredData structuredData={personStructuredData} />
       <div className="my-4 items-start gap-4 md:flex">
         <div className="mr-0 overflow-clip rounded-xl lg:mr-4">
           <Headshot size={250} />
@@ -131,6 +151,13 @@ const HomePage: NextPage<HomePageProps> = ({ posts, newsletter }) => {
       <div>
         <Subtitle>LATEST POSTS</Subtitle>
         <PostFeed posts={posts} />
+        <PaginationWrapper
+          currentPage={pagination.currentPage}
+          totalPages={pagination.totalPages}
+          hasNextPage={pagination.hasNextPage}
+          hasPreviousPage={pagination.hasPreviousPage}
+          basePath=""
+        />
       </div>
       <WebmentionMetadata
         summary="mikebifulco.com - articles on design, development, and making the world a better place."

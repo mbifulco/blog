@@ -9,7 +9,7 @@ const NewsletterSignup: React.FC = () => {
   return (
     <div className="mb-4 flex flex-row text-justify">
       <div className="mx-auto my-0 flex max-w-[800px] flex-col justify-center border border-solid border-gray-200 bg-white px-8 py-4">
-        <section className="mx-0 mb-0 mt-8 flex max-w-[calc(100vw_-_2rem)] flex-col gap-2">
+        <section className="mx-0 mt-8 mb-0 flex max-w-[calc(100vw_-_2rem)] flex-col gap-2">
           <div className="mb-2 flex flex-row justify-center">
             <Headshot />
           </div>

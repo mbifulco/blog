@@ -22,12 +22,12 @@ const NewsletterHero = () => {
             <div className="relative max-w-prose space-y-4 overflow-visible rounded-sm text-gray-300">
               <div className="absolute -top-4 left-4 z-0 block h-full w-full bg-[hsl(3,90%,55%)] mix-blend-screen" />
               {/* <div className="absolute left-0 top-0 z-0 block h-full w-full  bg-[hsl(113,90%,55%)] mix-blend-screen" /> */}
-              <div className="absolute -left-4 top-4 z-0 block h-full w-full bg-[hsl(223,90%,55%)] mix-blend-screen" />
+              <div className="absolute top-4 -left-4 z-0 block h-full w-full bg-[hsl(223,90%,55%)] mix-blend-screen" />
               <div className="relative z-20 flex h-full w-full flex-col gap-4 bg-[#222] p-6">
                 <Heading
                   as="h2"
                   className="lg-text-2xl text-white xl:text-7xl"
-                  id="newsletter-signup"
+                  id="subscribe"
                 >
                   SHIP PRODUCTS <br />
                   THAT <span className="text-pink-600">MATTER</span>

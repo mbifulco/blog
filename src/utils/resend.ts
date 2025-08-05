@@ -1,17 +1,19 @@
 import type { CreateContactResponse } from 'resend';
-
-// Custom response type to handle already subscribed case
-export type SubscribeResponse = CreateContactResponse | {
-  data: null;
-  error: {
-    name: 'already_subscribed';
-    message: string;
-  };
-};
 import { Resend } from 'resend';
 import { z } from 'zod';
 
 import { env } from './env';
+
+// Custom response type to handle already subscribed case
+export type SubscribeResponse =
+  | CreateContactResponse
+  | {
+      data: null;
+      error: {
+        name: 'already_subscribed';
+        message: string;
+      };
+    };
 
 export const resend = new Resend(env.RESEND_API_KEY);
 
@@ -130,12 +132,12 @@ export const getSubscriberCount = async () => {
       audienceId: env.RESEND_NEWSLETTER_AUDIENCE_ID,
     });
 
-    if (!response.data) {
-      throw new Error('No audience data');
-    }
-
     if (response.error) {
       throw new Error(`${response.error.name}: ${response.error.message}`);
+    }
+
+    if (!response.data) {
+      throw new Error('No audience data');
     }
 
     const contacts = response.data.data;
@@ -151,9 +153,7 @@ export const getSubscriberCount = async () => {
 };
 
 export const emailIsBad = (email: string) => {
-  const badDomains = [
-    'mailinator.com',
-  ];
+  const badDomains = ['mailinator.com'];
   const domain = email.split('@')[1]?.toLowerCase();
   return badDomains.includes(domain);
 };
@@ -162,9 +162,7 @@ export const emailIsBad = (email: string) => {
  * return a "success" response in cases where the email is from a bad domain
  */
 export const fakeSubscribe = async (subscriber: SubscribeArgs) => {
-  const badDomains = [
-    'mailinator.com',
-  ];
+  const badDomains = ['mailinator.com'];
   const domain = subscriber.email.split('@')[1]?.toLowerCase();
   if (badDomains.includes(domain)) {
     return {
@@ -173,8 +171,9 @@ export const fakeSubscribe = async (subscriber: SubscribeArgs) => {
   }
 };
 
-export const subscribe = async (subscriber: SubscribeArgs): Promise<SubscribeResponse> => {
-
+export const subscribe = async (
+  subscriber: SubscribeArgs
+): Promise<SubscribeResponse> => {
   // if the email is from a bad domain, return a fake response
   // so the form looks happy and the abuser can buzz off thinking they were successful
   if (emailIsBad(subscriber.email)) {
@@ -219,7 +218,10 @@ export const subscribe = async (subscriber: SubscribeArgs): Promise<SubscribeRes
   } catch (error: unknown) {
     // If the error is that the contact doesn't exist, that's fine - proceed with creation
     const errorObj = error as Error;
-    if (errorObj?.message?.includes('not_found') || errorObj?.name === 'not_found') {
+    if (
+      errorObj?.message?.includes('not_found') ||
+      errorObj?.name === 'not_found'
+    ) {
       try {
         const res = await resend.contacts.create({
           audienceId: env.RESEND_NEWSLETTER_AUDIENCE_ID,

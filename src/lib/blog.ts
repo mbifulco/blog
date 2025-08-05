@@ -3,6 +3,8 @@ import { join } from 'path';
 
 import { ContentTypes } from '../data/content-types';
 import type { BlogPost } from '../data/content-types';
+import { paginate } from '../utils/pagination';
+import type { PaginatedResult, PaginationOptions } from '../utils/pagination';
 import { getAllContentFromDirectory } from './content-loaders/getAllContentFromDirectory';
 import { getContentBySlug } from './content-loaders/getContentBySlug';
 
@@ -22,4 +24,11 @@ export const getAllPosts = async () => {
   )) as BlogPost[];
 
   return allPosts;
+};
+
+export const getPaginatedPosts = async (
+  options: PaginationOptions = {}
+): Promise<PaginatedResult<BlogPost>> => {
+  const allPosts = await getAllPosts();
+  return paginate(allPosts, options);
 };

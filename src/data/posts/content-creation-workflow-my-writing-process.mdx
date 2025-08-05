@@ -1,14 +1,15 @@
 ---
-title: "Content creation workflow: my writing process"
+title: 'Content creation workflow: my writing process'
 excerpt: Learn how I write and publish content on my Next.js site using Markdown and MDX, and a custom content creation workflow.
 tags: ['nextjs', 'design', 'newsletter']
 date: 12-22-2024
-slug:  content-creation-workflow-my-writing-process
+slug: content-creation-workflow-my-writing-process
 coverImagePublicId: posts/content-creation-workflow-my-writing-process/cover
-series: "Content creation workflow: Writing"
+series: 'Content creation workflow: Writing'
 ---
 
 ## My writing workflow
+
 I have worked diligently to develop a writing workflow that keeps me productive and focused on writing, rather than getting hung up on the tools I use to write.
 
 ### A little about me
@@ -31,28 +32,42 @@ Regardless of who you are, the tools you use, and what you're writing about, lan
 
 If the work you're creating is good, you've got a great foundation to stand on. Sharing your expertise and knowledge with your community starts there - the rest is just details.
 
-
 ## How I publish content on my Next.js site with Markdown and MDX
 
 For all content on my site, my authoring workflow looks like this:
 
 ### Write in Markdown
+
 <Image
   publicId="posts/content-creation-workflow-my-writing-process/writing-screenshot"
   alt="A screenshot of my IDE with a Markdown file open"
-  caption={<span>writing new posts looks a whole lot like <a href="https://mikebifulco.com/posts/self-healing-urls-nextjs-seo">this</a>.</span>}
+  caption={
+    <span>
+      writing new posts looks a whole lot like{' '}
+      <a href="https://mikebifulco.com/posts/self-healing-urls-nextjs-seo">
+        this
+      </a>
+      .
+    </span>
+  }
 />
 
 1. I write in [Markdown](https://daringfireball.net/projects/markdown/). This makes it easy to write without distraction, and keeps my writing process focused on _what_ I should be saying, rather than how it looks.
 1. I create a file for each new post in [the source code for my site](https://github.com/mikebifulco/blog) under the `src/data/newsletters` directory, as a single `.mdx` file with a small amount of frontmatter (title, desctiption, tags, slug, and a cover image).
-
 
 ### Every article needs a cover image
 
 <Image
   publicId="posts/content-creation-workflow-my-writing-process/figma"
   alt="A screenshot of a Figma file with a cover image for an article"
-  caption={<span><a href="https://mikebifulco.com/newsletter/open-sourcing-my-design-system">I use Figma</a> to create cover images for all of my articles.</span>}
+  caption={
+    <span>
+      <a href="https://mikebifulco.com/newsletter/open-sourcing-my-design-system">
+        I use Figma
+      </a>{' '}
+      to create cover images for all of my articles.
+    </span>
+  }
 />
 
 1. For every article, I create a `1200 x 630px` cover image in [Figma](https://mikebifulco.com/newsletter/open-sourcing-my-design-system). This is the image you'll see on social media sites when a link to my articles is shared. Any other images included in the body of a post are created the same way, and are generally the same size.
@@ -70,6 +85,7 @@ For all content on my site, my authoring workflow looks like this:
 1. After the PR is merged, Vercel automatically builds the site and deploys the changes, and the article is live in a few minutes.
 
 ## After I publish: sharing my work
+
 **The most critical part of this process is sharing my work with the world.**
 
 Once a post goes live, I run off to social media and start _sharing my work_ with the world - on Bluesky, on Threads, on LinkedIn, and on Reddit. The ins and outs of that process is a whole other article, but I'll say this: it's just as important as _actually publishing something_.

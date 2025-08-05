@@ -7,7 +7,7 @@ const useNewsletterStats = () => {
 
   const { data: subscriberCount } = subscriberCountQuery;
 
-  const randomMax = 1030;
+  const randomMax = 1300;
   const randomMin = 1112;
   const COUNT_TO_SHOW_WHILE_LOADING = getRandomNumberBetween(
     randomMin,
