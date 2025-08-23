@@ -215,7 +215,7 @@ const SubscriptionForm: React.FC<SubscriptionFormProps> = ({
                 ref={firstNameRef}
               />
               <Input
-                className="h-10 w-full grow rounded-b-none border border-b-0 border-solid border-pink-600 bg-white px-[2ch] py-[1ch] font-normal text-gray-950"
+                className="h-10 w-full grow rounded-none border border-b-0 border-solid border-pink-600 bg-white px-[2ch] py-[1ch] font-normal text-gray-950"
                 name="email_address"
                 aria-label="Email Address"
                 placeholder="Email Address"
