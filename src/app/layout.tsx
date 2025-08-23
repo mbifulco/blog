@@ -35,6 +35,8 @@ export default function RootLayout({
               <FathomAnalytics siteId={env.NEXT_PUBLIC_FATHOM_ID} />
               {children}
               <Toaster
+                richColors
+                closeButton
                 position="top-right"
                 toastOptions={{
                   style: {

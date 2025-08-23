@@ -71,8 +71,6 @@ export default function NewsletterSignupPage() {
         source: 'subscribe-page',
         error,
       });
-
-      reset();
     },
   });
 
