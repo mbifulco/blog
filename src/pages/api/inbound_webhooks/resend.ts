@@ -39,7 +39,7 @@ const ensureEventForCurrentAudience = (data: ContactEventData) => {
   return true;
 };
 
-const webhooks = async (req: NextApiRequest, res: NextApiResponse) => {
+const webhookHandler = async (req: NextApiRequest, res: NextApiResponse) => {
   const { method } = req;
   if (!method || method !== 'POST') {
     res.setHeader('Allow', ['POST']);
@@ -138,10 +138,16 @@ const webhooks = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 };
 
+// Type the handler properly for Next.js API routes
+const typedHandler = webhookHandler as (
+  req: NextApiRequest,
+  res: NextApiResponse,
+) => Promise<void>;
+
 export const config = {
   api: {
     bodyParser: false,
   },
 };
 
-export default webhooks;
+export default typedHandler;

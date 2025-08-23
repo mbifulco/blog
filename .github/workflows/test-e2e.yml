@@ -12,7 +12,7 @@ jobs:
     timeout-minutes: 7
     runs-on: ubuntu-latest
     container:
-      image: mcr.microsoft.com/playwright:v1.54.1-noble
+      image: mcr.microsoft.com/playwright:v1.55.0-noble
       options: --user 1001
     env:
       NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME: ${{ secrets.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME }}
@@ -35,6 +35,9 @@ jobs:
 
       - name: Install deps
         run: pnpm install
+
+      - name: Install Playwright browsers
+        run: pnpm exec playwright install
 
       - name: Run Playwright tests
         run: pnpm exec playwright test

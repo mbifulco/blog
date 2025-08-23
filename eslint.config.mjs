@@ -32,6 +32,7 @@ export default [
       '.next',
       'dist',
       'pnpm-lock.yaml',
+      'next-env.d.ts',
     ],
   },
   {

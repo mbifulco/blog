@@ -1,19 +1,18 @@
-import type { NextRequest } from 'next/server';
+import type { NextApiRequest, NextApiResponse } from 'next';
 import { appRouter } from '@server/routers/_app';
-import { fetchRequestHandler } from '@trpc/server/adapters/fetch';
+import { createNextApiHandler } from '@trpc/server/adapters/next';
 
-export default async function handler(req: NextRequest) {
-  return fetchRequestHandler({
-    endpoint: '/api/trpc',
+const trpcHandler = async (req: NextApiRequest, res: NextApiResponse) => {
+  return createNextApiHandler({
     router: appRouter,
-    req,
     createContext: () => ({}),
-  });
-}
-
-// We're using the edge-runtime
-// NOTE: if you don't want to use the edge runtime, the adapter above will need to be removed
-// see https://trpc.io/docs/client/nextjs/setup#3-create-a-trpc-router for the alternate implementation
-export const config = {
-  runtime: 'edge',
+  })(req, res);
 };
+
+// Type the handler properly for Next.js API routes
+const typedHandler = trpcHandler as (
+  req: NextApiRequest,
+  res: NextApiResponse,
+) => Promise<void>;
+
+export default typedHandler;
