@@ -12,7 +12,7 @@ import { Button } from '@ui/button';
 import { Card, CardContent, CardHeader } from '@ui/card';
 import { Input } from '@ui/input';
 import { Label } from '@ui/label';
-import type { SubscribeResponse } from '@utils/resend';
+import type { SubscribeMutationResponse } from '@server/routers/mailingList';
 import { trpc } from '@utils/trpc';
 import { PostHogPageview } from '../posthog-provider';
 
@@ -31,9 +31,7 @@ export default function NewsletterSignupPage() {
   } = useForm<FormData>();
 
   const addSubscriberMutation = trpc.mailingList.subscribe.useMutation({
-    onSuccess: (data: SubscribeResponse) => {
-      reset();
-
+    onSuccess: (data: SubscribeMutationResponse) => {
       if (data?.error?.name === 'already_subscribed') {
         toast.success('Already subscribed! 🎉', {
           description: data.error.message,
@@ -44,6 +42,7 @@ export default function NewsletterSignupPage() {
           source: 'subscribe-page',
         });
 
+        reset();
         return;
       }
 
@@ -58,10 +57,10 @@ export default function NewsletterSignupPage() {
       posthog.capture('newsletter/subscribed', {
         source: 'subscribe-page',
       });
+
+      reset();
     },
     onError: (error) => {
-      reset();
-
       toast.error('Subscription failed', {
         description:
           'Please try again or contact hello@mikebifulco.com for help.',
@@ -72,26 +71,20 @@ export default function NewsletterSignupPage() {
         source: 'subscribe-page',
         error,
       });
+
+      reset();
     },
   });
 
-  const onSubmit = async (data: FormData) => {
+  const onSubmit = (data: FormData) => {
     posthog.identify(data.email, {
       firstName: data.firstName,
     });
 
-    try {
-      await addSubscriberMutation.mutateAsync({
-        email: data.email,
-        firstName: data.firstName,
-      });
-    } catch (error) {
-      // Handle TRPC input validation errors or other errors that don't trigger onError
-      console.error('Form submission error:', error);
-    }
-
-    // Always reset the form after submission attempt, regardless of outcome
-    reset();
+    addSubscriberMutation.mutate({
+      email: data.email,
+      firstName: data.firstName,
+    });
   };
 
   if (isSubmitted) {

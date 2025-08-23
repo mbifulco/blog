@@ -1,5 +1,4 @@
 import { useRef, useState } from 'react';
-import Link from 'next/link';
 import useNewsletterStats from '@hooks/useNewsletterStats';
 import posthog from 'posthog-js';
 import { toast } from 'sonner';
@@ -7,6 +6,7 @@ import { toast } from 'sonner';
 import Button from '@components/Button';
 import { Input } from '@ui/input';
 import { trpc } from '@utils/trpc';
+import type { SubscribeMutationResponse } from '@server/routers/mailingList';
 
 type SubscriptionFormProps = {
   tags?: string[];
@@ -21,10 +21,15 @@ const SubscriptionForm: React.FC<SubscriptionFormProps> = ({
 }) => {
   const [getHoneypottedNerd, setGetHoneypottedNerd] = useState<boolean>(false);
   const [alreadySubscribed, setAlreadySubscribed] = useState<boolean>(false);
+  const [validationError, setValidationError] = useState<string | null>(null);
+
   const addSubscriberMutation = trpc.mailingList.subscribe.useMutation({
-    onSuccess: (data) => {
+    onSuccess: (data: SubscribeMutationResponse) => {
+      // Clear any validation errors on success
+      setValidationError(null);
+
       // Check if this is the "already subscribed" case
-      if (data?.error?.name === 'already_subscribed') {
+      if (data.error?.name === 'already_subscribed') {
         const email = emailRef.current?.value;
         const firstName = firstNameRef.current?.value;
 
@@ -75,9 +80,26 @@ const SubscriptionForm: React.FC<SubscriptionFormProps> = ({
       const email = emailRef.current?.value;
       const firstName = firstNameRef.current?.value;
 
+      // Handle validation errors specifically
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const errorData = error as any;
+      if (errorData?.data?.zodError?.fieldErrors) {
+        const fieldErrors = errorData.data.zodError.fieldErrors;
+        if (fieldErrors.email) {
+          setValidationError('Please enter a valid email address (e.g., person@gmail.com)');
+        } else if (fieldErrors.firstName) {
+          setValidationError('Please enter your first name');
+        } else {
+          setValidationError('Please check your input and try again');
+        }
+      } else if (errorData?.message) {
+        setValidationError(errorData.message);
+      } else {
+        setValidationError('Something went wrong. Please try again or contact support.');
+      }
+
       toast.error('Subscription failed', {
-        description:
-          'Please try again or contact hello@mikebifulco.com for help.',
+        description: 'Please check your input and try again.',
         duration: 5000,
       });
 
@@ -85,7 +107,7 @@ const SubscriptionForm: React.FC<SubscriptionFormProps> = ({
         source,
         email,
         firstName,
-        error,
+        error: errorData?.message || 'Unknown error',
       });
     },
   });
@@ -97,8 +119,11 @@ const SubscriptionForm: React.FC<SubscriptionFormProps> = ({
   const firstNameRef = useRef<HTMLInputElement>(null);
   const honeypotRef = useRef<HTMLInputElement>(null);
 
-  const handleSubmission = async (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmission = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    // Clear any previous validation errors
+    setValidationError(null);
 
     const email = emailRef.current?.value;
     const firstName = firstNameRef.current?.value;
@@ -110,6 +135,14 @@ const SubscriptionForm: React.FC<SubscriptionFormProps> = ({
     }
 
     if (!email) {
+      setValidationError('Please enter your email address');
+      return;
+    }
+
+    // Basic email validation on frontend
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setValidationError('Please enter a valid email address (e.g., person@gmail.com)');
       return;
     }
 
@@ -117,30 +150,70 @@ const SubscriptionForm: React.FC<SubscriptionFormProps> = ({
       firstName,
     });
 
-    await addSubscriberMutation.mutateAsync({
+    addSubscriberMutation.mutate({
       email,
       firstName,
     });
   };
 
-  if (addSubscriberMutation.error) {
+  // Show validation error inline with the form
+  if (validationError) {
     return (
       <div className="flex flex-col gap-2">
-        <p className="text-xl font-semibold text-inherit">
-          {addSubscriberMutation.error.message}
-        </p>
-        <p className="text-inherit">
-          If you continue to have issues, please email{' '}
-          <Link
-            className="text-pink-600 hover:underline"
-            href="mailto:hello@mikebifulco.com"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            hello@mikebifulco.com
-          </Link>{' '}
-          and I&apos;ll help get this sorted.
-        </p>
+        <div className="rounded-md border border-red-200 bg-red-50 p-4">
+          <p className="text-sm font-medium text-red-800">
+            {validationError}
+          </p>
+        </div>
+        <form ref={formRef} className="w-full" onSubmit={handleSubmission}>
+          <fieldset disabled={addSubscriberMutation.isPending}>
+            <div data-style="clean">
+              <div
+                className="seva-fields formkit-fields grid w-full items-center rounded-sm"
+                data-element="fields"
+                data-stacked="false"
+              >
+                <Input
+                  type="text"
+                  aria-label="Last Name"
+                  ref={honeypotRef}
+                  style={{ display: 'none' }}
+                  name="fields[last_name]"
+                />
+                <Input
+                  className="h-10 w-full grow rounded-t rounded-b-none border border-b-0 border-solid border-pink-600 bg-white px-[2ch] py-[1ch] font-normal text-gray-950"
+                  aria-label="First Name"
+                  name="fields[first_name]"
+                  required
+                  placeholder="First Name"
+                  type="text"
+                  ref={firstNameRef}
+                />
+                <Input
+                  className="h-10 w-full grow rounded-b-none rounded-none border border-b-0 border-solid border-pink-600 bg-white px-[2ch] py-[1ch] font-normal text-gray-950"
+                  name="email_address"
+                  aria-label="Email Address"
+                  placeholder="Email Address"
+                  required
+                  type="email"
+                  ref={emailRef}
+                />
+                <Button
+                  type="submit"
+                  data-element="submit"
+                  className="formkit-submit formkit-submit padding-[1ch 2ch] h-10 grow rounded-t-none rounded-b font-normal"
+                >
+                  <div className="formkit-spinner">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                  </div>
+                  <span>💌 {buttonText}</span>
+                </Button>
+              </div>
+            </div>
+          </fieldset>
+        </form>
       </div>
     );
   }
