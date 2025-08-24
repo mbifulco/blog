@@ -85,6 +85,7 @@ vi.mock('@utils/trpc', () => ({
     mailingList: {
       subscribe: {
         useMutation: vi.fn(() => ({
+          mutate: vi.fn(),
           mutateAsync: vi.fn(),
           isPending: false,
           isSuccess: false,
@@ -268,36 +269,30 @@ describe('NewsletterSignupPage', () => {
 
   it('should show success state after successful submission', async () => {
     // Create a mock that properly triggers the onSuccess callback
-    let onSuccessCallback: ((data: unknown) => void) | null = null;
-
-    const mockMutateAsync = vi.fn().mockImplementation(async (_data) => {
-      // Simulate the mutation completing successfully
-      const result = { success: true };
-      // Call the onSuccess callback if it exists
-      if (onSuccessCallback) {
-        onSuccessCallback(result);
+    let capturedOnSuccess: ((data: unknown) => void) | null = null;
+    const mockMutate = vi.fn().mockImplementation(() => {
+      // Simulate successful mutation by calling the captured onSuccess callback
+      if (capturedOnSuccess) {
+        capturedOnSuccess({ data: { id: "sub_12345" }, error: null });
       }
-      return result;
     });
 
-    // Mock successful mutation that will trigger onSuccess
+    // Mock successful mutation that will capture and trigger onSuccess
     const { trpc } = await import('@utils/trpc');
-    const mockUseMutation = vi.fn(
-      (options: { onSuccess?: (data: unknown) => void }) => {
-        // Store the onSuccess callback
-        onSuccessCallback = options?.onSuccess || null;
-
-        return {
-          mutateAsync: mockMutateAsync,
-          isPending: false,
-          isSuccess: false,
-          error: null,
-        };
-      }
-    );
+    const mockUseMutation = vi.fn().mockImplementation((options) => {
+      // Capture the onSuccess callback
+      capturedOnSuccess = options?.onSuccess || null;
+      
+      return {
+        mutate: mockMutate,
+        mutateAsync: vi.fn(),
+        isPending: false,
+        isSuccess: false,
+        error: null,
+      };
+    });
 
     vi.mocked(trpc.mailingList.subscribe.useMutation).mockImplementation(
-      // @ts-expect-error - Mock implementation for testing
       mockUseMutation
     );
 
@@ -347,35 +342,29 @@ describe('NewsletterSignupPage', () => {
 
   it('should show success state with correct link to newsletter', async () => {
     // Create a mock that properly triggers the onSuccess callback
-    let onSuccessCallback: ((data: unknown) => void) | null = null;
-
-    const mockMutateAsync = vi.fn().mockImplementation(async (_data) => {
-      // Simulate the mutation completing successfully
-      const result = { success: true };
-      // Call the onSuccess callback if it exists
-      if (onSuccessCallback) {
-        onSuccessCallback(result);
+    let capturedOnSuccess: ((data: unknown) => void) | null = null;
+    const mockMutate = vi.fn().mockImplementation(() => {
+      // Simulate successful mutation by calling the captured onSuccess callback
+      if (capturedOnSuccess) {
+        capturedOnSuccess({ data: { id: "sub_12345" }, error: null });
       }
-      return result;
     });
 
     const { trpc } = await import('@utils/trpc');
-    const mockUseMutation = vi.fn(
-      (options: { onSuccess?: (data: unknown) => void }) => {
-        // Store the onSuccess callback
-        onSuccessCallback = options?.onSuccess || null;
-
-        return {
-          mutateAsync: mockMutateAsync,
-          isPending: false,
-          isSuccess: false,
-          error: null,
-        };
-      }
-    );
+    const mockUseMutation = vi.fn().mockImplementation((options) => {
+      // Capture the onSuccess callback
+      capturedOnSuccess = options?.onSuccess || null;
+      
+      return {
+        mutate: mockMutate,
+        mutateAsync: vi.fn(),
+        isPending: false,
+        isSuccess: false,
+        error: null,
+      };
+    });
 
     vi.mocked(trpc.mailingList.subscribe.useMutation).mockImplementation(
-      // @ts-expect-error - Mock implementation for testing
       mockUseMutation
     );
 
