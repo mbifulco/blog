@@ -49,6 +49,8 @@ function MyApp({ Component, pageProps }: AppProps) {
           <FathomAnalytics siteId={env.NEXT_PUBLIC_FATHOM_ID} />
           <Component {...pageProps} />
           <Toaster
+            richColors
+            closeButton
             position="top-right"
             toastOptions={{
               style: {

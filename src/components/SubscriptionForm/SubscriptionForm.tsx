@@ -1,5 +1,4 @@
 import { useRef, useState } from 'react';
-import Link from 'next/link';
 import useNewsletterStats from '@hooks/useNewsletterStats';
 import posthog from 'posthog-js';
 import { toast } from 'sonner';
@@ -7,6 +6,7 @@ import { toast } from 'sonner';
 import Button from '@components/Button';
 import { Input } from '@ui/input';
 import { trpc } from '@utils/trpc';
+import type { SubscribeMutationResponse } from '@server/routers/mailingList';
 
 type SubscriptionFormProps = {
   tags?: string[];
@@ -21,10 +21,11 @@ const SubscriptionForm: React.FC<SubscriptionFormProps> = ({
 }) => {
   const [getHoneypottedNerd, setGetHoneypottedNerd] = useState<boolean>(false);
   const [alreadySubscribed, setAlreadySubscribed] = useState<boolean>(false);
-  const addSubscriberMutation = trpc.mailingList.subscribe.useMutation({
-    onSuccess: (data) => {
+
+    const addSubscriberMutation = trpc.mailingList.subscribe.useMutation({
+    onSuccess: (data: SubscribeMutationResponse) => {
       // Check if this is the "already subscribed" case
-      if (data?.error?.name === 'already_subscribed') {
+      if (data.error?.name === 'already_subscribed') {
         const email = emailRef.current?.value;
         const firstName = firstNameRef.current?.value;
 
@@ -75,18 +76,42 @@ const SubscriptionForm: React.FC<SubscriptionFormProps> = ({
       const email = emailRef.current?.value;
       const firstName = firstNameRef.current?.value;
 
-      toast.error('Subscription failed', {
-        description:
-          'Please try again or contact hello@mikebifulco.com for help.',
-        duration: 5000,
-      });
+      // Handle validation errors specifically
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const errorData = error as any;
+      if (errorData?.data?.zodError?.fieldErrors) {
+        const fieldErrors = errorData.data.zodError.fieldErrors;
+        if (fieldErrors.email) {
+          toast.error('Invalid email address', {
+            description: 'Please enter a valid email address (e.g., person@gmail.com)',
+          });
+        } else if (fieldErrors.firstName) {
+          toast.error('Missing first name', {
+            description: 'Please enter your first name',
+          });
+        } else {
+          toast.error('Validation error', {
+            description: 'Please check your input and try again',
+          });
+        }
+      } else if (errorData?.message) {
+        toast.error('Subscription failed', {
+          description: errorData.message,
+        });
+      } else {
+        toast.error('Something went wrong', {
+          description: 'Please try again or contact support.',
+        });
+      }
 
       posthog.capture('newsletter/subscribe_error', {
         source,
         email,
         firstName,
-        error,
+        error: errorData?.message || 'Unknown error',
       });
+
+      // Don't clear form values on error - let user fix their input
     },
   });
 
@@ -97,7 +122,7 @@ const SubscriptionForm: React.FC<SubscriptionFormProps> = ({
   const firstNameRef = useRef<HTMLInputElement>(null);
   const honeypotRef = useRef<HTMLInputElement>(null);
 
-  const handleSubmission = async (e: React.FormEvent<HTMLFormElement>) => {
+      const handleSubmission = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const email = emailRef.current?.value;
@@ -110,6 +135,20 @@ const SubscriptionForm: React.FC<SubscriptionFormProps> = ({
     }
 
     if (!email) {
+      toast.error('Missing email', {
+        description: 'Please enter your email address',
+        duration: 5000,
+      });
+      return;
+    }
+
+    // Basic email validation on frontend
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      toast.error('Invalid email address', {
+        description: 'Please enter a valid email address (e.g., person@gmail.com)',
+        duration: 5000,
+      });
       return;
     }
 
@@ -117,33 +156,13 @@ const SubscriptionForm: React.FC<SubscriptionFormProps> = ({
       firstName,
     });
 
-    await addSubscriberMutation.mutateAsync({
+    addSubscriberMutation.mutate({
       email,
       firstName,
     });
   };
 
-  if (addSubscriberMutation.error) {
-    return (
-      <div className="flex flex-col gap-2">
-        <p className="text-xl font-semibold text-inherit">
-          {addSubscriberMutation.error.message}
-        </p>
-        <p className="text-inherit">
-          If you continue to have issues, please email{' '}
-          <Link
-            className="text-pink-600 hover:underline"
-            href="mailto:hello@mikebifulco.com"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            hello@mikebifulco.com
-          </Link>{' '}
-          and I&apos;ll help get this sorted.
-        </p>
-      </div>
-    );
-  }
+
 
   if (
     (addSubscriberMutation.isSuccess && !alreadySubscribed) ||
@@ -196,7 +215,7 @@ const SubscriptionForm: React.FC<SubscriptionFormProps> = ({
                 ref={firstNameRef}
               />
               <Input
-                className="h-10 w-full grow rounded-b-none border border-b-0 border-solid border-pink-600 bg-white px-[2ch] py-[1ch] font-normal text-gray-950"
+                className="h-10 w-full grow rounded-none border border-b-0 border-solid border-pink-600 bg-white px-[2ch] py-[1ch] font-normal text-gray-950"
                 name="email_address"
                 aria-label="Email Address"
                 placeholder="Email Address"
