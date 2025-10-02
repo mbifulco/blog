@@ -5,6 +5,7 @@ import eslint from '@eslint/js';
 import tsParser from '@typescript-eslint/parser';
 import reactCompiler from 'eslint-plugin-react-compiler';
 import unusedImports from 'eslint-plugin-unused-imports';
+import reactHooks from 'eslint-plugin-react-hooks';
 import { configs } from 'typescript-eslint';
 
 const compat = new FlatCompat({
@@ -39,6 +40,7 @@ export default [
     plugins: {
       'unused-imports': unusedImports,
       'react-compiler': reactCompiler,
+      'react-hooks': reactHooks,
     },
     languageOptions: {
       parser: tsParser,
