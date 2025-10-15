@@ -122,7 +122,35 @@ const SubscriptionForm: React.FC<SubscriptionFormProps> = ({
   const firstNameRef = useRef<HTMLInputElement>(null);
   const honeypotRef = useRef<HTMLInputElement>(null);
 
-      const handleSubmission = (e: React.FormEvent<HTMLFormElement>) => {
+      // Validation helper: detect suspicious first names
+  const isSpamFirstName = (name: string | undefined): boolean => {
+    if (!name || name.length === 0) return false;
+
+    // Check for mixed case pattern (e.g., VKvNcRvi, mtpDQVeZaqb)
+    const hasMixedCase = /[a-z]/.test(name) && /[A-Z]/.test(name);
+    const hasMultipleUpperInMiddle = /[a-z][A-Z]/.test(name);
+
+    // Check for excessive uppercase letters in mixed case names
+    // Split by spaces and check each word
+    const words = name.split(/\s+/);
+    const hasExcessiveUppercase = words.some((word) => {
+      const uppercaseCount = (word.match(/[A-Z]/g) || []).length;
+      const hasMixed = /[a-z]/.test(word) && /[A-Z]/.test(word);
+      return hasMixed && uppercaseCount > 2;
+    });
+
+    // Check for excessive consonants (>4 in a row)
+    const hasExcessiveConsonants = /[bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ]{5,}/.test(name);
+
+    // Check vowel ratio (should have at least 20% vowels in a normal name)
+    const vowelCount = (name.match(/[aeiouAEIOU]/g) || []).length;
+    const vowelRatio = vowelCount / name.length;
+    const hasLowVowelRatio = vowelRatio < 0.2 && name.length > 4;
+
+    return (hasMixedCase && hasMultipleUpperInMiddle) || hasExcessiveConsonants || hasLowVowelRatio || hasExcessiveUppercase;
+  };
+
+  const handleSubmission = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const email = emailRef.current?.value;
@@ -130,6 +158,25 @@ const SubscriptionForm: React.FC<SubscriptionFormProps> = ({
     const honeypot = honeypotRef.current?.value;
 
     if (honeypot) {
+      posthog.capture('newsletter/spam_detected', {
+        source,
+        email,
+        firstName,
+        reason: 'honeypot',
+        honeypotValue: honeypot,
+      });
+      setGetHoneypottedNerd(true);
+      return;
+    }
+
+    // Check for spam patterns in first name
+    if (isSpamFirstName(firstName)) {
+      posthog.capture('newsletter/spam_detected', {
+        source,
+        email,
+        firstName,
+        reason: 'suspicious_first_name',
+      });
       setGetHoneypottedNerd(true);
       return;
     }
@@ -200,10 +247,12 @@ const SubscriptionForm: React.FC<SubscriptionFormProps> = ({
             >
               <Input
                 type="text"
-                aria-label="Last Name"
+                aria-label="Website"
                 ref={honeypotRef}
                 style={{ display: 'none' }}
-                name="fields[last_name]"
+                name="website"
+                tabIndex={-1}
+                autoComplete="off"
               />
               <Input
                 className="h-10 w-full grow rounded-t rounded-b-none border border-b-0 border-solid border-pink-600 bg-white px-[2ch] py-[1ch] font-normal text-gray-950"
