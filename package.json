@@ -8,7 +8,7 @@
   "scripts": {
     "analyze": "ANALYZE=true next build",
     "build": "next build",
-    "dev": "NODE_OPTIONS='--inspect' next dev --turbopack",
+    "dev": "NODE_OPTIONS='--inspect' next dev",
     "depcheck": "depcheck",
     "email": "email dev --dir ./src/utils/email/templates",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md,mdx}\"",
@@ -28,7 +28,7 @@
     "@headlessui/react": "^2.2.9",
     "@mdx-js/mdx": "^3.1.1",
     "@mdx-js/react": "^3.1.1",
-    "@next/bundle-analyzer": "^15.5.6",
+    "@next/bundle-analyzer": "16.0.0",
     "@number-flow/react": "^0.5.10",
     "@radix-ui/react-slot": "^1.2.3",
     "@react-email/components": "^0.5.7",
@@ -49,7 +49,7 @@
     "gray-matter": "^4.0.3",
     "lucide-react": "^0.546.0",
     "micro": "^10.0.1",
-    "next": "15.5.6",
+    "next": "16.0.0",
     "next-cloudinary": "^6.16.1",
     "next-mdx-remote": "5.0.0",
     "pluralize": "^8.0.0",
@@ -81,7 +81,7 @@
     "@eslint/eslintrc": "^3.3.1",
     "@eslint/js": "^9.38.0",
     "@ianvs/prettier-plugin-sort-imports": "^4.7.0",
-    "@next/eslint-plugin-next": "^15.5.6",
+    "@next/eslint-plugin-next": "16.0.0",
     "@playwright/test": "^1.56.1",
     "@tailwindcss/postcss": "^4.1.14",
     "@testing-library/jest-dom": "^6.9.1",
@@ -98,7 +98,7 @@
     "depcheck": "^1.4.7",
     "dotenv": "^17.2.3",
     "eslint": "9.38.0",
-    "eslint-config-next": "^15.5.6",
+    "eslint-config-next": "16.0.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-config-turbo": "^2.5.8",
     "eslint-plugin-import": "^2.32.0",
@@ -126,10 +126,9 @@
   "bugs": {
     "url": "https://github.com/mbifulco/blog/issues"
   },
-  "eslintConfig": {
-    "root": true,
-    "extends": [
-      "./eslint.config.js"
-    ]
+  "pnpm": {
+    "overrides": {
+      "@types/react": "19.2.2"
+    }
   }
 }

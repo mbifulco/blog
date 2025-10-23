@@ -1,22 +1,15 @@
 // @ts-check
 
-import { FlatCompat } from '@eslint/eslintrc';
 import eslint from '@eslint/js';
+import nextPlugin from '@next/eslint-plugin-next';
 import tsParser from '@typescript-eslint/parser';
 import reactCompiler from 'eslint-plugin-react-compiler';
 import unusedImports from 'eslint-plugin-unused-imports';
-import reactHooks from 'eslint-plugin-react-hooks';
+import importPlugin from 'eslint-plugin-import';
+import jsxA11y from 'eslint-plugin-jsx-a11y';
 import { configs } from 'typescript-eslint';
 
-const compat = new FlatCompat({
-  baseDirectory: import.meta.dirname,
-});
-
-// Import Next.js config via compatibility layer
-const nextEslintConfig = compat.extends('next/core-web-vitals');
-
 export default [
-  ...nextEslintConfig,
   eslint.configs.recommended,
   ...configs.recommended,
   {
@@ -38,9 +31,11 @@ export default [
   },
   {
     plugins: {
+      '@next/next': nextPlugin,
       'unused-imports': unusedImports,
       'react-compiler': reactCompiler,
-      'react-hooks': reactHooks,
+      'import': importPlugin,
+      'jsx-a11y': jsxA11y,
     },
     languageOptions: {
       parser: tsParser,
@@ -50,9 +45,12 @@ export default [
         project: ['./tsconfig.json'],
       },
     },
-  },
-  {
     rules: {
+      // Next.js recommended rules
+      ...nextPlugin.configs.recommended.rules,
+      ...nextPlugin.configs['core-web-vitals'].rules,
+
+      // Custom rules
       'react/prop-types': 'off',
       '@typescript-eslint/no-unused-vars': [
         'error',
