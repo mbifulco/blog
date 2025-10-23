@@ -126,12 +126,6 @@
   "bugs": {
     "url": "https://github.com/mbifulco/blog/issues"
   },
-  "eslintConfig": {
-    "root": true,
-    "extends": [
-      "./eslint.config.js"
-    ]
-  },
   "pnpm": {
     "overrides": {
       "@types/react": "19.2.2"
