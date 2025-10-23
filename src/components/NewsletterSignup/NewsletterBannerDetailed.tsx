@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Code, CornerRightDown, Rocket, Zap } from 'lucide-react';
 import { usePostHog } from 'posthog-js/react';
 
@@ -10,7 +10,10 @@ import SubscriberCount from './SubscriberCount';
 
 const NewsletterBannerDetailed = () => {
   const posthog = usePostHog();
-  const [titleIndex, setTitleIndex] = useState(0);
+
+  // Get the title index directly from PostHog feature flag during render
+  const testVariant = posthog?.getFeatureFlag('newsletter-title-test');
+  const titleIndex = parseInt(testVariant as string) || 0;
 
   // calculate the number of days until the next Tuesday
   const daysUntilNextTuesday = (2 - new Date().getDay() + 7) % 7;
@@ -27,13 +30,6 @@ const NewsletterBannerDetailed = () => {
     default:
       daysText = `in ${daysUntilNextTuesday} days`;
   }
-
-  useEffect(() => {
-    if (posthog) {
-      const testVariant = posthog.getFeatureFlag('newsletter-title-test');
-      setTitleIndex(parseInt(testVariant as string) || 0);
-    }
-  }, [posthog]);
 
   const titleOptions = [
     {
