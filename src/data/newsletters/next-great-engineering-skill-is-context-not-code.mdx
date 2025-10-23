@@ -1,0 +1,74 @@
+---
+title: "The next great engineering skill is not coding"
+excerpt: "You have likely ignored it your entire career. That stops now - it's time to hone your writing skills."
+tags: [ai, writing, productivity]
+date: 2025-10-23
+coverImagePublicId: newsletters/next-great-engineering-skill-is-context-not-code/cover
+slug: next-great-engineering-skill-is-context-not-code
+---
+
+## The Big Idea
+
+When providing accurate context is make-or-break for your workflow, everyone needs to become a better writer.
+
+We convinced ourselves that moving fast was the same as being smart. Shipping first. Reacting faster than anyone else. What we did not notice is that this trained an entire generation of builders to think only in the moment, never on the record.
+
+That mindset worked when everything stayed in your own head. It breaks completely when your collaborators are machines. And it is the same thing your teammates have quietly been begging you to fix for years.
+
+### Why this suddenly matters
+
+- With LLMs and agents, context is not just helpful, it is _everything_.
+- Developers are historically allergic to context. We want to skip the ticket and jump to the code.
+- That habit is now actively expensive.
+- Clear writing is fast implementation. Fuzzy writing creates hallucinations, bugs, and rework, and wastes time.
+- If you get good at writing for agents, you automatically get better at writing for humans. Your teammates have been asking for this for years anyway - they're gonna love you for it.
+
+
+
+## A simple framework for writing to agents (and humans, and future-you)
+
+1. State the problem or goal. What is happening? What outcome matters?
+2. Provide history. What have you already tried, seen, or ruled out?
+3. List constraints. What absolutely must not break?
+4. Point to the code. If you were starting, where would you look first? Any past examples or similar patterns?
+
+Go back and re-read your instructions, and imagine this is the first time you're hearing about the bug or feature you're describing. Is there enough information for you to get the job done?
+
+Iterate as needed. That's really all there is to it.
+
+## A real example
+
+I was getting spam signups to the Tiny Improvements mailing list. Dozens a day. Instead of stewing on it internally like I used to, I wrote up this description from my phone while on a plane:
+
+```
+I have been getting spam signups on my newsletter form for the past couple weeks - can you read through `SubscriptionForm.tsx` and help me come up with a plan to deter spam signups?
+
+Here are some sample subscriptions from the past few weeks that are all spam:
+(list of ~50 spam signups, including the addresses, first and last names used)
+
+Based on what I'm seeing here, I think we can probably do a few things to deter spam signups:
+1. make sure the honeypot field on the form is working as expected
+2. Automatically reject signups where the first name is mixed case has >3 capital letters: i.e. XavcASkiox
+3. Automatically reject signups where the first name has >4 consecutive consonants: i.e. mtpDQVeZaqb
+
+For signups that _fail_ any of our spam checks, we should make it look like the subscription was a success, but don't actually subscribe the email address, and instead log the spam signup attempt to Posthog analytics for further analysis.
+```
+
+That 90 seconds of writing turned into a working fix with minimal edits, and thankfully, spam fell off a cliff.
+
+And bonus: writing it down cleared background mental noise I did not realize I was carrying.
+
+## Conclusion
+
+If context is now make-or-break, writing is no longer optional - it's the difference between wasting your time and speeding up your workflow.
+
+Write down what you're thinking about. It frees your brain, helps your team, and makes agents actually useful.
+
+_And if you're the one sending automated spam signups to my newsletter: c'mon, dude._
+
+---
+
+### For more Context on Context
+
+- [Matt Pocock's video on LLM Context](https://youtu.be/-uW5-TaVXu4) is a superb explainer on the topic, with a really helpful series of diagrams to help you visualize the concept.
+- Michael Reeves shows what happens when you [corrupt the back-context](https://www.youtube.com/shorts/WP5_XJY_P0Q) of an LLM conversation. It's chaotic - and convincing.
