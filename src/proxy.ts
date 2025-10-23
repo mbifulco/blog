@@ -3,7 +3,7 @@ import type { NextRequest } from 'next/server';
 
 import { handlePaginationRedirects } from './utils/pagination-redirects';
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   // Handle pagination redirects using centralized logic
   const paginationRedirect = handlePaginationRedirects(request);
   if (paginationRedirect) {
