@@ -1,6 +1,7 @@
 {
   "ignorePatterns": [],
   "ignores": [
+    "@eslint/eslintrc",
     "@eslint/js",
     "@ianvs/prettier-plugin-sort-imports",
     "@next/bundle-analyzer",
@@ -26,7 +27,6 @@
     "sharp",
     "tailwindcss",
     "typescript-eslint",
-
     "@/config",
     "@components/*",
     "@ui/*",
