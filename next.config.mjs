@@ -45,6 +45,9 @@ const postRedirects = oldPostPaths.map((path) => ({
  * @type {import('next').NextConfig}
  **/
 const config = {
+  experimental: {
+    reactCompiler: true,
+  },
   pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md', 'mdx'],
   images: {
     remotePatterns: [
