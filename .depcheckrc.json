@@ -38,10 +38,10 @@
     "prettier",
     "react-email",
     "sharp",
-    "src"
+    "src",
     "tailwindcss",
     "tsx",
-    "typescript-eslint",
+    "typescript-eslint"
   ],
   "parsers": {
     "**/*.{ts,tsx}": ["typescript"]
