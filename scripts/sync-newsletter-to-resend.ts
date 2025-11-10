@@ -16,12 +16,13 @@
  *   RESEND_NEWSLETTER_AUDIENCE_ID - Resend segment/audience ID
  */
 import { execSync } from 'child_process';
+import fs from 'fs';
 import path from 'path';
 import React from 'react';
 import { render } from '@react-email/render';
 import { isAfter, isSameDay, parseISO } from 'date-fns';
+import matter from 'gray-matter';
 
-import { getContentBySlug } from '../src/lib/content-loaders/getContentBySlug';
 import { NewsletterEmail } from '../src/utils/email/templates/NewsletterEmail';
 import { upsertBroadcast } from '../src/utils/resend/broadcasts';
 
@@ -152,15 +153,13 @@ async function main() {
     try {
       console.log(`📰 Processing: ${slug}`);
 
-      // Load newsletter content
-      const newsletter = await getContentBySlug(
-        slug,
-        newslettersDir,
-        'newsletter'
-      );
+      // Load newsletter file with gray-matter (avoids MDX dependencies)
+      const filePath = path.join(newslettersDir, `${slug}.mdx`);
+      const fileContents = fs.readFileSync(filePath, 'utf8');
+      const { data: frontmatter, content } = matter(fileContents);
 
       // Check if newsletter has required frontmatter
-      if (!newsletter.frontmatter.title || !newsletter.frontmatter.excerpt || !newsletter.frontmatter.date) {
+      if (!frontmatter.title || !frontmatter.excerpt || !frontmatter.date) {
         console.warn(
           `⚠️  Skipping ${slug}: missing required frontmatter (title, excerpt, or date)`
         );
@@ -169,26 +168,26 @@ async function main() {
       }
 
       // Check date cutoff
-      if (!shouldProcessNewsletter(newsletter.frontmatter.date, slug)) {
+      if (!shouldProcessNewsletter(frontmatter.date, slug)) {
         skipped++;
         continue;
       }
 
       // Convert MDX content to markdown-friendly format
-      const cleanContent = convertImagesToHtml(newsletter.content);
+      const cleanContent = convertImagesToHtml(content);
 
       // Render to HTML
       const html = await render(
         React.createElement(NewsletterEmail, {
           content: cleanContent,
-          excerpt: newsletter.frontmatter.excerpt,
+          excerpt: frontmatter.excerpt,
         })
       );
 
       // Upsert broadcast
       const result = await upsertBroadcast({
         slug,
-        subject: newsletter.frontmatter.title,
+        subject: frontmatter.title,
         html,
         from: FROM_ADDRESS,
       });

@@ -13,8 +13,8 @@
     "@next/bundle-analyzer",
     "@next/eslint-plugin-next",
     "@prettier/plugin-ruby",
-    "@react-email/preview-server",
     "@react-email/markdown",
+    "@react-email/preview-server",
     "@server/*",
     "@server/*",
     "@tailwindcss/forms",
@@ -30,6 +30,7 @@
     "eslint-*",
     "eslint",
     "jiti",
+    "mdx",
     "playwright",
     "postcss-import",
     "postcss",
@@ -37,11 +38,10 @@
     "prettier",
     "react-email",
     "sharp",
+    "src",
     "tailwindcss",
-    "typescript-eslint",
-
-    "mdx",
-    "src"
+    "tsx",
+    "typescript-eslint"
   ],
   "parsers": {
     "**/*.{ts,tsx}": ["typescript"]
