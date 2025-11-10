@@ -35,7 +35,7 @@ export const EmailLayout = ({
       <Head>
         <style>{`
           h1, h2, h3, h4, h5, h6 {
-            font-weight: 700;
+            font-weight: 900;
             color: #D83D84;
             margin-top: 24px;
             margin-bottom: 16px;
