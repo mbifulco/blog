@@ -32,7 +32,23 @@ export const EmailLayout = ({
 
   return (
     <Html>
-      <Head />
+      <Head>
+        <style>{`
+          h1, h2, h3, h4, h5, h6 {
+            font-weight: 700;
+            color: #D83D84;
+            margin-top: 24px;
+            margin-bottom: 16px;
+            line-height: 1.3;
+          }
+          h1 { font-size: 32px; }
+          h2 { font-size: 28px; }
+          h3 { font-size: 24px; }
+          h4 { font-size: 20px; }
+          h5 { font-size: 18px; }
+          h6 { font-size: 16px; }
+        `}</style>
+      </Head>
       <Preview>{preview}</Preview>
 
       <Tailwind>
