@@ -19,6 +19,7 @@ import { execSync } from 'child_process';
 import path from 'path';
 import React from 'react';
 import { render } from '@react-email/render';
+import { isAfter, isSameDay, parseISO } from 'date-fns';
 
 import { getContentBySlug } from '../src/lib/content-loaders/getContentBySlug';
 import { NewsletterEmail } from '../src/utils/email/templates/NewsletterEmail';
@@ -33,18 +34,34 @@ const FROM_ADDRESS =
 
 /**
  * Parses a newsletter date string to a Date object.
- * Handles both YYYY-MM-DD and MM-DD-YYYY formats.
+ * Handles YYYY-MM-DD, MM-DD-YYYY formats, and Date objects.
  */
-function parseNewsletterDate(dateStr: string): Date {
-  // Try YYYY-MM-DD format
-  if (dateStr.match(/^\d{4}-\d{2}-\d{2}$/)) {
+function parseNewsletterDate(dateStr: string | number | Date): Date {
+  // If already a Date object, return it
+  if (dateStr instanceof Date) {
+    return dateStr;
+  }
+
+  // If it's a number (Unix timestamp), convert it
+  if (typeof dateStr === 'number') {
     return new Date(dateStr);
+  }
+
+  // Try to parse as a Date string (handles various date string formats)
+  const parsedDate = new Date(dateStr);
+  if (!isNaN(parsedDate.getTime())) {
+    return parsedDate;
+  }
+
+  // Try YYYY-MM-DD format (ISO date string)
+  if (dateStr.match(/^\d{4}-\d{2}-\d{2}$/)) {
+    return parseISO(dateStr);
   }
 
   // Try MM-DD-YYYY format
   if (dateStr.match(/^\d{2}-\d{2}-\d{4}$/)) {
     const [month, day, year] = dateStr.split('-');
-    return new Date(`${year}-${month}-${day}`);
+    return parseISO(`${year}-${month}-${day}`);
   }
 
   throw new Error(`Invalid date format: ${dateStr}`);
@@ -53,10 +70,11 @@ function parseNewsletterDate(dateStr: string): Date {
 /**
  * Checks if a newsletter should be processed based on its date.
  */
-function shouldProcessNewsletter(date: string, slug: string): boolean {
+function shouldProcessNewsletter(date: string | number | Date, slug: string): boolean {
   try {
     const newsletterDate = parseNewsletterDate(date);
-    const shouldProcess = newsletterDate >= CUTOFF_DATE;
+    // Newsletter date must be on or after the cutoff date
+    const shouldProcess = isAfter(newsletterDate, CUTOFF_DATE) || isSameDay(newsletterDate, CUTOFF_DATE);
 
     if (!shouldProcess) {
       console.log(`⏭️  Skipping ${slug}: dated before cutoff (${date})`);
@@ -151,7 +169,7 @@ async function main() {
       }
 
       // Check date cutoff
-      if (!shouldProcessNewsletter(String(newsletter.frontmatter.date), slug)) {
+      if (!shouldProcessNewsletter(newsletter.frontmatter.date, slug)) {
         skipped++;
         continue;
       }
