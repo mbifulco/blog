@@ -5,6 +5,10 @@
   "author": "Mike Bifulco <hello@mikebifulco.com>",
   "license": "MIT",
   "packageManager": "pnpm@10.21.0",
+  "engines": {
+    "node": "22.x",
+    "pnpm": "10"
+  },
   "scripts": {
     "analyze": "ANALYZE=true next build",
     "build": "next build",
