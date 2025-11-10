@@ -29,7 +29,11 @@ type NewsletterEmailProps = {
  */
 export const NewsletterEmail = ({ content, excerpt }: NewsletterEmailProps) => {
   return (
-    <EmailLayout preview={excerpt} firstName={false}>
+    <EmailLayout
+      preview={excerpt}
+      firstName={false}
+      includeUnsubscribeLink={true}
+    >
       <Row>
         <Column>
           <Markdown>{content}</Markdown>
