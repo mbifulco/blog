@@ -32,6 +32,7 @@
     "@number-flow/react": "^0.5.10",
     "@radix-ui/react-slot": "^1.2.4",
     "@react-email/components": "^1.0.0",
+    "@react-email/markdown": "0.0.17",
     "@react-email/render": "^2.0.0",
     "@t3-oss/env-nextjs": "^0.13.8",
     "@tailwindcss/typography": "^0.5.19",
