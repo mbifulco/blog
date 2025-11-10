@@ -6,6 +6,8 @@ export const env = createEnv({
   extends: [vercel()],
   server: {
     RESEND_API_KEY: z.string(),
+    // Note: Resend renamed "audiences" to "segments" in their new API.
+    // This env var works for both - use it as segment_id when calling Resend API.
     RESEND_NEWSLETTER_AUDIENCE_ID: z.string(),
     RESEND_SIGNING_SECRET: z.string(),
   },
