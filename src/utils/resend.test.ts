@@ -368,11 +368,12 @@ describe('getSubscriberCount', () => {
     vi.mocked(resend.contacts.list).mockResolvedValue({
       data: null,
       error: {
-        name: 'validation_error' as const,
+        name: 'validation_error',
         message: 'Something went wrong',
         statusCode: 400,
       },
-    } as any);
+      headers: null,
+    });
 
     const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
 
@@ -401,11 +402,12 @@ describe('getSubscriberCount', () => {
     vi.mocked(resend.contacts.list).mockResolvedValue({
       data: null,
       error: {
-        name: 'not_found' as const,
+        name: 'not_found',
         message: 'Data not found',
         statusCode: 404,
       },
-    } as any);
+      headers: null,
+    });
 
     const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
 
@@ -455,7 +457,8 @@ describe('subscribe', () => {
         object: 'contact' as const,
       },
       error: null,
-    } as any;
+      headers: null,
+    };
 
     vi.mocked(resend.contacts.create).mockResolvedValue(mockResponse);
 
@@ -491,7 +494,8 @@ describe('subscribe', () => {
         properties: {},
       },
       error: null,
-    } as any;
+      headers: null,
+    };
 
     vi.mocked(resend.contacts.get).mockResolvedValue(mockExistingContact);
 
@@ -523,11 +527,12 @@ describe('subscribe', () => {
     vi.mocked(resend.contacts.create).mockResolvedValue({
       data: null,
       error: {
-        name: 'validation_error' as const,
+        name: 'validation_error',
         message: 'Invalid email format',
         statusCode: 400,
       },
-    } as any);
+      headers: null,
+    });
 
     const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
 
