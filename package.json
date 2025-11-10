@@ -4,7 +4,7 @@
   "version": "0.1.0",
   "author": "Mike Bifulco <hello@mikebifulco.com>",
   "license": "MIT",
-  "packageManager": "pnpm@10.19.0",
+  "packageManager": "pnpm@10.21.0",
   "scripts": {
     "analyze": "ANALYZE=true next build",
     "build": "next build",
