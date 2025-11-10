@@ -34,6 +34,11 @@ jobs:
         env:
           RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
           RESEND_NEWSLETTER_AUDIENCE_ID: ${{ secrets.RESEND_NEWSLETTER_AUDIENCE_ID }}
+          RESEND_SIGNING_SECRET: ${{ secrets.RESEND_SIGNING_SECRET }}
+          # Client-side env vars (not used by script but required by env.ts validation)
+          NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME: ${{ secrets.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME }}
+          NEXT_PUBLIC_FATHOM_ID: ${{ secrets.NEXT_PUBLIC_FATHOM_ID }}
+          NEXT_PUBLIC_POSTHOG_KEY: ${{ secrets.NEXT_PUBLIC_POSTHOG_KEY }}
         run: pnpm tsx scripts/sync-newsletter-to-resend.ts
 
       - name: Comment on PR (on failure)
