@@ -56,10 +56,24 @@ export type EmailEventData = {
 };
 
 /**
+ * Custom property value type for contact properties.
+ */
+export type ContactPropertyValue =
+  | {
+      type: 'string';
+      value: string;
+    }
+  | {
+      type: 'number';
+      value: number;
+    };
+
+/**
  * The data structure of the event payload sent by the webhook for events related to contacts.
  * @typedef ContactEventData
  * @type {object}
- * @property {string} audience_id - The ID of the audience.
+ * @property {string} audience_id - The ID of the audience (deprecated - use segment_id).
+ * @property {string} segment_id - The ID of the segment (replaces audience_id in new API).
  * @property {string} created_at - The timestamp when the event occurred.
  * @property {string} email - The email address of the contact.
  * @property {string} first_name - The first name of the contact.
@@ -67,10 +81,13 @@ export type EmailEventData = {
  * @property {string} id - The Resend ID of the contact.
  * @property {boolean} unsubscribed - Whether the contact has unsubscribed.
  * @property {string} updated_at - The timestamp when the contact was last updated.
+ * @property {object} properties - Custom properties for the contact (key-value pairs).
  *
  */
 export type ContactEventData = {
-  audience_id: string;
+  /** @deprecated Use segment_id instead */
+  audience_id?: string;
+  segment_id?: string;
   created_at: string;
   email: string;
   first_name?: string;
@@ -78,6 +95,7 @@ export type ContactEventData = {
   id: string;
   unsubscribed: boolean;
   updated_at: string;
+  properties?: Record<string, ContactPropertyValue>;
 };
 
 export type EmailEvent = {

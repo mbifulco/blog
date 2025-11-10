@@ -25,20 +25,34 @@ const ph = new PostHog(env.NEXT_PUBLIC_POSTHOG_KEY, {
 const webhook = new Webhook(env.RESEND_SIGNING_SECRET);
 
 /**
- * Ensures that the event data matches the current audience,
+ * Ensures that the event data matches the current audience/segment,
  * to make sure we're only processing events for the current audience, since
- * Resend doesn't support filtering webhook endpoints by audience.
+ * Resend doesn't support filtering webhook endpoints by audience/segment.
+ *
+ * Note: Resend renamed "audiences" to "segments" in their new Contacts API.
+ * This function supports both the legacy audience_id and new segment_id fields.
+ *
  * @param {ContactEventData} data - The event data.
- * @returns {boolean} Whether the event data matches the current audience.
+ * @returns {boolean} Whether the event data matches the current audience/segment.
  */
 const ensureEventForCurrentAudience = (data: ContactEventData) => {
-  if (data.audience_id !== env.RESEND_NEWSLETTER_AUDIENCE_ID) {
-    console.info("Event doesn't match current audience:", data);
+  // Support both new segment_id and legacy audience_id
+  const segmentOrAudienceId = data.segment_id || data.audience_id;
+
+  if (segmentOrAudienceId !== env.RESEND_NEWSLETTER_AUDIENCE_ID) {
+    console.info("Event doesn't match current audience/segment:", data);
     return false;
   }
   return true;
 };
 
+/**
+ * Webhook handler for Resend events.
+ *
+ * Current webhook events supported:
+ * - contact.created, contact.updated, contact.deleted
+ * - email.sent, email.delivered, email.bounced, email.clicked, etc.
+ */
 const webhookHandler = async (req: NextApiRequest, res: NextApiResponse) => {
   const { method } = req;
   if (!method || method !== 'POST') {
@@ -141,7 +155,7 @@ const webhookHandler = async (req: NextApiRequest, res: NextApiResponse) => {
 // Type the handler properly for Next.js API routes
 const typedHandler = webhookHandler as (
   req: NextApiRequest,
-  res: NextApiResponse,
+  res: NextApiResponse
 ) => Promise<void>;
 
 export const config = {
