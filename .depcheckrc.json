@@ -14,6 +14,7 @@
     "@next/eslint-plugin-next",
     "@prettier/plugin-ruby",
     "@react-email/preview-server",
+    "@react-email/mdx",
     "@server/*",
     "@server/*",
     "@tailwindcss/forms",
