@@ -69,30 +69,42 @@ export const EmailLayout = ({
             </Section>
 
             {/* Footer Text */}
-            <Text
+            <Section
               style={{
-                textAlign: 'center',
-                fontSize: 12,
-                color: 'rgb(0,0,0, 0.7)',
+                maxWidth: '500px',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '10px',
               }}
+              className="mt-2 text-gray-500"
             >
-              © 2024 | 💌 Tiny Improvements ·{' '}
-              <Link href="https://mikebifulco.com" className="text-pink-600">
-                mikebifulco.com
-              </Link>{' '}
-            </Text>
-            {includeUnsubscribeLink && (
-              <Text style={paragraph}>
-                Not getting what you need? No worries, you can{' '}
+              <Text
+                style={{
+                  fontSize: 12,
+                }}
+                className="my-0"
+              >
+                © {new Date().getFullYear()} &bull; 💌 Tiny Improvements &bull;{' '}
                 <Link
-                  href="{{{RESEND_UNSUBSCRIBE_LINK}}}"
+                  href="https://mikebifulco.com/newsletter"
                   className="text-pink-600"
                 >
-                  unsubscribe
+                  mikebifulco.com
                 </Link>{' '}
-                anytime.
               </Text>
-            )}
+              {includeUnsubscribeLink && (
+                <Text className="my-0 text-xs text-gray-500">
+                  Not getting what you need? No worries, you can{' '}
+                  <Link
+                    href="{{{RESEND_UNSUBSCRIBE_LINK}}}"
+                    className="text-pink-600"
+                  >
+                    unsubscribe
+                  </Link>{' '}
+                  anytime.
+                </Text>
+              )}
+            </Section>
           </Container>
         </Body>
       </Tailwind>

@@ -27,7 +27,10 @@ type NewsletterEmailProps = {
  * );
  * ```
  */
-export const NewsletterEmail = ({ content, excerpt }: NewsletterEmailProps) => {
+export const NewsletterEmail = ({
+  content = '',
+  excerpt = 'Preview text for email clients',
+}: NewsletterEmailProps) => {
   return (
     <EmailLayout
       preview={excerpt}
