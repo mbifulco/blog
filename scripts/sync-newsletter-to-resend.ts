@@ -71,11 +71,16 @@ function parseNewsletterDate(dateStr: string | number | Date): Date {
 /**
  * Checks if a newsletter should be processed based on its date.
  */
-function shouldProcessNewsletter(date: string | number | Date, slug: string): boolean {
+function shouldProcessNewsletter(
+  date: string | number | Date,
+  slug: string
+): boolean {
   try {
     const newsletterDate = parseNewsletterDate(date);
     // Newsletter date must be on or after the cutoff date
-    const shouldProcess = isAfter(newsletterDate, CUTOFF_DATE) || isSameDay(newsletterDate, CUTOFF_DATE);
+    const shouldProcess =
+      isAfter(newsletterDate, CUTOFF_DATE) ||
+      isSameDay(newsletterDate, CUTOFF_DATE);
 
     if (!shouldProcess) {
       console.log(`⏭️  Skipping ${slug}: dated before cutoff (${date})`);
@@ -97,10 +102,14 @@ function convertImagesToHtml(content: string): string {
   const imageRegex = /<Image\s+publicId="([^"]+)"[^>]*\/>/g;
 
   return content.replace(imageRegex, (_, publicId) => {
-    const cloudinaryUrl = `https://res.cloudinary.com/mikebifulco-com/image/upload/${publicId}`;
+    const cloudinaryUrl = getCloudinaryImageUrl(publicId);
     return `![](${cloudinaryUrl})`;
   });
 }
+
+const getCloudinaryImageUrl = (publicId: string) => {
+  return `https://res.cloudinary.com/mikebifulco-com/image/upload/${publicId}`;
+};
 
 /**
  * Gets list of changed newsletter files in current PR.
@@ -181,6 +190,9 @@ async function main() {
         React.createElement(NewsletterEmail, {
           content: cleanContent,
           excerpt: frontmatter.excerpt,
+          coverImage: frontmatter.coverImagePublicId
+            ? getCloudinaryImageUrl(frontmatter.coverImagePublicId)
+            : undefined,
         })
       );
 
