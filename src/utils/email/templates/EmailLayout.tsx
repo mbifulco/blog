@@ -35,18 +35,21 @@ export const EmailLayout = ({
       <Head>
         <style>{`
           h1, h2, h3, h4, h5, h6 {
-            font-weight: 900;
-            color: #D83D84;
+            font-weight: bold !important;
+            color: #D83D84 !important;
             margin-top: 24px;
             margin-bottom: 16px;
             line-height: 1.3;
           }
-          h1 { font-size: 32px; }
-          h2 { font-size: 28px; }
-          h3 { font-size: 24px; }
-          h4 { font-size: 20px; }
-          h5 { font-size: 18px; }
-          h6 { font-size: 16px; }
+          h1 { font-size: 32px !important; }
+          h2 { font-size: 28px !important; }
+          h3 { font-size: 24px !important; }
+          h4 { font-size: 20px !important; }
+          h5 { font-size: 18px !important; }
+          h6 { font-size: 16px !important; }
+          a {
+            color: #D83D84;
+          }
         `}</style>
       </Head>
       <Preview>{preview}</Preview>
