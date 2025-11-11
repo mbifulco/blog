@@ -120,6 +120,7 @@
     "prettier-plugin-tailwindcss": "^0.7.1",
     "schema-dts": "^1.1.5",
     "tailwindcss": "^4.1.17",
+    "tsx": "^4.20.6",
     "typescript": "5.9.3",
     "typescript-eslint": "^8.46.3",
     "vite-tsconfig-paths": "^5.1.4",

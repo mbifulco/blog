@@ -1,0 +1,122 @@
+---
+title: "Patching NPM Dependencies with pnpm patch"
+excerpt: "Learn how to patch NPM dependencies with pnpm patch to fix issues with your project."
+tags: [javascript, oss, devtools]
+coverImagePublicId: "posts/patching-npm-dependencies-with-pnpm-patch/cover"
+slug: patching-npm-dependencies-with-pnpm-patch
+date: 11-11-2025
+published: true
+---
+
+## Introduction
+
+Sometimes a third-party package breaks, and you can't wait for a PR to make its way into a release. Fortunately, `pnpm patch` makes it dead simple to hotfix packages locally while keeping your version control clean.
+
+Recently, we needed to patch the [`@payloadcms/storage-uploadthing` package](https://www.npmjs.com/package/@payloadcms/storage-uploadthing) to fix a bug with image loading, so that we could continue to use it as our image hosting provider for [Craftwork](https://craftwork.com)'s implementation of [Payload CMS](https://payloadcms.com).
+
+Here's how we handled it, using `pnpm patch`.
+
+
+### What is pnpm patch?
+
+[`pnpm patch`](https://pnpm.io/cli/patch) is a tool provided by the pnpm package manager that allows you to patch packages locally—and commit those changes cleanly. It works by creating a patch file that contains the changes you want to make to the package. You can then apply the patch file to the package using `pnpm install`.
+
+## The process
+
+Patching a package is a three-step process:
+1. Track down the bug
+2. Create a patch file
+3. Apply the patch file to the package
+
+Let's go through each step in detail.
+
+### Step 1: Track down the bug
+
+In our case, we tracked the bug down by making changes to the `handleUpload` function in `@payloadcms/storage-uploadthing`. You can do this in two ways:
+
+1. Dig into `node_modules/@payloadcms/storage-uploadthing/src/...` directly
+2. Or, clone the repo and search from there if you want to keep your project folder clean
+
+We worked directly inside `node_modules` to validate the fix quickly. One thing to keep in mind here is that running `pnpm install` will overwrite your changes to the package -- which is eactly why we need to use `pnpm patch` to create a persistent patch!
+
+### Step 2: Make a Local Fix
+
+Once you've got a fix in mind, try it out directly in your project. You will do this by making temporary edits right inside the installed version of the package within your IDE.
+
+<Aside type="note">
+  In our case, the fix for `@payloadcms/storage-uploadthing` involved some minor changes:
+
+  - the `handleUpload` function wasn't setting a `url` field based on the UploadThing API's response, so our Payload db didn't have any image URLs stored.
+  - the `disablePayloadAccessControl` setting was commented out, which caused payload to store _local_ image URLs instead of UploadThing's public URLs.
+</Aside>
+
+Once we saw that this fix solved the issue in development, it was time to commit it to source control using `pnpm patch`.
+
+### Step 3: Create a Persistent Patch with pnpm patch
+
+<Image
+  publicId="posts/patching-npm-dependencies-with-pnpm-patch/patch-process-1"
+  alt="A screenshot of the terminal showing the output of the `pnpm patch` command"
+  caption="The `pnpm patch` command opens the dependency's code in a temporary directory for you to edit."
+/>
+
+To preserve your fix and commit it to source control:
+
+1. run: `pnpm patch <package-name>`. This opens the dependency's code in a temporary directory for you to edit.
+2. Reapply the fix in the temporary folder.
+3. Test it - do everything you would typically do to make sure the fix works: test functionality, run linters and test suites, etc.
+4. To complete your patch and ready it for addition to source control on your project, run: `pnpm patch-commit <package-name>`
+
+That saves the patch to your repo, and pnpm will re-apply it automatically every time you install dependencies. It also modifies your `package.json` to reference the patched version.
+
+This will add a new entry to your `package.json` like this:
+```json
+"@payloadcms/storage-uploadthing": {
+  "patches": {
+    "@payloadcms/storage-uploadthing": "patch/@payloadcms/storage-uploadthing.patch"
+  }
+}
+```
+
+...as well as a file in your project's `patches` directory that represents the patch itself, in git diff format. This file type is a little difficult to read. You can re-open your patch file in your code editor to see the changes. Your changes will also be reflected in your `pnpm-lock.yaml` file.
+
+This will cause pnpm to apply the patch every time you install dependencies.
+
+### If you need to edit your patch
+
+This is one part of the workflow that leaves a bit to be desired - if you need to edit your patch later, the best workflow I've found is to remove the patch from your project by running: `pnpm patch-remove <package-name>`, and then start a fresh patch by running: `pnpm patch <package-name>` (and going through these steps again).
+
+You _can_ edit the `.patch` file directly, but it's finicky. In most cases, it's easier to remove and re-create the patch.
+
+
+### Closing the loop with the package maintainer
+
+Your dependency is now patched, and you can commit it to source control to use. This can help provide evidence to open source maintainers that the fix is needed, and that it works. It's good practice to [open a pull request](https://github.com/payloadcms/payload/pull/14250) to the package maintainer with your fix so that they can review it and merge it into the main branch.
+
+
+### When it's time to remove the patch
+
+Once there is an upstream fix in place, you can remove the patch from your project by running: `pnpm patch-remove <package-name>`.
+
+This will remove the patch from your `package.json` and the `patches` directory, and you can then commit the changes to source control.
+
+Remember that this doesn't automatically update the dependency in your project to the latest version - you'll still need to use `pnpm install` to do that.
+
+---
+
+## Why this process is useful
+
+- You don't need to wait on library maintainers to merge PRs to get your fix into your project
+- Your fix lives in version control, so teammates and CI builds stay in sync
+- It's a fast, repeatable way to patch packages without publishing a fork
+
+
+## Not using pnpm?
+If your team is using a package manager other than pnpm, there are other options that are very similar:
+
+- for `yarn` you can use [`yarn patch`](https://yarnpkg.com/cli/patch)
+- for `bun` you can use [`bun patch`](https://bun.com/docs/pm/cli/patch)
+- for `npm` you can use [`npx patch package`](https://www.npmjs.com/package/patch-package)
+- if you're using ruby's `bundler`, you're in the wrong place, and you have my sympathies.
+
+The specifics of each of these options are very similar, but vary slightly - refer to the docs linked above for a walkthrough of each.
