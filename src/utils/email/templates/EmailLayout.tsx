@@ -139,7 +139,7 @@ const content = {
   border: '1px solid rgb(0,0,0, 0.1)',
   borderRadius: '3px',
   overflow: 'hidden',
-  maxWidth: '500px',
+  maxWidth: '630px',
   backgroundColor: '#fff',
   paddingTop: '8px',
   paddingBottom: '8px',
