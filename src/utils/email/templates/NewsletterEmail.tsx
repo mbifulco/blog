@@ -1,11 +1,18 @@
-import * as React from 'react';
-import { Column, Markdown, Row } from '@react-email/components';
+import {
+  Column,
+  Img,
+  Link,
+  Markdown,
+  Row,
+  Text,
+} from '@react-email/components';
 
 import { EmailLayout } from './EmailLayout';
 
 type NewsletterEmailProps = {
   content: string;
   excerpt: string;
+  coverImage?: string;
 };
 
 /**
@@ -28,8 +35,9 @@ type NewsletterEmailProps = {
  * ```
  */
 export const NewsletterEmail = ({
-  content = '',
+  content = 'lorem ipsum dolor sit amet this is just sample content for email preview',
   excerpt = 'Preview text for email clients',
+  coverImage = 'https://picsum.photos/1200/630',
 }: NewsletterEmailProps) => {
   return (
     <EmailLayout
@@ -37,9 +45,46 @@ export const NewsletterEmail = ({
       firstName={false}
       includeUnsubscribeLink={true}
     >
+      {coverImage && (
+        <Row>
+          <Column>
+            <Img
+              src={coverImage}
+              alt="Newsletter cover image"
+              className="mt-2 w-full rounded"
+              style={{
+                maxWidth: '100%',
+                height: 'auto',
+              }}
+            />
+          </Column>
+        </Row>
+      )}
       <Row>
         <Column>
           <Markdown>{content}</Markdown>
+        </Column>
+      </Row>
+      <Row>
+        <Column>
+          <Text className="text-xl">
+            Give &apos;em hell out there. ✌️ <br /> - Mike
+          </Text>
+        </Column>
+      </Row>
+      <Row>
+        <Column>
+          <Text className="italic text-gray-500">
+            Thanks for reading 💌 Tiny Improvements. If you found this helpful,
+            I'd love it if you{' '}
+            <Link
+              href="https://mikebifulco.com/newsletter"
+              className="text-pink-600"
+            >
+              share it with a friend
+            </Link>
+            . It helps me out a great deal!
+          </Text>
         </Column>
       </Row>
     </EmailLayout>
