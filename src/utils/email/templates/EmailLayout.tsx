@@ -94,12 +94,7 @@ export const EmailLayout = ({
               }}
               className="mt-2 text-gray-500"
             >
-              <Text
-                style={{
-                  fontSize: 12,
-                }}
-                className="my-0"
-              >
+              <Text className="my-0 text-sm">
                 © {new Date().getFullYear()} &bull; 💌 Tiny Improvements &bull;{' '}
                 <Link
                   href="https://mikebifulco.com/newsletter"
@@ -109,7 +104,7 @@ export const EmailLayout = ({
                 </Link>{' '}
               </Text>
               {includeUnsubscribeLink && (
-                <Text className="my-0 text-xs text-gray-500">
+                <Text className="my-0 text-sm text-gray-500">
                   Not getting what you need? No worries, you can{' '}
                   <Link
                     href="{{{RESEND_UNSUBSCRIBE_URL}}}"
