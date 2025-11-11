@@ -18,12 +18,14 @@ type EmailLayoutProps = {
   children: React.ReactNode;
   /** Optional first name for greeting. Set to `false` to disable greeting entirely. */
   firstName?: string | false;
+  includeUnsubscribeLink?: boolean;
 };
 
 export const EmailLayout = ({
   preview,
   children,
   firstName,
+  includeUnsubscribeLink = false,
 }: EmailLayoutProps) => {
   const showGreeting = firstName !== false;
   const greeting = `Hey ${typeof firstName === 'string' ? firstName : 'there'}`;
@@ -78,6 +80,19 @@ export const EmailLayout = ({
               <Link href="https://mikebifulco.com" className="text-pink-600">
                 mikebifulco.com
               </Link>{' '}
+              {includeUnsubscribeLink && (
+                <Text className="my-0">
+                  Not getting what you need? No worries, you can
+                  <Link
+                    href={`{{{RESEND_UNSUBSCRIBE_URL}}}`}
+                    className="text-pink-600"
+                  >
+                    {' '}
+                    unsubscribe
+                  </Link>{' '}
+                  anytime.
+                </Text>
+              )}
             </Text>
           </Container>
         </Body>
