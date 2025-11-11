@@ -18,19 +18,37 @@ type EmailLayoutProps = {
   children: React.ReactNode;
   /** Optional first name for greeting. Set to `false` to disable greeting entirely. */
   firstName?: string | false;
+  includeUnsubscribeLink?: boolean;
 };
 
 export const EmailLayout = ({
   preview,
   children,
   firstName,
+  includeUnsubscribeLink = false,
 }: EmailLayoutProps) => {
   const showGreeting = firstName !== false;
   const greeting = `Hey ${typeof firstName === 'string' ? firstName : 'there'}`;
 
   return (
     <Html>
-      <Head />
+      <Head>
+        <style>{`
+          h1, h2, h3, h4, h5, h6 {
+            font-weight: 900;
+            color: #D83D84;
+            margin-top: 24px;
+            margin-bottom: 16px;
+            line-height: 1.3;
+          }
+          h1 { font-size: 32px; }
+          h2 { font-size: 28px; }
+          h3 { font-size: 24px; }
+          h4 { font-size: 20px; }
+          h5 { font-size: 18px; }
+          h6 { font-size: 16px; }
+        `}</style>
+      </Head>
       <Preview>{preview}</Preview>
 
       <Tailwind>
@@ -67,18 +85,42 @@ export const EmailLayout = ({
             </Section>
 
             {/* Footer Text */}
-            <Text
+            <Section
               style={{
-                textAlign: 'center',
-                fontSize: 12,
-                color: 'rgb(0,0,0, 0.7)',
+                maxWidth: '500px',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '10px',
               }}
+              className="mt-2 text-gray-500"
             >
-              © 2024 | 💌 Tiny Improvements ·{' '}
-              <Link href="https://mikebifulco.com" className="text-pink-600">
-                mikebifulco.com
-              </Link>{' '}
-            </Text>
+              <Text
+                style={{
+                  fontSize: 12,
+                }}
+                className="my-0"
+              >
+                © {new Date().getFullYear()} &bull; 💌 Tiny Improvements &bull;{' '}
+                <Link
+                  href="https://mikebifulco.com/newsletter"
+                  className="text-pink-600"
+                >
+                  mikebifulco.com
+                </Link>{' '}
+              </Text>
+              {includeUnsubscribeLink && (
+                <Text className="my-0 text-xs text-gray-500">
+                  Not getting what you need? No worries, you can{' '}
+                  <Link
+                    href="{{{RESEND_UNSUBSCRIBE_LINK}}}"
+                    className="text-pink-600"
+                  >
+                    unsubscribe
+                  </Link>{' '}
+                  anytime.
+                </Text>
+              )}
+            </Section>
           </Container>
         </Body>
       </Tailwind>
