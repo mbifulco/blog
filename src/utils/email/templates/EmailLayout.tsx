@@ -35,24 +35,27 @@ export const EmailLayout = ({
       <Head>
         <style>{`
           h1, h2, h3, h4, h5, h6 {
-            font-weight: 900;
-            color: #D83D84;
+            font-weight: bold !important;
+            color: #D83D84 !important;
             margin-top: 24px;
             margin-bottom: 16px;
             line-height: 1.3;
           }
-          h1 { font-size: 32px; }
-          h2 { font-size: 28px; }
-          h3 { font-size: 24px; }
-          h4 { font-size: 20px; }
-          h5 { font-size: 18px; }
-          h6 { font-size: 16px; }
+          h1 { font-size: 32px !important; }
+          h2 { font-size: 28px !important; }
+          h3 { font-size: 24px !important; }
+          h4 { font-size: 20px !important; }
+          h5 { font-size: 18px !important; }
+          h6 { font-size: 16px !important; }
+          a {
+            color: #D83D84;
+          }
         `}</style>
       </Head>
       <Preview>{preview}</Preview>
 
       <Tailwind>
-        <Body className="mx-auto my-auto bg-[#fafafa] px-4 font-sans text-xl">
+        <Body className="mx-auto my-auto p-4 font-sans text-xl">
           <Container>
             {/* Logo Section */}
             <Section style={logo} align="center">
@@ -94,12 +97,7 @@ export const EmailLayout = ({
               }}
               className="mt-2 text-gray-500"
             >
-              <Text
-                style={{
-                  fontSize: 12,
-                }}
-                className="my-0"
-              >
+              <Text className="my-0 text-sm">
                 © {new Date().getFullYear()} &bull; 💌 Tiny Improvements &bull;{' '}
                 <Link
                   href="https://mikebifulco.com/newsletter"
@@ -109,10 +107,10 @@ export const EmailLayout = ({
                 </Link>{' '}
               </Text>
               {includeUnsubscribeLink && (
-                <Text className="my-0 text-xs text-gray-500">
+                <Text className="my-0 text-sm text-gray-500">
                   Not getting what you need? No worries, you can{' '}
                   <Link
-                    href="{{{RESEND_UNSUBSCRIBE_LINK}}}"
+                    href="{{{RESEND_UNSUBSCRIBE_URL}}}"
                     className="text-pink-600"
                   >
                     unsubscribe
@@ -139,7 +137,7 @@ const content = {
   border: '1px solid rgb(0,0,0, 0.1)',
   borderRadius: '3px',
   overflow: 'hidden',
-  maxWidth: '500px',
+  maxWidth: '630px',
   backgroundColor: '#fff',
   paddingTop: '8px',
   paddingBottom: '8px',
