@@ -55,7 +55,7 @@ export const EmailLayout = ({
       <Preview>{preview}</Preview>
 
       <Tailwind>
-        <Body className="mx-auto my-auto bg-[#fafafa] px-4 font-sans text-xl">
+        <Body className="mx-auto my-auto p-4 font-sans text-xl">
           <Container>
             {/* Logo Section */}
             <Section style={logo} align="center">
