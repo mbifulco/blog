@@ -27,7 +27,7 @@ type NewsletterEmailProps = {
  * ```
  */
 export const NewsletterEmail = ({
-  content = '',
+  content = 'lorem ipsum dolor sit amet this is just sample content for email preview',
   excerpt = 'Preview text for email clients',
 }: NewsletterEmailProps) => {
   return (
@@ -43,16 +43,16 @@ export const NewsletterEmail = ({
       </Row>
       <Row>
         <Column>
-          <Text>
+          <Text className="text-xl">
             Give &apos;em hell out there. ✌️ <br /> - Mike
           </Text>
         </Column>
       </Row>
       <Row>
         <Column>
-          <Text className="text-sm italic text-gray-500">
-            Thanks for reading Tiny Improvements. If you found this helpful, I'd
-            love it if you{' '}
+          <Text className="italic text-gray-500">
+            Thanks for reading 💌 Tiny Improvements. If you found this helpful,
+            I'd love it if you{' '}
             <Link
               href="https://mikebifulco.com/newsletter"
               className="text-pink-600"
