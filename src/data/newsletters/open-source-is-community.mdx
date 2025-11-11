@@ -1,0 +1,67 @@
+---
+title: "Contributing to Open Source without being a Jerk"
+excerpt: "Open source doesn't work without good faith - and sometimes you need to patch a dependency to do your part."
+tags: [open source, javascript, react, devtools]
+date: 11-11-2025
+coverImagePublicId: "newsletters/open-source-is-community/cover"
+slug: open-source-is-community
+---
+
+## The Big Idea
+
+Open source works best when we treat each other like humans -not vending machines for bug fixes.
+
+## How We Patched a Broken Package - and What It Taught Us
+
+Recently at [Craftwork](https://craftwork.com), we hit a snag using the [@payloadcms/storage-uploadthing](https://github.com/payloadcms/storage-uploadthing) plugin for image uploads in [Payload CMS](https://payloadcms.com).
+
+One of our engineers dug in, found the issue, and fixed it. We opened a [pull request](https://github.com/payloadcms/payload/pull/14250), hoping to help others in the same situation.
+
+But here's the thing: We couldn't afford to wait for the PR to get merged before moving forward. Publishing a forked npm package is a common fallback - but it can be hard to maintain long-term.
+
+In addition to creating a fork to submit a fix  we used [`pnpm patch`](https://mikebifulco.com/posts/patching-npm-dependencies-with-pnpm-patch) to apply the fix to our repo. It's clean, version-controlled, and works until the upstream package is updated.
+
+
+## Maintainers Aren't the Problem
+
+It's easy to forget that open source projects are often maintained by small teams under heavy load. At the time of writing, Payload has over 375 open pull requests. Expecting our fix to jump the line would be absurd.
+
+This isn't about neglect or indifference. It's about capacity.
+
+In other repos, we've seen PRs sit untouched for months, with long threads of angsty, impatient comments. I get it - but that doesn't help anyone. Especially not the maintainers.
+
+
+### A Better Way to Contribute
+
+Here's what we did instead:
+
+- 🛠 Fixed the issue locally using `pnpm patch` (need a tutorial? I [gotchu](https://mikebifulco.com/posts/patching-npm-dependencies-with-pnpm-patch))
+- 💬 Shared the fix in the original GitHub thread to unblock others
+- 🔁 Opened a new, cleaner PR
+- 🤝 Let the maintainers off the hook — no pressure, just help
+
+This approach makes open source better for _everyone_. It gives control back to contributors, and it gives maintainers room to breathe.
+
+It is easy to forget that contributing to open source isn't just Pull Requests - discussion, community building, managing expectations, and creative solutions help us all build a better internet together.
+
+I'm confident you'll get more results if you treat people with humanity - and you will [build a reputation for yourself](https://mikebifulco.com/newsletter/serendipity-isnt-an-accident) that makes people eager to help you when they can.
+
+---
+
+## Want to Do Open Source Better?
+
+Read [*Working in Public*](https://hardcover.app/books/working-in-public) by Nadia Eghbal. It's the best book I've read on the culture of open source—what's broken, what's beautiful, and what's worth fixing.
+
+Also, if you like learning by watching smart people build in public, check out:
+
+- [cmgriffing on Twitch](https://www.twitch.tv/cmgriffing) — streams dev work and product experiments
+- [Rizel Scarlett (aka blackgirlbytes)](https://www.twitch.tv/blackgirlbytes1) — open source, conference prep, and community vibes
+
+
+---
+
+## Give without the expectation of receiving
+
+Open source is a special kind of economy. Show up with something useful. Share what you've learned. Make it easier for the next person.
+
+Let's be better guests in each other's repos.
