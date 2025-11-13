@@ -1,4 +1,5 @@
 import withBundleAnalyzer from '@next/bundle-analyzer';
+import { withBotId } from 'botid/next/config';
 import { createJiti } from 'jiti';
 
 const jiti = createJiti(new URL(import.meta.url).pathname);
@@ -6,7 +7,9 @@ const jiti = createJiti(new URL(import.meta.url).pathname);
 await jiti.import('./src/utils/env');
 
 // Import centralized pagination redirect logic
-const { generatePaginationConfigRedirects } = await jiti.import('./src/utils/pagination-redirects');
+const { generatePaginationConfigRedirects } = await jiti.import(
+  './src/utils/pagination-redirects'
+);
 
 // Redirect legacy post paths to the new pattern
 const oldPostPaths = [
@@ -69,6 +72,10 @@ const config = {
         protocol: 'https',
         hostname: 'images.unsplash.com',
       },
+      {
+        protocol: 'https',
+        hostname: 'picsum.photos',
+      },
     ],
   },
   productionBrowserSourceMaps: true,
@@ -124,6 +131,6 @@ const config = {
   },
 };
 
-export default withBundleAnalyzer({ enabled: process.env.ANALYZE === true })(
-  config
+export default withBotId(
+  withBundleAnalyzer({ enabled: process.env.ANALYZE === true })(config)
 );
