@@ -69,9 +69,6 @@ const config = {
         hostname: 'webmention.io',
       },
       {
-        protocol: 'https',
-        hostname: 'images.unsplash.com',
-      },
       {
         protocol: 'https',
         hostname: 'picsum.photos',
