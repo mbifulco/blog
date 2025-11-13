@@ -24,13 +24,15 @@ vi.mock('./env', () => ({
 
 // Mock the Resend SDK
 vi.mock('resend', () => ({
-  Resend: vi.fn(() => ({
-    contacts: {
-      create: vi.fn(),
-      list: vi.fn(),
-      get: vi.fn(),
-    },
-  })),
+  Resend: vi.fn(function () {
+    return {
+      contacts: {
+        create: vi.fn(),
+        list: vi.fn(),
+        get: vi.fn(),
+      },
+    };
+  }),
 }));
 
 describe('emailIsBad', () => {

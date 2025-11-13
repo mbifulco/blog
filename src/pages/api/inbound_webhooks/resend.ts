@@ -1,5 +1,6 @@
 import type { IncomingMessage } from 'http';
 import type { NextApiRequest, NextApiResponse } from 'next';
+import { checkBotId } from 'botid/server';
 import { buffer } from 'micro';
 import { PostHog } from 'posthog-node';
 import { Webhook } from 'svix';
@@ -58,6 +59,13 @@ const webhookHandler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (!method || method !== 'POST') {
     res.setHeader('Allow', ['POST']);
     return res.status(405).end(`Method ${method} Not Allowed`);
+  }
+
+  // Verify this request is not from a bot
+  const verification = await checkBotId();
+  if (verification.isBot) {
+    console.warn('Bot detected attempting to access webhook');
+    return res.status(403).json({ error: 'Access denied' });
   }
 
   try {
