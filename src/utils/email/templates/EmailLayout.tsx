@@ -60,8 +60,8 @@ export const EmailLayout = ({
       <Preview>{preview}</Preview>
 
       <Tailwind>
-        <Body className="mx-auto my-auto p-4 font-sans text-xl">
-          <Container>
+        <Body className="mx-auto my-auto font-sans text-xl">
+          <Container className="p-4">
             {/* Logo Section */}
             <Section style={logo} align="center">
               <Row>
@@ -109,7 +109,7 @@ export const EmailLayout = ({
                   className="text-pink-600"
                 >
                   mikebifulco.com
-                </Link>{' '}
+                </Link>
               </Text>
               {includeUnsubscribeLink && (
                 <Text className="my-0 text-sm text-gray-500">
