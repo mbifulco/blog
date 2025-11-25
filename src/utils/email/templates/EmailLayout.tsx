@@ -50,6 +50,11 @@ export const EmailLayout = ({
           a {
             color: #D83D84;
           }
+          img {
+            max-width: 100% !important;
+            height: auto !important;
+            display: block !important;
+          }
         `}</style>
       </Head>
       <Preview>{preview}</Preview>
