@@ -22,7 +22,7 @@ importers:
         version: 3.1.1
       '@mdx-js/react':
         specifier: ^3.1.1
-        version: 3.1.1(@types/react@19.2.7)(react@19.2.0)
+        version: 3.1.1(@types/react@19.2.6)(react@19.2.0)
       '@next/bundle-analyzer':
         specifier: 16.0.4
         version: 16.0.4
@@ -31,7 +31,7 @@ importers:
         version: 0.5.10(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
       '@radix-ui/react-slot':
         specifier: ^1.2.4
-        version: 1.2.4(@types/react@19.2.7)(react@19.2.0)
+        version: 1.2.4(@types/react@19.2.6)(react@19.2.0)
       '@react-email/components':
         specifier: ^1.0.1
         version: 1.0.1(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
@@ -97,7 +97,7 @@ importers:
         version: 6.17.5(next@16.0.4(@babel/core@7.28.5)(@playwright/test@1.57.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(sass@1.94.2))(react@19.2.0)
       next-mdx-remote:
         specifier: 5.0.0
-        version: 5.0.0(@types/react@19.2.7)(react@19.2.0)
+        version: 5.0.0(@types/react@19.2.6)(react@19.2.0)
       pluralize:
         specifier: ^8.0.0
         version: 8.0.0
@@ -197,7 +197,7 @@ importers:
         version: 6.9.1
       '@testing-library/react':
         specifier: ^16.3.0
-        version: 16.3.0(@testing-library/dom@10.4.1)(@types/react-dom@19.0.4(@types/react@19.2.7))(@types/react@19.2.7)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
+        version: 16.3.0(@testing-library/dom@10.4.1)(@types/react-dom@19.0.4(@types/react@19.2.6))(@types/react@19.2.6)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
       '@testing-library/user-event':
         specifier: ^14.6.1
         version: 14.6.1(@testing-library/dom@10.4.1)
@@ -211,8 +211,8 @@ importers:
         specifier: ^0.0.33
         version: 0.0.33
       '@types/react':
-        specifier: 19.2.7
-        version: 19.2.7
+        specifier: 19.2.6
+        version: 19.2.6
       '@typescript-eslint/eslint-plugin':
         specifier: ^8.48.0
         version: 8.48.0(@typescript-eslint/parser@8.48.0(eslint@9.39.1(jiti@2.6.1))(typescript@5.9.3))(eslint@9.39.1(jiti@2.6.1))(typescript@5.9.3)
@@ -2362,8 +2362,8 @@ packages:
     peerDependencies:
       '@types/react': 19.2.6
 
-  '@types/react@19.2.7':
-    resolution: {integrity: sha512-MWtvHrGZLFttgeEj28VXHxpmwYbor/ATPYbBfSFZEIRK0ecCFLl2Qo55z52Hss+UV9CRN7trSeq1zbgx7YDWWg==}
+  '@types/react@19.2.6':
+    resolution: {integrity: sha512-p/jUvulfgU7oKtj6Xpk8cA2Y1xKTtICGpJYeJXz2YVO2UcvjQgeRMLDGfDeqeRW2Ta+0QNFwcc8X3GH8SxZz6w==}
 
   '@types/unist@2.0.11':
     resolution: {integrity: sha512-CmBKiL6NNo/OqgmMn95Fk9Whlp2mtvIv+KNpQKN2F4SjvrEesubTRWGYSg+BnWZOnlCaSTU1sMpsBOzgbYhnsA==}
@@ -6391,10 +6391,10 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@mdx-js/react@3.1.1(@types/react@19.2.7)(react@19.2.0)':
+  '@mdx-js/react@3.1.1(@types/react@19.2.6)(react@19.2.0)':
     dependencies:
       '@types/mdx': 2.0.13
-      '@types/react': 19.2.7
+      '@types/react': 19.2.6
       react: 19.2.0
 
   '@napi-rs/wasm-runtime@0.2.12':
@@ -6559,18 +6559,18 @@ snapshots:
     dependencies:
       cross-spawn: 7.0.6
 
-  '@radix-ui/react-compose-refs@1.1.2(@types/react@19.2.7)(react@19.2.0)':
+  '@radix-ui/react-compose-refs@1.1.2(@types/react@19.2.6)(react@19.2.0)':
     dependencies:
       react: 19.2.0
     optionalDependencies:
-      '@types/react': 19.2.7
+      '@types/react': 19.2.6
 
-  '@radix-ui/react-slot@1.2.4(@types/react@19.2.7)(react@19.2.0)':
+  '@radix-ui/react-slot@1.2.4(@types/react@19.2.6)(react@19.2.0)':
     dependencies:
-      '@radix-ui/react-compose-refs': 1.1.2(@types/react@19.2.7)(react@19.2.0)
+      '@radix-ui/react-compose-refs': 1.1.2(@types/react@19.2.6)(react@19.2.0)
       react: 19.2.0
     optionalDependencies:
-      '@types/react': 19.2.7
+      '@types/react': 19.2.6
 
   '@react-aria/breadcrumbs@3.5.29(react-dom@19.2.0(react@19.2.0))(react@19.2.0)':
     dependencies:
@@ -7880,15 +7880,15 @@ snapshots:
       picocolors: 1.1.1
       redent: 3.0.0
 
-  '@testing-library/react@16.3.0(@testing-library/dom@10.4.1)(@types/react-dom@19.0.4(@types/react@19.2.7))(@types/react@19.2.7)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)':
+  '@testing-library/react@16.3.0(@testing-library/dom@10.4.1)(@types/react-dom@19.0.4(@types/react@19.2.6))(@types/react@19.2.6)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)':
     dependencies:
       '@babel/runtime': 7.28.4
       '@testing-library/dom': 10.4.1
       react: 19.2.0
       react-dom: 19.2.0(react@19.2.0)
     optionalDependencies:
-      '@types/react': 19.2.7
-      '@types/react-dom': 19.0.4(@types/react@19.2.7)
+      '@types/react': 19.2.6
+      '@types/react-dom': 19.0.4(@types/react@19.2.6)
 
   '@testing-library/user-event@14.6.1(@testing-library/dom@10.4.1)':
     dependencies:
@@ -8010,12 +8010,12 @@ snapshots:
 
   '@types/prismjs@1.26.5': {}
 
-  '@types/react-dom@19.0.4(@types/react@19.2.7)':
+  '@types/react-dom@19.0.4(@types/react@19.2.6)':
     dependencies:
-      '@types/react': 19.2.7
+      '@types/react': 19.2.6
     optional: true
 
-  '@types/react@19.2.7':
+  '@types/react@19.2.6':
     dependencies:
       csstype: 3.2.3
 
@@ -10494,11 +10494,11 @@ snapshots:
       next: 16.0.4(@babel/core@7.28.5)(@playwright/test@1.57.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(sass@1.94.2)
       react: 19.2.0
 
-  next-mdx-remote@5.0.0(@types/react@19.2.7)(react@19.2.0):
+  next-mdx-remote@5.0.0(@types/react@19.2.6)(react@19.2.0):
     dependencies:
       '@babel/code-frame': 7.27.1
       '@mdx-js/mdx': 3.1.1
-      '@mdx-js/react': 3.1.1(@types/react@19.2.7)(react@19.2.0)
+      '@mdx-js/react': 3.1.1(@types/react@19.2.6)(react@19.2.0)
       react: 19.2.0
       unist-util-remove: 3.1.1
       vfile: 6.0.3
