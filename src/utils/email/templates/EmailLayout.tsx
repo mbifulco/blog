@@ -55,6 +55,15 @@ export const EmailLayout = ({
             height: auto !important;
             display: block !important;
           }
+
+          @media only screen and (max-width: 600px) {
+            body {
+              font-size: 18px !important;
+            }
+            p {
+              font-size: 18px !important;
+            }
+          }
         `}</style>
       </Head>
       <Preview>{preview}</Preview>
