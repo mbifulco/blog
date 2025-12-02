@@ -25,8 +25,9 @@ export const useNewsletterModalTrigger = ({
   const pathname = usePathname();
 
   useEffect(() => {
-    // Don't show on subscribe page
-    if (pathname === '/subscribe') return;
+    const DO_NOT_SHOW_ON_PATHS = ['/subscribe', '/newsletter'];
+    // Don't show on these pages
+    if (pathname && DO_NOT_SHOW_ON_PATHS.includes(pathname)) return;
 
     // Check if already shown or dismissed
     const hasBeenShown = sessionStorage.getItem(MODAL_SHOWN_KEY);
@@ -36,16 +37,15 @@ export const useNewsletterModalTrigger = ({
 
     let timeTimeout: NodeJS.Timeout;
 
-    // Time on page trigger
-    if (timeOnPage > 0) {
-      timeTimeout = setTimeout(() => {
-        setIsOpen(true);
-        sessionStorage.setItem(MODAL_SHOWN_KEY, 'true');
-      }, timeOnPage);
-    }
-
     // Scroll depth trigger
     const handleScroll = () => {
+      // Check if already shown (in case time trigger fired first)
+      const hasBeenShown = sessionStorage.getItem(MODAL_SHOWN_KEY);
+      if (hasBeenShown) {
+        window.removeEventListener('scroll', handleScroll);
+        return;
+      }
+
       const scrollTop = window.scrollY;
       const docHeight = document.documentElement.scrollHeight;
       const winHeight = window.innerHeight;
@@ -60,6 +60,16 @@ export const useNewsletterModalTrigger = ({
         if (timeTimeout) clearTimeout(timeTimeout);
       }
     };
+
+    // Time on page trigger
+    if (timeOnPage > 0) {
+      timeTimeout = setTimeout(() => {
+        setIsOpen(true);
+        sessionStorage.setItem(MODAL_SHOWN_KEY, 'true');
+        // Remove scroll listener since we're showing the modal now
+        window.removeEventListener('scroll', handleScroll);
+      }, timeOnPage);
+    }
 
     if (scrollDepth > 0) {
       window.addEventListener('scroll', handleScroll);
