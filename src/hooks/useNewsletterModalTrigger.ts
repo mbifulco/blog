@@ -61,11 +61,15 @@ export const useNewsletterModalTrigger = ({
       }
     };
 
-    window.addEventListener('scroll', handleScroll);
+    if (scrollDepth > 0) {
+      window.addEventListener('scroll', handleScroll);
+    }
 
     return () => {
       if (timeTimeout) clearTimeout(timeTimeout);
-      window.removeEventListener('scroll', handleScroll);
+      if (scrollDepth > 0) {
+        window.removeEventListener('scroll', handleScroll);
+      }
     };
   }, [pathname, timeOnPage, scrollDepth]);
 
