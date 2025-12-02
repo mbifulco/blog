@@ -73,3 +73,17 @@
     @apply text-pink-600;
   }
 }
+
+@keyframes wiggle-interval {
+  0% { transform: rotate(0deg); }
+  5% { transform: rotate(-10deg); }
+  10% { transform: rotate(10deg); }
+  15% { transform: rotate(-10deg); }
+  20% { transform: rotate(10deg); }
+  25% { transform: rotate(0deg); }
+  100% { transform: rotate(0deg); }
+}
+
+.animate-wiggle-interval {
+  animation: wiggle-interval 3s ease-in-out infinite;
+}

@@ -31,10 +31,17 @@ export function PostHogPageview() {
   return null;
 }
 
+import NewsletterModal from '@components/NewsletterSignup/NewsletterModal';
+
 export default function PostHogProvider({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  return <PHProvider client={posthog}>{children}</PHProvider>;
+  return (
+    <PHProvider client={posthog}>
+      {children}
+      <NewsletterModal />
+    </PHProvider>
+  );
 }
