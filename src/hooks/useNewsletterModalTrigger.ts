@@ -4,10 +4,10 @@ import { usePathname } from 'next/navigation';
 const MODAL_SHOWN_KEY = 'newsletter_modal_shown';
 const MODAL_DISMISSED_KEY = 'newsletter_modal_dismissed';
 
-interface UseNewsletterModalTriggerProps {
+type UseNewsletterModalTriggerProps = {
   timeOnPage?: number; // in milliseconds
   scrollDepth?: number; // percentage (0-100)
-}
+};
 
 export const useNewsletterModalTrigger = ({
   timeOnPage = 30000,
