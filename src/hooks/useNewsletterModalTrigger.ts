@@ -9,6 +9,9 @@ type UseNewsletterModalTriggerProps = {
   scrollDepth?: number; // percentage (0-100)
 };
 
+// Modal will not be shown on these paths
+const DO_NOT_SHOW_ON_PATHS = ['/subscribe', '/newsletter'];
+
 /**
  * Hook to manage newsletter modal trigger logic based on time on page and scroll depth.
  * The modal will be shown once per session when either trigger condition is met.
@@ -25,8 +28,6 @@ export const useNewsletterModalTrigger = ({
   const pathname = usePathname();
 
   useEffect(() => {
-    const DO_NOT_SHOW_ON_PATHS = ['/subscribe', '/newsletter'];
-    // Don't show on these pages
     if (pathname && DO_NOT_SHOW_ON_PATHS.includes(pathname)) return;
 
     // Check if already shown or dismissed
