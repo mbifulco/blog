@@ -53,7 +53,13 @@ export const EmailLayout = ({
           img {
             max-width: 100% !important;
             height: auto !important;
-            display: block !important;
+          }
+          img[data-emoji] {
+            display: inline-block !important;
+            vertical-align: middle !important;
+            height: 1em !important;
+            width: auto !important;
+            margin: 0 !important;
           }
 
           @media only screen and (max-width: 600px) {
@@ -111,15 +117,7 @@ export const EmailLayout = ({
               }}
               className="mt-2 text-gray-500"
             >
-              <Text className="my-0 text-sm">
-                © {new Date().getFullYear()} &bull; 💌 Tiny Improvements &bull;{' '}
-                <Link
-                  href="https://mikebifulco.com/newsletter"
-                  className="text-pink-600"
-                >
-                  mikebifulco.com
-                </Link>
-              </Text>
+              <Text className="my-0 text-sm">© {new Date().getFullYear()} &bull; 💌 Tiny Improvements &bull; <Link href="https://mikebifulco.com/newsletter" className="text-pink-600">mikebifulco.com</Link></Text>
               {includeUnsubscribeLink && (
                 <Text className="my-0 text-sm text-gray-500">
                   Not getting what you need? No worries, you can{' '}

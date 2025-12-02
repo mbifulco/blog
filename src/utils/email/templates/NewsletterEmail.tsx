@@ -67,24 +67,13 @@ export const NewsletterEmail = ({
       </Row>
       <Row>
         <Column>
-          <Text className="text-xl">
-            Give &apos;em hell out there. ✌️ <br /> - Mike
-          </Text>
+          <Text className="text-xl">Give &apos;em hell out there. ✌️</Text>
+          <Text className="text-xl">- Mike</Text>
         </Column>
       </Row>
       <Row>
         <Column>
-          <Text className="italic text-gray-500">
-            Thanks for reading 💌 Tiny Improvements. If you found this helpful,
-            I'd love it if you{' '}
-            <Link
-              href="https://mikebifulco.com/newsletter"
-              className="text-pink-600"
-            >
-              share it with a friend
-            </Link>
-            . It helps me out a great deal!
-          </Text>
+          <Text className="italic text-gray-500">Thanks for reading 💌 Tiny Improvements. If you found this helpful, I'd love it if you <Link href="https://mikebifulco.com/newsletter" className="text-pink-600">share it with a friend</Link>. It helps me out a great deal!</Text>
         </Column>
       </Row>
     </EmailLayout>
