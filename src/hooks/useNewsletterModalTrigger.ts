@@ -9,6 +9,14 @@ type UseNewsletterModalTriggerProps = {
   scrollDepth?: number; // percentage (0-100)
 };
 
+/**
+ * Hook to manage newsletter modal trigger logic based on time on page and scroll depth.
+ * The modal will be shown once per session when either trigger condition is met.
+ *
+ * @param timeOnPage - Time in milliseconds before showing the modal (default: 30000ms30s)
+ * @param scrollDepth - Scroll depth percentage (0-100) to trigger the modal (default: 50)
+ * @returns { isOpen: boolean, setIsOpen: (isOpen: boolean) => void, dismiss: () => void }
+ */
 export const useNewsletterModalTrigger = ({
   timeOnPage = 30000,
   scrollDepth = 50,
