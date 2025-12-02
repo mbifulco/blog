@@ -41,7 +41,9 @@ export const useNewsletterModalTrigger = ({
       const scrollTop = window.scrollY;
       const docHeight = document.documentElement.scrollHeight;
       const winHeight = window.innerHeight;
-      const scrollPercent = (scrollTop / (docHeight - winHeight)) * 100;
+      const scrollableHeight = docHeight - winHeight;
+      if (scrollableHeight <= 0) return; // Page is not scrollable
+      const scrollPercent = (scrollTop / scrollableHeight) * 100;
 
       if (scrollPercent > scrollDepth) {
         setIsOpen(true);
