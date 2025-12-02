@@ -34,6 +34,7 @@
     "@mdx-js/react": "^3.1.1",
     "@next/bundle-analyzer": "16.0.5",
     "@number-flow/react": "^0.5.10",
+    "@radix-ui/react-dialog": "^1.1.15",
     "@radix-ui/react-slot": "^1.2.4",
     "@react-email/components": "^1.0.1",
     "@react-email/markdown": "0.0.17",
@@ -80,6 +81,7 @@
     "superjson": "^2.2.6",
     "svix": "^1.81.0",
     "tailwind-merge": "^3.4.0",
+    "tailwindcss-animate": "^1.0.7",
     "zod": "^4.1.13"
   },
   "devDependencies": {

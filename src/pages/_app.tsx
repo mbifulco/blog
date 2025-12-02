@@ -41,6 +41,8 @@ if (typeof window !== 'undefined') {
   }
 }
 
+import NewsletterModal from '@components/NewsletterSignup/NewsletterModal';
+
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <PostHogProvider client={posthog}>
@@ -60,6 +62,7 @@ function MyApp({ Component, pageProps }: AppProps) {
               },
             }}
           />
+          <NewsletterModal />
         </DefaultLayout>
       </div>
     </PostHogProvider>
