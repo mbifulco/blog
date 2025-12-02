@@ -62,6 +62,12 @@ export const useNewsletterModalTrigger = ({
       }
     };
 
+    // Add scroll listener first, before setting up the time trigger
+    // This ensures the listener is always registered before any attempt to remove it
+    if (scrollDepth > 0) {
+      window.addEventListener('scroll', handleScroll);
+    }
+
     // Time on page trigger
     if (timeOnPage > 0) {
       timeTimeout = setTimeout(() => {
@@ -70,10 +76,6 @@ export const useNewsletterModalTrigger = ({
         // Remove scroll listener since we're showing the modal now
         window.removeEventListener('scroll', handleScroll);
       }, timeOnPage);
-    }
-
-    if (scrollDepth > 0) {
-      window.addEventListener('scroll', handleScroll);
     }
 
     return () => {
