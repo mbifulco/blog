@@ -55,7 +55,7 @@
     "gray-matter": "^4.0.3",
     "lucide-react": "^0.555.0",
     "micro": "^10.0.1",
-    "next": "16.0.5",
+    "next": "16.0.7",
     "next-cloudinary": "^6.17.5",
     "next-mdx-remote": "5.0.0",
     "pluralize": "^8.0.0",
