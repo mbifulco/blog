@@ -203,6 +203,12 @@ const SubscriptionForm: React.FC<SubscriptionFormProps> = ({
       firstName,
     });
 
+    posthog.capture('newsletter/attempting_subscribe', {
+      source,
+      email,
+      firstName,
+    });
+
     addSubscriberMutation.mutate({
       email,
       firstName,
