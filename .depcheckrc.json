@@ -12,6 +12,7 @@
     "@lib/*",
     "@next/bundle-analyzer",
     "@next/eslint-plugin-next",
+    "@posthog/nextjs-config",
     "@prettier/plugin-ruby",
     "@react-email/markdown",
     "@react-email/preview-server",
