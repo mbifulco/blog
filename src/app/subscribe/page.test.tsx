@@ -340,6 +340,38 @@ describe('NewsletterSignupPage', () => {
     expect(screen.getByPlaceholderText('you@example.com')).toBeInTheDocument();
   });
 
+  it('should capture newsletter/attempting_subscribe analytics event on form submission', async () => {
+    const user = userEvent.setup();
+    const posthog = await import('posthog-js');
+
+    render(
+      <TestWrapper>
+        <NewsletterSignupPage />
+      </TestWrapper>
+    );
+
+    const firstNameInput = screen.getByPlaceholderText('First Name');
+    const emailInput = screen.getByPlaceholderText('you@example.com');
+    const submitButton = screen.getByRole('button', {
+      name: /💌 Get the newsletter/i,
+    });
+
+    await user.type(firstNameInput, 'Jane');
+    await user.type(emailInput, 'jane@example.com');
+    await user.click(submitButton);
+
+    await waitFor(() => {
+      expect(posthog.default.capture).toHaveBeenCalledWith(
+        'newsletter/attempting_subscribe',
+        {
+          source: 'subscribe-page',
+          email: 'jane@example.com',
+          firstName: 'Jane',
+        }
+      );
+    });
+  });
+
   it('should show success state with correct link to newsletter', async () => {
     // Create a mock that properly triggers the onSuccess callback
     let capturedOnSuccess: ((data: unknown) => void) | null = null;

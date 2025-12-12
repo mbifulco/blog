@@ -315,4 +315,49 @@ describe('SubscriptionForm - Spam Detection', () => {
       expect(mutateMock).not.toHaveBeenCalled();
     });
   });
+
+  describe('Analytics tracking', () => {
+    it('should capture newsletter/attempting_subscribe event on valid form submission', async () => {
+      const user = userEvent.setup();
+      render(<SubscriptionForm source="test-source" />);
+
+      const firstNameInput = screen.getByPlaceholderText('First Name');
+      const emailInput = screen.getByPlaceholderText('Email Address');
+      const submitButton = screen.getByRole('button', { name: /subscribe/i });
+
+      await user.type(firstNameInput, 'Alice');
+      await user.type(emailInput, 'alice@example.com');
+      await user.click(submitButton);
+
+      await waitFor(() => {
+        expect(posthog.capture).toHaveBeenCalledWith(
+          'newsletter/attempting_subscribe',
+          {
+            source: 'test-source',
+            email: 'alice@example.com',
+            firstName: 'Alice',
+          }
+        );
+      });
+    });
+
+    it('should identify user before capturing attempting_subscribe event', async () => {
+      const user = userEvent.setup();
+      render(<SubscriptionForm source="test-source" />);
+
+      const firstNameInput = screen.getByPlaceholderText('First Name');
+      const emailInput = screen.getByPlaceholderText('Email Address');
+      const submitButton = screen.getByRole('button', { name: /subscribe/i });
+
+      await user.type(firstNameInput, 'Bob');
+      await user.type(emailInput, 'bob@example.com');
+      await user.click(submitButton);
+
+      await waitFor(() => {
+        expect(posthog.identify).toHaveBeenCalledWith('bob@example.com', {
+          firstName: 'Bob',
+        });
+      });
+    });
+  });
 });
