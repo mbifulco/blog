@@ -79,6 +79,12 @@ export default function NewsletterSignupPage() {
       firstName: data.firstName,
     });
 
+    posthog.capture('newsletter/attempting_subscribe', {
+      source: 'subscribe-page',
+      email: data.email,
+      firstName: data.firstName,
+    });
+
     addSubscriberMutation.mutate({
       email: data.email,
       firstName: data.firstName,
