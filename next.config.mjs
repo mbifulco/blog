@@ -1,4 +1,5 @@
 import withBundleAnalyzer from '@next/bundle-analyzer';
+import { withPostHogConfig } from '@posthog/nextjs-config';
 import { createJiti } from 'jiti';
 
 const jiti = createJiti(new URL(import.meta.url).pathname);
@@ -125,5 +126,12 @@ const config = {
 };
 
 export default withBundleAnalyzer({ enabled: process.env.ANALYZE === true })(
-  config
+  withPostHogConfig(config, {
+    sourcemaps: {
+      // Upload sourcemaps only when API key is available
+      enabled: process.env.NODE_ENV === 'production' && !!process.env.POSTHOG_PERSONAL_API_KEY,
+      // Clean up sourcemaps after upload to reduce bundle size
+      deleteAfterUpload: true,
+    },
+  })
 );
