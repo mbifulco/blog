@@ -90,7 +90,6 @@
     "@ianvs/prettier-plugin-sort-imports": "^4.7.0",
     "@next/eslint-plugin-next": "16.0.10",
     "@playwright/test": "^1.57.0",
-    "@posthog/nextjs-config": "^1.7.0",
     "@react-email/preview-server": "5.0.8",
     "@tailwindcss/postcss": "^4.1.18",
     "@testing-library/jest-dom": "^6.9.1",
