@@ -1,4 +1,6 @@
 import type { GetStaticProps, NextPage } from 'next';
+import { useRef } from 'react';
+import posthog from 'posthog-js';
 
 import { ExternalWorkItem } from '../components/ExternalWork';
 import SEO from '../components/seo';
@@ -20,6 +22,17 @@ type WorkPageProps = {
 };
 
 const WorkPage: NextPage<WorkPageProps> = ({ articles }) => {
+  const hasTrackedView = useRef(false);
+
+  const handlePageViewed = () => {
+    if (hasTrackedView.current) return;
+    hasTrackedView.current = true;
+
+    posthog.capture('work_page_viewed', {
+      article_count: articles.length,
+    });
+  };
+
   return (
     <>
       <SEO
@@ -27,7 +40,7 @@ const WorkPage: NextPage<WorkPageProps> = ({ articles }) => {
         canonical="/work"
         description="Some samples of my work online"
       />
-      <div className="flex flex-row gap-4">
+      <div className="flex flex-row gap-4" onMouseEnter={handlePageViewed}>
         <h1 className="text-4xl font-bold">Some samples of my work online</h1>
         <div>
           <p className="mb-8">

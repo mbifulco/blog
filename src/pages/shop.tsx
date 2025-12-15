@@ -1,17 +1,29 @@
 import type { NextPage } from 'next';
+import { useRef } from 'react';
+import posthog from 'posthog-js';
 
 import { Heading } from '../components/Heading';
 import { Image } from '../components/Image';
 import SEO from '../components/seo';
 import SoldOut from '../components/soldOut';
 
-const Shop: NextPage = () => (
-  <>
-    <SEO
-      title="Shop - stickers, design files, digital downloads, and other stuff I've made"
-      description="I occasionally design and sell things in small runs - stickers, design files, whitepapers, digital downloads, and other stuff I've made."
-    />
-    <main className={'mx-auto mb-5 w-full max-w-3xl p-5 text-left'}>
+const Shop: NextPage = () => {
+  const hasTrackedView = useRef(false);
+
+  const handlePageViewed = () => {
+    if (hasTrackedView.current) return;
+    hasTrackedView.current = true;
+
+    posthog.capture('shop_page_viewed');
+  };
+
+  return (
+    <>
+      <SEO
+        title="Shop - stickers, design files, digital downloads, and other stuff I've made"
+        description="I occasionally design and sell things in small runs - stickers, design files, whitepapers, digital downloads, and other stuff I've made."
+      />
+      <main className={'mx-auto mb-5 w-full max-w-3xl p-5 text-left'} onMouseEnter={handlePageViewed}>
       <h1 className="justify-center">Shop</h1>
 
       <article className={'relative max-w-[45%] rounded-sm bg-gray-50 p-2'}>
@@ -26,9 +38,10 @@ const Shop: NextPage = () => (
         </p>
 
         <Image publicId="egg-em" alt="egg sticker" className="mx-0 my-8" />
-      </article>
-    </main>
-  </>
-);
+        </article>
+      </main>
+    </>
+  );
+};
 
 export default Shop;

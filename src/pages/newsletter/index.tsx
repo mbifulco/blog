@@ -1,4 +1,6 @@
 import type { GetStaticProps } from 'next';
+import { useRef } from 'react';
+import posthog from 'posthog-js';
 
 import { Heading } from '@components/Heading';
 import NewsletterItem from '@components/NewsletterFeed/NewsletterItem';
@@ -46,9 +48,22 @@ const NewsletterPage: React.FC<NewsletterPageProps> = ({
   pagination,
 }) => {
   const [latestNewsletter, ...pastNewsletters] = newsletters;
+  const hasTrackedView = useRef(false);
+
+  // Track newsletter page view (fires once when user engages with page)
+  const handlePageViewed = () => {
+    if (hasTrackedView.current) return;
+    hasTrackedView.current = true;
+
+    posthog.capture('newsletter_page_viewed', {
+      current_page: pagination.currentPage,
+      total_pages: pagination.totalPages,
+      newsletter_count: newsletters.length,
+    });
+  };
 
   return (
-    <div className="mx-auto flex max-w-4xl flex-col gap-4">
+    <div className="mx-auto flex max-w-4xl flex-col gap-4" onMouseEnter={handlePageViewed}>
       <SEO
         title={`${config.newsletter.title}: a newsletter for startup founders, indiehackers, and product builders`}
         description={config.newsletter.shortDescription}

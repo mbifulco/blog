@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import posthog from 'posthog-js';
 
 import {
   BlueskyIcon,
@@ -13,6 +14,13 @@ import {
   YouTubeIcon,
 } from '../icons';
 
+const handleSocialLinkClick = (platform: string, url: string) => {
+  posthog.capture('social_link_clicked', {
+    platform,
+    url,
+  });
+};
+
 const SocialLinks = () => (
   <div className="flex flex-row items-center gap-6">
     <Link
@@ -20,7 +28,8 @@ const SocialLinks = () => (
       href="https://patreon.com/tinyimprovements"
       target="_blank"
       rel="noopener noreferrer me"
-      aria-label="💌 Tiny Improvements on Patreon"
+      aria-label="Tiny Improvements on Patreon"
+      onClick={() => handleSocialLinkClick('patreon', 'https://patreon.com/tinyimprovements')}
     >
       <PatreonIcon />
     </Link>
@@ -29,7 +38,8 @@ const SocialLinks = () => (
       href="https://bsky.app/profile/mikebifulco.com"
       target="_blank"
       rel="noopener noreferrer me"
-      aria-label="Buy me a coffee"
+      aria-label="@mikebifulco.com on Bluesky"
+      onClick={() => handleSocialLinkClick('bluesky', 'https://bsky.app/profile/mikebifulco.com')}
     >
       <BlueskyIcon />
     </Link>
@@ -39,6 +49,7 @@ const SocialLinks = () => (
       target="_blank"
       rel="noreferrer noopener me"
       aria-label="@irreverentmike on threads"
+      onClick={() => handleSocialLinkClick('threads', 'https://threads.net/@irreverentmike')}
     >
       <ThreadsIcon />
     </Link>
@@ -49,6 +60,7 @@ const SocialLinks = () => (
       target="_blank"
       rel="noopener noreferrer me"
       aria-label="MikeBifulco on youtube"
+      onClick={() => handleSocialLinkClick('youtube', 'https://www.youtube.com/c/MikeBifulco')}
     >
       <span className="text-sm">
         <YouTubeIcon />
@@ -61,6 +73,7 @@ const SocialLinks = () => (
       target="_blank"
       rel="noreferrer noopener me"
       aria-label="@mbifulco on github"
+      onClick={() => handleSocialLinkClick('github', 'https://github.com/mbifulco')}
     >
       <GitHubIcon />
     </Link>
@@ -71,6 +84,7 @@ const SocialLinks = () => (
       rel="noopener noreferrer me"
       aria-label="@irreverentmike on Mastodon"
       href="https://hachyderm.io/@irreverentmike"
+      onClick={() => handleSocialLinkClick('mastodon', 'https://hachyderm.io/@irreverentmike')}
     >
       <MastodonIcon />
     </Link>
@@ -81,6 +95,7 @@ const SocialLinks = () => (
       target="_blank"
       rel="noreferrer noopener me"
       aria-label="@irreverentmike on twitter"
+      onClick={() => handleSocialLinkClick('twitter', 'https://twitter.com/irreverentmike')}
     >
       <TwitterIcon />
     </Link>
@@ -91,6 +106,7 @@ const SocialLinks = () => (
       target="_blank"
       rel="noreferrer noopener"
       aria-label="@irreverentmike on twitch"
+      onClick={() => handleSocialLinkClick('twitch', 'https://www.twitch.tv/irreverentmike')}
     >
       <TwitchIcon />
     </Link>
@@ -101,6 +117,7 @@ const SocialLinks = () => (
       target="_blank"
       rel="noopener noreferrer"
       aria-label="RSS feed for this site"
+      onClick={() => handleSocialLinkClick('rss', '/rss.xml')}
     >
       <RssIcon />
     </Link>
