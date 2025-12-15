@@ -1,0 +1,62 @@
+[
+  {
+    "event_name": "social_link_clicked",
+    "event_description": "User clicked an external social media link (Patreon, Bluesky, Threads, YouTube, GitHub, Mastodon, RSS)",
+    "file_path": "src/components/SocialLinks/SocialLinks.tsx"
+  },
+  {
+    "event_name": "sponsor_cta_clicked",
+    "event_description": "User clicked the sponsor CTA link to explore sponsorship opportunities",
+    "file_path": "src/components/SponsorCTA/SponsorCTA.tsx"
+  },
+  {
+    "event_name": "post_read_started",
+    "event_description": "User started reading a blog post (top of conversion funnel for content engagement)",
+    "file_path": "src/pages/posts/[slug].tsx"
+  },
+  {
+    "event_name": "newsletter_page_viewed",
+    "event_description": "User viewed the newsletter landing page (top of newsletter signup funnel)",
+    "file_path": "src/pages/newsletter/index.tsx"
+  },
+  {
+    "event_name": "shop_page_viewed",
+    "event_description": "User viewed the shop page (e-commerce funnel entry point)",
+    "file_path": "src/pages/shop.tsx"
+  },
+  {
+    "event_name": "error_page_viewed",
+    "event_description": "User encountered an error page (404 or 500) - tracks potential churn/broken UX",
+    "file_path": "src/components/ErrorPage.tsx"
+  },
+  {
+    "event_name": "post_summary_clicked",
+    "event_description": "User clicked on a post summary card to read the full article",
+    "file_path": "src/components/Post/PostSummary.tsx"
+  },
+  {
+    "event_name": "about_page_viewed",
+    "event_description": "User viewed the about page (interest in author/brand)",
+    "file_path": "src/pages/about/index.tsx"
+  },
+  {
+    "event_name": "work_page_viewed",
+    "event_description": "User viewed the work/portfolio page (potential business opportunities)",
+    "file_path": "src/pages/work.tsx"
+  },
+  {
+    "event_name": "podcast_page_viewed",
+    "event_description": "User viewed the podcast page (content engagement)",
+    "file_path": "src/pages/podcast/index.tsx"
+  },
+  {
+    "event_name": "tag_clicked",
+    "event_description": "User clicked on a tag to filter content by topic",
+    "file_path": "src/components/tag.tsx"
+  },
+  {
+    "event_name": "series_navigation_clicked",
+    "event_description": "User navigated within a post series (content engagement depth)",
+    "file_path": "src/components/Series/SeriesNavigation.tsx"
+  }
+]

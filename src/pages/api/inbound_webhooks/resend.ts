@@ -17,7 +17,7 @@ import {
 import type { ContactEventData, WebhookEvent } from '@utils/resend';
 
 const ph = new PostHog(env.NEXT_PUBLIC_POSTHOG_KEY, {
-  host: 'https://us.i.posthog.com',
+  host: env.NEXT_PUBLIC_POSTHOG_HOST || 'https://us.i.posthog.com',
   flushAt: 1, // flush immediately since this is a serverless function
   flushInterval: 0, // disable periodic flush as well
 });

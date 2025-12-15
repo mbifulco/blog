@@ -1,6 +1,8 @@
 import type { NextPage } from 'next';
 import type { MDXRemoteSerializeResult } from 'next-mdx-remote';
 import { MDXRemote } from 'next-mdx-remote';
+import { useRef } from 'react';
+import posthog from 'posthog-js';
 
 import NewsletterSignup from '@components/NewsletterSignup/NewsletterBannerFancy';
 import SEO from '../../components/seo';
@@ -58,13 +60,23 @@ type AboutPageProps = {
   error?: boolean;
 };
 
-const AboutPage: NextPage<AboutPageProps> = ({ mdxSource, error }) => (
-  <>
-    <SEO
-      title="About Mike Bifulco - founder, developer advocate, designer, writer"
-      description="Mike Bifulco is a serial entrepreneur, author, and software developer, and former Stripe, Google, and Microsoft employee, working to build great products."
-    />
-    <main className="mx-auto mb-8 max-w-4xl">
+const AboutPage: NextPage<AboutPageProps> = ({ mdxSource, error }) => {
+  const hasTrackedView = useRef(false);
+
+  const handlePageViewed = () => {
+    if (hasTrackedView.current) return;
+    hasTrackedView.current = true;
+
+    posthog.capture('about_page_viewed');
+  };
+
+  return (
+    <>
+      <SEO
+        title="About Mike Bifulco - founder, developer advocate, designer, writer"
+        description="Mike Bifulco is a serial entrepreneur, author, and software developer, and former Stripe, Google, and Microsoft employee, working to build great products."
+      />
+      <main className="mx-auto mb-8 max-w-4xl" onMouseEnter={handlePageViewed}>
       {error && (
         <div className="mb-6 border-l-4 border-yellow-400 bg-yellow-50 p-4">
           <p className="text-yellow-700">
@@ -73,12 +85,13 @@ const AboutPage: NextPage<AboutPageProps> = ({ mdxSource, error }) => (
         </div>
       )}
       <div className="prose prose-lg">
-        <MDXRemote {...mdxSource} components={components} />
-      </div>
-    </main>
+          <MDXRemote {...mdxSource} components={components} />
+        </div>
+      </main>
 
-    <NewsletterSignup />
-  </>
-);
+      <NewsletterSignup />
+    </>
+  );
+};
 
 export default AboutPage;

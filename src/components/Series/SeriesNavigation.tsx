@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import posthog from 'posthog-js';
 
 import { Heading } from '@components/Heading';
 import type { Series } from '@lib/series';
@@ -23,6 +24,17 @@ export const SeriesNavigation: React.FC<SeriesNavigationProps> = ({
       new Date(b.frontmatter.date).getTime()
     );
   });
+
+  const handleSeriesNavClick = (targetTitle: string, targetSlug: string, positionInSeries: number) => {
+    posthog.capture('series_navigation_clicked', {
+      series_name: series.name,
+      series_slug: series.slug,
+      target_title: targetTitle,
+      target_slug: targetSlug,
+      position_in_series: positionInSeries,
+      total_in_series: orderedContent.length,
+    });
+  };
 
   return (
     <div className="mt-6 rounded-lg border border-gray-200 bg-white p-4">
@@ -53,6 +65,7 @@ export const SeriesNavigation: React.FC<SeriesNavigationProps> = ({
               <Link
                 href={isActivePage ? '#' : postPath || newsletterPath}
                 className="flex items-center gap-2 text-lg text-inherit no-underline"
+                onClick={() => !isActivePage && handleSeriesNavClick(post.frontmatter.title, post.frontmatter.slug, index + 1)}
               >
                 <span
                   className={clsxm(

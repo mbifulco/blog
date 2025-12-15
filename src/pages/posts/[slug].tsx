@@ -1,5 +1,7 @@
 import type { GetStaticProps, NextPage } from 'next';
 import { useRouter } from 'next/router';
+import { useRef } from 'react';
+import posthog from 'posthog-js';
 
 import { NewsletterSignup } from '@components/NewsletterSignup';
 import { getSeries } from '@lib/series';
@@ -63,13 +65,27 @@ const PostPage: NextPage<PostPageProps> = ({ post, series }) => {
     frontmatter;
 
   const router = useRouter();
+  const hasTrackedRead = useRef(false);
 
+  // Track post read started event (fires once when user engages with content)
+  const handlePostReadStarted = () => {
+    if (hasTrackedRead.current) return;
+    hasTrackedRead.current = true;
+
+    posthog.capture('post_read_started', {
+      post_slug: slug,
+      post_title: title,
+      post_tags: tags,
+      series_name: series?.name,
+      published_date: date,
+    });
+  };
   const postImagePublicId = coverImagePublicId || `posts/${slug}/cover`;
   const coverImageUrl = getCloudinaryImageUrl(postImagePublicId);
 
   return (
     <>
-      <div className="mx-auto w-full px-4 md:px-0">
+      <div className="mx-auto w-full px-4 md:px-0" onMouseEnter={handlePostReadStarted}>
         <SEO
           canonical={router.asPath}
           title={title}

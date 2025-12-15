@@ -1,5 +1,7 @@
 import Link from 'next/link';
+import { useRef } from 'react';
 import { Popover } from '@headlessui/react';
+import posthog from 'posthog-js';
 
 import config from '@/config';
 import NewsletterSignup from '../../components/NewsletterSignup';
@@ -36,8 +38,17 @@ const Eponymous = () => {
 };
 
 const PodcastPage = () => {
+  const hasTrackedView = useRef(false);
+
+  const handlePageViewed = () => {
+    if (hasTrackedView.current) return;
+    hasTrackedView.current = true;
+
+    posthog.capture('podcast_page_viewed');
+  };
+
   return (
-    <div className="mx-auto flex max-w-4xl flex-col gap-4">
+    <div className="mx-auto flex max-w-4xl flex-col gap-4" onMouseEnter={handlePageViewed}>
       <SEO
         title="Tiny Improvements, the Podcast"
         description={config.podcast.description}
