@@ -250,7 +250,7 @@ const ListItemComponent: React.FC<HTMLAttributes<HTMLLIElement>> = ({
   children,
   ...rest
 }) => (
-  <li {...rest} className="my-1">
+  <li {...rest}>
     {children}
   </li>
 );
