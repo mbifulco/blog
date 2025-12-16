@@ -226,7 +226,10 @@ const OrderedList: React.FC<HTMLAttributes<HTMLOListElement>> = ({
   children,
   ...rest
 }) => (
-  <ol {...rest} className="list-decimal marker:text-pink-400">
+  <ol
+    {...rest}
+    className="list-decimal marker:text-pink-400 [&_li]:my-1 [&_li_p]:my-0"
+  >
     {children}
   </ol>
 );
@@ -235,7 +238,10 @@ const UnorderedList: React.FC<HTMLAttributes<HTMLUListElement>> = ({
   children,
   ...rest
 }) => (
-  <ul {...rest} className="list-disc marker:text-pink-400">
+  <ul
+    {...rest}
+    className="list-disc marker:text-pink-400 [&_li]:my-1 [&_li_p]:my-0"
+  >
     {children}
   </ul>
 );
@@ -243,7 +249,11 @@ const UnorderedList: React.FC<HTMLAttributes<HTMLUListElement>> = ({
 const ListItemComponent: React.FC<HTMLAttributes<HTMLLIElement>> = ({
   children,
   ...rest
-}) => <li {...rest}>{children}</li>;
+}) => (
+  <li {...rest} className="my-1">
+    {children}
+  </li>
+);
 
 const HorizontalRule = () => {
   return (
