@@ -14,7 +14,7 @@ export const ImageEmail: React.FC<ImageEmailProps> = ({
   alt = '',
 }) => {
   const getCloudinaryImageUrl = (publicId: string) => {
-    return `https://res.cloudinary.com/mikebifulco-com/image/upload/${publicId}`;
+    return `https://res.cloudinary.com/mikebifulco-com/image/upload/q_auto:eco,f_auto/v1/${publicId}`;
   };
 
   return (
