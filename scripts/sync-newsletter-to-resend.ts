@@ -108,10 +108,18 @@ function convertImagesToMarkdown(content: string): string {
 
 /**
  * Converts basic markdown to HTML for sponsored section content.
- * Handles headings, bold, italic, and links.
+ * Handles headings, bold, italic, links, and preserves existing HTML tags.
  */
 function convertMarkdownToHtml(markdown: string): string {
   let html = markdown;
+
+  // Preserve existing HTML img tags (like tracking pixels) by temporarily replacing them
+  const imgTags: string[] = [];
+  html = html.replace(/<img[^>]+>/gi, (match) => {
+    const index = imgTags.length;
+    imgTags.push(match);
+    return `__IMG_PLACEHOLDER_${index}__`;
+  });
 
   // Convert headings (###, ##, #)
   html = html.replace(/^### (.+)$/gm, '<h3 style="font-weight: 500; font-size: 1.5rem; margin: 16px 0 8px 0; color: #1f2937;">$1</h3>');
@@ -134,13 +142,18 @@ function convertMarkdownToHtml(markdown: string): string {
     .split(/\n\s*\n/)
     .map((para) => {
       const trimmed = para.trim();
-      // Don't wrap if already an HTML tag
-      if (trimmed.startsWith('<')) {
+      // Don't wrap if already an HTML tag or img placeholder
+      if (trimmed.startsWith('<') || trimmed.startsWith('__IMG_PLACEHOLDER_')) {
         return trimmed;
       }
       return `<p style="margin: 8px 0; line-height: 1.5;">${trimmed}</p>`;
     })
     .join('\n');
+
+  // Restore preserved img tags
+  imgTags.forEach((imgTag, index) => {
+    html = html.replace(`__IMG_PLACEHOLDER_${index}__`, imgTag);
+  });
 
   return html;
 }
