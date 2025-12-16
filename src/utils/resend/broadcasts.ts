@@ -6,6 +6,7 @@ type BroadcastParams = {
   subject: string;
   html: string;
   from: string;
+  disableClickTracking?: boolean; // Disable click tracking to preserve sponsor URLs
 };
 
 /**
@@ -50,6 +51,12 @@ export async function createBroadcast(params: BroadcastParams) {
       from: params.from,
       html: params.html,
       audienceId: env.RESEND_NEWSLETTER_AUDIENCE_ID,
+      // Conditionally disable click tracking to preserve sponsor tracking URLs
+      ...(params.disableClickTracking && {
+        tracking: {
+          click: false,
+        },
+      }),
     });
 
     if (response.error) {
@@ -77,6 +84,12 @@ export async function updateBroadcast(
       from: params.from,
       html: params.html,
       segmentId: env.RESEND_NEWSLETTER_AUDIENCE_ID,
+      // Conditionally disable click tracking to preserve sponsor tracking URLs
+      ...(params.disableClickTracking && {
+        tracking: {
+          click: false,
+        },
+      }),
     });
 
     if (response.error) {

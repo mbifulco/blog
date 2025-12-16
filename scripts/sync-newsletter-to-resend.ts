@@ -292,6 +292,18 @@ async function main() {
       // 2. Convert <SponsoredSection> components to inline HTML
       cleanContent = convertSponsoredSectionsToHtml(cleanContent);
 
+      // Check if newsletter has sponsors (auto-detect or use frontmatter)
+      const hasSponsor =
+        frontmatter.hasSponsor ??
+        frontmatter.disableClickTracking ??
+        content.includes('<SponsoredSection');
+
+      if (hasSponsor) {
+        console.log(
+          `   📊 Disabling click tracking (sponsor content detected)`
+        );
+      }
+
       // Render to HTML
       const html = await render(
         React.createElement(NewsletterEmail, {
@@ -309,6 +321,7 @@ async function main() {
         subject: frontmatter.title,
         html,
         from: FROM_ADDRESS,
+        disableClickTracking: hasSponsor,
       });
 
       if (result.data) {
