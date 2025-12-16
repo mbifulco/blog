@@ -114,11 +114,12 @@ function convertMarkdownToHtml(markdown: string): string {
   let html = markdown;
 
   // Preserve existing HTML img tags (like tracking pixels) by temporarily replacing them
+  // Use %%% delimiters to avoid conflicts with markdown syntax (_ * [ ] etc)
   const imgTags: string[] = [];
   html = html.replace(/<img[^>]+>/gi, (match) => {
     const index = imgTags.length;
     imgTags.push(match);
-    return `__IMG_PLACEHOLDER_${index}__`;
+    return `%%%IMG_PLACEHOLDER_${index}%%%`;
   });
 
   // Convert headings (###, ##, #)
@@ -143,7 +144,7 @@ function convertMarkdownToHtml(markdown: string): string {
     .map((para) => {
       const trimmed = para.trim();
       // Don't wrap if already an HTML tag or img placeholder
-      if (trimmed.startsWith('<') || trimmed.startsWith('__IMG_PLACEHOLDER_')) {
+      if (trimmed.startsWith('<') || trimmed.startsWith('%%%IMG_PLACEHOLDER_')) {
         return trimmed;
       }
       return `<p style="margin: 8px 0; line-height: 1.5;">${trimmed}</p>`;
@@ -152,7 +153,7 @@ function convertMarkdownToHtml(markdown: string): string {
 
   // Restore preserved img tags
   imgTags.forEach((imgTag, index) => {
-    html = html.replace(`__IMG_PLACEHOLDER_${index}__`, imgTag);
+    html = html.replace(`%%%IMG_PLACEHOLDER_${index}%%%`, imgTag);
   });
 
   return html;
