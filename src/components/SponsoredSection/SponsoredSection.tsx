@@ -63,7 +63,7 @@ const SponsoredSection: React.FC<SponsoredSectionProps> = ({
           className={clsxm(
             'prose block py-4 prose-headings:mb-1 prose-headings:mt-0 prose-p:my-2',
             imagePublicId ? 'prose-xs' : 'prose-sm',
-            '[&_h3]:text-(--brand-color)! [&_h4]:text-(--brand-color)! [&_h5]:text-(--brand-color)!'
+            '[&_h3]:text-[var(--brand-color)] [&_h4]:text-[var(--brand-color)] [&_h5]:text-[var(--brand-color)]'
           )}
           style={
             {
