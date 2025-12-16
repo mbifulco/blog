@@ -75,17 +75,11 @@ const SponsoredSection: React.FC<SponsoredSectionProps> = ({
 
           <div className="flex flex-col content-center gap-4">
             <Link
-              className="self-center rounded-md px-6 py-2.5 text-sm font-medium text-white no-underline transition-all hover:text-white hover:no-underline"
+              className="self-center rounded-md px-6 py-2.5 text-sm font-medium text-white no-underline transition-all hover:text-white hover:no-underline hover:opacity-90 focus:opacity-90"
               style={{
                 backgroundColor: brandColor,
                 borderColor: brandColor,
                 border: '1px solid',
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.opacity = '0.9';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.opacity = '1';
               }}
               href={href}
               rel="sponsored"
