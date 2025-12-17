@@ -95,15 +95,106 @@ function shouldProcessNewsletter(
 }
 
 /**
- * Converts custom <Image> MDX components to standard <img> tags with Cloudinary URLs.
+ * Converts custom <Image> MDX components to standard markdown image syntax.
  */
-function convertImagesToHtml(content: string): string {
-  // Match <Image publicId="path/to/image" ... />
+function convertImagesToMarkdown(content: string): string {
   const imageRegex = /<Image\s+publicId="([^"]+)"[^>]*\/>/g;
 
   return content.replace(imageRegex, (_, publicId) => {
     const cloudinaryUrl = getCloudinaryImageUrl(publicId);
     return `![](${cloudinaryUrl})`;
+  });
+}
+
+/**
+ * Converts basic markdown to HTML for sponsored section content.
+ * Handles headings, bold, italic, links, and paragraphs.
+ */
+function convertMarkdownToHtml(markdown: string): string {
+  let html = markdown;
+
+  // Convert headings (###, ##, #)
+  html = html.replace(/^### (.+)$/gm, '<h3 style="font-weight: 500; font-size: 1.5rem; margin: 16px 0 8px 0; color: #1f2937;">$1</h3>');
+  html = html.replace(/^## (.+)$/gm, '<h2 style="font-weight: 500; font-size: 1.75rem; margin: 20px 0 12px 0; color: #1f2937;">$1</h2>');
+  html = html.replace(/^# (.+)$/gm, '<h1 style="font-weight: 500; font-size: 2rem; margin: 24px 0 16px 0; color: #1f2937;">$1</h1>');
+
+  // Convert bold (**text** or __text__)
+  html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+  html = html.replace(/__(.+?)__/g, '<strong>$1</strong>');
+
+  // Convert italic (*text* or _text_)
+  html = html.replace(/\*(.+?)\*/g, '<em>$1</em>');
+  html = html.replace(/_(.+?)_/g, '<em>$1</em>');
+
+  // Convert links [text](url)
+  html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" style="color: #2563eb; text-decoration: underline;">$1</a>');
+
+  // Convert paragraphs (lines separated by blank lines)
+  html = html
+    .split(/\n\s*\n/)
+    .map((para) => {
+      const trimmed = para.trim();
+      // Don't wrap if already an HTML tag
+      if (trimmed.startsWith('<')) {
+        return trimmed;
+      }
+      return `<p style="margin: 8px 0; line-height: 1.5;">${trimmed}</p>`;
+    })
+    .join('\n');
+
+  return html;
+}
+
+/**
+ * Converts custom <SponsoredSection> MDX components to email-safe HTML.
+ * The Markdown component in @react-email/components can handle inline HTML.
+ */
+function convertSponsoredSectionsToHtml(content: string): string {
+  const sponsorRegex =
+    /<SponsoredSection\s+([^>]+)>\s*([\s\S]*?)\s*<\/SponsoredSection>/g;
+
+  return content.replace(sponsorRegex, (_, attributes, children) => {
+    // Extract attributes
+    const imagePublicId =
+      attributes.match(/imagePublicId="([^"]+)"/)?.[1] || '';
+    const sponsorName = attributes.match(/sponsorName="([^"]+)"/)?.[1] || '';
+    const CTAtext = attributes.match(/CTAtext="([^"]+)"/)?.[1] || '';
+    const brandColor =
+      attributes.match(/brandColor="([^"]+)"/)?.[1] || '#db2777';
+    const href = attributes.match(/href="([^"]+)"/)?.[1] || '';
+
+    // Convert markdown children to HTML
+    const htmlContent = convertMarkdownToHtml(children.trim());
+
+    // Build email-safe HTML
+    let html = '\n\n<div style="padding: 20px 0; border-top: 1px solid #e5e7eb; border-bottom: 1px solid #e5e7eb; margin: 20px 0;">\n';
+
+    // Top separator
+    html += '<div style="text-align: center; color: #d1d5db; font-size: 32px; margin-bottom: 10px;">* * *</div>\n';
+
+    // Sponsor attribution
+    html += `<p style="font-size: 12px; font-style: italic; color: #9ca3af; text-transform: uppercase;">Thanks to <strong>${sponsorName}</strong> for sponsoring</p>\n`;
+
+    // Sponsor image if provided
+    if (imagePublicId) {
+      const imageUrl = getCloudinaryImageUrl(imagePublicId);
+      html += `<a href="${href}" style="display: block; margin: 10px 0;"><img src="${imageUrl}" alt="Sponsored by ${sponsorName}" style="width: 100%; max-width: 100%; height: auto; border-radius: 6px;" /></a>\n`;
+    }
+
+    // Content (converted from markdown to HTML)
+    html += `<div style="margin: 16px 0;">\n${htmlContent}\n</div>\n`;
+
+    // CTA button
+    html += `<div style="text-align: center; margin: 20px 0;">
+  <a href="${href}" style="display: inline-block; background-color: ${brandColor}; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: 500; font-size: 14px;">${CTAtext}</a>
+</div>\n`;
+
+    // Bottom separator
+    html += '<div style="text-align: center; color: #d1d5db; font-size: 32px; margin-top: 10px;">* * *</div>\n';
+
+    html += '</div>\n\n';
+
+    return html;
   });
 }
 
@@ -182,8 +273,23 @@ async function main() {
         continue;
       }
 
-      // Convert MDX content to markdown-friendly format
-      const cleanContent = convertImagesToHtml(content);
+      // Convert MDX content to email-friendly format
+      // 1. Convert <Image> components to markdown
+      let cleanContent = convertImagesToMarkdown(content);
+      // 2. Convert <SponsoredSection> components to inline HTML
+      cleanContent = convertSponsoredSectionsToHtml(cleanContent);
+
+      // Check if newsletter has sponsors (auto-detect or use frontmatter)
+      const hasSponsor =
+        frontmatter.hasSponsor ??
+        frontmatter.disableClickTracking ??
+        content.includes('<SponsoredSection');
+
+      if (hasSponsor) {
+        console.log(
+          `   📊 Disabling click tracking (sponsor content detected)`
+        );
+      }
 
       // Render to HTML
       const html = await render(
@@ -202,6 +308,7 @@ async function main() {
         subject: frontmatter.title,
         html,
         from: FROM_ADDRESS,
+        disableClickTracking: hasSponsor,
       });
 
       if (result.data) {

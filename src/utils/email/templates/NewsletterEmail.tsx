@@ -21,18 +21,7 @@ type NewsletterEmailProps = {
  * Takes markdown content and renders it using the EmailLayout component.
  * No greeting is shown (firstName={false}) as newsletters are sent to the full list.
  *
- * Usage:
- * ```tsx
- * import { NewsletterEmail } from './templates/NewsletterEmail';
- * import { render } from '@react-email/render';
- *
- * const html = render(
- *   <NewsletterEmail
- *     content={markdownContent}
- *     excerpt="Preview text for email clients"
- *   />
- * );
- * ```
+ * The content can include inline HTML for custom components like SponsoredSection.
  */
 export const NewsletterEmail = ({
   content = 'lorem ipsum dolor sit amet this is just sample content for email preview',
@@ -62,7 +51,9 @@ export const NewsletterEmail = ({
       )}
       <Row>
         <Column>
-          <Markdown>{content}</Markdown>
+          <Markdown markdownContainerStyles={{ fontSize: '1.25rem', lineHeight: 1.4 }}>
+            {content}
+          </Markdown>
         </Column>
       </Row>
       <Row>
@@ -73,7 +64,17 @@ export const NewsletterEmail = ({
       </Row>
       <Row>
         <Column>
-          <Text className="italic text-gray-500">Thanks for reading 💌 Tiny Improvements. If you found this helpful, I'd love it if you <Link href="https://mikebifulco.com/newsletter" className="text-pink-600">share it with a friend</Link>. It helps me out a great deal!</Text>
+          <Text className="italic text-gray-500">
+            Thanks for reading 💌 Tiny Improvements. If you found this helpful,
+            I&apos;d love it if you{' '}
+            <Link
+              href="https://mikebifulco.com/newsletter"
+              className="text-pink-600"
+            >
+              share it with a friend
+            </Link>
+            . It helps me out a great deal!
+          </Text>
         </Column>
       </Row>
     </EmailLayout>
