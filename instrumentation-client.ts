@@ -4,13 +4,10 @@ import { initBotId } from 'botid/client/core';
 // Add routes here that you want to protect from bot traffic
 initBotId({
   protect: [
-    // Example: Protect webhook endpoints
-    { path: '/api/inbound_webhooks/resend', method: 'POST' },
-
-    // Example: Protect tRPC endpoints (if needed)
+    // Protect tRPC endpoints from automated abuse
     { path: '/api/trpc/*', method: 'POST' },
 
-    // Example: Protect form submissions
+    // Protect form submissions
     { path: '/subscribe', method: 'POST' },
   ],
 });

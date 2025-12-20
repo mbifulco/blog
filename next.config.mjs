@@ -69,7 +69,6 @@ const config = {
         hostname: 'webmention.io',
       },
       {
-      {
         protocol: 'https',
         hostname: 'picsum.photos',
       },
