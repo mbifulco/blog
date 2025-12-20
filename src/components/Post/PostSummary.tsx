@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import posthog from 'posthog-js';
 
 import clsxm from '@utils/clsxm';
 import type { BlogPost } from '../../data/content-types';
@@ -19,8 +20,16 @@ const PostSummary: React.FC<PostSummaryProps> = ({ post, eager = false }) => {
 
   const postPath = `/posts/${slug}`;
 
+  const handlePostSummaryClick = () => {
+    posthog.capture('post_summary_clicked', {
+      post_slug: slug,
+      post_title: title,
+      published_date: date,
+    });
+  };
+
   const coverContainer = (
-    <Link href={postPath}>
+    <Link href={postPath} onClick={handlePostSummaryClick}>
       <Image
         className={clsxm(
           '-mx-2 mb-4 object-cover object-center shadow-sm sm:mx-0 sm:rounded-lg'
@@ -43,6 +52,7 @@ const PostSummary: React.FC<PostSummaryProps> = ({ post, eager = false }) => {
             <Link
               className="text-xl text-pink-600 no-underline hover:underline"
               href={postPath}
+              onClick={handlePostSummaryClick}
             >
               {title}
             </Link>

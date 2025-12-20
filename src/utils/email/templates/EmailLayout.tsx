@@ -50,13 +50,33 @@ export const EmailLayout = ({
           a {
             color: #D83D84;
           }
+          img {
+            max-width: 100% !important;
+            height: auto !important;
+          }
+          img[data-emoji] {
+            display: inline-block !important;
+            vertical-align: middle !important;
+            height: 1em !important;
+            width: auto !important;
+            margin: 0 !important;
+          }
+
+          @media only screen and (max-width: 600px) {
+            body {
+              font-size: 18px !important;
+            }
+            p {
+              font-size: 18px !important;
+            }
+          }
         `}</style>
       </Head>
       <Preview>{preview}</Preview>
 
       <Tailwind>
-        <Body className="mx-auto my-auto p-4 font-sans text-xl">
-          <Container>
+        <Body className="mx-auto my-auto font-sans text-xl">
+          <Container className="p-4">
             {/* Logo Section */}
             <Section style={logo} align="center">
               <Row>
@@ -97,15 +117,7 @@ export const EmailLayout = ({
               }}
               className="mt-2 text-gray-500"
             >
-              <Text className="my-0 text-sm">
-                © {new Date().getFullYear()} &bull; 💌 Tiny Improvements &bull;{' '}
-                <Link
-                  href="https://mikebifulco.com/newsletter"
-                  className="text-pink-600"
-                >
-                  mikebifulco.com
-                </Link>{' '}
-              </Text>
+              <Text className="my-0 text-sm">© {new Date().getFullYear()} &bull; 💌 Tiny Improvements &bull; <Link href="https://mikebifulco.com/newsletter" className="text-pink-600">mikebifulco.com</Link></Text>
               {includeUnsubscribeLink && (
                 <Text className="my-0 text-sm text-gray-500">
                   Not getting what you need? No worries, you can{' '}

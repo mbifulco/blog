@@ -1,4 +1,6 @@
+import { useRef } from 'react';
 import type { GetStaticProps } from 'next';
+import posthog from 'posthog-js';
 
 import { Heading } from '@components/Heading';
 import NewsletterItem from '@components/NewsletterFeed/NewsletterItem';
@@ -46,9 +48,25 @@ const NewsletterPage: React.FC<NewsletterPageProps> = ({
   pagination,
 }) => {
   const [latestNewsletter, ...pastNewsletters] = newsletters;
+  const hasTrackedView = useRef(false);
+
+  // Track newsletter page view (fires once when user engages with page)
+  const handlePageViewed = () => {
+    if (hasTrackedView.current) return;
+    hasTrackedView.current = true;
+
+    posthog.capture('newsletter_page_viewed', {
+      current_page: pagination.currentPage,
+      total_pages: pagination.totalPages,
+      newsletter_count: newsletters.length,
+    });
+  };
 
   return (
-    <div className="mx-auto flex max-w-4xl flex-col gap-4">
+    <div
+      className="mx-auto flex max-w-4xl flex-col gap-4"
+      onMouseEnter={handlePageViewed}
+    >
       <SEO
         title={`${config.newsletter.title}: a newsletter for startup founders, indiehackers, and product builders`}
         description={config.newsletter.shortDescription}
@@ -78,15 +96,15 @@ const NewsletterPage: React.FC<NewsletterPageProps> = ({
         <SponsorCTA />
       </div>
 
-      <Heading as="h2" className="mt-10 mb-4 text-xl text-black" id="latest">
+      <Heading as="h2" className="mb-4 mt-10 text-xl text-black" id="latest">
         💌 Read the latest dispatch
       </Heading>
       <NewsletterItem newsletter={latestNewsletter} />
 
-      <Heading as="h2" className="mt-4 mb-4 text-xl text-black" id="past">
-        Read past disptaches
+      <Heading as="h2" className="mb-4 mt-4 text-xl text-black" id="past">
+        Read past dispaches
       </Heading>
-      <div className="grid-cols-auto-fit-min-300 grid gap-5">
+      <div className="grid grid-cols-auto-fit-min-300 gap-5">
         {pastNewsletters.map((newsletter) => {
           if (!newsletter || !newsletter.frontmatter) return null;
           const { slug } = newsletter.frontmatter;

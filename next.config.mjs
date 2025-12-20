@@ -128,5 +128,5 @@ const config = {
 };
 
 export default withBotId(
-  withBundleAnalyzer({ enabled: process.env.ANALYZE === true })(config)
+  withBundleAnalyzer({ enabled: process.env.ANALYZE === 'true' })(config)
 );

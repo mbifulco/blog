@@ -10,11 +10,15 @@ export const env = createEnv({
     // This env var works for both - use it as segment_id when calling Resend API.
     RESEND_NEWSLETTER_AUDIENCE_ID: z.string(),
     RESEND_SIGNING_SECRET: z.string(),
+    // PostHog Personal API key for sourcemap uploads
+    POSTHOG_PERSONAL_API_KEY: z.string().optional(),
   },
   client: {
     NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME: z.string().min(1),
     NEXT_PUBLIC_FATHOM_ID: z.string().min(8),
     NEXT_PUBLIC_POSTHOG_KEY: z.string().min(8),
+    NEXT_PUBLIC_POSTHOG_HOST: z.url().optional(),
+    NEXT_PUBLIC_POSTHOG_PROJECT_ID: z.string().optional(),
   },
   // For Next.js >= 13.4.4, you only need to destructure client variables:
   // see: https://env.t3.gg/docs/nextjs#create-your-schema
@@ -23,5 +27,7 @@ export const env = createEnv({
       process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
     NEXT_PUBLIC_FATHOM_ID: process.env.NEXT_PUBLIC_FATHOM_ID,
     NEXT_PUBLIC_POSTHOG_KEY: process.env.NEXT_PUBLIC_POSTHOG_KEY,
+    NEXT_PUBLIC_POSTHOG_HOST: process.env.NEXT_PUBLIC_POSTHOG_HOST,
+    NEXT_PUBLIC_POSTHOG_PROJECT_ID: process.env.NEXT_PUBLIC_POSTHOG_PROJECT_ID,
   },
 });
