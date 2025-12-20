@@ -11,8 +11,9 @@
   },
   "scripts": {
     "analyze": "ANALYZE=true next build",
+    "analyze:new": "next experimental-analyze",
     "build": "next build",
-    "dev": "NODE_OPTIONS='--inspect' next dev",
+    "dev": "next dev --inspect",
     "depcheck": "depcheck",
     "email": "email dev --dir ./src/utils/email/templates",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md,mdx}\"",
