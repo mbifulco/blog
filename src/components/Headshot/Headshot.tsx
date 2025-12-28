@@ -1,5 +1,7 @@
 import Image from 'next/image';
 
+import clsxm from '@utils/clsxm';
+
 const Headshot: React.FC<{
   className?: string;
   priority?: boolean;
@@ -10,7 +12,7 @@ const Headshot: React.FC<{
     height={size}
     width={size}
     alt="Mike Bifulco headshot"
-    className={`headshot ${className}`}
+    className={clsxm(`headshot ${className}`)}
     priority={priority}
     quality={90}
   />
