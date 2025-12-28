@@ -5,8 +5,9 @@ import type { BlogPost, Newsletter } from '@data/content-types';
 import { generatePostStructuredData } from './generateStructuredData';
 
 // Mock blog post for testing
-const mockBlogPost: BlogPost = {
+const mockBlogPost = {
   frontmatter: {
+    type: 'post',
     title: 'Test Blog Post',
     slug: 'test-blog-post',
     date: '2024-01-15',
@@ -18,13 +19,14 @@ const mockBlogPost: BlogPost = {
   },
   content: 'Full blog post content here.',
   slug: 'test-blog-post',
-  source: {} as BlogPost['source'],
+  source: {},
   tableOfContents: [],
-};
+} as unknown as BlogPost;
 
 // Mock newsletter for testing
-const mockNewsletter: Newsletter = {
+const mockNewsletter = {
   frontmatter: {
+    type: 'newsletter',
     title: 'Test Newsletter',
     slug: 'test-newsletter',
     date: '2024-01-20',
@@ -34,9 +36,13 @@ const mockNewsletter: Newsletter = {
   },
   content: 'Newsletter content here.',
   slug: 'test-newsletter',
-  source: {} as Newsletter['source'],
+  source: {},
   tableOfContents: [],
-};
+} as unknown as Newsletter;
+
+// Helper to cast structured data result for type-safe assertions
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const getBlogPosting = (result: any[]) => result[0] as Record<string, any>;
 
 describe('generatePostStructuredData', () => {
   describe('BlogPosting schema fields', () => {
@@ -44,7 +50,7 @@ describe('generatePostStructuredData', () => {
       const result = generatePostStructuredData({ post: mockBlogPost });
 
       expect(result).toHaveLength(1);
-      const blogPosting = result[0];
+      const blogPosting = getBlogPosting(result);
 
       expect(blogPosting['@context']).toBe('https://schema.org');
       expect(blogPosting['@type']).toBe('BlogPosting');
@@ -52,21 +58,21 @@ describe('generatePostStructuredData', () => {
 
     it('should include headline from post title', () => {
       const result = generatePostStructuredData({ post: mockBlogPost });
-      const blogPosting = result[0];
+      const blogPosting = getBlogPosting(result);
 
       expect(blogPosting.headline).toBe('Test Blog Post');
     });
 
     it('should include description from excerpt', () => {
       const result = generatePostStructuredData({ post: mockBlogPost });
-      const blogPosting = result[0];
+      const blogPosting = getBlogPosting(result);
 
       expect(blogPosting.description).toBe('This is a test blog post excerpt.');
     });
 
     it('should include datePublished and dateModified', () => {
       const result = generatePostStructuredData({ post: mockBlogPost });
-      const blogPosting = result[0];
+      const blogPosting = getBlogPosting(result);
 
       expect(blogPosting.datePublished).toBeDefined();
       expect(blogPosting.dateModified).toBeDefined();
@@ -75,21 +81,21 @@ describe('generatePostStructuredData', () => {
 
     it('should include url for blog posts with /posts/ path', () => {
       const result = generatePostStructuredData({ post: mockBlogPost });
-      const blogPosting = result[0];
+      const blogPosting = getBlogPosting(result);
 
       expect(blogPosting.url).toContain('/posts/test-blog-post');
     });
 
     it('should include url for newsletters with /newsletter/ path', () => {
       const result = generatePostStructuredData({ post: mockNewsletter });
-      const blogPosting = result[0];
+      const blogPosting = getBlogPosting(result);
 
       expect(blogPosting.url).toContain('/newsletter/test-newsletter');
     });
 
     it('should include mainEntityOfPage with WebPage type', () => {
       const result = generatePostStructuredData({ post: mockBlogPost });
-      const blogPosting = result[0];
+      const blogPosting = getBlogPosting(result);
 
       expect(blogPosting.mainEntityOfPage).toBeDefined();
       expect(blogPosting.mainEntityOfPage?.['@type']).toBe('WebPage');
@@ -100,16 +106,38 @@ describe('generatePostStructuredData', () => {
 
     it('should include image with ImageObject type', () => {
       const result = generatePostStructuredData({ post: mockBlogPost });
-      const blogPosting = result[0];
+      const blogPosting = getBlogPosting(result);
 
       expect(blogPosting.image).toBeDefined();
       expect(blogPosting.image?.['@type']).toBe('ImageObject');
       expect(blogPosting.image?.url).toContain('cloudinary');
     });
 
+    it('should use posts prefix for blog post image fallback', () => {
+      const postWithoutCover = {
+        ...mockBlogPost,
+        frontmatter: { ...mockBlogPost.frontmatter, coverImagePublicId: undefined },
+      } as unknown as BlogPost;
+      const result = generatePostStructuredData({ post: postWithoutCover });
+      const blogPosting = getBlogPosting(result);
+
+      expect(blogPosting.image?.url).toContain('posts/test-blog-post/cover');
+    });
+
+    it('should use newsletters prefix for newsletter image fallback', () => {
+      const newsletterWithoutCover = {
+        ...mockNewsletter,
+        frontmatter: { ...mockNewsletter.frontmatter, coverImagePublicId: undefined },
+      } as unknown as Newsletter;
+      const result = generatePostStructuredData({ post: newsletterWithoutCover });
+      const blogPosting = getBlogPosting(result);
+
+      expect(blogPosting.image?.url).toContain('newsletters/test-newsletter/cover');
+    });
+
     it('should include keywords from tags', () => {
       const result = generatePostStructuredData({ post: mockBlogPost });
-      const blogPosting = result[0];
+      const blogPosting = getBlogPosting(result);
 
       expect(blogPosting.keywords).toBe('react, typescript');
     });
@@ -120,14 +148,14 @@ describe('generatePostStructuredData', () => {
         frontmatter: { ...mockBlogPost.frontmatter, tags: undefined },
       };
       const result = generatePostStructuredData({ post: postWithoutTags });
-      const blogPosting = result[0];
+      const blogPosting = getBlogPosting(result);
 
       expect(blogPosting.keywords).toBeUndefined();
     });
 
     it('should include author data', () => {
       const result = generatePostStructuredData({ post: mockBlogPost });
-      const blogPosting = result[0];
+      const blogPosting = getBlogPosting(result);
 
       expect(blogPosting.author).toBeDefined();
       expect(blogPosting.author?.['@type']).toBe('Person');
@@ -135,7 +163,7 @@ describe('generatePostStructuredData', () => {
 
     it('should include publisher data', () => {
       const result = generatePostStructuredData({ post: mockBlogPost });
-      const blogPosting = result[0];
+      const blogPosting = getBlogPosting(result);
 
       expect(blogPosting.publisher).toBeDefined();
       expect(blogPosting.publisher?.['@type']).toBe('Organization');
@@ -150,7 +178,7 @@ describe('generatePostStructuredData', () => {
         frontmatter: { ...mockBlogPost.frontmatter, series: 'react-tips' },
       };
       const result = generatePostStructuredData({ post: postWithSeries });
-      const blogPosting = result[0];
+      const blogPosting = getBlogPosting(result);
 
       expect(blogPosting.isPartOf).toBeDefined();
       expect(blogPosting.isPartOf?.['@type']).toBe('CreativeWorkSeries');
@@ -160,7 +188,7 @@ describe('generatePostStructuredData', () => {
 
     it('should not include isPartOf when post has no series', () => {
       const result = generatePostStructuredData({ post: mockBlogPost });
-      const blogPosting = result[0];
+      const blogPosting = getBlogPosting(result);
 
       expect(blogPosting.isPartOf).toBeUndefined();
     });
@@ -175,7 +203,7 @@ describe('generatePostStructuredData', () => {
       const result = generatePostStructuredData({ post: postWithVideo });
 
       expect(result).toHaveLength(2);
-      const videoObject = result[1];
+      const videoObject = getBlogPosting([result[1]]);
 
       expect(videoObject['@type']).toBe('VideoObject');
       expect(videoObject.contentUrl).toContain('youtube.com/watch?v=abc123');

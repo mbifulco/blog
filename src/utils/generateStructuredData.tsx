@@ -36,8 +36,9 @@ const getContentUrl = (post: BlogPost | Newsletter): string => {
 
 // Helper to generate Cloudinary image URL
 const getImageUrl = (post: BlogPost | Newsletter): string => {
+  const prefix = isNewsletter(post) ? 'newsletters' : 'posts';
   const publicId =
-    post.frontmatter.coverImagePublicId || `posts/${post.frontmatter.slug}/cover`;
+    post.frontmatter.coverImagePublicId || `${prefix}/${post.frontmatter.slug}/cover`;
   return `https://res.cloudinary.com/mikebifulco-com/image/upload/q_auto:eco,f_auto/${publicId}`;
 };
 
