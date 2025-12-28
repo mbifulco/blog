@@ -69,7 +69,7 @@ const HomePage: NextPage<HomePageProps> = ({
       <StructuredData structuredData={personStructuredData} />
       <div className="my-4 items-start gap-4 md:flex">
         <div className="mr-0 overflow-clip rounded-xl lg:mr-4">
-          <Headshot size={250} />
+          <Headshot size={250} priority />
         </div>
         <div className="prose prose-xl max-w-[50ch]">
           <Heading as="h1" className="m-0 mb-2 text-4xl font-bold">

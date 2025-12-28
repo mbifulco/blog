@@ -71,7 +71,7 @@ const config = {
       },
     ],
   },
-  productionBrowserSourceMaps: true,
+  productionBrowserSourceMaps: false,
   skipTrailingSlashRedirect: true,
   redirects: async () => [
     {

@@ -4,7 +4,7 @@ const Headshot: React.FC<{
   className?: string;
   priority?: boolean;
   size?: number;
-}> = ({ size = 100, className, priority }) => (
+}> = ({ size = 100, className, priority = false }) => (
   <Image
     src="/images/mike-headshot-square.png"
     height={size}
@@ -12,7 +12,7 @@ const Headshot: React.FC<{
     alt="Mike Bifulco headshot"
     className={`headshot ${className}`}
     priority={priority}
-    unoptimized
+    quality={90}
   />
 );
 

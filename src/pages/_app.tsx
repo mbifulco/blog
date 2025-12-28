@@ -17,11 +17,13 @@ import '../components/CarbonAd/CarbonAd.css';
 const quickdraw = localFont({
   src: '../../public/fonts/TAYQuickDraw.woff',
   variable: '--font-quickdraw',
+  display: 'swap',
 });
 
 const dumpling = localFont({
   src: '../../public/fonts/TAYDumpling.woff',
   variable: '--font-dumpling',
+  display: 'swap',
 });
 
 const fontVariables = [quickdraw.variable, dumpling.variable].join(' ');
