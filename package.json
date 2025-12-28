@@ -12,6 +12,7 @@
   "scripts": {
     "analyze": "ANALYZE=true next build",
     "analyze:new": "next experimental-analyze",
+    "prebuild": "npx tsx scripts/generate-top-tags.ts",
     "build": "next build",
     "dev": "next dev --inspect",
     "depcheck": "depcheck",
