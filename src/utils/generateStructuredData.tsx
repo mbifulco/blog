@@ -1,5 +1,6 @@
 import type {
   BlogPosting,
+  CollectionPage,
   CreativeWorkSeries,
   Organization,
   Person,
@@ -11,6 +12,7 @@ import type {
 
 import type { BlogPost, Newsletter } from '@data/content-types';
 import type { Series } from '@lib/series';
+import type { Topic } from '@lib/topics';
 import config, { BASE_SITE_URL } from '@/config';
 
 const PUBLISHER_DATA: Organization = {
@@ -206,4 +208,38 @@ export const generateSiteStructuredData = (): StructuredDataWithType[] => {
     generateOrganizationStructuredData() as StructuredDataWithType,
     generateWebSiteStructuredData() as StructuredDataWithType,
   ];
+};
+
+/**
+ * Generate CollectionPage structured data for topic pages
+ * Helps search engines understand topic cluster pages as curated collections
+ */
+export const generateTopicStructuredData = (
+  topic: Topic
+): WithContext<CollectionPage> => {
+  const topicUrl = `${BASE_SITE_URL}/topics/${topic.slug}`;
+
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: topic.name,
+    description: topic.description,
+    url: topicUrl,
+    mainEntity: {
+      '@type': 'ItemList',
+      numberOfItems: topic.totalCount,
+      itemListElement: [
+        ...topic.posts.slice(0, 10).map((post, index) => ({
+          '@type': 'ListItem' as const,
+          position: index + 1,
+          url: `${BASE_SITE_URL}/posts/${post.frontmatter.slug}`,
+          name: post.frontmatter.title,
+        })),
+      ],
+    },
+    author: AUTHOR_DATA,
+    publisher: PUBLISHER_DATA,
+    keywords: topic.tags.join(', '),
+    inLanguage: 'en-US',
+  };
 };

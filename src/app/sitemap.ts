@@ -4,6 +4,7 @@ import { getAllPosts } from '@lib/blog';
 import { getAllNewsletters } from '@lib/newsletters';
 import { getAllSeries } from '@lib/series';
 import { getAllTags } from '@lib/tags';
+import { getAllTopics } from '@lib/topics';
 import { BASE_SITE_URL } from '@/config';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
@@ -41,6 +42,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.5,
   }));
 
+  const topics = getAllTopics();
+  const topicsSitemap = topics.map((topic) => ({
+    url: `${baseUrl}/topics/${topic.slug}`,
+    lastModified: new Date(),
+    changeFrequency: 'weekly' as const,
+    priority: 0.7,
+  }));
+
   // Define your static routes
   const routes: string[] = [
     '', // home page
@@ -50,6 +59,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     '/podcast',
     // '/posts', // this is just the home page, /posts does not exist
     '/tags',
+    '/topics',
     '/work',
     '/shop',
   ];
@@ -67,6 +77,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...newslettersSitemap,
     ...postsSitemap,
     ...seriesSitemap,
+    ...topicsSitemap,
     ...tagsSitemap,
   ];
 }

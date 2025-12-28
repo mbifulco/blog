@@ -1,10 +1,6 @@
-import { MDXRemote } from 'next-mdx-remote';
-
 import type { Article } from '../../data/content-types';
-import { components } from '../../utils/MDXProviderWrapper';
 import { Heading } from '../Heading';
 import { PublishDate } from '../PublishDate';
-import TagsSummary from '../tagsSummary';
 
 type ExternalWorkItemProps = {
   article: Article;
@@ -12,22 +8,23 @@ type ExternalWorkItemProps = {
 
 const ExternalWorkItem: React.FC<ExternalWorkItemProps> = ({ article }) => {
   const {
-    frontmatter: { date, title, tags },
+    frontmatter: { date, title, excerpt },
   } = article;
 
-  {
-    /* note: box shadow from @drucial's https://www.betterneumorphism.com/?h=0&s=0&l=100 */
-  }
   return (
-    <article className="flex flex-col rounded-md p-6 shadow-2xl">
-      <Heading as="h2" className="mb-0">
-        {title}
-      </Heading>
-      <p className="mt-0 text-pink-500">
-        <PublishDate date={date} />
-      </p>
-      <TagsSummary tags={tags} />
-      <MDXRemote {...article.source} components={components} />
+    <article className="max-w-[100vw]">
+      <div className="relative">
+        <header className="flex flex-col gap-1">
+          <Heading as="h2" className="m-0 p-0 text-xl md:text-xl">
+            <span className="text-xl text-pink-600">{title}</span>
+          </Heading>
+          <p>
+            <PublishDate date={date} className="text-sm text-gray-500" />
+          </p>
+        </header>
+
+        {excerpt && <p className="text-md text-balance">{excerpt}</p>}
+      </div>
     </article>
   );
 };

@@ -1,51 +1,19 @@
-const soldOut = () => {
+const SoldOut = () => {
   return (
-    <>
-      <style jsx>{`
-        .soldout {
-          border: 5px solid #ff3333;
-          color: white;
-          border-radius: 14px;
-          padding: 1rem;
-          margin: 0 auto;
-          transform: rotate(10deg);
-          background: rgba(255, 30, 30, 0.9);
-          width: 70%;
-          height: 30%;
-          bottom: 25%;
-          left: 15%;
-          display: flex;
-          align-self: center;
-          align-items: center;
-          justify-content: center;
-          position: absolute;
-          z-index: 1;
-          font-family:
-            Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-          font-size: 36px;
-
-          &:hover {
-            & > div::after {
-              content: '(Sorry)';
-              font-family: 'Helvetica Neue', Arial, Helvetica, sans-serif;
-              font-weight: 500;
-              font-size: 9pt;
-              display: block;
-              text-align: center;
-              text-decoration: none;
-              position: absolute;
-              transform: rotate(-90deg);
-              left: 74%;
-              top: 41%;
-            }
-          }
-        }
-      `}</style>
-      <figure className="soldout">
-        <div>Sold Out!</div>
-      </figure>
-    </>
+    <figure
+      className="group absolute bottom-1/4 left-[15%] z-10 mx-auto flex h-[30%] w-[70%] rotate-[10deg] items-center justify-center rounded-xl border-[5px] border-red-500 bg-red-600/90 p-4 text-4xl text-white"
+      style={{
+        fontFamily: "Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif",
+      }}
+    >
+      <div className="relative">
+        Sold Out!
+        <span className="absolute left-[74%] top-[41%] hidden -rotate-90 font-sans text-xs font-medium group-hover:block">
+          (Sorry)
+        </span>
+      </div>
+    </figure>
   );
 };
 
-export default soldOut;
+export default SoldOut;

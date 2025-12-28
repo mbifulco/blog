@@ -9,6 +9,7 @@ type ImageProps = {
   loading?: 'lazy' | 'eager';
   priority?: boolean;
   publicId?: string;
+  sizes?: string;
   transformations?: string[];
   width?: number;
 };
@@ -21,6 +22,7 @@ const Image: React.FC<ImageProps> = ({
   height = 630,
   loading = 'lazy',
   publicId,
+  sizes = '(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1200px',
   transformations,
   width = 1200,
   ...rest
@@ -38,6 +40,8 @@ const Image: React.FC<ImageProps> = ({
       alt={alt ?? publicId}
       loading={loading}
       className={className}
+      sizes={sizes}
+      style={{ aspectRatio: `${width}/${height}` }}
       transformations={transformations}
       {...rest}
     />
