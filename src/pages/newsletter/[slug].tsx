@@ -102,6 +102,8 @@ const NewsletterPage: React.FC<NewsletterPageProps> = ({
           description={excerpt}
           image={coverImageUrl}
           ogType="article"
+          publishedAt={date}
+          tags={tags}
         />
         <StructuredData structuredData={blogPostingStructuredData} />
 

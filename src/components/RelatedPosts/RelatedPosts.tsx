@@ -31,7 +31,7 @@ const RelatedPosts: React.FC<RelatedPostsProps> = ({
   };
 
   return (
-    <div className="w-full border-t border-gray-200 py-12">
+    <div className="w-full py-12">
       <div className="mx-auto max-w-5xl px-4">
         <Heading as="h2" className="mb-6 text-2xl font-bold">
           Related Reading
@@ -56,9 +56,10 @@ const RelatedPosts: React.FC<RelatedPostsProps> = ({
                   <Image
                     className="aspect-video w-full object-cover transition-opacity duration-200 group-hover:opacity-90"
                     publicId={
-                      item.type === 'newsletter'
+                      item.coverImagePublicId ||
+                      (item.type === 'newsletter'
                         ? `newsletters/${item.slug}/cover`
-                        : `posts/${item.slug}/cover`
+                        : `posts/${item.slug}/cover`)
                     }
                     alt={item.title}
                     height={315}

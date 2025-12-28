@@ -5,6 +5,7 @@ import config from '../config';
 import { getCloudinaryImageUrl } from '../utils/images';
 
 const baseUrl = config.siteUrl;
+const siteName = 'mikebifulco.com';
 
 type SEOMeta = {
   name: string;
@@ -21,7 +22,8 @@ type SEOProps = {
   keywords?: string[];
   title?: string;
   lang?: string;
-  publishedAt?: string | Date;
+  publishedAt?: string | number | Date;
+  tags?: string[];
 };
 
 const SEO: React.FC<SEOProps> = ({
@@ -34,6 +36,7 @@ const SEO: React.FC<SEOProps> = ({
   ogType,
   image,
   publishedAt,
+  tags,
 }) => {
   const router = useRouter();
 
@@ -97,7 +100,7 @@ const SEO: React.FC<SEOProps> = ({
       {/* end favicon */}
 
       <link rel="canonical" href={fullCanonical()} />
-      <title>{title}</title>
+      <title>{title ? `${title} | ${siteTitle}` : siteTitle}</title>
       <meta name="description" content={description ?? metaDescription} />
       <meta
         name="monetization"
@@ -106,30 +109,45 @@ const SEO: React.FC<SEOProps> = ({
       {keywords && keywords?.length > 0 && (
         <meta name="keywords" content={keywords.join(', ')} />
       )}
+      {/* Twitter Card meta tags */}
       <meta
         name="twitter:card"
         content={ogImageUrl ? `summary_large_image` : `summary`}
       />
+      <meta name="twitter:site" content={social.twitter} />
       <meta name="twitter:title" content={metaTitle} />
       <meta name="twitter:creator" content={social.twitter} />
       <meta name="twitter:description" content={metaDescription} />
+
+      {/* Open Graph meta tags */}
+      <meta property="og:site_name" content={siteName} />
+      <meta property="og:locale" content="en_US" />
       <meta
-        name="og:title"
+        property="og:title"
         content={title ? `${title} | ${siteTitle}` : siteTitle}
       />
-      <meta name="og:description" content={metaDescription} />
-      <meta name="og:type" content={ogType ?? `website`} />
-      <meta name="og:url" content={router.asPath} />
-      <meta name="og:image" content={ogImageUrl} />
-      <meta name="og:image:url" content={ogImageUrl} />
-      <meta name="creator" content="Mike Bifulco @irreverentmike" />
-      <meta name="publisher" content="mikebifulco.com" />
+      <meta property="og:description" content={metaDescription} />
+      <meta property="og:type" content={ogType ?? `website`} />
+      <meta property="og:url" content={fullCanonical()} />
+      <meta property="og:image" content={ogImageUrl} />
+      <meta property="og:image:url" content={ogImageUrl} />
+
+      {/* Article-specific meta tags */}
+      {ogType === 'article' && (
+        <meta property="article:author" content={baseUrl} />
+      )}
       {publishedAt && (
         <meta
-          name="article:published_time"
-          content={new Date(publishedAt).toUTCString()}
+          property="article:published_time"
+          content={new Date(publishedAt).toISOString()}
         />
       )}
+      {tags?.map((tag) => (
+        <meta key={`article-tag-${tag}`} property="article:tag" content={tag} />
+      ))}
+
+      <meta name="creator" content="Mike Bifulco @irreverentmike" />
+      <meta name="publisher" content={siteName} />
       {meta?.map(({ name, content }) => (
         <meta key={name} name={name} content={content} />
       ))}

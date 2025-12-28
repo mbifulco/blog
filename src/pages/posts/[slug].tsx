@@ -104,6 +104,8 @@ const PostPage: NextPage<PostPageProps> = ({ post, series, relatedContent }) => 
           description={excerpt}
           image={coverImageUrl}
           ogType="article"
+          publishedAt={date}
+          tags={tags}
         />
         {published === false && process.env.NODE_ENV !== 'production' && (
           <div>

@@ -71,7 +71,6 @@ const FullPost: React.FC<FullPostProps> = ({
         ]
       : [
           { name: 'Home', href: '/' },
-          { name: 'Articles', href: '/' },
           { name: title, href: `/posts/${slug}` },
         ];
 

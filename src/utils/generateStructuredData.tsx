@@ -5,6 +5,7 @@ import type {
   Person,
   Thing,
   VideoObject,
+  WebSite,
   WithContext,
 } from 'schema-dts';
 
@@ -148,4 +149,61 @@ export const generateSeriesStructuredData = (series: Series) => {
   };
 
   return structuredData;
+};
+
+/**
+ * Generate Organization structured data for the site
+ * Should be included on all pages for consistent branding in search results
+ */
+export const generateOrganizationStructuredData =
+  (): WithContext<Organization> => {
+    return {
+      '@context': 'https://schema.org',
+      '@type': 'Organization',
+      name: 'mikebifulco.com',
+      url: BASE_SITE_URL,
+      logo: {
+        '@type': 'ImageObject',
+        url: `${BASE_SITE_URL}/icons/icon-512x512.png`,
+      },
+      sameAs: [
+        `https://twitter.com/${config.social.twitter.replace('@', '')}`,
+        `https://github.com/${config.social.github}`,
+        'https://bsky.app/profile/mikebifulco.com',
+        'https://threads.net/@irreverentmike',
+        'https://www.linkedin.com/in/mbifulco',
+        'https://youtube.com/@mikebifulco',
+      ],
+      founder: AUTHOR_DATA,
+      description: config.description,
+    };
+  };
+
+/**
+ * Generate WebSite structured data with search action
+ * Helps search engines understand the site structure
+ */
+export const generateWebSiteStructuredData = (): WithContext<WebSite> => {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: config.title,
+    alternateName: 'mikebifulco.com',
+    url: BASE_SITE_URL,
+    description: config.description,
+    publisher: PUBLISHER_DATA,
+    author: AUTHOR_DATA,
+    inLanguage: 'en-US',
+  };
+};
+
+/**
+ * Generate both Organization and WebSite structured data
+ * Convenience function for including in layouts
+ */
+export const generateSiteStructuredData = (): StructuredDataWithType[] => {
+  return [
+    generateOrganizationStructuredData() as StructuredDataWithType,
+    generateWebSiteStructuredData() as StructuredDataWithType,
+  ];
 };
