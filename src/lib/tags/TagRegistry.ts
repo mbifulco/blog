@@ -60,4 +60,33 @@ export class TagRegistry {
   getAllTags(): string[] {
     return Object.keys(this.tags).sort();
   }
+
+  /**
+   * Get the total content count for a tag
+   *
+   * @param tag - The tag to count
+   * @returns number - Total number of content items with this tag
+   */
+  getTagContentCount(tag: string): number {
+    const content = this.tags[tag];
+    if (!content) return 0;
+    return content.post.length + content.newsletter.length + content.article.length;
+  }
+
+  /**
+   * Get top tags sorted by content count
+   *
+   * @param limit - Maximum number of tags to return (default: 10)
+   * @returns Array of {tag, count} objects sorted by count descending
+   */
+  getTopTags(limit: number = 10): { tag: string; count: number }[] {
+    const tagCounts = Object.keys(this.tags).map((tag) => ({
+      tag,
+      count: this.getTagContentCount(tag),
+    }));
+
+    return tagCounts
+      .sort((a, b) => b.count - a.count)
+      .slice(0, limit);
+  }
 }

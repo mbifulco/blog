@@ -4,6 +4,9 @@ public/rss.xml
 public/sitemap.xml
 public/sitemap*
 
+# Generated data files (created by prebuild scripts)
+src/data/generated/
+
 .next
 
 # Logs

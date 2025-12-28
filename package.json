@@ -12,6 +12,7 @@
   "scripts": {
     "analyze": "ANALYZE=true next build",
     "analyze:new": "next experimental-analyze",
+    "prebuild": "npx tsx scripts/generate-top-tags.ts",
     "build": "next build",
     "dev": "next dev --inspect",
     "depcheck": "depcheck",
@@ -69,7 +70,6 @@
     "react-dom": "19.2.3",
     "react-email": "5.1.0",
     "react-hook-form": "^7.69.0",
-    "react-icons": "^5.5.0",
     "react-stately": "^3.43.0",
     "rehype-img-size": "^1.0.1",
     "rehype-slug": "^6.0.0",

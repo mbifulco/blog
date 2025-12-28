@@ -22,5 +22,18 @@ export const getContentForTag = async (tag: string) => {
   return tagRegistry.getContentForTag(tag);
 };
 
+export type TopTag = { tag: string; count: number };
+
+/**
+ * Get top tags sorted by content count
+ *
+ * @param limit - Maximum number of tags to return (default: 10)
+ * @returns Promise<TopTag[]> - Array of tags with counts, sorted by count descending
+ */
+export const getTopTags = async (limit: number = 10): Promise<TopTag[]> => {
+  const tagRegistry = await getTagRegistryForAllContent();
+  return tagRegistry.getTopTags(limit);
+};
+
 // Re-export utility functions
 export { parseTag };

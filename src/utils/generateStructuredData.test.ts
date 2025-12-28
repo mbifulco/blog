@@ -2,7 +2,12 @@ import { describe, expect, it } from 'vitest';
 
 import type { BlogPost, Newsletter } from '@data/content-types';
 
-import { generatePostStructuredData } from './generateStructuredData';
+import {
+  generateOrganizationStructuredData,
+  generatePostStructuredData,
+  generateSiteStructuredData,
+  generateWebSiteStructuredData,
+} from './generateStructuredData';
 
 // Mock blog post for testing
 const mockBlogPost = {
@@ -216,5 +221,112 @@ describe('generatePostStructuredData', () => {
 
       expect(result).toHaveLength(1);
     });
+  });
+});
+
+describe('generateOrganizationStructuredData', () => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const getOrgData = () => generateOrganizationStructuredData() as any;
+
+  it('should generate valid Organization schema', () => {
+    const result = getOrgData();
+
+    expect(result['@context']).toBe('https://schema.org');
+    expect(result['@type']).toBe('Organization');
+  });
+
+  it('should include organization name and URL', () => {
+    const result = getOrgData();
+
+    expect(result.name).toBe('mikebifulco.com');
+    expect(result.url).toContain('mikebifulco.com');
+  });
+
+  it('should include logo as ImageObject', () => {
+    const result = getOrgData();
+
+    expect(result.logo).toBeDefined();
+    expect(result.logo['@type']).toBe('ImageObject');
+  });
+
+  it('should include social media links in sameAs', () => {
+    const result = getOrgData();
+
+    expect(result.sameAs).toBeDefined();
+    expect(Array.isArray(result.sameAs)).toBe(true);
+    expect(result.sameAs).toContain('https://twitter.com/irreverentmike');
+    expect(result.sameAs).toContain('https://github.com/mbifulco');
+  });
+
+  it('should include founder as Person', () => {
+    const result = getOrgData();
+
+    expect(result.founder).toBeDefined();
+    expect(result.founder['@type']).toBe('Person');
+  });
+});
+
+describe('generateWebSiteStructuredData', () => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const getWebSiteData = () => generateWebSiteStructuredData() as any;
+
+  it('should generate valid WebSite schema', () => {
+    const result = getWebSiteData();
+
+    expect(result['@context']).toBe('https://schema.org');
+    expect(result['@type']).toBe('WebSite');
+  });
+
+  it('should include site name and URL', () => {
+    const result = getWebSiteData();
+
+    expect(result.name).toBe('Mike Bifulco');
+    expect(result.url).toContain('mikebifulco.com');
+  });
+
+  it('should include alternateName', () => {
+    const result = getWebSiteData();
+
+    expect(result.alternateName).toBe('mikebifulco.com');
+  });
+
+  it('should include language', () => {
+    const result = getWebSiteData();
+
+    expect(result.inLanguage).toBe('en-US');
+  });
+
+  it('should include publisher as Organization', () => {
+    const result = getWebSiteData();
+
+    expect(result.publisher).toBeDefined();
+    expect(result.publisher['@type']).toBe('Organization');
+  });
+
+  it('should include author as Person', () => {
+    const result = getWebSiteData();
+
+    expect(result.author).toBeDefined();
+    expect(result.author['@type']).toBe('Person');
+  });
+});
+
+describe('generateSiteStructuredData', () => {
+  it('should return both Organization and WebSite schemas', () => {
+    const result = generateSiteStructuredData();
+
+    expect(result).toHaveLength(2);
+  });
+
+  it('should include Organization schema first', () => {
+    const result = generateSiteStructuredData();
+
+    expect(result[0]['@type']).toBe('Organization');
+  });
+
+  it('should include WebSite schema second', () => {
+    const result = generateSiteStructuredData();
+
+    expect(result[1]['@type']).toBe('WebSite');
   });
 });

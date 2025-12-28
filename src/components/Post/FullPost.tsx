@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { MDXRemote } from 'next-mdx-remote';
 
 import { Badge } from '@components/Badge';
+import Breadcrumbs from '@components/Breadcrumbs/Breadcrumbs';
 import { SeriesNavigation } from '@components/Series/SeriesNavigation';
 import { StructuredData } from '@components/StructuredData';
 import type { BlogPost, Newsletter } from '@data/content-types';
@@ -20,6 +21,7 @@ import TableOfContents from './TableOfContents';
 type FullPostProps = {
   post: BlogPost | Newsletter;
   series?: Series | null;
+  contentType?: 'post' | 'newsletter';
 };
 
 // Add these type guard functions
@@ -41,7 +43,11 @@ const TitleBadge = ({ post }: { post: BlogPost | Newsletter }) => {
   return null;
 };
 
-const FullPost: React.FC<FullPostProps> = ({ post, series }) => {
+const FullPost: React.FC<FullPostProps> = ({
+  post,
+  series,
+  contentType = 'post',
+}) => {
   const { frontmatter } = post;
 
   const {
@@ -54,6 +60,19 @@ const FullPost: React.FC<FullPostProps> = ({ post, series }) => {
     title,
     youTubeId,
   } = frontmatter;
+
+  // Build breadcrumb trail
+  const breadcrumbs =
+    contentType === 'newsletter'
+      ? [
+          { name: 'Home', href: '/' },
+          { name: 'Newsletter', href: '/newsletter' },
+          { name: title, href: `/newsletter/${slug}` },
+        ]
+      : [
+          { name: 'Home', href: '/' },
+          { name: title, href: `/posts/${slug}` },
+        ];
 
   let coverContainer: React.ReactNode = (
     <Image
@@ -91,6 +110,7 @@ const FullPost: React.FC<FullPostProps> = ({ post, series }) => {
       <article>
         <header className="mx-auto mb-4 flex flex-col gap-2">
           <div className="mx-auto mb-4 max-w-[75ch]">
+            <Breadcrumbs crumbs={breadcrumbs} className="mb-4" />
             <TitleBadge post={post} />
             <Heading as="h1" className="m-0 mt-2 p-0">
               {title}

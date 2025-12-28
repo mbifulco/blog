@@ -6,7 +6,9 @@ import { Toaster } from 'sonner';
 
 import FathomAnalytics from '@components/Analytics/Fathom';
 import DefaultLayout from '@components/Layouts/DefaultLayout';
+import { StructuredData } from '@components/StructuredData';
 import { env } from '@utils/env';
+import { generateSiteStructuredData } from '@utils/generateStructuredData';
 import { trpcPages } from '@utils/trpc';
 
 import '../styles/globals.css';
@@ -43,9 +45,13 @@ if (typeof window !== 'undefined') {
 
 import NewsletterModal from '@components/NewsletterSignup/NewsletterModal';
 
+// Generate site-wide structured data once
+const siteStructuredData = generateSiteStructuredData();
+
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <PostHogProvider client={posthog}>
+      <StructuredData structuredData={siteStructuredData} />
       <div className={fontVariables}>
         <DefaultLayout>
           <FathomAnalytics siteId={env.NEXT_PUBLIC_FATHOM_ID} />
