@@ -62,7 +62,8 @@ const HomePage: NextPage<HomePageProps> = ({
   return (
     <div className="mx-auto mb-10 flex max-w-4xl flex-col gap-12">
       <SEO
-        title="Latest articles on design, development, and the world around me"
+        title="Mike Bifulco | Developer Advocate & Startup Founder"
+        description="Articles on React, Next.js, startup building, and developer advocacy from Mike Bifulco - CTO, Y Combinator alum, and creator of Tiny Improvements newsletter."
         image={headshotPublicUrl}
       />
       <StructuredData structuredData={personStructuredData} />
@@ -71,9 +72,12 @@ const HomePage: NextPage<HomePageProps> = ({
           <Headshot size={250} />
         </div>
         <div className="prose prose-xl max-w-[50ch]">
-          <Heading as="h2" className="m-0 mb-2 text-4xl font-bold">
-            Oh, hello
+          <Heading as="h1" className="m-0 mb-2 text-4xl font-bold">
+            Mike Bifulco
           </Heading>
+          <p className="m-0 text-lg font-medium text-gray-600 dark:text-gray-400">
+            Developer Advocate & Startup CTO
+          </p>
           <p className="text-xl font-normal italic">
             I work as a {config.employer.role} at{' '}
             <Link

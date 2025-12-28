@@ -1,6 +1,7 @@
 import type {
   BlogPosting,
   CreativeWorkSeries,
+  Organization,
   Person,
   Thing,
   VideoObject,
@@ -10,6 +11,36 @@ import type {
 import type { BlogPost, Newsletter } from '@data/content-types';
 import type { Series } from '@lib/series';
 import config, { BASE_SITE_URL } from '@/config';
+
+const PUBLISHER_DATA: Organization = {
+  '@type': 'Organization',
+  name: 'mikebifulco.com',
+  url: BASE_SITE_URL,
+  logo: {
+    '@type': 'ImageObject',
+    url: `${BASE_SITE_URL}/favicon-32x32.png`,
+  },
+};
+
+// Helper to determine if content is a Newsletter (has specific metadata pattern)
+const isNewsletter = (post: BlogPost | Newsletter): post is Newsletter => {
+  // Newsletters don't have the 'content' field in frontmatter that BlogPosts have
+  return !('content' in post.frontmatter && post.frontmatter.content);
+};
+
+// Helper to generate the correct URL path for content
+const getContentUrl = (post: BlogPost | Newsletter): string => {
+  const pathPrefix = isNewsletter(post) ? 'newsletter' : 'posts';
+  return `${BASE_SITE_URL}/${pathPrefix}/${post.frontmatter.slug}`;
+};
+
+// Helper to generate Cloudinary image URL
+const getImageUrl = (post: BlogPost | Newsletter): string => {
+  const prefix = isNewsletter(post) ? 'newsletters' : 'posts';
+  const publicId =
+    post.frontmatter.coverImagePublicId || `${prefix}/${post.frontmatter.slug}/cover`;
+  return `https://res.cloudinary.com/mikebifulco-com/image/upload/q_auto:eco,f_auto/${publicId}`;
+};
 
 const AUTHOR_DATA: Person = {
   '@type': 'Person',
@@ -67,13 +98,29 @@ export const generatePostStructuredData = ({
 }: GeneratePostStructuredDataProps) => {
   const structuredData: StructuredDataWithType[] = [];
 
+  const contentUrl = getContentUrl(post);
+  const imageUrl = getImageUrl(post);
+  const publishDate = new Date(post.frontmatter.date).toISOString();
+
   const postStructuredData: WithContext<BlogPosting> | undefined = {
     '@context': 'https://schema.org',
     '@type': 'BlogPosting',
     headline: post.frontmatter.title,
     description: post.frontmatter.excerpt,
-    datePublished: new Date(post.frontmatter.date).toISOString(),
+    datePublished: publishDate,
+    dateModified: publishDate,
     author: AUTHOR_DATA,
+    publisher: PUBLISHER_DATA,
+    url: contentUrl,
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': contentUrl,
+    },
+    image: {
+      '@type': 'ImageObject',
+      url: imageUrl,
+    },
+    keywords: post.frontmatter.tags?.join(', '),
     isPartOf: post.frontmatter.series
       ? {
           '@type': 'CreativeWorkSeries',
