@@ -11,7 +11,7 @@ export type RelatedContent = {
   date: string | number | Date;
   tags: string[];
   sharedTagCount: number;
-  coverImagePublicId?: string;
+  coverImagePublicId: string | null;
 };
 
 type GetRelatedContentOptions = {
@@ -58,7 +58,7 @@ export async function getRelatedContent({
         date: post.frontmatter.date,
         tags: postTags,
         sharedTagCount,
-        coverImagePublicId: post.frontmatter.coverImagePublicId,
+        coverImagePublicId: post.frontmatter.coverImagePublicId ?? null,
       };
     })
     .filter((item) => item.sharedTagCount > 0);
@@ -81,7 +81,7 @@ export async function getRelatedContent({
         date: newsletter.frontmatter.date,
         tags: newsletterTags,
         sharedTagCount,
-        coverImagePublicId: newsletter.frontmatter.coverImagePublicId,
+        coverImagePublicId: newsletter.frontmatter.coverImagePublicId ?? null,
       };
     })
     .filter((item) => item.sharedTagCount > 0);
@@ -135,7 +135,7 @@ export function findRelatedContent(
         date: post.frontmatter.date,
         tags: postTags,
         sharedTagCount,
-        coverImagePublicId: post.frontmatter.coverImagePublicId,
+        coverImagePublicId: post.frontmatter.coverImagePublicId ?? null,
       };
     })
     .filter((item) => item.sharedTagCount > 0);
@@ -157,7 +157,7 @@ export function findRelatedContent(
         date: newsletter.frontmatter.date,
         tags: newsletterTags,
         sharedTagCount,
-        coverImagePublicId: newsletter.frontmatter.coverImagePublicId,
+        coverImagePublicId: newsletter.frontmatter.coverImagePublicId ?? null,
       };
     })
     .filter((item) => item.sharedTagCount > 0);
