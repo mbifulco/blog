@@ -1,40 +1,76 @@
+import React from 'react';
 import Link from 'next/link';
-import { FaChevronRight } from 'react-icons/fa';
+import type { BreadcrumbList as BreadcrumbListSchema, WithContext } from 'schema-dts';
 
-type BreadcrumbsProps = {
-  crumbs: {
-    name: string;
-    href: string;
-  }[];
+import { StructuredData } from '@components/StructuredData';
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from '@components/ui/breadcrumb';
+import { BASE_SITE_URL } from '@/config';
+
+export type BreadcrumbCrumb = {
+  name: string;
+  href: string;
 };
 
-const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ crumbs }) => {
+type BreadcrumbsProps = {
+  crumbs: BreadcrumbCrumb[];
+  className?: string;
+};
+
+const generateBreadcrumbSchema = (
+  crumbs: BreadcrumbCrumb[]
+): WithContext<BreadcrumbListSchema> => {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: crumbs.map((crumb, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: crumb.name,
+      item: `${BASE_SITE_URL}${crumb.href}`,
+    })),
+  };
+};
+
+const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ crumbs, className }) => {
+  if (!crumbs || crumbs.length === 0) {
+    return null;
+  }
+
+  const schemaData = generateBreadcrumbSchema(crumbs);
+
   return (
-    <nav aria-label="Breadcrumb">
-      <ol className="flex w-full max-w-full flex-wrap space-x-2 truncate text-sm text-ellipsis whitespace-nowrap">
-        {crumbs.map((crumb, idx) => {
-          return (
-            <li className="inline" key={`breadcrumb-${idx}`}>
-              <div className="flex flex-wrap items-center whitespace-break-spaces">
-                <Link
-                  className="tex-zinc-600 hover:no-underline"
-                  href={crumb.href}
-                  title={crumb.name}
-                >
-                  {crumb.name}
-                </Link>
-                {idx < crumbs.length - 1 && (
-                  <FaChevronRight
-                    className="ml-2 text-pink-600"
-                    aria-hidden="true"
-                  />
-                )}
-              </div>
-            </li>
-          );
-        })}
-      </ol>
-    </nav>
+    <>
+      <StructuredData structuredData={schemaData} />
+      <Breadcrumb className={className}>
+        <BreadcrumbList>
+          {crumbs.map((crumb, index) => {
+            const isLast = index === crumbs.length - 1;
+
+            return (
+              <React.Fragment key={`breadcrumb-${index}-${crumb.name}`}>
+                <BreadcrumbItem>
+                  {isLast ? (
+                    <BreadcrumbPage>{crumb.name}</BreadcrumbPage>
+                  ) : (
+                    <BreadcrumbLink asChild>
+                      <Link href={crumb.href}>{crumb.name}</Link>
+                    </BreadcrumbLink>
+                  )}
+                </BreadcrumbItem>
+                {!isLast && <BreadcrumbSeparator />}
+              </React.Fragment>
+            );
+          })}
+        </BreadcrumbList>
+      </Breadcrumb>
+    </>
   );
 };
 

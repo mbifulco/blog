@@ -4,6 +4,9 @@ import { useRef } from 'react';
 import posthog from 'posthog-js';
 
 import { NewsletterSignup } from '@components/NewsletterSignup';
+import { RelatedPosts } from '@components/RelatedPosts';
+import type { RelatedContent } from '@lib/related-posts';
+import { getRelatedContent } from '@lib/related-posts';
 import { getSeries } from '@lib/series';
 import type { Series } from '@lib/series';
 import { Colophon } from '../../components/Colophon';
@@ -21,6 +24,7 @@ type PostPageParams = {
 type PostPageProps = {
   post: BlogPost;
   series?: Series | null;
+  relatedContent: RelatedContent[];
 };
 
 export const getStaticProps: GetStaticProps<
@@ -37,10 +41,18 @@ export const getStaticProps: GetStaticProps<
     ? await getSeries(post.frontmatter.series)
     : undefined;
 
+  const relatedContent = await getRelatedContent({
+    currentSlug: params.slug,
+    currentTags: post.frontmatter.tags || [],
+    limit: 3,
+    includeNewsletters: true,
+  });
+
   return {
     props: {
       post,
       series: series ?? null,
+      relatedContent,
     },
   };
 };
@@ -58,7 +70,7 @@ export async function getStaticPaths() {
   };
 }
 
-const PostPage: NextPage<PostPageProps> = ({ post, series }) => {
+const PostPage: NextPage<PostPageProps> = ({ post, series, relatedContent }) => {
   const { frontmatter } = post;
 
   const { coverImagePublicId, published, date, tags, title, excerpt, slug } =
@@ -109,6 +121,9 @@ const PostPage: NextPage<PostPageProps> = ({ post, series }) => {
         />
         <Colophon />
       </div>
+      {relatedContent && relatedContent.length > 0 && (
+        <RelatedPosts relatedContent={relatedContent} currentTitle={title} />
+      )}
       <NewsletterSignup />
     </>
   );

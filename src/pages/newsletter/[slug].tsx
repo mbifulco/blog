@@ -4,11 +4,14 @@ import { useRouter } from 'next/router';
 import { Colophon } from '@components/Colophon';
 import { NewsletterSignup } from '@components/NewsletterSignup';
 import FullPost from '@components/Post/FullPost';
+import { RelatedPosts } from '@components/RelatedPosts';
 import SEO from '@components/seo';
 import StructuredData from '@components/StructuredData/StructuredData';
 import WebmentionMetadata from '@components/webmentionMetadata';
 import type { Newsletter } from '@data/content-types';
 import { getAllNewsletters, getNewsletterBySlug } from '@lib/newsletters';
+import type { RelatedContent } from '@lib/related-posts';
+import { getRelatedContent } from '@lib/related-posts';
 import { getSeries } from '@lib/series';
 import type { Series } from '@lib/series';
 import { getCloudinaryImageUrl } from '@utils/images';
@@ -35,6 +38,13 @@ export const getStaticProps: GetStaticProps<
     ? await getSeries(newsletter.frontmatter.series)
     : undefined;
 
+  const relatedContent = await getRelatedContent({
+    currentSlug: params.slug,
+    currentTags: newsletter.frontmatter.tags || [],
+    limit: 3,
+    includeNewsletters: true,
+  });
+
   return {
     props: {
       newsletter: {
@@ -42,6 +52,7 @@ export const getStaticProps: GetStaticProps<
         source: mdxSource,
       },
       series: series ?? null,
+      relatedContent,
     },
   };
 };
@@ -62,11 +73,13 @@ export async function getStaticPaths() {
 type NewsletterPageProps = {
   newsletter: Newsletter;
   series?: Series | null;
+  relatedContent: RelatedContent[];
 };
 
 const NewsletterPage: React.FC<NewsletterPageProps> = ({
   newsletter,
   series,
+  relatedContent,
 }) => {
   const { frontmatter } = newsletter;
 
@@ -92,7 +105,7 @@ const NewsletterPage: React.FC<NewsletterPageProps> = ({
         />
         <StructuredData structuredData={blogPostingStructuredData} />
 
-        <FullPost post={newsletter} series={series} />
+        <FullPost post={newsletter} series={series} contentType="newsletter" />
         <Colophon />
       </div>
       <WebmentionMetadata
@@ -102,7 +115,9 @@ const NewsletterPage: React.FC<NewsletterPageProps> = ({
         tags={tags}
         title={title}
       />
-      <div className="mt-10" />
+      {relatedContent && relatedContent.length > 0 && (
+        <RelatedPosts relatedContent={relatedContent} currentTitle={title} />
+      )}
       <NewsletterSignup />
     </>
   );
