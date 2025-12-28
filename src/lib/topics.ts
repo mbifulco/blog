@@ -1,8 +1,7 @@
-import type { BlogPost, Newsletter, Article } from '@data/content-types';
+import type { BlogPost, Newsletter } from '@data/content-types';
 
 import { getPostBySlug } from './blog';
 import { getNewsletterBySlug } from './newsletters';
-import { getExternalReferenceBySlug } from './external-references';
 import { getContentForTag } from './tags';
 
 export type TopicDefinition = {
@@ -16,7 +15,6 @@ export type TopicDefinition = {
 export type Topic = TopicDefinition & {
   posts: BlogPost[];
   newsletters: Newsletter[];
-  articles: Article[];
   totalCount: number;
 };
 
@@ -87,23 +85,18 @@ export const getTopicContent = async (slug: string): Promise<Topic | null> => {
   // Collect unique slugs for each content type across all tags
   const postSlugs = new Set<string>();
   const newsletterSlugs = new Set<string>();
-  const articleSlugs = new Set<string>();
 
   for (const tag of topicDef.tags) {
     const content = await getContentForTag(tag);
     content.post.forEach((slug) => postSlugs.add(slug));
     content.newsletter.forEach((slug) => newsletterSlugs.add(slug));
-    content.article.forEach((slug) => articleSlugs.add(slug));
   }
 
   // Fetch all the content
-  const [posts, newsletters, articles] = await Promise.all([
+  const [posts, newsletters] = await Promise.all([
     Promise.all(Array.from(postSlugs).map((slug) => getPostBySlug(slug))),
     Promise.all(
       Array.from(newsletterSlugs).map((slug) => getNewsletterBySlug(slug))
-    ),
-    Promise.all(
-      Array.from(articleSlugs).map((slug) => getExternalReferenceBySlug(slug))
     ),
   ]);
 
@@ -120,19 +113,11 @@ export const getTopicContent = async (slug: string): Promise<Topic | null> => {
       new Date(a.frontmatter.date).getTime()
   );
 
-  const sortedArticles = articles.sort(
-    (a, b) =>
-      new Date(b.frontmatter.date).getTime() -
-      new Date(a.frontmatter.date).getTime()
-  );
-
   return {
     ...topicDef,
     posts: sortedPosts,
     newsletters: sortedNewsletters,
-    articles: sortedArticles,
-    totalCount:
-      sortedPosts.length + sortedNewsletters.length + sortedArticles.length,
+    totalCount: sortedPosts.length + sortedNewsletters.length,
   };
 };
 
@@ -146,18 +131,16 @@ export const getAllTopicsWithCounts = async (): Promise<
     TOPIC_DEFINITIONS.map(async (topicDef) => {
       const postSlugs = new Set<string>();
       const newsletterSlugs = new Set<string>();
-      const articleSlugs = new Set<string>();
 
       for (const tag of topicDef.tags) {
         const content = await getContentForTag(tag);
         content.post.forEach((slug) => postSlugs.add(slug));
         content.newsletter.forEach((slug) => newsletterSlugs.add(slug));
-        content.article.forEach((slug) => articleSlugs.add(slug));
       }
 
       return {
         ...topicDef,
-        totalCount: postSlugs.size + newsletterSlugs.size + articleSlugs.size,
+        totalCount: postSlugs.size + newsletterSlugs.size,
       };
     })
   );
