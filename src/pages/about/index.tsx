@@ -5,9 +5,11 @@ import { useRef } from 'react';
 import posthog from 'posthog-js';
 
 import NewsletterSignup from '@components/NewsletterSignup/NewsletterBannerFancy';
+import StructuredData from '@components/StructuredData/StructuredData';
 import SEO from '../../components/seo';
 import { serialize } from '../../utils/mdx';
 import { components } from '../../utils/MDXProviderWrapper';
+import { personStructuredData } from '../../utils/mikePersonStructuredData';
 
 // Treat GitHub as a CMS source using ISR
 export async function getStaticProps() {
@@ -73,9 +75,10 @@ const AboutPage: NextPage<AboutPageProps> = ({ mdxSource, error }) => {
   return (
     <>
       <SEO
-        title="About Mike Bifulco - founder, developer advocate, designer, writer"
-        description="Mike Bifulco is a serial entrepreneur, author, and software developer, and former Stripe, Google, and Microsoft employee, working to build great products."
+        title="About Mike Bifulco | CTO, Y Combinator Alum & Developer Advocate"
+        description="Mike Bifulco is a startup CTO, Y Combinator alum, and developer advocate. Former Stripe, Google, and Microsoft. Creator of Tiny Improvements newsletter. Expert in React, Next.js, and API design."
       />
+      <StructuredData structuredData={personStructuredData} />
       <main className="mx-auto mb-8 max-w-4xl" onMouseEnter={handlePageViewed}>
       {error && (
         <div className="mb-6 border-l-4 border-yellow-400 bg-yellow-50 p-4">
