@@ -1,5 +1,6 @@
 import type { IncomingMessage } from 'http';
 import type { NextApiRequest, NextApiResponse } from 'next';
+import { checkBotId } from 'botid/server';
 import { buffer } from 'micro';
 import { PostHog } from 'posthog-node';
 import { Webhook } from 'svix';
@@ -65,8 +66,19 @@ const webhookHandler = async (req: NextApiRequest, res: NextApiResponse) => {
     const headers = req.headers as IncomingMessage['headers'] &
       WebhookRequiredHeaders;
 
-    // Verify the webhook signature and extract the event
+    // Verify the webhook signature first to ensure request came from Resend
     const event = webhook.verify(payload, headers) as WebhookEvent;
+
+    // After signature verification, check for bot traffic
+    const verification = await checkBotId({
+      advancedOptions: {
+        headers: req.headers,
+      },
+    });
+    if (verification.isBot) {
+      console.warn('Bot detected attempting to access webhook');
+      return res.status(403).json({ error: 'Access denied' });
+    }
 
     if (isEmailEvent(event)) {
       const id = Array.isArray(event.data.to)
