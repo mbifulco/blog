@@ -146,8 +146,8 @@ export const subscribeSchema = z.object({
 });
 
 // Minimum time in milliseconds between form load and submission
-// Bots typically submit instantly; real users take at least 3 seconds
-const MIN_FORM_SUBMISSION_TIME_MS = 3000;
+// Bots typically submit instantly; real users can still submit quickly via autofill
+const MIN_FORM_SUBMISSION_TIME_MS = 500;
 
 /**
  * Check if a first name looks like spam (random characters, "abc", etc.)
