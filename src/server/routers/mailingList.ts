@@ -1,7 +1,15 @@
 import { TRPCError } from '@trpc/server';
 import { z } from 'zod';
 
-import { getSubscriberCount, subscribe, subscribeSchema } from '@utils/resend';
+import {
+  getSubscriberCount,
+  isFormSubmittedTooFast,
+  isHoneypotFilled,
+  isSpamFirstName,
+  subscribe,
+  subscribeSchema,
+} from '@utils/resend';
+import { checkSubscribeRateLimit } from '../rateLimit';
 import { procedure, router } from '../trpc';
 
 // Define the return type for the subscribe mutation
@@ -34,8 +42,58 @@ export const mailingListRouter = router({
   subscribe: procedure
     .input(subscribeSchema)
     .output(subscribeResponseSchema)
-    .mutation(async ({ input }: { input: z.infer<typeof subscribeSchema> }): Promise<SubscribeMutationResponse> => {
-      const { email, firstName, lastName } = input;
+    .mutation(async ({ input, ctx }): Promise<SubscribeMutationResponse> => {
+      const { email, firstName, lastName, honeypot, formLoadedAt } = input;
+
+      // Fake success response for spam - makes spammers think they succeeded
+      const fakeSuccess: SubscribeMutationResponse = {
+        data: { id: 'fake-success' },
+        error: null,
+      };
+
+      // 1. Rate limiting check (must have IP)
+      if (ctx.clientIp) {
+        const rateLimitResult = await checkSubscribeRateLimit(ctx.clientIp);
+        if (!rateLimitResult.success) {
+          throw new TRPCError({
+            message: 'Too many subscription attempts. Please try again later.',
+            code: 'TOO_MANY_REQUESTS',
+          });
+        }
+      }
+
+      // 2. Honeypot check - if filled, it's a bot
+      if (isHoneypotFilled(honeypot)) {
+        if (process.env.NODE_ENV === 'development') {
+          console.log('[Spam Detection] Honeypot triggered:', { email, firstName });
+        }
+        return fakeSuccess;
+      }
+
+      // 3. Form timing check - if submitted too fast, it's a bot
+      if (isFormSubmittedTooFast(formLoadedAt)) {
+        if (process.env.NODE_ENV === 'development') {
+          console.log('[Spam Detection] Form submitted too fast:', {
+            email,
+            firstName,
+            formLoadedAt,
+            now: Date.now(),
+          });
+        }
+        return fakeSuccess;
+      }
+
+      // 4. Spam first name check
+      if (isSpamFirstName(firstName)) {
+        if (process.env.NODE_ENV === 'development') {
+          console.log('[Spam Detection] Spam first name detected:', {
+            email,
+            firstName,
+          });
+        }
+        return fakeSuccess;
+      }
+
       try {
         const res = await subscribe({
           email,

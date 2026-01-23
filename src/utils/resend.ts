@@ -140,7 +140,72 @@ export const subscribeSchema = z.object({
   email: z.string().email(),
   firstName: z.string().optional(),
   lastName: z.string().optional(),
+  // Anti-spam fields (optional for backwards compatibility)
+  honeypot: z.string().optional(),
+  formLoadedAt: z.number().optional(),
 });
+
+// Minimum time in milliseconds between form load and submission
+// Bots typically submit instantly; real users can still submit quickly via autofill
+const MIN_FORM_SUBMISSION_TIME_MS = 500;
+
+/**
+ * Check if a first name looks like spam (random characters, "abc", etc.)
+ * This runs server-side as a second layer of defense
+ */
+export function isSpamFirstName(name: string | undefined): boolean {
+  if (!name || name.length === 0) return false;
+
+  const normalized = name.trim().toLowerCase();
+
+  // Exact match for known spam patterns
+  if (normalized === 'abc') return true;
+
+  // Short names with no vowels (2-4 chars like "xyz", "bcdf")
+  if (normalized.length >= 2 && normalized.length <= 4) {
+    const hasVowel = /[aeiou]/.test(normalized);
+    if (!hasVowel) return true;
+  }
+
+  // Check for mixed case pattern (e.g., VKvNcRvi, mtpDQVeZaqb)
+  // Require 3+ case transitions to avoid flagging legitimate names like McDonald, OBrien, DeMarco
+  const caseTransitions = (name.match(/[a-z][A-Z]/g) || []).length;
+  const hasExcessiveCaseTransitions = caseTransitions >= 3;
+
+  // Check for excessive consonants (>4 in a row)
+  const hasExcessiveConsonants =
+    /[bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ]{5,}/.test(name);
+
+  // Check vowel ratio (should have at least 20% vowels in a normal name)
+  const vowelCount = (name.match(/[aeiouAEIOU]/g) || []).length;
+  const vowelRatio = vowelCount / name.length;
+  const hasLowVowelRatio = vowelRatio < 0.2 && name.length > 4;
+
+  return (
+    hasExcessiveCaseTransitions ||
+    hasExcessiveConsonants ||
+    hasLowVowelRatio
+  );
+}
+
+/**
+ * Check if the form was submitted too quickly (likely a bot)
+ */
+export function isFormSubmittedTooFast(formLoadedAt: number | undefined): boolean {
+  if (!formLoadedAt) return false; // Can't check if no timestamp provided
+
+  const submissionTime = Date.now();
+  const timeDiff = submissionTime - formLoadedAt;
+
+  return timeDiff < MIN_FORM_SUBMISSION_TIME_MS;
+}
+
+/**
+ * Check if honeypot field was filled (should be empty for real users)
+ */
+export function isHoneypotFilled(honeypot: string | undefined): boolean {
+  return Boolean(honeypot && honeypot.length > 0);
+}
 
 type SubscribeArgs = z.infer<typeof subscribeSchema>;
 

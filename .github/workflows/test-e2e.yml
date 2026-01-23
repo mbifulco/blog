@@ -21,6 +21,8 @@ jobs:
       RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
       RESEND_NEWSLETTER_AUDIENCE_ID: ${{ secrets.RESEND_NEWSLETTER_AUDIENCE_ID }}
       RESEND_SIGNING_SECRET: ${{ secrets.RESEND_SIGNING_SECRET }}
+      UPSTASH_REDIS_REST_URL: ${{ secrets.UPSTASH_REDIS_REST_URL }}
+      UPSTASH_REDIS_REST_TOKEN: ${{ secrets.UPSTASH_REDIS_REST_TOKEN }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v6

@@ -39,6 +39,8 @@ jobs:
           NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME: ${{ secrets.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME }}
           NEXT_PUBLIC_FATHOM_ID: ${{ secrets.NEXT_PUBLIC_FATHOM_ID }}
           NEXT_PUBLIC_POSTHOG_KEY: ${{ secrets.NEXT_PUBLIC_POSTHOG_KEY }}
+          UPSTASH_REDIS_REST_URL: ${{ secrets.UPSTASH_REDIS_REST_URL }}
+          UPSTASH_REDIS_REST_TOKEN: ${{ secrets.UPSTASH_REDIS_REST_TOKEN }}
         run: pnpm tsx scripts/sync-newsletter-to-resend.ts
 
       - name: Comment on PR (on failure)

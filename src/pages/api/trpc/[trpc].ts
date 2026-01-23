@@ -1,11 +1,12 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { appRouter } from '@server/routers/_app';
+import { createContext } from '@server/context';
 import { createNextApiHandler } from '@trpc/server/adapters/next';
 
 const trpcHandler = async (req: NextApiRequest, res: NextApiResponse) => {
   return createNextApiHandler({
     router: appRouter,
-    createContext: () => ({}),
+    createContext,
   })(req, res);
 };
 

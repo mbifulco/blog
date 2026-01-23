@@ -1,30 +1,45 @@
-// NOTE TO FUTURE SELF: there are handy /* */ comments
-// around the async / await stuff for when we need to add it back in
-
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import type * as trpcNext from '@trpc/server/adapters/next';
 
-type CreateContextOptions = object;
+type CreateContextOptions = {
+  clientIp: string | null;
+};
 
 /**
  * Inner function for `createContext` where we create the context.
  * This is useful for testing when we don't want to mock Next.js' request/response
  */
-export /* async */ function createContextInner(_opts: CreateContextOptions) {
-  return {};
+export function createContextInner(opts: CreateContextOptions) {
+  return {
+    clientIp: opts.clientIp,
+  };
 }
 
-// export type Context = Awaited<ReturnType<typeof createContextInner>>;
 export type Context = ReturnType<typeof createContextInner>;
+
+/**
+ * Extract client IP from request headers (Vercel provides x-forwarded-for)
+ */
+function getClientIp(req: trpcNext.CreateNextContextOptions['req']): string | null {
+  const forwarded = req.headers['x-forwarded-for'];
+  if (typeof forwarded === 'string') {
+    // x-forwarded-for can contain multiple IPs, the first is the client
+    return forwarded.split(',')[0]?.trim() ?? null;
+  }
+  if (Array.isArray(forwarded)) {
+    return forwarded[0]?.split(',')[0]?.trim() ?? null;
+  }
+  // Fallback to socket remote address
+  return req.socket?.remoteAddress ?? null;
+}
 
 /**
  * Creates context for an incoming request
  * @link https://trpc.io/docs/v11/context
  */
-export /* async */ function createContext(
+export function createContext(
   opts: trpcNext.CreateNextContextOptions
-): /* Promise<Context> */ Context {
-  // for API-response caching see https://trpc.io/docs/v11/caching
+): Context {
+  const clientIp = getClientIp(opts.req);
 
-  return /* await */ createContextInner({});
+  return createContextInner({ clientIp });
 }
