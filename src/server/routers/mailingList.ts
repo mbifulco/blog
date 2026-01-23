@@ -64,23 +64,28 @@ export const mailingListRouter = router({
 
       // 2. Honeypot check - if filled, it's a bot
       if (isHoneypotFilled(honeypot)) {
-        console.log('[Spam Detection] Honeypot triggered:', { email, firstName });
+        if (process.env.NODE_ENV === 'development') {
+          console.log('[Spam Detection] Honeypot triggered:', { email, firstName });
+        }
         return fakeSuccess;
       }
 
       // 3. Form timing check - if submitted too fast, it's a bot
       if (isFormSubmittedTooFast(formLoadedAt)) {
-        console.log('[Spam Detection] Form submitted too fast:', {
-          email,
-          firstName,
-          formLoadedAt,
-          now: Date.now(),
-        });
+        if (process.env.NODE_ENV === 'development') {
+          console.log('[Spam Detection] Form submitted too fast:', {
+            email,
+            firstName,
+            formLoadedAt,
+            now: Date.now(),
+          });
+        }
         return fakeSuccess;
       }
 
       // 4. Spam first name check
       if (isSpamFirstName(firstName)) {
+        if (process.env.NODE_ENV === 'development') {
         console.log('[Spam Detection] Spam first name detected:', {
           email,
           firstName,
