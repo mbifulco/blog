@@ -86,10 +86,11 @@ export const mailingListRouter = router({
       // 4. Spam first name check
       if (isSpamFirstName(firstName)) {
         if (process.env.NODE_ENV === 'development') {
-        console.log('[Spam Detection] Spam first name detected:', {
-          email,
-          firstName,
-        });
+          console.log('[Spam Detection] Spam first name detected:', {
+            email,
+            firstName,
+          });
+        }
         return fakeSuccess;
       }
 

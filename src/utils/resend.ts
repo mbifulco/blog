@@ -168,16 +168,9 @@ export function isSpamFirstName(name: string | undefined): boolean {
   }
 
   // Check for mixed case pattern (e.g., VKvNcRvi, mtpDQVeZaqb)
-  const hasMixedCase = /[a-z]/.test(name) && /[A-Z]/.test(name);
-  const hasMultipleUpperInMiddle = /[a-z][A-Z]/.test(name);
-
-  // Check for excessive uppercase letters in mixed case names
-  const words = name.split(/\s+/);
-  const hasExcessiveUppercase = words.some((word) => {
-    const uppercaseCount = (word.match(/[A-Z]/g) || []).length;
-    const hasMixed = /[a-z]/.test(word) && /[A-Z]/.test(word);
-    return hasMixed && uppercaseCount > 2;
-  });
+  // Require 3+ case transitions to avoid flagging legitimate names like McDonald, OBrien, DeMarco
+  const caseTransitions = (name.match(/[a-z][A-Z]/g) || []).length;
+  const hasExcessiveCaseTransitions = caseTransitions >= 3;
 
   // Check for excessive consonants (>4 in a row)
   const hasExcessiveConsonants =
@@ -189,10 +182,9 @@ export function isSpamFirstName(name: string | undefined): boolean {
   const hasLowVowelRatio = vowelRatio < 0.2 && name.length > 4;
 
   return (
-    (hasMixedCase && hasMultipleUpperInMiddle) ||
+    hasExcessiveCaseTransitions ||
     hasExcessiveConsonants ||
-    hasLowVowelRatio ||
-    hasExcessiveUppercase
+    hasLowVowelRatio
   );
 }
 

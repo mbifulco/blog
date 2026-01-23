@@ -128,22 +128,14 @@ const SubscriptionForm: React.FC<SubscriptionFormProps> = ({
   const firstNameRef = useRef<HTMLInputElement>(null);
   const honeypotRef = useRef<HTMLInputElement>(null);
 
-      // Validation helper: detect suspicious first names
+  // Validation helper: detect suspicious first names
   const isSpamFirstName = (name: string | undefined): boolean => {
     if (!name || name.length === 0) return false;
 
     // Check for mixed case pattern (e.g., VKvNcRvi, mtpDQVeZaqb)
-    const hasMixedCase = /[a-z]/.test(name) && /[A-Z]/.test(name);
-    const hasMultipleUpperInMiddle = /[a-z][A-Z]/.test(name);
-
-    // Check for excessive uppercase letters in mixed case names
-    // Split by spaces and check each word
-    const words = name.split(/\s+/);
-    const hasExcessiveUppercase = words.some((word) => {
-      const uppercaseCount = (word.match(/[A-Z]/g) || []).length;
-      const hasMixed = /[a-z]/.test(word) && /[A-Z]/.test(word);
-      return hasMixed && uppercaseCount > 2;
-    });
+    // Require 3+ case transitions to avoid flagging legitimate names like McDonald, OBrien, DeMarco
+    const caseTransitions = (name.match(/[a-z][A-Z]/g) || []).length;
+    const hasExcessiveCaseTransitions = caseTransitions >= 3;
 
     // Check for excessive consonants (>4 in a row)
     const hasExcessiveConsonants = /[bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ]{5,}/.test(name);
@@ -153,7 +145,7 @@ const SubscriptionForm: React.FC<SubscriptionFormProps> = ({
     const vowelRatio = vowelCount / name.length;
     const hasLowVowelRatio = vowelRatio < 0.2 && name.length > 4;
 
-    return (hasMixedCase && hasMultipleUpperInMiddle) || hasExcessiveConsonants || hasLowVowelRatio || hasExcessiveUppercase;
+    return hasExcessiveCaseTransitions || hasExcessiveConsonants || hasLowVowelRatio;
   };
 
   const handleSubmission = (e: React.FormEvent<HTMLFormElement>) => {
