@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import useNewsletterStats from '@hooks/useNewsletterStats';
 import posthog from 'posthog-js';
 import { toast } from 'sonner';
@@ -21,6 +21,12 @@ const SubscriptionForm: React.FC<SubscriptionFormProps> = ({
 }) => {
   const [getHoneypottedNerd, setGetHoneypottedNerd] = useState<boolean>(false);
   const [alreadySubscribed, setAlreadySubscribed] = useState<boolean>(false);
+  const [formLoadedAt, setFormLoadedAt] = useState<number | null>(null);
+
+  // Record when the form loads - bots submit instantly, humans take time
+  useEffect(() => {
+    setFormLoadedAt(Date.now());
+  }, []);
 
     const addSubscriberMutation = trpc.mailingList.subscribe.useMutation({
     onSuccess: (data: SubscribeMutationResponse) => {
@@ -212,6 +218,8 @@ const SubscriptionForm: React.FC<SubscriptionFormProps> = ({
     addSubscriberMutation.mutate({
       email,
       firstName,
+      honeypot: honeypot || undefined,
+      formLoadedAt: formLoadedAt ?? undefined,
     });
   };
 
