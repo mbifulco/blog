@@ -12,6 +12,9 @@ export const env = createEnv({
     RESEND_SIGNING_SECRET: z.string(),
     // PostHog Personal API key for sourcemap uploads
     POSTHOG_PERSONAL_API_KEY: z.string().optional(),
+    // Upstash Redis for rate limiting
+    UPSTASH_REDIS_REST_URL: z.string(),
+    UPSTASH_REDIS_REST_TOKEN: z.string(),
   },
   client: {
     NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME: z.string().min(1),
