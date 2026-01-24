@@ -137,10 +137,5 @@
   },
   "bugs": {
     "url": "https://github.com/mbifulco/blog/issues"
-  },
-  "pnpm": {
-    "overrides": {
-      "@types/react": "19.2.9"
-    }
   }
 }
