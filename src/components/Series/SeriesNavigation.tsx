@@ -16,8 +16,8 @@ export const SeriesNavigation: React.FC<SeriesNavigationProps> = ({
   const router = useRouter();
 
   const orderedContent = [
-    ...(series.posts ?? []),
-    ...(series.newsletters ?? []),
+    ...(series.posts ?? []).map((post) => ({ ...post, contentType: 'post' as const })),
+    ...(series.newsletters ?? []).map((newsletter) => ({ ...newsletter, contentType: 'newsletter' as const })),
   ].sort((a, b) => {
     return (
       new Date(a.frontmatter.date).getTime() -
@@ -44,14 +44,28 @@ export const SeriesNavigation: React.FC<SeriesNavigationProps> = ({
         </Link>
       </Heading>
       <ul className="m-0 list-none p-0">
-        {orderedContent.map((post, index) => {
-          const postPath =
-            post.frontmatter.slug && `/posts/${post.frontmatter.slug}`;
-          const newsletterPath =
-            post.frontmatter.slug && `/newsletters/${post.frontmatter.slug}`;
-          const isActivePage =
-            router.asPath.endsWith(postPath) ||
-            router.asPath.endsWith(newsletterPath);
+        {orderedContent.map((item, index) => {
+          const itemPath = item.frontmatter.slug
+            ? item.contentType === 'newsletter'
+              ? `/newsletter/${item.frontmatter.slug}`
+              : `/posts/${item.frontmatter.slug}`
+            : '';
+          const isActivePage = router.asPath.endsWith(itemPath);
+
+          const content = (
+            <>
+              <span
+                className={clsxm(
+                  `flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-sm font-semibold`,
+                  isActivePage && 'bg-pink-500 text-white',
+                  !isActivePage && 'bg-gray-500 text-white'
+                )}
+              >
+                {index + 1}
+              </span>
+              {item.frontmatter.title}
+            </>
+          );
 
           return (
             <li
@@ -62,22 +76,19 @@ export const SeriesNavigation: React.FC<SeriesNavigationProps> = ({
                 !isActivePage && 'hover:bg-gray-200'
               )}
             >
-              <Link
-                href={isActivePage ? '#' : postPath || newsletterPath}
-                className="flex items-center gap-2 text-lg text-inherit no-underline"
-                onClick={() => !isActivePage && handleSeriesNavClick(post.frontmatter.title, post.frontmatter.slug, index + 1)}
-              >
-                <span
-                  className={clsxm(
-                    `flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-sm font-semibold`,
-                    isActivePage && 'bg-pink-500 text-white',
-                    !isActivePage && 'bg-gray-500 text-white'
-                  )}
-                >
-                  {index + 1}
+              {isActivePage ? (
+                <span className="flex items-center gap-2 text-lg">
+                  {content}
                 </span>
-                {post.frontmatter.title}
-              </Link>
+              ) : (
+                <Link
+                  href={itemPath}
+                  className="flex items-center gap-2 text-lg text-inherit no-underline"
+                  onClick={() => handleSeriesNavClick(item.frontmatter.title, item.frontmatter.slug, index + 1)}
+                >
+                  {content}
+                </Link>
+              )}
             </li>
           );
         })}

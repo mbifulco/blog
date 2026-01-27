@@ -16,7 +16,7 @@ import { getSeries } from '@lib/series';
 import type { Series } from '@lib/series';
 import { getCloudinaryImageUrl } from '@utils/images';
 import { serialize } from '@utils/mdx';
-import { generateNewsletterBlogPostingStructuredData } from '../../utils/newsletterStructuredData';
+import { generatePostStructuredData } from '@utils/generateStructuredData';
 
 type NewsletterPageParams = {
   slug: string;
@@ -90,8 +90,7 @@ const NewsletterPage: React.FC<NewsletterPageProps> = ({
   const postImagePublicId = coverImagePublicId || `newsletters/${slug}/cover`;
   const coverImageUrl = getCloudinaryImageUrl(postImagePublicId);
 
-  const blogPostingStructuredData =
-    generateNewsletterBlogPostingStructuredData(newsletter);
+  const structuredData = generatePostStructuredData({ post: newsletter });
 
   return (
     <>
@@ -105,7 +104,7 @@ const NewsletterPage: React.FC<NewsletterPageProps> = ({
           publishedAt={date}
           tags={tags}
         />
-        <StructuredData structuredData={blogPostingStructuredData} />
+        <StructuredData structuredData={structuredData} />
 
         <FullPost post={newsletter} series={series} contentType="newsletter" />
         <Colophon />

@@ -117,7 +117,7 @@ const SeriesPage: NextPage<SeriesPageProps> = ({ series }) => {
         </main>
 
         <WebmentionMetadata
-          publishedAt={series?.posts[0].frontmatter.date}
+          publishedAt={sortedContent[0]?.frontmatter.date}
           tags={allTags.filter((tag) => tag !== undefined)}
           title={pageTitle}
         />
