@@ -6,7 +6,7 @@ import type {
   HTMLProps,
   ReactElement,
 } from 'react';
-import Link from 'next/link';
+import Link from '@components/Link';
 import Script from 'next/script';
 import { MDXProvider } from '@mdx-js/react';
 import type { MDXComponents } from 'mdx/types';

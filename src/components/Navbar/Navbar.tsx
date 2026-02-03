@@ -1,6 +1,6 @@
 'use client';
 
-import Link from 'next/link';
+import Link from '@components/Link';
 import { useRouter } from 'next/router';
 import {
   Disclosure,
@@ -74,7 +74,7 @@ const Navbar = () => {
       {({ open }) => (
         <>
           <div className="flex w-full flex-row gap-3 sm:mx-auto sm:flex-col">
-            <Link href="/" className="hover:no-underline">
+            <Link href="/" prefetch={true} className="hover:no-underline">
               <div
                 className={clsxm(
                   'text-center text-4xl uppercase text-gray-800 transition-all duration-500 ease-in-out hover:text-gray-700',
@@ -165,7 +165,7 @@ const Navbar = () => {
 
                     {/* Podcast - Simple Link */}
                     <NavigationMenuItem>
-                      <Link href="/podcast" legacyBehavior passHref>
+                      <Link href="/podcast" prefetch={true} legacyBehavior passHref>
                         <NavigationMenuLink
                           className={clsxm(
                             'group inline-flex h-9 w-max items-center justify-center rounded-md bg-transparent px-4 py-2 text-sm font-semibold uppercase text-gray-700 transition-colors hover:bg-gray-100'
@@ -178,7 +178,7 @@ const Navbar = () => {
 
                     {/* About - Simple Link */}
                     <NavigationMenuItem>
-                      <Link href="/about" legacyBehavior passHref>
+                      <Link href="/about" prefetch={true} legacyBehavior passHref>
                         <NavigationMenuLink
                           className={clsxm(
                             'group inline-flex h-9 w-max items-center justify-center rounded-md bg-transparent px-4 py-2 text-sm font-semibold uppercase text-gray-700 transition-colors hover:bg-gray-100'
@@ -196,6 +196,7 @@ const Navbar = () => {
                           <TooltipTrigger asChild>
                             <Link
                               href="/newsletter"
+                              prefetch={true}
                               className={clsxm(
                                 'inline-flex h-9 w-max items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-colors',
                                 'bg-pink-500 text-white no-underline hover:bg-pink-600 hover:text-white hover:no-underline'
@@ -278,6 +279,7 @@ const Navbar = () => {
               <DisclosureButton
                 as={Link}
                 href="/podcast"
+                prefetch={true}
                 className={clsxm(
                   'block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700',
                   router.pathname === '/podcast' &&
@@ -290,6 +292,7 @@ const Navbar = () => {
               <DisclosureButton
                 as={Link}
                 href="/about"
+                prefetch={true}
                 className={clsxm(
                   'block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700',
                   router.pathname === '/about' &&
@@ -304,6 +307,7 @@ const Navbar = () => {
                 <DisclosureButton
                   as={Link}
                   href="/newsletter"
+                  prefetch={true}
                   className="block w-full rounded-md bg-pink-500 px-4 py-2 text-center font-medium text-white hover:bg-pink-600"
                 >
                   💌 Subscribe to Newsletter

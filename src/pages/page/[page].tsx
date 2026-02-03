@@ -1,5 +1,5 @@
 import type { NextPage } from 'next';
-import Link from 'next/link';
+import Link from '@components/Link';
 import { startOfToday } from 'date-fns';
 
 import { Colophon } from '../../components/Colophon';

@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import Link from '@components/Link';
 
 import type { NewsletterItemProps } from '../../data/content-types';
 import formatDate from '../../utils/format-date';
