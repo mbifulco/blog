@@ -1,5 +1,5 @@
 import type { GetStaticPaths, GetStaticProps, NextPage } from 'next';
-import Link from 'next/link';
+import Link from '@components/Link';
 import { compareDesc } from 'date-fns';
 
 import { Badge } from '@components/Badge';

@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import Link from '@components/Link';
 import { useRef } from 'react';
 import { Popover } from '@headlessui/react';
 import posthog from 'posthog-js';

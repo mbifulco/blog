@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import Link from '@components/Link';
 import { MDXRemote } from 'next-mdx-remote';
 
 import { Badge } from '@components/Badge';
