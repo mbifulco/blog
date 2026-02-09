@@ -1,0 +1,140 @@
+---
+title: "A small Next.js change that cut my site's bandwidth by more than half"
+excerpt: "Next.js Link prefetching quietly burned through 15 GB of bandwidth on my Vercel-hosted blog. Here's the small wrapper component that fixed it."
+slug: reduce-nextjs-bandwidth-with-link-prefetch
+date: 2026-02-09
+coverImagePublicId: posts/reduce-nextjs-bandwidth-with-link-prefetch/cover
+tags: [nextjs, vercel, performance, typescript, react, bandwidth]
+---
+
+## A quiet problem I almost missed
+
+I got one of those automated emails from Vercel that made me stop and read it twice.
+
+My personal blog, a mostly static site with no video and lazy-loaded images, had already used more than **15 GB of outgoing bandwidth** for the month. That was roughly three quarters of Vercel's free tier, and the reset was still weeks away.
+
+Traffic here is steady, but not especially high. Something didn't add up.
+
+So I did what I probably should have done sooner and opened the analytics dashboard.
+
+## It turned out nothing was wrong
+
+The bandwidth wasn't coming from bots, scraping, or hotlinking. It was coming from **Fast Origin Transfer**, which in Vercel's world is largely driven by prefetching.
+
+Specifically, Next.js `<Link>` prefetching.
+
+By default, every `<Link>` on the page prefetches its destination as soon as it enters the viewport. That's a reasonable default for many apps. Navigation feels instant, and most of the time you never think about it.
+
+On my homepage, though, there are a lot of links visible right away. Post summaries link to articles and tags. The footer includes a long list of tag pages. There are navigation links, social links, and related content.
+
+Altogether, more than **sixty links** were prefetching their target pages the moment someone loaded the homepage. On every visit.
+
+## How Next.js Link prefetching actually works
+
+The short version is that the `<Link>` component in Next.js has a `prefetch` prop that defaults to `true`. In production, any link that enters the viewport automatically fetches the page it points to in the background.
+
+This became more noticeable for me after upgrading to **Next.js 16**, which made prefetching behavior more aggressive by default. The framework is smarter about what it fetches now, but on pages with lots of links, the volume of background requests can still add up quickly. On Vercel, those requests are metered as **Fast Origin Transfer**.
+
+The detail that made this fix viable for my site is that **hover prefetching still happens** even when viewport prefetching is disabled. When someone hovers a link, Next.js will still fetch what it needs before the click.
+
+That means you can keep most of the perceived performance benefit without eagerly downloading dozens of pages that may never be visited.
+
+One important caveat: this behavior depends on which router you're using. On the **Pages Router**, `prefetch={false}` disables viewport prefetching but still allows hover prefetching. On the **App Router**, `prefetch={false}` disables both. If you want hover-only behavior there, you'll need to call `router.prefetch()` yourself on mouse enter.
+
+## The change I made
+
+Rather than touching every `<Link>` by hand, I added a small wrapper component that flips the default to no viewport prefetching.
+
+```tsx
+// src/components/Link/Link.tsx
+import NextLink from 'next/link';
+import type { ComponentProps } from 'react';
+
+type LinkProps = ComponentProps<typeof NextLink>;
+
+/**
+ * Custom Link wrapper.
+ * Defaults prefetch to false to reduce background bandwidth usage.
+ */
+const Link = ({ prefetch = false, ...props }: LinkProps) => {
+  return <NextLink prefetch={prefetch} {...props} />;
+};
+
+export default Link;
+```
+
+Then I updated imports across the site to use this wrapper instead of next/link directly.
+
+```diff
+- import Link from 'next/link';
++ import Link from '@components/Link';
+```
+For the small set of links people are most likely to click, primarily the main navigation, I opted back into prefetching explicitly.
+
+```tsx
+<Link href="/newsletter" prefetch>
+  Newsletter
+</Link>
+```
+
+That keeps the interface feeling fast where it actually matters.
+
+## The results
+
+The number of background prefetch requests dropped immediately. Instead of sixty-plus fetches on every homepage visit, only a handful of intentional ones remained.
+
+Based on early numbers and bundle sizes, I'm seeing something in the range of a 40 to 60 percent reduction in bandwidth usage. That's the difference between flirting with Vercel's free tier limits and staying comfortably under them.
+
+| Metric | Before | After |
+|--------|--------|-------|
+| Viewport prefetch | All visible links | Primary navigation only |
+| Hover prefetch | Yes | Yes |
+| Background bandwidth | ~15 GB/mo | Estimated 6-9 GB/mo |
+
+## When this is worth doing
+
+This pattern makes sense if:
+
+- You have pages with lots of visible links, like homepages or tag indexes
+- Your pages prefetch non-trivial JavaScript bundles or data
+- You're on Vercel's free or Pro tier and paying attention to bandwidth
+- You've noticed Fast Origin Transfer climbing without an obvious cause
+- You recently upgraded to Next.js 16 and saw a usage spike
+
+It's probably not worth the effort if:
+
+-Your pages have very few links
+- Navigation speed matters more than bandwidth for your use case
+- You're already prefetching intentionally and have bandwidth to spare
+
+## Trade-offs, honestly
+
+The main downside is that the first click to a non-prefetched page might be slightly slower.
+
+In practice, I haven't noticed it. Most people hover before clicking, and hover-triggered prefetching still kicks in. The perceived speed is nearly identical.
+
+The wrapper component adds a small abstraction, but it also gives me a single place to control this behavior site-wide. If Next.js changes their defaults again, and they will, I only have one file to update.
+
+## What I took away from this
+
+- Sensible defaults aren't universal
+- Prefetching is powerful, but it isn't free
+- A small wrapper component can save real money
+- It's worth occasionally checking what your framework is doing on your behalf
+
+This is the kind of issue that only shows up when you've been running your own site for a while. Nothing was broken. It was just quietly inefficient.
+
+## You're not the only one
+
+Once I started digging into this, I realized how common the problem is. There are long-running threads full of developers hitting the same wall: unexpected bandwidth spikes, climbing Fast Origin Transfer costs, and confusion about what prefetch actually does.
+
+If you're dealing with this too, these are worth reading:
+
+- [Nextjs prefetching and Vercel high Fast Data Transfer](https://community.vercel.com/t/nextjs-prefetching-and-vercel-high-fast-data-transfer/9154)
+- [How to reduce fast origin transfer](https://community.vercel.com/t/how-to-reduce-fast-origin-transfer/23551)
+- [Please allow to globally disable prefetching](https://github.com/vercel/next.js/discussions/24009)
+- [`<Link>` prefetching behavior](https://github.com/vercel/next.js/discussions/60581)
+
+If you've run into similar surprises, I'm always curious to hear about them. You can find me on [Bluesky](https://bsky.app/profile/mikebifulco.com) or [Threads](https://threads.net/@irreverentmike).
+
+
