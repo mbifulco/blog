@@ -21,14 +21,13 @@ import {
   handlePaginatedStaticProps,
 } from '../../utils/pagination';
 
-// We use fallback: 'blocking' so that getStaticProps runs for any page param, allowing us to handle invalid page numbers (non-numeric, out-of-range, etc.) with redirects or 404s, while still statically generating valid pages after the first request.
 export async function getStaticPaths() {
   const getTotalPages = async (limit: number) => {
     const { totalPages } = await getPaginatedPosts({ limit });
     return { totalPages };
   };
   const paths = await generatePaginatedPaths(getTotalPages, 10);
-  return { paths, fallback: 'blocking' };
+  return { paths, fallback: false };
 }
 
 export async function getStaticProps({ params }: { params: { page: string } }) {
