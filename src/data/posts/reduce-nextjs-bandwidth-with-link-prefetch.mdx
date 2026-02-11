@@ -1,6 +1,6 @@
 ---
-title: "A small Next.js change that cut my site's bandwidth by more than half"
-excerpt: "Next.js Link prefetching quietly burned through 15 GB of bandwidth on my Vercel-hosted blog. Here's the small wrapper component that fixed it."
+title: "Optimizing Your Next.js Site's Fast Origin Transfer and ISR Reads"
+excerpt: "Next.js Link prefetching quietly burned through 15 GB of bandwidth on my Vercel-hosted blog. Here's how I fixed it."
 slug: reduce-nextjs-bandwidth-with-link-prefetch
 date: 2026-02-09
 coverImagePublicId: posts/reduce-nextjs-bandwidth-with-link-prefetch/cover
@@ -13,9 +13,16 @@ I got one of those automated emails from Vercel that made me stop and read it tw
 
 My personal blog, a mostly static site with no video and lazy-loaded images, had already used more than **15 GB of outgoing bandwidth** for the month. That was roughly three quarters of Vercel's free tier, and the reset was still weeks away.
 
+<Image
+  publicId="posts/reduce-nextjs-bandwidth-with-link-prefetch/vercel-email"
+  alt="A screenshot of the Vercel email showing a warning about hitting tier limits"
+  caption="Wuh oh - work up to an email from Vercel warning about hitting tier limits"
+/>
+
 Traffic here is steady, but not especially high. Something didn't add up.
 
 So I did what I probably should have done sooner and opened the analytics dashboard.
+
 
 ## It turned out nothing was wrong
 
@@ -41,7 +48,7 @@ That means you can keep most of the perceived performance benefit without eagerl
 
 One important caveat: this behavior depends on which router you're using. On the **Pages Router**, `prefetch={false}` disables viewport prefetching but still allows hover prefetching. On the **App Router**, `prefetch={false}` disables both. If you want hover-only behavior there, you'll need to call `router.prefetch()` yourself on mouse enter.
 
-## The change I made
+## The changes I made
 
 Rather than touching every `<Link>` by hand, I added a small wrapper component that flips the default to no viewport prefetching.
 
@@ -114,6 +121,21 @@ The main downside is that the first click to a non-prefetched page might be slig
 In practice, I haven't noticed it. Most people hover before clicking, and hover-triggered prefetching still kicks in. The perceived speed is nearly identical.
 
 The wrapper component adds a small abstraction, but it also gives me a single place to control this behavior site-wide. If Next.js changes their defaults again, and they will, I only have one file to update.
+
+
+## Follow-up: another important change
+
+After reviewing more of my analytics in PostHog, I realized I was getting _loads_ of traffic from crawlers and bots that were trying to visit arbitrary page numbers on my site by appending them to the URL:
+
+```markdown
+https://mikebifulco.com/page/117
+https://mikebifulco.com/page/9
+https://mikebifulco.com/page/28
+```
+
+In an attempt to make my site more friendly to people who somehow got a link to a page that didn't exist, I had set up a server-side redirect that would redirect to the first page -- this redirect was _also_ triggering ISR reads each time it ran.
+
+The change I made here was obvious in retrospect: visit a page that doesn't exist? 404. No additional checks, just the basics. No more ISR reads.
 
 ## What I took away from this
 

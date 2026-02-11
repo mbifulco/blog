@@ -1,0 +1,65 @@
+---
+title: Just Enough Is an Ongoing Practice
+excerpt: Stable products still need maintenance. Defaults and shiny features quietly tax systems over time, and efficiency is a sign of craftsmanship, not penny-pinching.
+date: 2026-02-10
+tags: [product, nextjs]
+coverImagePublicId: newsletters/just-enough-is-an-ongoing-practice/cover
+slug: just-enough-is-an-ongoing-practice
+---
+
+## The Big Idea
+
+Stable products still need maintenance. Defaults and shiny features quietly tax systems over time, and efficiency is a sign of craftsmanship, not penny-pinching.
+
+## “Just Enough” Is an Ongoing Practice
+
+At some point, my next.js website crossed a line I did not notice right away. It was stable, not changing much apart from new posts and newsletters. Traffic was healthy. And yet, I was steadily consuming more of the resources measured by **Vercel's free tier**. Nothing had broken. Nothing felt slow. But the line on the graph kept moving in the wrong direction.
+
+That surprised me.
+
+We often tend to think of stability as the end of something. Engineer ship something, it works, and we move on. Modern web frameworks ship with helpful defaults, and those defaults are optimized for convenience, not restraint. Prefetching everything on the page. Recomputing pages that could have been built once. Redirecting politely when a bot is clearly probing your pagination. Individually, each decision makes sense. Over time, they quietly add up.
+
+Taking time to chase this down pulled me away from real work, the kind with deadlines and people waiting on me. I am not short on things that demand attention.
+
+The results of a few hours of my time were exactly the doctor ordered:
+
+<Image
+  publicId="newsletters/just-enough-is-an-ongoing-practice/isr-reads"
+  alt="A screenshot of the Vercel dashboard showing ISR reads before and after the changes"
+  caption="ISR Reads before and after the changes"
+/>
+
+<Image
+  publicId="newsletters/just-enough-is-an-ongoing-practice/fast-origin-transfer"
+  alt="A screenshot of the Vercel dashboard showing Fast Origin Transfer before and after the changes"
+  caption="Fast Origin Transfer before and after the changes"
+/>
+
+ISR Reads and Fast Origin Transfer both dropped dramatically, and flattened out. The site went back to living comfortably within a modest tier, even with steady traffic. What struck me was not how clever the fixes were, but how ordinary they felt in hindsight. These were not optimizations born from genius. They were the result of paying attention.
+
+<Aside type="note">
+
+  👉 <b>Interested in the details of these changes?</b> Check out my post on [reducing Next.js bandwidth with link prefetch](https://mikebifulco.com/posts/reduce-nextjs-bandwidth-with-link-prefetch).
+
+</Aside>
+
+
+## Keeping the lights on
+
+The larger takeaway isn't at all about ISR or Fast Origin Transfer or prefetching. I think there's a lesson in what it means for a product to be "finished".
+
+Launches of new products and features are exciting. It is _always_ a thrill to be working on the new hotness, drawing attention from your peers and customers.
+
+But - there is a version of craftsmanship that only shows up after spotlight moves on. Funny enough, during my time at Google and Stripe, this was called KTLO: Keeping The Lights On.
+
+## The unsung hero of the product lifecycle
+
+This is the craft and attention to detail that shapes the integrity of the system. Efficiency, performance, and even environmental impact rarely make it into launch announcements. They still shape the integrity of the system. It's the work that is often thankless, and invisible to end users.
+
+Growing the skill for this kind of work is not a one-time event. It is a skill that must be cultivated over time. It is a skill that must be practiced regularly. It is a skill that must be honed over time.
+
+This is the same idea I wrote about before as **[just enough, nothing more](https://mikebifulco.com/newsletter/reflecting-on-one-year-as-startup-cto#just-enough-and-nothing-more)**. You don't cross the finish line once. You return to it. You notice drift. You develop a sense for new signals to listen to from the systems you've built and used. You remove things that no longer serve the system. You question defaults that once seemed harmless.
+
+A stable product is not a finished product. It is simply a product that now requires a different kind of care.
+
+“Just enough” is not a milestone. It is an ongoing practice.
