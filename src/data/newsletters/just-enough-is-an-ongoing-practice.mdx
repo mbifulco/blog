@@ -1,6 +1,6 @@
 ---
 title: Just Enough Is an Ongoing Practice
-excerpt: At some point, my next.js site crossed a line I did not notice right away. It was stable. It was not changing much. Traffic was healthy. And yet, the bill on the Vercel free tier kept creeping up.
+excerpt: Stable products still need maintenance. Defaults and shiny features quietly tax systems over time, and efficiency is a sign of craftsmanship, not penny-pinching.
 date: 2026-02-10
 tags: [product, nextjs]
 coverImagePublicId: newsletters/just-enough-is-an-ongoing-practice/cover
@@ -13,18 +13,15 @@ Stable products still need maintenance. Defaults and shiny features quietly tax 
 
 ## “Just Enough” Is an Ongoing Practice
 
-At some point, my personal site crossed a line I did not notice right away. It was stable. It was not changing much. Traffic was healthy. And yet, I was steadily using more of the resources measured by **Vercel's free tier**. That's not good.
+At some point, my next.js website crossed a line I did not notice right away. It was stable, not changing much apart from new posts and newsletters. Traffic was healthy. And yet, I was steadily consuming more of the resources measured by **Vercel's free tier**. Nothing had broken. Nothing felt slow. But the line on the graph kept moving in the wrong direction.
 
-Nothing was broken. Nothing felt slow. I had not shipped anything flashy. But under the surface, defaults and “helpful” features were quietly taxing a system that was already done. This surprised me, mostly because I assumed that once something was stable, it would stay cheap.
+That surprised me.
 
-Taking time to chase this pulled me away from real work, the kind with deadlines and people waiting on me. But once I finally looked closely, the fixes were not dramatic:
+We often tend to think of stability as the end of something. Engineer ship something, it works, and we move on. Modern web frameworks ship with helpful defaults, and those defaults are optimized for convenience, not restraint. Prefetching everything on the page. Recomputing pages that could have been built once. Redirecting politely when a bot is clearly probing your pagination. Individually, each decision makes sense. Over time, they quietly add up.
 
-- Turning off link prefetching
-- Moving dynamic work to build time
-- Returning a 404 instead of redirecting bots that were hammering pagination
-- Being disciplined about images and file sizes
+Taking time to chase this down pulled me away from real work, the kind with deadlines and people waiting on me. I am not short on things that demand attention.
 
-None of this was exciting, but all of it mattered, and in aggregate, it made a significant difference. Results were immediate:
+The results of a few hours of my time were exactly the doctor ordered:
 
 <Image
   publicId="newsletters/just-enough-is-an-ongoing-practice/isr-reads"
@@ -38,34 +35,26 @@ None of this was exciting, but all of it mattered, and in aggregate, it made a s
   caption="Fast Origin Transfer before and after the changes"
 />
 
-Bandwidth dropped, and Reads flattened out. The site went back to living comfortably on a modest tier, even with steady traffic. What stood out was not how clever the changes were, but how ordinary they felt in hindsight. Shiny defaults in modern frameworks are optimized for convenience, not longevity. They are easy to forget about once they work.
+ISR Reads and Fast Origin Transfer both dropped dramatically, and flattened out. The site went back to living comfortably within a modest tier, even with steady traffic. What struck me was not how clever the fixes were, but how ordinary they felt in hindsight. These were not optimizations born from genius. They were the result of paying attention.
 
 <Aside type="note">
 
-  <b>Interested in the details of these changes?</b> Check out my post on [reducing Next.js bandwidth with link prefetch](https://mikebifulco.com/posts/reduce-nextjs-bandwidth-with-link-prefetch).
+  👉 <b>Interested in the details of these changes?</b> Check out my post on [reducing Next.js bandwidth with link prefetch](https://mikebifulco.com/posts/reduce-nextjs-bandwidth-with-link-prefetch).
 
 </Aside>
 
+The larger takeaway isn't at all about ISR or Fast Origin Transfer or prefetching. I think there's a lesson in what it means for a product to be "finished".
 
-This is where efficiency stops being about saving money and starts being about craft. A careful builder revisits old decisions. They remove things. They question defaults. They treat cost, performance, and environmental impact as part of the product, not as accounting trivia. This is the same idea I wrote about before as **[just enough, nothing more](https://mikebifulco.com/newsletter/reflecting-on-one-year-as-startup-cto#just-enough-and-nothing-more)**.
+Launches of new products and features are exciting. It is _always_ a thrill to be working on the new hotness, drawing attention from your peers and customers.
 
-As builders, we do not arrive there once. We keep returning to _just enough_ - by observing and learning what we do and don't really need.
+But - there is a version of craftsmanship that only shows up after spotlight moves on. Funny enough, during my time at Google and Stripe, this was called KTLO: Keeping The Lights On.
 
-### What I actually changed
+This is the craft and attention to detail that shapes the integrity of the system. Efficiency, performance, and even environmental impact rarely make it into launch announcements. They still shape the integrity of the system. It's the work that is often thankless, and invisible to end users.
 
-For folks who want receipts, here is the list of concrete changes I made to my site, which is built with Next.js using the (not-shiny, old-timey) pages router.
+Growing the skill for this kind of work is not a one-time event. It is a skill that must be cultivated over time. It is a skill that must be practiced regularly. It is a skill that must be honed over time.
 
-- **Turned off link prefetching** in Next.js, which was quietly burning bandwidth on every page view
-  https://mikebifulco.com/posts/reduce-nextjs-bandwidth-with-link-prefetch
-- **Moved my About page from runtime to build time**, instead of dynamically generating it from my GitHub README on every request
-  https://github.com/mbifulco/blog/pull/1159
-- **Stopped redirecting bad pagination requests** and returned a proper 404, which prevented bots from triggering unnecessary ISR reads
-  https://github.com/mbifulco/blog/pull/1173
-- **Standardized all images through Cloudinary**, and pre converted uploads to WebP using Squoosh for smaller file sizes
-  https://cloudinary.com
-  https://squoosh.app
+This is the same idea I wrote about before as **[just enough, nothing more](https://mikebifulco.com/newsletter/reflecting-on-one-year-as-startup-cto#just-enough-and-nothing-more)**. You don't cross the finish line once. You return to it. You notice drift. You develop a sense for new signals to listen to from the systems you've built and used. You remove things that no longer serve the system. You question defaults that once seemed harmless.
 
-None of these changed the user experience for site visitors in any meaningful way - it's funny when you think about it, because that's the point.
+A stable product is not a finished product. It is simply a product that now requires a different kind of care.
 
-“Just enough” is not something you decide once. It is an ongoing practice. And like most good maintenance work, it only becomes obvious after you finally stop ignoring it.
-
+“Just enough” is not a milestone. It is an ongoing practice.
