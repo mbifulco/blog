@@ -1,0 +1,71 @@
+---
+title: Just Enough Is an Ongoing Practice
+excerpt: At some point, my next.js site crossed a line I did not notice right away. It was stable. It was not changing much. Traffic was healthy. And yet, the bill on the Vercel free tier kept creeping up.
+date: 2026-02-10
+tags: [product, nextjs]
+coverImagePublicId: newsletters/just-enough-is-an-ongoing-practice/cover
+slug: just-enough-is-an-ongoing-practice
+---
+
+## The Big Idea
+
+Stable products still need maintenance. Defaults and shiny features quietly tax systems over time, and efficiency is a sign of craftsmanship, not penny-pinching.
+
+## “Just Enough” Is an Ongoing Practice
+
+At some point, my personal site crossed a line I did not notice right away. It was stable. It was not changing much. Traffic was healthy. And yet, I was steadily using more of the resources measured by **Vercel's free tier**. That's not good.
+
+Nothing was broken. Nothing felt slow. I had not shipped anything flashy. But under the surface, defaults and “helpful” features were quietly taxing a system that was already done. This surprised me, mostly because I assumed that once something was stable, it would stay cheap.
+
+Taking time to chase this pulled me away from real work, the kind with deadlines and people waiting on me. But once I finally looked closely, the fixes were not dramatic:
+
+- Turning off link prefetching
+- Moving dynamic work to build time
+- Returning a 404 instead of redirecting bots that were hammering pagination
+- Being disciplined about images and file sizes
+
+None of this was exciting, but all of it mattered, and in aggregate, it made a significant difference. Results were immediate:
+
+<Image
+  publicId="newsletters/just-enough-is-an-ongoing-practice/isr-reads"
+  alt="A screenshot of the Vercel dashboard showing ISR reads before and after the changes"
+  caption="ISR Reads before and after the changes"
+/>
+
+<Image
+  publicId="newsletters/just-enough-is-an-ongoing-practice/fast-origin-transfer"
+  alt="A screenshot of the Vercel dashboard showing Fast Origin Transfer before and after the changes"
+  caption="Fast Origin Transfer before and after the changes"
+/>
+
+Bandwidth dropped, and Reads flattened out. The site went back to living comfortably on a modest tier, even with steady traffic. What stood out was not how clever the changes were, but how ordinary they felt in hindsight. Shiny defaults in modern frameworks are optimized for convenience, not longevity. They are easy to forget about once they work.
+
+<Aside type="note">
+
+  <b>Interested in the details of these changes?</b> Check out my post on [reducing Next.js bandwidth with link prefetch](https://mikebifulco.com/posts/reduce-nextjs-bandwidth-with-link-prefetch).
+
+</Aside>
+
+
+This is where efficiency stops being about saving money and starts being about craft. A careful builder revisits old decisions. They remove things. They question defaults. They treat cost, performance, and environmental impact as part of the product, not as accounting trivia. This is the same idea I wrote about before as **[just enough, nothing more](https://mikebifulco.com/newsletter/reflecting-on-one-year-as-startup-cto#just-enough-and-nothing-more)**.
+
+As builders, we do not arrive there once. We keep returning to _just enough_ - by observing and learning what we do and don't really need.
+
+### What I actually changed
+
+For folks who want receipts, here is the list of concrete changes I made to my site, which is built with Next.js using the (not-shiny, old-timey) pages router.
+
+- **Turned off link prefetching** in Next.js, which was quietly burning bandwidth on every page view
+  https://mikebifulco.com/posts/reduce-nextjs-bandwidth-with-link-prefetch
+- **Moved my About page from runtime to build time**, instead of dynamically generating it from my GitHub README on every request
+  https://github.com/mbifulco/blog/pull/1159
+- **Stopped redirecting bad pagination requests** and returned a proper 404, which prevented bots from triggering unnecessary ISR reads
+  https://github.com/mbifulco/blog/pull/1173
+- **Standardized all images through Cloudinary**, and pre converted uploads to WebP using Squoosh for smaller file sizes
+  https://cloudinary.com
+  https://squoosh.app
+
+None of these changed the user experience for site visitors in any meaningful way - it's funny when you think about it, because that's the point.
+
+“Just enough” is not something you decide once. It is an ongoing practice. And like most good maintenance work, it only becomes obvious after you finally stop ignoring it.
+
