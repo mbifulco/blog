@@ -39,7 +39,9 @@ export const getHeadings = (source: string): Heading[] => {
 
 export const serialize = async (content: string) => {
   const mdxSource = await serializeMdx(content, {
-    // All MDX content is authored by us, not user-submitted, so JS expressions are safe
+    // All MDX content except the about page is authored locally, not user-submitted.
+    // The about page MDX is fetched at build time from our own GitHub repository, which we control,
+    // so we treat it as trusted content and allow JS expressions (blockJS: false).
     blockJS: false,
     mdxOptions: {
       remarkPlugins: [
