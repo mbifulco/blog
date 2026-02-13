@@ -39,6 +39,8 @@ export const getHeadings = (source: string): Heading[] => {
 
 export const serialize = async (content: string) => {
   const mdxSource = await serializeMdx(content, {
+    // All MDX content is authored by us, not user-submitted, so JS expressions are safe
+    blockJS: false,
     mdxOptions: {
       remarkPlugins: [
         remarkGfm, // Add GitHub Flavored Markdown support (tables, strikethrough, etc.)
