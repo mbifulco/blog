@@ -1,43 +1,55 @@
 import type { NextPage } from 'next';
-import Link from '@components/Link';
 import { startOfToday } from 'date-fns';
 
-import { Colophon } from '../../components/Colophon';
-import { Heading } from '../../components/Heading';
-import { Headshot } from '../../components/Headshot';
-import NewsletterItem from '../../components/NewsletterFeed/NewsletterItem';
-import PaginationWrapper from '../../components/Pagination';
-import { PostFeed } from '../../components/PostFeed';
-import SEO from '../../components/seo';
-import { Subtitle } from '../../components/Subtitle';
-import WebmentionMetadata from '../../components/webmentionMetadata';
-import config from '../../config';
-import type { BlogPost, Newsletter } from '../../data/content-types';
-import { getPaginatedPosts } from '../../lib/blog';
-import { getAllNewsletters } from '../../lib/newsletters';
-import { getCloudinaryImageUrl } from '../../utils/images';
+import { Colophon } from '@components/Colophon';
+import { HomeHero } from '@components/HomeHero';
+import PaginationWrapper from '@components/Pagination';
+import SEO from '@components/seo';
+import StructuredData from '@components/StructuredData/StructuredData';
+import { Subtitle } from '@components/Subtitle';
+import { TopicLinks } from '@components/TopicLinks';
+import { UnifiedContentFeed } from '@components/UnifiedContentFeed';
+import WebmentionMetadata from '@components/webmentionMetadata';
+import { getAllPosts } from '@lib/blog';
+import { getAllNewsletters } from '@lib/newsletters';
+import { getAllTopics } from '@lib/topics';
+import type { TopicDefinition } from '@lib/topics';
+import type { UnifiedFeedItem } from '@lib/unified-feed';
+import { getPaginatedUnifiedFeed } from '@lib/unified-feed';
+import { generateFeedItemListStructuredData } from '@utils/generateStructuredData';
+import { getCloudinaryImageUrl } from '@utils/images';
 import {
   generatePaginatedPaths,
   handlePaginatedStaticProps,
-} from '../../utils/pagination';
+} from '@utils/pagination';
 
 export async function getStaticPaths() {
   const getTotalPages = async (limit: number) => {
-    const { totalPages } = await getPaginatedPosts({ limit });
-    return { totalPages };
+    const allPosts = await getAllPosts();
+    const allNewsletters = await getAllNewsletters();
+    const totalItems = allPosts.length + allNewsletters.length;
+    return { totalPages: Math.ceil(totalItems / limit) };
   };
   const paths = await generatePaginatedPaths(getTotalPages, 10);
   return { paths, fallback: false };
 }
 
-export async function getStaticProps({ params }: { params: { page: string } }) {
+export async function getStaticProps({
+  params,
+}: {
+  params: { page: string };
+}) {
+  const allPosts = await getAllPosts();
+  const allNewsletters = await getAllNewsletters();
+
   const getTotalPages = async (limit: number) => {
-    const { totalPages } = await getPaginatedPosts({ limit });
-    return { totalPages };
+    const totalItems = allPosts.length + allNewsletters.length;
+    return { totalPages: Math.ceil(totalItems / limit) };
   };
+
   return handlePaginatedStaticProps<{
-    posts: BlogPost[];
-    newsletter: Newsletter;
+    feedItems: UnifiedFeedItem[];
+    topics: TopicDefinition[];
     pagination: {
       currentPage: number;
       totalPages: number;
@@ -50,17 +62,23 @@ export async function getStaticProps({ params }: { params: { page: string } }) {
     limit: 10,
     redirectBase: '/',
     getPageProps: async (page) => {
-      const paginatedPosts = await getPaginatedPosts({ page, limit: 10 });
-      const newsletters = await getAllNewsletters();
+      const paginatedFeed = getPaginatedUnifiedFeed(
+        allPosts,
+        allNewsletters,
+        { page, limit: 10 }
+      );
+
+      const topics = getAllTopics();
+
       return {
         props: {
-          posts: paginatedPosts.items,
-          newsletter: newsletters[0],
+          feedItems: paginatedFeed.items,
+          topics,
           pagination: {
-            currentPage: paginatedPosts.currentPage,
-            totalPages: paginatedPosts.totalPages,
-            hasNextPage: paginatedPosts.hasNextPage,
-            hasPreviousPage: paginatedPosts.hasPreviousPage,
+            currentPage: paginatedFeed.currentPage,
+            totalPages: paginatedFeed.totalPages,
+            hasNextPage: paginatedFeed.hasNextPage,
+            hasPreviousPage: paginatedFeed.hasPreviousPage,
           },
         },
       };
@@ -71,9 +89,9 @@ export async function getStaticProps({ params }: { params: { page: string } }) {
 const headshotPublicId = 'mike-headshot-square';
 const headshotPublicUrl = getCloudinaryImageUrl(headshotPublicId);
 
-type HomePageProps = {
-  posts: BlogPost[];
-  newsletter: Newsletter;
+type PaginatedPageProps = {
+  feedItems: UnifiedFeedItem[];
+  topics: TopicDefinition[];
   pagination: {
     currentPage: number;
     totalPages: number;
@@ -82,110 +100,52 @@ type HomePageProps = {
   };
 };
 
-const HomePage: NextPage<HomePageProps> = ({
-  posts,
-  newsletter,
+const PaginatedPage: NextPage<PaginatedPageProps> = ({
+  feedItems,
+  topics,
   pagination,
 }) => {
   return (
-    <div className="mx-auto mb-10 flex max-w-4xl flex-col gap-12">
+    <div className="mx-auto mb-10 flex max-w-4xl flex-col gap-12 px-4">
       <SEO
-        title="Latest articles on design, development, and the world around me"
+        title={`Page ${pagination.currentPage} | Mike Bifulco`}
+        description={`Page ${pagination.currentPage} of articles on React, design, and startup building from Mike Bifulco.`}
         image={headshotPublicUrl}
+        pagination={{
+          currentPage: pagination.currentPage,
+          totalPages: pagination.totalPages,
+          basePath: '',
+        }}
       />
-      <div className="my-4 items-start gap-4 md:flex">
-        <div className="mr-0 overflow-clip rounded-xl lg:mr-4">
-          <Headshot size={250} />
-        </div>
-        <div className="prose prose-xl max-w-[50ch]">
-          <Heading as="h2" className="m-0 mb-2 text-4xl font-bold">
-            Oh, hello
-          </Heading>
-          <p className="text-xl font-normal italic">
-            I work as a {config.employer.role} at{' '}
-            <Link
-              href={config.employer.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-pink-600 hover:underline"
-            >
-              {config.employer.name}
-            </Link>{' '}
-            &mdash; I&apos;m a founder &amp; product builder with background in
-            design and development.
-          </p>
-          <p className="m-0 text-xl font-normal">
-            Find me on Bluesky{' '}
-            <Link
-              href="https://bsky.app/profile/mikebifulco.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-pink-600 hover:underline"
-            >
-              @mikebifulco.com
-            </Link>
-            {', '}Threads{' '}
-            <Link
-              href="https://threads.net/@irreverentmike"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-pink-600 hover:underline"
-            >
-              @irreverentmike
-            </Link>{' '}
-            or{' '}
-            <Link
-              className="text-pink-600 hover:underline"
-              href="https://hachyderm.io/@irreverentmike"
-            >
-              Mastodon
-            </Link>
-            .
-          </p>
-          <p className="text-sm italic">
-            What you see here are my own thoughts, and don&apos;t necessarily
-            reflect the views or opinions of {config.employer.name} or you, or
-            anyone else.
-          </p>
-        </div>
-      </div>
+      <StructuredData
+        structuredData={generateFeedItemListStructuredData(
+          feedItems,
+          pagination.currentPage
+        )}
+      />
 
-      <div className="grid gap-4 lg:grid-cols-2">
-        <div>
-          <Subtitle>
-            <Link href="/newsletter">💌 Tiny Improvements newsletter</Link>
-          </Subtitle>
-          <div className="my-2">
-            <NewsletterItem newsletter={newsletter} />
-          </div>
-        </div>
+      <HomeHero />
 
-        <div>
-          <Subtitle>
-            <Link href="/podcast">🎙️ The Podcast</Link>
-          </Subtitle>
-          <div className="my-2">
-            <iframe
-              width="100%"
-              height="390"
-              seamless
-              src="https://share.transistor.fm/e/tiny-improvements/playlist?color=F90476"
-            />
-          </div>
-        </div>
-      </div>
-
+      {/* Unified content feed */}
       <div>
-        <Subtitle>LATEST POSTS</Subtitle>
-        <PostFeed posts={posts} />
-        <PaginationWrapper
-          currentPage={pagination.currentPage}
-          totalPages={pagination.totalPages}
-          hasNextPage={pagination.hasNextPage}
-          hasPreviousPage={pagination.hasPreviousPage}
-          basePath=""
-        />
+        <Subtitle>ARTICLES</Subtitle>
+        <div className="mt-4">
+          <UnifiedContentFeed items={feedItems} />
+        </div>
       </div>
+
+      {/* Topic discovery */}
+      <TopicLinks topics={topics} />
+
+      {/* Pagination */}
+      <PaginationWrapper
+        currentPage={pagination.currentPage}
+        totalPages={pagination.totalPages}
+        hasNextPage={pagination.hasNextPage}
+        hasPreviousPage={pagination.hasPreviousPage}
+        basePath=""
+      />
+
       <WebmentionMetadata
         summary="mikebifulco.com - articles on design, development, and making the world a better place."
         title="Home - mikebifulco.com"
@@ -197,4 +157,4 @@ const HomePage: NextPage<HomePageProps> = ({
   );
 };
 
-export default HomePage;
+export default PaginatedPage;

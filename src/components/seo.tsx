@@ -12,6 +12,12 @@ type SEOMeta = {
   content: string;
 };
 
+type SEOPagination = {
+  currentPage: number;
+  totalPages: number;
+  basePath: string;
+};
+
 type SEOProps = {
   author?: string;
   canonical?: string;
@@ -24,6 +30,7 @@ type SEOProps = {
   lang?: string;
   publishedAt?: string | number | Date;
   tags?: string[];
+  pagination?: SEOPagination;
 };
 
 const SEO: React.FC<SEOProps> = ({
@@ -37,6 +44,7 @@ const SEO: React.FC<SEOProps> = ({
   image,
   publishedAt,
   tags,
+  pagination,
 }) => {
   const router = useRouter();
 
@@ -151,6 +159,24 @@ const SEO: React.FC<SEOProps> = ({
       {meta?.map(({ name, content }) => (
         <meta key={name} name={name} content={content} />
       ))}
+
+      {/* Pagination rel prev/next */}
+      {pagination && pagination.currentPage > 1 && (
+        <link
+          rel="prev"
+          href={
+            pagination.currentPage === 2
+              ? `${baseUrl}${pagination.basePath || '/'}`
+              : `${baseUrl}${pagination.basePath}/page/${pagination.currentPage - 1}`
+          }
+        />
+      )}
+      {pagination && pagination.currentPage < pagination.totalPages && (
+        <link
+          rel="next"
+          href={`${baseUrl}${pagination.basePath}/page/${pagination.currentPage + 1}`}
+        />
+      )}
     </Head>
   );
 };

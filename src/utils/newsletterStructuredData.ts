@@ -10,11 +10,13 @@ export const tinyImprovementsBlogStructuredData: StructuredDataWithType = {
   url: `${BASE_SITE_URL}/newsletter`,
   author: {
     '@type': 'Person',
+    '@id': `${BASE_SITE_URL}/#person`,
     name: config.author.name.replace(' @irreverentmike', ''),
     url: BASE_SITE_URL,
   },
   publisher: {
     '@type': 'Person',
+    '@id': `${BASE_SITE_URL}/#person`,
     name: config.author.name.replace(' @irreverentmike', ''),
     url: BASE_SITE_URL,
   },
@@ -42,11 +44,13 @@ export const generateNewsletterBlogPostingStructuredData = (
     dateModified: new Date(date).toISOString(),
     author: {
       '@type': 'Person',
+      '@id': `${BASE_SITE_URL}/#person`,
       name: config.author.name.replace(' @irreverentmike', ''),
       url: BASE_SITE_URL,
     },
     publisher: {
       '@type': 'Person',
+      '@id': `${BASE_SITE_URL}/#person`,
       name: config.author.name.replace(' @irreverentmike', ''),
       url: BASE_SITE_URL,
     },

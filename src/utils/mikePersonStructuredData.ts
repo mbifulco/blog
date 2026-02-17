@@ -4,7 +4,12 @@ import type { StructuredDataWithType } from './generateStructuredData';
 export const personStructuredData: StructuredDataWithType = {
   '@context': 'https://schema.org',
   '@type': 'Person',
+  '@id': `${BASE_SITE_URL}/#person`,
   name: config.author.name.replace(' @irreverentmike', ''),
+  mainEntityOfPage: {
+    '@type': 'WebPage',
+    '@id': `${BASE_SITE_URL}/about`,
+  },
   brand: [
     {
       '@type': 'Brand',
@@ -27,6 +32,9 @@ export const personStructuredData: StructuredDataWithType = {
   sameAs: [
     `https://twitter.com/${config.social.twitter}`,
     `https://github.com/${config.social.github}`,
+    'https://bsky.app/profile/mikebifulco.com',
+    'https://threads.net/@irreverentmike',
+    'https://hachyderm.io/@irreverentmike',
     'https://www.linkedin.com/in/mbifulco',
     'https://www.youtube.com/@mikebifulco',
     'https://apisyouwonthate.com',
