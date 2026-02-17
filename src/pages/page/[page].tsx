@@ -53,9 +53,6 @@ export async function getStaticProps({
   const allItems = buildUnifiedFeed(allPosts, allNewsletters);
   const totalPages = getTotalFeedPages(allItems.length);
 
-  if (page === 1) {
-    return { redirect: { destination: '/', permanent: false } };
-  }
   if (page > totalPages) {
     return { redirect: { destination: '/', permanent: false } };
   }
