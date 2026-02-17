@@ -6,6 +6,9 @@ import {
   buildUnifiedFeed,
   getImagePublicId,
   getItemPath,
+  getTotalFeedPages,
+  HOME_PAGE_LIMIT,
+  PAGE_LIMIT,
 } from './unified-feed';
 
 const makePost = (overrides: Partial<BlogPost['frontmatter']> & { slug?: string } = {}) => {
@@ -169,6 +172,23 @@ describe('getItemPath', () => {
     expect(
       getItemPath({ type: 'newsletter', slug: 'my-nl', title: '', excerpt: '', date: '', tags: [], coverImagePublicId: null })
     ).toBe('/newsletter/my-nl');
+  });
+});
+
+describe('getTotalFeedPages', () => {
+  it('should return 1 when items fit on home page', () => {
+    expect(getTotalFeedPages(0)).toBe(1);
+    expect(getTotalFeedPages(5)).toBe(1);
+    expect(getTotalFeedPages(HOME_PAGE_LIMIT)).toBe(1);
+  });
+
+  it('should return 2 when items spill to one extra page', () => {
+    expect(getTotalFeedPages(HOME_PAGE_LIMIT + 1)).toBe(2);
+    expect(getTotalFeedPages(HOME_PAGE_LIMIT + PAGE_LIMIT)).toBe(2);
+  });
+
+  it('should return 3 when items fill two extra pages', () => {
+    expect(getTotalFeedPages(HOME_PAGE_LIMIT + PAGE_LIMIT + 1)).toBe(3);
   });
 });
 

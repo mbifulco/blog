@@ -52,6 +52,18 @@ export const getImagePublicId = (item: UnifiedFeedItem) =>
     ? `newsletters/${item.slug}/cover`
     : `posts/${item.slug}/cover`);
 
+/** Page 1 shows 11 items in a tiered layout (1 featured + 4 medium + 6 compact) */
+export const HOME_PAGE_LIMIT = 11;
+
+/** Subsequent pages show 12 items in a uniform 3-column grid (4 full rows) */
+export const PAGE_LIMIT = 12;
+
+/** Calculate total pages accounting for asymmetric page sizes */
+export const getTotalFeedPages = (totalItems: number): number => {
+  if (totalItems <= HOME_PAGE_LIMIT) return 1;
+  return 1 + Math.ceil((totalItems - HOME_PAGE_LIMIT) / PAGE_LIMIT);
+};
+
 export const getPaginatedUnifiedFeed = (
   posts: BlogPost[],
   newsletters: Newsletter[],

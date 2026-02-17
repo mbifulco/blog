@@ -16,7 +16,11 @@ import { getAllNewsletters } from '@lib/newsletters';
 import { getAllTopics } from '@lib/topics';
 import type { TopicDefinition } from '@lib/topics';
 import type { UnifiedFeedItem } from '@lib/unified-feed';
-import { getPaginatedUnifiedFeed } from '@lib/unified-feed';
+import {
+  buildUnifiedFeed,
+  getTotalFeedPages,
+  HOME_PAGE_LIMIT,
+} from '@lib/unified-feed';
 import { generateFeedItemListStructuredData } from '@utils/generateStructuredData';
 import { getCloudinaryImageUrl } from '@utils/images';
 import { personStructuredData } from '@utils/mikePersonStructuredData';
@@ -29,21 +33,21 @@ export async function getStaticProps() {
   // Fix: pass ALL posts to RSS feed, not just paginated subset
   generateRSSFeed(allPosts, allNewsletters);
 
-  const paginatedFeed = getPaginatedUnifiedFeed(allPosts, allNewsletters, {
-    limit: 10,
-  });
+  const allItems = buildUnifiedFeed(allPosts, allNewsletters);
+  const feedItems = allItems.slice(0, HOME_PAGE_LIMIT);
+  const totalPages = getTotalFeedPages(allItems.length);
 
   const topics = getAllTopics();
 
   return {
     props: {
-      feedItems: paginatedFeed.items,
+      feedItems,
       topics,
       pagination: {
-        currentPage: paginatedFeed.currentPage,
-        totalPages: paginatedFeed.totalPages,
-        hasNextPage: paginatedFeed.hasNextPage,
-        hasPreviousPage: paginatedFeed.hasPreviousPage,
+        currentPage: 1,
+        totalPages,
+        hasNextPage: totalPages > 1,
+        hasPreviousPage: false,
       },
     },
   };

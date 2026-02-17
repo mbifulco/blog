@@ -251,3 +251,6 @@ $RECYCLE.BIN/
 
 # tsc
 tsconfig.tsbuildinfo
+
+
+.claude
