@@ -100,7 +100,7 @@ const PaginatedPage: NextPage<PaginatedPageProps> = ({
   return (
     <div className="mx-auto mb-10 flex max-w-4xl flex-col gap-12 px-4">
       <SEO
-        title={`Page ${pagination.currentPage} | Mike Bifulco`}
+        title={`Articles - Page ${pagination.currentPage}`}
         description={`Page ${pagination.currentPage} of articles on React, design, and startup building from Mike Bifulco.`}
         image={headshotPublicUrl}
         pagination={{

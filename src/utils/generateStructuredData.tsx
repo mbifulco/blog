@@ -234,7 +234,7 @@ export const generateFeedItemListStructuredData = (
       url: `${BASE_SITE_URL}${getItemPath(item)}`,
       name: item.title,
     })),
-    ...(currentPage > 1 && { name: `Articles - Page ${currentPage}` }),
+    ...(currentPage > 1 ? { name: `Articles - Page ${currentPage}` } : {}),
   };
 };
 
