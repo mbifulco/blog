@@ -9,6 +9,8 @@ import { getItemPath, getImagePublicId } from '@lib/unified-feed';
 
 type UnifiedContentFeedProps = {
   items: UnifiedFeedItem[];
+  /** "tiered" = featured + 2x2 + CTA + 3-col (home page). "grid" = uniform grid (paginated pages). */
+  layout?: 'tiered' | 'grid';
 };
 
 const handleItemClick = (item: UnifiedFeedItem) => {
@@ -124,19 +126,15 @@ const CompactCard: React.FC<{ item: UnifiedFeedItem }> = ({ item }) => {
   );
 };
 
-const UnifiedContentFeed: React.FC<UnifiedContentFeedProps> = ({ items }) => {
-  if (!items || items.length === 0) return null;
-
+const TieredLayout: React.FC<{ items: UnifiedFeedItem[] }> = ({ items }) => {
   const featured = items[0];
   const gridItems = items.slice(1, 5);
   const remainingItems = items.slice(5);
 
   return (
     <div className="flex flex-col gap-12">
-      {/* Featured: most recent item, full width */}
       {featured && <FeaturedCard item={featured} />}
 
-      {/* 2x2 grid */}
       {gridItems.length > 0 && (
         <div className="grid gap-8 sm:grid-cols-2">
           {gridItems.map((item) => (
@@ -145,10 +143,8 @@ const UnifiedContentFeed: React.FC<UnifiedContentFeedProps> = ({ items }) => {
         </div>
       )}
 
-      {/* Newsletter CTA between sections */}
       {remainingItems.length > 0 && <NewsletterSignup />}
 
-      {/* 3-column grid */}
       {remainingItems.length > 0 && (
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {remainingItems.map((item) => (
@@ -157,6 +153,27 @@ const UnifiedContentFeed: React.FC<UnifiedContentFeedProps> = ({ items }) => {
         </div>
       )}
     </div>
+  );
+};
+
+const GridLayout: React.FC<{ items: UnifiedFeedItem[] }> = ({ items }) => (
+  <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+    {items.map((item) => (
+      <MediumCard key={`${item.type}-${item.slug}`} item={item} />
+    ))}
+  </div>
+);
+
+const UnifiedContentFeed: React.FC<UnifiedContentFeedProps> = ({
+  items,
+  layout = 'tiered',
+}) => {
+  if (!items || items.length === 0) return null;
+
+  return layout === 'grid' ? (
+    <GridLayout items={items} />
+  ) : (
+    <TieredLayout items={items} />
   );
 };
 

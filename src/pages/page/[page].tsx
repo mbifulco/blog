@@ -2,7 +2,6 @@ import type { NextPage } from 'next';
 import { startOfToday } from 'date-fns';
 
 import { Colophon } from '@components/Colophon';
-import { HomeHero } from '@components/HomeHero';
 import PaginationWrapper from '@components/Pagination';
 import SEO from '@components/seo';
 import StructuredData from '@components/StructuredData/StructuredData';
@@ -15,22 +14,25 @@ import { getAllNewsletters } from '@lib/newsletters';
 import { getAllTopics } from '@lib/topics';
 import type { TopicDefinition } from '@lib/topics';
 import type { UnifiedFeedItem } from '@lib/unified-feed';
-import { getPaginatedUnifiedFeed } from '@lib/unified-feed';
+import {
+  buildUnifiedFeed,
+  getTotalFeedPages,
+  HOME_PAGE_LIMIT,
+  PAGE_LIMIT,
+} from '@lib/unified-feed';
 import { generateFeedItemListStructuredData } from '@utils/generateStructuredData';
 import { getCloudinaryImageUrl } from '@utils/images';
-import {
-  generatePaginatedPaths,
-  handlePaginatedStaticProps,
-} from '@utils/pagination';
 
 export async function getStaticPaths() {
-  const getTotalPages = async (limit: number) => {
-    const allPosts = await getAllPosts();
-    const allNewsletters = await getAllNewsletters();
-    const totalItems = allPosts.length + allNewsletters.length;
-    return { totalPages: Math.ceil(totalItems / limit) };
-  };
-  const paths = await generatePaginatedPaths(getTotalPages, 10);
+  const allPosts = await getAllPosts();
+  const allNewsletters = await getAllNewsletters();
+  const totalItems = allPosts.length + allNewsletters.length;
+  const totalPages = getTotalFeedPages(totalItems);
+
+  const paths = [];
+  for (let i = 2; i <= totalPages; i++) {
+    paths.push({ params: { page: i.toString() } });
+  }
   return { paths, fallback: false };
 }
 
@@ -39,51 +41,41 @@ export async function getStaticProps({
 }: {
   params: { page: string };
 }) {
+  const pageParam = params?.page;
+  const page = parseInt(pageParam, 10);
+
+  if (isNaN(page) || page < 2 || !pageParam.match(/^\d+$/)) {
+    return { notFound: true };
+  }
+
   const allPosts = await getAllPosts();
   const allNewsletters = await getAllNewsletters();
+  const allItems = buildUnifiedFeed(allPosts, allNewsletters);
+  const totalPages = getTotalFeedPages(allItems.length);
 
-  const getTotalPages = async (limit: number) => {
-    const totalItems = allPosts.length + allNewsletters.length;
-    return { totalPages: Math.ceil(totalItems / limit) };
-  };
+  if (page === 1) {
+    return { redirect: { destination: '/', permanent: false } };
+  }
+  if (page > totalPages) {
+    return { redirect: { destination: '/', permanent: false } };
+  }
 
-  return handlePaginatedStaticProps<{
-    feedItems: UnifiedFeedItem[];
-    topics: TopicDefinition[];
-    pagination: {
-      currentPage: number;
-      totalPages: number;
-      hasNextPage: boolean;
-      hasPreviousPage: boolean;
-    };
-  }>({
-    params,
-    getTotalPages,
-    limit: 10,
-    redirectBase: '/',
-    getPageProps: async (page) => {
-      const paginatedFeed = getPaginatedUnifiedFeed(
-        allPosts,
-        allNewsletters,
-        { page, limit: 10 }
-      );
+  const offset = HOME_PAGE_LIMIT + (page - 2) * PAGE_LIMIT;
+  const feedItems = allItems.slice(offset, offset + PAGE_LIMIT);
+  const topics = getAllTopics();
 
-      const topics = getAllTopics();
-
-      return {
-        props: {
-          feedItems: paginatedFeed.items,
-          topics,
-          pagination: {
-            currentPage: paginatedFeed.currentPage,
-            totalPages: paginatedFeed.totalPages,
-            hasNextPage: paginatedFeed.hasNextPage,
-            hasPreviousPage: paginatedFeed.hasPreviousPage,
-          },
-        },
-      };
+  return {
+    props: {
+      feedItems,
+      topics,
+      pagination: {
+        currentPage: page,
+        totalPages,
+        hasNextPage: page < totalPages,
+        hasPreviousPage: true,
+      },
     },
-  });
+  };
 }
 
 const headshotPublicId = 'mike-headshot-square';
@@ -124,20 +116,15 @@ const PaginatedPage: NextPage<PaginatedPageProps> = ({
         )}
       />
 
-      <HomeHero />
-
-      {/* Unified content feed */}
       <div>
         <Subtitle>ARTICLES</Subtitle>
         <div className="mt-4">
-          <UnifiedContentFeed items={feedItems} />
+          <UnifiedContentFeed items={feedItems} layout="grid" />
         </div>
       </div>
 
-      {/* Topic discovery */}
       <TopicLinks topics={topics} />
 
-      {/* Pagination */}
       <PaginationWrapper
         currentPage={pagination.currentPage}
         totalPages={pagination.totalPages}
