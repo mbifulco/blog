@@ -2,6 +2,7 @@ import type {
   BlogPosting,
   CollectionPage,
   CreativeWorkSeries,
+  ItemList,
   Organization,
   Person,
   Thing,
@@ -13,6 +14,8 @@ import type {
 import type { BlogPost, Newsletter } from '@data/content-types';
 import type { Series } from '@lib/series';
 import type { Topic } from '@lib/topics';
+import type { UnifiedFeedItem } from '@lib/unified-feed';
+import { getItemPath } from '@lib/unified-feed';
 import config, { BASE_SITE_URL } from '@/config';
 
 const PUBLISHER_DATA: Organization = {
@@ -47,6 +50,7 @@ const getImageUrl = (post: BlogPost | Newsletter): string => {
 
 const AUTHOR_DATA: Person = {
   '@type': 'Person',
+  '@id': `${BASE_SITE_URL}/#person`,
   name: config.author.name.replace(' @irreverentmike', ''),
   brand: [config.newsletter.title.replace('💌 ', ''), config.employer.name],
   email: config.author.email,
@@ -56,8 +60,9 @@ const AUTHOR_DATA: Person = {
   sameAs: [
     `https://twitter.com/${config.social.twitter}`,
     `https://github.com/${config.social.github}`,
-    'https://bsky.com/profile/mikebifulco.com',
+    'https://bsky.app/profile/mikebifulco.com',
     'https://threads.net/@irreverentmike',
+    'https://hachyderm.io/@irreverentmike',
     'https://www.linkedin.com/in/mbifulco',
     'https://youtube.com/@mikebifulco',
   ],
@@ -189,6 +194,7 @@ export const generateWebSiteStructuredData = (): WithContext<WebSite> => {
   return {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
+    '@id': `${BASE_SITE_URL}/#website`,
     name: config.title,
     alternateName: 'mikebifulco.com',
     url: BASE_SITE_URL,
@@ -208,6 +214,28 @@ export const generateSiteStructuredData = (): StructuredDataWithType[] => {
     generateOrganizationStructuredData() as StructuredDataWithType,
     generateWebSiteStructuredData() as StructuredDataWithType,
   ];
+};
+
+/**
+ * Generate ItemList structured data for the unified content feed
+ * Helps search engines understand the list of articles on home/paginated pages
+ */
+export const generateFeedItemListStructuredData = (
+  items: UnifiedFeedItem[],
+  currentPage: number
+): WithContext<ItemList> => {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    numberOfItems: items.length,
+    itemListElement: items.map((item, index) => ({
+      '@type': 'ListItem' as const,
+      position: index + 1,
+      url: `${BASE_SITE_URL}${getItemPath(item)}`,
+      name: item.title,
+    })),
+    ...(currentPage > 1 && { name: `Articles - Page ${currentPage}` }),
+  };
 };
 
 /**
