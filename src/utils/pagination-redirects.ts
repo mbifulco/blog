@@ -22,7 +22,7 @@ export const PAGINATION_ROUTES: PaginationRoute[] = [
 /**
  * Generates Next.js config redirects for pagination routes
  */
-export function generatePaginationConfigRedirects() {
+function generatePaginationConfigRedirects() {
   return PAGINATION_ROUTES.map(({ basePath, paginationPath }) => ({
     source: paginationPath,
     destination: basePath,
@@ -71,7 +71,7 @@ export function handlePaginationRedirects(
 /**
  * Generates middleware matcher patterns for pagination routes
  */
-export function generatePaginationMatchers(): string[] {
+function generatePaginationMatchers(): string[] {
   return PAGINATION_ROUTES.map(
     ({ paginationPath }) => `${paginationPath}/:path*`
   );
@@ -80,7 +80,7 @@ export function generatePaginationMatchers(): string[] {
 /**
  * Generates server-side redirect props for page-level redirects
  */
-export function createPaginationRedirectProps(basePath: string) {
+function createPaginationRedirectProps(basePath: string) {
   return {
     redirect: {
       destination: basePath,

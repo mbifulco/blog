@@ -16,6 +16,9 @@
   ],
   "ignoreBinaries": ["eslint-config-prettier-check"],
   "ignoreExportsUsedInFile": true,
+  "rules": {
+    "duplicates": "off"
+  },
   "paths": {
     "@components/*": ["src/components/*"],
     "@data/*": ["src/data/*"],

@@ -26,7 +26,7 @@ export const getAllPosts = async () => {
   return allPosts;
 };
 
-export const getPaginatedPosts = async (
+const getPaginatedPosts = async (
   options: PaginationOptions = {}
 ): Promise<PaginatedResult<BlogPost>> => {
   const allPosts = await getAllPosts();

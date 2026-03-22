@@ -39,4 +39,3 @@ export const CenteredTextDemo = ({
   );
 };
 
-export default CenteredTextDemo;

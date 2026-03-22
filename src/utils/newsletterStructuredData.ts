@@ -24,7 +24,7 @@ export const tinyImprovementsBlogStructuredData: StructuredDataWithType = {
   blogPost: [], // This will be populated dynamically
 };
 
-export const generateNewsletterBlogPostingStructuredData = (
+const generateNewsletterBlogPostingStructuredData = (
   newsletter: Newsletter
 ): StructuredDataWithType => {
   const { frontmatter } = newsletter;

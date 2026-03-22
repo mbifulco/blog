@@ -94,12 +94,6 @@ export type Article = MarkdownDocument & {
   } & BaseFrontmatter;
 };
 
-export type Tag = string;
-
-/**
- * Union type of all possible frontmatter shapes
- */
-export type ContentFrontmatter = NewsletterMetadata | Article['frontmatter'];
 
 export const ContentTypes = {
   Post: 'post',

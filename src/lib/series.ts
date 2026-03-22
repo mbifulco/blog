@@ -69,7 +69,7 @@ export const getAllSeries = async (): Promise<Series[]> => {
  * Check if a post is in a series by checking is the full string series name of a post
  * matches the slugified series name seen in URLs
  */
-export const isInSpecificSeries = (
+const isInSpecificSeries = (
   post: BlogPost | Newsletter,
   seriesName: string
 ) => {

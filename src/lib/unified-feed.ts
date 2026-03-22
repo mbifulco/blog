@@ -64,7 +64,7 @@ export const getTotalFeedPages = (totalItems: number): number => {
   return 1 + Math.ceil((totalItems - HOME_PAGE_LIMIT) / PAGE_LIMIT);
 };
 
-export const getPaginatedUnifiedFeed = (
+const getPaginatedUnifiedFeed = (
   posts: BlogPost[],
   newsletters: Newsletter[],
   options: PaginationOptions = {}

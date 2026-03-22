@@ -105,7 +105,7 @@ export async function getRelatedContent({
  * Synchronous version for use with pre-fetched content
  * Useful when you already have all posts/newsletters loaded
  */
-export function findRelatedContent(
+function findRelatedContent(
   currentSlug: string,
   currentTags: string[],
   allPosts: BlogPost[],
