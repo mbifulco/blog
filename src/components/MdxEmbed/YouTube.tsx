@@ -14,7 +14,7 @@ type YouTubeProps = {
   noCookie?: boolean;
 };
 
-export const YouTube: React.FC<YouTubeProps> = ({
+const YouTube: React.FC<YouTubeProps> = ({
   youTubeId,
   youTubePlaylistId,
   aspectRatio = '16:9',

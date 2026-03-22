@@ -44,13 +44,3 @@ export const createScriptTag = (
 
   document.getElementsByTagName(`head`)[0].appendChild(script);
 };
-
-export const createStyleSheet = (href: string) => {
-  const link = document.createElement(`link`);
-
-  link.type = `text/css`;
-  link.rel = `stylesheet`;
-  link.href = href;
-
-  document.getElementsByTagName(`head`)[0].appendChild(link);
-};

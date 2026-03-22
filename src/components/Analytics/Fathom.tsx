@@ -34,7 +34,7 @@ const FathomPagesRouter = ({ siteId }: { siteId: string }) => {
   return null;
 };
 
-export const TrackPageView = ({ siteId }: { siteId: string }) => {
+const TrackPageView = ({ siteId }: { siteId: string }) => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
@@ -73,7 +73,7 @@ const FathomAppRouter = ({ siteId }: { siteId: string }) => {
 type FathomAnalyticsProps = {
   siteId: string;
 };
-export const FathomAnalytics = ({ siteId }: FathomAnalyticsProps) => {
+const FathomAnalytics = ({ siteId }: FathomAnalyticsProps) => {
   const routerType = useRouterType();
   if (routerType === 'pages') {
     return <FathomPagesRouter siteId={siteId} />;
