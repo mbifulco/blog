@@ -60,7 +60,7 @@ const config = {
   siteUrl: BASE_SITE_URL,
 };
 
-const ContentDefinitions = {
+const _ContentDefinitions = {
   [ContentTypes.Post]: {
     directory: 'src/data/posts',
     contentType: ContentTypes.Post,

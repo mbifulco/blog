@@ -69,20 +69,6 @@ export const getAllSeries = async (): Promise<Series[]> => {
  * Check if a post is in a series by checking is the full string series name of a post
  * matches the slugified series name seen in URLs
  */
-const isInSpecificSeries = (
-  post: BlogPost | Newsletter,
-  seriesName: string
-) => {
-  if (
-    post.frontmatter.series === undefined ||
-    post.frontmatter.series === null ||
-    post.frontmatter.series === ''
-  ) {
-    return false;
-  }
-
-  return getSlugForSeries(post.frontmatter.series) === seriesName;
-};
 
 export type Series = {
   name: string;

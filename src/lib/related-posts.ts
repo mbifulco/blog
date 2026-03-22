@@ -1,7 +1,8 @@
 import { getAllPosts } from './blog';
 import { getAllNewsletters } from './newsletters';
 
-import { findRelatedContent, type RelatedContent } from './related-posts-core';
+import type { RelatedContent } from './related-posts-core';
+import { findRelatedContent } from './related-posts-core';
 export type { RelatedContent };
 export { findRelatedContent };
 
