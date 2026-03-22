@@ -1,6 +1,4 @@
 import type { BlogPost, Newsletter } from '@data/content-types';
-import type { PaginatedResult, PaginationOptions } from '@utils/pagination';
-import { paginate } from '@utils/pagination';
 
 export type UnifiedFeedItem = {
   type: 'post' | 'newsletter';
@@ -64,11 +62,3 @@ export const getTotalFeedPages = (totalItems: number): number => {
   return 1 + Math.ceil((totalItems - HOME_PAGE_LIMIT) / PAGE_LIMIT);
 };
 
-export const getPaginatedUnifiedFeed = (
-  posts: BlogPost[],
-  newsletters: Newsletter[],
-  options: PaginationOptions = {}
-): PaginatedResult<UnifiedFeedItem> => {
-  const allItems = buildUnifiedFeed(posts, newsletters);
-  return paginate(allItems, options);
-};

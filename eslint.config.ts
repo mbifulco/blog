@@ -1,5 +1,3 @@
-// @ts-check
-
 import eslint from '@eslint/js';
 import nextPlugin from '@next/eslint-plugin-next';
 import tsParser from '@typescript-eslint/parser';
@@ -23,6 +21,7 @@ export default [
       '**/*.config.js',
       '**/*.config.cjs',
       '**/*.config.mjs',
+      '**/*.config.ts',
       '.next',
       'dist',
       'pnpm-lock.yaml',
@@ -34,7 +33,7 @@ export default [
       '@next/next': nextPlugin,
       'unused-imports': unusedImports,
       'react-compiler': reactCompiler,
-      'import': importPlugin,
+      import: importPlugin,
       'jsx-a11y': jsxA11y,
     },
     languageOptions: {
@@ -51,7 +50,6 @@ export default [
       ...nextPlugin.configs['core-web-vitals'].rules,
 
       // Custom rules
-      'react/prop-types': 'off',
       '@typescript-eslint/no-unused-vars': [
         'error',
         { argsIgnorePattern: '^_', varsIgnorePattern: '^_' },

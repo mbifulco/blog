@@ -51,6 +51,6 @@ jobs:
         run: pnpm lint
 
       - name: Check dependencies
-        run: pnpm depcheck
+        run: pnpm knip
 
 

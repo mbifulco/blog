@@ -57,4 +57,3 @@ export const serialize = async (content: string) => {
   return mdxSource;
 };
 
-export default serialize;

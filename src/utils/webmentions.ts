@@ -24,7 +24,7 @@ export type WebMention = {
   target: string;
 };
 
-export const getMentions = async (slug: string) => {
+const getMentions = async (slug: string) => {
   const resp = await fetch(
     `https://webmention.io/api/mentions.json?target=https://mikebifulco.com${slug}`
   );

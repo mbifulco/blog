@@ -108,6 +108,7 @@ const DialogDescription = React.forwardRef<
 ));
 DialogDescription.displayName = DialogPrimitive.Description.displayName;
 
+/** @public */
 export {
   Dialog,
   DialogPortal,

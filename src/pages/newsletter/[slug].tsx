@@ -10,8 +10,8 @@ import StructuredData from '@components/StructuredData/StructuredData';
 import WebmentionMetadata from '@components/webmentionMetadata';
 import type { Newsletter } from '@data/content-types';
 import { getAllNewsletters, getNewsletterBySlug } from '@lib/newsletters';
-import type { RelatedContent } from '@lib/related-posts';
-import { getRelatedContent } from '@lib/related-posts';
+import type { RelatedContent, RelatedPostsManifest } from '@lib/related-posts';
+import relatedPostsData from '@data/generated/relatedPosts.json';
 import { getSeries } from '@lib/series';
 import type { Series } from '@lib/series';
 import { getCloudinaryImageUrl } from '@utils/images';
@@ -38,12 +38,7 @@ export const getStaticProps: GetStaticProps<
     ? await getSeries(newsletter.frontmatter.series)
     : undefined;
 
-  const relatedContent = await getRelatedContent({
-    currentSlug: params.slug,
-    currentTags: newsletter.frontmatter.tags || [],
-    limit: 3,
-    includeNewsletters: true,
-  });
+  const relatedContent = (relatedPostsData as RelatedPostsManifest).relatedContent[params.slug] ?? [];
 
   return {
     props: {

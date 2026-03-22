@@ -68,23 +68,3 @@ export function handlePaginationRedirects(
   return null;
 }
 
-/**
- * Generates middleware matcher patterns for pagination routes
- */
-export function generatePaginationMatchers(): string[] {
-  return PAGINATION_ROUTES.map(
-    ({ paginationPath }) => `${paginationPath}/:path*`
-  );
-}
-
-/**
- * Generates server-side redirect props for page-level redirects
- */
-export function createPaginationRedirectProps(basePath: string) {
-  return {
-    redirect: {
-      destination: basePath,
-      permanent: false,
-    },
-  };
-}

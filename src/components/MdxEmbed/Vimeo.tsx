@@ -11,7 +11,7 @@ type VimeoProps = {
   };
 };
 
-export const Vimeo: React.FC<VimeoProps> = ({
+const Vimeo: React.FC<VimeoProps> = ({
   vimeoId,
   autoPlay = false,
   skipTo = { h: 0, m: 0, s: 0 },

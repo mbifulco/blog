@@ -15,7 +15,7 @@ const twttrLoad = () => {
   }
 };
 
-export const handleTwttrLoad = () => {
+const handleTwttrLoad = () => {
   if (!window.twttr) {
     createScriptTag(null, twttrEmbedScript);
     return {
@@ -36,7 +36,7 @@ type TweetProps = {
   hideConversation?: boolean;
 };
 
-export const Tweet: React.FC<TweetProps> = ({
+const Tweet: React.FC<TweetProps> = ({
   tweetLink,
   theme = 'light',
   align = 'left',
