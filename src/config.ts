@@ -1,5 +1,3 @@
-import { ContentTypes } from '@data/content-types';
-
 export const BASE_SITE_URL = 'https://mikebifulco.com';
 
 const config = {
