@@ -1,0 +1,30 @@
+{
+  "$schema": "https://unpkg.com/knip@6/schema.json",
+  "entry": [
+    "src/pages/**/*.{ts,tsx}",
+    "src/app/**/*.{ts,tsx}",
+    "src/utils/email/templates/**/*.tsx",
+    "scripts/**/*.ts",
+    "tailwind.config.{js,ts}",
+    "postcss.config.{js,ts}"
+  ],
+  "project": ["src/**/*.{ts,tsx}", "scripts/**/*.ts"],
+  "ignoreDependencies": [
+    "sharp",
+    "@react-email/preview-server",
+    "eslint-config-prettier"
+  ],
+  "ignoreBinaries": ["eslint-config-prettier-check"],
+  "ignoreExportsUsedInFile": true,
+  "paths": {
+    "@components/*": ["src/components/*"],
+    "@data/*": ["src/data/*"],
+    "@hooks/*": ["src/hooks/*"],
+    "@layouts/*": ["src/components/layouts/*"],
+    "@lib/*": ["src/lib/*"],
+    "@utils/*": ["src/utils/*"],
+    "@server/*": ["src/server/*"],
+    "@/config": ["src/config.ts"],
+    "@ui/*": ["src/components/ui/*"]
+  }
+}
