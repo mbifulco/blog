@@ -60,7 +60,7 @@ const Thumb = (props: {
   );
 };
 
-export const Slider = (
+const Slider = (
   props: SliderStateOptions<number[]> & {
     onChangeStart?: () => void;
     label?: string;

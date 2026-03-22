@@ -16,7 +16,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
 
-import { findRelatedContent } from '../src/lib/related-posts-core';
+import { findRelatedContent } from '../src/lib/related-posts';
 import { loadContentFromDirectory } from '../src/lib/tags/loadContentFromDirectory';
 
 const OUTPUT_DIR = path.join(process.cwd(), 'src/data/generated');
@@ -64,9 +64,7 @@ async function main() {
     );
   }
 
-  if (!fs.existsSync(OUTPUT_DIR)) {
-    fs.mkdirSync(OUTPUT_DIR, { recursive: true });
-  }
+  fs.mkdirSync(OUTPUT_DIR, { recursive: true });
 
   fs.writeFileSync(
     OUTPUT_FILE,

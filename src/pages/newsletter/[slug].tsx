@@ -10,18 +10,13 @@ import StructuredData from '@components/StructuredData/StructuredData';
 import WebmentionMetadata from '@components/webmentionMetadata';
 import type { Newsletter } from '@data/content-types';
 import { getAllNewsletters, getNewsletterBySlug } from '@lib/newsletters';
-import type { RelatedContent } from '@lib/related-posts';
+import type { RelatedContent, RelatedPostsManifest } from '@lib/related-posts';
 import relatedPostsData from '@data/generated/relatedPosts.json';
 import { getSeries } from '@lib/series';
 import type { Series } from '@lib/series';
 import { getCloudinaryImageUrl } from '@utils/images';
 import { serialize } from '@utils/mdx';
 import { generatePostStructuredData } from '@utils/generateStructuredData';
-
-type RelatedPostsJson = {
-  generatedAt: string;
-  relatedContent: Record<string, RelatedContent[]>;
-};
 
 type NewsletterPageParams = {
   slug: string;
@@ -43,8 +38,7 @@ export const getStaticProps: GetStaticProps<
     ? await getSeries(newsletter.frontmatter.series)
     : undefined;
 
-  const data = relatedPostsData as RelatedPostsJson;
-  const relatedContent = data.relatedContent[params.slug] ?? [];
+  const relatedContent = (relatedPostsData as RelatedPostsManifest).relatedContent[params.slug] ?? [];
 
   return {
     props: {

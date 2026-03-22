@@ -5,7 +5,7 @@ import posthog from 'posthog-js';
 
 import { NewsletterSignup } from '@components/NewsletterSignup';
 import { RelatedPosts } from '@components/RelatedPosts';
-import type { RelatedContent } from '@lib/related-posts';
+import type { RelatedContent, RelatedPostsManifest } from '@lib/related-posts';
 import relatedPostsData from '@data/generated/relatedPosts.json';
 import { getSeries } from '@lib/series';
 import type { Series } from '@lib/series';
@@ -16,11 +16,6 @@ import WebmentionMetadata from '../../components/webmentionMetadata';
 import type { BlogPost } from '../../data/content-types';
 import { getAllPosts, getPostBySlug } from '../../lib/blog';
 import { getCloudinaryImageUrl } from '../../utils/images';
-
-type RelatedPostsJson = {
-  generatedAt: string;
-  relatedContent: Record<string, RelatedContent[]>;
-};
 
 type PostPageParams = {
   slug: string;
@@ -46,8 +41,7 @@ export const getStaticProps: GetStaticProps<
     ? await getSeries(post.frontmatter.series)
     : undefined;
 
-  const data = relatedPostsData as RelatedPostsJson;
-  const relatedContent = data.relatedContent[params.slug] ?? [];
+  const relatedContent = (relatedPostsData as RelatedPostsManifest).relatedContent[params.slug] ?? [];
 
   return {
     props: {
