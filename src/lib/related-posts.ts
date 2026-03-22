@@ -16,6 +16,34 @@ export type RelatedContent = {
   coverImagePublicId: string | null;
 };
 
+function scoreItems(
+  items: (BlogPost | Newsletter)[],
+  currentSlug: string,
+  currentTagsSet: Set<string>,
+  type: RelatedContent['type']
+): RelatedContent[] {
+  return items
+    .filter((item) => item.slug !== currentSlug)
+    .map((item) => {
+      const tags = item.frontmatter.tags || [];
+      const sharedTagCount = tags.filter((tag) =>
+        currentTagsSet.has(tag.toLowerCase())
+      ).length;
+
+      return {
+        type,
+        slug: item.slug,
+        title: item.frontmatter.title,
+        excerpt: item.frontmatter.excerpt || '',
+        date: item.frontmatter.date,
+        tags,
+        sharedTagCount,
+        coverImagePublicId: item.frontmatter.coverImagePublicId ?? null,
+      };
+    })
+    .filter((item) => item.sharedTagCount > 0);
+}
+
 export function findRelatedContent(
   currentSlug: string,
   currentTags: string[],
@@ -29,49 +57,10 @@ export function findRelatedContent(
 
   const currentTagsSet = new Set(currentTags.map((t) => t.toLowerCase()));
 
-  const scoredPosts: RelatedContent[] = allPosts
-    .filter((post) => post.slug !== currentSlug)
-    .map((post) => {
-      const postTags = post.frontmatter.tags || [];
-      const sharedTagCount = postTags.filter((tag) =>
-        currentTagsSet.has(tag.toLowerCase())
-      ).length;
-
-      return {
-        type: 'post' as const,
-        slug: post.slug,
-        title: post.frontmatter.title,
-        excerpt: post.frontmatter.excerpt || '',
-        date: post.frontmatter.date,
-        tags: postTags,
-        sharedTagCount,
-        coverImagePublicId: post.frontmatter.coverImagePublicId ?? null,
-      };
-    })
-    .filter((item) => item.sharedTagCount > 0);
-
-  const scoredNewsletters: RelatedContent[] = allNewsletters
-    .filter((newsletter) => newsletter.slug !== currentSlug)
-    .map((newsletter) => {
-      const newsletterTags = newsletter.frontmatter.tags || [];
-      const sharedTagCount = newsletterTags.filter((tag) =>
-        currentTagsSet.has(tag.toLowerCase())
-      ).length;
-
-      return {
-        type: 'newsletter' as const,
-        slug: newsletter.slug,
-        title: newsletter.frontmatter.title,
-        excerpt: newsletter.frontmatter.excerpt || '',
-        date: newsletter.frontmatter.date,
-        tags: newsletterTags,
-        sharedTagCount,
-        coverImagePublicId: newsletter.frontmatter.coverImagePublicId ?? null,
-      };
-    })
-    .filter((item) => item.sharedTagCount > 0);
-
-  return [...scoredPosts, ...scoredNewsletters]
+  return [
+    ...scoreItems(allPosts, currentSlug, currentTagsSet, 'post'),
+    ...scoreItems(allNewsletters, currentSlug, currentTagsSet, 'newsletter'),
+  ]
     .sort((a, b) => {
       if (b.sharedTagCount !== a.sharedTagCount) {
         return b.sharedTagCount - a.sharedTagCount;
