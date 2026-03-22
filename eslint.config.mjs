@@ -51,7 +51,6 @@ export default [
       ...nextPlugin.configs['core-web-vitals'].rules,
 
       // Custom rules
-      'react/prop-types': 'off',
       '@typescript-eslint/no-unused-vars': [
         'error',
         { argsIgnorePattern: '^_', varsIgnorePattern: '^_' },
