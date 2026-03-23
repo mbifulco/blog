@@ -10,9 +10,10 @@ import { spawn } from 'child_process';
 function runScript(script: string): Promise<void> {
   return new Promise((resolve, reject) => {
     const child = spawn('npx', ['tsx', script], { stdio: 'inherit' });
-    child.on('close', (code) => {
+    child.on('error', (err) => reject(err));
+    child.on('close', (code, signal) => {
       if (code === 0) resolve();
-      else reject(new Error(`${script} exited with code ${code}`));
+      else reject(new Error(`${script} exited with code ${code ?? `signal ${signal}`}`));
     });
   });
 }
