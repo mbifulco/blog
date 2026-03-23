@@ -107,12 +107,12 @@ const FullPost: React.FC<FullPostProps> = ({
           key={`structuredData-${structuredData['@type']}-${post.frontmatter.slug}`}
         />
       ))}
-      <article>
+      <article data-pagefind-filter={`type:${contentType}`}>
         <header className="mx-auto mb-4 flex flex-col gap-2">
           <div className="mx-auto mb-4 max-w-[75ch]">
             <Breadcrumbs crumbs={breadcrumbs} className="mb-4" />
             <TitleBadge post={post} />
-            <Heading as="h1" className="m-0 mt-2 p-0">
+            <Heading as="h1" className="m-0 mt-2 p-0" data-pagefind-meta="title">
               {title}
             </Heading>
             {series && (
@@ -135,7 +135,7 @@ const FullPost: React.FC<FullPostProps> = ({
 
         <div className="mx-auto flex w-fit flex-col gap-4">
           <main className="mx-auto flex flex-col-reverse content-center justify-center gap-4 md:flex md:flex-row lg:gap-8">
-            <article className="max-w-prose">
+            <article className="max-w-prose" data-pagefind-body>
               {series && (
                 <div className="mb-6">
                   <SeriesNavigation series={series} />
