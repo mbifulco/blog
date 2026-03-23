@@ -15,6 +15,7 @@
     "prebuild": "npx tsx scripts/prebuild.ts",
     "dev:prebuild": "pnpm run prebuild",
     "build": "next build",
+    "postbuild": "npx tsx scripts/postbuild.ts",
     "dev": "next dev --inspect",
     "knip": "knip",
     "email": "email dev --dir ./src/utils/email/templates",
