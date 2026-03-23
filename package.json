@@ -12,7 +12,7 @@
   "scripts": {
     "analyze": "ANALYZE=true next build",
     "analyze:new": "next experimental-analyze",
-    "prebuild": "npx tsx scripts/generate-top-tags.ts && npx tsx scripts/generate-related-posts.ts",
+    "prebuild": "npx tsx scripts/prebuild.ts",
     "dev:prebuild": "pnpm run prebuild",
     "build": "next build",
     "dev": "next dev --inspect",
