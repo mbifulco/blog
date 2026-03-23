@@ -254,3 +254,6 @@ tsconfig.tsbuildinfo
 
 
 .claude
+
+# Git worktrees
+.worktrees/
