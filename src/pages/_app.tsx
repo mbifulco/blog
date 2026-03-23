@@ -6,10 +6,14 @@ import { Toaster } from 'sonner';
 
 import FathomAnalytics from '@components/Analytics/Fathom';
 import DefaultLayout from '@components/Layouts/DefaultLayout';
+import NewsletterModal from '@components/NewsletterSignup/NewsletterModal';
+import { SearchModal } from '@components/Search/SearchModal';
+import { SearchProvider } from '@components/Search/SearchContext';
 import { StructuredData } from '@components/StructuredData';
 import { env } from '@utils/env';
 import { generateSiteStructuredData } from '@utils/generateStructuredData';
 import { trpcPages } from '@utils/trpc';
+import { NuqsAdapter } from 'nuqs/adapters/next/pages';
 
 import '../styles/globals.css';
 import '../components/CarbonAd/CarbonAd.css';
@@ -45,35 +49,38 @@ if (typeof window !== 'undefined') {
   }
 }
 
-import NewsletterModal from '@components/NewsletterSignup/NewsletterModal';
-
 // Generate site-wide structured data once
 const siteStructuredData = generateSiteStructuredData();
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <PostHogProvider client={posthog}>
-      <StructuredData structuredData={siteStructuredData} />
-      <div className={fontVariables}>
-        <DefaultLayout>
-          <FathomAnalytics siteId={env.NEXT_PUBLIC_FATHOM_ID} />
-          <Component {...pageProps} />
-          <Toaster
-            richColors
-            closeButton
-            position="top-right"
-            toastOptions={{
-              style: {
-                background: 'white',
-                border: '1px solid #e5e5e5',
-                color: '#333',
-              },
-            }}
-          />
-          <NewsletterModal />
-        </DefaultLayout>
-      </div>
-    </PostHogProvider>
+    <NuqsAdapter>
+      <SearchProvider>
+        <PostHogProvider client={posthog}>
+          <StructuredData structuredData={siteStructuredData} />
+          <div className={fontVariables}>
+            <DefaultLayout>
+              <FathomAnalytics siteId={env.NEXT_PUBLIC_FATHOM_ID} />
+              <Component {...pageProps} />
+              <Toaster
+                richColors
+                closeButton
+                position="top-right"
+                toastOptions={{
+                  style: {
+                    background: 'white',
+                    border: '1px solid #e5e5e5',
+                    color: '#333',
+                  },
+                }}
+              />
+              <NewsletterModal />
+              <SearchModal />
+            </DefaultLayout>
+          </div>
+        </PostHogProvider>
+      </SearchProvider>
+    </NuqsAdapter>
   );
 }
 
