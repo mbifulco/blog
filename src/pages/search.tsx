@@ -4,7 +4,8 @@ import { useQueryState } from 'nuqs';
 import SEO from '@components/seo';
 import { Badge } from '@components/Badge';
 import Link from '@components/Link';
-import { usePagefind, type PagefindResultData } from '@hooks/usePagefind';
+import { usePagefind } from '@hooks/usePagefind';
+import type {PagefindResultData} from '@hooks/usePagefind';
 
 const SearchResultCard = ({ result }: { result: PagefindResultData }) => (
   <article className="flex flex-col gap-2">
