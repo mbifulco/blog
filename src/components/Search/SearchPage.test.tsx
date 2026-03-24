@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
-import SearchPage from './search';
+import SearchPage from '../../pages/search';
 
 // nuqs requires the NuqsAdapter — use the test adapter in unit tests
 vi.mock('nuqs', () => ({
