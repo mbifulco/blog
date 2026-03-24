@@ -20,7 +20,7 @@ export function SearchModal() {
   const { open, setOpen } = useSearch();
   const { results, search } = usePagefind();
   const router = useRouter();
-  const debounceRef = useRef<ReturnType<typeof setTimeout>>(null);
+  const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // Register ⌘K / Ctrl+K keyboard shortcut
   useEffect(() => {
@@ -33,6 +33,12 @@ export function SearchModal() {
     document.addEventListener('keydown', handleKeyDown);
     return () => document.removeEventListener('keydown', handleKeyDown);
   }, [setOpen]);
+
+  useEffect(() => {
+    return () => {
+      if (debounceRef.current) clearTimeout(debounceRef.current);
+    };
+  }, []);
 
   const handleInput = (value: string) => {
     if (debounceRef.current) clearTimeout(debounceRef.current);

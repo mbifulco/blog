@@ -1,5 +1,6 @@
 import type { AppProps } from 'next/app';
 import localFont from 'next/font/local';
+import { NuqsAdapter } from 'nuqs/adapters/next/pages';
 import posthog from 'posthog-js';
 import { PostHogProvider } from 'posthog-js/react';
 import { Toaster } from 'sonner';
@@ -7,13 +8,12 @@ import { Toaster } from 'sonner';
 import FathomAnalytics from '@components/Analytics/Fathom';
 import DefaultLayout from '@components/Layouts/DefaultLayout';
 import NewsletterModal from '@components/NewsletterSignup/NewsletterModal';
-import { SearchModal } from '@components/Search/SearchModal';
 import { SearchProvider } from '@components/Search/SearchContext';
+import { SearchModal } from '@components/Search/SearchModal';
 import { StructuredData } from '@components/StructuredData';
 import { env } from '@utils/env';
 import { generateSiteStructuredData } from '@utils/generateStructuredData';
 import { trpcPages } from '@utils/trpc';
-import { NuqsAdapter } from 'nuqs/adapters/next/pages';
 
 import '../styles/globals.css';
 import '../components/CarbonAd/CarbonAd.css';

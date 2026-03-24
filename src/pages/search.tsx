@@ -32,7 +32,7 @@ const SearchPage = () => {
   const { results, isLoading, search } = usePagefind();
 
   useEffect(() => {
-    if (query) void search(query);
+    void search(query);
   }, [query, search]);
 
   return (
