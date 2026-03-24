@@ -51,7 +51,9 @@ export function usePagefind(): UsePagefindReturn {
     try {
       const { results: stubs } = await pagefindRef.current.search(query);
       const data = await Promise.all(stubs.map((r) => r.data()));
-      setResults(data);
+      // Pagefind derives URLs from .html filenames in .next/server/pages/.
+      // Strip the .html suffix so links resolve correctly in Next.js.
+      setResults(data.map((d) => ({ ...d, url: d.url.replace(/\.html$/, '') })));
     } finally {
       setIsLoading(false);
     }
