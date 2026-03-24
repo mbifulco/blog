@@ -46,7 +46,7 @@ export function SearchModal() {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent className="overflow-hidden p-0">
+      <DialogContent className="overflow-hidden p-0" aria-describedby={undefined}>
         {/* shouldFilter=false — pagefind handles all filtering */}
         <Command shouldFilter={false} className="[&_[cmdk-input-wrapper]]:border-b [&_[cmdk-input]]:h-12">
           <CommandInput
