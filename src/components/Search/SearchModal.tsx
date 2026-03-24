@@ -13,7 +13,6 @@ import {
   Dialog,
   DialogContent,
 } from '@components/ui/dialog';
-import { Badge } from '@components/Badge';
 import { usePagefind } from '@hooks/usePagefind';
 import { useSearch } from './SearchContext';
 
@@ -65,14 +64,7 @@ export function SearchModal() {
                     onSelect={() => handleSelect(result.url)}
                     className="flex flex-col items-start gap-1 py-3"
                   >
-                    <div className="flex items-center gap-2">
-                      <Badge>
-                        {result.filters.type?.[0] === 'newsletter'
-                          ? '💌 Newsletter'
-                          : 'Article'}
-                      </Badge>
-                      <span className="font-medium">{result.meta.title}</span>
-                    </div>
+                    <span className="font-medium">{result.meta.title}</span>
                     {/* excerpt contains <mark> HTML from pagefind highlighting */}
                     <span
                       className="line-clamp-2 text-sm text-gray-500"
