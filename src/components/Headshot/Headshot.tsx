@@ -14,7 +14,6 @@ const Headshot: React.FC<{
     alt="Mike Bifulco headshot"
     className={clsxm(`headshot ${className}`)}
     priority={priority}
-    quality={90}
   />
 );
 

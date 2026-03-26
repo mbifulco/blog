@@ -7,7 +7,7 @@ import {
   DisclosureButton,
   DisclosurePanel,
 } from '@headlessui/react';
-import { Menu, X } from 'lucide-react';
+import { Menu, Search, X } from 'lucide-react';
 
 import {
   NavigationMenu,
@@ -24,6 +24,7 @@ import {
   TooltipTrigger,
 } from '@components/ui/tooltip';
 import clsxm from '@utils/clsxm';
+import { useSearch } from '@components/Search/SearchContext';
 
 const topics = [
   {
@@ -68,6 +69,7 @@ const browseLinks = [
 
 const Navbar = () => {
   const router = useRouter();
+  const { setOpen } = useSearch();
 
   return (
     <Disclosure as="nav" className="w-full bg-white">
@@ -189,6 +191,25 @@ const Navbar = () => {
                       </Link>
                     </NavigationMenuItem>
 
+                    {/* Search trigger */}
+                    <NavigationMenuItem>
+                      <button
+                        onClick={() => setOpen(true)}
+                        className={clsxm(
+                          'group inline-flex h-9 w-max items-center justify-center gap-1.5 rounded-md',
+                          'bg-transparent px-4 py-2 text-sm font-semibold uppercase text-gray-700',
+                          'transition-colors hover:bg-gray-100'
+                        )}
+                        aria-label="Search"
+                      >
+                        <Search className="h-4 w-4" />
+                        <span className="hidden lg:inline">Search</span>
+                        <kbd className="hidden rounded border border-gray-200 bg-gray-100 px-1 py-0.5 text-xs text-gray-500 lg:inline">
+                          ⌘K
+                        </kbd>
+                      </button>
+                    </NavigationMenuItem>
+
                     {/* Newsletter CTA */}
                     <NavigationMenuItem>
                       <TooltipProvider delayDuration={200}>
@@ -233,6 +254,17 @@ const Navbar = () => {
           {/* Mobile Navigation */}
           <DisclosurePanel className="sm:hidden">
             <div className="space-y-1 pb-3 pt-2">
+              {/* Search trigger */}
+              <div className="border-b border-gray-200 pb-2">
+                <button
+                  onClick={() => setOpen(true)}
+                  className="flex w-full items-center gap-2 px-3 py-2 text-base font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+                >
+                  <Search className="h-4 w-4" />
+                  Search
+                </button>
+              </div>
+
               {/* Topics Section */}
               <div className="border-b border-gray-200 pb-2">
                 <p className="px-3 py-1 text-xs font-semibold uppercase tracking-wider text-gray-500">
