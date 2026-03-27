@@ -1,4 +1,5 @@
-import { createContext, useContext, useState, type Dispatch, type SetStateAction } from 'react';
+import { createContext, useContext, useState } from "react";
+import type { Dispatch, SetStateAction } from 'react';
 
 type SearchContextValue = {
   open: boolean;
