@@ -256,13 +256,14 @@ const Navbar = () => {
             <div className="space-y-1 pb-3 pt-2">
               {/* Search trigger */}
               <div className="border-b border-gray-200 pb-2">
-                <button
+                <DisclosureButton
+                  as="button"
                   onClick={() => setOpen(true)}
                   className="flex w-full items-center gap-2 px-3 py-2 text-base font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900"
                 >
                   <Search className="h-4 w-4" />
                   Search
-                </button>
+                </DisclosureButton>
               </div>
 
               {/* Topics Section */}

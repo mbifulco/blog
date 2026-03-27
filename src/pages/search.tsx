@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useQueryState } from 'nuqs';
 
 import SEO from '@components/seo';
@@ -11,7 +11,7 @@ const SearchResultCard = ({ result }: { result: PagefindResultData }) => (
   <article className="flex flex-col gap-2">
     <div className="flex items-center gap-2">
       <Badge>
-        {result.filters.type?.[0] === 'newsletter' ? '💌 Newsletter' : 'Article'}
+        {result.filters.type?.[0] === 'newsletter' ? 'Newsletter' : 'Article'}
       </Badge>
     </div>
     <h2 className="text-xl font-semibold">
@@ -30,14 +30,19 @@ const SearchResultCard = ({ result }: { result: PagefindResultData }) => (
 const SearchPage = () => {
   const [query, setQuery] = useQueryState('q', { defaultValue: '' });
   const { results, isLoading, search } = usePagefind();
+  const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
-    void search(query);
+    if (debounceRef.current) clearTimeout(debounceRef.current);
+    debounceRef.current = setTimeout(() => void search(query), 150);
+    return () => {
+      if (debounceRef.current) clearTimeout(debounceRef.current);
+    };
   }, [query, search]);
 
   return (
     <>
-      <SEO title="Search" />
+      <SEO title="Search" meta={[{ name: 'robots', content: 'noindex' }]} />
       <div className="mx-auto max-w-3xl px-4 py-12">
         <h1 className="mb-6 text-3xl font-bold text-gray-900">Search</h1>
 

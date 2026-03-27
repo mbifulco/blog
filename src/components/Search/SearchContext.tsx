@@ -1,8 +1,9 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useState } from "react";
+import type { Dispatch, SetStateAction } from 'react';
 
 type SearchContextValue = {
   open: boolean;
-  setOpen: (open: boolean) => void;
+  setOpen: Dispatch<SetStateAction<boolean>>;
 };
 
 const SearchContext = createContext<SearchContextValue>({
