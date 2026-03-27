@@ -50,21 +50,28 @@ export function usePagefind(): UsePagefindReturn {
   }, []);
 
   const search = useCallback(async (query: string) => {
+    // Increment the global counter and capture the value for this invocation.
+    // Every call — including empty/clear calls — bumps the counter so that any
+    // previously in-flight request becomes "stale" and will bail out when it
+    // checks its own requestId below.
+    const requestId = ++requestIdRef.current;
+
     if (!pagefindRef.current || !query.trim()) {
       setResults([]);
       setLastCompletedQuery('');
       return;
     }
-
-    const requestId = ++requestIdRef.current;
     setIsLoading(true);
     try {
       const { results: stubs } = await pagefindRef.current.search(query);
+      // If a newer search has started since this one was issued, discard results.
       if (requestId !== requestIdRef.current) return;
 
       console.log('[pagefind] search("' + query + '") → ' + stubs.length + ' results');
 
+      // Each stub is a lightweight reference; calling .data() fetches the full result.
       const data = await Promise.all(stubs.map((r) => r.data()));
+      // Check again after the second async gap — another search may have fired.
       if (requestId !== requestIdRef.current) return;
 
       // Pagefind derives URLs from .html filenames in .next/server/pages/.
@@ -72,6 +79,7 @@ export function usePagefind(): UsePagefindReturn {
       setResults(data.map((d) => ({ ...d, url: d.url.replace(/\.html$/, '') })));
       setLastCompletedQuery(query);
     } finally {
+      // Only clear the loading state if no newer request has taken over.
       if (requestId === requestIdRef.current) setIsLoading(false);
     }
   }, []);
