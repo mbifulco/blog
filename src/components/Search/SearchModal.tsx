@@ -20,7 +20,7 @@ import { useSearch } from './SearchContext';
 
 export function SearchModal() {
   const { open, setOpen } = useSearch();
-  const { results, search } = usePagefind();
+  const { results, lastCompletedQuery, search } = usePagefind();
   const router = useRouter();
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const currentQueryRef = useRef('');
@@ -30,12 +30,12 @@ export function SearchModal() {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'k' && (e.metaKey || e.ctrlKey)) {
         e.preventDefault();
-        setOpen(!open);
+        setOpen((prev) => !prev);
       }
     };
     document.addEventListener('keydown', handleKeyDown);
     return () => document.removeEventListener('keydown', handleKeyDown);
-  }, [open, setOpen]);
+  }, [setOpen]);
 
   // Clear pending debounce timer on unmount
   useEffect(() => {
@@ -53,15 +53,15 @@ export function SearchModal() {
     }
   }, [open, search]);
 
-  // Track search after results resolve
+  // Track search after results resolve — lastCompletedQuery comes from the hook
+  // so it's always the query that produced the current results (no race condition).
   useEffect(() => {
-    const query = currentQueryRef.current;
-    if (!query) return;
+    if (!lastCompletedQuery.trim()) return;
     posthog.capture('search_performed', {
-      query,
+      query: lastCompletedQuery,
       results_count: results.length,
     });
-  }, [results]);
+  }, [results, lastCompletedQuery]);
 
   const handleInput = (value: string) => {
     currentQueryRef.current = value;
@@ -72,11 +72,12 @@ export function SearchModal() {
   const handleSelect = (url: string) => {
     const query = currentQueryRef.current;
     const index = results.findIndex((r) => r.url === url);
+    const result = index >= 0 ? results[index] : null;
     posthog.capture('search_result_clicked', {
       query,
       url,
-      title: results[index]?.meta.title,
-      result_position: index,
+      title: result?.meta.title ?? null,
+      result_position: result ? index : null,
     });
     setOpen(false);
     void router.push(url);
