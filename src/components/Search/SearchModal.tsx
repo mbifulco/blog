@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { useRouter } from 'next/router';
+import posthog from 'posthog-js';
 
 import {
   Command,
@@ -22,6 +23,7 @@ export function SearchModal() {
   const { results, search } = usePagefind();
   const router = useRouter();
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const currentQueryRef = useRef('');
 
   // Register ⌘K / Ctrl+K keyboard shortcut — toggles open/closed
   useEffect(() => {
@@ -46,16 +48,36 @@ export function SearchModal() {
   useEffect(() => {
     if (!open) {
       if (debounceRef.current) clearTimeout(debounceRef.current);
+      currentQueryRef.current = '';
       void search('');
     }
   }, [open, search]);
 
+  // Track search after results resolve
+  useEffect(() => {
+    const query = currentQueryRef.current;
+    if (!query) return;
+    posthog.capture('search_performed', {
+      query,
+      results_count: results.length,
+    });
+  }, [results]);
+
   const handleInput = (value: string) => {
+    currentQueryRef.current = value;
     if (debounceRef.current) clearTimeout(debounceRef.current);
     debounceRef.current = setTimeout(() => void search(value), 150);
   };
 
   const handleSelect = (url: string) => {
+    const query = currentQueryRef.current;
+    const index = results.findIndex((r) => r.url === url);
+    posthog.capture('search_result_clicked', {
+      query,
+      url,
+      title: results[index]?.meta.title,
+      result_position: index,
+    });
     setOpen(false);
     void router.push(url);
   };
