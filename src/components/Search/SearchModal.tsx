@@ -12,6 +12,7 @@ import {
 import {
   Dialog,
   DialogContent,
+  DialogTitle,
 } from '@components/ui/dialog';
 import { usePagefind } from '@hooks/usePagefind';
 import { useSearch } from './SearchContext';
@@ -22,23 +23,32 @@ export function SearchModal() {
   const router = useRouter();
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  // Register ⌘K / Ctrl+K keyboard shortcut
+  // Register ⌘K / Ctrl+K keyboard shortcut — toggles open/closed
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'k' && (e.metaKey || e.ctrlKey)) {
         e.preventDefault();
-        setOpen(true);
+        setOpen(!open);
       }
     };
     document.addEventListener('keydown', handleKeyDown);
     return () => document.removeEventListener('keydown', handleKeyDown);
-  }, [setOpen]);
+  }, [open, setOpen]);
 
+  // Clear pending debounce timer on unmount
   useEffect(() => {
     return () => {
       if (debounceRef.current) clearTimeout(debounceRef.current);
     };
   }, []);
+
+  // Reset results when modal closes so stale results don't show on reopen
+  useEffect(() => {
+    if (!open) {
+      if (debounceRef.current) clearTimeout(debounceRef.current);
+      void search('');
+    }
+  }, [open, search]);
 
   const handleInput = (value: string) => {
     if (debounceRef.current) clearTimeout(debounceRef.current);
@@ -53,6 +63,8 @@ export function SearchModal() {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent className="overflow-hidden p-0" aria-describedby={undefined}>
+        {/* Visually hidden title gives screen readers an accessible dialog name */}
+        <DialogTitle className="sr-only">Search</DialogTitle>
         {/* shouldFilter=false — pagefind handles all filtering */}
         <Command shouldFilter={false} className="[&_[cmdk-input-wrapper]]:border-b [&_[cmdk-input]]:h-12">
           <CommandInput

@@ -12,6 +12,8 @@ export type PagefindResultData = {
   filters: { type?: string[] };
 };
 
+// Minimal subset of the Pagefind API — pagefind ships no TS types.
+// Extend here if additional methods (e.g. filters, debouncedSearch) are needed.
 type PagefindAPI = {
   search: (query: string) => Promise<{ results: PagefindResult[] }>;
 };
@@ -36,9 +38,12 @@ export function usePagefind(): UsePagefindReturn {
     const pagefindUrl = '/pagefind/pagefind.js';
     import(/* @vite-ignore */ /* webpackIgnore: true */ pagefindUrl)
       .then((pf: unknown) => {
+        console.log('[pagefind] loaded successfully');
         pagefindRef.current = pf as PagefindAPI;
       })
-      .catch(() => undefined);
+      .catch((err: unknown) => {
+        console.error('[pagefind] failed to load:', err);
+      });
   }, []);
 
   const search = useCallback(async (query: string) => {
@@ -50,6 +55,7 @@ export function usePagefind(): UsePagefindReturn {
     setIsLoading(true);
     try {
       const { results: stubs } = await pagefindRef.current.search(query);
+      console.log('[pagefind] search("' + query + '") → ' + stubs.length + ' results');
       const data = await Promise.all(stubs.map((r) => r.data()));
       // Pagefind derives URLs from .html filenames in .next/server/pages/.
       // Strip the .html suffix so links resolve correctly in Next.js.
