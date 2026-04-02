@@ -1,0 +1,20 @@
+User-agent: *
+Disallow: /tags/
+Disallow: /page/
+Disallow: /newsletter/page/
+Disallow: /topics/
+
+# Block AI training crawlers
+User-agent: GPTBot
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+User-agent: Google-Extended
+Disallow: /
+
+User-agent: anthropic-ai
+Disallow: /
+
+Sitemap: https://mikebifulco.com/sitemap.xml
