@@ -2,7 +2,7 @@ import type { GetStaticPaths, GetStaticProps } from 'next';
 
 import { getPostBySlug } from '@lib/blog';
 import { getNewsletterBySlug } from '@lib/newsletters';
-import { getAllTags, getContentForTag } from '@lib/tags';
+import { getTopTags, getContentForTag } from '@lib/tags';
 import { ExternalWorkItem } from '../../components/ExternalWork';
 import { Heading } from '../../components/Heading';
 import NewsletterItem from '../../components/NewsletterFeed/NewsletterItem';
@@ -63,10 +63,10 @@ export const getStaticProps: GetStaticProps<
 };
 
 export const getStaticPaths: GetStaticPaths<TagPageParams> = async () => {
-  const allTags = await getAllTags();
+  const topTags = await getTopTags(20);
 
   return {
-    paths: allTags.map((tag) => ({
+    paths: topTags.map(({ tag }) => ({
       params: {
         tag,
       },
