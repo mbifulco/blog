@@ -1,7 +1,11 @@
 User-agent: *
+Disallow: /tags
 Disallow: /tags/
+Disallow: /page
 Disallow: /page/
+Disallow: /newsletter/page
 Disallow: /newsletter/page/
+Disallow: /topics
 Disallow: /topics/
 
 # Block AI training crawlers
