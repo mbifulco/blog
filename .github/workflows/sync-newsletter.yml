@@ -45,7 +45,7 @@ jobs:
 
       - name: Comment on PR (on failure)
         if: failure()
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
         with:
           script: |
             github.rest.pulls.createReviewComment({
