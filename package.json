@@ -124,7 +124,7 @@
     "pagefind": "^1.4.0",
     "prettier": "^3.8.1",
     "prettier-plugin-tailwindcss": "^0.7.2",
-    "schema-dts": "^1.1.5",
+    "schema-dts": "^2.0.0",
     "tailwindcss": "^4.2.2",
     "tsx": "^4.21.0",
     "typescript": "5.9.3",
