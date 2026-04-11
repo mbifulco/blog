@@ -63,7 +63,7 @@
     "gray-matter": "^4.0.3",
     "lucide-react": "^1.7.0",
     "micro": "^10.0.1",
-    "next": "16.2.2",
+    "next": "16.2.3",
     "next-cloudinary": "^6.17.5",
     "next-mdx-remote": "6.0.0",
     "nuqs": "^2.8.9",
@@ -142,7 +142,7 @@
   },
   "pnpm": {
     "overrides": {
-      "next": "16.2.2",
+      "next": "16.2.3",
       "tailwindcss": "^4.2.2"
     }
   }
