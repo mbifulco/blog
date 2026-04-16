@@ -7,6 +7,7 @@ type ImageProps = {
   className?: string;
   height?: number;
   loading?: 'lazy' | 'eager';
+  objectFit?: React.CSSProperties['objectFit'];
   priority?: boolean;
   publicId?: string;
   sizes?: string;
@@ -21,6 +22,7 @@ const Image: React.FC<ImageProps> = ({
   className,
   height = 630,
   loading = 'lazy',
+  objectFit = 'cover',
   publicId,
   sizes = '(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1200px',
   transformations,
@@ -41,7 +43,7 @@ const Image: React.FC<ImageProps> = ({
       loading={loading}
       className={className}
       sizes={sizes}
-      style={{ aspectRatio: `${width}/${height}` }}
+      style={{ aspectRatio: `${width}/${height}`, objectFit }}
       transformations={transformations}
       {...rest}
     />

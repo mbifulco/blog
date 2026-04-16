@@ -35,8 +35,8 @@ export const getAllSeries = async (): Promise<Series[]> => {
       )
       .sort((a, b) => {
         return compareAsc(
-          new Date(b.frontmatter.date),
-          new Date(a.frontmatter.date)
+          new Date(a.frontmatter.date),
+          new Date(b.frontmatter.date)
         );
       });
 
@@ -48,8 +48,8 @@ export const getAllSeries = async (): Promise<Series[]> => {
       )
       .sort((a, b) => {
         return compareAsc(
-          new Date(b.frontmatter.date),
-          new Date(a.frontmatter.date)
+          new Date(a.frontmatter.date),
+          new Date(b.frontmatter.date)
         );
       });
 
