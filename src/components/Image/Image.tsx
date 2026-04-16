@@ -41,7 +41,7 @@ const Image: React.FC<ImageProps> = ({
       loading={loading}
       className={className}
       sizes={sizes}
-      style={{ aspectRatio: `${width}/${height}` }}
+      style={{ aspectRatio: `${width}/${height}`, objectFit: 'cover' }}
       transformations={transformations}
       {...rest}
     />
