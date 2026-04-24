@@ -68,7 +68,7 @@
     "next-mdx-remote": "6.0.0",
     "nuqs": "^2.8.9",
     "pluralize": "^8.0.0",
-    "postcss": "^8.5.8",
+    "postcss": "^8.5.10",
     "posthog-js": "^1.364.7",
     "posthog-node": "^5.28.11",
     "prism-react-renderer": "^2.4.1",
