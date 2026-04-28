@@ -31,7 +31,7 @@ export const EmailLayout = ({
   const greeting = `Hey ${typeof firstName === 'string' ? firstName : 'there'}`;
 
   return (
-    <Html>
+    <Html lang="en">
       <Head>
         <style>{`
           body {
@@ -80,7 +80,7 @@ export const EmailLayout = ({
       <Preview>{preview}</Preview>
 
       <Tailwind>
-        <Body className="mx-auto my-auto font-sans text-xl">
+        <Body style={{ fontSize: '20px' }} className="mx-auto my-auto font-sans">
           <Container className="p-4">
             {/* Logo Section */}
             <Section style={logo} align="center">
@@ -108,21 +108,16 @@ export const EmailLayout = ({
                 width={620}
                 height={92}
                 src="https://res.cloudinary.com/mikebifulco-com/image/upload/v1723993697/email/footerimg.png"
-                alt="These lovely plant graphics are licensed from Jyothi on The Noun Project: https://thenounproject.com/creator/jyothi.shilpa077"
+                alt=""
               />
             </Section>
 
             {/* Footer Text */}
             <Section
-              style={{
-                maxWidth: '500px',
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '10px',
-              }}
+              style={{ maxWidth: '500px' }}
               className="mt-2 text-gray-500"
             >
-              <Text className="my-0 text-sm">© {new Date().getFullYear()} &bull; 💌 Tiny Improvements &bull; <Link href="https://mikebifulco.com/newsletter" className="text-pink-600">mikebifulco.com</Link></Text>
+              <Text style={{ marginBottom: '10px' }} className="my-0 text-sm">© {new Date().getFullYear()} &bull; 💌 Tiny Improvements &bull; <Link href="https://mikebifulco.com/newsletter" className="text-pink-600">mikebifulco.com</Link></Text>
               {includeUnsubscribeLink && (
                 <Text className="my-0 text-sm text-gray-500">
                   Not getting what you need? No worries, you can{' '}
@@ -151,7 +146,7 @@ const logo = {
 };
 
 const content = {
-  border: '1px solid rgb(0,0,0, 0.1)',
+  border: '1px solid rgba(0,0,0,0.1)',
   borderRadius: '3px',
   overflow: 'hidden',
   maxWidth: '630px',
@@ -179,7 +174,7 @@ export const button = {
   borderRadius: 3,
   color: '#FFF',
   fontWeight: 'bold',
-  border: '1px solid rgb(0,0,0, 0.1)',
+  border: '1px solid rgba(0,0,0,0.1)',
   cursor: 'pointer',
   padding: '12px 30px',
 };
