@@ -19,6 +19,7 @@ const headingStyles = {
 const baseHeadingStyle = {
   fontWeight: 'bold' as const,
   color: '#D83D84',
+  textWrap: 'balance' as const,
 };
 
 export const Heading = ({ children, level = 1, style }: HeadingProps) => {
