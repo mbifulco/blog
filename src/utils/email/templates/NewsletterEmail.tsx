@@ -5,7 +5,7 @@ import {
   Markdown,
   Row,
   Text,
-} from '@react-email/components';
+} from 'react-email';
 
 import { EmailLayout } from './EmailLayout';
 

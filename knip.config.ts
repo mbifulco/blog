@@ -18,7 +18,7 @@ const config: KnipConfig = {
   project: ['src/**/*.{ts,tsx}', 'scripts/**/*.ts'],
   ignoreDependencies: [
     'sharp', // next/image peer dep, not imported directly
-    '@react-email/preview-server', // CLI tool used via package.json scripts
+    '@react-email/ui', // auto-installed at runtime by react-email CLI, not a direct import
     'eslint-config-prettier', // loaded by eslint config name, not imported
     'pagefind', // CLI tool invoked via `npx pagefind` in scripts/postbuild.ts
     '@data/generated/*', // build-time generated JSON files, gitignored — not present in CI

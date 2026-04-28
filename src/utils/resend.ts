@@ -312,7 +312,7 @@ export const subscribe = async (
         });
 
         if (res.error) {
-          throw new Error(`${res.error.name}: ${res.error.message}`);
+          throw new Error(`${res.error.name}: ${res.error.message}`, { cause: error });
         }
 
         return res;

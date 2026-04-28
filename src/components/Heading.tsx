@@ -19,30 +19,15 @@ export const Heading: React.FC<HeadingProps> = ({
   // Use the 'as' prop to dynamically determine the component type
   const Component = as ?? 'h2';
 
-  let headingClasses = '';
-  switch (Component) {
-    case 'h1':
-      headingClasses = 'text-2xl md:text-4xl uppercase';
-      break;
-    case 'h2':
-      headingClasses = 'text-2xl md:text-3xl';
-      break;
-    case 'h3':
-      headingClasses = 'text-xl md:text-2xl';
-      break;
-    case 'h4':
-      headingClasses = 'text-xl';
-      break;
-    case 'h5':
-      headingClasses = 'text-lg';
-      break;
-    case 'h6':
-      headingClasses = 'text-lg';
-      break;
-    default:
-      headingClasses = 'text-4xl';
-      break;
-  }
+  const headingClassMap: Record<HeadingType, string> = {
+    h1: 'text-2xl md:text-4xl uppercase',
+    h2: 'text-2xl md:text-3xl',
+    h3: 'text-xl md:text-2xl',
+    h4: 'text-xl',
+    h5: 'text-lg',
+    h6: 'text-lg',
+  };
+  const headingClasses = headingClassMap[Component] ?? 'text-4xl';
 
   return (
     <Component

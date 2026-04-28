@@ -9,7 +9,7 @@ import {
   Link,
   Row,
   Text,
-} from '@react-email/components';
+} from 'react-email';
 
 import {
   button,

@@ -35,7 +35,8 @@ export const processMDXFileContent = async (
   } catch (error: unknown) {
     console.error(`MDX syntax error in ${fullPath}:`, error);
     throw new Error(
-      `MDX syntax error in ${fullPath}: ${error instanceof Error ? error.message : String(error)}`
+      `MDX syntax error in ${fullPath}: ${error instanceof Error ? error.message : String(error)}`,
+      { cause: error }
     );
   }
 

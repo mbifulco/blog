@@ -1,0 +1,112 @@
+---
+title: 'Dunning-Kruger for Vibe Coders'
+excerpt: "The first thing AI teaches you about coding is confidence. The second is why that's a problem. Let's talk about the Dunning-Kruger effect."
+tags: [ai, coding, psychology]
+slug: dunning-kruger-for-vibe-coders
+coverImagePublicId: newsletters/dunning-kruger-for-vibe-coders/cover
+date: 04-28-2026
+---
+
+# The Dunning-Kruger Effect for Vibe Coders
+
+## The Big Idea
+
+AI makes it easier than ever to build something that feels like it works. It does not make it easier to understand what you've built, how it works, or how it might break.
+
+---
+
+## Learning Feels Like Progress, Until It Doesn't
+
+One of the most enjoyable parts of learning something new is how quickly it can feel like you're getting good at it.
+
+You start from nothing, make a bit of progress, and then suddenly things begin to click. A few early wins stack up, and you get that dopamine boost from the feeling that you have a handle on what you're doing. If you've ever watched someone pick up a new skill for the first time, you've probably seen this happen. Beginner's luck and a handful of successful attempts can create a surprising amount of confidence.
+
+The problem is that this confidence is often built on a very small slice of reality.
+
+When you've been doing something for a long time, you develop an intuition for how much there is to know. Beginners do not have that perspective yet, which makes it easy to overestimate how far along they are. Eventually, if they stick with it, they run into the limits of their understanding. That moment, when things stop working as expected and the gaps become obvious, tends to be uncomfortable, but it is also where real learning begins.
+
+This pattern is well understood as the [**Dunning-Kruger Effect**](https://en.wikipedia.org/wiki/Dunning%E2%80%93Kruger_effect). More formally, it describes the tendency of people with a small amount of experience to be overconfident in their abilities. It also captures the inverse tendency, where highly skilled people underestimate their relative competence. The effect was first identified by psychologists [David Dunning](https://en.wikipedia.org/wiki/David_Dunning) and [Justin Kruger](https://en.wikipedia.org/wiki/Justin_Kruger) in 1999.
+
+The Dunning-Kruger Effect is a natural, typical pattern of human learning. It is **not** a sign of low intelligence. It's a lack of experience.
+
+The issue is not confidence itself. It is confidence that has not yet been tested.
+
+---
+
+## AI Changes the Pace, Not the Fundamentals
+
+When everyone has superpowered LLMs at our fingertips, the game changes. What's different now is how quickly someone can get an early sense of competence.
+
+Rather than learn about weather patterns or signal processing or buying ads on Google (or whatever problem you're working on), you can slap a few sentences together and send it off to your LLM of choice, and in moments you can have a working prototype.
+
+That's really cool - but it should give you at least a _little_ anxiety.
+
+Modern AI tools make it possible to build things that would have taken weeks or months in a matter of hours. Someone who has never written code before can assemble a working application, connect it to real data, and deploy it to the internet without fully understanding how any of it works. The results are often impressive enough to reinforce the feeling that they are on the right track.
+
+It is hard to overstate how big of a shift this is. The first program I ever wrote added three numbers together and printed the result to a terminal. It was simple, but it forced me to understand every step along the way. That constraint is largely gone now.
+
+What has not changed is how computers behave. They still do exactly what you tell them to do, even when what you told them to do is incomplete, inconsistent, or quietly destructive. AI can help you write those instructions faster, but it does not guarantee that they're correct.
+
+---
+
+## Experience Is Mostly About Anticipating Failure
+
+If you spend enough time around production systems, you start to realize that a large part of the job is not building new features, but anticipating and avoiding failure modes.
+
+That is why experienced teams invest so much energy in things that can feel tedious at first glance. They plan before they build. They test changes in environments that are isolated from real users. They introduce safeguards like feature flags and rate limits, and they maintain the ability to roll back changes when something goes wrong. These practices exist because systems are fragile in ways that are not always obvious, especially early on.
+
+If you are new to building software, and especially if you are learning through AI-assisted tools, there is a good chance you have not yet had the experience that makes these practices feel necessary. That is a normal part of the process. The risk comes from assuming that you can skip that part entirely, or worse, _not knowing_ that you should be doing it.
+
+Dunning-Kruger comes for us all.
+
+---
+
+## The Real Risk Is Misplaced Confidence
+
+The tools themselves are not the problem. The combination of speed and confidence is.
+
+When you can build something quickly and it seems like it works right away, it's natural to trust it more than you should. That trust can extend further than it ought to, especially when the system begins to handle real data or real users.
+
+Here's my April 2026 Prediction: Sometime soon, someone is going to push something into a context where the stakes are higher than their understanding of the system, and it is not going to behave the way they expect. Overconfidence will meet under-experience, and something will come crashing down. This will cause real, profound problems for a business that has been otherwise successful, and the dominos will start to fall. Will it be a fortune 500 company, a moonshot startup, a government agency, or a small business? I don't know the answer to that, but I feel confident that something will happen, and we'll all learn hard lessons from it.
+
+It is not hard to imagine how it plays out. Ask your engineer friends about their biggest fears for failures in production: A script runs twice when it should have run once. A production database gets deleted with one little line of code. A set of permissions is broader than intended. A piece of logic that seemed harmless at small scale behaves very differently under load.
+
+None of these scenarios are new, but the barrier to encountering them is now much lower.
+
+---
+
+## What This Means in Practice
+
+If you have been doing this for a while, your role is not to discourage people from using these tools. It is to help them use them safely.
+
+That usually means putting guardrails in place where they matter most. Limiting access to production systems, being deliberate about how credentials are managed, and creating environments where experimentation does not carry real risk all go a long way. Just as important is being open to the fact that people will be exploring vibe coding tools. That curiosity is a good thing! When exploration happens in the open, it is much easier to guide it.
+
+If you are newer to this world, **the most useful thing you can do is adopt a deliberate skepticism** toward the tools you use and anything you build.
+
+Assume that your system has edge cases you have not considered. Look for the places where it might break, especially under conditions that are slightly different from what you tested. Make sure you have a way to recover when something goes wrong, whether that means backups, staging environments, or simply the ability to turn something off quickly.
+
+It is also worth writing down how your system works, at least at a high level. The decisions you make early on tend to fade from memory faster than you expect, and when something breaks, that context becomes incredibly valuable.
+
+Perhaps most importantly, resist the urge to treat speed as the primary goal. Building quickly is useful, but building something you understand is what allows you to keep it running.
+
+---
+
+## Understanding the Tool Matters More Than Using It
+
+None of this is an argument to avoid AI. These tools are genuinely useful, and they are only getting better.
+
+But it is important to understand what they are doing. Large language models are not reasoning about your system in the way a human collaborator might. They are generating likely sequences of text based on patterns in their training data and the context you provide. That can produce very convincing output, but it does not come with guarantees.
+
+The people who benefit most from these tools are the ones who can engage with them critically. They can ask better questions, recognize when something looks off, and take the time to verify the results before relying on them.
+
+In practice, that means [spending more time reading and writing](https://mikebifulco.com/newsletter/next-great-engineering-skill-is-context-not-code) than you might expect. It means thinking through your systems in plain language, not just code, and being able to explain what they are doing and why.
+
+---
+
+## The Curve Is Still There
+
+The underlying learning curve has not changed.
+
+It is still easy to feel confident early on, and it is still necessary to move past that initial confidence to build something durable. AI has made the early stages faster and more rewarding, but it has not removed the need for deeper understanding.
+
+If anything, it has made that understanding more important.
