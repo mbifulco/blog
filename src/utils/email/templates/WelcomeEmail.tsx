@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Button, Column, Link, Row, Text } from '@react-email/components';
+import { Button, Column, Link, Row, Text } from 'react-email';
 
 import { button, EmailLayout, paragraph } from './EmailLayout';
 
