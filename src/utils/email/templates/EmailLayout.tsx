@@ -34,12 +34,17 @@ export const EmailLayout = ({
     <Html>
       <Head>
         <style>{`
+          body {
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+          }
           h1, h2, h3, h4, h5, h6 {
             font-weight: bold !important;
             color: #D83D84 !important;
             margin-top: 24px;
             margin-bottom: 16px;
             line-height: 1.3;
+            text-wrap: balance;
           }
           h1 { font-size: 32px !important; }
           h2 { font-size: 28px !important; }

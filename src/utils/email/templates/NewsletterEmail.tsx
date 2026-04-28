@@ -51,7 +51,10 @@ export const NewsletterEmail = ({
       )}
       <Row>
         <Column>
-          <Markdown markdownContainerStyles={{ fontSize: '1.25rem', lineHeight: 1.4 }}>
+          <Markdown
+            markdownContainerStyles={{ fontSize: 20, lineHeight: 1.6 }}
+            markdownCustomStyles={{ p: { fontSize: '20px', lineHeight: '1.6', color: '#222' } }}
+          >
             {content}
           </Markdown>
         </Column>
