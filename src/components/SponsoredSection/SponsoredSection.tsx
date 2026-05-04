@@ -53,7 +53,7 @@ const SponsoredSection: React.FC<SponsoredSectionProps> = ({
                 bare
                 publicId={imagePublicId}
                 alt={`Sponsored by ${sponsorName}`}
-                className="my-0 inline-block h-auto w-full"
+                className="my-0 inline-block h-auto w-full object-contain"
               />
             </Link>
           </div>

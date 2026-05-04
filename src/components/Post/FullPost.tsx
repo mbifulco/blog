@@ -148,7 +148,7 @@ const FullPost: React.FC<FullPostProps> = ({
                   <iframe width="100%" height="180" seamless src={podcastUrl} />
                 </div>
               )}
-              <div className="prose lg:prose-xl">
+              <div className="prose">
                 <MDXRemote {...post.source} components={components} />
               </div>
               <MentionsSummary />

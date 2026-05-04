@@ -17,6 +17,7 @@ import clsxm from '@utils/clsxm';
 // one off component imports
 import { CenteredTextDemo } from '../components/demos/CenteredTextDemo';
 import { OrtonEffectImage } from '../components/demos/OrtonEffectImage';
+import { TextPrettyDemo } from '../components/demos/TextPrettyDemo';
 import type { HeadingProps } from '../components/Heading';
 import { Heading } from '../components/Heading';
 import { Image } from '../components/Image';
@@ -81,14 +82,14 @@ const H6: React.FC<HeadingProps> = (props) => (
 );
 
 const P: React.FC<HTMLAttributes<HTMLParagraphElement>> = (props) => (
-  <p className="text-xl" {...props} />
+  <p className="font-serif text-xl text-pretty" {...props} />
 );
 
 const Blockquote: React.FC<HTMLAttributes<HTMLQuoteElement>> = ({
   children,
 }) => {
   return (
-    <blockquote className="border-l-4 border-pink-400 bg-gray-100 p-3 text-balance">
+    <blockquote className="border-l-4 border-pink-400 bg-gray-100 p-3 text-pretty">
       {children}
     </blockquote>
   );
@@ -122,7 +123,7 @@ const Aside: React.FC<AsideProps> = ({ type = 'default', ...props }) => {
   return (
     <aside
       className={clsxm(
-        'my-8 -ml-8 border-l-8 border-solid px-8 py-4',
+        'my-8 -ml-8 border-l-8 border-solid px-8 py-4 text-pretty',
         type === 'default' && 'border-pink-400 bg-pink-50 text-pink-900',
         type === 'info' && 'border-yellow-400 bg-yellow-50 text-yellow-900',
         type === 'note' && 'border-green-400 bg-green-50 text-green-900',
@@ -144,13 +145,13 @@ const TextHighlight = ({ key: _, ...rest }: HTMLProps<HTMLElement>) => (
   />
 );
 
-const InlineCode: React.FC<HTMLAttributes<HTMLSpanElement>> = ({
+const InlineCode: React.FC<HTMLAttributes<HTMLElement>> = ({
   ...props
 }) => {
   return (
-    <span
+    <code
       {...props}
-      className="inline-block max-w-full rounded-xs bg-slate-500 px-[0.5ch] py-[0.1ch] align-text-bottom font-mono text-sm whitespace-pre text-white"
+      className="inline bg-slate-100 border border-slate-200 text-slate-700 rounded-sm font-mono text-sm px-[0.5ch] py-[0.1ch]"
     />
   );
 };
@@ -176,7 +177,7 @@ const Pre: React.FC<PreProps> = ({ children }) => {
 
   return (
     <div
-      className="-mx-2 max-w-[calc(100vw_-_36px)] rounded-sm md:mx-0"
+      className="-mx-2 my-6 max-w-[calc(100vw_-_36px)] rounded-sm md:mx-0"
       style={{
         background: themes.nightOwl.plain.backgroundColor,
       }}
@@ -250,7 +251,7 @@ const ListItemComponent: React.FC<HTMLAttributes<HTMLLIElement>> = ({
   children,
   ...rest
 }) => (
-  <li {...rest}>
+  <li className="font-serif text-xl" {...rest}>
     {children}
   </li>
 );
@@ -333,6 +334,7 @@ export const customComponents = {
 const oneOffComponentsUsedInPosts = {
   CenteredTextDemo, // used in dont-center-paragraph-text.mdx
   OrtonEffectImage, // used in orton-effect-css-react.mdx
+  TextPrettyDemo, // used in text-pretty-for-visual-balance.mdx
 };
 
 export const components: MDXComponents = {
