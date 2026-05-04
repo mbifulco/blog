@@ -36,8 +36,10 @@ export function usePagefind(): UsePagefindReturn {
     if (typeof window === 'undefined') return;
 
     // /pagefind/pagefind.js is only available after `next build` + postbuild.
-    // In `next dev` / test env, the import will fail — search is non-functional.
-    // Use a runtime-computed path so bundlers/Vite don't attempt static analysis.
+    // Skip in dev/test — search is non-functional there and the missing file
+    // causes Turbopack to surface a TypeError in the error overlay.
+    if (process.env.NODE_ENV !== 'production') return;
+
     const pagefindUrl = '/pagefind/pagefind.js';
     import(/* @vite-ignore */ /* webpackIgnore: true */ pagefindUrl)
       .then((pf: unknown) => {
