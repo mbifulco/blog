@@ -145,6 +145,15 @@
       "minimatch@3>brace-expansion": "1.1.14",
       "gray-matter>js-yaml": "3.14.2",
       "mdast-util-to-hast": "13.2.1"
-    }
+    },
+    "onlyBuiltDependencies": [
+      "@parcel/watcher",
+      "@tailwindcss/oxide",
+      "core-js",
+      "esbuild",
+      "protobufjs",
+      "sharp",
+      "unrs-resolver"
+    ]
   }
 }
