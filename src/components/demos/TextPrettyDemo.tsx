@@ -121,7 +121,11 @@ export const TextPrettyDemo = () => {
         </div>
 
         {/* Sticky bottom control bar — only shown while the demo panel is in view */}
-        <div className={`fixed bottom-0 left-0 right-0 z-50 border-t border-slate-200 bg-white/90 px-4 py-3 backdrop-blur-sm transition-transform duration-200 ${panelVisible ? 'translate-y-0' : 'translate-y-full'}`}>
+        <div
+          aria-hidden={!panelVisible}
+          inert={!panelVisible}
+          className={`fixed bottom-0 left-0 right-0 z-50 border-t border-slate-200 bg-white/90 px-4 py-3 backdrop-blur-sm transition-transform duration-200 ${panelVisible ? 'translate-y-0' : 'translate-y-full'}`}
+        >
           <div className="flex flex-col gap-2">
             <div className="flex items-center gap-3">
               <span className="shrink-0 text-xs font-medium text-slate-500">
@@ -134,6 +138,7 @@ export const TextPrettyDemo = () => {
                 value={width}
                 onChange={(e) => setWidth(Number(e.target.value))}
                 className="flex-1"
+                aria-label={`Column width: ${width}%`}
               />
             </div>
             <button
