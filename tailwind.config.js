@@ -61,22 +61,43 @@ module.exports = {
           css: {
             h1: {
               fontFamily: `${theme('fontFamily.dumpling')}`,
+              marginTop: '1.75em',
+              marginBottom: '0.35em',
             },
             h2: {
               fontFamily: `${theme('fontFamily.dumpling')}`,
+              marginTop: '1.75em',
+              marginBottom: '0.35em',
             },
             h3: {
               fontFamily: `${theme('fontFamily.dumpling')}`,
+              marginTop: '1.4em',
+              marginBottom: '0.3em',
             },
             h4: {
               fontFamily: `${theme('fontFamily.dumpling')}`,
+              marginTop: '1.25em',
+              marginBottom: '0.25em',
             },
             h5: {
               fontFamily: `${theme('fontFamily.dumpling')}`,
+              marginTop: '1.25em',
+              marginBottom: '0.2em',
             },
             h6: {
               fontFamily: `${theme('fontFamily.dumpling')}`,
+              marginTop: '1.25em',
+              marginBottom: '0.2em',
             },
+            p: {
+              marginTop: '0',
+            },
+            pre: {
+              marginTop: '0',
+              marginBottom: '0',
+            },
+            'code::before': { content: 'none' },
+            'code::after': { content: 'none' },
           },
         },
       }),

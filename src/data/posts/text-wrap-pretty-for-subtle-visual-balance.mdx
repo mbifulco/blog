@@ -1,0 +1,110 @@
+---
+title: 'CSS Tips Part 2 - text-wrap: pretty will make your text feel intentional'
+excerpt: 'Go beyond balance. Learn how text-wrap: pretty improves readability, reduces awkward breaks, and makes your UI feel more polished.'
+tags: [css, ux, typography]
+slug: text-wrap-pretty-will-make-your-designs-better
+series: CSS For Visual Balance
+coverImagePublicId: posts/text-wrap-pretty-will-make-your-designs-better/cover
+date: 04-30-2026
+---
+
+## Part 2: A Slightly Smarter Wrap
+
+In the last post, we talked about `text-wrap: balance` and how it makes headings feel cleaner and easier to read.
+
+Where `balance` is perfect for making your headings feel cleaner and a little easier to read, `pretty` is here to make paragraphs feel _just right_.
+
+In short: `text-wrap: pretty` helps make sure the last sentences in paragraphs don't end up with an orphaned word or two on their last line.
+
+
+
+## What is text-wrap: pretty?
+
+`text-wrap: pretty` is a newer CSS value that tells the browser to avoid awkward line breaks when wrapping text.
+
+Instead of just filling lines as efficiently as possible, the renderer uses an algorithm to make better decisions about where lines should break, rather than the default behavior, which uses the "play it as it lies" approach you're probably familiar with.
+
+Fundamentally, it means fewer orphaned words at the end of paragraphs, and fewer cases where multiple consecutive lines have hyphenated breaks.
+
+It is subtle, but the end result is a lot more like hand-laid typography from the golden age of print.
+
+
+
+### Why this matters: Better UX
+
+Reading is not just about words. It is about flow.
+
+When a line breaks in an awkward place, your brain has to do a tiny bit of extra work. That cost is small, but it adds up across a page.
+
+Good typography removes friction.
+
+This ties directly into a few UX principles:
+
+- **Cognitive load**: Cleaner line breaks reduce micro-interruptions while reading
+- **Orphan prevention**: Avoiding a single word stranded on its own line keeps the reader's eye moving naturally
+- **Aesthetic usability effect**: Cleaner text feels easier to use, even if nothing else changed
+
+Most people will never point at your site and say “nice line breaks.”
+
+But they will feel the difference.
+
+
+
+### Pretty vs Balance
+
+These two are easy to confuse, but they solve different problems:
+
+- `text-wrap: balance` → makes lines similar in length (great for **headings**)
+- `text-wrap: pretty` → avoids awkward breaks (great for **paragraph text**)
+
+
+
+## See it in action
+
+On desktop, drag the slider to narrow the column. On mobile, tap the toggle and adjust width to compare — watch what happens to the last line of each paragraph.
+
+<TextPrettyDemo />
+
+<br />
+
+
+
+## How to use it: CSS
+
+```css
+p {
+  text-wrap: pretty;
+}
+```
+
+That is it.
+
+Like `balance`, this is one of those rare features that gives you a real UX improvement for almost no effort.
+
+
+
+## How to use it: Tailwind
+
+Tailwind now supports this as well:
+
+```html
+<p class="text-pretty">
+  Your text here
+</p>
+```
+
+If you already adopted `text-balance` for headings, this pairs nicely with it.
+
+
+
+## Can I use it yet?
+
+In general, yes. According to [Can I Use](https://caniuse.com/wf-text-wrap-pretty), it is supported by most major browsers. The good news is that the fallback is harmless: the text will wrap as it normally would without the property.
+
+So: go for it! Use this rule where it makes sense in your page designs. There's essentially no downside.
+
+
+## Related Reading
+
+- [W3C CSS Text Module Level 4: text-wrap](https://www.w3.org/TR/css-text-4/#text-wrap) official specification
+- [Chrome Developer blog: Text Wrap Pretty](https://developer.chrome.com/blog/css-text-wrap-pretty)

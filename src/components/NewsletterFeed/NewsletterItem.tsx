@@ -18,7 +18,7 @@ const NewsletterItem: React.FC<NewsletterItemProps> = ({ newsletter }) => {
         className="m-0 block aspect-1200/630 max-w-full"
       >
         <div
-          className="aspect-1200/630 h-full min-h-[205px] bg-cover"
+          className="aspect-1200/630 h-full min-h-[205px] bg-cover p-0 m-0 object-cover"
           style={{
             backgroundImage: `url('${getCloudinaryImageUrl(
               coverImagePublicId

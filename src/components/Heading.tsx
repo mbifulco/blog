@@ -21,11 +21,11 @@ export const Heading: React.FC<HeadingProps> = ({
 
   const headingClassMap: Record<HeadingType, string> = {
     h1: 'text-2xl md:text-4xl uppercase',
-    h2: 'text-2xl md:text-3xl',
-    h3: 'text-xl md:text-2xl',
-    h4: 'text-xl',
-    h5: 'text-lg',
-    h6: 'text-lg',
+    h2: 'text-xl md:text-2xl',
+    h3: 'text-lg md:text-xl',
+    h4: 'text-base md:text-lg',
+    h5: 'text-sm uppercase tracking-widest',
+    h6: 'text-xs uppercase tracking-widest text-gray-700',
   };
   const headingClasses = headingClassMap[Component] ?? 'text-4xl';
 
