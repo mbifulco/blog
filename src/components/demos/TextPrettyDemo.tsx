@@ -157,5 +157,3 @@ export const TextPrettyDemo = () => {
     </div>
   );
 };
-
-export default TextPrettyDemo;
