@@ -22,7 +22,7 @@ const Image: React.FC<ImageProps> = ({
   className,
   height = 630,
   loading = 'lazy',
-  objectFit = 'contain',
+  objectFit = 'cover',
   publicId,
   sizes = '(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1200px',
   transformations,
