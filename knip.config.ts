@@ -21,6 +21,7 @@ const config: KnipConfig = {
     '@react-email/ui', // auto-installed at runtime by react-email CLI, not a direct import
     'eslint-config-prettier', // loaded by eslint config name, not imported
     'pagefind', // CLI tool invoked via `npx pagefind` in scripts/postbuild.ts
+    '@data/generated/*', // build-time generated JSON files, gitignored — not present in CI
   ],
   ignoreBinaries: [
     'eslint-config-prettier-check', // binary from eslint-config-prettier package
