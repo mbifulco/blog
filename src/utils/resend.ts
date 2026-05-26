@@ -246,8 +246,7 @@ export const emailIsBad = (email: string) => {
  * return a "success" response in cases where the email is from a bad domain
  */
 export const fakeSubscribe = async (subscriber: SubscribeArgs) => {
-  const domain = subscriber.email.split('@')[1]?.toLowerCase();
-  if (BAD_DOMAINS.includes(domain)) {
+  if (emailIsBad(subscriber.email)) {
     return {
       success: true,
     };

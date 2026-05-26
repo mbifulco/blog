@@ -41,6 +41,11 @@ describe('emailIsBad', () => {
     expect(result).toBe(true);
   });
 
+  it('should return true for abhoward.site domain', () => {
+    const result = emailIsBad('test@abhoward.site');
+    expect(result).toBe(true);
+  });
+
   it('should return false for legitimate email domains', () => {
     const legitimateEmails = [
       'user@gmail.com',
@@ -144,17 +149,9 @@ describe('fakeSubscribe', () => {
     }); // Domains are case-insensitive, so this should be caught
   });
 
-  it('should handle multiple bad domains correctly', async () => {
-    // Test with the known bad domain
-    const badSubscriber = {
-      email: 'test@mailinator.com',
-      firstName: 'Test',
-    };
-
-    const result = await fakeSubscribe(badSubscriber);
-    expect(result).toEqual({
-      success: true,
-    });
+  it('should return success for abhoward.site domain', async () => {
+    const result = await fakeSubscribe({ email: 'test@abhoward.site' });
+    expect(result).toEqual({ success: true });
   });
 });
 
