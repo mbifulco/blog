@@ -235,19 +235,18 @@ export const getSubscriberCount = async () => {
   }
 };
 
+const BAD_DOMAINS = ['mailinator.com', 'abhoward.site'];
+
 export const emailIsBad = (email: string) => {
-  const badDomains = ['mailinator.com'];
   const domain = email.split('@')[1]?.toLowerCase();
-  return badDomains.includes(domain);
+  return BAD_DOMAINS.includes(domain);
 };
 
 /**
  * return a "success" response in cases where the email is from a bad domain
  */
 export const fakeSubscribe = async (subscriber: SubscribeArgs) => {
-  const badDomains = ['mailinator.com'];
-  const domain = subscriber.email.split('@')[1]?.toLowerCase();
-  if (badDomains.includes(domain)) {
+  if (emailIsBad(subscriber.email)) {
     return {
       success: true,
     };
