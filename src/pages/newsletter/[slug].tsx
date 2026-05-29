@@ -12,11 +12,13 @@ import type { Newsletter } from '@data/content-types';
 import { getAllNewsletters, getNewsletterBySlug } from '@lib/newsletters';
 import type { RelatedContent, RelatedPostsManifest } from '@lib/related-posts';
 import relatedPostsData from '@data/generated/relatedPosts.json';
+import atprotoData from '@data/generated/atproto-documents.json';
 import { getSeries } from '@lib/series';
 import type { Series } from '@lib/series';
 import { getCloudinaryImageUrl } from '@utils/images';
 import { serialize } from '@utils/mdx';
 import { generatePostStructuredData } from '@utils/generateStructuredData';
+import { getDocumentUri } from '@utils/atproto';
 
 type NewsletterPageParams = {
   slug: string;
@@ -40,6 +42,11 @@ export const getStaticProps: GetStaticProps<
 
   const relatedContent = (relatedPostsData as RelatedPostsManifest).relatedContent[params.slug] ?? [];
 
+  const standardSiteDocumentUri = getDocumentUri(
+    (atprotoData as { documents: Record<string, string> }).documents,
+    params.slug
+  );
+
   return {
     props: {
       newsletter: {
@@ -48,6 +55,7 @@ export const getStaticProps: GetStaticProps<
       },
       series: series ?? null,
       relatedContent,
+      ...(standardSiteDocumentUri ? { standardSiteDocumentUri } : {}),
     },
   };
 };
@@ -69,12 +77,14 @@ type NewsletterPageProps = {
   newsletter: Newsletter;
   series?: Series | null;
   relatedContent: RelatedContent[];
+  standardSiteDocumentUri?: string;
 };
 
 const NewsletterPage: React.FC<NewsletterPageProps> = ({
   newsletter,
   series,
   relatedContent,
+  standardSiteDocumentUri,
 }) => {
   const { frontmatter } = newsletter;
 
@@ -98,6 +108,7 @@ const NewsletterPage: React.FC<NewsletterPageProps> = ({
           ogType="article"
           publishedAt={date}
           tags={tags}
+          standardSiteDocumentUri={standardSiteDocumentUri}
         />
         <StructuredData structuredData={structuredData} />
 

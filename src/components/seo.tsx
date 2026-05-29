@@ -31,6 +31,7 @@ type SEOProps = {
   publishedAt?: string | number | Date;
   tags?: string[];
   pagination?: SEOPagination;
+  standardSiteDocumentUri?: string;
 };
 
 const SEO: React.FC<SEOProps> = ({
@@ -45,6 +46,7 @@ const SEO: React.FC<SEOProps> = ({
   publishedAt,
   tags,
   pagination,
+  standardSiteDocumentUri,
 }) => {
   const router = useRouter();
 
@@ -83,6 +85,10 @@ const SEO: React.FC<SEOProps> = ({
         rel="pingback"
         href="https://webmention.io/mikebifulco.com/xmlrpc"
       />
+      {/* standard.site AT Protocol document link */}
+      {standardSiteDocumentUri && (
+        <link rel="site.standard.document" href={standardSiteDocumentUri} />
+      )}
       {/* favicon */}
       <link
         rel="apple-touch-icon"
