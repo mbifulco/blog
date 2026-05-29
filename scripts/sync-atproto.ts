@@ -159,6 +159,10 @@ function atUriToRkey(atUri: string): string {
 
 const CREATE_ONLY = process.argv.includes('--create-only');
 
+// File paths passed as positional args (e.g. from the pre-commit hook).
+// When present, only those files are synced instead of the full directory scan.
+const TARGET_PATHS = process.argv.slice(2).filter((a) => !a.startsWith('--'));
+
 async function syncPublication(
   session: Session,
   data: AtprotoData
@@ -229,40 +233,73 @@ async function main() {
   const publicationUri = await syncPublication(session, data);
   data.publicationUri = publicationUri;
 
-  console.log('\nSyncing posts...');
-  const posts = readContentDirectory('src/data/posts');
-  for (const fm of posts) {
-    data.documents[fm.slug] = await syncDocument(
-      session,
-      data,
-      publicationUri,
-      fm.slug,
-      `/posts/${fm.slug}`,
-      fm
-    );
-  }
+  let synced = 0;
 
-  console.log('\nSyncing newsletters...');
-  const newsletters = readContentDirectory('src/data/newsletters');
-  for (const fm of newsletters) {
-    data.documents[fm.slug] = await syncDocument(
-      session,
-      data,
-      publicationUri,
-      fm.slug,
-      `/newsletter/${fm.slug}`,
-      fm
-    );
+  if (TARGET_PATHS.length > 0) {
+    // Targeted mode: only process the specific files passed as arguments.
+    console.log(`\nSyncing ${TARGET_PATHS.length} file(s)...`);
+    for (const filePath of TARGET_PATHS) {
+      const raw = fs.readFileSync(path.join(process.cwd(), filePath), 'utf-8');
+      const { data: fm } = matter(raw);
+      const frontmatter = fm as ContentFrontmatter;
+
+      if (!frontmatter.slug || !frontmatter.title || frontmatter.published === false) {
+        console.log(`  Skipped (unpublished or missing slug): ${filePath}`);
+        continue;
+      }
+
+      const isNewsletter = filePath.startsWith('src/data/newsletters/');
+      const contentPath = isNewsletter
+        ? `/newsletter/${frontmatter.slug}`
+        : `/posts/${frontmatter.slug}`;
+
+      data.documents[frontmatter.slug] = await syncDocument(
+        session,
+        data,
+        publicationUri,
+        frontmatter.slug,
+        contentPath,
+        frontmatter
+      );
+      synced++;
+    }
+  } else {
+    // Full mode: scan all content directories.
+    console.log('\nSyncing posts...');
+    const posts = readContentDirectory('src/data/posts');
+    for (const fm of posts) {
+      data.documents[fm.slug] = await syncDocument(
+        session,
+        data,
+        publicationUri,
+        fm.slug,
+        `/posts/${fm.slug}`,
+        fm
+      );
+      synced++;
+    }
+
+    console.log('\nSyncing newsletters...');
+    const newsletters = readContentDirectory('src/data/newsletters');
+    for (const fm of newsletters) {
+      data.documents[fm.slug] = await syncDocument(
+        session,
+        data,
+        publicationUri,
+        fm.slug,
+        `/newsletter/${fm.slug}`,
+        fm
+      );
+      synced++;
+    }
   }
 
   saveAtprotoData(data);
   writeWellKnown(publicationUri);
 
+  console.log(`\nDone. ${synced} document(s) synced.`);
   console.log(
-    `\nDone. ${posts.length} posts and ${newsletters.length} newsletters synced.`
-  );
-  console.log(
-    'Commit src/data/generated/atproto-documents.json and public/.well-known/site.standard.publication to apply changes on next build.'
+    'Commit src/data/atproto-documents.json and public/.well-known/site.standard.publication to apply changes on next build.'
   );
 }
 
