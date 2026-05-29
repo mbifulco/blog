@@ -7,7 +7,7 @@ import { NewsletterSignup } from '@components/NewsletterSignup';
 import { RelatedPosts } from '@components/RelatedPosts';
 import type { RelatedContent, RelatedPostsManifest } from '@lib/related-posts';
 import relatedPostsData from '@data/generated/relatedPosts.json';
-import atprotoData from '@data/generated/atproto-documents.json';
+import atprotoData from '@data/atproto-documents.json';
 import { getSeries } from '@lib/series';
 import type { Series } from '@lib/series';
 import { Colophon } from '../../components/Colophon';

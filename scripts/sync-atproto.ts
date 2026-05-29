@@ -38,7 +38,7 @@ const PDS_URL = 'https://bsky.social';
 
 const ATPROTO_DOCUMENTS_PATH = path.join(
   process.cwd(),
-  'src/data/generated/atproto-documents.json'
+  'src/data/atproto-documents.json'
 );
 const WELL_KNOWN_PATH = path.join(
   process.cwd(),
@@ -105,6 +105,9 @@ type AtprotoData = {
 };
 
 function loadAtprotoData(): AtprotoData {
+  if (!fs.existsSync(ATPROTO_DOCUMENTS_PATH)) {
+    return { publicationUri: null, documents: {} };
+  }
   const raw = fs.readFileSync(ATPROTO_DOCUMENTS_PATH, 'utf-8');
   return JSON.parse(raw) as AtprotoData;
 }
