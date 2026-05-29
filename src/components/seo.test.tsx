@@ -7,6 +7,10 @@ vi.mock('next/router', () => ({
   useRouter: () => ({ asPath: '/posts/test-post' }),
 }));
 
+vi.mock('../utils/images', () => ({
+  getCloudinaryImageUrl: (id: string) => `https://cdn.example.com/${id}`,
+}));
+
 // next/head renders children into a wrapper so they appear in the jsdom container
 vi.mock('next/head', () => ({
   default: ({ children }: { children: React.ReactNode }) => (
