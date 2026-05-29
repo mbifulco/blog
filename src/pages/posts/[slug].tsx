@@ -7,6 +7,7 @@ import { NewsletterSignup } from '@components/NewsletterSignup';
 import { RelatedPosts } from '@components/RelatedPosts';
 import type { RelatedContent, RelatedPostsManifest } from '@lib/related-posts';
 import relatedPostsData from '@data/generated/relatedPosts.json';
+import atprotoData from '@data/atproto-documents.json';
 import { getSeries } from '@lib/series';
 import type { Series } from '@lib/series';
 import { Colophon } from '../../components/Colophon';
@@ -16,6 +17,7 @@ import WebmentionMetadata from '../../components/webmentionMetadata';
 import type { BlogPost } from '../../data/content-types';
 import { getAllPosts, getPostBySlug } from '../../lib/blog';
 import { getCloudinaryImageUrl } from '../../utils/images';
+import { getDocumentUri } from '../../utils/atproto';
 
 type PostPageParams = {
   slug: string;
@@ -25,6 +27,7 @@ type PostPageProps = {
   post: BlogPost;
   series?: Series | null;
   relatedContent: RelatedContent[];
+  standardSiteDocumentUri?: string;
 };
 
 export const getStaticProps: GetStaticProps<
@@ -43,11 +46,17 @@ export const getStaticProps: GetStaticProps<
 
   const relatedContent = (relatedPostsData as RelatedPostsManifest).relatedContent[params.slug] ?? [];
 
+  const standardSiteDocumentUri = getDocumentUri(
+    (atprotoData as { documents: Record<string, string> }).documents,
+    params.slug
+  );
+
   return {
     props: {
       post,
       series: series ?? null,
       relatedContent,
+      ...(standardSiteDocumentUri ? { standardSiteDocumentUri } : {}),
     },
   };
 };
@@ -65,7 +74,7 @@ export async function getStaticPaths() {
   };
 }
 
-const PostPage: NextPage<PostPageProps> = ({ post, series, relatedContent }) => {
+const PostPage: NextPage<PostPageProps> = ({ post, series, relatedContent, standardSiteDocumentUri }) => {
   const { frontmatter } = post;
 
   const { coverImagePublicId, published, date, tags, title, excerpt, slug } =
@@ -101,6 +110,7 @@ const PostPage: NextPage<PostPageProps> = ({ post, series, relatedContent }) => 
           ogType="article"
           publishedAt={date}
           tags={tags}
+          standardSiteDocumentUri={standardSiteDocumentUri}
         />
         {published === false && process.env.NODE_ENV !== 'production' && (
           <div>

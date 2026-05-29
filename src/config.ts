@@ -1,4 +1,5 @@
 export const BASE_SITE_URL = 'https://mikebifulco.com';
+export const ATPROTO_DID = 'did:plc:icpcpp5txyow3prnfgi533lj';
 
 const config = {
   employer: {

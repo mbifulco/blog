@@ -29,7 +29,9 @@
     "test:e2e:headed": "playwright test --headed",
     "typecheck": "tsc --noEmit",
     "lint": "pnpm eslint .",
-    "eslint-check": "pnpm eslint --print-config . | pnpm eslint-config-prettier-check"
+    "eslint-check": "pnpm eslint --print-config . | pnpm eslint-config-prettier-check",
+    "sync:atproto": "npx tsx scripts/sync-atproto.ts",
+    "prepare": "git config core.hooksPath .githooks 2>/dev/null || true"
   },
   "dependencies": {
     "@cloudinary/url-gen": "^1.22.0",

@@ -1,0 +1,27 @@
+#!/bin/sh
+# Sync newly added posts/newsletters to AT Protocol (standard.site).
+# Only fires when new .mdx/.md files are staged in the content directories.
+
+ADDED_CONTENT=$(git diff --cached --name-only --diff-filter=AR | grep -E '^src/data/(posts|newsletters)/.*\.(mdx|md)$')
+
+if [ -z "$ADDED_CONTENT" ]; then
+  exit 0
+fi
+
+echo "New content detected:"
+echo "$ADDED_CONTENT" | sed 's/^/  /'
+echo "Syncing AT Protocol records..."
+
+# Pass the specific file paths so the script only processes these files,
+# not the entire content directory.
+# shellcheck disable=SC2086
+if ! pnpm sync:atproto --create-only $ADDED_CONTENT; then
+  echo "⚠️  AT Protocol sync failed — commit proceeds, but standard.site link tags won't be added."
+  echo "    Run 'pnpm sync:atproto' manually and commit the updated atproto-documents.json."
+  exit 0
+fi
+
+git add src/data/atproto-documents.json
+git add public/.well-known/site.standard.publication
+
+echo "✓ AT Protocol records synced and staged."
