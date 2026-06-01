@@ -1,7 +1,7 @@
+import { useRef } from 'react';
 import type { NextPage } from 'next';
 import type { MDXRemoteSerializeResult } from 'next-mdx-remote';
 import { MDXRemote } from 'next-mdx-remote';
-import { useRef } from 'react';
 import posthog from 'posthog-js';
 
 import NewsletterSignup from '@components/NewsletterSignup/NewsletterBannerFancy';
@@ -72,14 +72,14 @@ const AboutPage: NextPage<AboutPageProps> = ({ mdxSource, error }) => {
       />
       <StructuredData structuredData={personStructuredData} />
       <main className="mx-auto mb-8 max-w-4xl" onMouseEnter={handlePageViewed}>
-      {error && (
-        <div className="mb-6 border-l-4 border-yellow-400 bg-yellow-50 p-4">
-          <p className="text-yellow-700">
-            Content is temporarily unavailable. Showing cached version.
-          </p>
-        </div>
-      )}
-      <div className="prose prose-lg">
+        {error && (
+          <div className="mb-6 border-l-4 border-yellow-400 bg-yellow-50 p-4">
+            <p className="text-yellow-700">
+              Content is temporarily unavailable. Showing cached version.
+            </p>
+          </div>
+        )}
+        <div className="prose prose-lg">
           <MDXRemote {...mdxSource} components={components} />
         </div>
       </main>

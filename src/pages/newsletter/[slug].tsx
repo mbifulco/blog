@@ -8,17 +8,17 @@ import { RelatedPosts } from '@components/RelatedPosts';
 import SEO from '@components/seo';
 import StructuredData from '@components/StructuredData/StructuredData';
 import WebmentionMetadata from '@components/webmentionMetadata';
+import atprotoData from '@data/atproto-documents.json';
 import type { Newsletter } from '@data/content-types';
+import relatedPostsData from '@data/generated/relatedPosts.json';
 import { getAllNewsletters, getNewsletterBySlug } from '@lib/newsletters';
 import type { RelatedContent, RelatedPostsManifest } from '@lib/related-posts';
-import relatedPostsData from '@data/generated/relatedPosts.json';
-import atprotoData from '@data/atproto-documents.json';
 import { getSeries } from '@lib/series';
 import type { Series } from '@lib/series';
+import { getDocumentUri } from '@utils/atproto';
+import { generatePostStructuredData } from '@utils/generateStructuredData';
 import { getCloudinaryImageUrl } from '@utils/images';
 import { serialize } from '@utils/mdx';
-import { generatePostStructuredData } from '@utils/generateStructuredData';
-import { getDocumentUri } from '@utils/atproto';
 
 type NewsletterPageParams = {
   slug: string;
@@ -40,7 +40,9 @@ export const getStaticProps: GetStaticProps<
     ? await getSeries(newsletter.frontmatter.series)
     : undefined;
 
-  const relatedContent = (relatedPostsData as RelatedPostsManifest).relatedContent[params.slug] ?? [];
+  const relatedContent =
+    (relatedPostsData as RelatedPostsManifest).relatedContent[params.slug] ??
+    [];
 
   const standardSiteDocumentUri = getDocumentUri(
     (atprotoData as { documents: Record<string, string> }).documents,

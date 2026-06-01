@@ -182,16 +182,16 @@ export function isSpamFirstName(name: string | undefined): boolean {
   const hasLowVowelRatio = vowelRatio < 0.2 && name.length > 4;
 
   return (
-    hasExcessiveCaseTransitions ||
-    hasExcessiveConsonants ||
-    hasLowVowelRatio
+    hasExcessiveCaseTransitions || hasExcessiveConsonants || hasLowVowelRatio
   );
 }
 
 /**
  * Check if the form was submitted too quickly (likely a bot)
  */
-export function isFormSubmittedTooFast(formLoadedAt: number | undefined): boolean {
+export function isFormSubmittedTooFast(
+  formLoadedAt: number | undefined
+): boolean {
   if (!formLoadedAt) return false; // Can't check if no timestamp provided
 
   const submissionTime = Date.now();
@@ -311,7 +311,9 @@ export const subscribe = async (
         });
 
         if (res.error) {
-          throw new Error(`${res.error.name}: ${res.error.message}`, { cause: error });
+          throw new Error(`${res.error.name}: ${res.error.message}`, {
+            cause: error,
+          });
         }
 
         return res;

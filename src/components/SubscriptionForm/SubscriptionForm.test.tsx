@@ -1,7 +1,7 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { describe, expect, it, vi, beforeEach } from 'vitest';
 import posthog from 'posthog-js';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import SubscriptionForm from './SubscriptionForm';
 
@@ -206,7 +206,7 @@ describe('SubscriptionForm - Spam Detection', () => {
       });
     });
 
-    it('should allow normal names with mixed case (e.g., McDonald, O\'Brien)', async () => {
+    it("should allow normal names with mixed case (e.g., McDonald, O'Brien)", async () => {
       const user = userEvent.setup();
       render(<SubscriptionForm source="test-source" />);
 
@@ -280,7 +280,9 @@ describe('SubscriptionForm - Spam Detection', () => {
 
       await waitFor(() => {
         expect(screen.getByText(/Success!/)).toBeInTheDocument();
-        expect(screen.getByText(/Thanks so much for subscribing/)).toBeInTheDocument();
+        expect(
+          screen.getByText(/Thanks so much for subscribing/)
+        ).toBeInTheDocument();
       });
     });
 

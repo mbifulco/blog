@@ -61,4 +61,3 @@ export const getTotalFeedPages = (totalItems: number): number => {
   if (totalItems <= HOME_PAGE_LIMIT) return 1;
   return 1 + Math.ceil((totalItems - HOME_PAGE_LIMIT) / PAGE_LIMIT);
 };
-

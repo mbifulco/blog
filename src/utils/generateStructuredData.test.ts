@@ -1,7 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
 import type { BlogPost, Newsletter } from '@data/content-types';
-
 import {
   generateOrganizationStructuredData,
   generatePostStructuredData,
@@ -121,7 +120,10 @@ describe('generatePostStructuredData', () => {
     it('should use posts prefix for blog post image fallback', () => {
       const postWithoutCover = {
         ...mockBlogPost,
-        frontmatter: { ...mockBlogPost.frontmatter, coverImagePublicId: undefined },
+        frontmatter: {
+          ...mockBlogPost.frontmatter,
+          coverImagePublicId: undefined,
+        },
       } as unknown as BlogPost;
       const result = generatePostStructuredData({ post: postWithoutCover });
       const blogPosting = getBlogPosting(result);
@@ -132,12 +134,19 @@ describe('generatePostStructuredData', () => {
     it('should use newsletters prefix for newsletter image fallback', () => {
       const newsletterWithoutCover = {
         ...mockNewsletter,
-        frontmatter: { ...mockNewsletter.frontmatter, coverImagePublicId: undefined },
+        frontmatter: {
+          ...mockNewsletter.frontmatter,
+          coverImagePublicId: undefined,
+        },
       } as unknown as Newsletter;
-      const result = generatePostStructuredData({ post: newsletterWithoutCover });
+      const result = generatePostStructuredData({
+        post: newsletterWithoutCover,
+      });
       const blogPosting = getBlogPosting(result);
 
-      expect(blogPosting.image?.url).toContain('newsletters/test-newsletter/cover');
+      expect(blogPosting.image?.url).toContain(
+        'newsletters/test-newsletter/cover'
+      );
     });
 
     it('should include keywords from tags', () => {

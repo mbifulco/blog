@@ -13,7 +13,6 @@ const config: KnipConfig = {
     'src/utils/pagination-redirects.ts',
     'tailwind.config.{js,ts}',
     'postcss.config.{js,ts}',
-
   ],
   project: ['src/**/*.{ts,tsx}', 'scripts/**/*.ts'],
   ignoreDependencies: [

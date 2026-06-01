@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { useRouter } from 'next/router';
+import { usePagefind } from '@hooks/usePagefind';
 import posthog from 'posthog-js';
 
 import {
@@ -10,12 +11,7 @@ import {
   CommandItem,
   CommandList,
 } from '@components/ui/command';
-import {
-  Dialog,
-  DialogContent,
-  DialogTitle,
-} from '@components/ui/dialog';
-import { usePagefind } from '@hooks/usePagefind';
+import { Dialog, DialogContent, DialogTitle } from '@components/ui/dialog';
 import { useSearch } from './SearchContext';
 
 export function SearchModal() {
@@ -85,11 +81,17 @@ export function SearchModal() {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent className="overflow-hidden p-0" aria-describedby={undefined}>
+      <DialogContent
+        className="overflow-hidden p-0"
+        aria-describedby={undefined}
+      >
         {/* Visually hidden title gives screen readers an accessible dialog name */}
         <DialogTitle className="sr-only">Search</DialogTitle>
         {/* shouldFilter=false — pagefind handles all filtering */}
-        <Command shouldFilter={false} className="[&_[cmdk-input-wrapper]]:border-b [&_[cmdk-input]]:h-12">
+        <Command
+          shouldFilter={false}
+          className="[&_[cmdk-input-wrapper]]:border-b [&_[cmdk-input]]:h-12"
+        >
           <CommandInput
             placeholder="Search posts and newsletters…"
             onValueChange={handleInput}

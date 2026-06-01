@@ -1,9 +1,9 @@
-import Link from '@components/Link';
 import posthog from 'posthog-js';
 
 import { Badge } from '@components/Badge';
 import { Heading } from '@components/Heading';
 import { Image } from '@components/Image';
+import Link from '@components/Link';
 import { PublishDate } from '@components/PublishDate';
 import type { RelatedContent } from '@lib/related-posts';
 
@@ -71,7 +71,10 @@ const RelatedPosts: React.FC<RelatedPostsProps> = ({
                   <Badge>
                     {item.type === 'newsletter' ? '💌 Newsletter' : 'Article'}
                   </Badge>
-                  <PublishDate date={item.date} className="text-xs text-gray-500" />
+                  <PublishDate
+                    date={item.date}
+                    className="text-xs text-gray-500"
+                  />
                 </div>
                 <Heading as="h3" className="m-0 text-lg font-semibold">
                   <Link

@@ -1,8 +1,8 @@
-import Link from '@components/Link';
 import { MDXRemote } from 'next-mdx-remote';
 
 import { Badge } from '@components/Badge';
 import Breadcrumbs from '@components/Breadcrumbs/Breadcrumbs';
+import Link from '@components/Link';
 import { SeriesNavigation } from '@components/Series/SeriesNavigation';
 import { StructuredData } from '@components/StructuredData';
 import type { BlogPost, Newsletter } from '@data/content-types';
@@ -112,11 +112,15 @@ const FullPost: React.FC<FullPostProps> = ({
           <div className="mx-auto mb-4 max-w-[75ch]">
             <Breadcrumbs crumbs={breadcrumbs} className="mb-4" />
             <TitleBadge post={post} />
-            <Heading as="h1" className="m-0 mt-2 p-0" data-pagefind-meta="title">
+            <Heading
+              as="h1"
+              className="m-0 mt-2 p-0"
+              data-pagefind-meta="title"
+            >
               {title}
             </Heading>
             {series && (
-              <p className="my-2 text-sm text-gray-700 uppercase italic">
+              <p className="my-2 text-sm uppercase italic text-gray-700">
                 <span>Part of the </span>
                 <Link href={`/series/${series.slug}`} className="font-medium">
                   {series.name}
@@ -137,7 +141,9 @@ const FullPost: React.FC<FullPostProps> = ({
           <main className="mx-auto flex flex-col-reverse content-center justify-center gap-4 md:flex md:flex-row lg:gap-8">
             <article className="max-w-prose" data-pagefind-body>
               {/* Pagefind scopes data-pagefind-meta to the body element; repeat title here so it's captured */}
-              <span className="sr-only" data-pagefind-meta="title">{title}</span>
+              <span className="sr-only" data-pagefind-meta="title">
+                {title}
+              </span>
               {series && (
                 <div className="mb-6">
                   <SeriesNavigation series={series} />

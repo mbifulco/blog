@@ -1,5 +1,4 @@
 import Link from '@components/Link';
-
 import config from '../config';
 import RelatedContentLinksByTag from './RelatedContent/RelatedContentLinksByTag';
 import { SocialLinks } from './SocialLinks';

@@ -23,7 +23,6 @@ Traffic here is steady, but not especially high. Something didn't add up.
 
 So I did what I probably should have done sooner and opened the analytics dashboard.
 
-
 ## It turned out nothing was wrong
 
 The bandwidth wasn't coming from bots, scraping, or hotlinking. It was coming from **Fast Origin Transfer**, which in Vercel's world is largely driven by prefetching.
@@ -54,8 +53,8 @@ Rather than touching every `<Link>` by hand, I added a small wrapper component t
 
 ```tsx
 // src/components/Link/Link.tsx
-import NextLink from 'next/link';
 import type { ComponentProps } from 'react';
+import NextLink from 'next/link';
 
 type LinkProps = ComponentProps<typeof NextLink>;
 
@@ -76,6 +75,7 @@ Then I updated imports across the site to use this wrapper instead of next/link 
 - import Link from 'next/link';
 + import Link from '@components/Link';
 ```
+
 For the small set of links people are most likely to click, primarily the main navigation, I opted back into prefetching explicitly.
 
 ```tsx
@@ -92,11 +92,11 @@ The number of background prefetch requests dropped immediately. Instead of sixty
 
 Based on early numbers and bundle sizes, I'm seeing something in the range of a 40 to 60 percent reduction in bandwidth usage. That's the difference between flirting with Vercel's free tier limits and staying comfortably under them.
 
-| Metric | Before | After |
-|--------|--------|-------|
-| Viewport prefetch | All visible links | Primary navigation only |
-| Hover prefetch | Yes | Yes |
-| Background bandwidth | ~15 GB/mo | Estimated 6-9 GB/mo |
+| Metric               | Before            | After                   |
+| -------------------- | ----------------- | ----------------------- |
+| Viewport prefetch    | All visible links | Primary navigation only |
+| Hover prefetch       | Yes               | Yes                     |
+| Background bandwidth | ~15 GB/mo         | Estimated 6-9 GB/mo     |
 
 ## When this is worth doing
 
@@ -121,7 +121,6 @@ The main downside is that the first click to a non-prefetched page might be slig
 In practice, I haven't noticed it. Most people hover before clicking, and hover-triggered prefetching still kicks in. The perceived speed is nearly identical.
 
 The wrapper component adds a small abstraction, but it also gives me a single place to control this behavior site-wide. If Next.js changes their defaults again, and they will, I only have one file to update.
-
 
 ## Follow-up: another important change
 
@@ -158,5 +157,3 @@ If you're dealing with this too, these are worth reading:
 - [`<Link>` prefetching behavior](https://github.com/vercel/next.js/discussions/60581)
 
 If you've run into similar surprises, I'm always curious to hear about them. You can find me on [Bluesky](https://bsky.app/profile/mikebifulco.com) or [Threads](https://threads.net/@irreverentmike).
-
-

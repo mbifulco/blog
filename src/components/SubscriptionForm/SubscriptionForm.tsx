@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
 import useNewsletterStats from '@hooks/useNewsletterStats';
+import type { SubscribeMutationResponse } from '@server/routers/mailingList';
 import posthog from 'posthog-js';
 import { toast } from 'sonner';
 
 import Button from '@components/Button';
 import { Input } from '@ui/input';
 import { trpc } from '@utils/trpc';
-import type { SubscribeMutationResponse } from '@server/routers/mailingList';
 
 type SubscriptionFormProps = {
   tags?: string[];
@@ -28,7 +28,7 @@ const SubscriptionForm: React.FC<SubscriptionFormProps> = ({
     setFormLoadedAt(Date.now());
   }, []);
 
-    const addSubscriberMutation = trpc.mailingList.subscribe.useMutation({
+  const addSubscriberMutation = trpc.mailingList.subscribe.useMutation({
     onSuccess: (data: SubscribeMutationResponse) => {
       // Check if this is the "already subscribed" case
       if (data.error?.name === 'already_subscribed') {
@@ -89,7 +89,8 @@ const SubscriptionForm: React.FC<SubscriptionFormProps> = ({
         const fieldErrors = errorData.data.zodError.fieldErrors;
         if (fieldErrors.email) {
           toast.error('Invalid email address', {
-            description: 'Please enter a valid email address (e.g., person@gmail.com)',
+            description:
+              'Please enter a valid email address (e.g., person@gmail.com)',
           });
         } else if (fieldErrors.firstName) {
           toast.error('Missing first name', {
@@ -138,14 +139,17 @@ const SubscriptionForm: React.FC<SubscriptionFormProps> = ({
     const hasExcessiveCaseTransitions = caseTransitions >= 3;
 
     // Check for excessive consonants (>4 in a row)
-    const hasExcessiveConsonants = /[bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ]{5,}/.test(name);
+    const hasExcessiveConsonants =
+      /[bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ]{5,}/.test(name);
 
     // Check vowel ratio (should have at least 20% vowels in a normal name)
     const vowelCount = (name.match(/[aeiouAEIOU]/g) || []).length;
     const vowelRatio = vowelCount / name.length;
     const hasLowVowelRatio = vowelRatio < 0.2 && name.length > 4;
 
-    return hasExcessiveCaseTransitions || hasExcessiveConsonants || hasLowVowelRatio;
+    return (
+      hasExcessiveCaseTransitions || hasExcessiveConsonants || hasLowVowelRatio
+    );
   };
 
   const handleSubmission = (e: React.FormEvent<HTMLFormElement>) => {
@@ -191,7 +195,8 @@ const SubscriptionForm: React.FC<SubscriptionFormProps> = ({
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       toast.error('Invalid email address', {
-        description: 'Please enter a valid email address (e.g., person@gmail.com)',
+        description:
+          'Please enter a valid email address (e.g., person@gmail.com)',
         duration: 5000,
       });
       return;
@@ -214,8 +219,6 @@ const SubscriptionForm: React.FC<SubscriptionFormProps> = ({
       formLoadedAt: formLoadedAt ?? undefined,
     });
   };
-
-
 
   if (
     (addSubscriberMutation.isSuccess && !alreadySubscribed) ||
@@ -261,7 +264,7 @@ const SubscriptionForm: React.FC<SubscriptionFormProps> = ({
                 autoComplete="off"
               />
               <Input
-                className="h-10 w-full grow rounded-t rounded-b-none border border-b-0 border-solid border-pink-600 bg-white px-[2ch] py-[1ch] font-normal text-gray-950"
+                className="h-10 w-full grow rounded-b-none rounded-t border border-b-0 border-solid border-pink-600 bg-white px-[2ch] py-[1ch] font-normal text-gray-950"
                 aria-label="First Name"
                 name="fields[first_name]"
                 required
@@ -281,7 +284,7 @@ const SubscriptionForm: React.FC<SubscriptionFormProps> = ({
               <Button
                 type="submit"
                 data-element="submit"
-                className="formkit-submit formkit-submit padding-[1ch 2ch] h-10 grow rounded-t-none rounded-b font-normal"
+                className="formkit-submit formkit-submit padding-[1ch 2ch] h-10 grow rounded-b rounded-t-none font-normal"
               >
                 <div className="formkit-spinner">
                   <div></div>

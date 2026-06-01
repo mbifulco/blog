@@ -1,5 +1,4 @@
 import type { BlogPost, Newsletter } from '@data/content-types';
-
 import { getPostBySlug } from './blog';
 import { getNewsletterBySlug } from './newsletters';
 import { getContentForTag } from './tags';

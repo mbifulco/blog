@@ -1,10 +1,10 @@
 import type { GetStaticPaths, GetStaticProps, NextPage } from 'next';
-import Link from '@components/Link';
 import { compareDesc } from 'date-fns';
 
 import { Badge } from '@components/Badge';
 import Breadcrumbs from '@components/Breadcrumbs/Breadcrumbs';
 import { Heading } from '@components/Heading';
+import Link from '@components/Link';
 import NewsletterItem from '@components/NewsletterFeed/NewsletterItem';
 import { NewsletterSignup } from '@components/NewsletterSignup';
 import { BlogPost as Post } from '@components/Post';
@@ -68,10 +68,7 @@ const TopicPage: NextPage<TopicPageProps> = ({ topic }) => {
       contentType: 'newsletter' as const,
     })),
   ].sort((a, b) =>
-    compareDesc(
-      new Date(a.frontmatter.date),
-      new Date(b.frontmatter.date)
-    )
+    compareDesc(new Date(a.frontmatter.date), new Date(b.frontmatter.date))
   );
 
   const breadcrumbs = [
@@ -85,11 +82,7 @@ const TopicPage: NextPage<TopicPageProps> = ({ topic }) => {
 
   return (
     <>
-      <SEO
-        title={pageTitle}
-        description={topic.description}
-        ogType="article"
-      />
+      <SEO title={pageTitle} description={topic.description} ogType="article" />
       <StructuredData structuredData={structuredData} />
 
       <div className="mx-auto flex max-w-6xl flex-col gap-6">
@@ -107,9 +100,7 @@ const TopicPage: NextPage<TopicPageProps> = ({ topic }) => {
           <Heading as="h1" className="mb-3 text-4xl">
             {topic.name}
           </Heading>
-          <p className="text-lg text-gray-600">
-            {topic.description}
-          </p>
+          <p className="text-lg text-gray-600">{topic.description}</p>
           <div className="mt-4 flex flex-wrap gap-2">
             {topic.tags.map((tag) => (
               <Link
@@ -125,9 +116,7 @@ const TopicPage: NextPage<TopicPageProps> = ({ topic }) => {
 
         <div className="flex items-center justify-between border-b border-gray-200 pb-4">
           <span className="text-gray-600">
-            <strong className="text-gray-900">
-              {topic.totalCount}
-            </strong>{' '}
+            <strong className="text-gray-900">{topic.totalCount}</strong>{' '}
             articles in this topic
           </span>
         </div>

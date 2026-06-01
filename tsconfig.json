@@ -1,10 +1,6 @@
 {
   "compilerOptions": {
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -21,33 +17,15 @@
     "target": "ES2022",
     "baseUrl": ".",
     "paths": {
-      "@components/*": [
-        "src/components/*"
-      ],
-      "@data/*": [
-        "src/data/*"
-      ],
-      "@hooks/*": [
-        "src/hooks/*"
-      ],
-      "@layouts/*": [
-        "src/components/layouts/*"
-      ],
-      "@lib/*": [
-        "src/lib/*"
-      ],
-      "@utils/*": [
-        "src/utils/*"
-      ],
-      "@server/*": [
-        "src/server/*"
-      ],
-      "@/config": [
-        "src/config.ts"
-      ],
-      "@ui/*": [
-        "src/components/ui/*"
-      ]
+      "@components/*": ["src/components/*"],
+      "@data/*": ["src/data/*"],
+      "@hooks/*": ["src/hooks/*"],
+      "@layouts/*": ["src/components/layouts/*"],
+      "@lib/*": ["src/lib/*"],
+      "@utils/*": ["src/utils/*"],
+      "@server/*": ["src/server/*"],
+      "@/config": ["src/config.ts"],
+      "@ui/*": ["src/components/ui/*"]
     },
     "plugins": [
       {
@@ -66,7 +44,5 @@
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts"
   ],
-  "exclude": [
-    "node_modules"
-  ]
+  "exclude": ["node_modules"]
 }

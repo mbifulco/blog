@@ -3,7 +3,8 @@ import type { Metadata } from 'next';
 import { cn } from '@utils/cn';
 
 const title = '💌 Tiny Improvements Newsletter, from Mike Bifulco';
-const description = 'Subscribe to 💌 Tiny Improvements - weekly newsletter for startup founders, indiehackers, and product builders';
+const description =
+  'Subscribe to 💌 Tiny Improvements - weekly newsletter for startup founders, indiehackers, and product builders';
 const ogImage = {
   url: 'https://asset.cloudinary.com/mikebifulco-com/b4c9d86b86a1c54aa0edd9592eb2475e',
   width: 1200,

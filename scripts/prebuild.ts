@@ -13,7 +13,10 @@ function runScript(script: string): Promise<void> {
     child.on('error', (err) => reject(err));
     child.on('close', (code, signal) => {
       if (code === 0) resolve();
-      else reject(new Error(`${script} exited with code ${code ?? `signal ${signal}`}`));
+      else
+        reject(
+          new Error(`${script} exited with code ${code ?? `signal ${signal}`}`)
+        );
     });
   });
 }

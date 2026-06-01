@@ -13,7 +13,7 @@ const PodcastSidebar: React.FC = () => {
   return (
     <>
       {/* Desktop: sticky gutter player */}
-      <aside className="pointer-events-none fixed top-24 right-4 z-10 hidden w-[300px] xl:block">
+      <aside className="pointer-events-none fixed right-4 top-24 z-10 hidden w-[300px] xl:block">
         <div className="pointer-events-auto">
           <iframe
             width="100%"
