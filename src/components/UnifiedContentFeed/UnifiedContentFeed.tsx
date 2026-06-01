@@ -1,11 +1,11 @@
-import Link from '@components/Link';
 import { format } from 'date-fns';
 import posthog from 'posthog-js';
 
 import { Image } from '@components/Image';
+import Link from '@components/Link';
 import NewsletterSignup from '@components/NewsletterSignup';
 import type { UnifiedFeedItem } from '@lib/unified-feed';
-import { getItemPath, getImagePublicId } from '@lib/unified-feed';
+import { getImagePublicId, getItemPath } from '@lib/unified-feed';
 
 type UnifiedContentFeedProps = {
   items: UnifiedFeedItem[];
@@ -48,8 +48,11 @@ const FeaturedCard: React.FC<{ item: UnifiedFeedItem }> = ({ item }) => {
           {item.title}
         </Link>
       </h3>
-      <p className="mt-1 text-base text-balance text-gray-600">
-        <time dateTime={new Date(item.date).toISOString()} className="font-medium font-mono text-gray-500">
+      <p className="mt-1 text-balance text-base text-gray-600">
+        <time
+          dateTime={new Date(item.date).toISOString()}
+          className="font-mono font-medium text-gray-500"
+        >
           {formatDate(item.date)}
         </time>
         {item.excerpt && <> {item.excerpt}</>}
@@ -73,7 +76,7 @@ const MediumCard: React.FC<{ item: UnifiedFeedItem }> = ({ item }) => {
           loading="lazy"
         />
       </Link>
-      <h3 className="m-0 p-0 text-lg font-semibold text-balance">
+      <h3 className="m-0 text-balance p-0 text-lg font-semibold">
         <Link
           className="text-pink-600 no-underline hover:underline"
           href={path}
@@ -83,7 +86,10 @@ const MediumCard: React.FC<{ item: UnifiedFeedItem }> = ({ item }) => {
         </Link>
       </h3>
       <p className="mt-1 line-clamp-2 text-sm text-gray-600">
-        <time dateTime={new Date(item.date).toISOString()} className="font-semibold text-gray-500">
+        <time
+          dateTime={new Date(item.date).toISOString()}
+          className="font-semibold text-gray-500"
+        >
           {formatDate(item.date)}
         </time>
         {item.excerpt && <> {item.excerpt}</>}
@@ -107,7 +113,7 @@ const CompactCard: React.FC<{ item: UnifiedFeedItem }> = ({ item }) => {
           loading="lazy"
         />
       </Link>
-      <h3 className="m-0 p-0 text-sm font-semibold text-balance">
+      <h3 className="m-0 text-balance p-0 text-sm font-semibold">
         <Link
           className="text-pink-600 no-underline hover:underline"
           href={path}
@@ -117,7 +123,10 @@ const CompactCard: React.FC<{ item: UnifiedFeedItem }> = ({ item }) => {
         </Link>
       </h3>
       <p className="mt-1 line-clamp-2 text-xs text-gray-600">
-        <time dateTime={new Date(item.date).toISOString()} className="font-semibold text-gray-500">
+        <time
+          dateTime={new Date(item.date).toISOString()}
+          className="font-semibold text-gray-500"
+        >
           {formatDate(item.date)}
         </time>
         {item.excerpt && <> {item.excerpt}</>}

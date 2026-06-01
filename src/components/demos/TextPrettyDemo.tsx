@@ -71,7 +71,12 @@ export const TextPrettyDemo = () => {
               Default
             </p>
             {paragraphs.map((text, i) => (
-              <p key={i} className={paraClass} lang="en" style={{ textWrap: 'wrap' }}>
+              <p
+                key={i}
+                className={paraClass}
+                lang="en"
+                style={{ textWrap: 'wrap' }}
+              >
                 {text}
               </p>
             ))}
@@ -82,7 +87,12 @@ export const TextPrettyDemo = () => {
               text-wrap: pretty
             </p>
             {paragraphs.map((text, i) => (
-              <p key={i} className={paraClass} lang="en" style={{ textWrap: 'pretty' }}>
+              <p
+                key={i}
+                className={paraClass}
+                lang="en"
+                style={{ textWrap: 'pretty' }}
+              >
                 {text}
               </p>
             ))}
@@ -99,7 +109,10 @@ export const TextPrettyDemo = () => {
               ? 'border-pink-200 bg-pink-50'
               : 'border-slate-200 bg-white'
           }`}
-          style={{ paddingLeft: `${(100 - width) / 2}%`, paddingRight: `${(100 - width) / 2}%` }}
+          style={{
+            paddingLeft: `${(100 - width) / 2}%`,
+            paddingRight: `${(100 - width) / 2}%`,
+          }}
         >
           <p
             className={`mb-3 text-xs font-bold uppercase tracking-widest ${
@@ -149,7 +162,9 @@ export const TextPrettyDemo = () => {
                   : 'bg-slate-100 text-slate-700'
               }`}
             >
-              {prettyEnabled ? 'text-wrap: pretty ✓' : 'text-wrap: pretty — tap to enable'}
+              {prettyEnabled
+                ? 'text-wrap: pretty ✓'
+                : 'text-wrap: pretty — tap to enable'}
             </button>
           </div>
         </div>

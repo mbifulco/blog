@@ -1,6 +1,5 @@
 'use client';
 
-import Link from '@components/Link';
 import { useRouter } from 'next/router';
 import {
   Disclosure,
@@ -9,6 +8,8 @@ import {
 } from '@headlessui/react';
 import { Menu, Search, X } from 'lucide-react';
 
+import Link from '@components/Link';
+import { useSearch } from '@components/Search/SearchContext';
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -24,7 +25,6 @@ import {
   TooltipTrigger,
 } from '@components/ui/tooltip';
 import clsxm from '@utils/clsxm';
-import { useSearch } from '@components/Search/SearchContext';
 
 const topics = [
   {
@@ -167,7 +167,12 @@ const Navbar = () => {
 
                     {/* Podcast - Simple Link */}
                     <NavigationMenuItem>
-                      <Link href="/podcast" prefetch={true} legacyBehavior passHref>
+                      <Link
+                        href="/podcast"
+                        prefetch={true}
+                        legacyBehavior
+                        passHref
+                      >
                         <NavigationMenuLink
                           className={clsxm(
                             'group inline-flex h-9 w-max items-center justify-center rounded-md bg-transparent px-4 py-2 text-sm font-semibold uppercase text-gray-700 transition-colors hover:bg-gray-100'
@@ -180,7 +185,12 @@ const Navbar = () => {
 
                     {/* About - Simple Link */}
                     <NavigationMenuItem>
-                      <Link href="/about" prefetch={true} legacyBehavior passHref>
+                      <Link
+                        href="/about"
+                        prefetch={true}
+                        legacyBehavior
+                        passHref
+                      >
                         <NavigationMenuLink
                           className={clsxm(
                             'group inline-flex h-9 w-max items-center justify-center rounded-md bg-transparent px-4 py-2 text-sm font-semibold uppercase text-gray-700 transition-colors hover:bg-gray-100'
@@ -238,7 +248,7 @@ const Navbar = () => {
 
               {/* Mobile menu button */}
               <div className="-mr-2 flex items-center sm:hidden">
-                <DisclosureButton className="focus:outline-none relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:ring-2 focus:ring-inset focus:ring-pink-500">
+                <DisclosureButton className="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-pink-500">
                   <span className="absolute -inset-0.5" />
                   <span className="sr-only">Open main menu</span>
                   {open ? (

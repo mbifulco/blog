@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react';
-import { describe, it, expect, vi } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
+
 import SearchPage from '../../pages/search';
 
 // nuqs requires the NuqsAdapter — use the test adapter in unit tests
@@ -27,7 +28,10 @@ describe('SearchPage', () => {
 
   it('shows no results message when query is set but results are empty', async () => {
     const { useQueryState } = vi.mocked(await import('nuqs'));
-    (useQueryState as ReturnType<typeof vi.fn>).mockReturnValue(['react', vi.fn()]);
+    (useQueryState as ReturnType<typeof vi.fn>).mockReturnValue([
+      'react',
+      vi.fn(),
+    ]);
 
     render(<SearchPage />);
     expect(screen.getByText(/no results for "react"/i)).toBeInTheDocument();

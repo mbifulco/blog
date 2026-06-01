@@ -16,8 +16,6 @@ Where `balance` is perfect for making your headings feel cleaner and a little ea
 
 In short: `text-wrap: pretty` helps make sure the last sentences in paragraphs don't end up with an orphaned word or two on their last line.
 
-
-
 ## What is text-wrap: pretty?
 
 `text-wrap: pretty` is a newer CSS value that tells the browser to avoid awkward line breaks when wrapping text.
@@ -27,8 +25,6 @@ Instead of just filling lines as efficiently as possible, the renderer uses an a
 Fundamentally, it means fewer orphaned words at the end of paragraphs, and fewer cases where multiple consecutive lines have hyphenated breaks.
 
 It is subtle, but the end result is a lot more like hand-laid typography from the golden age of print.
-
-
 
 ### Why this matters: Better UX
 
@@ -48,16 +44,12 @@ Most people will never point at your site and say “nice line breaks.”
 
 But they will feel the difference.
 
-
-
 ### Pretty vs Balance
 
 These two are easy to confuse, but they solve different problems:
 
 - `text-wrap: balance` → makes lines similar in length (great for **headings**)
 - `text-wrap: pretty` → avoids awkward breaks (great for **paragraph text**)
-
-
 
 ## See it in action
 
@@ -66,8 +58,6 @@ On desktop, drag the slider to narrow the column. On mobile, tap the toggle and 
 <TextPrettyDemo />
 
 <br />
-
-
 
 ## How to use it: CSS
 
@@ -81,28 +71,21 @@ That is it.
 
 Like `balance`, this is one of those rare features that gives you a real UX improvement for almost no effort.
 
-
-
 ## How to use it: Tailwind
 
 Tailwind now supports this as well:
 
 ```html
-<p class="text-pretty">
-  Your text here
-</p>
+<p class="text-pretty">Your text here</p>
 ```
 
 If you already adopted `text-balance` for headings, this pairs nicely with it.
-
-
 
 ## Can I use it yet?
 
 In general, yes. According to [Can I Use](https://caniuse.com/wf-text-wrap-pretty), it is supported by most major browsers. The good news is that the fallback is harmless: the text will wrap as it normally would without the property.
 
 So: go for it! Use this rule where it makes sense in your page designs. There's essentially no downside.
-
 
 ## Related Reading
 

@@ -1,5 +1,4 @@
 import Link from '@components/Link';
-
 import type { NewsletterItemProps } from '../../data/content-types';
 import formatDate from '../../utils/format-date';
 import { getCloudinaryImageUrl } from '../../utils/images';
@@ -15,10 +14,10 @@ const NewsletterItem: React.FC<NewsletterItemProps> = ({ newsletter }) => {
     <div className="w-full overflow-hidden bg-white">
       <Link
         href={`/newsletter/${slug}`}
-        className="m-0 block aspect-1200/630 max-w-full"
+        className="aspect-1200/630 m-0 block max-w-full"
       >
         <div
-          className="aspect-1200/630 h-full min-h-[205px] bg-cover p-0 m-0 object-cover"
+          className="aspect-1200/630 m-0 h-full min-h-[205px] bg-cover object-cover p-0"
           style={{
             backgroundImage: `url('${getCloudinaryImageUrl(
               coverImagePublicId
@@ -30,7 +29,7 @@ const NewsletterItem: React.FC<NewsletterItemProps> = ({ newsletter }) => {
         <Heading as="h3" className="text-xl text-pink-600">
           <Link href={`/newsletter/${slug}`}>{title}</Link>
         </Heading>
-        <p className="hidden text-sm text-gray-500 uppercase lg:visible">
+        <p className="hidden text-sm uppercase text-gray-500 lg:visible">
           {formatDate(date)}
         </p>
         <p className="line-clamp-3 overflow-y-hidden text-ellipsis text-gray-600">

@@ -6,12 +6,12 @@ import type {
   HTMLProps,
   ReactElement,
 } from 'react';
-import Link from '@components/Link';
 import Script from 'next/script';
 import { MDXProvider } from '@mdx-js/react';
 import type { MDXComponents } from 'mdx/types';
 import { Highlight, themes } from 'prism-react-renderer';
 
+import Link from '@components/Link';
 import { PullQuote } from '@components/PullQuote';
 import clsxm from '@utils/clsxm';
 // one off component imports
@@ -82,14 +82,14 @@ const H6: React.FC<HeadingProps> = (props) => (
 );
 
 const P: React.FC<HTMLAttributes<HTMLParagraphElement>> = (props) => (
-  <p className="font-serif text-xl text-pretty" {...props} />
+  <p className="text-pretty font-serif text-xl" {...props} />
 );
 
 const Blockquote: React.FC<HTMLAttributes<HTMLQuoteElement>> = ({
   children,
 }) => {
   return (
-    <blockquote className="border-l-4 border-pink-400 bg-gray-100 p-3 text-pretty">
+    <blockquote className="text-pretty border-l-4 border-pink-400 bg-gray-100 p-3">
       {children}
     </blockquote>
   );
@@ -104,7 +104,7 @@ const CustomLink: React.FC<CustomLinkProps> = ({ children, ...props }) => {
 const Colophon = () => {
   return (
     <div
-      className="mt-12 mb-6 flex flex-row gap-2 font-bold text-pink-400"
+      className="mb-6 mt-12 flex flex-row gap-2 font-bold text-pink-400"
       aria-hidden
     >
       <div className="flex flex-row gap-5">
@@ -123,7 +123,7 @@ const Aside: React.FC<AsideProps> = ({ type = 'default', ...props }) => {
   return (
     <aside
       className={clsxm(
-        'my-8 -ml-8 border-l-8 border-solid px-8 py-4 text-pretty',
+        'my-8 -ml-8 text-pretty border-l-8 border-solid px-8 py-4',
         type === 'default' && 'border-pink-400 bg-pink-50 text-pink-900',
         type === 'info' && 'border-yellow-400 bg-yellow-50 text-yellow-900',
         type === 'note' && 'border-green-400 bg-green-50 text-green-900',
@@ -145,13 +145,11 @@ const TextHighlight = ({ key: _, ...rest }: HTMLProps<HTMLElement>) => (
   />
 );
 
-const InlineCode: React.FC<HTMLAttributes<HTMLElement>> = ({
-  ...props
-}) => {
+const InlineCode: React.FC<HTMLAttributes<HTMLElement>> = ({ ...props }) => {
   return (
     <code
       {...props}
-      className="inline bg-slate-100 border border-slate-200 text-slate-700 rounded-sm font-mono text-sm px-[0.5ch] py-[0.1ch]"
+      className="inline rounded-sm border border-slate-200 bg-slate-100 px-[0.5ch] py-[0.1ch] font-mono text-sm text-slate-700"
     />
   );
 };
@@ -258,7 +256,7 @@ const ListItemComponent: React.FC<HTMLAttributes<HTMLLIElement>> = ({
 
 const HorizontalRule = () => {
   return (
-    <div className="mx-auto mt-12 mb-8 w-[50%] max-w-[50%] rounded-sm border-b-[5px] border-solid border-pink-400" />
+    <div className="mx-auto mb-8 mt-12 w-[50%] max-w-[50%] rounded-sm border-b-[5px] border-solid border-pink-400" />
   );
 };
 

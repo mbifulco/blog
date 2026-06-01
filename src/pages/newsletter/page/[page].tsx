@@ -117,7 +117,7 @@ const NewsletterPage: React.FC<NewsletterPageProps> = ({
         <>
           <Heading
             as="h2"
-            className="mt-10 mb-4 text-xl text-black"
+            className="mb-4 mt-10 text-xl text-black"
             id="latest"
           >
             💌 Read the latest dispatch
@@ -126,10 +126,10 @@ const NewsletterPage: React.FC<NewsletterPageProps> = ({
         </>
       )}
 
-      <Heading as="h2" className="mt-4 mb-4 text-xl text-black" id="past">
+      <Heading as="h2" className="mb-4 mt-4 text-xl text-black" id="past">
         Read past dispatches
       </Heading>
-      <div className="grid-cols-auto-fit-min-300 grid gap-5">
+      <div className="grid grid-cols-auto-fit-min-300 gap-5">
         {(pagination.currentPage === 1 ? pastNewsletters : newsletters).map(
           (newsletter) => {
             if (!newsletter || !newsletter.frontmatter) return null;

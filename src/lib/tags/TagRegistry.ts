@@ -70,7 +70,9 @@ export class TagRegistry {
   getTagContentCount(tag: string): number {
     const content = this.tags[tag];
     if (!content) return 0;
-    return content.post.length + content.newsletter.length + content.article.length;
+    return (
+      content.post.length + content.newsletter.length + content.article.length
+    );
   }
 
   /**
@@ -85,8 +87,6 @@ export class TagRegistry {
       count: this.getTagContentCount(tag),
     }));
 
-    return tagCounts
-      .sort((a, b) => b.count - a.count)
-      .slice(0, limit);
+    return tagCounts.sort((a, b) => b.count - a.count).slice(0, limit);
   }
 }

@@ -1,11 +1,11 @@
 import { useEffect, useRef } from 'react';
+import { usePagefind } from '@hooks/usePagefind';
+import type { PagefindResultData } from '@hooks/usePagefind';
 import { useQueryState } from 'nuqs';
 
-import SEO from '@components/seo';
 import { Badge } from '@components/Badge';
 import Link from '@components/Link';
-import { usePagefind } from '@hooks/usePagefind';
-import type {PagefindResultData} from '@hooks/usePagefind';
+import SEO from '@components/seo';
 
 const SearchResultCard = ({ result }: { result: PagefindResultData }) => (
   <article className="flex flex-col gap-2">
@@ -15,7 +15,10 @@ const SearchResultCard = ({ result }: { result: PagefindResultData }) => (
       </Badge>
     </div>
     <h2 className="text-xl font-semibold">
-      <Link href={result.url} className="text-pink-600 hover:underline no-underline">
+      <Link
+        href={result.url}
+        className="text-pink-600 no-underline hover:underline"
+      >
         {result.meta.title}
       </Link>
     </h2>
@@ -49,7 +52,9 @@ const SearchPage = () => {
         <input
           type="search"
           value={query}
-          onChange={(e) => void setQuery(e.target.value !== '' ? e.target.value : null)}
+          onChange={(e) =>
+            void setQuery(e.target.value !== '' ? e.target.value : null)
+          }
           placeholder="Search posts and newsletters…"
           className="w-full rounded-md border border-gray-300 px-4 py-2 text-base focus:outline-none focus:ring-2 focus:ring-pink-500"
           autoFocus

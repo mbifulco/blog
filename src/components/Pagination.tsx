@@ -71,7 +71,7 @@ const PaginationWrapper: React.FC<PaginationWrapperProps> = ({
   }
 
   return (
-    <Pagination className="mt-8 mb-4">
+    <Pagination className="mb-4 mt-8">
       <PaginationContent>
         {hasPreviousPage && (
           <PaginationItem>

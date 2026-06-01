@@ -94,7 +94,6 @@ export type Article = MarkdownDocument & {
   } & BaseFrontmatter;
 };
 
-
 export const ContentTypes = {
   Post: 'post',
   Newsletter: 'newsletter',

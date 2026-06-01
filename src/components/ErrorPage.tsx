@@ -26,12 +26,17 @@ const ErrorPage: React.FC<ErrorPageProps> = ({
 
     // Also capture as an exception for error tracking
     if (statusCode) {
-      posthog.captureException(new Error(`Error page ${statusCode}: ${message || title}`));
+      posthog.captureException(
+        new Error(`Error page ${statusCode}: ${message || title}`)
+      );
     }
   };
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-white" onMouseEnter={handleErrorPageViewed}>
+    <div
+      className="flex min-h-screen flex-col items-center justify-center bg-white"
+      onMouseEnter={handleErrorPageViewed}
+    >
       <h1 className="text-6xl font-bold text-gray-800">
         {statusCode ? statusCode : title ? title : 'Error'}
       </h1>

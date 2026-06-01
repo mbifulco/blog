@@ -9,7 +9,6 @@
  *
  * Usage: npx tsx scripts/generate-top-tags.ts
  */
-
 import * as fs from 'fs';
 import * as path from 'path';
 
@@ -43,7 +42,9 @@ async function main() {
   );
 
   console.log(`Generated ${OUTPUT_FILE}`);
-  console.log(`Top tags: ${topTags.map((t) => `${t.tag} (${t.count})`).join(', ')}`);
+  console.log(
+    `Top tags: ${topTags.map((t) => `${t.tag} (${t.count})`).join(', ')}`
+  );
 }
 
 main().catch((error) => {

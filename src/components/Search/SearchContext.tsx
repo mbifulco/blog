@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState } from 'react';
 import type { Dispatch, SetStateAction } from 'react';
 
 type SearchContextValue = {
@@ -11,11 +11,7 @@ const SearchContext = createContext<SearchContextValue>({
   setOpen: () => undefined,
 });
 
-export const SearchProvider = ({
-  children,
-}: {
-  children: React.ReactNode;
-}) => {
+export const SearchProvider = ({ children }: { children: React.ReactNode }) => {
   const [open, setOpen] = useState(false);
   return (
     <SearchContext.Provider value={{ open, setOpen }}>

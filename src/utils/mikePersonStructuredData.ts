@@ -78,7 +78,7 @@ export const personStructuredData: StructuredDataWithType = {
     'PostHog',
     'Linear',
     'Craftwork',
-    'APIs You Won\'t Hate',
+    "APIs You Won't Hate",
     'Y Combinator',
   ],
   description:

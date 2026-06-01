@@ -1,6 +1,6 @@
 import type { GetStaticProps, NextPage } from 'next';
-import Link from '@components/Link';
 
+import Link from '@components/Link';
 import NewsletterSignup from '@components/NewsletterSignup/NewsletterBannerFancy';
 import SEO from '@components/seo';
 import { Subtitle } from '@components/Subtitle';
@@ -54,9 +54,7 @@ const TopicsPage: NextPage<TopicsPageProps> = ({ topics }) => {
                   {topic.name}
                 </h2>
               </div>
-              <p className="mb-3 text-gray-600">
-                {topic.description}
-              </p>
+              <p className="mb-3 text-gray-600">{topic.description}</p>
               <div className="flex items-center gap-2 text-sm text-gray-500">
                 <span className="font-medium text-pink-600">
                   {topic.totalCount} articles

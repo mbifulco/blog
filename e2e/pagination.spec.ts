@@ -68,9 +68,7 @@ test.describe('Pagination', () => {
       await expect(page).toHaveURL('/');
     });
 
-    test('should handle invalid page numbers gracefully', async ({
-      page,
-    }) => {
+    test('should handle invalid page numbers gracefully', async ({ page }) => {
       // In production (fallback: false), these 404.
       // In dev, getStaticProps always runs so they redirect to 200.
       const response = await page.goto('/page/999');

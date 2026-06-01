@@ -1,8 +1,8 @@
 ---
-title: "Patching NPM Dependencies with pnpm patch"
-excerpt: "Learn how to patch NPM dependencies with pnpm patch to fix issues with your project."
+title: 'Patching NPM Dependencies with pnpm patch'
+excerpt: 'Learn how to patch NPM dependencies with pnpm patch to fix issues with your project.'
 tags: [javascript, oss, devtools]
-coverImagePublicId: "posts/patching-npm-dependencies-with-pnpm-patch/cover"
+coverImagePublicId: 'posts/patching-npm-dependencies-with-pnpm-patch/cover'
 slug: patching-npm-dependencies-with-pnpm-patch
 date: 11-11-2025
 published: true
@@ -16,7 +16,6 @@ Recently, we needed to patch the [`@payloadcms/storage-uploadthing` package](htt
 
 Here's how we handled it, using `pnpm patch`.
 
-
 ### What is pnpm patch?
 
 [`pnpm patch`](https://pnpm.io/cli/patch) is a tool provided by the pnpm package manager that allows you to patch packages locally—and commit those changes cleanly. It works by creating a patch file that contains the changes you want to make to the package. You can then apply the patch file to the package using `pnpm install`.
@@ -24,6 +23,7 @@ Here's how we handled it, using `pnpm patch`.
 ## The process
 
 Patching a package is a three-step process:
+
 1. Track down the bug
 2. Create a patch file
 3. Apply the patch file to the package
@@ -70,6 +70,7 @@ To preserve your fix and commit it to source control:
 That saves the patch to your repo, and pnpm will re-apply it automatically every time you install dependencies. It also modifies your `package.json` to reference the patched version.
 
 This will add a new entry to your `package.json` like this:
+
 ```json
 "@payloadcms/storage-uploadthing": {
   "patches": {
@@ -88,11 +89,9 @@ This is one part of the workflow that leaves a bit to be desired - if you need t
 
 You _can_ edit the `.patch` file directly, but it's finicky. In most cases, it's easier to remove and re-create the patch.
 
-
 ### Closing the loop with the package maintainer
 
 Your dependency is now patched, and you can commit it to source control to use. This can help provide evidence to open source maintainers that the fix is needed, and that it works. It's good practice to [open a pull request](https://github.com/payloadcms/payload/pull/14250) to the package maintainer with your fix so that they can review it and merge it into the main branch.
-
 
 ### When it's time to remove the patch
 
@@ -110,8 +109,8 @@ Remember that this doesn't automatically update the dependency in your project t
 - Your fix lives in version control, so teammates and CI builds stay in sync
 - It's a fast, repeatable way to patch packages without publishing a fork
 
-
 ## Not using pnpm?
+
 If your team is using a package manager other than pnpm, there are other options that are very similar:
 
 - for `yarn` you can use [`yarn patch`](https://yarnpkg.com/cli/patch)

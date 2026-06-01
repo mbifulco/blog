@@ -1,11 +1,4 @@
-import {
-  Column,
-  Img,
-  Link,
-  Markdown,
-  Row,
-  Text,
-} from 'react-email';
+import { Column, Img, Link, Markdown, Row, Text } from 'react-email';
 
 import { EmailLayout } from './EmailLayout';
 
@@ -53,7 +46,9 @@ export const NewsletterEmail = ({
         <Column>
           <Markdown
             markdownContainerStyles={{ fontSize: 20, lineHeight: 1.6 }}
-            markdownCustomStyles={{ p: { fontSize: '20px', lineHeight: '1.6', color: '#222' } }}
+            markdownCustomStyles={{
+              p: { fontSize: '20px', lineHeight: '1.6', color: '#222' },
+            }}
           >
             {content}
           </Markdown>

@@ -1,5 +1,5 @@
-import type { GetStaticProps, NextPage } from 'next';
 import { useRef } from 'react';
+import type { GetStaticProps, NextPage } from 'next';
 import posthog from 'posthog-js';
 
 import { ExternalWorkItem } from '../components/ExternalWork';

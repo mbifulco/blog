@@ -1,8 +1,9 @@
-import { render, screen, fireEvent } from '@testing-library/react';
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import type { PagefindResultData } from '@hooks/usePagefind';
+import { fireEvent, render, screen } from '@testing-library/react';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+
 import { SearchProvider } from './SearchContext';
 import { SearchModal } from './SearchModal';
-import type { PagefindResultData } from '@hooks/usePagefind';
 
 // Hoist mock fn references so they're available inside vi.mock factories
 const { mockCapture, mockUsePagefind } = vi.hoisted(() => ({
@@ -20,7 +21,9 @@ vi.mock('@hooks/usePagefind', () => ({
   usePagefind: mockUsePagefind,
 }));
 
-const makeResult = (overrides?: Partial<PagefindResultData>): PagefindResultData => ({
+const makeResult = (
+  overrides?: Partial<PagefindResultData>
+): PagefindResultData => ({
   url: '/posts/test',
   meta: { title: 'Test Post' },
   excerpt: 'An excerpt',
@@ -42,7 +45,8 @@ const renderModal = () =>
     </SearchProvider>
   );
 
-const openModal = () => fireEvent.keyDown(document, { key: 'k', metaKey: true });
+const openModal = () =>
+  fireEvent.keyDown(document, { key: 'k', metaKey: true });
 
 beforeEach(() => {
   mockCapture.mockClear();
@@ -108,13 +112,18 @@ describe('SearchModal', () => {
         </SearchProvider>
       );
 
-      expect(mockCapture).not.toHaveBeenCalledWith('search_performed', expect.anything());
+      expect(mockCapture).not.toHaveBeenCalledWith(
+        'search_performed',
+        expect.anything()
+      );
     });
 
     it('captures search_result_clicked with correct properties when a result is selected', () => {
       mockUsePagefind.mockReturnValue({
         ...defaultHookReturn(),
-        results: [makeResult({ url: '/posts/my-post', meta: { title: 'My Post' } })],
+        results: [
+          makeResult({ url: '/posts/my-post', meta: { title: 'My Post' } }),
+        ],
         lastCompletedQuery: 'my post',
       });
 
@@ -146,7 +155,8 @@ describe('SearchModal', () => {
 
       fireEvent.click(screen.getByText('Second Post'));
 
-      expect(mockCapture).toHaveBeenCalledWith('search_result_clicked',
+      expect(mockCapture).toHaveBeenCalledWith(
+        'search_result_clicked',
         expect.objectContaining({ result_position: 1, title: 'Second Post' })
       );
     });

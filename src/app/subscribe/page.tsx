@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import type { SubscribeMutationResponse } from '@server/routers/mailingList';
 import posthog from 'posthog-js';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
@@ -12,7 +13,6 @@ import { Button } from '@ui/button';
 import { Card, CardContent, CardHeader } from '@ui/card';
 import { Input } from '@ui/input';
 import { Label } from '@ui/label';
-import type { SubscribeMutationResponse } from '@server/routers/mailingList';
 import { trpc } from '@utils/trpc';
 import { PostHogPageview } from '../posthog-provider';
 
@@ -139,7 +139,7 @@ export default function NewsletterSignupPage() {
           <CardHeader className="pb-4 text-left">
             <header className="flex flex-col gap-1 text-left">
               <h1
-                className="mb-1 text-3xl font-bold text-balance text-pink-600"
+                className="mb-1 text-balance text-3xl font-bold text-pink-600"
                 data-testid="newsletter-title"
               >
                 Join{' '}
@@ -149,7 +149,7 @@ export default function NewsletterSignupPage() {
                 devs &amp; founders building better.
               </h1>
               <p
-                className="text-muted-foreground mb-2 text-lg"
+                className="mb-2 text-lg text-muted-foreground"
                 data-testid="newsletter-description"
               >
                 One sharp idea each week to help you ship smarter and faster.
@@ -226,11 +226,11 @@ export default function NewsletterSignupPage() {
                 className="rounded-full"
               />
               <div className="flex flex-col">
-                <p className="text-foreground text-sm">💌 Tiny Improvements</p>
-                <p className="text-muted-foreground text-sm font-medium">
+                <p className="text-sm text-foreground">💌 Tiny Improvements</p>
+                <p className="text-sm font-medium text-muted-foreground">
                   <span className="font-normal">by</span> Mike Bifulco
                 </p>
-                <p className="text-muted-foreground text-sm">
+                <p className="text-sm text-muted-foreground">
                   YC founder. Ex-Stripe, Google, Microsoft.
                 </p>
               </div>

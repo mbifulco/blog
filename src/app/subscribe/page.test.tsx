@@ -273,7 +273,7 @@ describe('NewsletterSignupPage', () => {
     const mockMutate = vi.fn().mockImplementation(() => {
       // Simulate successful mutation by calling the captured onSuccess callback
       if (capturedOnSuccess) {
-        capturedOnSuccess({ data: { id: "sub_12345" }, error: null });
+        capturedOnSuccess({ data: { id: 'sub_12345' }, error: null });
       }
     });
 
@@ -282,7 +282,7 @@ describe('NewsletterSignupPage', () => {
     const mockUseMutation = vi.fn().mockImplementation((options) => {
       // Capture the onSuccess callback
       capturedOnSuccess = options?.onSuccess || null;
-      
+
       return {
         mutate: mockMutate,
         mutateAsync: vi.fn(),
@@ -378,7 +378,7 @@ describe('NewsletterSignupPage', () => {
     const mockMutate = vi.fn().mockImplementation(() => {
       // Simulate successful mutation by calling the captured onSuccess callback
       if (capturedOnSuccess) {
-        capturedOnSuccess({ data: { id: "sub_12345" }, error: null });
+        capturedOnSuccess({ data: { id: 'sub_12345' }, error: null });
       }
     });
 
@@ -386,7 +386,7 @@ describe('NewsletterSignupPage', () => {
     const mockUseMutation = vi.fn().mockImplementation((options) => {
       // Capture the onSuccess callback
       capturedOnSuccess = options?.onSuccess || null;
-      
+
       return {
         mutate: mockMutate,
         mutateAsync: vi.fn(),

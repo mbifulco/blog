@@ -19,7 +19,9 @@ export type Context = ReturnType<typeof createContextInner>;
 /**
  * Extract client IP from request headers (Vercel provides x-forwarded-for)
  */
-function getClientIp(req: trpcNext.CreateNextContextOptions['req']): string | null {
+function getClientIp(
+  req: trpcNext.CreateNextContextOptions['req']
+): string | null {
   const forwarded = req.headers['x-forwarded-for'];
   if (typeof forwarded === 'string') {
     // x-forwarded-for can contain multiple IPs, the first is the client
