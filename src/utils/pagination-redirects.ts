@@ -67,4 +67,3 @@ export function handlePaginationRedirects(
 
   return null;
 }
-

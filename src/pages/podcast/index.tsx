@@ -1,8 +1,8 @@
-import Link from '@components/Link';
 import { useRef } from 'react';
 import { Popover } from '@headlessui/react';
 import posthog from 'posthog-js';
 
+import Link from '@components/Link';
 import config from '@/config';
 import NewsletterSignup from '../../components/NewsletterSignup';
 import SEO from '../../components/seo';
@@ -48,7 +48,10 @@ const PodcastPage = () => {
   };
 
   return (
-    <div className="mx-auto flex max-w-4xl flex-col gap-4" onMouseEnter={handlePageViewed}>
+    <div
+      className="mx-auto flex max-w-4xl flex-col gap-4"
+      onMouseEnter={handlePageViewed}
+    >
       <SEO
         title="Tiny Improvements, the Podcast"
         description={config.podcast.description}

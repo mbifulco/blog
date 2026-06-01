@@ -1,7 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
 import type { BlogPost, Newsletter } from '@data/content-types';
-
 import {
   buildUnifiedFeed,
   getImagePublicId,
@@ -11,7 +10,9 @@ import {
   PAGE_LIMIT,
 } from './unified-feed';
 
-const makePost = (overrides: Partial<BlogPost['frontmatter']> & { slug?: string } = {}) => {
+const makePost = (
+  overrides: Partial<BlogPost['frontmatter']> & { slug?: string } = {}
+) => {
   const { slug = 'test-post', ...frontmatterOverrides } = overrides;
   return {
     slug,
@@ -31,7 +32,9 @@ const makePost = (overrides: Partial<BlogPost['frontmatter']> & { slug?: string 
   } as BlogPost;
 };
 
-const makeNewsletter = (overrides: Partial<Newsletter['frontmatter']> & { slug?: string } = {}) => {
+const makeNewsletter = (
+  overrides: Partial<Newsletter['frontmatter']> & { slug?: string } = {}
+) => {
   const { slug = 'test-newsletter', ...frontmatterOverrides } = overrides;
   return {
     slug,
@@ -68,7 +71,9 @@ describe('buildUnifiedFeed', () => {
   });
 
   it('should handle newsletters only', () => {
-    const newsletters = [makeNewsletter({ slug: 'nl-1', title: 'Newsletter 1' })];
+    const newsletters = [
+      makeNewsletter({ slug: 'nl-1', title: 'Newsletter 1' }),
+    ];
     const result = buildUnifiedFeed([], newsletters);
 
     expect(result).toHaveLength(1);
@@ -85,7 +90,11 @@ describe('buildUnifiedFeed', () => {
       makePost({ slug: 'new-post', title: 'New Post', date: '2025-03-01' }),
     ];
     const newsletters = [
-      makeNewsletter({ slug: 'mid-nl', title: 'Mid Newsletter', date: '2025-02-01' }),
+      makeNewsletter({
+        slug: 'mid-nl',
+        title: 'Mid Newsletter',
+        date: '2025-02-01',
+      }),
     ];
     const result = buildUnifiedFeed(posts, newsletters);
 
@@ -164,13 +173,29 @@ describe('buildUnifiedFeed', () => {
 describe('getItemPath', () => {
   it('should return /posts/{slug} for post items', () => {
     expect(
-      getItemPath({ type: 'post', slug: 'my-post', title: '', excerpt: '', date: '', tags: [], coverImagePublicId: null })
+      getItemPath({
+        type: 'post',
+        slug: 'my-post',
+        title: '',
+        excerpt: '',
+        date: '',
+        tags: [],
+        coverImagePublicId: null,
+      })
     ).toBe('/posts/my-post');
   });
 
   it('should return /newsletter/{slug} for newsletter items', () => {
     expect(
-      getItemPath({ type: 'newsletter', slug: 'my-nl', title: '', excerpt: '', date: '', tags: [], coverImagePublicId: null })
+      getItemPath({
+        type: 'newsletter',
+        slug: 'my-nl',
+        title: '',
+        excerpt: '',
+        date: '',
+        tags: [],
+        coverImagePublicId: null,
+      })
     ).toBe('/newsletter/my-nl');
   });
 });

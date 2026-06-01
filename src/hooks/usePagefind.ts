@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 type PagefindResult = {
   id: string;
@@ -69,7 +69,9 @@ export function usePagefind(): UsePagefindReturn {
       // If a newer search has started since this one was issued, discard results.
       if (requestId !== requestIdRef.current) return;
 
-      console.log('[pagefind] search("' + query + '") → ' + stubs.length + ' results');
+      console.log(
+        '[pagefind] search("' + query + '") → ' + stubs.length + ' results'
+      );
 
       // Each stub is a lightweight reference; calling .data() fetches the full result.
       const data = await Promise.all(stubs.map((r) => r.data()));
@@ -78,7 +80,9 @@ export function usePagefind(): UsePagefindReturn {
 
       // Pagefind derives URLs from .html filenames in .next/server/pages/.
       // Strip the .html suffix so links resolve correctly in Next.js.
-      setResults(data.map((d) => ({ ...d, url: d.url.replace(/\.html$/, '') })));
+      setResults(
+        data.map((d) => ({ ...d, url: d.url.replace(/\.html$/, '') }))
+      );
       setLastCompletedQuery(query);
     } finally {
       // Only clear the loading state if no newer request has taken over.

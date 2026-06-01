@@ -1,5 +1,4 @@
 import Link from '@components/Link';
-
 import clsxm from '@utils/clsxm';
 import { Image } from '../Image';
 

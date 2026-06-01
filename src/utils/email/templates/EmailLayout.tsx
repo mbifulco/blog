@@ -80,7 +80,10 @@ export const EmailLayout = ({
       <Preview>{preview}</Preview>
 
       <Tailwind>
-        <Body style={{ fontSize: '20px' }} className="mx-auto my-auto font-sans">
+        <Body
+          style={{ fontSize: '20px' }}
+          className="mx-auto my-auto font-sans"
+        >
           <Container className="p-4">
             {/* Logo Section */}
             <Section style={logo} align="center">
@@ -117,7 +120,15 @@ export const EmailLayout = ({
               style={{ maxWidth: '500px' }}
               className="mt-2 text-gray-500"
             >
-              <Text style={{ marginBottom: '10px' }} className="my-0 text-sm">© {new Date().getFullYear()} &bull; 💌 Tiny Improvements &bull; <Link href="https://mikebifulco.com/newsletter" className="text-pink-600">mikebifulco.com</Link></Text>
+              <Text style={{ marginBottom: '10px' }} className="my-0 text-sm">
+                © {new Date().getFullYear()} &bull; 💌 Tiny Improvements &bull;{' '}
+                <Link
+                  href="https://mikebifulco.com/newsletter"
+                  className="text-pink-600"
+                >
+                  mikebifulco.com
+                </Link>
+              </Text>
               {includeUnsubscribeLink && (
                 <Text className="my-0 text-sm text-gray-500">
                   Not getting what you need? No worries, you can{' '}

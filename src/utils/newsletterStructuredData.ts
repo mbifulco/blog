@@ -22,4 +22,3 @@ export const tinyImprovementsBlogStructuredData: StructuredDataWithType = {
   inLanguage: 'en-US',
   blogPost: [], // This will be populated dynamically
 };
-

@@ -12,7 +12,6 @@
  * instead of getAllPosts/getAllNewsletters to avoid @mdx-js/mdx pulling in
  * estree-walker which lacks an "exports" main in its package.json under Node 24.
  */
-
 import * as fs from 'fs';
 import * as path from 'path';
 
@@ -27,22 +26,21 @@ async function main() {
   console.log('Generating related posts data...');
 
   const postsDir = path.join(process.cwd(), 'src', 'data', 'posts');
-  const newslettersDir = path.join(
-    process.cwd(),
-    'src',
-    'data',
-    'newsletters'
-  );
+  const newslettersDir = path.join(process.cwd(), 'src', 'data', 'newsletters');
 
   const [posts, newsletters] = await Promise.all([
     loadContentFromDirectory(postsDir, 'post'),
     loadContentFromDirectory(newslettersDir, 'newsletter'),
   ]);
 
-  console.log(`Loaded ${posts.length} posts, ${newsletters.length} newsletters`);
+  console.log(
+    `Loaded ${posts.length} posts, ${newsletters.length} newsletters`
+  );
 
-  const relatedContent: Record<string, ReturnType<typeof findRelatedContent>> =
-    {};
+  const relatedContent: Record<
+    string,
+    ReturnType<typeof findRelatedContent>
+  > = {};
 
   for (const post of posts) {
     relatedContent[post.slug] = findRelatedContent(

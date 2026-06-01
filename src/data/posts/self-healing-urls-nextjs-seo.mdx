@@ -220,11 +220,16 @@ We also use the [Next.js App Router's `generateMetadata` function](https://nextj
 
 ```tsx
 import { Metadata, ResolvingMetadata } from 'next';
-import { RedirectType, notFound, redirect } from 'next/navigation';
 import { isRedirectError } from 'next/dist/client/components/redirect';
+import { notFound, redirect, RedirectType } from 'next/navigation';
 
-import { Post, getAllPosts, getPostById, getPostSlug } from '@/utils/posts';
-import { getIdFromSlug } from '@/utils/posts';
+import {
+  getAllPosts,
+  getIdFromSlug,
+  getPostById,
+  getPostSlug,
+  Post,
+} from '@/utils/posts';
 
 // generate URLs for all posts
 export async function generateStaticParams() {
@@ -277,7 +282,7 @@ export default async function Post({ params }: PostPageParams) {
 
 export async function generateMetadata(
   { params }: PostPageParams,
-  parent: ResolvingMetadata,
+  parent: ResolvingMetadata
 ): Promise<Metadata> {
   // read route params
   const id = getIdFromSlug(params.slug);

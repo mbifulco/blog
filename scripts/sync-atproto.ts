@@ -20,12 +20,10 @@
  *   ATPROTO_IDENTIFIER  - Bluesky handle (e.g. mikebifulco.com) or DID
  *   ATPROTO_APP_PASSWORD - App password from bsky.app/settings/app-passwords
  */
-
 import 'dotenv/config';
 
 import fs from 'fs';
 import path from 'path';
-
 import matter from 'gray-matter';
 
 import { ATPROTO_DID, BASE_SITE_URL } from '../src/config';
@@ -181,7 +179,11 @@ async function syncPublication(
     return data.publicationUri;
   }
 
-  const { uri } = await createRecord(session, 'site.standard.publication', record);
+  const { uri } = await createRecord(
+    session,
+    'site.standard.publication',
+    record
+  );
   console.log(`Created publication record: ${uri}`);
   return uri;
 }
@@ -243,7 +245,11 @@ async function main() {
       const { data: fm } = matter(raw);
       const frontmatter = fm as ContentFrontmatter;
 
-      if (!frontmatter.slug || !frontmatter.title || frontmatter.published === false) {
+      if (
+        !frontmatter.slug ||
+        !frontmatter.title ||
+        frontmatter.published === false
+      ) {
         console.log(`  Skipped (unpublished or missing slug): ${filePath}`);
         continue;
       }

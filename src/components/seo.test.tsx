@@ -13,9 +13,7 @@ vi.mock('../utils/images', () => ({
 
 // next/head renders children into a wrapper so they appear in the jsdom container
 vi.mock('next/head', () => ({
-  default: ({ children }: { children: React.ReactNode }) => (
-    <>{children}</>
-  ),
+  default: ({ children }: { children: React.ReactNode }) => <>{children}</>,
 }));
 
 describe('SEO', () => {

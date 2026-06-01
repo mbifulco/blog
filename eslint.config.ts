@@ -1,10 +1,10 @@
 import eslint from '@eslint/js';
 import nextPlugin from '@next/eslint-plugin-next';
 import tsParser from '@typescript-eslint/parser';
-import reactCompiler from 'eslint-plugin-react-compiler';
-import unusedImports from 'eslint-plugin-unused-imports';
 import importPlugin from 'eslint-plugin-import';
 import jsxA11y from 'eslint-plugin-jsx-a11y';
+import reactCompiler from 'eslint-plugin-react-compiler';
+import unusedImports from 'eslint-plugin-unused-imports';
 import { configs } from 'typescript-eslint';
 
 export default [

@@ -1,5 +1,6 @@
-import Link from '@components/Link';
 import posthog from 'posthog-js';
+
+import Link from '@components/Link';
 
 type TagProps = {
   children: React.ReactNode;

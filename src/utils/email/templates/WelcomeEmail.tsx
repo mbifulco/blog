@@ -9,7 +9,10 @@ type WelcomeEmailProps = {
 
 export const WelcomeEmail = ({ firstName }: WelcomeEmailProps) => {
   return (
-    <EmailLayout preview="🧋 Let's build things that matter" firstName={firstName}>
+    <EmailLayout
+      preview="🧋 Let's build things that matter"
+      firstName={firstName}
+    >
       <Row>
         <Column>
           <Text style={paragraph}>
@@ -32,10 +35,7 @@ export const WelcomeEmail = ({ firstName }: WelcomeEmailProps) => {
 
           <Text style={paragraph}>
             To make sure you don&apos;t miss out, add{' '}
-            <Link
-              href="mailto:hello@mikebifulco.com"
-              className="text-pink-600"
-            >
+            <Link href="mailto:hello@mikebifulco.com" className="text-pink-600">
               hello@mikebifulco.com
             </Link>{' '}
             to your contacts. And if Tiny Improvements isn&apos;t your thing,

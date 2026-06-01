@@ -36,11 +36,7 @@ export async function getStaticPaths() {
   return { paths, fallback: false };
 }
 
-export async function getStaticProps({
-  params,
-}: {
-  params: { page: string };
-}) {
+export async function getStaticProps({ params }: { params: { page: string } }) {
   const pageParam = params?.page;
   const page = parseInt(pageParam, 10);
 

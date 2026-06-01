@@ -1,7 +1,7 @@
 import React from 'react';
-import Link from '@components/Link';
 import posthog from 'posthog-js';
 
+import Link from '@components/Link';
 import clsxm from '@utils/clsxm';
 import type { BlogPost } from '../../data/content-types';
 import { Heading } from '../Heading';

@@ -1,8 +1,8 @@
-import Link from '@components/Link';
 import { useRouter } from 'next/router';
 import posthog from 'posthog-js';
 
 import { Heading } from '@components/Heading';
+import Link from '@components/Link';
 import type { Series } from '@lib/series';
 import clsxm from '@utils/clsxm';
 
@@ -16,8 +16,14 @@ export const SeriesNavigation: React.FC<SeriesNavigationProps> = ({
   const router = useRouter();
 
   const orderedContent = [
-    ...(series.posts ?? []).map((post) => ({ ...post, contentType: 'post' as const })),
-    ...(series.newsletters ?? []).map((newsletter) => ({ ...newsletter, contentType: 'newsletter' as const })),
+    ...(series.posts ?? []).map((post) => ({
+      ...post,
+      contentType: 'post' as const,
+    })),
+    ...(series.newsletters ?? []).map((newsletter) => ({
+      ...newsletter,
+      contentType: 'newsletter' as const,
+    })),
   ].sort((a, b) => {
     return (
       new Date(a.frontmatter.date).getTime() -
@@ -25,7 +31,11 @@ export const SeriesNavigation: React.FC<SeriesNavigationProps> = ({
     );
   });
 
-  const handleSeriesNavClick = (targetTitle: string, targetSlug: string, positionInSeries: number) => {
+  const handleSeriesNavClick = (
+    targetTitle: string,
+    targetSlug: string,
+    positionInSeries: number
+  ) => {
     posthog.capture('series_navigation_clicked', {
       series_name: series.name,
       series_slug: series.slug,
@@ -84,7 +94,13 @@ export const SeriesNavigation: React.FC<SeriesNavigationProps> = ({
                 <Link
                   href={itemPath}
                   className="flex items-center gap-2 text-lg text-inherit no-underline"
-                  onClick={() => handleSeriesNavClick(item.frontmatter.title, item.frontmatter.slug, index + 1)}
+                  onClick={() =>
+                    handleSeriesNavClick(
+                      item.frontmatter.title,
+                      item.frontmatter.slug,
+                      index + 1
+                    )
+                  }
                 >
                   {content}
                 </Link>

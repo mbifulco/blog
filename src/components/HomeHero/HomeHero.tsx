@@ -1,6 +1,6 @@
-import Link from '@components/Link';
 import { Heading } from '@components/Heading';
 import { Headshot } from '@components/Headshot';
+import Link from '@components/Link';
 import config from '@/config';
 
 type HomeHeroProps = {

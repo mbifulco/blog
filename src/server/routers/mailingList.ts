@@ -65,7 +65,10 @@ export const mailingListRouter = router({
       // 2. Honeypot check - if filled, it's a bot
       if (isHoneypotFilled(honeypot)) {
         if (process.env.NODE_ENV === 'development') {
-          console.log('[Spam Detection] Honeypot triggered:', { email, firstName });
+          console.log('[Spam Detection] Honeypot triggered:', {
+            email,
+            firstName,
+          });
         }
         return fakeSuccess;
       }

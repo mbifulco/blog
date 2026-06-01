@@ -114,9 +114,18 @@ function convertMarkdownToHtml(markdown: string): string {
   let html = markdown;
 
   // Convert headings (###, ##, #)
-  html = html.replace(/^### (.+)$/gm, '<h3 style="font-weight: 500; font-size: 1.5rem; margin: 16px 0 8px 0; color: #1f2937;">$1</h3>');
-  html = html.replace(/^## (.+)$/gm, '<h2 style="font-weight: 500; font-size: 1.75rem; margin: 20px 0 12px 0; color: #1f2937;">$1</h2>');
-  html = html.replace(/^# (.+)$/gm, '<h1 style="font-weight: 500; font-size: 2rem; margin: 24px 0 16px 0; color: #1f2937;">$1</h1>');
+  html = html.replace(
+    /^### (.+)$/gm,
+    '<h3 style="font-weight: 500; font-size: 1.5rem; margin: 16px 0 8px 0; color: #1f2937;">$1</h3>'
+  );
+  html = html.replace(
+    /^## (.+)$/gm,
+    '<h2 style="font-weight: 500; font-size: 1.75rem; margin: 20px 0 12px 0; color: #1f2937;">$1</h2>'
+  );
+  html = html.replace(
+    /^# (.+)$/gm,
+    '<h1 style="font-weight: 500; font-size: 2rem; margin: 24px 0 16px 0; color: #1f2937;">$1</h1>'
+  );
 
   // Convert bold (**text** or __text__)
   html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
@@ -127,7 +136,10 @@ function convertMarkdownToHtml(markdown: string): string {
   html = html.replace(/_(.+?)_/g, '<em>$1</em>');
 
   // Convert links [text](url)
-  html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" style="color: #2563eb; text-decoration: underline;">$1</a>');
+  html = html.replace(
+    /\[([^\]]+)\]\(([^)]+)\)/g,
+    '<a href="$2" style="color: #2563eb; text-decoration: underline;">$1</a>'
+  );
 
   // Convert paragraphs (lines separated by blank lines)
   html = html
@@ -167,10 +179,12 @@ function convertSponsoredSectionsToHtml(content: string): string {
     const htmlContent = convertMarkdownToHtml(children.trim());
 
     // Build email-safe HTML
-    let html = '\n\n<div style="padding: 20px 0; border-top: 1px solid #e5e7eb; border-bottom: 1px solid #e5e7eb; margin: 20px 0;">\n';
+    let html =
+      '\n\n<div style="padding: 20px 0; border-top: 1px solid #e5e7eb; border-bottom: 1px solid #e5e7eb; margin: 20px 0;">\n';
 
     // Top separator
-    html += '<div style="text-align: center; color: #d1d5db; font-size: 32px; margin-bottom: 10px;">* * *</div>\n';
+    html +=
+      '<div style="text-align: center; color: #d1d5db; font-size: 32px; margin-bottom: 10px;">* * *</div>\n';
 
     // Sponsor attribution
     html += `<p style="font-size: 12px; font-style: italic; color: #9ca3af; text-transform: uppercase;">Thanks to <strong>${sponsorName}</strong> for sponsoring</p>\n`;
@@ -190,7 +204,8 @@ function convertSponsoredSectionsToHtml(content: string): string {
 </div>\n`;
 
     // Bottom separator
-    html += '<div style="text-align: center; color: #d1d5db; font-size: 32px; margin-top: 10px;">* * *</div>\n';
+    html +=
+      '<div style="text-align: center; color: #d1d5db; font-size: 32px; margin-top: 10px;">* * *</div>\n';
 
     html += '</div>\n\n';
 

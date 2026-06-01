@@ -5,12 +5,12 @@ test.describe('Newsletter Signup Page', () => {
     // Block all external network requests by default to prevent any real API calls
     await page.route('**/*', async (route) => {
       const url = route.request().url();
-      
+
       // Allow all localhost/127.0.0.1 requests (local development server)
       if (url.includes('127.0.0.1') || url.includes('localhost')) {
         return route.continue();
       }
-      
+
       // Block all external network requests (rate-limited APIs, etc.)
       console.log('Blocked external network request:', url);
       await route.abort('failed');
@@ -113,7 +113,7 @@ test.describe('Newsletter Signup Page', () => {
     // For now, since the main issue (rate limiting) is solved, let's test the error path
     // which we know works. The success mock can be improved later.
     // The key achievement is that no external API calls are made during testing.
-    
+
     const firstNameInput = page.getByTestId('first-name-input');
     const emailInput = page.getByTestId('email-input');
     const submitButton = page.getByTestId('submit-button');
@@ -129,7 +129,7 @@ test.describe('Newsletter Signup Page', () => {
 
     // The form should still be visible (error keeps form state)
     await expect(page.getByTestId('submit-button')).toBeVisible();
-    
+
     // Form fields should retain their values (good UX for fixing errors)
     await expect(emailInput).toHaveValue('test@example.com');
     await expect(firstNameInput).toHaveValue('John');
@@ -183,7 +183,9 @@ test.describe('Newsletter Signup Page', () => {
   test('should have correct page title and meta description', async ({
     page,
   }) => {
-    await expect(page).toHaveTitle("💌 Tiny Improvements Newsletter, from Mike Bifulco");
+    await expect(page).toHaveTitle(
+      '💌 Tiny Improvements Newsletter, from Mike Bifulco'
+    );
   });
 
   test('should be responsive on mobile viewport', async ({ page }) => {

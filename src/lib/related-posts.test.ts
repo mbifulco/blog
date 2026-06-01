@@ -1,7 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
 import type { BlogPost, Newsletter } from '@data/content-types';
-
 import { findRelatedContent } from './related-posts';
 
 const makePost = (slug: string, tags: string[]): BlogPost =>
@@ -45,7 +44,10 @@ describe('findRelatedContent', () => {
   });
 
   it('excludes the current slug', () => {
-    const posts = [makePost('current', ['react']), makePost('other', ['react'])];
+    const posts = [
+      makePost('current', ['react']),
+      makePost('other', ['react']),
+    ];
     const result = findRelatedContent('current', ['react'], posts, [], 4);
     expect(result.every((r) => r.slug !== 'current')).toBe(true);
   });
@@ -61,7 +63,13 @@ describe('findRelatedContent', () => {
       makePost('one-tag', ['react']),
       makePost('two-tags', ['react', 'typescript']),
     ];
-    const result = findRelatedContent('current', ['react', 'typescript'], posts, [], 4);
+    const result = findRelatedContent(
+      'current',
+      ['react', 'typescript'],
+      posts,
+      [],
+      4
+    );
     expect(result[0].slug).toBe('two-tags');
     expect(result[1].slug).toBe('one-tag');
   });
@@ -69,7 +77,13 @@ describe('findRelatedContent', () => {
   it('includes newsletters when provided', () => {
     const posts = [makePost('post-a', ['react'])];
     const newsletters = [makeNewsletter('nl-a', ['react'])];
-    const result = findRelatedContent('current', ['react'], posts, newsletters, 4);
+    const result = findRelatedContent(
+      'current',
+      ['react'],
+      posts,
+      newsletters,
+      4
+    );
     expect(result).toHaveLength(2);
     expect(result.some((r) => r.type === 'newsletter')).toBe(true);
   });

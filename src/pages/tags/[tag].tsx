@@ -2,7 +2,7 @@ import type { GetStaticPaths, GetStaticProps } from 'next';
 
 import { getPostBySlug } from '@lib/blog';
 import { getNewsletterBySlug } from '@lib/newsletters';
-import { getTopTags, getContentForTag } from '@lib/tags';
+import { getContentForTag, getTopTags } from '@lib/tags';
 import { ExternalWorkItem } from '../../components/ExternalWork';
 import { Heading } from '../../components/Heading';
 import NewsletterItem from '../../components/NewsletterFeed/NewsletterItem';

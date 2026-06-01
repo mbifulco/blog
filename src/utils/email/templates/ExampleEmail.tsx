@@ -11,6 +11,7 @@ import {
   Text,
 } from 'react-email';
 
+import { H1, H2, H3, H4, H5, H6 } from '../components/Heading';
 import {
   button,
   codeBlock,
@@ -18,7 +19,6 @@ import {
   EmailLayout,
   paragraph,
 } from './EmailLayout';
-import { H1, H2, H3, H4, H5, H6 } from '../components/Heading';
 
 /**
  * Example email template showing how to use EmailLayout.

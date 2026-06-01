@@ -1,13 +1,13 @@
+import { useRef } from 'react';
 import type { GetStaticProps, NextPage } from 'next';
 import { useRouter } from 'next/router';
-import { useRef } from 'react';
 import posthog from 'posthog-js';
 
 import { NewsletterSignup } from '@components/NewsletterSignup';
 import { RelatedPosts } from '@components/RelatedPosts';
-import type { RelatedContent, RelatedPostsManifest } from '@lib/related-posts';
-import relatedPostsData from '@data/generated/relatedPosts.json';
 import atprotoData from '@data/atproto-documents.json';
+import relatedPostsData from '@data/generated/relatedPosts.json';
+import type { RelatedContent, RelatedPostsManifest } from '@lib/related-posts';
 import { getSeries } from '@lib/series';
 import type { Series } from '@lib/series';
 import { Colophon } from '../../components/Colophon';
@@ -16,8 +16,8 @@ import SEO from '../../components/seo';
 import WebmentionMetadata from '../../components/webmentionMetadata';
 import type { BlogPost } from '../../data/content-types';
 import { getAllPosts, getPostBySlug } from '../../lib/blog';
-import { getCloudinaryImageUrl } from '../../utils/images';
 import { getDocumentUri } from '../../utils/atproto';
+import { getCloudinaryImageUrl } from '../../utils/images';
 
 type PostPageParams = {
   slug: string;
@@ -44,7 +44,9 @@ export const getStaticProps: GetStaticProps<
     ? await getSeries(post.frontmatter.series)
     : undefined;
 
-  const relatedContent = (relatedPostsData as RelatedPostsManifest).relatedContent[params.slug] ?? [];
+  const relatedContent =
+    (relatedPostsData as RelatedPostsManifest).relatedContent[params.slug] ??
+    [];
 
   const standardSiteDocumentUri = getDocumentUri(
     (atprotoData as { documents: Record<string, string> }).documents,
@@ -74,7 +76,12 @@ export async function getStaticPaths() {
   };
 }
 
-const PostPage: NextPage<PostPageProps> = ({ post, series, relatedContent, standardSiteDocumentUri }) => {
+const PostPage: NextPage<PostPageProps> = ({
+  post,
+  series,
+  relatedContent,
+  standardSiteDocumentUri,
+}) => {
   const { frontmatter } = post;
 
   const { coverImagePublicId, published, date, tags, title, excerpt, slug } =
@@ -101,7 +108,10 @@ const PostPage: NextPage<PostPageProps> = ({ post, series, relatedContent, stand
 
   return (
     <>
-      <div className="mx-auto w-full px-4 md:px-0" onMouseEnter={handlePostReadStarted}>
+      <div
+        className="mx-auto w-full px-4 md:px-0"
+        onMouseEnter={handlePostReadStarted}
+      >
         <SEO
           canonical={router.asPath}
           title={title}

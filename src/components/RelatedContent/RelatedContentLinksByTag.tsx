@@ -1,5 +1,4 @@
 import Link from '@components/Link';
-
 import topTagsData from '@data/generated/topTags.json';
 
 const tagLabels: Record<string, string> = {
@@ -44,7 +43,7 @@ const getDefaultTags = (): string[] => {
 
 const RelatedContentLinksByTag = ({ tags = getDefaultTags() }) => {
   return (
-    <div className="pt-8 pb-20">
+    <div className="pb-20 pt-8">
       <p className="font-bold">Explore by topic</p>
       <div className="grid grid-cols-1 text-lg sm:grid-cols-2">
         {tags.map((tag) => {
