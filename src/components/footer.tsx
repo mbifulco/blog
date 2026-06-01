@@ -1,6 +1,7 @@
 import Link from '@components/Link';
 
 import config from '../config';
+import AtprotoSubscribe from './AtprotoSubscribe';
 import RelatedContentLinksByTag from './RelatedContent/RelatedContentLinksByTag';
 import { SocialLinks } from './SocialLinks';
 import SponsorCTA from './SponsorCTA/SponsorCTA';
@@ -25,6 +26,7 @@ const Footer = () => {
 
             <SponsorCTA />
             <SocialLinks />
+            <AtprotoSubscribe />
           </div>
 
           <div className="flex flex-col gap-2">

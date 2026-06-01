@@ -47,6 +47,8 @@ export const getStaticProps: GetStaticProps<
     params.slug
   );
 
+  const standardSitePublicationUri = (atprotoData as { publicationUri: string }).publicationUri;
+
   return {
     props: {
       newsletter: {
@@ -56,6 +58,7 @@ export const getStaticProps: GetStaticProps<
       series: series ?? null,
       relatedContent,
       ...(standardSiteDocumentUri ? { standardSiteDocumentUri } : {}),
+      ...(standardSitePublicationUri ? { standardSitePublicationUri } : {}),
     },
   };
 };
@@ -78,6 +81,7 @@ type NewsletterPageProps = {
   series?: Series | null;
   relatedContent: RelatedContent[];
   standardSiteDocumentUri?: string;
+  standardSitePublicationUri?: string;
 };
 
 const NewsletterPage: React.FC<NewsletterPageProps> = ({
@@ -85,6 +89,7 @@ const NewsletterPage: React.FC<NewsletterPageProps> = ({
   series,
   relatedContent,
   standardSiteDocumentUri,
+  standardSitePublicationUri,
 }) => {
   const { frontmatter } = newsletter;
 
@@ -109,6 +114,7 @@ const NewsletterPage: React.FC<NewsletterPageProps> = ({
           publishedAt={date}
           tags={tags}
           standardSiteDocumentUri={standardSiteDocumentUri}
+          standardSitePublicationUri={standardSitePublicationUri}
         />
         <StructuredData structuredData={structuredData} />
 
