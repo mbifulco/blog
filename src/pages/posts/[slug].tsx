@@ -28,6 +28,7 @@ type PostPageProps = {
   series?: Series | null;
   relatedContent: RelatedContent[];
   standardSiteDocumentUri?: string;
+  standardSitePublicationUri?: string;
 };
 
 export const getStaticProps: GetStaticProps<
@@ -53,12 +54,15 @@ export const getStaticProps: GetStaticProps<
     params.slug
   );
 
+  const standardSitePublicationUri = (atprotoData as { publicationUri: string }).publicationUri;
+
   return {
     props: {
       post,
       series: series ?? null,
       relatedContent,
       ...(standardSiteDocumentUri ? { standardSiteDocumentUri } : {}),
+      ...(standardSitePublicationUri ? { standardSitePublicationUri } : {}),
     },
   };
 };
@@ -76,12 +80,7 @@ export async function getStaticPaths() {
   };
 }
 
-const PostPage: NextPage<PostPageProps> = ({
-  post,
-  series,
-  relatedContent,
-  standardSiteDocumentUri,
-}) => {
+const PostPage: NextPage<PostPageProps> = ({ post, series, relatedContent, standardSiteDocumentUri, standardSitePublicationUri }) => {
   const { frontmatter } = post;
 
   const { coverImagePublicId, published, date, tags, title, excerpt, slug } =
@@ -121,6 +120,7 @@ const PostPage: NextPage<PostPageProps> = ({
           publishedAt={date}
           tags={tags}
           standardSiteDocumentUri={standardSiteDocumentUri}
+          standardSitePublicationUri={standardSitePublicationUri}
         />
         {published === false && process.env.NODE_ENV !== 'production' && (
           <div>
