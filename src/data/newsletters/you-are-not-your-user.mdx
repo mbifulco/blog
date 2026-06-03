@@ -1,0 +1,130 @@
+---
+title: 'You are not your user. Except when you are.'
+excerpt: 'You are not your user. Except when you are. This is a story about how I learned to be a better user of my own product.'
+tags: [product, design, user experience]
+date: 2026-06-03
+coverImagePublicId: newsletters/you-are-not-your-user/cover
+slug: you-are-not-your-user
+---
+
+## The Big Idea
+
+"You are not your user" is fundamentally good advice. It's also occasionally wrong, but in a very useful way.
+
+## You Are Not Your User
+
+One of the first things you learn in UX is that **you are not your user**.
+
+This is usually true, and is worth repeating because (all) people are very good at forgetting it. The more time you spend with a product, the harder it gets to see it clearly. You know where everything is. You know why the confusing part is confusing. You know the history behind that _one_ weird button label, and the customer complaint that led to that one edge case, and the Slack thread where everyone finally agreed to ship the thing as-is because it was Friday and everyone was tired.
+
+That kind of knowledge is useful for building the product, but it's terrible for seeing the product.
+
+It creates snow blindness. The product becomes so familiar that you stop noticing the parts that are strange, brittle, or needlessly complicated. You stop seeing the first five minutes because you've already lived the next five years.
+
+<SponsoredSection
+  imagePublicId="sponsors/tripo-ai/project-eden"
+  sponsorName="Tripo AI"
+  CTAtext="Start Creating with Tripo AI"
+  href="https://www.tripo3d.ai/?utm_source=newsletter&utm_medium=sponsorship&utm_campaign=launchtinyimp"
+>
+
+**Explore AI-native 3D workflows for your product.**<br />
+Turn your ideas into high-quality 3D assets faster, including product visualization, interior and home design, gaming, film, VR/AR, digital twins, robotics simulation, and interactive experiences.
+
+</SponsoredSection>
+
+This is one reason I try not to say "users" when I can avoid it. The problem isn't with the word itself - but rather that it adds a layer of euphemism between designers and the _people_ they are trying to build for. It's a small abstraction that cuts both ways; at times designers say "users" to sound smart, and in other moments "users" is a way to forget the reality that there are people on the other side of these screens.
+
+The _person_ on the other side of the black mirror is probably busy. They may be distracted. They may be skeptical. They may be trying to get something done while their kid asks for a snack, their dog barks at the mailman, and their coffee gets cold.
+
+If you want to build good products, you have to keep remembering to [imagine others complexly](https://en.wikipedia.org/wiki/Wikipedia:Imagine_others_complexly).
+
+## Except When You Are
+
+Every once in a while, though, you really are building for yourself.
+
+That's how my project [Guithub](https://guithub.org) started.
+
+Guithub is an online guitar tuner I recently built and published for myself ("recently" is doing a lot of work here. I've owned the domain since 2020, which means this tiny side project managed to take me roughly six years to finish!).
+
+I play guitar and sing, and for years I played a couple times a month at bars around town. Like most guitar players, I own tuners. They're fine - "does what it says on the tin", as they say, but for the most part they're designed to be _generically_ useful for a wide range of musicians in a wide range of contexts.
+
+Tuner have always bothered me in a few specific ways:
+
+Tuners are built around standard guitar tuning (EADGBE). Most assume you are tuning open strings. If you put a capo on after tuning, it starts to sound a little weird the further you move up the neck. And if, hypothetically, you play a lot of songs in alternate tunings because you spent too much time listening to _Bon Iver_ or _The Tallest Man on Earth_, you end up doing more mental translation than you want to do while standing in front of people.
+
+I also usually play with a laptop or tablet in front of me, with chord charts and lyrics - because I just don't have it all memorized.
+
+All this to say: a tuner _built for me_ isn't complicated -- but it _is_ fairly different from the one you'll pull out of the box from your local guitar shop.
+
+I wanted a tuner that worked the way I actually play. I wanted to open a browser, pick an instrument, pick a tuning, set a capo position, and get back to playing.
+
+That was the whole idea.
+
+Not a universal tuner for every musician in every context: a tuner for me.
+
+## The Six-Year Side Project
+
+The annoying thing about Guithub is that I understood the basic problem pretty well.
+
+I studied computer science and mechanical engineering, so the math and physics behind a tuner are not especially mysterious. You listen to a sound, find the fundamental frequency, map that frequency to a note, and tell the musician whether they are sharp or flat.
+
+That sounds straightforward until you try to make it work in a browser, on real devices, in real rooms, with real instruments.
+
+Sound is messy. Instruments produce harmonics. Microphones vary wildly. Rooms are noisy. Browsers have their own constraints. And there is a big difference between understanding a Fourier transform and building a pitch detector that feels fast and reliable enough to trust.
+
+The first version I built could identify notes reasonably well, but not well enough that I would have wanted to use it on stage. So the project sat there for years, in the extremely crowded drawer where I keep ideas that are "basically working" and therefore nowhere near done.
+
+Then, eventually, I had the embarrassingly obvious thought that there might already be an npm package for this.
+
+Of course there was.
+
+With a library handling the core pitch detection, and an LLM helping me wire things together and test the important paths, I finally got past the part that had kept me stuck. That freed me up to work on the actual product.
+
+The product was never "can I implement signal processing from scratch?"
+
+The product was "can I tune quickly and get back to the song?"
+
+That distinction matters. A lot of side projects get stuck because the interesting technical problem disguises itself as the product. Sometimes it is. Often it's just the thing standing between you and the product.
+
+## The Homepage Is the Product
+
+Because Guithub is built for the exact situation I kept running into, the homepage is the product.
+
+There is no ceremony: go to [guithub.org](https://guithub.org), modify default settings if you need to, and get to tuning. It supports guitar, bass, banjo, and ukulele. It supports different tunings. It supports capo positions. It is meant to be useful on the device I probably already have in front of me when I am playing.
+
+I have tried not to turn it into a fluffy product homepage, even though search engines and LLM indexers would prefer that. It's a funny tension: SEO wants explanation, but a great product experience is (in this case) just the thing itself.
+
+For this project, I'm trying to let the tool win.
+
+The best version of Guithub is not impressive. It's forgettable in the right way. It opens quickly, helps you tune, and lets you move on with your life.
+
+That is what I wanted as a musician - and if that's what other guitarists want, I'll be super happy to see it.
+
+## Build the Thing That Keeps Bothering You
+
+This is the part where "you are not your user" gets complicated.
+
+You should not assume everyone is like you. That's a path to misguided products, confusing defaults, and founders confidently explaining that customers are wrong for not understanding the brilliant thing they built.
+
+But... _sometimes_ your own frustration is a useful starting point. Not because it makes you representative of the whole audience, but because it gives you access to details and compassion that are hard to fake.
+
+You have _felt_ existing options fail you. You know which parts are merely annoying and which parts actually matter. You know the little moment where you mutter under your breath and think, "why does this work this way?"
+
+That moment is worth paying attention to.
+
+[Craftwork](https://craftwork.com) came from a version of this too. Finding a reliable, professional, high-quality painting company for your home should not feel like a gamble, but it often does. That frustration was specific enough to give us a place to start.
+
+Specific frustration is not the same thing as product-market fit. It's not proof that other people care. It's not a business model. It's not distribution.
+
+But: it _is_ a signal.
+
+Sometimes the thing that keeps bothering you is just a thing that keeps bothering you.
+
+Sometimes it's the first draft of something useful.
+
+---
+
+## Guitarists, try my sweet tuner
+
+If you play music ([_like me!_](https://guithub.org/about)), I would love for you to try [Guithub](https://guithub.org). And if it breaks, annoys you, or gets in your way, please tell me. You can reply here or email me at [hello@mikebifulco.com](mailto:hello@mikebifulco.com).
