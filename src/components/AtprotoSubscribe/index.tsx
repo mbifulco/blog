@@ -11,9 +11,13 @@ const AtprotoSubscribe: React.FC = () => {
   const [copied, setCopied] = useState(false);
 
   const handleCopy = async () => {
-    await navigator.clipboard.writeText(publicationUri);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+    try {
+      await navigator.clipboard.writeText(publicationUri);
+      setCopied(true);
+      window.setTimeout(() => setCopied(false), 2000);
+    } catch {
+      // Clipboard API unavailable or permission denied; ignore.
+    }
   };
 
   return (
