@@ -89,7 +89,10 @@ const SEO: React.FC<SEOProps> = ({
       />
       {/* standard.site AT Protocol links */}
       {standardSitePublicationUri && (
-        <link rel="site.standard.publication" href={standardSitePublicationUri} />
+        <link
+          rel="site.standard.publication"
+          href={standardSitePublicationUri}
+        />
       )}
       {standardSiteDocumentUri && (
         <link rel="site.standard.document" href={standardSiteDocumentUri} />

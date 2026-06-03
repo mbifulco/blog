@@ -95,6 +95,32 @@ async function putRecord(
   return res.json() as Promise<{ uri: string }>;
 }
 
+type AtprotoBlob = {
+  $type: 'blob';
+  ref: { $link: string };
+  mimeType: string;
+  size: number;
+};
+
+async function uploadBlob(
+  session: Session,
+  data: Buffer,
+  mimeType: string
+): Promise<AtprotoBlob> {
+  const res = await fetch(`${PDS_URL}/xrpc/com.atproto.repo.uploadBlob`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': mimeType,
+      Authorization: `Bearer ${session.accessJwt}`,
+    },
+    // Node.js fetch accepts Buffer at runtime; cast needed due to strict lib types
+    body: data as unknown as BodyInit,
+  });
+  if (!res.ok) throw new Error(`uploadBlob failed: ${await res.text()}`);
+  const json = (await res.json()) as { blob: AtprotoBlob };
+  return json.blob;
+}
+
 // ─── Local data helpers ──────────────────────────────────────────────────────
 
 type AtprotoData = {
@@ -141,7 +167,11 @@ function readContentDirectory(dir: string): ContentFrontmatter[] {
     .map((file) => {
       const raw = fs.readFileSync(path.join(dirPath, file), 'utf-8');
       const { data } = matter(raw);
-      return data as ContentFrontmatter;
+      const fm = data as ContentFrontmatter;
+      // Always use filename-derived slug to match Next.js routing, which uses
+      // filenames not frontmatter slugs when building static paths.
+      fm.slug = path.basename(file, path.extname(file));
+      return fm;
     })
     .filter(
       (fm): fm is ContentFrontmatter =>
@@ -161,15 +191,27 @@ const CREATE_ONLY = process.argv.includes('--create-only');
 // When present, only those files are synced instead of the full directory scan.
 const TARGET_PATHS = process.argv.slice(2).filter((a) => !a.startsWith('--'));
 
+const ICON_PATH = path.join(process.cwd(), 'public/images/publication-icon.png');
+
 async function syncPublication(
   session: Session,
   data: AtprotoData
 ): Promise<string> {
+  let icon: AtprotoBlob | undefined;
+  if (fs.existsSync(ICON_PATH)) {
+    const imgData = fs.readFileSync(ICON_PATH);
+    icon = await uploadBlob(session, imgData, 'image/png');
+    console.log('  Uploaded publication icon blob');
+  } else {
+    console.log(`  No icon found at ${ICON_PATH}, skipping`);
+  }
+
   const record = buildPublicationRecord({
     url: BASE_SITE_URL,
-    name: 'Mike Bifulco',
+    name: '💌 Tiny Improvements - for builders, by @MikeBifulco.com',
     description:
       'Resources for modern software designers and developers. Tips and walkthroughs on React, node, and javascript.',
+    icon,
   });
 
   if (data.publicationUri) {
@@ -244,13 +286,11 @@ async function main() {
       const raw = fs.readFileSync(path.join(process.cwd(), filePath), 'utf-8');
       const { data: fm } = matter(raw);
       const frontmatter = fm as ContentFrontmatter;
+      // Use filename as slug, consistent with Next.js static path generation.
+      frontmatter.slug = path.basename(filePath, path.extname(filePath));
 
-      if (
-        !frontmatter.slug ||
-        !frontmatter.title ||
-        frontmatter.published === false
-      ) {
-        console.log(`  Skipped (unpublished or missing slug): ${filePath}`);
+      if (!frontmatter.title || frontmatter.published === false) {
+        console.log(`  Skipped (unpublished or missing title): ${filePath}`);
         continue;
       }
 

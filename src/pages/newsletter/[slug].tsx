@@ -49,7 +49,8 @@ export const getStaticProps: GetStaticProps<
     params.slug
   );
 
-  const standardSitePublicationUri = (atprotoData as { publicationUri: string }).publicationUri;
+  const standardSitePublicationUri = (atprotoData as { publicationUri: string })
+    .publicationUri;
 
   return {
     props: {

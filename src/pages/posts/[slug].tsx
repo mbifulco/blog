@@ -54,7 +54,8 @@ export const getStaticProps: GetStaticProps<
     params.slug
   );
 
-  const standardSitePublicationUri = (atprotoData as { publicationUri: string }).publicationUri;
+  const standardSitePublicationUri = (atprotoData as { publicationUri: string })
+    .publicationUri;
 
   return {
     props: {
@@ -80,7 +81,13 @@ export async function getStaticPaths() {
   };
 }
 
-const PostPage: NextPage<PostPageProps> = ({ post, series, relatedContent, standardSiteDocumentUri, standardSitePublicationUri }) => {
+const PostPage: NextPage<PostPageProps> = ({
+  post,
+  series,
+  relatedContent,
+  standardSiteDocumentUri,
+  standardSitePublicationUri,
+}) => {
   const { frontmatter } = post;
 
   const { coverImagePublicId, published, date, tags, title, excerpt, slug } =
