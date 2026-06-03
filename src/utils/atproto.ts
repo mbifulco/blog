@@ -10,23 +10,33 @@ export type AtprotoDocumentRecord = {
   publishedAt: string;
 };
 
+type AtprotoBlob = {
+  $type: 'blob';
+  ref: { $link: string };
+  mimeType: string;
+  size: number;
+};
+
 export type AtprotoPublicationRecord = {
   $type: 'site.standard.publication';
   url: string;
   name: string;
   description?: string;
+  icon?: AtprotoBlob;
 };
 
 export function buildPublicationRecord(opts: {
   url: string;
   name: string;
   description?: string;
+  icon?: AtprotoBlob;
 }): AtprotoPublicationRecord {
   return {
     $type: 'site.standard.publication',
     url: opts.url,
     name: opts.name,
     ...(opts.description ? { description: opts.description } : {}),
+    ...(opts.icon ? { icon: opts.icon } : {}),
   };
 }
 
