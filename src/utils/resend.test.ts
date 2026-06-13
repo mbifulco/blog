@@ -51,6 +51,11 @@ describe('emailIsBad', () => {
     expect(result).toBe(true);
   });
 
+  it('should return true for emails with an integer local part', () => {
+    const result = emailIsBad('123456@example.com');
+    expect(result).toBe(true);
+  });
+
   it('should return false for legitimate email domains', () => {
     const legitimateEmails = [
       'user@gmail.com',
@@ -161,6 +166,11 @@ describe('fakeSubscribe', () => {
 
   it('should return success for apexgunparts.space domain', async () => {
     const result = await fakeSubscribe({ email: '4@apexgunparts.space' });
+    expect(result).toEqual({ success: true });
+  });
+
+  it('should return success for integer local part emails', async () => {
+    const result = await fakeSubscribe({ email: '123@example.com' });
     expect(result).toEqual({ success: true });
   });
 });
@@ -461,6 +471,23 @@ describe('subscribe', () => {
   it('should return fake response for apexgunparts.space emails', async () => {
     const badSubscriber = {
       email: '4@apexgunparts.space',
+      firstName: 'Spam',
+      lastName: 'Bot',
+    };
+
+    const result = await subscribe(badSubscriber);
+    expect(result).toEqual({
+      data: {
+        id: '123',
+      },
+      error: null,
+    });
+    expect(resend.contacts.create).not.toHaveBeenCalled();
+  });
+
+  it('should return fake response for integer local part emails', async () => {
+    const badSubscriber = {
+      email: '999@example.com',
       firstName: 'Spam',
       lastName: 'Bot',
     };
