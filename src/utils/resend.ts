@@ -238,8 +238,10 @@ export const getSubscriberCount = async () => {
 const BAD_DOMAINS = ['mailinator.com', 'abhoward.site', 'apexgunparts.space'];
 
 export const emailIsBad = (email: string) => {
+  const localPart = email.split('@')[0];
   const domain = email.split('@')[1]?.toLowerCase();
-  return BAD_DOMAINS.includes(domain);
+  const hasIntegerLocalPart = /^\d+$/.test(localPart);
+  return BAD_DOMAINS.includes(domain) || hasIntegerLocalPart;
 };
 
 /**
