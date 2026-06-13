@@ -235,7 +235,7 @@ export const getSubscriberCount = async () => {
   }
 };
 
-const BAD_DOMAINS = ['mailinator.com', 'abhoward.site'];
+const BAD_DOMAINS = ['mailinator.com', 'abhoward.site', 'apexgunparts.space'];
 
 export const emailIsBad = (email: string) => {
   const domain = email.split('@')[1]?.toLowerCase();
