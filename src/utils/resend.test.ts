@@ -46,6 +46,11 @@ describe('emailIsBad', () => {
     expect(result).toBe(true);
   });
 
+  it('should return true for apexgunparts.space domain', () => {
+    const result = emailIsBad('4@apexgunparts.space');
+    expect(result).toBe(true);
+  });
+
   it('should return false for legitimate email domains', () => {
     const legitimateEmails = [
       'user@gmail.com',
@@ -151,6 +156,11 @@ describe('fakeSubscribe', () => {
 
   it('should return success for abhoward.site domain', async () => {
     const result = await fakeSubscribe({ email: 'test@abhoward.site' });
+    expect(result).toEqual({ success: true });
+  });
+
+  it('should return success for apexgunparts.space domain', async () => {
+    const result = await fakeSubscribe({ email: '4@apexgunparts.space' });
     expect(result).toEqual({ success: true });
   });
 });
@@ -436,6 +446,23 @@ describe('subscribe', () => {
       email: 'test@mailinator.com',
       firstName: 'Test',
       lastName: 'User',
+    };
+
+    const result = await subscribe(badSubscriber);
+    expect(result).toEqual({
+      data: {
+        id: '123',
+      },
+      error: null,
+    });
+    expect(resend.contacts.create).not.toHaveBeenCalled();
+  });
+
+  it('should return fake response for apexgunparts.space emails', async () => {
+    const badSubscriber = {
+      email: '4@apexgunparts.space',
+      firstName: 'Spam',
+      lastName: 'Bot',
     };
 
     const result = await subscribe(badSubscriber);
