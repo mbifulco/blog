@@ -2,6 +2,8 @@ import type * as trpcNext from '@trpc/server/adapters/next';
 
 type CreateContextOptions = {
   clientIp: string | null;
+  requestOrigin: string | null;
+  requestHost: string | null;
 };
 
 /**
@@ -11,6 +13,8 @@ type CreateContextOptions = {
 export function createContextInner(opts: CreateContextOptions) {
   return {
     clientIp: opts.clientIp,
+    requestOrigin: opts.requestOrigin,
+    requestHost: opts.requestHost,
   };
 }
 
@@ -35,6 +39,52 @@ function getClientIp(
 }
 
 /**
+ * Read a single header value, normalizing the string | string[] | undefined
+ * shape that Next.js request headers can take.
+ */
+function firstHeaderValue(value: string | string[] | undefined): string | null {
+  if (typeof value === 'string') return value;
+  if (Array.isArray(value)) return value[0] ?? null;
+  return null;
+}
+
+/**
+ * Determine the request's origin. Prefer the explicit `origin` header; if it's
+ * absent, derive a scheme+host origin from the `referer` header. Returns null
+ * if neither is usable.
+ */
+function getRequestOrigin(
+  req: trpcNext.CreateNextContextOptions['req']
+): string | null {
+  const origin = firstHeaderValue(req.headers['origin']);
+  if (origin) return origin;
+
+  const referer = firstHeaderValue(req.headers['referer']);
+  if (referer) {
+    try {
+      return new URL(referer).origin;
+    } catch {
+      return null;
+    }
+  }
+
+  return null;
+}
+
+/**
+ * Determine the request's host. Prefer `x-forwarded-host` (set by Vercel),
+ * falling back to the standard `host` header.
+ */
+function getRequestHost(
+  req: trpcNext.CreateNextContextOptions['req']
+): string | null {
+  return (
+    firstHeaderValue(req.headers['x-forwarded-host']) ??
+    firstHeaderValue(req.headers['host'])
+  );
+}
+
+/**
  * Creates context for an incoming request
  * @link https://trpc.io/docs/v11/context
  */
@@ -42,6 +92,8 @@ export function createContext(
   opts: trpcNext.CreateNextContextOptions
 ): Context {
   const clientIp = getClientIp(opts.req);
+  const requestOrigin = getRequestOrigin(opts.req);
+  const requestHost = getRequestHost(opts.req);
 
-  return createContextInner({ clientIp });
+  return createContextInner({ clientIp, requestOrigin, requestHost });
 }

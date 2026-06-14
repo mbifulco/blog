@@ -191,7 +191,10 @@ const CREATE_ONLY = process.argv.includes('--create-only');
 // When present, only those files are synced instead of the full directory scan.
 const TARGET_PATHS = process.argv.slice(2).filter((a) => !a.startsWith('--'));
 
-const ICON_PATH = path.join(process.cwd(), 'public/images/publication-icon.png');
+const ICON_PATH = path.join(
+  process.cwd(),
+  'public/images/publication-icon.png'
+);
 
 async function syncPublication(
   session: Session,

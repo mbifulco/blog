@@ -1,11 +1,14 @@
 import { useEffect, useRef, useState } from 'react';
 import useNewsletterStats from '@hooks/useNewsletterStats';
+import { Turnstile } from '@marsidev/react-turnstile';
+import type { TurnstileInstance } from '@marsidev/react-turnstile';
 import type { SubscribeMutationResponse } from '@server/routers/mailingList';
 import posthog from 'posthog-js';
 import { toast } from 'sonner';
 
 import Button from '@components/Button';
 import { Input } from '@ui/input';
+import { env } from '@utils/env';
 import { trpc } from '@utils/trpc';
 
 type SubscriptionFormProps = {
@@ -22,6 +25,7 @@ const SubscriptionForm: React.FC<SubscriptionFormProps> = ({
   const [getHoneypottedNerd, setGetHoneypottedNerd] = useState<boolean>(false);
   const [alreadySubscribed, setAlreadySubscribed] = useState<boolean>(false);
   const [formLoadedAt, setFormLoadedAt] = useState<number | null>(null);
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
 
   // Record when the form loads - bots submit instantly, humans take time
   useEffect(() => {
@@ -119,6 +123,10 @@ const SubscriptionForm: React.FC<SubscriptionFormProps> = ({
       });
 
       // Don't clear form values on error - let user fix their input
+
+      // Reset Turnstile so the user gets a fresh token (tokens are single-use)
+      turnstileRef.current?.reset();
+      setTurnstileToken(null);
     },
   });
 
@@ -128,6 +136,7 @@ const SubscriptionForm: React.FC<SubscriptionFormProps> = ({
   const emailRef = useRef<HTMLInputElement>(null);
   const firstNameRef = useRef<HTMLInputElement>(null);
   const honeypotRef = useRef<HTMLInputElement>(null);
+  const turnstileRef = useRef<TurnstileInstance>(null);
 
   // Validation helper: detect suspicious first names
   const isSpamFirstName = (name: string | undefined): boolean => {
@@ -217,6 +226,7 @@ const SubscriptionForm: React.FC<SubscriptionFormProps> = ({
       firstName,
       honeypot: honeypot || undefined,
       formLoadedAt: formLoadedAt ?? undefined,
+      turnstileToken: turnstileToken ?? undefined,
     });
   };
 
@@ -281,10 +291,25 @@ const SubscriptionForm: React.FC<SubscriptionFormProps> = ({
                 type="email"
                 ref={emailRef}
               />
+              <div className="mt-2">
+                <Turnstile
+                  ref={turnstileRef}
+                  siteKey={env.NEXT_PUBLIC_TURNSTILE_SITE_KEY}
+                  onSuccess={setTurnstileToken}
+                  onExpire={() => setTurnstileToken(null)}
+                  onError={() => setTurnstileToken(null)}
+                  options={{
+                    appearance: 'interaction-only',
+                    size: 'flexible',
+                    theme: 'auto',
+                  }}
+                />
+              </div>
               <Button
                 type="submit"
                 data-element="submit"
                 className="formkit-submit formkit-submit padding-[1ch 2ch] h-10 grow rounded-b rounded-t-none font-normal"
+                disabled={addSubscriberMutation.isPending || !turnstileToken}
               >
                 <div className="formkit-spinner">
                   <div></div>

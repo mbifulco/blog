@@ -2,6 +2,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import {
   ContactEvents,
+  deleteContactByEmail,
   EmailEvents,
   emailIsBad,
   fakeSubscribe,
@@ -30,6 +31,7 @@ vi.mock('resend', () => ({
         create: vi.fn(),
         list: vi.fn(),
         get: vi.fn(),
+        remove: vi.fn(),
       },
     };
   }),
@@ -622,6 +624,81 @@ describe('subscribe', () => {
     await expect(subscribe(legitimateSubscriber)).rejects.toThrow(
       'Network failure'
     );
+    expect(consoleSpy).toHaveBeenCalled();
+
+    consoleSpy.mockRestore();
+  });
+});
+
+describe('deleteContactByEmail', () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
+
+  it('should call contacts.remove with email and audienceId', async () => {
+    vi.mocked(resend.contacts.remove).mockResolvedValue({
+      data: { object: 'contact', deleted: true, contact: 'test@example.com' },
+      error: null,
+      headers: null,
+    });
+
+    await deleteContactByEmail('test@example.com');
+
+    expect(resend.contacts.remove).toHaveBeenCalledWith({
+      email: 'test@example.com',
+      audienceId: 'test-audience-id',
+    });
+  });
+
+  it('should swallow a not_found result without throwing', async () => {
+    vi.mocked(resend.contacts.remove).mockResolvedValue({
+      data: null,
+      error: {
+        name: 'not_found',
+        message: 'Contact not found',
+        statusCode: 404,
+      },
+      headers: null,
+    });
+
+    // Should not throw
+    await expect(
+      deleteContactByEmail('gone@example.com')
+    ).resolves.toBeUndefined();
+  });
+
+  it('should not throw on a generic error and should log it', async () => {
+    vi.mocked(resend.contacts.remove).mockRejectedValue(
+      new Error('Network failure')
+    );
+
+    const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+
+    // Should not throw
+    await expect(
+      deleteContactByEmail('error@example.com')
+    ).resolves.toBeUndefined();
+    expect(consoleSpy).toHaveBeenCalled();
+
+    consoleSpy.mockRestore();
+  });
+
+  it('should not throw when contacts.remove returns a generic API error', async () => {
+    vi.mocked(resend.contacts.remove).mockResolvedValue({
+      data: null,
+      error: {
+        name: 'validation_error',
+        message: 'Something went wrong',
+        statusCode: 400,
+      },
+      headers: null,
+    });
+
+    const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+
+    await expect(
+      deleteContactByEmail('bad@example.com')
+    ).resolves.toBeUndefined();
     expect(consoleSpy).toHaveBeenCalled();
 
     consoleSpy.mockRestore();

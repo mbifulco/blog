@@ -53,6 +53,11 @@ export type EmailEventData = {
   from: string;
   subject: string;
   to: string[];
+  bounce?: {
+    type?: 'Permanent' | 'Transient' | 'Undetermined';
+    subType?: string;
+    message?: string;
+  };
 };
 
 /**
@@ -143,6 +148,9 @@ export const subscribeSchema = z.object({
   // Anti-spam fields (optional for backwards compatibility)
   honeypot: z.string().optional(),
   formLoadedAt: z.number().optional(),
+  // Cloudflare Turnstile token. Optional at the schema level so a missing
+  // token is handled as a silent fake-success in the mutation (not a zod 400).
+  turnstileToken: z.string().optional(),
 });
 
 // Minimum time in milliseconds between form load and submission
@@ -208,6 +216,30 @@ export function isHoneypotFilled(honeypot: string | undefined): boolean {
 }
 
 type SubscribeArgs = z.infer<typeof subscribeSchema>;
+
+/**
+ * Remove a contact from the newsletter audience by email address.
+ * Idempotent: not_found is treated as success.
+ * Never throws — errors are logged and swallowed so callers (e.g. webhooks) can still return HTTP 200.
+ */
+export async function deleteContactByEmail(email: string): Promise<void> {
+  try {
+    const response = await resend.contacts.remove({
+      email,
+      audienceId: env.RESEND_NEWSLETTER_AUDIENCE_ID,
+    });
+
+    if (response.error) {
+      if (response.error.name === 'not_found') {
+        // Contact is already gone — idempotent, treat as success
+        return;
+      }
+      console.error('Error deleting contact by email:', response.error);
+    }
+  } catch (error) {
+    console.error('Error deleting contact by email:', error);
+  }
+}
 
 export const getSubscriberCount = async () => {
   try {

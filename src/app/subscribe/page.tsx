@@ -1,8 +1,10 @@
 'use client';
 
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { Turnstile } from '@marsidev/react-turnstile';
+import type { TurnstileInstance } from '@marsidev/react-turnstile';
 import type { SubscribeMutationResponse } from '@server/routers/mailingList';
 import posthog from 'posthog-js';
 import { useForm } from 'react-hook-form';
@@ -13,6 +15,7 @@ import { Button } from '@ui/button';
 import { Card, CardContent, CardHeader } from '@ui/card';
 import { Input } from '@ui/input';
 import { Label } from '@ui/label';
+import { env } from '@utils/env';
 import { trpc } from '@utils/trpc';
 import { PostHogPageview } from '../posthog-provider';
 
@@ -23,6 +26,8 @@ type FormData = {
 
 export default function NewsletterSignupPage() {
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
+  const turnstileRef = useRef<TurnstileInstance>(null);
   const {
     register,
     handleSubmit,
@@ -61,6 +66,10 @@ export default function NewsletterSignupPage() {
       reset();
     },
     onError: (error) => {
+      // Reset Turnstile so the user gets a fresh single-use token to retry with.
+      turnstileRef.current?.reset();
+      setTurnstileToken(null);
+
       toast.error('Subscription failed', {
         description:
           'Please try again or contact hello@mikebifulco.com for help.',
@@ -88,6 +97,7 @@ export default function NewsletterSignupPage() {
     addSubscriberMutation.mutate({
       email: data.email,
       firstName: data.firstName,
+      turnstileToken: turnstileToken ?? undefined,
     });
   };
 
@@ -205,12 +215,29 @@ export default function NewsletterSignupPage() {
                 </div>
               </fieldset>
 
+              <Turnstile
+                ref={turnstileRef}
+                siteKey={env.NEXT_PUBLIC_TURNSTILE_SITE_KEY}
+                onSuccess={setTurnstileToken}
+                onExpire={() => setTurnstileToken(null)}
+                onError={() => setTurnstileToken(null)}
+                options={{
+                  appearance: 'interaction-only',
+                  size: 'flexible',
+                  theme: 'auto',
+                }}
+              />
+
               <Button
                 type="submit"
                 variant={'default'}
                 className="w-full"
                 data-testid="submit-button"
-                disabled={isSubmitting || addSubscriberMutation.isPending}
+                disabled={
+                  isSubmitting ||
+                  addSubscriberMutation.isPending ||
+                  !turnstileToken
+                }
               >
                 {isSubmitting || addSubscriberMutation.isPending
                   ? 'Subscribing...'
