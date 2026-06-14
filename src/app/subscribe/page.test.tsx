@@ -1,9 +1,32 @@
+import React from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import NewsletterSignupPage from './page';
+
+// Controls whether the Turnstile mock auto-emits a token. Flip to false in tests that need no token.
+let turnstileShouldEmitToken = true;
+
+// Mock the Turnstile widget — auto-emits a token on mount so the form is submittable in tests
+vi.mock('@marsidev/react-turnstile', () => ({
+  Turnstile: ({ onSuccess }: { onSuccess: (t: string) => void }) => {
+    React.useEffect(() => {
+      if (turnstileShouldEmitToken) {
+        onSuccess('test-turnstile-token');
+      }
+    }, [onSuccess]);
+    return <div data-testid="turnstile-widget" />;
+  },
+}));
+
+// Mock the env module so tests don't need real env vars
+vi.mock('@utils/env', () => ({
+  env: {
+    NEXT_PUBLIC_TURNSTILE_SITE_KEY: '1x00000000000000000000AA',
+  },
+}));
 
 // Mock dependencies
 vi.mock('sonner', () => ({
@@ -123,6 +146,61 @@ const TestWrapper = ({ children }: { children: React.ReactNode }) => {
 describe('NewsletterSignupPage', () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    turnstileShouldEmitToken = true;
+  });
+
+  it('should disable submit until a Turnstile token is present', async () => {
+    turnstileShouldEmitToken = false;
+
+    render(
+      <TestWrapper>
+        <NewsletterSignupPage />
+      </TestWrapper>
+    );
+
+    const submitButton = screen.getByRole('button', {
+      name: /💌 Get the newsletter/i,
+    });
+    expect(submitButton).toBeDisabled();
+  });
+
+  it('sends the Turnstile token in the subscribe payload', async () => {
+    const mockMutate = vi.fn();
+    const { trpc } = await import('@utils/trpc');
+    vi.mocked(trpc.mailingList.subscribe.useMutation).mockReturnValue({
+      mutate: mockMutate,
+      mutateAsync: vi.fn(),
+      isPending: false,
+      isSuccess: false,
+      error: null,
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } as any);
+
+    const user = userEvent.setup();
+    render(
+      <TestWrapper>
+        <NewsletterSignupPage />
+      </TestWrapper>
+    );
+
+    await user.type(screen.getByPlaceholderText('First Name'), 'Ada');
+    await user.type(
+      screen.getByPlaceholderText('you@example.com'),
+      'ada@example.com'
+    );
+    await user.click(
+      screen.getByRole('button', { name: /💌 Get the newsletter/i })
+    );
+
+    await waitFor(() => {
+      expect(mockMutate).toHaveBeenCalledWith(
+        expect.objectContaining({
+          email: 'ada@example.com',
+          firstName: 'Ada',
+          turnstileToken: 'test-turnstile-token',
+        })
+      );
+    });
   });
 
   it('should render the newsletter signup form', () => {

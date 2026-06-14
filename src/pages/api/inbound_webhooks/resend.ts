@@ -10,6 +10,7 @@ import { sendWelcomeEmail } from '@utils/email/sendWelcomeEmail';
 import { env } from '@utils/env';
 import {
   ContactEvents,
+  deleteContactByEmail,
   EmailEvents,
   isContactEvent,
   isEmailEvent,
@@ -128,7 +129,37 @@ const webhookHandler = async (req: NextApiRequest, res: NextApiResponse) => {
         break;
 
       // Email events
-      case EmailEvents.EmailBounced:
+      case EmailEvents.EmailBounced: {
+        // `to` is typed as string[] but Resend may send a bare string at runtime
+        // (the PostHog block above guards the same way).
+        const recipient = Array.isArray(event.data.to)
+          ? event.data.to[0]
+          : event.data.to;
+        if (recipient) {
+          if (event.data.bounce?.type === 'Permanent') {
+            try {
+              await deleteContactByEmail(recipient);
+              ph.capture({
+                distinctId: recipient,
+                event: 'resend/contact_removed_permanent_bounce',
+                properties: {
+                  email: recipient,
+                  bounce: event.data.bounce,
+                },
+              });
+              await ph.flush();
+            } catch (error) {
+              // Never let a delete failure break the 200 response
+              console.error('Error handling hard bounce deletion:', error);
+            }
+          } else {
+            console.info(
+              `Skipping contact removal for non-permanent bounce (type: ${event.data.bounce?.type ?? 'unknown'}) for ${recipient}`
+            );
+          }
+        }
+        break;
+      }
       case EmailEvents.EmailClicked:
       case EmailEvents.EmailComplained:
       case EmailEvents.EmailDelivered:
