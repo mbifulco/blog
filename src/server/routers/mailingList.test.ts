@@ -43,7 +43,7 @@ vi.mock('../posthog', () => ({
 // Stub the network-touching pieces of resend while keeping the real
 // schema + spam-detection helpers (which are pure).
 vi.mock('@utils/resend', async (importOriginal) => {
-  const actual = await importOriginal<typeof import('@utils/resend')>();
+  const actual = await importOriginal<typeof ResendModule>();
   return {
     ...actual,
     subscribe: vi.fn(),
