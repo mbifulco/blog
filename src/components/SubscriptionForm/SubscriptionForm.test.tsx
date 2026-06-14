@@ -66,6 +66,9 @@ vi.mock('@utils/trpc', () => ({
 describe('SubscriptionForm - Spam Detection', () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    // Reset to a known state so a test that suppresses the token can't leak
+    // into later tests (which would cause order-dependent failures).
+    turnstileShouldEmitToken = true;
   });
 
   describe('Honeypot field', () => {
@@ -436,9 +439,7 @@ describe('SubscriptionForm - Spam Detection', () => {
 
       // With no token emitted, the submit button should remain disabled
       expect(submitButton).toBeDisabled();
-
-      // Restore default for subsequent tests
-      turnstileShouldEmitToken = true;
+      // (beforeEach resets turnstileShouldEmitToken for the next test)
     });
 
     it('should enable submit button once Turnstile emits a token', async () => {

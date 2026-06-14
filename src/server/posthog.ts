@@ -6,8 +6,11 @@ let client: PostHog | null = null;
 
 /**
  * Lazily-created PostHog client for server-side event capture.
- * Returns null when no PostHog key is configured (e.g. some local/CI setups),
- * so callers become no-ops rather than throwing.
+ *
+ * NEXT_PUBLIC_POSTHOG_KEY is required by src/utils/env.ts, so in normal runtime
+ * it is always present. The guard below is a defensive no-op for environments
+ * where the key isn't configured (e.g. unit tests that mock `@utils/env`),
+ * so callers don't throw or hit the network.
  */
 function getPostHogClient(): PostHog | null {
   if (!env.NEXT_PUBLIC_POSTHOG_KEY) return null;

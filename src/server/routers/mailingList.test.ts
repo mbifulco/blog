@@ -84,8 +84,9 @@ describe('mailingListRouter.subscribe', () => {
   beforeEach(() => {
     vi.clearAllMocks();
     subscribeMock.mockResolvedValue({
-      data: { id: 'real-contact-id' },
+      data: { object: 'contact', id: 'real-contact-id' },
       error: null,
+      headers: null,
     });
   });
 
