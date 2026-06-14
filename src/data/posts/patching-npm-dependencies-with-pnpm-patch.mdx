@@ -48,6 +48,7 @@ Once you've got a fix in mind, try it out directly in your project. You will do 
 
   - the `handleUpload` function wasn't setting a `url` field based on the UploadThing API's response, so our Payload db didn't have any image URLs stored.
   - the `disablePayloadAccessControl` setting was commented out, which caused payload to store _local_ image URLs instead of UploadThing's public URLs.
+
 </Aside>
 
 Once we saw that this fix solved the issue in development, it was time to commit it to source control using `pnpm patch`.
