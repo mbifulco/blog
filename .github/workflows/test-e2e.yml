@@ -12,7 +12,9 @@ jobs:
     timeout-minutes: 7
     runs-on: ubuntu-latest
     container:
-      image: mcr.microsoft.com/playwright:v1.55.0-noble
+      # Keep this version in sync with the @playwright/test version in package.json
+      # so the browsers pre-installed in the image match (no separate install step).
+      image: mcr.microsoft.com/playwright:v1.61.0-noble
       options: --user 1001
     env:
       NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME: ${{ secrets.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME }}
