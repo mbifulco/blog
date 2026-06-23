@@ -41,6 +41,9 @@ export const processMDXFileContent = async (
   }
 
   const mdxSource = await serialize(content);
+  const tldrSource = data.tldr
+    ? await serialize(String(data.tldr))
+    : undefined;
   const headings = getHeadings(content);
   const tagsArray = (tags ?? []) as string[];
 
@@ -57,5 +60,6 @@ export const processMDXFileContent = async (
     content,
     tableOfContents: headings,
     source: mdxSource,
+    ...(tldrSource ? { tldrSource } : {}),
   };
 };

@@ -90,8 +90,16 @@ const PostPage: NextPage<PostPageProps> = ({
 }) => {
   const { frontmatter } = post;
 
-  const { coverImagePublicId, published, date, tags, title, excerpt, slug } =
-    frontmatter;
+  const {
+    coverImagePublicId,
+    published,
+    date,
+    updated,
+    tags,
+    title,
+    excerpt,
+    slug,
+  } = frontmatter;
 
   const router = useRouter();
   const hasTrackedRead = useRef(false);
@@ -125,6 +133,7 @@ const PostPage: NextPage<PostPageProps> = ({
           image={coverImageUrl}
           ogType="article"
           publishedAt={date}
+          modifiedAt={updated}
           tags={tags}
           standardSiteDocumentUri={standardSiteDocumentUri}
           standardSitePublicationUri={standardSitePublicationUri}

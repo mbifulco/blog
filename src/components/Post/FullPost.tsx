@@ -5,6 +5,7 @@ import Breadcrumbs from '@components/Breadcrumbs/Breadcrumbs';
 import Link from '@components/Link';
 import { SeriesNavigation } from '@components/Series/SeriesNavigation';
 import { StructuredData } from '@components/StructuredData';
+import { TLDR } from '@components/TLDR';
 import type { BlogPost, Newsletter } from '@data/content-types';
 import type { Series } from '@lib/series';
 import { generatePostStructuredData } from '@utils/generateStructuredData';
@@ -155,6 +156,7 @@ const FullPost: React.FC<FullPostProps> = ({
                 </div>
               )}
               <div className="prose">
+                {post.tldrSource && <TLDR source={post.tldrSource} />}
                 <MDXRemote {...post.source} components={components} />
               </div>
               <MentionsSummary />

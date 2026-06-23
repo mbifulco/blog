@@ -49,6 +49,17 @@ const getImageUrl = (post: BlogPost | Newsletter): string => {
   return `https://res.cloudinary.com/mikebifulco-com/image/upload/q_auto:eco,f_auto/${publicId}`;
 };
 
+// Strip inline markdown so the `tldr` reads as clean plain text in structured
+// data (code spans, emphasis, and links are markup noise for AI/search).
+const stripInlineMarkdown = (text: string): string =>
+  text
+    .replace(/`([^`]+)`/g, '$1')
+    .replace(/\*\*([^*]+)\*\*/g, '$1')
+    .replace(/\*([^*]+)\*/g, '$1')
+    .replace(/_([^_]+)_/g, '$1')
+    .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
+    .trim();
+
 const AUTHOR_DATA: Person = {
   '@type': 'Person',
   '@id': `${BASE_SITE_URL}/#person`,
@@ -110,14 +121,20 @@ export const generatePostStructuredData = ({
   const contentUrl = getContentUrl(post);
   const imageUrl = getImageUrl(post);
   const publishDate = new Date(post.frontmatter.date).toISOString();
+  const modifiedDate = post.frontmatter.updated
+    ? new Date(post.frontmatter.updated).toISOString()
+    : publishDate;
 
   const postStructuredData: WithContext<BlogPosting> | undefined = {
     '@context': 'https://schema.org',
     '@type': 'BlogPosting',
     headline: post.frontmatter.title,
     description: post.frontmatter.excerpt,
+    ...(post.frontmatter.tldr
+      ? { abstract: stripInlineMarkdown(post.frontmatter.tldr) }
+      : {}),
     datePublished: publishDate,
-    dateModified: publishDate,
+    dateModified: modifiedDate,
     author: AUTHOR_DATA,
     publisher: PUBLISHER_DATA,
     url: contentUrl,

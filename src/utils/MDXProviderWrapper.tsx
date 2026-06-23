@@ -11,6 +11,7 @@ import { MDXProvider } from '@mdx-js/react';
 import type { MDXComponents } from 'mdx/types';
 import { Highlight, themes } from 'prism-react-renderer';
 
+import { FAQ, FAQItem } from '@components/FAQ';
 import Link from '@components/Link';
 import { PullQuote } from '@components/PullQuote';
 import clsxm from '@utils/clsxm';
@@ -297,6 +298,8 @@ export const customComponents = {
   Aside,
   blockquote: Blockquote,
   PullQuote,
+  FAQ,
+  FAQItem,
   Button,
   Colophon,
   Highlight: TextHighlight,
