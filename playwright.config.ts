@@ -16,9 +16,9 @@ export default defineConfig({
   /* Fail the build on CI if you accidentally left test.only in the source code. */
   forbidOnly: !!process.env.CI,
   /* Retry on CI only */
-  retries: process.env.CI ? 2 : 0,
-  /* Opt out of parallel tests on CI. */
-  workers: process.env.CI ? 1 : undefined,
+  retries: process.env.CI ? 1 : 0,
+  /* Run tests in parallel on CI too; the runner has multiple cores. */
+  workers: process.env.CI ? 2 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: 'html',
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
@@ -68,11 +68,12 @@ export default defineConfig({
     // },
   ],
 
-  /* Run your local dev server before starting the tests */
+  /* Serve the prebuilt app. CI builds in a separate step; locally this builds
+     on demand if nothing is already running on the port. */
   webServer: {
-    command: 'pnpm build && pnpm start',
+    command: process.env.CI ? 'pnpm start' : 'pnpm build && pnpm start',
     url: 'http://127.0.0.1:3000',
     reuseExistingServer: !process.env.CI,
-    timeout: 10 * 60 * 1000, // 10 minutes in milliseconds
+    timeout: 2 * 60 * 1000, // 2 minutes — no build happens here on CI
   },
 });

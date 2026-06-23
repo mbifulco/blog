@@ -38,8 +38,19 @@ jobs:
       - name: Install deps
         run: pnpm install
 
-      - name: Install Playwright browsers
-        run: pnpm exec playwright install
+      # The playwright container already ships the browsers, so no install step
+      # is needed. Build in its own step so build time is separate from the test
+      # budget and the Next.js cache can be reused across runs.
+      - name: Cache Next.js build
+        uses: actions/cache@v4
+        with:
+          path: ${{ github.workspace }}/.next/cache
+          key: nextjs-${{ hashFiles('pnpm-lock.yaml') }}-${{ hashFiles('**/*.[jt]s', '**/*.[jt]sx') }}
+          restore-keys: |
+            nextjs-${{ hashFiles('pnpm-lock.yaml') }}-
+
+      - name: Build
+        run: pnpm build
 
       - name: Run Playwright tests
         run: pnpm exec playwright test
