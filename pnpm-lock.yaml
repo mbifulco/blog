@@ -4,6 +4,13 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+overrides:
+  next: 16.2.9
+  tailwindcss: ^4.3.1
+  minimatch@3>brace-expansion: 1.1.14
+  gray-matter>js-yaml: 3.14.2
+  mdast-util-to-hast: 13.2.1
+
 importers:
 
   .:
@@ -2487,7 +2494,7 @@ packages:
   '@tailwindcss/typography@0.5.20':
     resolution: {integrity: sha512-hwbzQuNUfcPvbegQFatVPl/MY/tcM9KLl963hQ5laJKPh81TEZ1+dNG9PirGvcaDBkp+BCshExAyKVPW91dozw==}
     peerDependencies:
-      tailwindcss: '>=3.0.0 || >=4.0.0 || insiders'
+      tailwindcss: ^4.3.1
 
   '@tanstack/query-core@5.101.0':
     resolution: {integrity: sha512-cQetA74EB+seWySv1TTKr828TnP0u39m6LykwDXIo84SNortpDkp30TMEjkqtYCNP9c40uT/iwl6MLiufEt0Ow==}
@@ -2550,7 +2557,7 @@ packages:
       '@trpc/client': 11.18.0
       '@trpc/react-query': 11.18.0
       '@trpc/server': 11.18.0
-      next: '*'
+      next: 16.2.9
       react: '>=16.8.0'
       react-dom: '>=16.8.0'
       typescript: '>=5.7.2'
@@ -4349,7 +4356,7 @@ packages:
   next-cloudinary@6.17.5:
     resolution: {integrity: sha512-YIyIWw5Ds30f4rnED+E9ssLUd94FOPTtbkO2KUvOcw9z4irOEIpb1goxMxbn2EUBnIGQOd6uUf1gFizjME7pMg==}
     peerDependencies:
-      next: ^12 || ^13 || ^14 || >=15.0.0-rc || ^15
+      next: 16.2.9
       react: ^17 || ^18 || >=19.0.0-beta || ^19
 
   next-mdx-remote@6.0.0:
@@ -4397,7 +4404,7 @@ packages:
     peerDependencies:
       '@remix-run/react': '>=2'
       '@tanstack/react-router': ^1
-      next: '>=14.2.0'
+      next: 16.2.9
       react: '>=18.2.0 || ^19.0.0-0'
       react-router: ^5 || ^6 || ^7
       react-router-dom: ^5 || ^6 || ^7
@@ -5129,7 +5136,7 @@ packages:
   tailwindcss-animate@1.0.7:
     resolution: {integrity: sha512-bl6mpH3T7I3UFxuvDEXLxy/VuFxBk5bbzplh7tXI68mwMokNYd1t9qPBHlnyTwfa4JGC4zP516I1hYYtQ/vspA==}
     peerDependencies:
-      tailwindcss: '>=3.0.0 || insiders'
+      tailwindcss: ^4.3.1
 
   tailwindcss@4.3.1:
     resolution: {integrity: sha512-hk+TB1m+K8CYNrP6rjQaq/Y+4Zylwpa87mLYBKCunwnnQ9p+fHb7kmSfGqyEJoxF/O6CDyABWVFEafNSYKll+Q==}
