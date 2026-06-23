@@ -1,7 +1,7 @@
 import { getAllPosts } from '@lib/blog';
 import { getAllNewsletters } from '@lib/newsletters';
 import { getTopTags } from '@lib/tags';
-import { BASE_SITE_URL } from '@/config';
+import { ATPROTO_DID, BASE_SITE_URL } from '@/config';
 
 export async function GET() {
   const posts = await getAllPosts();
@@ -52,6 +52,7 @@ Additional resources that can be skipped for shorter context:
 - [Podcast](${BASE_SITE_URL}/podcast): Tiny Improvements podcast episodes
 - [RSS Feed](${BASE_SITE_URL}/rss.xml): Subscribe via RSS
 - [Sitemap](${BASE_SITE_URL}/sitemap.xml): Full site structure
+- [AT Protocol Publication](${BASE_SITE_URL}/.well-known/site.standard.publication): standard.site publication (\`${ATPROTO_DID}\`) — posts and newsletters are also published as structured AT Protocol records for machine-readable access
 `;
 
   return new Response(content, {
