@@ -1,19 +1,18 @@
 import { getAllPosts } from '@lib/blog';
 import { getAllNewsletters } from '@lib/newsletters';
-import { getAllTags } from '@lib/tags';
+import { getTopTags } from '@lib/tags';
 import { BASE_SITE_URL } from '@/config';
 
 export async function GET() {
   const posts = await getAllPosts();
   const newsletters = await getAllNewsletters();
-  const tags = await getAllTags();
 
   // Get recent posts (last 20)
   const recentPosts = posts.slice(0, 20);
   const recentNewsletters = newsletters.slice(0, 10);
 
-  // Get popular tags (for topic organization)
-  const popularTags = tags.slice(0, 15);
+  // Get popular tags by usage count (for topic organization)
+  const popularTags = await getTopTags(15);
 
   const content = `# mikebifulco.com
 
@@ -33,17 +32,17 @@ Mike Bifulco is a software engineer, startup founder, and developer advocate. He
 
 ## Recent Articles
 
-${recentPosts.map((post) => `- [${post.frontmatter.title}](${BASE_SITE_URL}/posts/${post.slug}): ${post.frontmatter.excerpt || ''}`).join('\n')}
+${recentPosts.map((post) => `- [${post.frontmatter.title}](${BASE_SITE_URL}/posts/${post.slug})${post.frontmatter.excerpt ? `: ${post.frontmatter.excerpt}` : ''}`).join('\n')}
 
 ## Recent Newsletter Issues
 
-${recentNewsletters.map((newsletter) => `- [${newsletter.frontmatter.title}](${BASE_SITE_URL}/newsletter/${newsletter.slug}): ${newsletter.frontmatter.excerpt || ''}`).join('\n')}
+${recentNewsletters.map((newsletter) => `- [${newsletter.frontmatter.title}](${BASE_SITE_URL}/newsletter/${newsletter.slug})${newsletter.frontmatter.excerpt ? `: ${newsletter.frontmatter.excerpt}` : ''}`).join('\n')}
 
 ## Topics
 
 Browse articles by topic:
 
-${popularTags.map((tag) => `- [${tag}](${BASE_SITE_URL}/tags/${tag})`).join('\n')}
+${popularTags.map(({ tag }) => `- [${tag}](${BASE_SITE_URL}/tags/${tag})`).join('\n')}
 
 ## Optional
 
