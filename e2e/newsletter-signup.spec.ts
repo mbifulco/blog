@@ -6,8 +6,16 @@ test.describe('Newsletter Signup Page', () => {
     await page.route('**/*', async (route) => {
       const url = route.request().url();
 
+      let hostname: string;
+      try {
+        hostname = new URL(url).hostname;
+      } catch {
+        console.log('Blocked malformed network request URL:', url);
+        return route.abort('failed');
+      }
+
       // Allow all localhost/127.0.0.1 requests (local development server)
-      if (url.includes('127.0.0.1') || url.includes('localhost')) {
+      if (hostname === '127.0.0.1' || hostname === 'localhost') {
         return route.continue();
       }
 
@@ -15,7 +23,7 @@ test.describe('Newsletter Signup Page', () => {
       // always-pass *test* site key outside Vercel production (see src/utils/env.ts),
       // so the widget issues a dummy token immediately and deterministically,
       // which enables the submit button without any real challenge.
-      if (url.includes('challenges.cloudflare.com')) {
+      if (hostname === 'challenges.cloudflare.com') {
         return route.continue();
       }
 
