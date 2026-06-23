@@ -12,7 +12,9 @@ jobs:
     timeout-minutes: 7
     runs-on: ubuntu-latest
     container:
-      image: mcr.microsoft.com/playwright:v1.55.0-noble
+      # Keep this version in sync with the @playwright/test version in package.json
+      # so the browsers pre-installed in the image match (no separate install step).
+      image: mcr.microsoft.com/playwright:v1.61.0-noble
       options: --user 1001
     env:
       NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME: ${{ secrets.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME }}
@@ -38,8 +40,19 @@ jobs:
       - name: Install deps
         run: pnpm install
 
-      - name: Install Playwright browsers
-        run: pnpm exec playwright install
+      # The playwright container already ships the browsers, so no install step
+      # is needed. Build in its own step so build time is separate from the test
+      # budget and the Next.js cache can be reused across runs.
+      - name: Cache Next.js build
+        uses: actions/cache@v4
+        with:
+          path: ${{ github.workspace }}/.next/cache
+          key: nextjs-${{ hashFiles('pnpm-lock.yaml') }}-${{ hashFiles('**/*.[jt]s', '**/*.[jt]sx') }}
+          restore-keys: |
+            nextjs-${{ hashFiles('pnpm-lock.yaml') }}-
+
+      - name: Build
+        run: pnpm build
 
       - name: Run Playwright tests
         run: pnpm exec playwright test
