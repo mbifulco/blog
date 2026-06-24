@@ -5,6 +5,8 @@ tags: [seo, nextjs]
 slug: own-your-work-with-canonical-tags
 coverImagePublicId: posts/own-your-work-with-canonical-tags/cover
 date: 07-12-2024
+updated: 06-23-2026
+tldr: 'A canonical tag is a `<link rel="canonical" href="..." />` tag in your page `<head>` that tells search engines which URL is the original, authoritative home of the content. Use one when you cross-post to sites like Medium, Dev.to, or Hashnode so the original on your own site gets the SEO credit. In Next.js, add a single `<link>` via `next/head` (pages router) or the `alternates.canonical` field in `generateMetadata` (app router).'
 ---
 
 ## Canonically Speaking: Own Your Work
@@ -233,3 +235,21 @@ I have [written _gobs_ about SEO for developers](https://mikebifulco.com/tags/se
 - [3 Tiny Tips for better SEO](https://mikebifulco.com/newsletter/tiny-tips-for-better-seo)
 - [SEO tools I used to grow my sites to 20k+ visitors/month](https://mikebifulco.com/posts/seo-tools-for-new-web-projects)
 - [The correct semantic HTML for adding subtitles to h1 tags](https://mikebifulco.com/posts/semantic-html-heading-subtitle)
+
+<FAQ>
+  <FAQItem question="What is a canonical tag?">
+    A canonical tag is a specially formatted `<link rel="canonical" href="..." />` tag that lives in the `<head>` of an HTML page. It lets you specify the original or "canonical" version of the content on that page. Search engines like Google use it, along with a few other signals, to decide which URL should be considered the official home of the content.
+  </FAQItem>
+  <FAQItem question="When should I use a canonical tag?">
+    Use one whenever your work appears in multiple places online, especially when you cross-post. If you publish on your own site and then cross-post to Hashnode, Medium, or Dev.to without a canonical tag, it can hurt your search rankings everywhere. The canonical tag points crawlers back to your original so the backlinks and traffic credit accrue to your site.
+  </FAQItem>
+  <FAQItem question="How many canonical tags should a page have?">
+    Exactly one. A page should have **only one** canonical tag. Adding more than one can have negative or unintended effects on your search rankings. In Next.js, watch out for accidentally rendering more than one `<Head />` per page.
+  </FAQItem>
+  <FAQItem question="How do I add a canonical tag in Next.js?">
+    With the pages router, import `Head` from `next/head` and drop a `<link rel="canonical" href="..." />` inside it, using the exact, absolute URL of the page (including a trailing slash if your URLs have one). With the app router, return an `alternates: { canonical: '/your-path' }` object from `generateMetadata`, and set `metadataBase` so Next can build complete URLs from relative paths.
+  </FAQItem>
+  <FAQItem question="Can I set a canonical URL on platforms where I cross-post?">
+    Yes, and you should whenever the option exists. [Dev.to](https://dev.to/p/editor_guide#front-matter) supports a `canonical_url` field in front matter, [Medium](https://help.medium.com/hc/en-us/articles/360033930293-Set-a-canonical-link) lets you mark a story as originally published elsewhere, and [Hashnode](https://support.hashnode.com/en/articles/6556971-how-to-set-a-canonical-link) has a republishing setting in Draft Settings. LinkedIn articles do not support canonical tags, so share a plain link to your original instead.
+  </FAQItem>
+</FAQ>

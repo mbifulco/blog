@@ -5,6 +5,8 @@ date: 2023-12-02
 tags: [nextjs, seo, typescript]
 coverImagePublicId: posts/self-healing-urls-nextjs-seo/cover
 slug: self-healing-urls-nextjs-seo
+updated: 06-23-2026
+tldr: 'A self-healing URL pairs human-readable text with a unique id, like `/posts/my-title-1`, so it always resolves to the right page even after the title changes. In the Next.js App Router, extract the `id` from the slug, look up the post, and if the readable portion does not match the post''s current slug, `redirect` to the correct URL server-side. Point each post''s canonical tag and sitemap entry at that same pattern so search engines index one URL.'
 ---
 
 <small>
@@ -355,3 +357,34 @@ You can find the code for this tutorial on [GitHub at mbifulco/next-self-healing
 ## PS: What about using the Next.js Pages router?
 
 This post _started_ as a tutorial for using the Next.js Pages router to create self-healing URLs, but I ran into a few issues that would make it really challenging to recommend going down this path if you're using the pages router (which is actually what [mikebifulco.com uses](https://github.com/mbifulco/blog)!). For that reason, I think **this is a feature you should only add if you're using the App Router**. I'm including the draft of my original post here [in a gist](https://gist.github.com/mbifulco/daf23aed0d827ec6317962691cb9cd0d) in case anyone wants to take a stab at it. If you figure it out, please let me know!
+
+<FAQ>
+  <FAQItem question="What is a self-healing URL?">
+    A self-healing URL pairs human-readable text with a unique identifier, so it
+    always points to the correct page even if the readable text changes or gets
+    removed entirely. The pattern in this post looks like
+    `/posts/${POST_TITLE}-${POST_ID}`. The `id` decides which content to render,
+    and the title is just there to make the URL readable and shareable.
+  </FAQItem>
+  <FAQItem question="How does the redirect actually work in the Next.js App Router?">
+    Inside `app/posts/[slug]/page.tsx`, you pull the `id` off the end of the
+    slug, look up the post by that `id`, and compare the current slug against the
+    post's real slug. If they don't match, you call `redirect` from
+    `next/navigation` to send the visitor to the correct URL. Because the whole
+    component renders server-side, there's no content flash before the redirect.
+  </FAQItem>
+  <FAQItem question="Why are self-healing URLs good for SEO?">
+    They let you commit to one canonical URL per post. You set the same pattern
+    in each page's `alternates.canonical` metadata and in your `sitemap.ts`, so
+    the URL in the address bar matches the URL search engines have indexed. That
+    avoids the duplicate-content problem Google penalizes when two URLs serve the
+    same content.
+  </FAQItem>
+  <FAQItem question="Do I still need redirects if the URL self-heals?">
+    Yes, for changed titles it's still worth adding an explicit redirect from the
+    old URL to the new one. The self-healing logic handles people landing on a
+    stale slug, but an explicit redirect helps with bookmarks, shared links, and
+    tells Google to index the new URL instead of the old one. Just watch out for
+    redirect loops, and don't add a redirect when the new URL matches a prior one.
+  </FAQItem>
+</FAQ>
