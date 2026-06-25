@@ -1,5 +1,6 @@
-import clsxm from '@utils/clsxm';
 import type { Icon } from '.';
+
+import clsxm from '@utils/clsxm';
 
 const GitHubIcon: Icon = ({ className }) => (
   <svg

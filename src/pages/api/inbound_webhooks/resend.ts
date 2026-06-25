@@ -1,9 +1,10 @@
-import type { IncomingMessage } from 'http';
 import type { NextApiRequest, NextApiResponse } from 'next';
+import type { ContactEventData, WebhookEvent } from '@utils/resend';
+import type { IncomingMessage } from 'http';
+import type { WebhookRequiredHeaders } from 'svix';
 import { buffer } from 'micro';
 import { PostHog } from 'posthog-node';
 import { Webhook } from 'svix';
-import type { WebhookRequiredHeaders } from 'svix';
 
 import { sendSubscriberNotificationEmail } from '@utils/email/sendSubscriberNotificationEmail';
 import { sendWelcomeEmail } from '@utils/email/sendWelcomeEmail';
@@ -15,7 +16,6 @@ import {
   isContactEvent,
   isEmailEvent,
 } from '@utils/resend';
-import type { ContactEventData, WebhookEvent } from '@utils/resend';
 
 const ph = new PostHog(env.NEXT_PUBLIC_POSTHOG_KEY, {
   host: env.NEXT_PUBLIC_POSTHOG_HOST || 'https://us.i.posthog.com',

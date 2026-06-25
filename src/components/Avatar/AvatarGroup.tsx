@@ -1,6 +1,7 @@
+import type { AvatarBaseProps, AvatarSizeVariant } from './Avatar';
+
 import clsxm from '@utils/clsxm';
 import Avatar from './Avatar';
-import type { AvatarBaseProps, AvatarSizeVariant } from './Avatar';
 
 type AvatarGroupProps = {
   people: AvatarBaseProps[];

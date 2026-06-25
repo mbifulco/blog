@@ -1,5 +1,5 @@
-import React from 'react';
 import type { Answer, FAQPage, Question, WithContext } from 'schema-dts';
+import React from 'react';
 
 import { Heading } from '@components/Heading';
 import clsxm from '@utils/clsxm';

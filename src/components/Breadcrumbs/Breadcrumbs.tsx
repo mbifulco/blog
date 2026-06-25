@@ -1,8 +1,8 @@
-import React from 'react';
 import type {
   BreadcrumbList as BreadcrumbListSchema,
   WithContext,
 } from 'schema-dts';
+import React from 'react';
 
 import Link from '@components/Link';
 import { StructuredData } from '@components/StructuredData';

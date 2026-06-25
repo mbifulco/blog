@@ -1,3 +1,4 @@
+import type { RelatedContent } from '@lib/related-posts';
 import posthog from 'posthog-js';
 
 import { Badge } from '@components/Badge';
@@ -5,7 +6,6 @@ import { Heading } from '@components/Heading';
 import { Image } from '@components/Image';
 import Link from '@components/Link';
 import { PublishDate } from '@components/PublishDate';
-import type { RelatedContent } from '@lib/related-posts';
 
 type RelatedPostsProps = {
   relatedContent: RelatedContent[];

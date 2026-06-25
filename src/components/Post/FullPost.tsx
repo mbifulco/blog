@@ -1,3 +1,5 @@
+import type { BlogPost, Newsletter } from '@data/content-types';
+import type { Series } from '@lib/series';
 import { MDXRemote } from 'next-mdx-remote';
 
 import { Badge } from '@components/Badge';
@@ -6,8 +8,6 @@ import Link from '@components/Link';
 import { SeriesNavigation } from '@components/Series/SeriesNavigation';
 import { StructuredData } from '@components/StructuredData';
 import { TLDR } from '@components/TLDR';
-import type { BlogPost, Newsletter } from '@data/content-types';
-import type { Series } from '@lib/series';
 import { generatePostStructuredData } from '@utils/generateStructuredData';
 import { components } from '@utils/MDXProviderWrapper';
 import { CarbonAd } from '../CarbonAd';

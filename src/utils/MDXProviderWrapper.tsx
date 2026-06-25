@@ -1,4 +1,3 @@
-import React, { Children } from 'react';
 import type {
   AnchorHTMLAttributes,
   ButtonHTMLAttributes,
@@ -6,9 +5,11 @@ import type {
   HTMLProps,
   ReactElement,
 } from 'react';
+import type { MDXComponents } from 'mdx/types';
+import type { HeadingProps } from '../components/Heading';
+import React, { Children } from 'react';
 import Script from 'next/script';
 import { MDXProvider } from '@mdx-js/react';
-import type { MDXComponents } from 'mdx/types';
 import { Highlight, themes } from 'prism-react-renderer';
 
 import { FAQ, FAQItem } from '@components/FAQ';
@@ -19,7 +20,6 @@ import clsxm from '@utils/clsxm';
 import { CenteredTextDemo } from '../components/demos/CenteredTextDemo';
 import { OrtonEffectImage } from '../components/demos/OrtonEffectImage';
 import { TextPrettyDemo } from '../components/demos/TextPrettyDemo';
-import type { HeadingProps } from '../components/Heading';
 import { Heading } from '../components/Heading';
 import { Image } from '../components/Image';
 import { Threads, Tweet, Vimeo, YouTube } from '../components/MdxEmbed';

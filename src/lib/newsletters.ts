@@ -1,8 +1,8 @@
 import { join } from 'path';
-
-import { ContentTypes } from '../data/content-types';
 import type { MarkdownDocument, Newsletter } from '../data/content-types';
 import type { PaginatedResult, PaginationOptions } from '../utils/pagination';
+
+import { ContentTypes } from '../data/content-types';
 import { paginate } from '../utils/pagination';
 import { getAllContentFromDirectory } from './content-loaders/getAllContentFromDirectory';
 import { getContentBySlug } from './content-loaders/getContentBySlug';

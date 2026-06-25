@@ -1,5 +1,6 @@
-import { useRef } from 'react';
 import type { GetStaticProps } from 'next';
+import type { Newsletter } from '@data/content-types';
+import { useRef } from 'react';
 import posthog from 'posthog-js';
 
 import { Heading } from '@components/Heading';
@@ -12,7 +13,6 @@ import SponsorCTA from '@components/SponsorCTA/SponsorCTA';
 import StructuredData from '@components/StructuredData/StructuredData';
 import { SubscriptionForm } from '@components/SubscriptionForm';
 import { Subtitle } from '@components/Subtitle';
-import type { Newsletter } from '@data/content-types';
 import { getPaginatedNewsletters } from '@lib/newsletters';
 import { tinyImprovementsBlogStructuredData } from '@utils/newsletterStructuredData';
 import config from '@/config';

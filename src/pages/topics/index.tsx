@@ -1,10 +1,10 @@
 import type { GetStaticProps, NextPage } from 'next';
+import type { TopicDefinition } from '@lib/topics';
 
 import Link from '@components/Link';
 import NewsletterSignup from '@components/NewsletterSignup/NewsletterBannerFancy';
 import SEO from '@components/seo';
 import { Subtitle } from '@components/Subtitle';
-import type { TopicDefinition } from '@lib/topics';
 import { getAllTopicsWithCounts } from '@lib/topics';
 
 type TopicsPageProps = {

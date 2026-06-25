@@ -1,4 +1,5 @@
 import type { GetStaticProps, NextPage } from 'next';
+import type { Series } from '@lib/series';
 import { useRouter } from 'next/router';
 import { compareAsc } from 'date-fns';
 
@@ -8,7 +9,6 @@ import NewsletterItem from '@components/NewsletterFeed/NewsletterItem';
 import { NewsletterSignup } from '@components/NewsletterSignup';
 import { StructuredData } from '@components/StructuredData';
 import { getAllSeries, getSeries } from '@lib/series';
-import type { Series } from '@lib/series';
 import { generateSeriesStructuredData } from '@utils/generateStructuredData';
 import { BlogPost as Post } from '../../components/Post';
 import SEO from '../../components/seo';

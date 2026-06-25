@@ -1,6 +1,5 @@
-import type { MDXRemoteSerializeResult } from 'next-mdx-remote';
-
 import type { Series } from '@lib/series';
+import type { MDXRemoteSerializeResult } from 'next-mdx-remote';
 
 /**
  * Represents a heading in MDX content with its hierarchy level,

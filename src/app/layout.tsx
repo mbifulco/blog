@@ -8,6 +8,9 @@ import config, { BASE_SITE_URL } from '@/config';
 import PostHogProvider from './posthog-provider';
 import TRPCProvider from './trpc-provider';
 
+import '../styles/globals.css';
+import '../components/CarbonAd/CarbonAd.css';
+
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_SITE_URL),
   title: {
@@ -35,9 +38,6 @@ export const metadata: Metadata = {
     },
   },
 };
-
-import '../styles/globals.css';
-import '../components/CarbonAd/CarbonAd.css';
 
 const quickdraw = localFont({
   src: '../../public/fonts/TAYQuickDraw.woff',

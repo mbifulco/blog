@@ -1,11 +1,11 @@
 'use client';
 
+import type { TurnstileInstance } from '@marsidev/react-turnstile';
+import type { SubscribeMutationResponse } from '@server/routers/mailingList';
 import { useRef, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Turnstile } from '@marsidev/react-turnstile';
-import type { TurnstileInstance } from '@marsidev/react-turnstile';
-import type { SubscribeMutationResponse } from '@server/routers/mailingList';
 import posthog from 'posthog-js';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';

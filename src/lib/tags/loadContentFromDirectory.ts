@@ -1,9 +1,9 @@
 import fs from 'fs';
 import { join } from 'path';
+import type { MarkdownDocument } from '@data/content-types';
 import { compareDesc } from 'date-fns';
 import matter from 'gray-matter';
 
-import type { MarkdownDocument } from '@data/content-types';
 import { parseTag } from './utils';
 
 /**

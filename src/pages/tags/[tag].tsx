@@ -1,4 +1,5 @@
 import type { GetStaticPaths, GetStaticProps } from 'next';
+import type { Article, BlogPost, Newsletter } from '../../data/content-types';
 
 import { getPostBySlug } from '@lib/blog';
 import { getNewsletterBySlug } from '@lib/newsletters';
@@ -8,7 +9,6 @@ import { Heading } from '../../components/Heading';
 import NewsletterItem from '../../components/NewsletterFeed/NewsletterItem';
 import { BlogPost as Post } from '../../components/Post';
 import SEO from '../../components/seo';
-import type { Article, BlogPost, Newsletter } from '../../data/content-types';
 import { getExternalReferenceBySlug as getArticleBySlug } from '../../lib/external-references';
 
 type TagPageParams = {

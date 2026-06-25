@@ -1,4 +1,6 @@
 import type { GetStaticPaths, GetStaticProps, NextPage } from 'next';
+import type { BlogPost, Newsletter } from '@data/content-types';
+import type { Topic } from '@lib/topics';
 import { compareDesc } from 'date-fns';
 
 import { Badge } from '@components/Badge';
@@ -10,8 +12,6 @@ import { NewsletterSignup } from '@components/NewsletterSignup';
 import { BlogPost as Post } from '@components/Post';
 import SEO from '@components/seo';
 import { StructuredData } from '@components/StructuredData';
-import type { BlogPost, Newsletter } from '@data/content-types';
-import type { Topic } from '@lib/topics';
 import { getAllTopics, getTopicContent } from '@lib/topics';
 import { generateTopicStructuredData } from '@utils/generateStructuredData';
 

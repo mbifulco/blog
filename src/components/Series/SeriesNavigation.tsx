@@ -1,9 +1,9 @@
+import type { Series } from '@lib/series';
 import { useRouter } from 'next/router';
 import posthog from 'posthog-js';
 
 import { Heading } from '@components/Heading';
 import Link from '@components/Link';
-import type { Series } from '@lib/series';
 import clsxm from '@utils/clsxm';
 
 type SeriesNavigationProps = {

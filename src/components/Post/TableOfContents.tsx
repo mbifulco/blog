@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from 'react';
 import type { Heading } from 'src/data/content-types';
+import { useEffect, useRef, useState } from 'react';
 
 import { Heading as HtmlHeading } from '@components/Heading';
 import Link from '@components/Link';

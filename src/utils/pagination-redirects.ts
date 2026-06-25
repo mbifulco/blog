@@ -1,5 +1,5 @@
-import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
+import { NextResponse } from 'next/server';
 
 export type PaginationRoute = {
   /** The base path (e.g., '/' for home, '/newsletter' for newsletter) */

@@ -1,5 +1,6 @@
 import type { Series } from '@lib/series';
 import type { BlogPost } from '../../data/content-types';
+
 import FullPost from './FullPost';
 import PostSummary from './PostSummary';
 

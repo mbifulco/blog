@@ -1,3 +1,4 @@
+import type { Button } from '@components/ui/button';
 import * as React from 'react';
 import {
   ChevronLeftIcon,
@@ -5,7 +6,6 @@ import {
   MoreHorizontalIcon,
 } from 'lucide-react';
 
-import type { Button } from '@components/ui/button';
 import { buttonVariants } from '@components/ui/button';
 import { cn } from '@utils/cn';
 

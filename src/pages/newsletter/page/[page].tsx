@@ -1,3 +1,5 @@
+import type { Newsletter } from '../../../data/content-types';
+
 import { Heading } from '@components/Heading';
 import NewsletterItem from '@components/NewsletterFeed/NewsletterItem';
 import NewsletterSignup from '@components/NewsletterSignup';
@@ -8,7 +10,6 @@ import { SubscriptionForm } from '@components/SubscriptionForm';
 import { Subtitle } from '@components/Subtitle';
 import PaginationWrapper from '../../../components/Pagination';
 import config from '../../../config';
-import type { Newsletter } from '../../../data/content-types';
 import { getPaginatedNewsletters } from '../../../lib/newsletters';
 import {
   generatePaginatedPaths,

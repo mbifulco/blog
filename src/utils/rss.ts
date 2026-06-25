@@ -1,8 +1,8 @@
 import fs from 'fs';
+import type { BlogPost, Newsletter } from '../data/content-types';
 import { Feed } from 'feed';
 
 import config from '../config';
-import type { BlogPost, Newsletter } from '../data/content-types';
 
 export const generateRSSFeed = (
   posts: BlogPost[],

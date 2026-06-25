@@ -1,6 +1,6 @@
+import type * as ResendModule from '@utils/resend';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-import type * as ResendModule from '@utils/resend';
 import { subscribe } from '@utils/resend';
 import { verifyTurnstileToken } from '@utils/turnstile';
 import { createContextInner } from '../context';

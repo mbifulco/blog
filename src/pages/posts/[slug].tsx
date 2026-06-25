@@ -1,5 +1,8 @@
-import { useRef } from 'react';
 import type { GetStaticProps, NextPage } from 'next';
+import type { RelatedContent, RelatedPostsManifest } from '@lib/related-posts';
+import type { Series } from '@lib/series';
+import type { BlogPost } from '../../data/content-types';
+import { useRef } from 'react';
 import { useRouter } from 'next/router';
 import posthog from 'posthog-js';
 
@@ -7,14 +10,11 @@ import { NewsletterSignup } from '@components/NewsletterSignup';
 import { RelatedPosts } from '@components/RelatedPosts';
 import atprotoData from '@data/atproto-documents.json';
 import relatedPostsData from '@data/generated/relatedPosts.json';
-import type { RelatedContent, RelatedPostsManifest } from '@lib/related-posts';
 import { getSeries } from '@lib/series';
-import type { Series } from '@lib/series';
 import { Colophon } from '../../components/Colophon';
 import { BlogPost as Post } from '../../components/Post';
 import SEO from '../../components/seo';
 import WebmentionMetadata from '../../components/webmentionMetadata';
-import type { BlogPost } from '../../data/content-types';
 import { getAllPosts, getPostBySlug } from '../../lib/blog';
 import { getDocumentUri } from '../../utils/atproto';
 import { getCloudinaryImageUrl } from '../../utils/images';

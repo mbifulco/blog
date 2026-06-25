@@ -1,3 +1,7 @@
+import type { BlogPost, Newsletter } from '@data/content-types';
+import type { Series } from '@lib/series';
+import type { Topic } from '@lib/topics';
+import type { UnifiedFeedItem } from '@lib/unified-feed';
 import type {
   BlogPosting,
   CollectionPage,
@@ -11,10 +15,6 @@ import type {
   WithContext,
 } from 'schema-dts';
 
-import type { BlogPost, Newsletter } from '@data/content-types';
-import type { Series } from '@lib/series';
-import type { Topic } from '@lib/topics';
-import type { UnifiedFeedItem } from '@lib/unified-feed';
 import { getItemPath } from '@lib/unified-feed';
 import config, { BASE_SITE_URL } from '@/config';
 
