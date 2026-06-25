@@ -8,11 +8,15 @@ import { components } from '@utils/MDXProviderWrapper';
 // Reuse the shared MDX component map (so code spans, links, emphasis match the
 // rest of the site) but override the paragraph so the summary keeps the TL;DR
 // box typography instead of the large serif body style.
-const TldrParagraph: React.FC<HTMLAttributes<HTMLParagraphElement>> = (
-  props
-) => (
+const TldrParagraph: React.FC<HTMLAttributes<HTMLParagraphElement>> = ({
+  className,
+  ...props
+}) => (
   <p
-    className="m-0 text-pretty text-lg leading-snug text-gray-800 dark:text-gray-200"
+    className={clsxm(
+      'm-0 text-pretty text-lg leading-snug text-gray-800 dark:text-gray-200',
+      className
+    )}
     {...props}
   />
 );

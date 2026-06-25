@@ -19,11 +19,10 @@ export function reactNodeToText(node: React.ReactNode): string {
 
   if (Array.isArray(node)) {
     // Join with a space so block-level children don't mash words together,
-    // then collapse runs of whitespace below.
-    return node.map(reactNodeToText).join(' ');
-  }
-
-  if (React.isValidElement(node)) {
+    // then fall through to the normalization below (collapse whitespace runs
+    // and drop spaces before punctuation, e.g. "hello ." => "hello.").
+    text = node.map(reactNodeToText).join(' ');
+  } else if (React.isValidElement(node)) {
     const { children } = (node.props as { children?: React.ReactNode }) ?? {};
     text = reactNodeToText(children);
   }

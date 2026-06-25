@@ -65,7 +65,12 @@ export const FAQ: React.FC<FAQProps> = ({
       {items.length > 0 && (
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+          dangerouslySetInnerHTML={{
+            // Escape `<` so answer text containing `</script>` (or `<!--`)
+            // can't break out of the script tag. `<` is valid JSON and
+            // renders identically.
+            __html: JSON.stringify(faqSchema).replace(/</g, '\\u003c'),
+          }}
         />
       )}
       <Heading as="h2" className={clsxm('mb-2')}>
