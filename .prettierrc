@@ -10,6 +10,10 @@
   ],
   "tailwindConfig": "./tailwind.config.js",
   "importOrder": [
+    "<TYPES>^(react/(.*)$)|^(react$)",
+    "<TYPES>^(next/(.*)$)|^(next$)",
+    "<TYPES>",
+    "<TYPES>^[.]",
     "^(react/(.*)$)|^(react$)|^(react-native(.*)$)",
     "^(next/(.*)$)|^(next$)",
     "^(expo(.*)$)|^(expo$)",

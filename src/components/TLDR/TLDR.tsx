@@ -1,5 +1,6 @@
 import type { HTMLAttributes } from 'react';
-import { MDXRemote, type MDXRemoteSerializeResult } from 'next-mdx-remote';
+import type { MDXRemoteSerializeResult } from 'next-mdx-remote';
+import { MDXRemote } from 'next-mdx-remote';
 
 import clsxm from '@utils/clsxm';
 import { components } from '@utils/MDXProviderWrapper';
