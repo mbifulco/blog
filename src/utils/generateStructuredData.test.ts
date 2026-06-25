@@ -1,6 +1,6 @@
+import type { BlogPost, Newsletter } from '@data/content-types';
 import { describe, expect, it } from 'vitest';
 
-import type { BlogPost, Newsletter } from '@data/content-types';
 import {
   generateOrganizationStructuredData,
   generatePostStructuredData,

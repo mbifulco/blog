@@ -1,5 +1,6 @@
-import Link from '@components/Link';
 import type { NewsletterItemProps } from '../../data/content-types';
+
+import Link from '@components/Link';
 import formatDate from '../../utils/format-date';
 import { getCloudinaryImageUrl } from '../../utils/images';
 import { Heading } from '../Heading';

@@ -7,6 +7,8 @@ series: CSS For Visual Balance
 coverImagePublicId: posts/text-wrap-balance-will-make-your-designs-better/cover
 youTubeId: y4f8zl1j8UA
 date: 12-23-2024
+updated: 06-23-2026
+tldr: '`text-wrap: balance` is one line of CSS that tells the browser to make wrapped lines roughly equal in length. Use it on headings (and short paragraphs or blockquotes), pair it with `text-wrap: pretty` on body text. Browser support is around 90%, the fallback is harmless, so there is no real downside.'
 ---
 
 ## A Quick Win with text-wrap: balance
@@ -177,3 +179,36 @@ Implementation details in Next.js with Tailwind
 [00:04:15] ​
 
 </details>
+
+<FAQ>
+  <FAQItem question="What does text-wrap: balance do?">
+    It tells the browser to adjust how text wraps so that the lines in a block
+    are as close to equal length as possible. This avoids uneven, awkward line
+    breaks and is especially effective on **headings**, short paragraphs, and
+    blockquotes.
+  </FAQItem>
+  <FAQItem question="What is the difference between text-wrap: balance and text-wrap: pretty?">
+    `text-wrap: balance` makes wrapped lines roughly equal in length, which is
+    great for **headings**. `text-wrap: pretty` avoids awkward breaks and
+    orphaned words, which is great for **paragraph / body text**. They solve
+    different problems and pair well together. See [text-wrap:
+    pretty](https://mikebifulco.com/posts/text-wrap-pretty-for-subtle-visual-balance)
+    for more.
+  </FAQItem>
+  <FAQItem question="Why should I use text-wrap: balance on headings instead of everything?">
+    The rule works on up to six lines, so applying it to long paragraphs won't
+    do anything useful. Headings and other short blocks of text are exactly
+    where it shines, giving you evenly balanced lines for minimal effort.
+  </FAQItem>
+  <FAQItem question="Is text-wrap: balance supported in all browsers?">
+    According to Can I Use, it is supported by roughly 90% of browsers. Where it
+    is not supported (such as IE11, Opera Mini, and some niche mobile browsers),
+    the fallback is harmless: the text simply wraps the way it normally would,
+    so it is safe to use without a polyfill.
+  </FAQItem>
+  <FAQItem question="How do I use text-wrap: balance with Tailwind CSS?">
+    Recent versions of Tailwind ship a `text-balance` utility, so you can write
+    `<h1 class="text-balance">`. It pairs nicely with `text-pretty` for body
+    text.
+  </FAQItem>
+</FAQ>

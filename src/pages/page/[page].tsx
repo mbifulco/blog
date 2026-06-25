@@ -1,4 +1,6 @@
 import type { NextPage } from 'next';
+import type { TopicDefinition } from '@lib/topics';
+import type { UnifiedFeedItem } from '@lib/unified-feed';
 import { startOfToday } from 'date-fns';
 
 import { Colophon } from '@components/Colophon';
@@ -12,8 +14,6 @@ import WebmentionMetadata from '@components/webmentionMetadata';
 import { getAllPosts } from '@lib/blog';
 import { getAllNewsletters } from '@lib/newsletters';
 import { getAllTopics } from '@lib/topics';
-import type { TopicDefinition } from '@lib/topics';
-import type { UnifiedFeedItem } from '@lib/unified-feed';
 import {
   buildUnifiedFeed,
   getTotalFeedPages,

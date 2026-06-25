@@ -1,10 +1,10 @@
+import type { UnifiedFeedItem } from '@lib/unified-feed';
 import { format } from 'date-fns';
 import posthog from 'posthog-js';
 
 import { Image } from '@components/Image';
 import Link from '@components/Link';
 import NewsletterSignup from '@components/NewsletterSignup';
-import type { UnifiedFeedItem } from '@lib/unified-feed';
 import { getImagePublicId, getItemPath } from '@lib/unified-feed';
 
 type UnifiedContentFeedProps = {

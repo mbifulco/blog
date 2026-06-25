@@ -1,1 +1,5 @@
 .next
+
+# Authored content — Prettier's JSX-text wrapping can split inline code spans,
+# and embedded code formatting rewrites sample code in posts. Leave content as written.
+src/data/**/*.mdx

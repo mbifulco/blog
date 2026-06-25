@@ -1,9 +1,9 @@
+import type { Heading } from 'src/data/content-types';
 import GithubSlugger from 'github-slugger';
 import { serialize as serializeMdx } from 'next-mdx-remote/serialize';
 import imageSize from 'rehype-img-size';
 import rehypeSlug from 'rehype-slug';
 import remarkGfm from 'remark-gfm';
-import type { Heading } from 'src/data/content-types';
 
 export const getHeadings = (source: string): Heading[] => {
   const lines = source.split('\n');

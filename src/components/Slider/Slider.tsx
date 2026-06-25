@@ -1,5 +1,6 @@
 'use client';
 
+import type { SliderState, SliderStateOptions } from 'react-stately';
 import { useRef } from 'react';
 import clsx from 'clsx';
 import {
@@ -10,7 +11,6 @@ import {
   VisuallyHidden,
 } from 'react-aria';
 import { useSliderState } from 'react-stately';
-import type { SliderState, SliderStateOptions } from 'react-stately';
 
 const Thumb = (props: {
   label?: string;

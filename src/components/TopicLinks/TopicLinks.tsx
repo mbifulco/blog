@@ -1,6 +1,7 @@
+import type { TopicDefinition } from '@lib/topics';
+
 import Link from '@components/Link';
 import { Subtitle } from '@components/Subtitle';
-import type { TopicDefinition } from '@lib/topics';
 
 type TopicLinksProps = {
   topics: TopicDefinition[];

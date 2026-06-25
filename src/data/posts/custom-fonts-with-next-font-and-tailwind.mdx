@@ -4,7 +4,9 @@ excerpt: 'Learn how to add custom fonts to your Next.js app using next/font and 
 tags: [nextjs, react, tailwind, typescript, SEO]
 date: 4-17-2023
 slug: custom-fonts-with-next-font-and-tailwind
-pulished: true
+published: true
+updated: 06-23-2026
+tldr: 'To use a custom font in Next.js with Tailwind, load it with `next/font/google` or `next/font/local` using the `variable` prop, spread the generated `.variable` class names onto a wrapper element in `_app.tsx`, then map each CSS variable to a `fontFamily` entry in your Tailwind config. After that, apply the font anywhere with a `font-*` utility class. `next/font` keeps things fast by self-hosting fonts and minimizing layout shift (CLS).'
 ---
 
 ## Adding custom fonts to your website is a typical requirement for most web projects
@@ -136,3 +138,18 @@ export default myComponent;
 That should do the trick!
 
 If you're wondering where these steps came from, it is essentially a combination of the instructions provided in [Next's docs for Font Optimization](https://nextjs.org/docs/basic-features/font-optimization). My team is using this very configuration setup for our Next.js site on [Craftwork.com](https://craftwork.com) to load custom fonts both locally and from Google Fonts, and it's been working great.
+
+<FAQ>
+  <FAQItem question="How do I add a custom font to a Next.js site with next/font?">
+    Import the font from `next/font/google` (for Google Fonts) or `next/font/local` (for font files in your repo), and pass the `variable` config prop to generate a CSS variable for it. Then spread the font's `.variable` class onto a wrapper element in `_app.tsx` so the variable is available throughout your app.
+  </FAQItem>
+  <FAQItem question="What is the difference between next/font/google and next/font/local?">
+    Use `next/font/google` to load fonts from Google Fonts directly by name. Use `next/font/local` to load font files stored in your own repo, for example in `/public/fonts`. With `next/font/local` you also pass a `src` array, which lets you map specific files to different font weights and styles.
+  </FAQItem>
+  <FAQItem question="How do I use a next/font font with Tailwind CSS?">
+    Add an entry under `theme.extend.fontFamily` in your Tailwind config that points to the CSS variable you generated, for example `"barlow-condensed": "var(--font-barlow-condensed)"`. You can name the left-hand key whatever you want; that name becomes the Tailwind utility, so you'd apply the font with a class like `font-barlow-condensed`.
+  </FAQItem>
+  <FAQItem question="Why use next/font instead of loading fonts manually?">
+    `next/font` loads fonts asynchronously using the Font Loading API, generates optimized font subsets to reduce data transferred over the network, and minimizes [Cumulative Layout Shift (CLS)](https://web.dev/optimize-cls/). Loading fonts carefully this way can also have a [positive impact on your Lighthouse scores](https://web.dev/patterns/web-vitals-patterns/fonts/) and SEO.
+  </FAQItem>
+</FAQ>

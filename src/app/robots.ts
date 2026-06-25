@@ -3,9 +3,25 @@ import type { MetadataRoute } from 'next';
 import { env } from '@utils/env';
 import { BASE_SITE_URL } from '@/config';
 
-const noIndexPaths = [
-  '/ingest', // posthog's reverse proxy
-  '/ingest/*', // posthog's reverse proxy
+// Infrastructure paths that aren't useful to any crawler.
+const infraDisallow = ['/api/', '/_next/', '/public/', '/ingest', '/ingest/*'];
+
+// AI search / training crawlers we explicitly welcome. The site publishes an
+// llms.txt index and AT Protocol records specifically to be discovered and
+// cited by generative engines, so we opt in by name rather than blocking them.
+const aiCrawlers = [
+  'GPTBot',
+  'OAI-SearchBot',
+  'ChatGPT-User',
+  'ClaudeBot',
+  'anthropic-ai',
+  'Claude-Web',
+  'PerplexityBot',
+  'Perplexity-User',
+  'Google-Extended',
+  'CCBot',
+  'Applebot-Extended',
+  'cohere-ai',
 ];
 
 export default function robots(): MetadataRoute.Robots {
@@ -28,20 +44,15 @@ export default function robots(): MetadataRoute.Robots {
     rules: [
       {
         userAgent: '*',
-        disallow: '/api/',
+        disallow: infraDisallow,
       },
+      // Welcome AI crawlers explicitly so the intent is documented and robust
+      // against any future wildcard changes.
       {
-        userAgent: '*',
-        disallow: '/_next/',
+        userAgent: aiCrawlers,
+        allow: '/',
+        disallow: infraDisallow,
       },
-      {
-        userAgent: '*',
-        disallow: '/public/',
-      },
-      ...noIndexPaths.map((path) => ({
-        userAgent: '*',
-        disallow: path,
-      })),
     ],
     sitemap: `${BASE_SITE_URL}/sitemap.xml`,
   };

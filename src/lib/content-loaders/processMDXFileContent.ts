@@ -1,8 +1,8 @@
 import fs from 'fs';
+import type { MarkdownDocument } from '../../data/content-types';
 import { compile } from '@mdx-js/mdx';
 import matter from 'gray-matter';
 
-import type { MarkdownDocument } from '../../data/content-types';
 import { getHeadings, serialize } from '../../utils/mdx';
 import { parseTag } from '../tags';
 
@@ -41,6 +41,7 @@ export const processMDXFileContent = async (
   }
 
   const mdxSource = await serialize(content);
+  const tldrSource = data.tldr ? await serialize(String(data.tldr)) : undefined;
   const headings = getHeadings(content);
   const tagsArray = (tags ?? []) as string[];
 
@@ -57,5 +58,6 @@ export const processMDXFileContent = async (
     content,
     tableOfContents: headings,
     source: mdxSource,
+    ...(tldrSource ? { tldrSource } : {}),
   };
 };

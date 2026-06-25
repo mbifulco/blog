@@ -1,7 +1,7 @@
 import { join } from 'path';
+import type { MarkdownDocument } from '@data/content-types';
 
 import { ContentTypes } from '@data/content-types';
-import type { MarkdownDocument } from '@data/content-types';
 import { loadContentFromDirectory } from './loadContentFromDirectory';
 import { TagRegistry } from './TagRegistry';
 

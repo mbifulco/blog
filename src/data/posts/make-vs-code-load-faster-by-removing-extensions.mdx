@@ -7,6 +7,8 @@ coverImagePublicId: posts/make-vs-code-load-faster-by-removing-extensions/cover
 slug: make-vs-code-load-faster-by-removing-extensions
 tags: [dev, productivity, javascript]
 published: true
+updated: 06-23-2026
+tldr: 'VS Code gets slow to load mostly because of accumulated extensions. Open the Extensions pane (`Shift + command + X` on Mac, `control + shift + X` on Windows/Linux), type `@installed` to list everything, and remove extensions you do not use. Watch the "Activation Time" badge to spot the slow ones. On an Apple Silicon Mac, do the [Apple Silicon fix](https://mikebifulco.com/posts/make-vs-code-load-faster-mac-apple-silicon) first for a much bigger gain.'
 ---
 
 <Aside type="info">
@@ -63,5 +65,40 @@ This post was inspired by a tweet I let fly recently after playing with load tim
   tweetLink="https://twitter.com/irreverentmike/status/1454054616027574283"
   align="center"
 />
+
+<FAQ>
+  <FAQItem question="Why does VS Code get slow to load over time?">
+    A fresh install of VS Code opens very quickly. The slowdown usually comes
+    from the community-built **extensions** you accumulate over time from the
+    [VS Code Marketplace](https://marketplace.visualstudio.com/VSCode). Each one
+    adds to startup, so removing the ones you do not use is the easiest win.
+  </FAQItem>
+  <FAQItem question="How do I see which extensions are installed?">
+    Open the Extensions pane (`Shift + command + X` on Mac, likely
+    `control + shift + X` on Windows/Linux) and type `@installed` into the
+    search bar at the top of the list. That shows every extension currently
+    installed so you can decide what to keep.
+  </FAQItem>
+  <FAQItem question="How do I find which extension is slow?">
+    Extensions with particularly long load times have their **Activation Time**
+    highlighted in the installed list, shown in the upper-right corner of each
+    extension's list item with a load time in milliseconds next to it. That
+    badge points you straight at the worst offenders.
+  </FAQItem>
+  <FAQItem question="What should I do about an extension with a high activation time?">
+    First decide whether you actually use it; if not, remove it. If you do,
+    check whether a faster alternative exists and switch to it. If there is no
+    better option, you can live with the load time or remove the extension.
+    Since most are open source, it is also worth searching that extension's repo
+    for [&quot;activation time&quot;](https://github.com/prettier/prettier-vscode/issues?q=activation+time)
+    to see if others hit the same issue, and opening an issue or PR if needed.
+  </FAQItem>
+  <FAQItem question="Does this fix work on Apple Silicon Macs?">
+    The tips here are still valid, but if you are on a Mac with an Apple Silicon
+    chip (M1, M1 Pro, or M1 Max) you should do the [Apple Silicon speedup](https://mikebifulco.com/posts/make-vs-code-load-faster-mac-apple-silicon)
+    first. You will see much bigger gains from that step, then come back here to
+    clean up extensions.
+  </FAQItem>
+</FAQ>
 
 _note: Cover photo for this article is from by <a href="https://unsplash.com/@loic?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Djim Loic</a> on <a href="https://unsplash.com/s/photos/time?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>._

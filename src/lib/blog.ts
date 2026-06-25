@@ -1,8 +1,8 @@
 // Install gray-matter and date-fns
 import { join } from 'path';
+import type { BlogPost } from '../data/content-types';
 
 import { ContentTypes } from '../data/content-types';
-import type { BlogPost } from '../data/content-types';
 import { getAllContentFromDirectory } from './content-loaders/getAllContentFromDirectory';
 import { getContentBySlug } from './content-loaders/getContentBySlug';
 

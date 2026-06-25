@@ -1,5 +1,5 @@
-import { useRef } from 'react';
 import type { NextPage } from 'next';
+import { useRef } from 'react';
 import posthog from 'posthog-js';
 
 import { Heading } from '../components/Heading';

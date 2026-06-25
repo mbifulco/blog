@@ -1,7 +1,7 @@
 import fs from 'fs';
 import { join } from 'path/posix';
-
 import type { ContentType, MarkdownDocument } from '@data/content-types';
+
 import { processMDXFileContent } from './processMDXFileContent';
 
 /**

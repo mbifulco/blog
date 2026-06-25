@@ -1,6 +1,5 @@
-import type { MDXRemoteSerializeResult } from 'next-mdx-remote';
-
 import type { Series } from '@lib/series';
+import type { MDXRemoteSerializeResult } from 'next-mdx-remote';
 
 /**
  * Represents a heading in MDX content with its hierarchy level,
@@ -34,6 +33,12 @@ export type OptionalFrontmatter = {
   coverImagePublicId?: string;
   url?: string;
   content?: string;
+  // Date the content was last meaningfully updated. Drives dateModified in
+  // structured data and article:modified_time. Falls back to `date` when absent.
+  updated?: string | number | Date;
+  // Answer-first summary. Rendered as a TL;DR box near the title and emitted
+  // into BlogPosting structured data (abstract) for AI/search extraction.
+  tldr?: string;
 };
 
 /**
@@ -51,6 +56,9 @@ export type MarkdownDocument = {
   tableOfContents?: Heading[];
   slug: string;
   source: MDXRemoteSerializeResult;
+  // Serialized `tldr` frontmatter, so the TL;DR box can render inline markdown
+  // (code spans, links, emphasis) instead of raw text.
+  tldrSource?: MDXRemoteSerializeResult;
 };
 
 /**

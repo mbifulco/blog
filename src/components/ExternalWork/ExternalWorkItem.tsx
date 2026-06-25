@@ -1,4 +1,5 @@
 import type { Article } from '../../data/content-types';
+
 import { Heading } from '../Heading';
 import { PublishDate } from '../PublishDate';
 

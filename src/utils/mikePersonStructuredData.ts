@@ -1,5 +1,6 @@
-import config, { BASE_SITE_URL } from '@/config';
 import type { StructuredDataWithType } from './generateStructuredData';
+
+import config, { BASE_SITE_URL } from '@/config';
 
 export const personStructuredData: StructuredDataWithType = {
   '@context': 'https://schema.org',

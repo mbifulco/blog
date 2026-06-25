@@ -1,3 +1,5 @@
+import type { BlogPost, Newsletter } from '@data/content-types';
+import type { Series } from '@lib/series';
 import { MDXRemote } from 'next-mdx-remote';
 
 import { Badge } from '@components/Badge';
@@ -5,8 +7,7 @@ import Breadcrumbs from '@components/Breadcrumbs/Breadcrumbs';
 import Link from '@components/Link';
 import { SeriesNavigation } from '@components/Series/SeriesNavigation';
 import { StructuredData } from '@components/StructuredData';
-import type { BlogPost, Newsletter } from '@data/content-types';
-import type { Series } from '@lib/series';
+import { TLDR } from '@components/TLDR';
 import { generatePostStructuredData } from '@utils/generateStructuredData';
 import { components } from '@utils/MDXProviderWrapper';
 import { CarbonAd } from '../CarbonAd';
@@ -155,6 +156,7 @@ const FullPost: React.FC<FullPostProps> = ({
                 </div>
               )}
               <div className="prose">
+                {post.tldrSource && <TLDR source={post.tldrSource} />}
                 <MDXRemote {...post.source} components={components} />
               </div>
               <MentionsSummary />

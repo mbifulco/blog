@@ -1,6 +1,6 @@
+import type { PagefindResultData } from '@hooks/usePagefind';
 import { useEffect, useRef } from 'react';
 import { usePagefind } from '@hooks/usePagefind';
-import type { PagefindResultData } from '@hooks/usePagefind';
 import { useQueryState } from 'nuqs';
 
 import { Badge } from '@components/Badge';

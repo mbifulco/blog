@@ -1,8 +1,8 @@
+import type { TurnstileInstance } from '@marsidev/react-turnstile';
+import type { SubscribeMutationResponse } from '@server/routers/mailingList';
 import { useEffect, useRef, useState } from 'react';
 import useNewsletterStats from '@hooks/useNewsletterStats';
 import { Turnstile } from '@marsidev/react-turnstile';
-import type { TurnstileInstance } from '@marsidev/react-turnstile';
-import type { SubscribeMutationResponse } from '@server/routers/mailingList';
 import posthog from 'posthog-js';
 import { toast } from 'sonner';
 

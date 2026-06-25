@@ -6,6 +6,8 @@ slug: text-wrap-pretty-for-subtle-visual-balance
 series: CSS For Visual Balance
 coverImagePublicId: posts/text-wrap-pretty-for-subtle-visual-balance/cover
 date: 04-30-2026
+updated: 06-23-2026
+tldr: '`text-wrap: pretty` tells the browser to avoid awkward line breaks, mostly orphaned words on the last line of a paragraph. Use it on body text (and `text-wrap: balance` on headings). Browser support is broad, the fallback is harmless, so there is no real downside.'
 ---
 
 ## Part 2: A Slightly Smarter Wrap
@@ -86,6 +88,31 @@ If you already adopted `text-balance` for headings, this pairs nicely with it.
 In general, yes. According to [Can I Use](https://caniuse.com/wf-text-wrap-pretty), it is supported by most major browsers. The good news is that the fallback is harmless: the text will wrap as it normally would without the property.
 
 So: go for it! Use this rule where it makes sense in your page designs. There's essentially no downside.
+
+<FAQ>
+  <FAQItem question="What does text-wrap: pretty do?">
+    It tells the browser to avoid awkward line breaks when wrapping text. Most
+    noticeably, it prevents a single orphaned word from being stranded on the
+    last line of a paragraph. The result feels closer to hand-laid print
+    typography.
+  </FAQItem>
+  <FAQItem question="What is the difference between text-wrap: pretty and text-wrap: balance?">
+    `text-wrap: balance` makes the lines in a block roughly equal in length,
+    which is great for **headings**. `text-wrap: pretty` avoids awkward breaks
+    and orphans, which is great for **paragraph / body text**. They solve
+    different problems and pair well together.
+  </FAQItem>
+  <FAQItem question="Is text-wrap: pretty supported in all browsers?">
+    It is supported in most major browsers. Where it is not, the fallback is
+    harmless: text simply wraps the way it normally would, so you can use it
+    safely without a polyfill. Check [Can I
+    Use](https://caniuse.com/wf-text-wrap-pretty) for the latest support.
+  </FAQItem>
+  <FAQItem question="How do I use text-wrap: pretty with Tailwind CSS?">
+    Tailwind ships a `text-pretty` utility, so you can write `<p
+    class="text-pretty">`. It pairs nicely with `text-balance` for headings.
+  </FAQItem>
+</FAQ>
 
 ## Related Reading
 

@@ -1,6 +1,6 @@
-import { useRef } from 'react';
 import type { NextPage } from 'next';
 import type { MDXRemoteSerializeResult } from 'next-mdx-remote';
+import { useRef } from 'react';
 import { MDXRemote } from 'next-mdx-remote';
 import posthog from 'posthog-js';
 

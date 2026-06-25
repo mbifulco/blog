@@ -1,7 +1,7 @@
 // get metadata about post series
+import type { BlogPost, Newsletter } from 'src/data/content-types';
 import { compareAsc } from 'date-fns';
 import slugify from 'slugify';
-import type { BlogPost, Newsletter } from 'src/data/content-types';
 
 import { getAllPosts } from './blog';
 import { getAllNewsletters } from './newsletters';

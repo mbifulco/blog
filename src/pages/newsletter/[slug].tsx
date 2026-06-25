@@ -1,4 +1,7 @@
 import type { GetStaticProps } from 'next';
+import type { Newsletter } from '@data/content-types';
+import type { RelatedContent, RelatedPostsManifest } from '@lib/related-posts';
+import type { Series } from '@lib/series';
 import { useRouter } from 'next/router';
 
 import { Colophon } from '@components/Colophon';
@@ -9,12 +12,9 @@ import SEO from '@components/seo';
 import StructuredData from '@components/StructuredData/StructuredData';
 import WebmentionMetadata from '@components/webmentionMetadata';
 import atprotoData from '@data/atproto-documents.json';
-import type { Newsletter } from '@data/content-types';
 import relatedPostsData from '@data/generated/relatedPosts.json';
 import { getAllNewsletters, getNewsletterBySlug } from '@lib/newsletters';
-import type { RelatedContent, RelatedPostsManifest } from '@lib/related-posts';
 import { getSeries } from '@lib/series';
-import type { Series } from '@lib/series';
 import { getDocumentUri } from '@utils/atproto';
 import { generatePostStructuredData } from '@utils/generateStructuredData';
 import { getCloudinaryImageUrl } from '@utils/images';

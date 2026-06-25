@@ -1,10 +1,10 @@
-import { useRef } from 'react';
 import type { GetStaticProps, NextPage } from 'next';
+import type { Article } from '../data/content-types';
+import { useRef } from 'react';
 import posthog from 'posthog-js';
 
 import { ExternalWorkItem } from '../components/ExternalWork';
 import SEO from '../components/seo';
-import type { Article } from '../data/content-types';
 import { getAllExternalReferences } from '../lib/external-references';
 
 export const getStaticProps: GetStaticProps = async () => {

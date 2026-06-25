@@ -1,9 +1,8 @@
+import type { AppRouter } from '../server/routers/_app';
 import { httpBatchStreamLink, loggerLink } from '@trpc/client';
 import { createTRPCNext } from '@trpc/next';
 import { createTRPCReact } from '@trpc/react-query';
 import superjson from 'superjson';
-
-import type { AppRouter } from '../server/routers/_app';
 
 function getBaseUrl() {
   if (typeof window !== 'undefined')

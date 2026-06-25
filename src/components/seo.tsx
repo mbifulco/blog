@@ -29,6 +29,7 @@ type SEOProps = {
   title?: string;
   lang?: string;
   publishedAt?: string | number | Date;
+  modifiedAt?: string | number | Date;
   tags?: string[];
   pagination?: SEOPagination;
   standardSiteDocumentUri?: string;
@@ -45,6 +46,7 @@ const SEO: React.FC<SEOProps> = ({
   ogType,
   image,
   publishedAt,
+  modifiedAt,
   tags,
   pagination,
   standardSiteDocumentUri,
@@ -116,6 +118,13 @@ const SEO: React.FC<SEOProps> = ({
         href="/favicon-16x16.png"
       />
       <link rel="manifest" href="/site.webmanifest" />
+      {/* RSS feed autodiscovery */}
+      <link
+        rel="alternate"
+        type="application/rss+xml"
+        title={`${siteName} RSS feed`}
+        href={`${baseUrl}/rss.xml`}
+      />
       <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5" />
       <meta name="msapplication-TileColor" content="#da532c" />
       <meta name="theme-color" content="#ffffff" />
@@ -162,6 +171,12 @@ const SEO: React.FC<SEOProps> = ({
         <meta
           property="article:published_time"
           content={new Date(publishedAt).toISOString()}
+        />
+      )}
+      {modifiedAt && (
+        <meta
+          property="article:modified_time"
+          content={new Date(modifiedAt).toISOString()}
         />
       )}
       {tags?.map((tag) => (

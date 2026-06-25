@@ -5,7 +5,9 @@ tags: [javascript, oss, devtools]
 coverImagePublicId: 'posts/patching-npm-dependencies-with-pnpm-patch/cover'
 slug: patching-npm-dependencies-with-pnpm-patch
 date: 11-11-2025
+updated: 06-23-2026
 published: true
+tldr: '`pnpm patch <package-name>` lets you fix a broken dependency locally and keep the fix in version control. Edit the package in the temp directory pnpm opens, run `pnpm patch-commit <package-name>`, and pnpm re-applies the patch on every install. No fork, and no waiting for the maintainer to ship a release.'
 ---
 
 ## Introduction
@@ -120,3 +122,36 @@ If your team is using a package manager other than pnpm, there are other options
 - if you're using ruby's `bundler`, you're in the wrong place, and you have my sympathies.
 
 The specifics of each of these options are very similar, but vary slightly - refer to the docs linked above for a walkthrough of each.
+
+<FAQ>
+  <FAQItem question="What is pnpm patch?">
+    `pnpm patch` is a command built into the pnpm package manager that lets you
+    make local changes to an installed dependency and save them as a patch
+    file. pnpm re-applies that patch automatically on every `pnpm install`, so
+    your fix survives reinstalls without maintaining a fork.
+  </FAQItem>
+  <FAQItem question="Where does pnpm store the patch file?">
+    In a `patches/` directory at the root of your project, as a `.patch` file
+    in git-diff format. pnpm also adds a reference to it in your `package.json`
+    and your `pnpm-lock.yaml`, so the patch is committed to source control
+    alongside the rest of your project.
+  </FAQItem>
+  <FAQItem question="How do I edit an existing pnpm patch?">
+    The cleanest workflow is to remove the patch with `pnpm patch-remove
+    <package-name>` and then start fresh with `pnpm patch <package-name>`. You
+    _can_ edit the `.patch` file by hand, but it's finicky; removing and
+    re-creating is usually faster.
+  </FAQItem>
+  <FAQItem question="How do I remove a pnpm patch when there's an upstream fix?">
+    Run `pnpm patch-remove <package-name>`, which clears the entry from your
+    `package.json` and the `patches/` directory. Note that this does **not**
+    bump the dependency. Run `pnpm install` to actually move to the version
+    that contains the upstream fix.
+  </FAQItem>
+  <FAQItem question="Can I patch dependencies without pnpm?">
+    Yes. Yarn has [`yarn patch`](https://yarnpkg.com/cli/patch), Bun has
+    [`bun patch`](https://bun.com/docs/pm/cli/patch), and for npm you can use
+    [`patch-package`](https://www.npmjs.com/package/patch-package). The
+    workflows are very similar in spirit.
+  </FAQItem>
+</FAQ>
