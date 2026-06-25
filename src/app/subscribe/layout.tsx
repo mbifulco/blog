@@ -12,7 +12,9 @@ const ogImage = {
 };
 
 export const metadata: Metadata = {
-  title,
+  // Already a complete, self-branded title; opt out of the root layout's
+  // `%s | Mike Bifulco` template so it isn't doubled up.
+  title: { absolute: title },
   description,
   robots: {
     index: true,
