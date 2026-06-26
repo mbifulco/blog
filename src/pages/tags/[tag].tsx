@@ -3,7 +3,7 @@ import type { Article, BlogPost, Newsletter } from '../../data/content-types';
 
 import { getPostBySlug } from '@lib/blog';
 import { getNewsletterBySlug } from '@lib/newsletters';
-import { getContentForTag, getTopTags } from '@lib/tags';
+import { getAllTags, getContentForTag } from '@lib/tags';
 import { ExternalWorkItem } from '../../components/ExternalWork';
 import { Heading } from '../../components/Heading';
 import NewsletterItem from '../../components/NewsletterFeed/NewsletterItem';
@@ -63,10 +63,12 @@ export const getStaticProps: GetStaticProps<
 };
 
 export const getStaticPaths: GetStaticPaths<TagPageParams> = async () => {
-  const topTags = await getTopTags(20);
+  // Build a page for every tag used across the site. The /tags index links to
+  // all of them, so anything less than the full set 404s (see Ahrefs audit).
+  const tags = await getAllTags();
 
   return {
-    paths: topTags.map(({ tag }) => ({
+    paths: tags.map((tag) => ({
       params: {
         tag,
       },

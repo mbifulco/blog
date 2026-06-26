@@ -54,7 +54,15 @@ export const loadContentFromDirectory = async (
     );
 
     // filter out null entries from failed processing
-    const validArticles = articles.filter((article) => article !== null);
+    let validArticles = articles.filter((article) => article !== null);
+
+    // filter out drafts in production so unpublished content doesn't leak
+    // into tag pages or related-content links (which would 404)
+    if (process.env.NODE_ENV === 'production') {
+      validArticles = validArticles.filter(
+        (article) => article.frontmatter?.published !== false
+      );
+    }
 
     // sort posts by date, newest first
     validArticles.sort((a, b) => {

@@ -34,7 +34,7 @@ const TagsPage: NextPage<TagsPageProps> = ({ tags }) => {
         </Heading>
         <div className="mb-20 flex flex-row flex-wrap gap-2 text-xl">
           {tags.map((tag) => (
-            <Tag key={`tag-cloud-${tag}`} url={`/tags/${tag}/`}>
+            <Tag key={`tag-cloud-${tag}`} url={`/tags/${tag}`}>
               {tag}
             </Tag>
           ))}

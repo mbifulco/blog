@@ -94,6 +94,12 @@ const config = {
       destination: '/newsletter',
       permanent: false,
     },
+    {
+      // Corrects a long-standing typo'd internal link to this post's real slug
+      source: '/posts/seo-tools-for-new-projects',
+      destination: '/posts/seo-tools-for-new-web-projects',
+      permanent: true,
+    },
     ...generatePaginationConfigRedirects(),
     ...postRedirects,
   ],
