@@ -15,17 +15,16 @@
     "jsx": "react-jsx",
     "strictNullChecks": true,
     "target": "ES2022",
-    "baseUrl": ".",
     "paths": {
-      "@components/*": ["src/components/*"],
-      "@data/*": ["src/data/*"],
-      "@hooks/*": ["src/hooks/*"],
-      "@layouts/*": ["src/components/layouts/*"],
-      "@lib/*": ["src/lib/*"],
-      "@utils/*": ["src/utils/*"],
-      "@server/*": ["src/server/*"],
-      "@/config": ["src/config.ts"],
-      "@ui/*": ["src/components/ui/*"]
+      "@components/*": ["./src/components/*"],
+      "@data/*": ["./src/data/*"],
+      "@hooks/*": ["./src/hooks/*"],
+      "@layouts/*": ["./src/components/layouts/*"],
+      "@lib/*": ["./src/lib/*"],
+      "@utils/*": ["./src/utils/*"],
+      "@server/*": ["./src/server/*"],
+      "@/config": ["./src/config.ts"],
+      "@ui/*": ["./src/components/ui/*"]
     },
     "plugins": [
       {
