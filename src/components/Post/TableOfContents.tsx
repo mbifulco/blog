@@ -1,4 +1,4 @@
-import type { Heading } from 'src/data/content-types';
+import type { Heading } from '@data/content-types';
 import { useEffect, useRef, useState } from 'react';
 
 import { Heading as HtmlHeading } from '@components/Heading';
