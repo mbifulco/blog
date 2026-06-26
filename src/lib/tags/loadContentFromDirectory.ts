@@ -54,7 +54,9 @@ export const loadContentFromDirectory = async (
     );
 
     // filter out null entries from failed processing
-    let validArticles = articles.filter((article) => article !== null);
+    let validArticles = articles.filter(
+      (article): article is MarkdownDocument => article !== null
+    );
 
     // filter out drafts in production so unpublished content doesn't leak
     // into tag pages or related-content links (which would 404)
