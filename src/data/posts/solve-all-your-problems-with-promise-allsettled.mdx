@@ -79,7 +79,7 @@ The easiest way to send off multiple requests at once is wit `Promise.all()`. It
   ]
 ```
 
-There is **one important catch (lol)** with `Promise.all()`. If _any_ of the promises sent to `Promise.all()` fails or `reject`s,  *everything*  fails. From the \[MDN Web Docs\](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global\_Objects/Promise/all) (emphasis mine):
+There is **one important catch (lol)** with `Promise.all()`. If _any_ of the promises sent to `Promise.all()` fails or `reject`s,  *everything*  fails. From the [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/all) (emphasis mine):
 
 > The `Promise.all()`  method returns a single `Promise`  that resolves when all of the promises passed as an iterable have resolved or when the iterable contains no promises. **\*\*It rejects with the reason of the first promise that rejects.\*\***
 
