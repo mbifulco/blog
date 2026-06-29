@@ -44,7 +44,7 @@ jobs:
       # is needed. Build in its own step so build time is separate from the test
       # budget and the Next.js cache can be reused across runs.
       - name: Cache Next.js build
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: ${{ github.workspace }}/.next/cache
           key: nextjs-${{ hashFiles('pnpm-lock.yaml') }}-${{ hashFiles('**/*.[jt]s', '**/*.[jt]sx') }}
