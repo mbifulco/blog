@@ -1,13 +1,19 @@
 import withBundleAnalyzer from '@next/bundle-analyzer';
-import { createJiti } from 'jiti';
 import { withPostHogConfig } from '@posthog/nextjs-config';
+import { createJiti } from 'jiti';
 
 const jiti = createJiti(new URL(import.meta.url).pathname);
 
 await jiti.import('./src/utils/env');
 
+const { POSTHOG_API_HOST, POSTHOG_ASSETS_HOST } = await jiti.import(
+  './src/lib/posthog/hosts'
+);
+
 // Import centralized pagination redirect logic
-const { generatePaginationConfigRedirects } = await jiti.import('./src/utils/pagination-redirects');
+const { generatePaginationConfigRedirects } = await jiti.import(
+  './src/utils/pagination-redirects'
+);
 
 // Redirect legacy post paths to the new pattern
 const oldPostPaths = [
@@ -107,15 +113,15 @@ const config = {
   rewrites: async () => [
     {
       source: '/ingest/static/:path*',
-      destination: 'https://us-assets.i.posthog.com/static/:path*',
+      destination: `${POSTHOG_ASSETS_HOST}/static/:path*`,
     },
     {
       source: '/ingest/:path*',
-      destination: 'https://us.i.posthog.com/:path*',
+      destination: `${POSTHOG_API_HOST}/:path*`,
     },
     {
       source: '/ingest/decide',
-      destination: 'https://us.i.posthog.com/decide',
+      destination: `${POSTHOG_API_HOST}/decide`,
     },
   ],
   turbopack: {},
@@ -136,10 +142,10 @@ export default withPostHogConfig(
   {
     personalApiKey: process.env.POSTHOG_PERSONAL_API_KEY,
     projectId: process.env.NEXT_PUBLIC_POSTHOG_PROJECT_ID,
-    host: process.env.NEXT_PUBLIC_POSTHOG_HOST,
+    host: process.env.NEXT_PUBLIC_POSTHOG_HOST || POSTHOG_API_HOST,
     sourcemaps: {
       enabled: process.env.VERCEL_ENV === 'production',
       deleteAfterUpload: true,
     },
-  },
+  }
 );

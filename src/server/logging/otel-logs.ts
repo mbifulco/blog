@@ -1,11 +1,13 @@
 import type { Logger } from '@opentelemetry/api-logs';
-import { SeverityNumber, logs } from '@opentelemetry/api-logs';
+import { logs, SeverityNumber } from '@opentelemetry/api-logs';
 import { OTLPLogExporter } from '@opentelemetry/exporter-logs-otlp-http';
 import { resourceFromAttributes } from '@opentelemetry/resources';
 import {
   BatchLogRecordProcessor,
   LoggerProvider,
 } from '@opentelemetry/sdk-logs';
+
+import { POSTHOG_LOGS_ENDPOINT } from '@lib/posthog/hosts';
 
 type ConsoleMethod = 'debug' | 'log' | 'info' | 'warn' | 'error';
 
@@ -98,7 +100,7 @@ export function registerServerLogging(): void {
     processors: [
       new BatchLogRecordProcessor({
         exporter: new OTLPLogExporter({
-          url: 'https://us.i.posthog.com/i/v1/logs',
+          url: POSTHOG_LOGS_ENDPOINT,
           headers: {
             Authorization: `Bearer ${token}`,
             'Content-Type': 'application/json',

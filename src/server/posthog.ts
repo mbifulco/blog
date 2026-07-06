@@ -1,5 +1,6 @@
 import { PostHog } from 'posthog-node';
 
+import { POSTHOG_API_HOST } from '@lib/posthog/hosts';
 import { env } from '@utils/env';
 
 let client: PostHog | null = null;
@@ -16,7 +17,7 @@ function getPostHogClient(): PostHog | null {
   if (!env.NEXT_PUBLIC_POSTHOG_KEY) return null;
   if (!client) {
     client = new PostHog(env.NEXT_PUBLIC_POSTHOG_KEY, {
-      host: env.NEXT_PUBLIC_POSTHOG_HOST || 'https://us.i.posthog.com',
+      host: env.NEXT_PUBLIC_POSTHOG_HOST || POSTHOG_API_HOST,
       flushAt: 1, // serverless: send immediately rather than batching
       flushInterval: 0,
     });
