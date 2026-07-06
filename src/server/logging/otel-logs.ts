@@ -91,6 +91,9 @@ export function installConsoleBridge(logger: EmittingLogger): () => void {
 export function registerServerLogging(): void {
   if (bridgeInstalled) return;
   if (process.env.NEXT_RUNTIME !== 'nodejs') return;
+  // Only ship logs from production deploys (matches the sourcemap upload gate),
+  // so preview/dev console output and dev-only data never reach PostHog Logs.
+  if (process.env.VERCEL_ENV !== 'production') return;
 
   const token = process.env.NEXT_PUBLIC_POSTHOG_KEY;
   if (!token) return;

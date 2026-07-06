@@ -142,7 +142,10 @@ export default withPostHogConfig(
   {
     personalApiKey: process.env.POSTHOG_PERSONAL_API_KEY,
     projectId: process.env.NEXT_PUBLIC_POSTHOG_PROJECT_ID,
-    host: process.env.NEXT_PUBLIC_POSTHOG_HOST || POSTHOG_API_HOST,
+    // Always use the real API host for build-time uploads. NEXT_PUBLIC_POSTHOG_HOST
+    // may be pointed at the /ingest reverse proxy (which does not proxy the
+    // sourcemap upload API), which would silently break uploads.
+    host: POSTHOG_API_HOST,
     sourcemaps: {
       enabled: process.env.VERCEL_ENV === 'production',
       deleteAfterUpload: true,

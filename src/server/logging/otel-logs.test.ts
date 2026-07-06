@@ -28,25 +28,32 @@ describe('installConsoleBridge', () => {
     const original = vi.spyOn(console, 'error').mockImplementation(() => {});
 
     const uninstall = installConsoleBridge(fakeLogger);
-    console.error('boom', { code: 500 });
+    try {
+      console.error('boom', { code: 500 });
 
-    // original console.error still called
-    expect(original).toHaveBeenCalledWith('boom', { code: 500 });
-    // and a record was emitted with ERROR severity + a string body
-    expect(emit).toHaveBeenCalledTimes(1);
-    const record = emit.mock.calls[0][0];
-    expect(record.severityNumber).toBe(SeverityNumber.ERROR);
-    expect(typeof record.body).toBe('string');
-    expect(record.body).toContain('boom');
-
-    uninstall();
+      // original console.error still called
+      expect(original).toHaveBeenCalledWith('boom', { code: 500 });
+      // and a record was emitted with ERROR severity + a string body
+      expect(emit).toHaveBeenCalledTimes(1);
+      const record = emit.mock.calls[0][0];
+      expect(record.severityNumber).toBe(SeverityNumber.ERROR);
+      expect(typeof record.body).toBe('string');
+      expect(record.body).toContain('boom');
+    } finally {
+      // Guarantee console is restored even if an assertion above throws, so a
+      // failure here cannot leak patched console methods into other tests.
+      uninstall();
+    }
   });
 
   it('restores console methods on uninstall', () => {
     const before = console.error;
     const uninstall = installConsoleBridge({ emit: vi.fn() });
-    expect(console.error).not.toBe(before);
-    uninstall();
+    try {
+      expect(console.error).not.toBe(before);
+    } finally {
+      uninstall();
+    }
     expect(console.error).toBe(before);
   });
 });
