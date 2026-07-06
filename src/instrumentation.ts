@@ -1,5 +1,5 @@
-// import { registerOTel } from '@vercel/otel';
+import { registerServerLogging } from '@server/logging/otel-logs';
 
-// export function register() {
-//   registerOTel({ serviceName: 'next-app' });
-// }
+export function register() {
+  registerServerLogging();
+}
