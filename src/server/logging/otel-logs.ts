@@ -1,4 +1,5 @@
-import { type Logger, SeverityNumber, logs } from '@opentelemetry/api-logs';
+import type { Logger } from '@opentelemetry/api-logs';
+import { SeverityNumber, logs } from '@opentelemetry/api-logs';
 import { OTLPLogExporter } from '@opentelemetry/exporter-logs-otlp-http';
 import { resourceFromAttributes } from '@opentelemetry/resources';
 import {
