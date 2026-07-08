@@ -16,6 +16,7 @@ onlyBuiltDependencies:
 
 allowBuilds:
   '@parcel/watcher': true
+  '@posthog/cli': true
   core-js: true
   esbuild: true
   sharp: true
