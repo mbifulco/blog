@@ -61,9 +61,9 @@ Want to see how it works? Dive into the [SEO component in the site's source code
 
 ### Contact form & Newsletter signup
 
-We had previously been using [Netlify Forms](https://www.netlify.com/products/forms/) for the site's contact form, but since the new site is hosted on Vercel, that is no longer possible. We're now using [Airtable's API](https://github.com/apisyouwonthate/apisyouwonthate.com/blob/main/src/pages/api/contact/index.js) for the form, which lets us collate all submissions into one place. New entries to this form trigger a routine which notifies site owners that we got a message. We then use Airtable to track responses, and make sure that nothing gets lost in the mail.
+We had previously been using [Netlify Forms](https://www.netlify.com/products/forms/) for the site's contact form, but since the new site is hosted on Vercel, that is no longer possible. We're now using Airtable's API for the form, which lets us collate all submissions into one place. New entries to this form trigger a routine which notifies site owners that we got a message. We then use Airtable to track responses, and make sure that nothing gets lost in the mail.
 
-This is all made possible by Next.js API routes. These are serverless functions that are magically deployed to the cloud for any route at `/pages/api/[slug]`. We use a similar approach for our Newsletter signup form, which adds contacts to a list on mailjet. You can check out the [API code here](https://github.com/apisyouwonthate/apisyouwonthate.com/blob/main/src/pages/api/newsletter/index.js), and the [newsletter form code here](https://github.com/apisyouwonthate/apisyouwonthate.com/blob/main/src/components/NewsletterForm/NewsletterForm.js).
+This is all made possible by Next.js API routes. These are serverless functions that are magically deployed to the cloud for any route at `/pages/api/[slug]`. We use a similar approach for our Newsletter signup form, which adds contacts to a list on mailjet.
 
 ### Lighthouse scores
 
@@ -87,7 +87,7 @@ One of the most important litmus tests available for our site's general performa
 
 Next also made it _far_ easier to generate a `sitemap.xml` for APIs You Won't Hate. In Gatsbyland, we needed to use [`gatsby-plugin-sitemap`](https://www.gatsbyjs.com/docs/how-to/adding-common-features/creating-a-sitemap/), which _is_ configurable, but is generated at _build time._ This meant that debugging sitemap changes took a full 10min+ for _each change_ - which was completely untenable for us.
 
-By contrast, our [sitemap implementation with Next.js](https://github.com/apisyouwonthate/apisyouwonthate.com/blob/main/next-sitemap.js) uses a library called [next-sitemap](https://github.com/iamvishnusankar/next-sitemap). It is _also_ generated at build time, but in a local dev environment builds take only a few seconds, allowing me to nail our sitemap much more quickly.
+By contrast, our sitemap implementation with Next.js uses a library called [next-sitemap](https://github.com/iamvishnusankar/next-sitemap). It is _also_ generated at build time, but in a local dev environment builds take only a few seconds, allowing me to nail our sitemap much more quickly.
 
 <Image
   publicId="posts/migrate-gatsby-to-nextjs-apisyouwonthate-com/sitemap"
