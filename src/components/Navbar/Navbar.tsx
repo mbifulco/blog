@@ -167,12 +167,7 @@ const Navbar = () => {
 
                     {/* Podcast - Simple Link */}
                     <NavigationMenuItem>
-                      <Link
-                        href="/podcast"
-                        prefetch={true}
-                        legacyBehavior
-                        passHref
-                      >
+                      <Link href="/podcast" prefetch={true} passHref>
                         <NavigationMenuLink
                           className={clsxm(
                             'group inline-flex h-9 w-max items-center justify-center rounded-md bg-transparent px-4 py-2 text-sm font-semibold uppercase text-gray-700 transition-colors hover:bg-gray-100'
@@ -185,12 +180,7 @@ const Navbar = () => {
 
                     {/* About - Simple Link */}
                     <NavigationMenuItem>
-                      <Link
-                        href="/about"
-                        prefetch={true}
-                        legacyBehavior
-                        passHref
-                      >
+                      <Link href="/about" prefetch={true} passHref>
                         <NavigationMenuLink
                           className={clsxm(
                             'group inline-flex h-9 w-max items-center justify-center rounded-md bg-transparent px-4 py-2 text-sm font-semibold uppercase text-gray-700 transition-colors hover:bg-gray-100'
