@@ -41,7 +41,12 @@ const ensureEventForCurrentAudience = (data: ContactEventData) => {
   const segmentOrAudienceId = data.segment_id || data.audience_id;
 
   if (segmentOrAudienceId !== env.RESEND_NEWSLETTER_AUDIENCE_ID) {
-    console.info("Event doesn't match current audience/segment:", data);
+    // Log only the mismatched ids, never the contact PII (email/name), since
+    // server logs now ship to PostHog Logs via the OTel console bridge.
+    console.info("Event doesn't match current audience/segment:", {
+      received: segmentOrAudienceId,
+      expected: env.RESEND_NEWSLETTER_AUDIENCE_ID,
+    });
     return false;
   }
   return true;
@@ -117,7 +122,13 @@ const webhookHandler = async (req: NextApiRequest, res: NextApiResponse) => {
           ]);
           if (responses.some((r) => r.status === 'rejected')) {
             console.error('Error sending new subscriber emails:');
-            console.error(responses);
+            // Log only rejection reasons, not the full settled results (which
+            // echo back the subscriber email/name passed into the senders).
+            console.error(
+              responses
+                .filter((r) => r.status === 'rejected')
+                .map((r) => (r as PromiseRejectedResult).reason)
+            );
           }
         } catch (error) {
           console.error('Error sending new subscriber emails:');
@@ -154,7 +165,7 @@ const webhookHandler = async (req: NextApiRequest, res: NextApiResponse) => {
             }
           } else {
             console.info(
-              `Skipping contact removal for non-permanent bounce (type: ${event.data.bounce?.type ?? 'unknown'}) for ${recipient}`
+              `Skipping contact removal for non-permanent bounce (type: ${event.data.bounce?.type ?? 'unknown'})`
             );
           }
         }
@@ -168,7 +179,9 @@ const webhookHandler = async (req: NextApiRequest, res: NextApiResponse) => {
       case EmailEvents.EmailSent:
         break;
       default:
-        console.log('Unknown event type:', event);
+        // `event` is narrowed to `never` here (union exhausted), but an
+        // unrecognized event can still arrive at runtime; read its type only.
+        console.log('Unknown event type:', (event as { type?: unknown }).type);
     }
 
     res.status(200).end();

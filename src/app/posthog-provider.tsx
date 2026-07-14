@@ -5,6 +5,11 @@ import posthog from 'posthog-js';
 import { PostHogProvider as PHProvider } from 'posthog-js/react';
 
 import NewsletterModal from '@components/NewsletterSignup/NewsletterModal';
+import {
+  POSTHOG_API_HOST,
+  POSTHOG_CLIENT_PROXY_HOST,
+  POSTHOG_UI_HOST,
+} from '@lib/posthog/hosts';
 
 // Initialize PostHog for App Router
 if (typeof window !== 'undefined') {
@@ -12,9 +17,9 @@ if (typeof window !== 'undefined') {
     posthog.init(process.env.NEXT_PUBLIC_POSTHOG_KEY, {
       api_host:
         process.env.NODE_ENV === 'production'
-          ? 'https://mikebifulco.com/ingest'
-          : 'https://us.i.posthog.com',
-      ui_host: 'https://app.posthog.com',
+          ? POSTHOG_CLIENT_PROXY_HOST
+          : POSTHOG_API_HOST,
+      ui_host: POSTHOG_UI_HOST,
       // Enable debug mode in development
       loaded: (posthog) => {
         if (process.env.NODE_ENV === 'development') posthog.debug();

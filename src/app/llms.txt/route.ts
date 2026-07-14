@@ -1,6 +1,8 @@
 import { getAllPosts } from '@lib/blog';
 import { getAllNewsletters } from '@lib/newsletters';
 import { getTopTags } from '@lib/tags';
+import { after } from 'next/server';
+import { flushLogs } from '@server/logging/otel-logs';
 import { ATPROTO_DID, BASE_SITE_URL } from '@/config';
 
 export async function GET() {
@@ -54,6 +56,8 @@ Additional resources that can be skipped for shorter context:
 - [Sitemap](${BASE_SITE_URL}/sitemap.xml): Full site structure
 - [AT Protocol Publication](${BASE_SITE_URL}/.well-known/site.standard.publication): standard.site publication (\`${ATPROTO_DID}\`) — posts and newsletters are also published as structured AT Protocol records for machine-readable access
 `;
+
+  after(flushLogs);
 
   return new Response(content, {
     headers: {
