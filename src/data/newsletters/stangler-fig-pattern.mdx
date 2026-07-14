@@ -1,0 +1,120 @@
+---
+title: "The Strangler Fig Pattern: Rebuild Everything, without losing your mind"
+excerpt: "When your prototype becomes the product your business depends on, you can't just start over. Here's how the Strangler Fig pattern let us rebuild safely."
+date: 2026-07-14
+tags: [product, founder, dev]
+slug: strangler-fig-pattern
+coverImagePublicId: newsletters/strangler-fig-pattern/cover
+---
+
+## The Big Idea
+
+At some point, a successful prototype changes jobs. It stops being a fast way to prove an idea, and starts becoming the thing your business depends on.
+
+## What happens when your prototype becomes a product?
+
+There is endless writing on the internet about building v0. Ship the MVP. Get something into people's hands. Find your first customers. Move fast enough to learn something before you run out of time, money, or emotional fortitude.
+
+I love that part of the work. I will probably spend the rest of my life building little v0s, because there are few feelings better than turning an idea into something real enough for someone else to touch.
+
+But there is a quiet threshold you cross if the product starts to work.
+
+One day, the scrappy prototype is no longer just a prototype. It is how people do their jobs. It is how your team answers questions. It is how customers get what they paid for. It is where the rules of the business live, even the rules no one remembers writing down.
+
+That is the moment you stop being only a builder. You become an operator.
+
+This is the first post in a series about that shift: what changes when your relationship with a tool, product, service, or SDK moves from “hello world” to “what do I need to know to keep the lights on?”
+
+## v0 Did Its Job
+
+Our first internal product at [Craftwork](https://www.craftwork.com) was built with Ruby on Rails, in a far off time before Claude Code existed.
+
+Rails was good enough to get started with, and for a little while, it made velocity feel great. We could see a problem in the morning, scaffold something to address it in the afternoon, and have someone using it soon after. That kind of speed matters early on, because the job of v0 is not to build the perfect system. The job of v0 is to learn which system deserves to exist.
+
+But I do think Rails was fundamentally the wrong choice for what we needed to become.
+
+The scaffolding that helped us move quickly started making the product harder to shape. We found ourselves anchored in snap-decisions that were difficult to unwind. Performance became painful in the places where speed mattered most.
+
+Hiring for Rails was harder than we wanted it to be.
+
+And, maybe most frustratingly, it made it harder for us to take advantage of some of the best libraries on the web for building modern interfaces, especially tools like shadcnui that fit much more naturally into a TypeScript and React world.
+
+All of this does not make Craftwork's initial software architecture a failure. It got us far enough down the driveway to discover what the real road looked like.
+
+But once the product started to matter, the thing that got us started was no longer the thing that could help us scale.
+
+It was time to rebuild.
+
+## Rebuilding Without Disappearing
+
+Rebuilding is an exciting, daunting, and scary prospect.
+
+The work is hard. It is technical. It is full of tradeoffs. It requires patience, taste, discipline, and a willingness to live in an awkward in-between state for much longer than you want.
+
+Here's the thing: your customers don't care that your rewrite is hard, or time consuming, or complex. They also don't need to.
+
+"Bear with us, this is complicated" isn't a product strategy. People don't experience your architecture. They experience whether the product helps them do the thing they came to do.
+
+It's tempting to hit `File + N`, and start from a blank slate. But that is a luxury we couldn't afford once our team and our customers were depending on the product to keep the business running.
+
+So a big, dramatic cutover was a fantasy. We couldn't disappear into a cave, rebuild the whole product, and return with a perfect v1 while the business politely waited for us to finish.
+
+The business was already running. People were already depending on the system. The old product could not simply be thrown away because it was inconvenient to maintain.
+
+So we had to strangle it.
+
+## What is the Strangler Fig Pattern?
+
+The [Strangler Fig Pattern](https://en.wikipedia.org/wiki/Strangler_fig_pattern) is a way to replace an old system without rewriting the whole thing at once.
+
+Instead of disappearing into a long, risky rebuild, you route one piece of behavior at a time through the new system. One workflow. One screen. One service boundary. One painful process.
+
+The old system keeps running while the new one grows around it. Eventually, the new system handles enough responsibility that the old system can safely go away.
+
+It's far less exciting than a clean-sheet rewrite.
+
+However, it gave us more chances to get things right, and smaller consequences when we needed to change direction. Our team has been shipping improvements in smaller pieces, learning from them, and keeping the business moving while rebuilding the core of what the business depends on.
+
+This _also_ means supporting the old system, and Keeping the Lights On™️ while the new system quietly takes over. The team building your product pays the tax of keeping both systems on, but also becomes more familiar with the old and the new as a result.
+
+The Strangler Fig pattern allows everyone to do their job.
+
+That's not just an engineering strategy. It's a product growth strategy.
+
+## The Operator's Lesson
+
+The most useful part of this process was treating the rebuild like product work instead of engineering housekeeping.
+
+We watched where people struggled. We listened to what they complained about, but also what they were quietly telling us underneath the complaint. People are not always precise reporters of their own pain. Someone might say a workflow takes [too many clicks](https://mikebifulco.com/newsletter/stop-counting-clicks) when what they really mean is, “This workflow isn't working for me.”
+
+Often times we'd discover behavioral patterns that started as a cheeky workaround and quickly became an invisible part of the system - a required step for getting things done. Peers using our tools would have no idea that the workaround was a workaround, because it had become a ritual. It was the only way to get the job done.
+
+That is the operator's trap: the longer a broken workflow exists, the more people build little rituals around surviving it. If you only see the words of a feature request literally, you may rebuild the ritual instead of solving the problem.
+
+## Rebuilding without the ritual
+
+So, what do you do when the old system is broken, but people have built rituals around it?
+
+You prototype, as cheaply as possible. We watched replays, interviewed people about their workflows, and put rough mockups in front of the team, asking them to show us how they would do their work. When something was confusing, we changed it. When something seemed obvious to us and useless to them, we changed it.
+
+We also made [short video demos](https://mikebifulco.com/newsletter/reverse-devrel-as-core-engineering-skill) as we shipped updates. Not polished launch videos, just simple walkthroughs that said, “Here is what is changing. Here is how this works. Here is what we think this will make easier.”
+
+That made the future less abstract. It gave people a chance to test changes and respond quickly, and it made feedback feel invited rather than tolerated.
+
+The lesson I am taking from this is simple, but it took me a long time to learn:
+
+**The goal of v0 is to learn fast enough to earn the right to build v1.**
+
+Once you get there, the job changes. You are no longer proving that something can exist. You are responsible for helping it mature without breaking the business it now supports.
+
+A good product is not a monument. It is a garden. You prune it. You graft new branches onto old roots. You remove what no longer belongs. You let the healthy parts keep growing while you carefully make room for what comes next.
+
+That is the real work of being an operator: keeping the thing useful after it starts to matter.
+
+---
+
+## Some related reading
+
+- [The Messy Middle](https://www.themessymiddle.com/) is a book by Scott Belsky about the challenges of growing a business after the initial idea has been proven.
+- Microsoft has a great writeup on embracing [The Strangler Fig Pattern](https://learn.microsoft.com/en-us/azure/architecture/patterns/strangler-fig)
+- For a bit of _actual_ nature and the origins of the metaphor, check out this 5-minute explainer from ABC Science on the [Strangler Fig Tree](https://www.youtube.com/watch?v=B4XoYONdtb4).

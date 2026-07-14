@@ -167,38 +167,32 @@ const Navbar = () => {
 
                     {/* Podcast - Simple Link */}
                     <NavigationMenuItem>
-                      <Link
-                        href="/podcast"
-                        prefetch={true}
-                        legacyBehavior
-                        passHref
-                      >
-                        <NavigationMenuLink
+                      <NavigationMenuLink asChild>
+                        <Link
+                          href="/podcast"
+                          prefetch={true}
                           className={clsxm(
                             'group inline-flex h-9 w-max items-center justify-center rounded-md bg-transparent px-4 py-2 text-sm font-semibold uppercase text-gray-700 transition-colors hover:bg-gray-100'
                           )}
                         >
                           Podcast
-                        </NavigationMenuLink>
-                      </Link>
+                        </Link>
+                      </NavigationMenuLink>
                     </NavigationMenuItem>
 
                     {/* About - Simple Link */}
                     <NavigationMenuItem>
-                      <Link
-                        href="/about"
-                        prefetch={true}
-                        legacyBehavior
-                        passHref
-                      >
-                        <NavigationMenuLink
+                      <NavigationMenuLink asChild>
+                        <Link
+                          href="/about"
+                          prefetch={true}
                           className={clsxm(
                             'group inline-flex h-9 w-max items-center justify-center rounded-md bg-transparent px-4 py-2 text-sm font-semibold uppercase text-gray-700 transition-colors hover:bg-gray-100'
                           )}
                         >
                           About
-                        </NavigationMenuLink>
-                      </Link>
+                        </Link>
+                      </NavigationMenuLink>
                     </NavigationMenuItem>
 
                     {/* Search trigger */}
