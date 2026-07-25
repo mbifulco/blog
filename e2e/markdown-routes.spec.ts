@@ -91,14 +91,34 @@ test.describe('markdown routes', () => {
     ).toHaveAttribute('href', '/posts/all-about-ch.md');
   });
 
-  test('serves llms-full.txt', async ({ request }) => {
+  test('serves llms-full.txt in the llms.txt house style', async ({
+    request,
+  }) => {
     const response = await request.get('/llms-full.txt');
 
     expect(response.status()).toBe(200);
 
     const body = await response.text();
-    expect(body).toContain('# mikebifulco.com: full content');
-    expect(body).toContain('canonical: https://mikebifulco.com/posts/');
+
+    // Single h1, then h2 sections, then one h3 per document with its source.
+    expect(body.startsWith('# mikebifulco.com\n')).toBe(true);
+    expect(body).toContain('\n> The complete text of every published article');
+    expect(body).toContain('\n## Articles\n');
+    expect(body).toContain('\n## Newsletter Issues\n');
+    expect(body).toContain('Source: https://mikebifulco.com/posts/');
+
+    // Entries carry no YAML frontmatter: `---` fences would be
+    // indistinguishable from the horizontal rules separating entries. Posts
+    // that show frontmatter inside code fences are fine, so this checks entry
+    // structure rather than the mere presence of the characters.
+    expect(body).not.toMatch(/^### .+\n\n---$/m);
+    expect(body).toMatch(/^### .+\n\nSource: https:\/\/mikebifulco\.com\//m);
+
+    const entryHeadings = body.match(/^### /gm) ?? [];
+    const sourceLines = body.match(/^Source: /gm) ?? [];
+    expect(entryHeadings.length).toBeGreaterThan(150);
+    // Allows for h3s appearing inside fenced code samples.
+    expect(entryHeadings.length - sourceLines.length).toBeLessThanOrEqual(3);
   });
 
   test('documents the markdown convention in llms.txt', async ({ request }) => {

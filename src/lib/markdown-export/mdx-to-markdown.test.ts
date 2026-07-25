@@ -115,6 +115,60 @@ describe('mdxToMarkdown', () => {
     expect(result).toContain('Visible text.');
   });
 
+  it('shifts headings so the shallowest sits at minHeadingDepth', async () => {
+    const result = await mdxToMarkdown('## Top\n\n### Nested\n', {
+      minHeadingDepth: 4,
+    });
+
+    expect(result).toContain('#### Top');
+    expect(result).toContain('##### Nested');
+    expect(result).not.toMatch(/^## Top/m);
+  });
+
+  it('shifts a body that opens at h1 by more than one that opens at h2', async () => {
+    const fromH1 = await mdxToMarkdown('# Top\n\n## Nested\n', {
+      minHeadingDepth: 4,
+    });
+
+    // A fixed offset would leave this at h3 and collide with entry headings.
+    expect(fromH1).toContain('#### Top');
+    expect(fromH1).toContain('##### Nested');
+    expect(fromH1).not.toMatch(/^#{1,3} /m);
+  });
+
+  it('preserves relative hierarchy rather than flattening', async () => {
+    const result = await mdxToMarkdown('# A\n\n### B\n\n## C\n', {
+      minHeadingDepth: 4,
+    });
+
+    expect(result).toContain('#### A');
+    expect(result).toContain('###### B');
+    expect(result).toContain('##### C');
+  });
+
+  it('never promotes headings that already sit deep enough', async () => {
+    const result = await mdxToMarkdown('#### Already deep\n', {
+      minHeadingDepth: 4,
+    });
+
+    expect(result).toContain('#### Already deep');
+  });
+
+  it('saturates shifted headings at h6 instead of overflowing', async () => {
+    const result = await mdxToMarkdown('# Top\n\n###### Deepest\n', {
+      minHeadingDepth: 4,
+    });
+
+    expect(result).not.toMatch(/^#{7,}/m);
+    expect(result).toContain('###### Deepest');
+  });
+
+  it('leaves headings alone by default', async () => {
+    const result = await mdxToMarkdown('## Top\n');
+
+    expect(result).toContain('## Top');
+  });
+
   it('preserves gfm tables', async () => {
     const source = ['| a | b |', '| --- | --- |', '| 1 | 2 |'].join('\n');
     const result = await mdxToMarkdown(source);

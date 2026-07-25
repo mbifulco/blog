@@ -93,28 +93,97 @@ const transformNodes = (nodes: RootContent[]): RootContent[] => {
   return output;
 };
 
-const remarkJsxToMarkdown = () => (tree: Root) => {
-  tree.children = transformNodes(tree.children);
+const MAX_HEADING_DEPTH = 6;
+
+const eachHeading = (
+  nodes: RootContent[],
+  visit: (heading: RootContent & { depth: number }) => void
+): void => {
+  for (const node of nodes) {
+    if (node.type === 'heading') visit(node);
+
+    const container = node as RootContent & { children?: RootContent[] };
+    if (Array.isArray(container.children)) {
+      eachHeading(container.children, visit);
+    }
+  }
 };
 
-const processor = unified()
-  .use(remarkParse)
-  .use(remarkMdx)
-  .use(remarkGfm)
-  .use(remarkJsxToMarkdown)
-  .use(remarkStringify, {
-    bullet: '-',
-    emphasis: '*',
-    strong: '*',
-    fences: true,
-    rule: '-',
+/**
+ * Pushes headings down so the shallowest one sits at `minDepth`, preserving the
+ * document's internal hierarchy.
+ *
+ * A fixed offset is not enough: post bodies are inconsistent about their top
+ * level, and a body that opens at h1 would land on the same level as the entry
+ * headings of the file it is embedded in. Depths saturate at h6 rather than
+ * overflowing into invalid markdown.
+ */
+const enforceMinHeadingDepth = (nodes: RootContent[], minDepth: number) => {
+  let shallowest = MAX_HEADING_DEPTH;
+  eachHeading(nodes, (heading) => {
+    shallowest = Math.min(shallowest, heading.depth);
   });
+
+  const offset = minDepth - shallowest;
+  if (offset <= 0) return;
+
+  eachHeading(nodes, (heading) => {
+    heading.depth = Math.min(heading.depth + offset, MAX_HEADING_DEPTH);
+  });
+};
+
+const remarkJsxToMarkdown =
+  ({ minHeadingDepth = 0 }: { minHeadingDepth?: number } = {}) =>
+  (tree: Root) => {
+    tree.children = transformNodes(tree.children);
+    if (minHeadingDepth > 1) {
+      enforceMinHeadingDepth(tree.children, minHeadingDepth);
+    }
+  };
+
+const buildProcessor = (minHeadingDepth: number) =>
+  unified()
+    .use(remarkParse)
+    .use(remarkMdx)
+    .use(remarkGfm)
+    .use(remarkJsxToMarkdown, { minHeadingDepth })
+    .use(remarkStringify, {
+      bullet: '-',
+      emphasis: '*',
+      strong: '*',
+      fences: true,
+      rule: '-',
+    });
+
+// Processors are stateless and reusable, so build one per distinct offset
+// rather than per document.
+const processors = new Map<number, ReturnType<typeof buildProcessor>>();
+
+const processorFor = (minHeadingDepth: number) => {
+  const cached = processors.get(minHeadingDepth);
+  if (cached) return cached;
+
+  const processor = buildProcessor(minHeadingDepth);
+  processors.set(minHeadingDepth, processor);
+  return processor;
+};
+
+export type MdxToMarkdownOptions = {
+  /**
+   * Shallowest heading level the output may use. Headings shift down as a
+   * group to honour it, for embedding a document inside a larger file.
+   */
+  minHeadingDepth?: number;
+};
 
 /**
  * Converts an MDX document body (frontmatter already removed) into plain
  * Markdown with every custom component resolved.
  */
-export const mdxToMarkdown = async (mdxBody: string): Promise<string> => {
-  const file = await processor.process(mdxBody);
+export const mdxToMarkdown = async (
+  mdxBody: string,
+  { minHeadingDepth = 0 }: MdxToMarkdownOptions = {}
+): Promise<string> => {
+  const file = await processorFor(minHeadingDepth).process(mdxBody);
   return String(file);
 };
