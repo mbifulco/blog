@@ -31,6 +31,20 @@ export type JsxHandler = (
   children: RootContent[]
 ) => RootContent[];
 
+/** A link to another document on the site, for the "Related reading" list. */
+export type MarkdownRelatedLink = {
+  title: string;
+  url: string;
+};
+
 export type MarkdownExportOptions = {
   canonicalUrl: string;
+  /** Other posts and newsletters worth following from this one. */
+  relatedLinks?: MarkdownRelatedLink[];
+  /** The series this document belongs to, when it is part of one. */
+  series?: {
+    name: string;
+    url: string;
+    entries: MarkdownRelatedLink[];
+  };
 };

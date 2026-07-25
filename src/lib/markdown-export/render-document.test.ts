@@ -98,6 +98,115 @@ describe('renderMarkdownDocument', () => {
     expect(result).toContain("title: 'Mike''s post'");
   });
 
+  it('emits the tldr as a callout directly under the title', async () => {
+    const result = await renderMarkdownDocument(
+      doc({ tldr: 'Use `text-wrap: pretty` to avoid orphans.' }),
+      options
+    );
+
+    expect(result).toContain(
+      '> **TL;DR:** Use `text-wrap: pretty` to avoid orphans.'
+    );
+    expect(result.indexOf('TL;DR')).toBeLessThan(
+      result.indexOf('Body text goes here.')
+    );
+    expect(result.indexOf('# All about ch')).toBeLessThan(
+      result.indexOf('TL;DR')
+    );
+  });
+
+  it('omits the tldr callout when there is no tldr', async () => {
+    const result = await renderMarkdownDocument(doc(), options);
+
+    expect(result).not.toContain('TL;DR');
+  });
+
+  it('lists related reading as links', async () => {
+    const result = await renderMarkdownDocument(doc(), {
+      ...options,
+      relatedLinks: [
+        { title: 'A related post', url: 'https://mikebifulco.com/posts/a' },
+        { title: 'A newsletter', url: 'https://mikebifulco.com/newsletter/b' },
+      ],
+    });
+
+    expect(result).toContain('## More from mikebifulco.com');
+    expect(result).toContain(
+      '- [A related post](https://mikebifulco.com/posts/a)'
+    );
+    expect(result).toContain(
+      '- [A newsletter](https://mikebifulco.com/newsletter/b)'
+    );
+  });
+
+  it('omits the related section when there is nothing to link', async () => {
+    const result = await renderMarkdownDocument(doc(), {
+      ...options,
+      relatedLinks: [],
+    });
+
+    expect(result).not.toContain('## More from mikebifulco.com');
+  });
+
+  it('lists the series entries when the document is part of a series', async () => {
+    const result = await renderMarkdownDocument(doc(), {
+      ...options,
+      series: {
+        name: 'JavaScript Tips',
+        url: 'https://mikebifulco.com/series/javascript-tips',
+        entries: [
+          { title: 'Part one', url: 'https://mikebifulco.com/posts/one' },
+        ],
+      },
+    });
+
+    expect(result).toContain('## Part of the JavaScript Tips series');
+    expect(result).toContain('- [Part one](https://mikebifulco.com/posts/one)');
+    expect(result).toContain(
+      'Full series: https://mikebifulco.com/series/javascript-tips'
+    );
+  });
+
+  it('omits the series section when the document is standalone', async () => {
+    const result = await renderMarkdownDocument(doc(), options);
+
+    expect(result).not.toContain('series');
+  });
+
+  it('closes with an attribution line naming the canonical url', async () => {
+    const result = await renderMarkdownDocument(doc(), options);
+
+    expect(
+      result
+        .trimEnd()
+        .endsWith(
+          'Written by Mike Bifulco. Originally published at https://mikebifulco.com/posts/all-about-ch'
+        )
+    ).toBe(true);
+  });
+
+  it('orders sections body, series, related, attribution', async () => {
+    const result = await renderMarkdownDocument(doc(), {
+      ...options,
+      relatedLinks: [{ title: 'R', url: 'https://mikebifulco.com/posts/r' }],
+      series: {
+        name: 'S',
+        url: 'https://mikebifulco.com/series/s',
+        entries: [{ title: 'E', url: 'https://mikebifulco.com/posts/e' }],
+      },
+    });
+
+    expect(result.indexOf('Body text goes here.')).toBeLessThan(
+      result.indexOf('## Part of the S series')
+    );
+    expect(result.indexOf('## Part of the S series')).toBeLessThan(
+      result.indexOf('## More from mikebifulco.com')
+    );
+    expect(result.indexOf('## More from mikebifulco.com')).toBeLessThan(
+      result.indexOf('Written by Mike Bifulco')
+    );
+  });
+
   it('transforms the body through the mdx pipeline', async () => {
     const document = {
       ...doc(),

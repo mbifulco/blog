@@ -1,5 +1,5 @@
 import type { MarkdownDocument } from '@data/content-types';
-import type { MarkdownExportOptions } from './types';
+import type { MarkdownExportOptions, MarkdownRelatedLink } from './types';
 
 import { mdxToMarkdown } from './mdx-to-markdown';
 
@@ -20,10 +20,18 @@ const toIsoDate = (value: string | number | Date): string | null => {
 
 const quote = (value: string) => `'${value.replace(/'/g, "''")}'`;
 
+const linkList = (links: MarkdownRelatedLink[]) =>
+  links.map(({ title, url }) => `- [${title}](${url})`).join('\n');
+
 /**
  * Renders a post or newsletter as a standalone Markdown file: a small YAML
- * header, the title as an H1, then the body with every custom component
- * resolved to real Markdown.
+ * header, the title as an H1, the body with every custom component resolved
+ * to real Markdown, then links onward to related content and an attribution
+ * line.
+ *
+ * The trailing sections matter for machine readers. Without them each file is
+ * a dead end with no path to the rest of the site, and no unambiguous
+ * statement of who wrote it or where it lives.
  */
 export const renderMarkdownDocument = async (
   document: MarkdownDocument,
@@ -57,5 +65,47 @@ export const renderMarkdownDocument = async (
 
   // Post bodies carry no H1 of their own; the site renders the title from
   // frontmatter, so add it back for standalone Markdown.
-  return `${lines.join('\n')}# ${frontmatter.title}\n\n${body.trimStart()}`;
+  const sections = [`${lines.join('\n')}# ${frontmatter.title}`];
+
+  // Answer-first summary, kept directly under the title where an extractive
+  // reader will find it. Authored for exactly this purpose.
+  if (frontmatter.tldr) {
+    const tldr = await mdxToMarkdown(String(frontmatter.tldr));
+    sections.push(`> **TL;DR:** ${tldr.trim()}`);
+  }
+
+  sections.push(body.trim());
+
+  if (options.series && options.series.entries.length > 0) {
+    sections.push(
+      [
+        `## Part of the ${options.series.name} series`,
+        '',
+        linkList(options.series.entries),
+        '',
+        `Full series: ${options.series.url}`,
+      ].join('\n')
+    );
+  }
+
+  if (options.relatedLinks && options.relatedLinks.length > 0) {
+    // Deliberately not "Related reading": three posts already use that heading
+    // for their own external links, and this list is specifically other pages
+    // on this site.
+    sections.push(
+      ['## More from mikebifulco.com', '', linkList(options.relatedLinks)].join(
+        '\n'
+      )
+    );
+  }
+
+  sections.push(
+    [
+      '---',
+      '',
+      `Written by Mike Bifulco. Originally published at ${options.canonicalUrl}`,
+    ].join('\n')
+  );
+
+  return `${sections.join('\n\n')}\n`;
 };
