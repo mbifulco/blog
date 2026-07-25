@@ -33,6 +33,8 @@ type SEOProps = {
   tags?: string[];
   pagination?: SEOPagination;
   standardSiteDocumentUri?: string;
+  /** Absolute URL of this page's Markdown twin, advertised to crawlers. */
+  markdownUrl?: string;
   standardSitePublicationUri?: string;
 };
 
@@ -50,6 +52,7 @@ const SEO: React.FC<SEOProps> = ({
   tags,
   pagination,
   standardSiteDocumentUri,
+  markdownUrl,
   standardSitePublicationUri,
 }) => {
   const router = useRouter();
@@ -125,6 +128,15 @@ const SEO: React.FC<SEOProps> = ({
         title={`${siteName} RSS feed`}
         href={`${baseUrl}/rss.xml`}
       />
+      {/* Markdown twin autodiscovery */}
+      {markdownUrl && (
+        <link
+          rel="alternate"
+          type="text/markdown"
+          title={`${siteName} Markdown version`}
+          href={markdownUrl}
+        />
+      )}
       <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5" />
       <meta name="msapplication-TileColor" content="#da532c" />
       <meta name="theme-color" content="#ffffff" />
