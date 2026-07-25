@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Check, ChevronDown, Copy, ExternalLink, Link2 } from 'lucide-react';
 import posthog from 'posthog-js';
 
@@ -28,17 +28,28 @@ const LABELS: Record<CopyState, string> = {
 
 /**
  * Hands the Markdown twin of the current page to the reader, for pasting into
- * an LLM or an editor. Falls back to opening the raw file if the clipboard is
- * unavailable.
+ * an LLM or an editor. When a copy fails the button reports it and the menu
+ * still offers opening the raw file directly.
  */
 export const CopyAsMarkdown: React.FC<CopyAsMarkdownProps> = ({
   markdownPath,
 }) => {
   const [state, setState] = useState<CopyState>('idle');
+  const resetTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(
+    () => () => {
+      if (resetTimer.current) clearTimeout(resetTimer.current);
+    },
+    []
+  );
 
   const flash = (next: CopyState) => {
     setState(next);
-    setTimeout(() => setState('idle'), RESET_DELAY_MS);
+    // Replace any pending reset, so a second click gets a full window rather
+    // than being cut short by the previous one's timer.
+    if (resetTimer.current) clearTimeout(resetTimer.current);
+    resetTimer.current = setTimeout(() => setState('idle'), RESET_DELAY_MS);
   };
 
   const copyMarkdown = async () => {

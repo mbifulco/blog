@@ -68,7 +68,7 @@ export async function GET() {
     '',
     "> The complete text of every published article and newsletter issue from Mike Bifulco's site. Mike is a startup CTO, Y Combinator alum, and writes about building products, React and Next.js development, design, and startup life.",
     '',
-    `Each entry below is introduced by an h3 heading and a Source line giving its canonical URL. Individual documents are also available as Markdown by appending \`.md\` to any URL on the site, and a linked index lives at ${BASE_SITE_URL}/llms.txt.`,
+    `Each entry below is introduced by an h3 heading and a Source line giving its canonical URL. Individual articles and newsletter issues are also available as Markdown by appending \`.md\` to their URL, and a linked index lives at ${BASE_SITE_URL}/llms.txt.`,
     '',
     rendered.join('\n\n'),
   ].join('\n');
