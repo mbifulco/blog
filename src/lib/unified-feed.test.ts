@@ -29,7 +29,7 @@ const makePost = (
       tags: ['react', 'testing'],
       ...frontmatterOverrides,
     },
-  } as BlogPost;
+  } as unknown as BlogPost;
 };
 
 const makeNewsletter = (
@@ -49,7 +49,7 @@ const makeNewsletter = (
       tags: ['newsletter'],
       ...frontmatterOverrides,
     },
-  } as Newsletter;
+  } as unknown as Newsletter;
 };
 
 describe('buildUnifiedFeed', () => {
