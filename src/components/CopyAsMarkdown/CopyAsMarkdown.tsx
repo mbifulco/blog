@@ -69,17 +69,20 @@ export const CopyAsMarkdown: React.FC<CopyAsMarkdownProps> = ({
   };
 
   return (
-    <ButtonGroup>
+    // Full width on small screens where it sits on its own line, intrinsic
+    // width once it shares a row with the date and tags.
+    <ButtonGroup className="w-full sm:w-fit">
       <Button
         variant="outline"
         size="sm"
         onClick={copyMarkdown}
         aria-label="Copy as Markdown"
+        className="flex-1 justify-center text-xs sm:flex-none"
       >
         {state === 'copied' ? (
-          <Check className="size-4" aria-hidden />
+          <Check className="size-3.5" aria-hidden />
         ) : (
-          <Copy className="size-4" aria-hidden />
+          <Copy className="size-3.5" aria-hidden />
         )}
         <span>{LABELS[state]}</span>
       </Button>
@@ -89,8 +92,9 @@ export const CopyAsMarkdown: React.FC<CopyAsMarkdownProps> = ({
             variant="outline"
             size="sm"
             aria-label="More Markdown options"
+            className="shrink-0 text-xs"
           >
-            <ChevronDown className="size-4" aria-hidden />
+            <ChevronDown className="size-3.5" aria-hidden />
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">

@@ -102,6 +102,11 @@ const FullPost: React.FC<FullPostProps> = ({
     series,
   });
 
+  const markdownPath = markdownPathFor(
+    contentType === 'newsletter' ? 'newsletter' : 'posts',
+    slug
+  );
+
   return (
     <>
       {pageStructuredData.map((structuredData) => (
@@ -131,18 +136,21 @@ const FullPost: React.FC<FullPostProps> = ({
                 <span> Series</span>
               </p>
             )}
-            <p className="text-xs text-gray-700 dark:text-gray-400">
-              <PublishDate date={date} />{' '}
-            </p>
-
-            <TagsSummary tags={tags} />
-            <div className="mt-3">
-              <CopyAsMarkdown
-                markdownPath={markdownPathFor(
-                  contentType === 'newsletter' ? 'newsletter' : 'posts',
-                  slug
-                )}
-              />
+            {/* Date and tags on the left, markdown control trailing on the
+                right. Stacks on small screens, where the control goes full
+                width on its own line. */}
+            <div className="mt-1 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between sm:gap-4">
+              <div className="min-w-0">
+                <p className="text-xs text-gray-700 dark:text-gray-400">
+                  <PublishDate date={date} />{' '}
+                </p>
+                <TagsSummary tags={tags} />
+              </div>
+              {/* Above md the control lives in the sticky sidebar instead, so
+                  it stays reachable while reading. */}
+              <div className="shrink-0 md:hidden">
+                <CopyAsMarkdown markdownPath={markdownPath} />
+              </div>
             </div>
           </div>
           <div className="mx-auto h-auto min-h-52 w-full">{coverContainer}</div>
@@ -172,6 +180,9 @@ const FullPost: React.FC<FullPostProps> = ({
               <MentionsSummary />
             </article>
             <div className="sticky top-12 flex h-max w-[300px] flex-col gap-4">
+              <div className="hidden md:block">
+                <CopyAsMarkdown markdownPath={markdownPath} />
+              </div>
               <TableOfContents headings={post.tableOfContents} />
               <CarbonAd />
             </div>
