@@ -4,8 +4,8 @@ import { after } from 'next/server';
 import { flushLogs } from '@server/logging/otel-logs';
 
 import { getAllPosts } from '@lib/blog';
+import { buildExportOptions } from '@lib/markdown-export/export-context';
 import { renderMarkdownDocument } from '@lib/markdown-export/render-document';
-import { canonicalUrlFor } from '@lib/markdown-export/urls';
 import { getAllNewsletters } from '@lib/newsletters';
 
 export const dynamic = 'force-static';
@@ -34,10 +34,11 @@ export async function GET() {
   );
 
   const rendered = await Promise.all(
-    entries.map(({ document, type }) =>
-      renderMarkdownDocument(document, {
-        canonicalUrl: canonicalUrlFor(type, document.slug),
-      })
+    entries.map(async ({ document, type }) =>
+      renderMarkdownDocument(
+        document,
+        await buildExportOptions(document, type, document.slug)
+      )
     )
   );
 

@@ -70,6 +70,26 @@ describe('markdown route handler', () => {
     );
   });
 
+  it('sends a canonical link header pointing at the html page', async () => {
+    const response = await GET(request(), {
+      params: Promise.resolve({ type: 'posts', slug: 'all-about-ch' }),
+    });
+
+    expect(response.headers.get('link')).toBe(
+      '<https://mikebifulco.com/posts/all-about-ch>; rel="canonical"'
+    );
+  });
+
+  it('closes the document with an attribution line', async () => {
+    const response = await GET(request(), {
+      params: Promise.resolve({ type: 'posts', slug: 'all-about-ch' }),
+    });
+
+    await expect(response.text()).resolves.toContain(
+      'Written by Mike Bifulco. Originally published at https://mikebifulco.com/posts/all-about-ch'
+    );
+  });
+
   it('404s for an unknown content type', async () => {
     const response = await GET(request(), {
       params: Promise.resolve({ type: 'recipes', slug: 'all-about-ch' }),

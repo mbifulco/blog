@@ -4,6 +4,7 @@ import { after } from 'next/server';
 import { flushLogs } from '@server/logging/otel-logs';
 
 import { getAllPosts, getPostBySlug } from '@lib/blog';
+import { buildExportOptions } from '@lib/markdown-export/export-context';
 import { renderMarkdownDocument } from '@lib/markdown-export/render-document';
 import {
   canonicalUrlFor,
@@ -60,9 +61,11 @@ export async function GET(_request: Request, { params }: RouteParams) {
     return new Response('Not found', { status: 404 });
   }
 
-  const content = await renderMarkdownDocument(document, {
-    canonicalUrl: canonicalUrlFor(type, slug),
-  });
+  const canonicalUrl = canonicalUrlFor(type, slug);
+  const content = await renderMarkdownDocument(
+    document,
+    await buildExportOptions(document, type, slug)
+  );
 
   after(flushLogs);
 
@@ -70,6 +73,10 @@ export async function GET(_request: Request, { params }: RouteParams) {
     headers: {
       'Content-Type': 'text/markdown; charset=utf-8',
       'Cache-Control': 'public, max-age=3600, s-maxage=86400',
+      // Search engines cannot read the YAML `canonical` field, so point them at
+      // the HTML page here. Without this these files read as duplicate content
+      // competing with the pages they mirror.
+      Link: `<${canonicalUrl}>; rel="canonical"`,
     },
   });
 }
