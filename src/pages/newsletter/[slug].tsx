@@ -13,6 +13,7 @@ import StructuredData from '@components/StructuredData/StructuredData';
 import WebmentionMetadata from '@components/webmentionMetadata';
 import atprotoData from '@data/atproto-documents.json';
 import relatedPostsData from '@data/generated/relatedPosts.json';
+import { markdownUrlFor } from '@lib/markdown-export/urls';
 import { getAllNewsletters, getNewsletterBySlug } from '@lib/newsletters';
 import { getSeries } from '@lib/series';
 import { getDocumentUri } from '@utils/atproto';
@@ -118,6 +119,10 @@ const NewsletterPage: React.FC<NewsletterPageProps> = ({
           tags={tags}
           standardSiteDocumentUri={standardSiteDocumentUri}
           standardSitePublicationUri={standardSitePublicationUri}
+          markdownUrl={markdownUrlFor(
+            'newsletter',
+            newsletter.frontmatter.slug
+          )}
         />
         <StructuredData structuredData={structuredData} />
 

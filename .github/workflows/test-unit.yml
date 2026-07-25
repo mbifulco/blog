@@ -14,6 +14,16 @@ jobs:
     timeout-minutes: 7
     runs-on: ubuntu-latest
 
+    # Unit tests import modules that read `src/utils/env`, which validates its
+    # schema at module load. `.env.test` is gitignored, so CI has to supply
+    # these. They are deliberately literal placeholders rather than secrets:
+    # nothing here reaches a real service, and this keeps the job working on
+    # pull requests from forks, which cannot read repository secrets.
+    env:
+      NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME: mikebifulco-com
+      NEXT_PUBLIC_FATHOM_ID: PAVJGIYJ
+      NEXT_PUBLIC_POSTHOG_KEY: phc_unit_test_placeholder
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v7
@@ -40,6 +50,11 @@ jobs:
 
       - name: Install deps (with cache)
         run: pnpm install
+
+      # src/data/generated/*.json is gitignored and produced at build time, but
+      # application modules import it directly, so unit tests need it present.
+      - name: Generate build-time content data
+        run: pnpm prebuild
 
       - name: Run unit tests
         run: pnpm test:unit --run

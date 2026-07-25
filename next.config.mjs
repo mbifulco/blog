@@ -111,6 +111,16 @@ const config = {
     ...postRedirects,
   ],
   rewrites: async () => [
+    // Markdown twins: /posts/foo.md and /newsletter/foo.md are served by the
+    // static route handler at /md/[type]/[slug].
+    {
+      source: '/posts/:slug.md',
+      destination: '/md/posts/:slug',
+    },
+    {
+      source: '/newsletter/:slug.md',
+      destination: '/md/newsletter/:slug',
+    },
     {
       source: '/ingest/static/:path*',
       destination: `${POSTHOG_ASSETS_HOST}/static/:path*`,

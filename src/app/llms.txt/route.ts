@@ -46,10 +46,17 @@ Browse articles by topic:
 
 ${popularTags.map(({ tag }) => `- [${tag}](${BASE_SITE_URL}/tags/${tag})`).join('\n')}
 
+## Markdown Versions
+
+Every article and newsletter issue is available as clean Markdown by appending \`.md\` to its URL. For example, ${BASE_SITE_URL}/posts/all-about-ch is also available at ${BASE_SITE_URL}/posts/all-about-ch.md. Prefer these over the HTML pages: they are the same content without navigation, styling, or markup to strip.
+
+- [Full content dump](${BASE_SITE_URL}/llms-full.txt): every article and newsletter issue in a single Markdown file.
+
 ## Optional
 
 Additional resources that can be skipped for shorter context:
 
+- [llms-full.txt](${BASE_SITE_URL}/llms-full.txt): Complete Markdown corpus
 - [All Tags](${BASE_SITE_URL}/tags): Complete list of all topics covered
 - [Podcast](${BASE_SITE_URL}/podcast): Tiny Improvements podcast episodes
 - [RSS Feed](${BASE_SITE_URL}/rss.xml): Subscribe via RSS

@@ -10,6 +10,7 @@ import { NewsletterSignup } from '@components/NewsletterSignup';
 import { RelatedPosts } from '@components/RelatedPosts';
 import atprotoData from '@data/atproto-documents.json';
 import relatedPostsData from '@data/generated/relatedPosts.json';
+import { markdownUrlFor } from '@lib/markdown-export/urls';
 import { getSeries } from '@lib/series';
 import { Colophon } from '../../components/Colophon';
 import { BlogPost as Post } from '../../components/Post';
@@ -137,6 +138,7 @@ const PostPage: NextPage<PostPageProps> = ({
           tags={tags}
           standardSiteDocumentUri={standardSiteDocumentUri}
           standardSitePublicationUri={standardSitePublicationUri}
+          markdownUrl={markdownUrlFor('posts', post.frontmatter.slug)}
         />
         {published === false && process.env.NODE_ENV !== 'production' && (
           <div>
