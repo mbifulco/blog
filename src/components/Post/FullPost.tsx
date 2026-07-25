@@ -4,10 +4,12 @@ import { MDXRemote } from 'next-mdx-remote';
 
 import { Badge } from '@components/Badge';
 import Breadcrumbs from '@components/Breadcrumbs/Breadcrumbs';
+import { CopyAsMarkdown } from '@components/CopyAsMarkdown';
 import Link from '@components/Link';
 import { SeriesNavigation } from '@components/Series/SeriesNavigation';
 import { StructuredData } from '@components/StructuredData';
 import { TLDR } from '@components/TLDR';
+import { markdownPathFor } from '@lib/markdown-export/urls';
 import { generatePostStructuredData } from '@utils/generateStructuredData';
 import { components } from '@utils/MDXProviderWrapper';
 import { CarbonAd } from '../CarbonAd';
@@ -134,6 +136,14 @@ const FullPost: React.FC<FullPostProps> = ({
             </p>
 
             <TagsSummary tags={tags} />
+            <div className="mt-3">
+              <CopyAsMarkdown
+                markdownPath={markdownPathFor(
+                  contentType === 'newsletter' ? 'newsletter' : 'posts',
+                  slug
+                )}
+              />
+            </div>
           </div>
           <div className="mx-auto h-auto min-h-52 w-full">{coverContainer}</div>
         </header>
