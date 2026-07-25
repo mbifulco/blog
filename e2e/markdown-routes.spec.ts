@@ -31,6 +31,33 @@ test.describe('markdown routes', () => {
     expect(body).not.toContain('utm_medium=sponsorship');
   });
 
+  test('links onward to other pages on the site', async ({ request }) => {
+    const response = await request.get(
+      '/posts/text-wrap-pretty-for-subtle-visual-balance.md'
+    );
+    const body = await response.text();
+
+    // Answer-first summary, series navigation, related links and attribution:
+    // without these each file is a dead end for a crawler.
+    expect(body).toContain('> **TL;DR:**');
+    expect(body).toContain('## Part of the CSS For Visual Balance series');
+    expect(body).toContain('## More from mikebifulco.com');
+    expect(body).toContain('https://mikebifulco.com/posts/');
+    expect(body.trimEnd()).toMatch(
+      /Written by Mike Bifulco\. Originally published at https:\/\/mikebifulco\.com\/posts\/text-wrap-pretty-for-subtle-visual-balance$/
+    );
+  });
+
+  test('sends a canonical link header for search engines', async ({
+    request,
+  }) => {
+    const response = await request.get('/posts/all-about-ch.md');
+
+    expect(response.headers()['link']).toBe(
+      '<https://mikebifulco.com/posts/all-about-ch>; rel="canonical"'
+    );
+  });
+
   test('404s for an unknown slug', async ({ request }) => {
     const response = await request.get('/posts/this-post-does-not-exist.md');
 
