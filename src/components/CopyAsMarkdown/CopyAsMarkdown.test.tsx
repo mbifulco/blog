@@ -95,9 +95,13 @@ describe('CopyAsMarkdown', () => {
       const button = screen.getByRole('button', { name: 'Copy as Markdown' });
       const label = () => button.textContent;
 
+      // Captured rather than hardcoded: this test is about timer behaviour, so
+      // it should survive edits to the display copy.
+      const idleLabel = label();
+
       fireEvent.click(button);
       await act(async () => {});
-      expect(label()).toBe('Copied');
+      expect(label()).toMatch(/copied/i);
 
       // Click again just before the first reset would fire.
       await act(async () => {
@@ -105,20 +109,20 @@ describe('CopyAsMarkdown', () => {
       });
       fireEvent.click(button);
       await act(async () => {});
-      expect(label()).toBe('Copied');
+      expect(label()).toMatch(/copied/i);
 
       // The first click's deadline passes here. Its timer must have been
       // cleared, or the label snaps back 100ms after the second click.
       await act(async () => {
         vi.advanceTimersByTime(200);
       });
-      expect(label()).toBe('Copied');
+      expect(label()).toMatch(/copied/i);
 
       // It still resets once the second window genuinely elapses.
       await act(async () => {
         vi.advanceTimersByTime(1900);
       });
-      expect(label()).toBe('Copy as Markdown');
+      expect(label()).toBe(idleLabel);
     } finally {
       vi.useRealTimers();
     }
