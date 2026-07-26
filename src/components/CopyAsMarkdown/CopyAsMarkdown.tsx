@@ -22,7 +22,7 @@ const RESET_DELAY_MS = 2000;
 
 const LABELS: Record<CopyState, string> = {
   idle: 'Copy as Markdown',
-  copied: 'Copied',
+  copied: 'Copied!',
   failed: 'Copy failed',
 };
 
@@ -82,13 +82,13 @@ export const CopyAsMarkdown: React.FC<CopyAsMarkdownProps> = ({
   return (
     // Full width on small screens where it sits on its own line, intrinsic
     // width once it shares a row with the date and tags.
-    <ButtonGroup className="w-full sm:w-fit">
+    <ButtonGroup className="w-[160px]">
       <Button
         variant="outline"
         size="sm"
         onClick={copyMarkdown}
         aria-label="Copy as Markdown"
-        className="flex-1 justify-center text-xs sm:flex-none"
+        className="flex-start w-full flex-1 justify-start text-xs sm:flex-none"
       >
         {state === 'copied' ? (
           <Check className="size-3.5" aria-hidden />
