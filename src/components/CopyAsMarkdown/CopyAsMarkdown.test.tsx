@@ -1,4 +1,10 @@
-import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import {
+  act,
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+} from '@testing-library/react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { CopyAsMarkdown } from './CopyAsMarkdown';
@@ -74,6 +80,52 @@ describe('CopyAsMarkdown', () => {
     });
 
     expect(navigator.clipboard.writeText).not.toHaveBeenCalled();
+  });
+
+  it('gives a second copy a full reset window instead of the first timer cutting it short', async () => {
+    vi.useFakeTimers();
+
+    try {
+      mockFetch().mockResolvedValue({
+        ok: true,
+        text: () => Promise.resolve('# x\n'),
+      });
+
+      render(<CopyAsMarkdown markdownPath={markdownPath} />);
+      const button = screen.getByRole('button', { name: 'Copy as Markdown' });
+      const label = () => button.textContent;
+
+      // Captured rather than hardcoded: this test is about timer behaviour, so
+      // it should survive edits to the display copy.
+      const idleLabel = label();
+
+      fireEvent.click(button);
+      await act(async () => {});
+      expect(label()).toMatch(/copied/i);
+
+      // Click again just before the first reset would fire.
+      await act(async () => {
+        vi.advanceTimersByTime(1900);
+      });
+      fireEvent.click(button);
+      await act(async () => {});
+      expect(label()).toMatch(/copied/i);
+
+      // The first click's deadline passes here. Its timer must have been
+      // cleared, or the label snaps back 100ms after the second click.
+      await act(async () => {
+        vi.advanceTimersByTime(200);
+      });
+      expect(label()).toMatch(/copied/i);
+
+      // It still resets once the second window genuinely elapses.
+      await act(async () => {
+        vi.advanceTimersByTime(1900);
+      });
+      expect(label()).toBe(idleLabel);
+    } finally {
+      vi.useRealTimers();
+    }
   });
 
   it('exposes a menu trigger for the secondary actions', () => {
