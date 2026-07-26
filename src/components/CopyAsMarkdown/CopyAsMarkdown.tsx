@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Check, ChevronDown, Copy, ExternalLink, Link2 } from 'lucide-react';
 import posthog from 'posthog-js';
 
@@ -22,23 +22,34 @@ const RESET_DELAY_MS = 2000;
 
 const LABELS: Record<CopyState, string> = {
   idle: 'Copy as Markdown',
-  copied: 'Copied',
+  copied: 'Copied!',
   failed: 'Copy failed',
 };
 
 /**
  * Hands the Markdown twin of the current page to the reader, for pasting into
- * an LLM or an editor. Falls back to opening the raw file if the clipboard is
- * unavailable.
+ * an LLM or an editor. When a copy fails the button reports it and the menu
+ * still offers opening the raw file directly.
  */
 export const CopyAsMarkdown: React.FC<CopyAsMarkdownProps> = ({
   markdownPath,
 }) => {
   const [state, setState] = useState<CopyState>('idle');
+  const resetTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(
+    () => () => {
+      if (resetTimer.current) clearTimeout(resetTimer.current);
+    },
+    []
+  );
 
   const flash = (next: CopyState) => {
     setState(next);
-    setTimeout(() => setState('idle'), RESET_DELAY_MS);
+    // Replace any pending reset, so a second click gets a full window rather
+    // than being cut short by the previous one's timer.
+    if (resetTimer.current) clearTimeout(resetTimer.current);
+    resetTimer.current = setTimeout(() => setState('idle'), RESET_DELAY_MS);
   };
 
   const copyMarkdown = async () => {
@@ -84,7 +95,11 @@ export const CopyAsMarkdown: React.FC<CopyAsMarkdownProps> = ({
         ) : (
           <Copy className="size-3.5" aria-hidden />
         )}
-        <span>{LABELS[state]}</span>
+        {/* Reserve the widest label's width so swapping copy for "Copied!" or
+            "Copy failed" does not resize the button mid-interaction. Sized on
+            the label rather than the group, so the chevron stays inside and
+            the control still stretches on small screens. */}
+        <span className="min-w-[7rem] text-left">{LABELS[state]}</span>
       </Button>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
