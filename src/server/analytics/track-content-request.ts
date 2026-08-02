@@ -2,7 +2,6 @@ import { createHash } from 'node:crypto';
 import type { TrackedContentRequest } from '@lib/analytics/content-requests';
 import { captureServerEvent } from '@server/posthog';
 
-import { sendFathomPageview } from '@lib/analytics/fathom-beacon';
 import { classifyUserAgent } from '@lib/analytics/user-agent';
 import { env } from '@utils/env';
 
@@ -51,10 +50,14 @@ const distinctIdFor = ({ ip, userAgent }: ContentRequestContext): string => {
 };
 
 /**
- * Record a request for a markdown twin or llms.txt file in both analytics
- * services. Never throws and never blocks the response — the proxy hands this
- * to `event.waitUntil`, and each service's failures are swallowed by the
- * capture helpers themselves.
+ * Record a request for a markdown twin or llms.txt file in PostHog. Never
+ * throws and never blocks the response — the proxy hands this to
+ * `event.waitUntil`, and `captureServerEvent` swallows its own failures.
+ *
+ * PostHog is the only destination. Fathom is a browser-only product: replaying
+ * the beacon its embed script sends was tried here and the hits never showed up
+ * on the dashboard, so there is nothing to keep. Markdown and llms.txt traffic
+ * lives in PostHog alone.
  */
 export const trackContentRequest = async (
   contentRequest: TrackedContentRequest,
@@ -66,7 +69,7 @@ export const trackContentRequest = async (
   const { origin, userAgent, referrer } = context;
 
   try {
-    const postHogCapture = captureServerEvent({
+    await captureServerEvent({
       distinctId: distinctIdFor(context),
       event: MARKDOWN_PAGE_VIEW_EVENT,
       properties: {
@@ -87,22 +90,8 @@ export const trackContentRequest = async (
         $geoip_disable: true,
       },
     });
-
-    const fathomCapture =
-      env.FATHOM_SERVER_BEACON === 'off'
-        ? Promise.resolve(false)
-        : sendFathomPageview({
-            siteId: env.NEXT_PUBLIC_FATHOM_ID,
-            origin,
-            pathname: path,
-            referrer,
-            userAgent,
-          });
-
-    // One slow or failing service must not hold up the other.
-    await Promise.allSettled([postHogCapture, fathomCapture]);
   } catch (error) {
-    // Belt and braces: both capture helpers swallow their own failures, so this
+    // Belt and braces: `captureServerEvent` swallows its own failures, so this
     // is only reachable if a malformed request gets this far. Either way an
     // analytics problem must not surface as a rejected `waitUntil` promise.
     console.error('Failed to track a machine-readable page view:', error);

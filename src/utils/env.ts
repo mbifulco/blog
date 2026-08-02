@@ -36,9 +36,6 @@ export const env = createEnv({
     // llms.txt) — see src/server/analytics/track-content-request.ts.
     // 'auto' limits it to production so previews and dev do not skew the data.
     SERVER_ANALYTICS: z.enum(['auto', 'on', 'off']).default('auto'),
-    // Kill switch for the server-side Fathom beacon specifically, which relies
-    // on Fathom's undocumented request shape. 'off' leaves PostHog untouched.
-    FATHOM_SERVER_BEACON: z.enum(['on', 'off']).default('on'),
   },
   client: {
     NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME: z.string().min(1),
