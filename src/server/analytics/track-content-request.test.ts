@@ -2,25 +2,19 @@ import type { TrackedContentRequest } from '@lib/analytics/content-requests';
 import { captureServerEvent } from '@server/posthog';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
-import { sendFathomPageview } from '@lib/analytics/fathom-beacon';
 import {
   MARKDOWN_PAGE_VIEW_EVENT,
   trackContentRequest,
 } from './track-content-request';
 
-// Mutable so each test can set the deployment environment and kill switches.
+// Mutable so each test can set the deployment environment and kill switch.
 const mockEnv = vi.hoisted(() => ({
-  NEXT_PUBLIC_FATHOM_ID: 'ABCDEFGH',
   VERCEL_ENV: 'production' as string | undefined,
   SERVER_ANALYTICS: 'auto' as 'auto' | 'on' | 'off',
-  FATHOM_SERVER_BEACON: 'on' as 'on' | 'off',
 }));
 
 vi.mock('@utils/env', () => ({ env: mockEnv }));
 vi.mock('@server/posthog', () => ({ captureServerEvent: vi.fn() }));
-vi.mock('@lib/analytics/fathom-beacon', () => ({
-  sendFathomPageview: vi.fn().mockResolvedValue(true),
-}));
 
 const markdownRequest: TrackedContentRequest = {
   format: 'markdown',
@@ -41,7 +35,6 @@ describe('trackContentRequest', () => {
     vi.clearAllMocks();
     mockEnv.VERCEL_ENV = 'production';
     mockEnv.SERVER_ANALYTICS = 'auto';
-    mockEnv.FATHOM_SERVER_BEACON = 'on';
   });
 
   // A console spy left in place would silence errors in every test after it.
@@ -49,7 +42,7 @@ describe('trackContentRequest', () => {
     vi.restoreAllMocks();
   });
 
-  it('records the request in both PostHog and Fathom', async () => {
+  it('records the request in PostHog', async () => {
     await trackContentRequest(markdownRequest, context);
 
     expect(captureServerEvent).toHaveBeenCalledTimes(1);
@@ -67,14 +60,6 @@ describe('trackContentRequest', () => {
         }),
       })
     );
-
-    expect(sendFathomPageview).toHaveBeenCalledWith({
-      siteId: 'ABCDEFGH',
-      origin: 'https://mikebifulco.com',
-      pathname: '/posts/all-about-ch.md',
-      referrer: null,
-      userAgent: context.userAgent,
-    });
   });
 
   it('keeps person profiles and server geolocation out of PostHog', async () => {
@@ -134,7 +119,6 @@ describe('trackContentRequest', () => {
     await trackContentRequest(markdownRequest, context);
 
     expect(captureServerEvent).not.toHaveBeenCalled();
-    expect(sendFathomPageview).not.toHaveBeenCalled();
   });
 
   it('can be forced on for a preview deploy', async () => {
@@ -152,16 +136,6 @@ describe('trackContentRequest', () => {
     await trackContentRequest(markdownRequest, context);
 
     expect(captureServerEvent).not.toHaveBeenCalled();
-    expect(sendFathomPageview).not.toHaveBeenCalled();
-  });
-
-  it('keeps PostHog running when the Fathom beacon is disabled', async () => {
-    mockEnv.FATHOM_SERVER_BEACON = 'off';
-
-    await trackContentRequest(markdownRequest, context);
-
-    expect(captureServerEvent).toHaveBeenCalledTimes(1);
-    expect(sendFathomPageview).not.toHaveBeenCalled();
   });
 
   it('never rejects, so a bad request cannot break waitUntil', async () => {
@@ -172,13 +146,16 @@ describe('trackContentRequest', () => {
     ).resolves.toBeUndefined();
   });
 
-  it('still reports to Fathom when PostHog capture fails', async () => {
+  it('swallows a PostHog capture failure', async () => {
+    const consoleError = vi
+      .spyOn(console, 'error')
+      .mockImplementation(() => {});
     vi.mocked(captureServerEvent).mockRejectedValueOnce(new Error('down'));
 
     await expect(
       trackContentRequest(markdownRequest, context)
     ).resolves.toBeUndefined();
 
-    expect(sendFathomPageview).toHaveBeenCalledTimes(1);
+    expect(consoleError).toHaveBeenCalled();
   });
 });

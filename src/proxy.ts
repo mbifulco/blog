@@ -13,7 +13,8 @@ const clientIpFrom = (request: NextRequest): string | null =>
 export function proxy(request: NextRequest, event: NextFetchEvent) {
   // Markdown twins and llms.txt are static files that run no JavaScript, so the
   // PostHog and Fathom snippets on the site never see a request for one. The
-  // proxy is the only place they can be counted.
+  // proxy is the only place they can be counted, and PostHog is the only
+  // service that can record them from here (see track-content-request.ts).
   const contentRequest =
     request.method === 'GET'
       ? classifyContentRequest(request.nextUrl.pathname)
