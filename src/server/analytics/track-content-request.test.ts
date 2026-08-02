@@ -1,6 +1,6 @@
 import type { TrackedContentRequest } from '@lib/analytics/content-requests';
 import { captureServerEvent } from '@server/posthog';
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { sendFathomPageview } from '@lib/analytics/fathom-beacon';
 import {
@@ -42,6 +42,11 @@ describe('trackContentRequest', () => {
     mockEnv.VERCEL_ENV = 'production';
     mockEnv.SERVER_ANALYTICS = 'auto';
     mockEnv.FATHOM_SERVER_BEACON = 'on';
+  });
+
+  // A console spy left in place would silence errors in every test after it.
+  afterEach(() => {
+    vi.restoreAllMocks();
   });
 
   it('records the request in both PostHog and Fathom', async () => {

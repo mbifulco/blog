@@ -36,10 +36,12 @@ const serverAnalyticsEnabled = (): boolean => {
 };
 
 /**
- * A stable id for grouping a single caller's requests without storing anything
- * identifying: the IP and user agent are hashed and the raw values never leave
- * the proxy. PostHog person profiles stay off for these events (see
- * `$process_person_profile` below), so this id only ever groups events.
+ * A stable id for grouping a single caller's requests: the IP and user agent
+ * are hashed together, and the raw IP never leaves the proxy. (The user agent
+ * itself is sent on, as `$raw_user_agent` — it is what tells ClaudeBot apart
+ * from GPTBot, which is the point of counting these requests.) PostHog person
+ * profiles stay off for these events (see `$process_person_profile` below), so
+ * this id only ever groups events.
  */
 const distinctIdFor = ({ ip, userAgent }: ContentRequestContext): string => {
   const fingerprint = `${ip ?? 'unknown-ip'}|${userAgent ?? 'unknown-ua'}`;
