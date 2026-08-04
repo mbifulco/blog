@@ -1,0 +1,29 @@
+---
+title: 'Tutorial: Make your LLM tool calls date-aware'
+date: 08-4-2026
+excerpt: "If you're building chat/prompt driven features, it's critical to understand that your LLM has no idea what day or time it is."
+coverImagePublicId: posts/make-tool-calls-date-aware/cover
+published: true
+slug: make-tool-calls-date-aware
+---
+
+## AI Models Have No Concept of Time
+
+Your favorite LLM model doesn't have any way of knowing what time it is. It has no access to the current date, and it doesn't know what day of the week it is. It also doesn't know what year it is, or even what decade it is.
+
+It's one of those things that _sounds_ obvious once you've heard it - but you need to _tell_ your model the date and time in order for it to be able to make tool calls that are date-aware.
+
+If not, it can lead to some very strange behavior.
+
+## What Happens When You Don't Tell Your Model the Date
+
+Here's the scenario: at [Craftwork](https://craftwork.com), we have a variety of LLM tools for use internally - our sales and support teams will often ask our Assistant to search through previous conversations with customers, to provide better service. Things like "Which rooms are we painting ceilings in?" or "What colors is Joe Smith using no their project?" are pretty straightforward.
+
+Another example of a common question might be: "Last weekend I got a call from a customer asking about German Smear. Can you tell me what their name was?"
+
+**Without telling the model the date, it will have no idea what "last weekend" means** - so it'll just guess. It might give you a date based on the last time it was trained, or make something up, or just... guess.
+
+## Fix it: Make your Models Date-Aware with Tool Calls
+
+If you've been building software for a long time, you'll be relieved to hear the answer is at least partly deterministic. When eed
+
