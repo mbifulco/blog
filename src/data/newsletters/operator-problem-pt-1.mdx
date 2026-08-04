@@ -1,0 +1,1036 @@
+---
+title: The Operator Problem
+date: 2024-06-05
+excerpt: "A three-part series about what happens after a startup makes it past the tutorial."
+coverImagePublicId: newsletters/operator-problem-pt-1/cover
+published: true
+slug: operator-problem-pt-1
+---
+
+
+# The Operator Problem
+
+A three-part series about what happens after a startup makes it past the tutorial.
+
+Most startup advice focuses on beginnings: validating an idea, building an MVP, shipping quickly, and finding the first customers.
+
+That advice is useful. But successful startups eventually encounter a different class of problem.
+
+The systems you built to discover whether the business could work are now responsible for keeping the business working. The code matters more. Failures cost more. People depend on tools that may have started as prototypes.
+
+You are no longer just building.
+
+You are operating.
+
+---
+
+# Part One: The Operator Problem
+
+## Working title
+
+**The Operator Problem**
+
+### Alternate titles
+
+- **What Happens After Hello, World?**
+- **Nobody Teaches You How to Operate Software**
+- **Operator Problems Are Earned**
+- **The Problems Successful Startups Grow Into**
+
+## Description
+
+Every tutorial teaches you how to get started. Almost none teach you what happens when your company depends on the thing you built.
+
+## The big idea
+
+Builder mode asks:
+
+> Can we make this work?
+
+Operator mode asks:
+
+> How do we keep this working?
+
+Most startup advice prepares people for the first question. Successful startups eventually have to answer the second.
+
+Operator problems can feel frustrating, boring, or even disappointing. But they are also evidence that you made it past the point where most projects stop.
+
+These problems are earned.
+
+---
+
+## Opening: Every tutorial stops too early
+
+Start with the familiar experience of adopting a new tool.
+
+The documentation shows you how to:
+
+- create an account
+- install the SDK
+- send your first request
+- deploy your first feature
+- complete the “Hello, World” example
+
+That is useful when you are deciding whether something can work.
+
+But the questions change after 100 days.
+
+After thousands of requests, conversations, projects, or customer interactions, you start asking things like:
+
+- Why did this fail only for these records?
+- How do we know when messages are not being delivered?
+- What happens when a third-party API changes?
+- Who understands this system well enough to debug it?
+- How do we recover from a partial failure?
+- How do we explain this behavior six months from now?
+- What parts of the system can no longer safely change?
+
+There is very little “day 100” documentation.
+
+Most tutorials help you create a dependency. Very few help you live with one.
+
+---
+
+## The invisible transition
+
+You rarely decide that today is the day you become an operator.
+
+The shift happens gradually.
+
+At first, a system is an experiment. You are trying to learn whether it is useful.
+
+Then people begin relying on it.
+
+The experiment becomes a workflow. The workflow becomes a dependency. Eventually, the business cannot function normally without it.
+
+Nothing necessarily changes in the code on the day this happens. What changes is the consequence of failure.
+
+A rough prototype can be perfectly reasonable when three people are testing an idea. The same prototype becomes dangerous when dozens of people depend on it to do their jobs.
+
+This transition is easy to miss because success often looks like more of the same:
+
+- more customers
+- more data
+- more transactions
+- more teammates
+- more integrations
+- more edge cases
+
+But beneath that growth, the nature of the engineering work is changing.
+
+---
+
+## Operator problems are earned
+
+Most startups never reach this stage.
+
+They run out of money, fail to find customers, lose momentum, or discover that the idea does not work.
+
+Operator problems only appear after something has become valuable enough to depend on.
+
+That does not make the problems pleasant. It does make them meaningful.
+
+A system cannot become critical until it has succeeded at something first.
+
+You do not worry about Twilio reliability until your company relies on thousands of conversations.
+
+You do not worry about framework hiring constraints until you need more people to maintain the application.
+
+You do not worry about institutional memory until the system has enough history that no single person can hold all of it.
+
+Operator problems are not a punishment for building badly.
+
+Sometimes they reveal bad decisions. Often, though, they are simply the cost of building something that survived.
+
+They are a receipt for success.
+
+---
+
+## The mindset shift
+
+The difference between builder mode and operator mode is not that one is creative and the other is boring.
+
+They optimize for different outcomes.
+
+### Builder mode
+
+Builder mode prioritizes:
+
+- speed
+- learning
+- experimentation
+- reducing uncertainty
+- getting something in front of people
+- finding out whether an idea works
+
+In builder mode, temporary decisions are often rational.
+
+You may hardcode a value, skip an abstraction, handle an edge case manually, or accept a brittle workflow because you are still learning whether the workflow should exist.
+
+### Operator mode
+
+Operator mode prioritizes:
+
+- stability
+- observability
+- resilience
+- predictability
+- recoverability
+- maintainability
+- shared understanding
+
+The goal is no longer simply to make the system work.
+
+The goal is to make its behavior understandable, including when it fails.
+
+An operator needs to know:
+
+- what happened
+- why it happened
+- who was affected
+- whether it is still happening
+- how to repair it
+- how to prevent it next time
+
+The work becomes less about creating the happy path and more about understanding all the other paths.
+
+---
+
+## The engineering muscles change
+
+The same engineer can work in both modes.
+
+But the work exercises different muscles.
+
+A strong MVP engineer may be good at moving through ambiguity, testing assumptions, and finding the shortest path to something useful.
+
+A strong operator must also think about:
+
+- failure modes
+- monitoring
+- logs and traces
+- data migrations
+- retries
+- idempotency
+- permissions
+- documentation
+- incident response
+- backward compatibility
+- operational tooling
+- knowledge transfer
+
+The trap is not hiring the wrong “type” of engineer.
+
+The trap is continuing to reward MVP behavior after a system requires operator behavior.
+
+If speed remains the only visible measure of progress, reliability work feels slow.
+
+If new features get celebrated while incidents disappear quietly, teams learn that building matters more than maintaining.
+
+Eventually, the system inherits those incentives.
+
+---
+
+## Why nobody writes the operator docs
+
+“Getting started” content is easy to publish and easy to market.
+
+It has a clean beginning and a satisfying result.
+
+Install the package. Copy the code. See the success message.
+
+Operator knowledge is harder.
+
+It is usually:
+
+- specific to one company
+- shaped by accumulated decisions
+- difficult to demonstrate in a short tutorial
+- discovered through failures
+- full of tradeoffs
+- less exciting than a product launch
+- hard to separate from business context
+
+There is also an incentive problem.
+
+Tool companies benefit from making adoption look easy. They have less incentive to emphasize the long-term cost of depending on their systems.
+
+Startup culture celebrates visible creation. New products, new features, new funding, and new launches make good stories.
+
+A week without an incident rarely becomes a blog post.
+
+An internal tool that prevents ten future support tickets is difficult to show on launch day.
+
+Operator work is often most successful when nothing dramatic happens.
+
+That makes it valuable and strangely thankless.
+
+---
+
+## How to recognize that you have become an operator
+
+You may be entering operator mode when:
+
+- failures affect real customers or teammates
+- the system contains years of accumulated decisions
+- changing one area creates unexpected effects elsewhere
+- the person who built something is no longer the only person maintaining it
+- debugging requires historical context
+- support issues reveal patterns instead of isolated bugs
+- third-party dependencies have become business dependencies
+- reliability work competes directly with feature work
+- documentation matters as much as implementation
+- a clever fix is less valuable than a predictable system
+
+The clearest signal is simple:
+
+> People now rely on this.
+
+Once that is true, the standard for “working” has changed.
+
+---
+
+## Closing
+
+Startup culture teaches us how to build something people want.
+
+It says far less about how to keep that thing dependable after people begin relying on it.
+
+That is the operator problem.
+
+The difficult parts are not proof that you failed to build the perfect MVP. They are often proof that the MVP did its job.
+
+You made it past the tutorial.
+
+Now you have to keep the lights on.
+
+## Bridge to part two
+
+The transition is even more complicated because a startup does not move from builder mode to operator mode all at once.
+
+One system may be mature infrastructure. Another may still be a rough experiment. A third may be somewhere in between.
+
+The company is not in one mode.
+
+It is a portfolio of systems at different stages of maturity.
+
+---
+
+# Part Two: The Operator Map
+
+## Working title
+
+**The Operator Map**
+
+### Alternate titles
+
+- **Your Startup Is in More Than One Mode**
+- **Every System Grows Up at a Different Speed**
+- **You Are Building and Operating at the Same Time**
+- **The Mixed-State Startup**
+
+## Description
+
+A startup does not graduate from MVP mode all at once. Every system reaches maturity on its own schedule.
+
+## The big idea
+
+Companies do not become operators.
+
+Systems do.
+
+A mature startup may still be prototyping a new product while operating critical infrastructure elsewhere.
+
+The challenge is learning to recognize which mode each system requires.
+
+---
+
+## Opening: The false before-and-after story
+
+It is tempting to describe startup growth as a clean transition.
+
+First, you build the MVP.
+
+Then, once the company succeeds, you become an operator.
+
+That is not how it feels in practice.
+
+At Craftwork, one part of the company may be experimenting with an early feature that could disappear next month.
+
+At the same time, another part may depend on a system that processes thousands of customer conversations or coordinates daily operational work.
+
+One system needs speed.
+
+Another needs stability.
+
+Both needs are legitimate.
+
+The hard part is knowing which one applies where.
+
+---
+
+## A startup is a portfolio of systems
+
+Every system inside a company has its own maturity curve.
+
+Some examples might include:
+
+- a prototype used by two teammates
+- an internal workflow used every day
+- an integration that supports customer communication
+- a pricing engine tied directly to revenue
+- an authentication system every customer depends on
+- a reporting tool that is useful but replaceable
+- an experiment intended to validate a new service
+
+These systems may exist in the same repository, share the same database, and be maintained by the same engineers.
+
+But they should not necessarily be built with the same standards.
+
+The right amount of rigor depends on the system’s maturity, consequences, and reversibility.
+
+---
+
+## A practical map
+
+You can think of systems as moving through four broad stages.
+
+### 1. Experiment
+
+The primary question is:
+
+> Is this idea useful?
+
+Characteristics:
+
+- low usage
+- low consequence of failure
+- incomplete understanding of the problem
+- frequent changes
+- manual intervention is acceptable
+- the system may be discarded entirely
+
+The goal is learning.
+
+### 2. Emerging workflow
+
+The question becomes:
+
+> Can people use this repeatedly?
+
+Characteristics:
+
+- a small group depends on it
+- repeated patterns begin to appear
+- temporary decisions accumulate
+- failures are inconvenient but recoverable
+- the team is still learning what the system should become
+
+The goal is repeatability.
+
+### 3. Operational dependency
+
+The question becomes:
+
+> Can the business rely on this?
+
+Characteristics:
+
+- failures interrupt important work
+- more people need access
+- edge cases become common
+- data integrity matters
+- monitoring and recovery become necessary
+- changes require more care
+
+The goal is dependability.
+
+### 4. Critical infrastructure
+
+The question becomes:
+
+> How do we keep this healthy over time?
+
+Characteristics:
+
+- failures have immediate business impact
+- migrations require planning
+- security and permissions are central concerns
+- institutional knowledge must be documented
+- ownership must survive team changes
+- replacement would be expensive or risky
+
+The goal is resilience.
+
+---
+
+## The danger of using the wrong mode
+
+The problem is not that one mode is better.
+
+The problem is applying the wrong mode to the system.
+
+### Operator thinking too early
+
+Treating an experiment like critical infrastructure can produce:
+
+- premature abstractions
+- long development cycles
+- infrastructure for requirements that never materialize
+- fear of changing something that should remain flexible
+- wasted engineering time
+
+You can build a beautiful, resilient system that nobody needs.
+
+### Builder thinking too late
+
+Treating critical infrastructure like an experiment can produce:
+
+- repeated incidents
+- undocumented behavior
+- fragile integrations
+- dangerous migrations
+- knowledge concentrated in one person
+- growing operational debt
+
+You can move quickly while quietly making the business less dependable.
+
+Good engineering requires matching the approach to the maturity of the system.
+
+---
+
+## Mode awareness
+
+The core skill is not choosing builder mode or operator mode.
+
+It is recognizing which mode you are currently in.
+
+Before changing a system, ask:
+
+- Who depends on this?
+- What happens if it fails?
+- How quickly can we recover?
+- How reversible is this decision?
+- How much do we understand about the problem?
+- Are the requirements still changing?
+- Is manual work still acceptable?
+- Has this failure happened before?
+- Does this need a feature or a durable capability?
+- Will another engineer understand this six months from now?
+
+The answers should change how you build.
+
+---
+
+## The same engineer can work in both modes
+
+Teams sometimes describe this as a personality difference.
+
+Some people are “builders.” Others are “operators.”
+
+There may be genuine preferences involved, but framing the problem entirely around personality misses something important.
+
+A good engineer can prototype quickly in the morning and design a careful migration in the afternoon.
+
+The harder part is switching standards deliberately.
+
+The same shortcut can be intelligent in one system and reckless in another.
+
+The same abstraction can be essential in one place and premature somewhere else.
+
+Maturity is contextual.
+
+---
+
+## Incentives must change with the system
+
+Teams often continue celebrating the behaviors that helped them build the MVP.
+
+They praise:
+
+- visible launches
+- rapid feature development
+- short cycle times
+- bold experiments
+
+Those behaviors remain valuable.
+
+But mature systems also need incentives for:
+
+- reducing incidents
+- improving observability
+- documenting old decisions
+- simplifying workflows
+- paying down operational debt
+- removing single points of failure
+- making systems easier for other people to understand
+
+A healthy engineering culture makes room for both.
+
+Otherwise, operator work becomes invisible labor completed between feature deadlines.
+
+---
+
+## Operational debt
+
+Technical debt is often described as messy code.
+
+Operational debt is broader.
+
+It is the accumulated cost of running a system that was built for an earlier stage.
+
+Operational debt might look like:
+
+- manual recovery processes
+- missing audit trails
+- unclear ownership
+- alerts nobody trusts
+- business rules scattered across the codebase
+- customer-facing behavior that only one engineer understands
+- support issues that require database access
+- configuration changes that require deployments
+- repeated one-off requests handled by engineering
+
+None of these problems necessarily stop the business immediately.
+
+They simply make every future change slower and riskier.
+
+---
+
+## The role of leadership
+
+Engineering leaders need to make system maturity visible.
+
+That may mean:
+
+- explicitly labeling experiments as experiments
+- defining which systems are business-critical
+- setting different standards for different systems
+- reviewing operational risks alongside product roadmaps
+- protecting time for reliability work
+- documenting why temporary decisions were made
+- deciding when a prototype deserves to be rebuilt
+- retiring experiments before they become accidental infrastructure
+
+The goal is not to eliminate shortcuts.
+
+The goal is to know which shortcuts you are taking and when they expire.
+
+---
+
+## Closing
+
+A startup is rarely in one stage.
+
+It is exploring, building, stabilizing, and operating all at once.
+
+The systems change at different speeds. The people working on them must learn to change modes with them.
+
+The central question is not:
+
+> Are we builders or operators?
+
+It is:
+
+> What does this system need from us right now?
+
+## Bridge to part three
+
+One of the clearest signs that a system is maturing is the way requests begin to repeat.
+
+At first, someone needs one button.
+
+Then they need a slightly different button.
+
+Eventually, the real need becomes clear.
+
+The team does not need another feature.
+
+It needs a capability.
+
+---
+
+# Part Three: From Features to Capabilities
+
+## Working title
+
+**From Features to Capabilities**
+
+### Alternate titles
+
+- **The Request Is Not the Requirement**
+- **Stop Building the Same Button Twice**
+- **Builders Answer Requests. Operators Build Capabilities.**
+- **How Engineering Stops Being the Bottleneck**
+
+## Description
+
+Early products solve specific problems. Mature products must learn to absorb whole classes of requests.
+
+## The big idea
+
+A feature solves the request in front of you.
+
+A capability gives people the tools to solve a whole class of similar problems.
+
+The operator mindset learns to recognize when the second is worth building.
+
+---
+
+## Opening: The filter button
+
+Use the concrete example from Craftwork.
+
+Someone asks for a button that shows all new projects from this week.
+
+The request is clear, reasonable, and easy to understand.
+
+So the team builds it.
+
+Soon, someone asks for new projects from this week and last week.
+
+Another person needs projects from the last 30 days.
+
+Someone else needs to combine the date with a project status.
+
+The original request was not wrong.
+
+It was simply one expression of a broader need.
+
+The company did not really need a “new projects this week” button.
+
+It needed a flexible way to filter projects.
+
+---
+
+## The request is not the requirement
+
+People are usually good at describing the pain they are experiencing.
+
+They are less likely to describe the underlying system that should be built.
+
+That is not their job.
+
+A person asking for a filter button is trying to complete their work. They are not responsible for designing a reusable filtering framework.
+
+This is where product and engineering judgment matter.
+
+The job is not to ignore what someone asks for.
+
+The job is to listen carefully enough to understand what the request reveals.
+
+The specific request may contain information about:
+
+- the immediate workflow
+- the missing information
+- the urgency of the problem
+- the way people currently think about the task
+- the shape of a broader need
+
+Good UX research often requires listening past the proposed solution.
+
+Operator thinking requires the same skill.
+
+---
+
+## Why the specific solution is so tempting
+
+Building exactly what someone asked for feels responsible.
+
+It is:
+
+- clear
+- fast
+- easy to estimate
+- easy to demonstrate
+- likely to satisfy the immediate request
+
+Interrogating the request takes more effort.
+
+You have to ask:
+
+- Why do you need this?
+- What are you trying to decide?
+- How often does the date range change?
+- Who else has this problem?
+- What would you do after filtering the list?
+- What other dimensions might matter?
+- Is this a one-time need or a repeated workflow?
+
+It is deeply human to avoid that ambiguity and build the obvious button.
+
+Sometimes that is also the right choice.
+
+The operator skill is recognizing when it has stopped being the right choice.
+
+---
+
+## The second request changes everything
+
+One request may be an edge case.
+
+A second request with the same shape is evidence of a pattern.
+
+By the third or fourth variation, the engineering team is no longer implementing independent features.
+
+It is repeatedly paying for the absence of a capability.
+
+This is an important transition.
+
+The question changes from:
+
+> How quickly can we add this button?
+
+To:
+
+> Why does every variation require an engineer?
+
+That is often the moment when a system has outgrown its original implementation.
+
+---
+
+## Features versus capabilities
+
+### A feature
+
+A feature solves a specific known request.
+
+Examples:
+
+- show projects created this week
+- allow one particular status change
+- send one type of notification
+- add one new pricing rule
+- give one person access to one report
+
+Features are useful because they are concrete.
+
+They are often the correct response when the company is still learning.
+
+### A capability
+
+A capability allows a class of requests to be handled without new engineering work.
+
+Examples:
+
+- a configurable filtering system
+- a permissions model
+- a notification rules engine
+- a configurable pricing system
+- a report builder
+- a workflow editor
+- self-service settings
+
+Capabilities cost more to design.
+
+But once they are in place, they allow the product and the organization to adapt without requiring a new deployment for every change.
+
+---
+
+## Engineering time becomes the bottleneck
+
+Early in a startup, engineering time is spent creating new value.
+
+Later, engineering often becomes responsible for maintaining every decision the company has ever made.
+
+Small requests begin to queue up:
+
+- change this label
+- add this option
+- adjust this condition
+- update this date range
+- give this person access
+- make this rule work slightly differently
+
+Each request may be easy.
+
+Together, they turn the engineering team into the control panel for the business.
+
+That does not scale.
+
+The operator question becomes:
+
+> How can we spend engineering time now so this category of request no longer needs engineering time later?
+
+Configurability is not only a technical decision.
+
+It is an economic decision.
+
+You are deciding whether to keep renting engineering attention for every future change or invest in a system that lets the business adapt on its own.
+
+---
+
+## Removing engineering as the bottleneck
+
+A mature internal system should allow the people closest to the work to make safe changes themselves.
+
+That might mean giving teams the ability to:
+
+- define filters
+- update rules
+- manage templates
+- change permissions
+- configure workflows
+- edit pricing logic
+- control notification settings
+- create reports
+
+The important word is safe.
+
+Configurability without guardrails can simply move the risk elsewhere.
+
+A good capability should provide:
+
+- clear limits
+- understandable options
+- sensible defaults
+- validation
+- audit history
+- previews
+- rollback
+- permissions
+- documentation
+
+The goal is not unlimited flexibility.
+
+The goal is controlled adaptability.
+
+---
+
+## The UX principle behind capability thinking
+
+There is a familiar product principle here:
+
+> Do not only listen to what people are saying. Listen to what they are telling you.
+
+A request for a button may be telling you that:
+
+- people need to explore the data
+- the existing workflow is too rigid
+- the information architecture does not match the work
+- the business changes faster than the software
+- engineering has become a dependency for routine decisions
+
+The proposed feature is useful evidence.
+
+It should not automatically become the design.
+
+The work is to uncover the need beneath it.
+
+---
+
+## Do not abstract too early
+
+Capability thinking has a failure mode.
+
+Once engineers learn to recognize patterns, they may begin seeing systems everywhere.
+
+A single request does not always justify a framework.
+
+Premature configurability can create:
+
+- complicated interfaces
+- vague abstractions
+- excessive implementation time
+- systems nobody understands
+- flexibility no one uses
+- maintenance costs larger than the original problem
+
+The first hardcoded filter may have been the correct decision.
+
+It allowed the team to learn quickly.
+
+The mistake is not building the specific version first.
+
+The mistake is continuing to build specific versions after the pattern is obvious.
+
+Capabilities should be earned by evidence.
+
+---
+
+## A practical threshold for abstraction
+
+Before turning a feature into a capability, ask:
+
+- Has this request appeared more than once?
+- Are the requests variations of the same underlying need?
+- Is engineering repeatedly involved?
+- Are people working around the limitation manually?
+- Is the business likely to keep changing this behavior?
+- Can the configuration be made safe and understandable?
+- Is the problem stable enough to model?
+- Will the capability remove meaningful future work?
+- Is the cost of flexibility lower than the cost of repeated custom work?
+
+There is no universal formula.
+
+The goal is to notice when repeated feature work has become a signal.
+
+---
+
+## The quiet win
+
+The launch of a new capability may feel less exciting than shipping a highly visible feature.
+
+Its success may look like:
+
+- fewer tickets
+- fewer Slack messages
+- fewer emergency deployments
+- fewer database edits
+- fewer requests waiting on engineering
+- faster decisions by operational teams
+- safer changes
+- less knowledge trapped in individual people
+
+The most successful outcome is often that engineering is no longer involved.
+
+That can make capability work difficult to celebrate.
+
+Nothing dramatic happens.
+
+The business simply becomes more adaptable.
+
+---
+
+## Closing
+
+Builders respond to requests.
+
+Operators learn to recognize the system hiding beneath them.
+
+The button still matters. The immediate pain still matters. The person asking for help still deserves a solution.
+
+But mature product work requires looking beyond today’s request.
+
+The goal is not to build every possible option.
+
+It is to notice when engineering has become the bottleneck and build the smallest durable capability that removes it.
+
+The best operator systems do not make engineering faster at answering the same request.
+
+They make sure engineering never needs to answer that request again.
+
+---
+
+# Series conclusion
+
+The operator problem begins when people start depending on what you built.
+
+From there, the work changes.
+
+You must learn to:
+
+1. recognize when a system has moved beyond the MVP stage
+2. operate different systems according to their maturity
+3. replace repeated feature work with durable capabilities
+
+None of this is as visible as launching something new.
+
+That may be why startup culture talks about it so rarely.
+
+But this is the work that allows a successful experiment to become a dependable company.
+
+Operator problems are what many startups are working toward.
+
+We should get better at recognizing them when they arrive.
