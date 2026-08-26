@@ -10,6 +10,11 @@
     "file_path": "src/components/SponsorCTA/SponsorCTA.tsx"
   },
   {
+    "event_name": "preferred_source_clicked",
+    "event_description": "User clicked the footer button to add mikebifulco.com as a Google preferred source (in_page_flow distinguishes Google's in-page flow from the deeplink fallback)",
+    "file_path": "src/components/PreferredSource/PreferredSource.tsx"
+  },
+  {
     "event_name": "post_read_started",
     "event_description": "User started reading a blog post (top of conversion funnel for content engagement)",
     "file_path": "src/pages/posts/[slug].tsx"
