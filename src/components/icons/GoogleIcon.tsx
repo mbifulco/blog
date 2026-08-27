@@ -2,10 +2,10 @@ import type { Icon } from '.';
 
 import clsxm from '@utils/clsxm';
 
-/** Google's four-color "G" mark, kept in brand colors rather than currentColor. */
-const GoogleIcon: Icon = ({ className, ...props }) => (
+const GoogleIcon: Icon = ({ className }) => (
   <svg
-    {...props}
+    aria-hidden="true"
+    focusable="false"
     viewBox="0 0 48 48"
     preserveAspectRatio="xMidYMid meet"
     style={{ verticalAlign: 'middle' }}

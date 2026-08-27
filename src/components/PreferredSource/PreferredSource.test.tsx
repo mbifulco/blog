@@ -2,25 +2,27 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import posthog from 'posthog-js';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-import PreferredSource from './PreferredSource';
-
 vi.mock('posthog-js', () => ({
   default: { capture: vi.fn() },
 }));
 
-// next/script renders nothing useful in jsdom, and loading Google's library is
-// exactly what these tests stand in for.
+// jsdom can't load Google's script; the tests drive the queue directly.
 vi.mock('next/script', () => ({
   default: () => null,
 }));
 
-type QueueCallback = (api: {
-  init: (options: unknown) => void;
-  addPreferredSource: () => void;
-}) => void;
+/** Registration happens once per module load, so each test gets a fresh one. */
+const loadButton = async () => {
+  vi.resetModules();
 
-const getQueue = () =>
-  globalThis.PREFERRED_SOURCE as unknown as QueueCallback[] | undefined;
+  return (await import('./PreferredSource')).default;
+};
+
+const renderButton = async () => {
+  const PreferredSource = await loadButton();
+
+  render(<PreferredSource />);
+};
 
 const link = () =>
   screen.getByRole('link', {
@@ -30,11 +32,11 @@ const link = () =>
 describe('PreferredSource', () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    delete (globalThis as { PREFERRED_SOURCE?: unknown }).PREFERRED_SOURCE;
+    delete globalThis.PREFERRED_SOURCE;
   });
 
-  it('links to the source preferences deeplink for this site', () => {
-    render(<PreferredSource />);
+  it('links to the source preferences deeplink for this site', async () => {
+    await renderButton();
 
     expect(link()).toHaveAttribute(
       'href',
@@ -42,14 +44,8 @@ describe('PreferredSource', () => {
     );
   });
 
-  it('queues an initialization callback for Google’s library', () => {
-    render(<PreferredSource />);
-
-    expect(getQueue()).toHaveLength(1);
-  });
-
-  it('follows the deeplink while the library has not loaded', () => {
-    render(<PreferredSource />);
+  it('follows the deeplink while the library has not loaded', async () => {
+    await renderButton();
 
     const notPrevented = fireEvent.click(link());
 
@@ -59,13 +55,15 @@ describe('PreferredSource', () => {
     });
   });
 
-  it('opens the in-page flow once the library has loaded', () => {
-    render(<PreferredSource />);
+  it('opens the in-page flow once the library has loaded', async () => {
+    await renderButton();
 
     const init = vi.fn();
     const addPreferredSource = vi.fn();
     // Stand in for the library draining the queue on load.
-    getQueue()?.forEach((callback) => callback({ init, addPreferredSource }));
+    globalThis.PREFERRED_SOURCE?.forEach((callback) =>
+      callback({ init, addPreferredSource })
+    );
 
     expect(init).toHaveBeenCalledWith({ theme: 'light' });
 
@@ -76,5 +74,14 @@ describe('PreferredSource', () => {
     expect(posthog.capture).toHaveBeenCalledWith('preferred_source_clicked', {
       in_page_flow: true,
     });
+  });
+
+  it('queues one callback no matter how many times it mounts', async () => {
+    const PreferredSource = await loadButton();
+
+    render(<PreferredSource />).unmount();
+    render(<PreferredSource />);
+
+    expect(globalThis.PREFERRED_SOURCE).toHaveLength(1);
   });
 });
