@@ -1,29 +1,363 @@
 ---
-title: 'Tutorial: Make your LLM tool calls date-aware'
-date: 08-4-2026
-excerpt: "If you're building chat/prompt driven features, it's critical to understand that your LLM has no idea what day or time it is."
+title: 'Give your model a clock: date-aware tool calls for AI features'
+date: 08-04-2026
+excerpt: "If you're building AI features into your product, your model has no idea what day it is — and it will confidently guess. Here's how to fix it."
+tags: [ai, dev, typescript, tutorial]
 coverImagePublicId: posts/make-tool-calls-date-aware/cover
-published: true
 slug: make-tool-calls-date-aware
 ---
 
-## AI Models Have No Concept of Time
+## AI models have no concept of time
 
-Your favorite LLM model doesn't have any way of knowing what time it is. It has no access to the current date, and it doesn't know what day of the week it is. It also doesn't know what year it is, or even what decade it is.
+Your favorite LLM doesn't have any way of knowing what time it is. It has no access to the current date, and it doesn't know what day of the week it is. It also doesn't know what year it is, or even what decade it is.
 
 It's one of those things that _sounds_ obvious once you've heard it - but you need to _tell_ your model the date and time in order for it to be able to make tool calls that are date-aware.
 
-If not, it can lead to some very strange behavior.
+Every major chat product - ChatGPT, Claude, Gemini - injects the current date into the model's context before your message ever reaches it.
 
-## What Happens When You Don't Tell Your Model the Date
+I ran into this while building an agent into our internal tools at [Craftwork](https://craftwork.com). **If you're the one integrating the model, injecting the date is your job.** If you skip it, you get some very strange behavior.
 
-Here's the scenario: at [Craftwork](https://craftwork.com), we have a variety of LLM tools for use internally - our sales and support teams will often ask our Assistant to search through previous conversations with customers, to provide better service. Things like "Which rooms are we painting ceilings in?" or "What colors is Joe Smith using no their project?" are pretty straightforward.
+{/* IMAGE: screenshot of the assistant confidently picking a wrong date range and returning nothing */}
+
+## What happens when you don't tell your model the date
+
+Here's the scenario: at Craftwork, we have a variety of LLM tools for use internally - our sales and support teams will often ask our Assistant to search through previous conversations with customers, to provide better service. Things like "Which rooms are we painting ceilings in?" or "What colors is Joe Smith using on their project?" are pretty straightforward.
 
 Another example of a common question might be: "Last weekend I got a call from a customer asking about German Smear. Can you tell me what their name was?"
 
-**Without telling the model the date, it will have no idea what "last weekend" means** - so it'll just guess. It might give you a date based on the last time it was trained, or make something up, or just... guess.
+**Without telling the model the date, it has no idea what "last weekend" means.** It doesn't know that it doesn't know, either - so it doesn't stop and ask. It picks something arbitrary, formats it into a perfectly valid ISO date range, and hands that to your tool with total confidence.
 
-## Fix it: Make your Models Date-Aware with Tool Calls
+That's the part that should worry you. This isn't a crash, and it isn't an error you can catch. In old-timey programming lingo, this is called a "logical error" - everything appears to be working, but it is producing the wrong result... confidently.
 
-If you've been building software for a long time, you'll be relieved to hear the answer is at least partly deterministic. When eed
+Your tool receives a well-formed request, runs a real query, and returns an honest, empty result set. Then your assistant says:
 
+```plaintext
+🤖 I couldn't find any conversations about German Smear.
+```
+
+To the salesperson reading that, this looks like a data problem. Maybe the call never got logged. Maybe the customer used different words. What it does _not_ look like is a bug, so until someone notices, nobody files anything. You can ship this and never hear about it.
+
+**A confidently wrong answer is worse than no answer.** In our case, the downside could be a support rep chasing a ghost for ten minutes, telling customers something wrong, or worse. If you're building something where dates carry real weight - scheduling, billing cycles, medication reminders, flight changes - a hallucinated date range stops being an annoyance and starts being a genuine hazard.
+
+So, let's fix it.
+
+## Give your model a clock
+
+The fix starts in your system prompt. Before any tool ever gets called, the model needs to know what "now" means:
+
+```ts
+const system = `You are Craftwork's internal assistant.
+
+Current date and time: 2026-08-04T09:14:00-06:00
+Day of week: Tuesday
+Time zone: America/Denver (MDT)`;
+```
+
+That's the whole idea. It really is that simple, and it's the single highest-leverage thing you can do.
+
+But there are a few details that will bite you, and they're the reason this post is longer than four lines.
+
+## A date on its own isn't enough
+
+Handing the model `2026-08-04` and calling it done will get you most of the way there and then quietly fail on the interesting cases. Three things travel with the date:
+
+**Time zone.** This is important to get right. Our sales team is spread across the US, and datestamps are expressed in UTC. When a rep in Denver asks about "last weekend" at 9pm on a Sunday, UTC has already rolled over to Monday. Your model needs the user's [IANA time zone](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones) (`America/Denver`), not your server's idea of the time.
+
+**Day of week.** "Last weekend" asked on a Monday and "last weekend" asked on a Friday are the same range. Asked on a _Sunday_, they're probably not - the weekend the user means is very likely the one currently happening. The model can't reason about any of that unless it knows which day it is, and asking it to derive Tuesday from `2026-08-04` is asking for trouble.
+
+**Locale.** This one surprised me. "Last week" depends on when the week starts, and that isn't universal: the week starts on Sunday in the US, Monday across most of Europe, and Saturday in much of the Middle East. If you're only shipping to one country you can safely ignore this. If you're not, a US-centric assumption baked into your date helpers will silently shift every "this week" query by a day for a chunk of your users.
+
+## Don't make the model do the date math
+
+Here's where I'll finish the thought I started earlier: if you've been building software for a long time, you'll be relieved to hear the answer is at least partly deterministic. And honestly, we should push it further than "partly."
+
+Models are genuinely bad at calendar arithmetic. Ask one to work out the date range for "the weekend before last" and it will produce something that _looks_ right, with abysmal accuracy for edge cases, like month boundaries, daylight saving transitions, and leap years. This is exactly the kind of work computers have been reliably good at since the 1970s. Don't outsource it to a language model.
+
+So rather than giving the model a timestamp and hoping, give it the answers already worked out. We use [date-fns](https://date-fns.org/) at Craftwork, paired with [`@date-fns/tz`](https://github.com/date-fns/tz) for time zone support:
+
+```ts
+import { TZDate } from '@date-fns/tz';
+import {
+  addDays,
+  endOfMonth,
+  format,
+  getDay,
+  startOfDay,
+  startOfHour,
+  startOfMonth,
+  startOfWeek,
+  subDays,
+  subMonths,
+  subWeeks,
+  type Locale,
+} from 'date-fns';
+import { enUS } from 'date-fns/locale';
+
+const iso = (d: Date) => format(d, 'yyyy-MM-dd');
+
+// 'MDT' rather than 'GMT-6' - friendlier for the model, and for anyone
+// reading your prompt logs later
+const tzAbbreviation = (d: Date, timeZone: string) =>
+  new Intl.DateTimeFormat('en-US', { timeZone, timeZoneName: 'short' })
+    .formatToParts(d)
+    .find((part) => part.type === 'timeZoneName')?.value;
+
+export const buildTemporalContext = (
+  timeZone: string, // IANA, e.g. 'America/Denver'
+  locale: Locale = enUS
+) => {
+  // TZDate carries the time zone with it, so every date-fns call below
+  // stays in the user's zone instead of quietly falling back to the server's.
+  // startOfHour, not the raw timestamp - more on why in the caching section
+  const now = startOfHour(TZDate.tz(timeZone));
+
+  // passing a locale makes startOfWeek respect that locale's first day of
+  // the week - Sunday for en-US, Monday for en-GB, and so on
+  const thisWeek = startOfWeek(now, { locale });
+  const lastWeek = subWeeks(thisWeek, 1);
+
+  // find the most recently *completed* Saturday.
+  // date-fns getDay: 0 = Sunday ... 6 = Saturday
+  const daysSinceSaturday = (getDay(now) + 1) % 7;
+  const weekendInProgress = daysSinceSaturday <= 1;
+  const lastWeekendStart = subWeeks(
+    subDays(startOfDay(now), daysSinceSaturday),
+    // if it's currently Sat or Sun, that weekend is still happening,
+    // so "last weekend" means the one before it
+    weekendInProgress ? 1 : 0
+  );
+
+  return `Current date and time: ${format(now, "yyyy-MM-dd'T'HH:mm:ssXXX")}
+Day of week: ${format(now, 'EEEE')}
+Time zone: ${timeZone} (${tzAbbreviation(now, timeZone)})
+Locale: ${locale.code} - weeks start on ${format(thisWeek, 'EEEE')}
+
+Pre-resolved date ranges. Use these rather than calculating dates yourself:
+- today: ${iso(now)}
+- yesterday: ${iso(subDays(now, 1))}
+- last weekend: ${iso(lastWeekendStart)} to ${iso(addDays(lastWeekendStart, 1))}
+- this week: ${iso(thisWeek)} to ${iso(now)}
+- last week: ${iso(lastWeek)} to ${iso(subDays(thisWeek, 1))}
+- this month: ${iso(startOfMonth(now))} to ${iso(now)}
+- last month: ${iso(startOfMonth(subMonths(now, 1)))} to ${iso(endOfMonth(subMonths(now, 1)))}`;
+};
+```
+
+Now the model isn't calculating anything. It's looking things up, which is a task it's actually good at.
+
+## Design your tools so dates resolve deterministically
+
+The reference block gets you a long way, but there's a second layer worth adding: make it possible for the model to _hand the date problem back to you_.
+
+Instead of a tool that only accepts explicit dates, accept a named period as well:
+
+```ts
+const searchConversations = {
+  name: 'search_conversations',
+  description:
+    'Search customer conversation history. When the user describes a time ' +
+    'period in words ("last weekend", "the past week"), pass `relative_range` ' +
+    'and let the system resolve it. Only use `start_date` and `end_date` when ' +
+    'the user gives you explicit calendar dates.',
+  input_schema: {
+    type: 'object',
+    properties: {
+      query: {
+        type: 'string',
+        description: 'What to search conversation text for',
+      },
+      relative_range: {
+        type: 'string',
+        enum: [
+          'today',
+          'yesterday',
+          'last_weekend',
+          'past_7_days',
+          'past_30_days',
+          'this_month',
+          'last_month',
+        ],
+        description: 'A named time period. Prefer this over explicit dates.',
+      },
+      start_date: {
+        type: 'string',
+        description: 'ISO 8601 calendar date, YYYY-MM-DD. Inclusive.',
+      },
+      end_date: {
+        type: 'string',
+        description: 'ISO 8601 calendar date, YYYY-MM-DD. Inclusive.',
+      },
+    },
+    required: ['query'],
+  },
+};
+```
+
+Two things to call out here, because both matter more than they look:
+
+The **tool description is where you steer behavior**. "Prefer this over explicit dates" in the description does more work than the same sentence buried in your system prompt. Be specific about _when_ to reach for each parameter, not just what each one is.
+
+And **spell out the format**. `ISO 8601 calendar date, YYYY-MM-DD` leaves no room for the model to hand you `08/04/2026` and let you find out at runtime which of those numbers was the month.
+
+Then resolve it in your handler, where you have a real date library and real tests:
+
+```ts
+import { TZDate } from '@date-fns/tz';
+import { format, subYears, type Locale } from 'date-fns';
+import { enUS } from 'date-fns/locale';
+
+const ISO_DATE = /^\d{4}-\d{2}-\d{2}$/;
+
+// Midnight on a calendar date, *in the user's zone*.
+// Watch out here: passing a bare string like '2026-08-01T00:00:00' to
+// TZDate parses it in the server's zone first and then re-renders it,
+// which can silently shift the date by a day. Pass components instead.
+const atMidnight = (isoDate: string, timeZone: string) => {
+  const [y, m, d] = isoDate.split('-').map(Number);
+  const date = new TZDate(y, m - 1, d, timeZone);
+  // rejects dates like 2026-02-31, which would otherwise roll forward
+  return format(date, 'yyyy-MM-dd') === isoDate ? date : null;
+};
+
+type DateRange = { start: string; end: string; label: string };
+
+export const resolveRange = (
+  input: { relative_range?: string; start_date?: string; end_date?: string },
+  timeZone: string,
+  locale: Locale = enUS
+): DateRange | null => {
+  // named range: we do the math, so it's right every time
+  if (input.relative_range) {
+    return resolveNamedRange(input.relative_range, timeZone, locale);
+  }
+
+  // explicit dates: trust, but verify
+  if (input.start_date && input.end_date) {
+    if (!ISO_DATE.test(input.start_date) || !ISO_DATE.test(input.end_date)) {
+      throw new Error('Dates must be ISO 8601 calendar dates (YYYY-MM-DD)');
+    }
+
+    const start = atMidnight(input.start_date, timeZone);
+    const end = atMidnight(input.end_date, timeZone);
+
+    if (!start || !end) {
+      throw new Error('Dates must be real calendar dates');
+    }
+    if (end < start) {
+      throw new Error('end_date must be on or after start_date');
+    }
+    // a range starting in 2023 is a strong sign the model guessed
+    if (start < subYears(TZDate.tz(timeZone), 2)) {
+      throw new Error('Range starts more than 2 years ago - please confirm');
+    }
+
+    return {
+      start: format(start, 'yyyy-MM-dd'),
+      end: format(end, 'yyyy-MM-dd'),
+      label: `${format(start, 'MMM d')} to ${format(end, 'MMM d, yyyy')}`,
+    };
+  }
+
+  return null; // no date filter - search everything
+};
+```
+
+Those validation errors are worth the keystrokes. When a tool throws, most frameworks hand the error text back to the model, which gets a chance to correct itself instead of silently querying 2023.
+
+## Save money with careful prompt caching
+
+This is the part I wish someone had told me, because I shipped the bug and only caught it while looking at a bill.
+
+**Prompt caching** is how you avoid paying full price to reprocess the same system prompt on every single request. Every major provider offers some version of it, and the savings are substantial - cached tokens typically cost around a tenth of regular input tokens.
+
+The catch is **how** caching works: it's a _prefix match_. The provider hashes your prompt from the first character you send, and reuses the cache only up to the first byte that differs. Change one character near the top, and everything after it is invalidated and reprocessed at full price.
+
+You can probably see where this is going:
+
+```ts
+// ⚠️ this is the bug
+const system = `You are Craftwork's internal assistant.
+Current time: ${new Date().toISOString()}
+
+${TEN_THOUSAND_TOKENS_OF_CAREFULLY_TUNED_INSTRUCTIONS}`;
+```
+
+That timestamp changes every millisecond, and it sits _above_ everything else. Your cache hit rate is exactly zero, permanently, and nothing in your app will tell you. No error, no warning - just an invoice that's larger than you expected.
+
+Two fixes, and you want both:
+
+**1. Round the timestamp.** Ask yourself what precision you actually need. For "last weekend," hourly is plenty:
+
+```ts
+// changes once an hour instead of a thousand times a second
+const now = startOfHour(TZDate.tz(timeZone));
+```
+
+If your app can tolerate day-level precision, round to the day and your cache survives until midnight.
+
+**2. Put the volatile bit last.** Your stable instructions go first, your cache breakpoint goes after them, and anything that changes per-request goes _below_ that line:
+
+```ts
+const system = [
+  {
+    type: 'text',
+    text: STABLE_INSTRUCTIONS, // big, unchanging, worth caching
+    cache_control: { type: 'ephemeral' },
+  },
+  {
+    type: 'text',
+    text: buildTemporalContext(timeZone, locale), // small, changes hourly
+  },
+];
+```
+
+Now your expensive prefix caches cleanly and only the small temporal block gets reprocessed. Exact syntax varies by provider, but the principle - stable content first, volatile content after the breakpoint - holds everywhere.
+
+**Verify it worked.** Every provider reports cache reads in the response's usage object. Fire the same request twice and look at the cached-token count on the second one. If it's zero, something above your breakpoint is still changing. That number is the only way you'll ever know, so check it deliberately.
+
+## Close the loop: tell the user what you searched
+
+One more thing, and it's the cheapest reliability win in this whole post.
+
+Have your tool return the range it resolved, and have your assistant say it out loud:
+
+```ts
+const range = resolveRange(input, timeZone, locale);
+const results = await searchConversations(input.query, range);
+
+return {
+  resolved_range: range, // hand it back to the model
+  results,
+};
+```
+
+Then, in your system prompt:
+
+```
+When a search covers a date range, state the range you searched in plain
+language before giving results. For example: "Searching conversations from
+Saturday, August 1 through Sunday, August 2..."
+```
+
+Now your rep sees:
+
+> Searching conversations from Saturday, August 1 through Sunday, August 2... I found one call about German Smear, from Dana Whitfield.
+
+If the range is wrong, a human catches it instantly - because a human knows what "last weekend" means and does not need to be told. You've converted a silent failure into an obvious one, which is the entire game.
+
+It also handles the genuinely ambiguous cases gracefully. When somebody asks about "last weekend" on a Sunday afternoon, there's no correct answer for your code to compute - but showing your work lets the person who _does_ know just say "no, the weekend before."
+
+{/* IMAGE: diagram - system prompt clock → model picks named range → handler resolves + validates → query → resolved range surfaced back to user */}
+
+## Wrapping up
+
+The whole fix comes down to four moves:
+
+1. **Inject the current date, time zone, day of week, and locale** into your system prompt. If you're integrating the model, nobody else is doing this for you.
+2. **Pre-resolve common ranges** rather than asking the model to do calendar math it's bad at.
+3. **Let your tools accept named periods** and resolve them in code, where you have a date library and tests.
+4. **Show the resolved range to the user**, so wrong answers stop being silent.
+
+And keep an eye on that cache hit rate while you do it.
+
+None of this is complicated. It's just easy to skip, because nothing fails loudly when you do - and "nothing fails loudly" is a genuinely bad property for software that people are trusting with real questions.
