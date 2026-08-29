@@ -97,7 +97,7 @@
     "slugify": "^1.6.9",
     "sonner": "^2.0.8",
     "superjson": "^2.2.6",
-    "svix": "^1.99.1",
+    "svix": "^2.1.0",
     "tailwind-merge": "^3.6.0",
     "tailwindcss-animate": "^1.0.7",
     "unified": "^11.0.5",
