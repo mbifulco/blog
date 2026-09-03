@@ -93,7 +93,7 @@
     "remark-stringify": "^11.0.0",
     "resend": "^6.22.1",
     "sass": "^1.103.1",
-    "sharp": "^0.35.3",
+    "sharp": "^0.35.4",
     "slugify": "^1.6.9",
     "sonner": "^2.0.8",
     "superjson": "^2.2.6",
