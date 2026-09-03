@@ -1,13 +1,13 @@
 ---
-title: 'Give your model a clock: date-aware tool calls for AI features'
+title: "Your LLM doesn't know what day it is: date handling for AI tool calls"
 date: 08-04-2026
-excerpt: "If you're building AI features into your product, your model has no idea what day it is — and it will confidently guess. Here's how to fix it."
-tags: [ai, dev, typescript, tutorial]
+excerpt: "If you're building AI features into your product, your model has no idea what day it is - and it will confidently guess. Here's how to fix it."
+tags: [ai, llm, dev, typescript, tutorial]
 coverImagePublicId: posts/make-tool-calls-date-aware/cover
 slug: make-tool-calls-date-aware
 ---
 
-## AI models have no concept of time
+## Why LLMs don't know the current date
 
 Your favorite LLM doesn't have any way of knowing what time it is. It has no access to the current date, and it doesn't know what day of the week it is. It also doesn't know what year it is, or even what decade it is.
 
@@ -19,11 +19,11 @@ I ran into this while building an agent into our internal tools at [Craftwork](h
 
 {/* IMAGE: screenshot of the assistant confidently picking a wrong date range and returning nothing */}
 
-## What happens when you don't tell your model the date
+## Hallucinated date ranges fail silently
 
 Here's the scenario: at Craftwork, we have a variety of LLM tools for use internally - our sales and support teams will often ask our Assistant to search through previous conversations with customers, to provide better service. Things like "Which rooms are we painting ceilings in?" or "What colors is Joe Smith using on their project?" are pretty straightforward.
 
-Another example of a common question might be: "Last weekend I got a call from a customer asking about German Smear. Can you tell me what their name was?"
+Another example of a common question might be: "Last weekend I got a call from a customer asking about Limewash. Can you tell me what their name was?"
 
 **Without telling the model the date, it has no idea what "last weekend" means.** It doesn't know that it doesn't know, either - so it doesn't stop and ask. It picks something arbitrary, formats it into a perfectly valid ISO date range, and hands that to your tool with total confidence.
 
@@ -32,16 +32,18 @@ That's the part that should worry you. This isn't a crash, and it isn't an error
 Your tool receives a well-formed request, runs a real query, and returns an honest, empty result set. Then your assistant says:
 
 ```plaintext
-🤖 I couldn't find any conversations about German Smear.
+🤖 I couldn't find any conversations about Limewash.
 ```
 
-To the salesperson reading that, this looks like a data problem. Maybe the call never got logged. Maybe the customer used different words. What it does _not_ look like is a bug, so until someone notices, nobody files anything. You can ship this and never hear about it.
+To the salesperson reading that, this looks like a data problem. Maybe the call never got logged. Maybe the customer used different words. What it does _not_ look like is a bug, so until someone notices, nobody files anything.
+
+You might ship this, and never hear about it.
 
 **A confidently wrong answer is worse than no answer.** In our case, the downside could be a support rep chasing a ghost for ten minutes, telling customers something wrong, or worse. If you're building something where dates carry real weight - scheduling, billing cycles, medication reminders, flight changes - a hallucinated date range stops being an annoyance and starts being a genuine hazard.
 
 So, let's fix it.
 
-## Give your model a clock
+## Give your model a clock: put the date in your system prompt
 
 The fix starts in your system prompt. Before any tool ever gets called, the model needs to know what "now" means:
 
@@ -57,17 +59,19 @@ That's the whole idea. It really is that simple, and it's the single highest-lev
 
 But there are a few details that will bite you, and they're the reason this post is longer than four lines.
 
-## A date on its own isn't enough
+## A date alone isn't enough: time zone, day of week, and locale
 
 Handing the model `2026-08-04` and calling it done will get you most of the way there and then quietly fail on the interesting cases. Three things travel with the date:
 
 **Time zone.** This is important to get right. Our sales team is spread across the US, and datestamps are expressed in UTC. When a rep in Denver asks about "last weekend" at 9pm on a Sunday, UTC has already rolled over to Monday. Your model needs the user's [IANA time zone](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones) (`America/Denver`), not your server's idea of the time.
 
-**Day of week.** "Last weekend" asked on a Monday and "last weekend" asked on a Friday are the same range. Asked on a _Sunday_, they're probably not - the weekend the user means is very likely the one currently happening. The model can't reason about any of that unless it knows which day it is, and asking it to derive Tuesday from `2026-08-04` is asking for trouble.
+**Day of week.** "Last weekend" means the most recently _completed_ weekend - and which two dates that is depends entirely on the day you're asking. Ask on a Monday and it's the previous two days. Ask on a Sunday and it's seven to eight days back, because the weekend you're standing in isn't "last weekend," it's today and yesterday. Same two words, ranges a week apart, and the only thing separating them is a fact the model doesn't have.
+
+The model can't reason about any of this unless it knows which day it is, and asking it to derive Tuesday from `2026-08-04` is asking for trouble.
 
 **Locale.** This one surprised me. "Last week" depends on when the week starts, and that isn't universal: the week starts on Sunday in the US, Monday across most of Europe, and Saturday in much of the Middle East. If you're only shipping to one country you can safely ignore this. If you're not, a US-centric assumption baked into your date helpers will silently shift every "this week" query by a day for a chunk of your users.
 
-## Don't make the model do the date math
+## Don't make the model do calendar math
 
 Here's where I'll finish the thought I started earlier: if you've been building software for a long time, you'll be relieved to hear the answer is at least partly deterministic. And honestly, we should push it further than "partly."
 
@@ -102,19 +106,40 @@ const tzAbbreviation = (d: Date, timeZone: string) =>
     .formatToParts(d)
     .find((part) => part.type === 'timeZoneName')?.value;
 
-export const buildTemporalContext = (
-  timeZone: string, // IANA, e.g. 'America/Denver'
-  locale: Locale = enUS
-) => {
-  // TZDate carries the time zone with it, so every date-fns call below
-  // stays in the user's zone instead of quietly falling back to the server's.
-  // startOfHour, not the raw timestamp - more on why in the caching section
-  const now = startOfHour(TZDate.tz(timeZone));
+export type NamedRange =
+  | 'today'
+  | 'yesterday'
+  | 'last_weekend'
+  | 'this_week'
+  | 'last_week'
+  | 'this_month'
+  | 'last_month';
 
+export type DateRange = { start: string; end: string; label: string };
+
+export const toRange = (start: Date, end: Date): DateRange => ({
+  start: iso(start),
+  end: iso(end),
+  // a human-readable label, for showing your work later on
+  label:
+    iso(start) === iso(end)
+      ? format(start, 'EEEE, MMMM d')
+      : `${format(start, 'EEEE, MMMM d')} through ${format(end, 'EEEE, MMMM d')}`,
+});
+
+// The single source of truth for what a named range means. The system prompt
+// renders these, and the tool handler resolves against them - so there is
+// exactly one implementation of "last weekend" in the codebase.
+export const buildNamedRanges = (
+  now: Date,
+  locale: Locale = enUS
+): Record<NamedRange, DateRange> => {
   // passing a locale makes startOfWeek respect that locale's first day of
   // the week - Sunday for en-US, Monday for en-GB, and so on
   const thisWeek = startOfWeek(now, { locale });
   const lastWeek = subWeeks(thisWeek, 1);
+  const yesterday = subDays(now, 1);
+  const lastMonth = subMonths(now, 1);
 
   // find the most recently *completed* Saturday.
   // date-fns getDay: 0 = Sunday ... 6 = Saturday
@@ -122,30 +147,51 @@ export const buildTemporalContext = (
   const weekendInProgress = daysSinceSaturday <= 1;
   const lastWeekendStart = subWeeks(
     subDays(startOfDay(now), daysSinceSaturday),
-    // if it's currently Sat or Sun, that weekend is still happening,
-    // so "last weekend" means the one before it
+    // if it's currently Sat or Sun, that weekend hasn't finished yet, so
+    // "last weekend" is the one before it - a week further back
     weekendInProgress ? 1 : 0
   );
+
+  return {
+    today: toRange(now, now),
+    yesterday: toRange(yesterday, yesterday),
+    last_weekend: toRange(lastWeekendStart, addDays(lastWeekendStart, 1)),
+    this_week: toRange(thisWeek, now),
+    last_week: toRange(lastWeek, subDays(thisWeek, 1)),
+    this_month: toRange(startOfMonth(now), now),
+    last_month: toRange(startOfMonth(lastMonth), endOfMonth(lastMonth)),
+  };
+};
+
+export const buildTemporalContext = (
+  timeZone: string, // IANA, e.g. 'America/Denver'
+  locale: Locale = enUS
+) => {
+  // TZDate carries the time zone with it, so every date-fns call below
+  // stays in the user's zone instead of quietly falling back to the server's.
+  // startOfHour, not the raw timestamp - rounding this matters for prompt
+  // caching; see the companion post linked below
+  const now = startOfHour(TZDate.tz(timeZone));
+
+  const ranges = Object.entries(buildNamedRanges(now, locale))
+    .map(([name, { start, end }]) => `- ${name}: ${start} to ${end}`)
+    .join('\n');
 
   return `Current date and time: ${format(now, "yyyy-MM-dd'T'HH:mm:ssXXX")}
 Day of week: ${format(now, 'EEEE')}
 Time zone: ${timeZone} (${tzAbbreviation(now, timeZone)})
-Locale: ${locale.code} - weeks start on ${format(thisWeek, 'EEEE')}
+Locale: ${locale.code} - weeks start on ${format(startOfWeek(now, { locale }), 'EEEE')}
 
-Pre-resolved date ranges. Use these rather than calculating dates yourself:
-- today: ${iso(now)}
-- yesterday: ${iso(subDays(now, 1))}
-- last weekend: ${iso(lastWeekendStart)} to ${iso(addDays(lastWeekendStart, 1))}
-- this week: ${iso(thisWeek)} to ${iso(now)}
-- last week: ${iso(lastWeek)} to ${iso(subDays(thisWeek, 1))}
-- this month: ${iso(startOfMonth(now))} to ${iso(now)}
-- last month: ${iso(startOfMonth(subMonths(now, 1)))} to ${iso(endOfMonth(subMonths(now, 1)))}`;
+Pre-resolved date ranges. Use these names exactly, rather than calculating dates yourself:
+${ranges}`;
 };
 ```
 
 Now the model isn't calculating anything. It's looking things up, which is a task it's actually good at.
 
-## Design your tools so dates resolve deterministically
+`buildNamedRanges` is deliberately a plain function of `now`, with no clock inside it. That makes it trivial to test - freeze a Tuesday, freeze a Sunday, freeze the Sunday that daylight saving ends, and assert on the ranges - and it means the next section can reuse it verbatim.
+
+## Design your tool schema so dates resolve in your code
 
 The reference block gets you a long way, but there's a second layer worth adding: make it possible for the model to _hand the date problem back to you_.
 
@@ -156,7 +202,7 @@ const searchConversations = {
   name: 'search_conversations',
   description:
     'Search customer conversation history. When the user describes a time ' +
-    'period in words ("last weekend", "the past week"), pass `relative_range` ' +
+    'period in words ("last weekend", "this month"), pass `relative_range` ' +
     'and let the system resolve it. Only use `start_date` and `end_date` when ' +
     'the user gives you explicit calendar dates.',
   input_schema: {
@@ -168,12 +214,13 @@ const searchConversations = {
       },
       relative_range: {
         type: 'string',
+        // exactly the names rendered into the system prompt above
         enum: [
           'today',
           'yesterday',
           'last_weekend',
-          'past_7_days',
-          'past_30_days',
+          'this_week',
+          'last_week',
           'this_month',
           'last_month',
         ],
@@ -193,7 +240,9 @@ const searchConversations = {
 };
 ```
 
-Two things to call out here, because both matter more than they look:
+Three things to call out here, because they all matter more than they look:
+
+**The enum is the same vocabulary as the system prompt.** `buildNamedRanges` renders `last_weekend` into the prompt and `last_weekend` is what the schema accepts - one list of names, generated from one piece of code. When those two drift apart, the model reads `this week` upstairs, sends `past_7_days` downstairs, and you get a range nobody wrote a test for.
 
 The **tool description is where you steer behavior**. "Prefer this over explicit dates" in the description does more work than the same sentence buried in your system prompt. Be specific about _when_ to reach for each parameter, not just what each one is.
 
@@ -203,8 +252,15 @@ Then resolve it in your handler, where you have a real date library and real tes
 
 ```ts
 import { TZDate } from '@date-fns/tz';
-import { format, subYears, type Locale } from 'date-fns';
+import { format, startOfHour, subYears, type Locale } from 'date-fns';
 import { enUS } from 'date-fns/locale';
+
+import {
+  buildNamedRanges,
+  toRange,
+  type DateRange,
+  type NamedRange,
+} from './temporal-context';
 
 const ISO_DATE = /^\d{4}-\d{2}-\d{2}$/;
 
@@ -219,7 +275,28 @@ const atMidnight = (isoDate: string, timeZone: string) => {
   return format(date, 'yyyy-MM-dd') === isoDate ? date : null;
 };
 
-type DateRange = { start: string; end: string; label: string };
+// Same function that built the system prompt, so a name the model read up
+// there always means the same thing down here.
+const resolveNamedRange = (
+  name: string,
+  timeZone: string,
+  locale: Locale = enUS
+): DateRange => {
+  const now = startOfHour(TZDate.tz(timeZone));
+  const ranges = buildNamedRanges(now, locale);
+  const match = ranges[name as NamedRange];
+
+  // an unrecognized name means the model invented one. Throw rather than
+  // fall through to "no date filter" - a loud error it can correct beats a
+  // silent search of everything.
+  if (!match) {
+    throw new Error(
+      `Unknown range "${name}". Use one of: ${Object.keys(ranges).join(', ')}`
+    );
+  }
+
+  return match;
+};
 
 export const resolveRange = (
   input: { relative_range?: string; start_date?: string; end_date?: string },
@@ -251,11 +328,9 @@ export const resolveRange = (
       throw new Error('Range starts more than 2 years ago - please confirm');
     }
 
-    return {
-      start: format(start, 'yyyy-MM-dd'),
-      end: format(end, 'yyyy-MM-dd'),
-      label: `${format(start, 'MMM d')} to ${format(end, 'MMM d, yyyy')}`,
-    };
+    // same shape as a named range, so callers never have to care which
+    // branch produced it
+    return toRange(start, end);
   }
 
   return null; // no date filter - search everything
@@ -264,58 +339,21 @@ export const resolveRange = (
 
 Those validation errors are worth the keystrokes. When a tool throws, most frameworks hand the error text back to the model, which gets a chance to correct itself instead of silently querying 2023.
 
-## Save money with careful prompt caching
+## One caching trap before you ship this
 
-This is the part I wish someone had told me, because I shipped the bug and only caught it while looking at a bill.
+There's a bill-shaped bug hiding in everything above, and I want to flag it here even though it deserves its own post.
 
-**Prompt caching** is how you avoid paying full price to reprocess the same system prompt on every single request. Every major provider offers some version of it, and the savings are substantial - cached tokens typically cost around a tenth of regular input tokens.
+You're about to put a timestamp into your system prompt. Prompt caching is a **prefix match** - providers reuse cached work only up to the first byte that differs - so a raw `new Date().toISOString()` sitting above ten thousand tokens of instructions will drop your cache hit rate to exactly zero. Permanently. With no error and no warning.
 
-The catch is **how** caching works: it's a _prefix match_. The provider hashes your prompt from the first character you send, and reuses the cache only up to the first byte that differs. Change one character near the top, and everything after it is invalidated and reprocessed at full price.
+Two habits keep you out of it:
 
-You can probably see where this is going:
+**Round the timestamp** to the coarsest precision your feature can tolerate. That's why `buildTemporalContext` above calls `startOfHour` instead of using the raw clock - hourly is plenty for resolving "last weekend," and it means you invalidate once an hour instead of on every request.
 
-```ts
-// ⚠️ this is the bug
-const system = `You are Craftwork's internal assistant.
-Current time: ${new Date().toISOString()}
+**Put the volatile block last**, after your cache breakpoint, so your expensive stable instructions cache cleanly in front of it.
 
-${TEN_THOUSAND_TOKENS_OF_CAREFULLY_TUNED_INSTRUCTIONS}`;
-```
+I shipped this bug and only caught it on an invoice. The full write-up - ordering, TTLs, the multi-turn wrinkle, and how to actually verify a cache hit - is here: [why your prompt cache hit rate is zero](/posts/prompt-cache-hit-rate-zero).
 
-That timestamp changes every millisecond, and it sits _above_ everything else. Your cache hit rate is exactly zero, permanently, and nothing in your app will tell you. No error, no warning - just an invoice that's larger than you expected.
-
-Two fixes, and you want both:
-
-**1. Round the timestamp.** Ask yourself what precision you actually need. For "last weekend," hourly is plenty:
-
-```ts
-// changes once an hour instead of a thousand times a second
-const now = startOfHour(TZDate.tz(timeZone));
-```
-
-If your app can tolerate day-level precision, round to the day and your cache survives until midnight.
-
-**2. Put the volatile bit last.** Your stable instructions go first, your cache breakpoint goes after them, and anything that changes per-request goes _below_ that line:
-
-```ts
-const system = [
-  {
-    type: 'text',
-    text: STABLE_INSTRUCTIONS, // big, unchanging, worth caching
-    cache_control: { type: 'ephemeral' },
-  },
-  {
-    type: 'text',
-    text: buildTemporalContext(timeZone, locale), // small, changes hourly
-  },
-];
-```
-
-Now your expensive prefix caches cleanly and only the small temporal block gets reprocessed. Exact syntax varies by provider, but the principle - stable content first, volatile content after the breakpoint - holds everywhere.
-
-**Verify it worked.** Every provider reports cache reads in the response's usage object. Fire the same request twice and look at the cached-token count on the second one. If it's zero, something above your breakpoint is still changing. That number is the only way you'll ever know, so check it deliberately.
-
-## Close the loop: tell the user what you searched
+## Close the loop: show the user the date range you searched
 
 One more thing, and it's the cheapest reliability win in this whole post.
 
@@ -341,11 +379,11 @@ Saturday, August 1 through Sunday, August 2..."
 
 Now your rep sees:
 
-> Searching conversations from Saturday, August 1 through Sunday, August 2... I found one call about German Smear, from Dana Whitfield.
+> Searching conversations from Saturday, August 1 through Sunday, August 2... I found one call about Limewash, from George Whitfield.
 
 If the range is wrong, a human catches it instantly - because a human knows what "last weekend" means and does not need to be told. You've converted a silent failure into an obvious one, which is the entire game.
 
-It also handles the genuinely ambiguous cases gracefully. When somebody asks about "last weekend" on a Sunday afternoon, there's no correct answer for your code to compute - but showing your work lets the person who _does_ know just say "no, the weekend before."
+It also covers the cases where your interpretation is defensible but still isn't the one the person had in mind. "Last week" is the clearest example: our code resolves it to a calendar week, and plenty of people say "last week" meaning the last seven days. Both readings are reasonable, and no amount of prompt engineering picks the right one every time. Showing your work lets the person who _does_ know just say "no, go back further."
 
 {/* IMAGE: diagram - system prompt clock → model picks named range → handler resolves + validates → query → resolved range surfaced back to user */}
 
@@ -358,6 +396,6 @@ The whole fix comes down to four moves:
 3. **Let your tools accept named periods** and resolve them in code, where you have a date library and tests.
 4. **Show the resolved range to the user**, so wrong answers stop being silent.
 
-And keep an eye on that cache hit rate while you do it.
+And [keep an eye on that cache hit rate](/posts/prompt-cache-hit-rate-zero) while you do it - rounding that timestamp is the difference between a cached prompt and a surprising bill.
 
 None of this is complicated. It's just easy to skip, because nothing fails loudly when you do - and "nothing fails loudly" is a genuinely bad property for software that people are trusting with real questions.
