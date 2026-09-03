@@ -57,6 +57,7 @@ export const CopyCodeButton: React.FC<CopyCodeButtonProps> = ({
 
   return (
     <Button
+      type="button"
       variant="ghost"
       size="icon"
       onClick={copy}
