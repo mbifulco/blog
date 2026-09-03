@@ -1,0 +1,199 @@
+---
+title: 'Why your prompt cache hit rate is zero: the silent invalidators'
+excerpt: 'Prompt caching is a prefix match: one changing byte near the top of your prompt drops your hit rate to zero. A timestamp is the obvious culprit - here are the rest.'
+tags: [ai, llm, typescript, dev]
+slug: prompt-cache-hit-rate-zero
+coverImagePublicId: posts/prompt-cache-hit-rate-zero/cover
+date: 09-03-2026
+tldr: 'Prompt caching matches on an exact prefix, so anything that changes near the top of your prompt invalidates everything below it. Put stable instructions first, your cache breakpoint after them, and per-request content last. Then check `usage.cache_read_input_tokens` - it is the only thing that will tell you whether it worked.'
+---
+
+## I found this bug on an invoice
+
+I shipped this one, and I didn't catch it in code review, in staging, or in production monitoring. I caught it when I looked at a bill that was larger than I expected.
+
+Nothing about this failure is loud. Your app keeps working, your tests keep passing, your responses keep coming back correct - you just quietly stop getting the discount you think you're getting.
+
+The setup: I was building an internal assistant at [Craftwork](https://craftwork.com), and I was having a great time adding features to help our team. What I didn't realize was that each chat was costing way more than it needed to.
+
+## What prompt caching actually does
+
+First, the fact everything here rests on: **LLM APIs are stateless.**
+
+The provider doesn't remember your conversation between calls. Every request ships the whole thing again - your system prompt, your tool definitions, and every message exchanged so far - and you're billed for all of it, every time.
+
+In other words: if you've got ten thousand tokens of carefully tuned instructions at the top of your prompt, you are not paying for them once. You're paying for them on message one, and again on message two, and again on message forty.
+
+**Prompt caching** is the provider's answer to that. It stores the processed form of a chunk of your prompt so the next request that starts with those exact same bytes can skip the work and read the result back cheaply.
+
+Every major provider offers some version of it. The concrete numbers below are Anthropic's, because that's what I was using, but the mechanism is the same everywhere and so is the bug.
+
+Cached tokens are read back at roughly **a tenth** of the normal input price. Writing to the cache costs a little more than a normal token - 1.25x for the short-lived cache - so caching pays for itself on the second request and prints money after that.
+
+That's the part everyone knows. Here's the part that bit me.
+
+## The catch: it's a prefix match
+
+The provider hashes your prompt from the very first byte and reuses the cached work **only up to the first byte that differs**.
+
+Not "the parts that match." Not "the blocks that look the same." A prefix. The cache walks forward from the start of your request and stops dead at the first difference, and everything after that point gets reprocessed at full price.
+
+It also helps to know the order things are hashed in. Your request renders as:
+
+```plaintext
+tools  →  system  →  messages
+```
+
+So a change to your tool definitions invalidates your system prompt *and* your entire conversation history. A change near the top of your system prompt invalidates the rest of it and every message below.
+
+You can probably see where this is going.
+
+## The bug
+
+```ts
+// ⚠️ this is the bug
+const system = `You are Craftwork's internal assistant.
+Current time: ${new Date().toISOString()}
+
+${TEN_THOUSAND_TOKENS_OF_CAREFULLY_TUNED_INSTRUCTIONS}`;
+```
+
+I had a good reason to put the timestamp there. [Models have no idea what day it is](/posts/make-tool-calls-date-aware), and if you don't tell them, they'll confidently guess - which produces its own category of expensive, silent bugs. So the date needed to be in the prompt.
+
+But `toISOString()` changes every millisecond, and I'd put it *above* ten thousand tokens of instructions.
+
+Result: my cache hit rate was exactly zero. Permanently. Every request paid full price for the entire prompt, plus a little extra to write a cache entry that could never be read, because the next request would never match it.
+
+No error. No warning. Nothing in the response says "hey, you're doing this wrong." Just an invoice.
+
+## Fix 1: round the timestamp
+
+Ask yourself what precision you actually need. Almost nobody needs milliseconds. For interpreting a phrase like "last weekend," hourly is plenty:
+
+```ts
+import { TZDate } from '@date-fns/tz';
+import { startOfHour } from 'date-fns';
+
+// changes once an hour instead of a thousand times a second
+const now = startOfHour(TZDate.tz(timeZone));
+```
+
+That's a real improvement - you go from invalidating on every single request to invalidating once an hour.
+
+### Rounding and TTL are different knobs
+
+This is where I want to correct something I believed for longer than I'd like to admit.
+
+Rounding the timestamp to the day does **not** mean your cache survives until midnight. Rounding controls *how often you invalidate the cache yourself*. It has nothing to do with how long the entry lives.
+
+Cache entries have a **TTL**, and it's short. Anthropic's default `ephemeral` cache lives for **five minutes**, extendable to an hour if you ask for it explicitly:
+
+```ts
+cache_control: { type: 'ephemeral' }              // 5-minute TTL (default)
+cache_control: { type: 'ephemeral', ttl: '1h' }   // 1-hour TTL
+```
+
+Every read refreshes the timer at no extra cost, so a steady stream of traffic keeps a cache warm indefinitely. But if requests sharing that prefix arrive more than five minutes apart, the entry is gone before the next one shows up - no matter how stable you made your prompt.
+
+So there are two separate questions, and you need to answer both:
+
+- **Am I invalidating my own cache?** Fixed by rounding and ordering.
+- **Is my traffic frequent enough to keep an entry alive?** Fixed by choosing a TTL, or by accepting that a low-traffic endpoint won't benefit much.
+
+The longer TTL isn't free - the write costs 2x instead of 1.25x, so it only pays off if you're getting at least three requests out of it. Continuous traffic should stay on the five-minute default.
+
+## Fix 2: put the volatile content last
+
+Rounding narrows the window. Ordering is what actually fixes the problem.
+
+Stable instructions go first, your cache breakpoint goes after them, and anything that changes per-request goes *below* that line:
+
+```ts
+const system = [
+  {
+    type: 'text',
+    text: STABLE_INSTRUCTIONS, // big, unchanging, worth caching
+    cache_control: { type: 'ephemeral' },
+  },
+  {
+    type: 'text',
+    text: buildTemporalContext(timeZone, locale), // small, changes hourly
+  },
+];
+```
+
+Now the expensive prefix caches cleanly and only the small temporal block gets reprocessed. Exact syntax varies by provider, but the principle - stable content first, volatile content after the breakpoint - holds everywhere.
+
+### The multi-turn wrinkle
+
+There's a catch that took me a second pass to notice, and it's the one I'd most want a reader to leave with.
+
+Remember the render order: `tools → system → messages`. If your volatile block sits at the bottom of `system`, then your entire conversation history sits *after* it. In a one-shot request that's fine. In a chat assistant, it means every message in the thread gets reprocessed every time that block changes.
+
+For a long conversation, that's a much bigger number than the system prompt you were trying to protect.
+
+If you're on a model that supports it, the cleaner move is to append the volatile context as a system-role message inside `messages` instead of putting it in the top-level `system` field:
+
+```ts
+const response = await client.messages.create({
+  model: 'claude-opus-5',
+  max_tokens: 16000,
+  system: [
+    { type: 'text', text: STABLE_INSTRUCTIONS, cache_control: { type: 'ephemeral' } },
+  ],
+  messages: [
+    ...history,
+    { role: 'user', content: userMessage },
+    { role: 'system', content: buildTemporalContext(timeZone, locale) },
+  ],
+});
+```
+
+The volatile part now lives at the *end* of the prefix rather than the middle, so the cached history in front of it survives.
+
+## A timestamp is just the obvious one
+
+Once you understand that the rule is "first byte that differs," you start seeing the same bug in places that have nothing to do with dates. Everything below has the identical shape - something varies near the front of the prefix, and the cost shows up nowhere but the invoice.
+
+**Personalization in the system prompt.** `User: ${user.name}`, `Account tier: ${tier}`, `Mode: ${mode}`. Exactly the same bug as the timestamp, and it feels even more natural to write. Every distinct user gets their own cache entry at best; interleaved traffic gets nothing.
+
+**Your tool definitions.** Tools render *before* the system prompt - position zero, the worst possible place. Add a tool, remove one, or just build the array by iterating an object whose key order isn't guaranteed, and you invalidate your system prompt and the entire conversation behind it. Sort your tools by name and keep the list stable across requests.
+
+**Nondeterministic serialization.** If any part of your prompt is `JSON.stringify`'d from an object assembled at runtime, key order is a real risk - and it's the version of this bug most likely to survive code review, because the diff between two requests is invisible until you look at the raw bytes.
+
+**Switching models.** Caches are scoped to a model. An A/B test, a cost-saving fallback, or a retry that lands on a different model reads no cache at all.
+
+**Retrieved context placed too high.** RAG chunks change per query by definition. Above your stable instructions, they invalidate everything; below the breakpoint, they cost you nothing extra.
+
+**Sub-agents and summarization passes.** Any side call that rebuilds `system` and `tools` from scratch - rather than copying the parent's verbatim - misses the parent's cache entirely, even when the text looks identical.
+
+The fix is the same shape every time: anything that varies per-request belongs *after* your breakpoint, and anything that only *looks* stable needs to be made deterministic.
+
+And note the timeline this usually follows. Caching rarely fails on day one - you set it up, you verify it, it works. It breaks months later when somebody adds a personalization field or a new tool, and nothing anywhere announces the regression. Which brings us to the only thing that will actually tell you.
+
+## Verify it, because nothing else will tell you
+
+Every provider reports cache activity in the response's usage object. On Anthropic it's three fields:
+
+```ts
+console.log(response.usage.cache_creation_input_tokens); // written to cache (~1.25x)
+console.log(response.usage.cache_read_input_tokens);     // served from cache (~0.1x)
+console.log(response.usage.input_tokens);                // uncached (full price)
+```
+
+Fire the same request twice and look at `cache_read_input_tokens` on the second one. If it's zero, something above your breakpoint is still changing.
+
+**One more trap while you're checking:** there's a minimum cacheable prefix, and it's model-dependent - somewhere between 512 and 4096 tokens depending on which model you're on. Below that threshold, nothing caches at all. No error, just `cache_creation_input_tokens: 0` forever. If you're testing with a toy prompt and seeing zeroes, that may be all that's happening.
+
+## Wrapping up
+
+Four things, in order of how much they'll save you:
+
+1. **Put stable content first and volatile content last.** This is the whole fix. Everything else is refinement.
+2. **Round any timestamp**, and make anything else that varies either deterministic or late - tool order, serialized objects, personalization, retrieved chunks.
+3. **Match your TTL to your traffic**, and remember it's a separate question from prompt stability.
+4. **Check `cache_read_input_tokens`.** Deliberately, on purpose, as a step you actually do - because this failure has no other symptom.
+
+That last one is the real lesson. This is a bug class with no stack trace and no failing test. The only way you find out is by looking, or by getting a bill.
+
+If you got here from the other direction and you're wondering *why* there's a timestamp in the system prompt at all, that's its own post: [your LLM doesn't know what day it is](/posts/make-tool-calls-date-aware), and telling it is your job.
