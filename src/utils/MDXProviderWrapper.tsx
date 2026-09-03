@@ -177,9 +177,8 @@ const Pre: React.FC<PreProps> = ({ children }) => {
   const language = matches?.groups?.lang ?? '';
 
   const source = firstChildProps?.children as string;
-  // The clipboard gets the trailing newline trimmed, but `Highlight` must not:
-  // the renderer below drops the final token line to swallow that newline, so
-  // trimming here would silently eat the last line of every code block.
+  // Trimmed for the clipboard only. `Highlight` needs the trailing newline the
+  // renderer below discards - trimming it here eats a real line of code.
   const copyableSource = String(source ?? '').replace(/\n+$/, '');
 
   return (
@@ -189,9 +188,8 @@ const Pre: React.FC<PreProps> = ({ children }) => {
         background: themes.nightOwl.plain.backgroundColor,
       }}
     >
-      {/* A zero-height sticky rail: the button overlays the block instead of
-          adding a header bar, and stays in reach while a long block scrolls
-          past. `pointer-events-none` keeps it from stealing text selection. */}
+      {/* Zero-height so the button overlays the block without adding to its
+          height, and transparent to clicks so it can't hijack text selection. */}
       <div className="pointer-events-none sticky top-2 z-10 flex h-0 justify-end pr-2 pt-2">
         <CopyCodeButton
           code={copyableSource}
@@ -203,7 +201,7 @@ const Pre: React.FC<PreProps> = ({ children }) => {
         {({ className, style, tokens, getLineProps, getTokenProps }) => (
           <pre className={className} style={{ ...style, overflowX: 'auto' }}>
             {tokens.map((line, i) => {
-              // TODO: why is this needed though?
+              // The last token line is MDX's trailing newline, not code.
               if (i === tokens.length - 1) return null;
               return (
                 <div style={{ display: 'table-row' }} key={`code-line-${i}`}>

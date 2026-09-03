@@ -62,8 +62,6 @@ describe('CopyCodeButton', () => {
 
     fireEvent.click(button);
 
-    // The label swaps to "Copied!", but the name screen readers announce for
-    // the control itself must not move underneath them.
     await waitFor(() => expect(button.textContent).toMatch(/copied/i));
     expect(screen.getByRole('button', { name: 'Copy code' })).toBe(button);
   });
@@ -88,14 +86,13 @@ describe('CopyCodeButton', () => {
       await act(async () => {});
       expect(label()).toMatch(/copied/i);
 
-      // The first click's deadline passes here. Its timer must have been
-      // cleared, or the label snaps back 100ms after the second click.
+      // The first click's deadline passes here: if its timer wasn't cleared,
+      // the label snaps back 100ms after the second click.
       await act(async () => {
         vi.advanceTimersByTime(200);
       });
       expect(label()).toMatch(/copied/i);
 
-      // And the second click's own window still expires on schedule.
       await act(async () => {
         vi.advanceTimersByTime(RESET_WINDOW_MS);
       });

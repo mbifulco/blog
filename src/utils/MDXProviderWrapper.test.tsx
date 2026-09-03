@@ -9,7 +9,7 @@ vi.mock('posthog-js', () => ({
 
 const Pre = customComponents.pre as React.FC<{ children?: React.ReactNode }>;
 
-/** Mirrors what MDX hands `pre`: a `code` element with a trailing newline. */
+// Mirrors what MDX hands `pre`: a `code` element with a trailing newline.
 const renderBlock = (source: string, language = 'ts') =>
   render(
     <Pre>
@@ -30,9 +30,8 @@ describe('Pre', () => {
     );
     const rendered = container.querySelector('pre')!.textContent!;
 
-    // The renderer drops the final token line to swallow MDX's trailing
-    // newline. If the source it highlights is ever pre-trimmed to match the
-    // clipboard copy, that last line is a real one and silently disappears.
+    // Guards the trailing-newline trap: pre-trimming the source handed to
+    // `Highlight` would drop `const c = 3;` and nothing else would notice.
     expect(rendered).toContain('const a = 1;');
     expect(rendered).toContain('const b = 2;');
     expect(rendered).toContain('const c = 3;');

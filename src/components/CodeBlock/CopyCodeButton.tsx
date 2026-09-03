@@ -16,17 +16,11 @@ const LABELS: Record<CopyState, string> = {
 };
 
 type CopyCodeButtonProps = {
-  /** Source of the code block, as it should land in the reader's clipboard. */
   code: string;
-  /** Prism language tag, recorded with the analytics event. */
   language?: string;
   className?: string;
 };
 
-/**
- * Copies a code block's source to the clipboard. Sits in the corner of the
- * block itself, so the reader never has to select code by hand to steal it.
- */
 export const CopyCodeButton: React.FC<CopyCodeButtonProps> = ({
   code,
   language,
@@ -69,13 +63,12 @@ export const CopyCodeButton: React.FC<CopyCodeButtonProps> = ({
       aria-label="Copy code"
       title={LABELS[state]}
       className={cn(
-        // The block behind this is always the Night Owl dark background, so
-        // opt out of the themed foreground colours and pin light-on-dark.
+        // Pinned light-on-dark rather than themed: the block behind this is
+        // always the Night Owl background.
         'backdrop-blur-xs size-7 border border-white/15 bg-white/10 text-slate-300',
         'hover:bg-white/20 hover:text-white',
         'focus-visible:ring-white/40',
-        // Dimmed until the reader goes looking, but never fully hidden - a
-        // copy button nobody can find is not a feature.
+        // Dimmed, never hidden: a hover-only reveal is invisible on touch.
         'opacity-70 transition-opacity focus-visible:opacity-100 group-hover:opacity-100',
         className
       )}
@@ -87,9 +80,7 @@ export const CopyCodeButton: React.FC<CopyCodeButtonProps> = ({
       ) : (
         <Copy className="size-3.5" aria-hidden />
       )}
-      {/* The control's own accessible name is fixed, so state changes are
-          announced here instead. Icon-only visually - the label would double
-          the button's width to say what the icon already says. */}
+      {/* The button's accessible name is fixed, so state changes announce here. */}
       <span aria-live="polite" className="sr-only">
         {LABELS[state]}
       </span>
