@@ -17,8 +17,6 @@ Every major chat product - ChatGPT, Claude, Gemini - injects the current date in
 
 I ran into this while building an agent into our internal tools at [Craftwork](https://craftwork.com). **If you're the one integrating the model, injecting the date is your job.** If you skip it, you get some very strange behavior.
 
-{/* IMAGE: screenshot of the assistant confidently picking a wrong date range and returning nothing */}
-
 ## Hallucinated date ranges fail silently
 
 Here's the scenario: at Craftwork, we have a variety of LLM tools for use internally - our sales and support teams will often ask our Assistant to search through previous conversations with customers, to provide better service. Things like "Which rooms are we painting ceilings in?" or "What colors is Joe Smith using on their project?" are pretty straightforward.
@@ -385,7 +383,6 @@ If the range is wrong, a human catches it instantly - because a human knows what
 
 It also covers the cases where your interpretation is defensible but still isn't the one the person had in mind. "Last week" is the clearest example: our code resolves it to a calendar week, and plenty of people say "last week" meaning the last seven days. Both readings are reasonable, and no amount of prompt engineering picks the right one every time. Showing your work lets the person who _does_ know just say "no, go back further."
 
-{/* IMAGE: diagram - system prompt clock → model picks named range → handler resolves + validates → query → resolved range surfaced back to user */}
 
 ## Wrapping up
 
