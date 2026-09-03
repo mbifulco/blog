@@ -12,6 +12,7 @@ import Script from 'next/script';
 import { MDXProvider } from '@mdx-js/react';
 import { Highlight, themes } from 'prism-react-renderer';
 
+import { CopyCodeButton } from '@components/CodeBlock';
 import { FAQ, FAQItem } from '@components/FAQ';
 import Link from '@components/Link';
 import { PullQuote } from '@components/PullQuote';
@@ -173,19 +174,32 @@ const Pre: React.FC<PreProps> = ({ children }) => {
 
   const classNames = firstChildProps.className!;
   const matches = /language-(?<lang>.*)/.exec(classNames);
+  const language = matches?.groups?.lang ?? '';
+
+  const source = firstChildProps?.children as string;
+  // The clipboard gets the trailing newline trimmed, but `Highlight` must not:
+  // the renderer below drops the final token line to swallow that newline, so
+  // trimming here would silently eat the last line of every code block.
+  const copyableSource = String(source ?? '').replace(/\n+$/, '');
 
   return (
     <div
-      className="-mx-2 my-6 max-w-[calc(100vw_-_36px)] rounded-sm md:mx-0"
+      className="group relative -mx-2 my-6 max-w-[calc(100vw_-_36px)] rounded-sm md:mx-0"
       style={{
         background: themes.nightOwl.plain.backgroundColor,
       }}
     >
-      <Highlight
-        theme={themes.nightOwl}
-        code={firstChildProps?.children as string}
-        language={matches?.groups?.lang ?? ''}
-      >
+      {/* A zero-height sticky rail: the button overlays the block instead of
+          adding a header bar, and stays in reach while a long block scrolls
+          past. `pointer-events-none` keeps it from stealing text selection. */}
+      <div className="pointer-events-none sticky top-2 z-10 flex h-0 justify-end pr-2 pt-2">
+        <CopyCodeButton
+          code={copyableSource}
+          language={language}
+          className="pointer-events-auto"
+        />
+      </div>
+      <Highlight theme={themes.nightOwl} code={source} language={language}>
         {({ className, style, tokens, getLineProps, getTokenProps }) => (
           <pre className={className} style={{ ...style, overflowX: 'auto' }}>
             {tokens.map((line, i) => {
