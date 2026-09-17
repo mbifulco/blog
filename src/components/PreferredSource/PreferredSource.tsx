@@ -12,21 +12,29 @@ type PreferredSourceApi = {
   addPreferredSource: () => void;
 };
 
+type PreferredSourceCallback = (api: PreferredSourceApi) => void;
+
 declare global {
-  // Google's library drains this queue on load, then replaces it with an
-  // object whose push runs callbacks immediately.
-  var PREFERRED_SOURCE: ((api: PreferredSourceApi) => void)[] | undefined;
+  // An array of pending callbacks until Google's library loads, which drains
+  // it and replaces it with an object whose push runs callbacks immediately.
+  var PREFERRED_SOURCE:
+    | PreferredSourceCallback[]
+    | { push: (callback: PreferredSourceCallback) => void }
+    | undefined;
 }
 
 const SITE_DOMAIN = new URL(BASE_SITE_URL).hostname;
-const DEEPLINK = `https://www.google.com/preferences/source?q=${SITE_DOMAIN}`;
+const DEEPLINK = `https://www.google.com/preferences/source?q=${encodeURIComponent(SITE_DOMAIN)}`;
 
 let api: PreferredSourceApi | null = null;
 
 // Queued once per page load rather than per mount. The queue is a browser
 // global, so the server, which renders this component too, stays out of it.
 if (typeof window !== 'undefined') {
-  (globalThis.PREFERRED_SOURCE ??= []).push((preferredSource) => {
+  const queue = (globalThis.PREFERRED_SOURCE ??=
+    new Array<PreferredSourceCallback>());
+
+  queue.push((preferredSource) => {
     preferredSource.init({ theme: 'light' });
     api = preferredSource;
   });

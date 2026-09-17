@@ -24,6 +24,18 @@ const link = () =>
     name: /make mikebifulco\.com a preferred source/i,
   });
 
+/** Stand in for the library draining the pre-load queue. */
+const loadLibrary = (api: {
+  init: () => void;
+  addPreferredSource: () => void;
+}) => {
+  const queue = globalThis.PREFERRED_SOURCE;
+
+  if (!Array.isArray(queue)) throw new Error('nothing was queued');
+
+  queue.forEach((callback) => callback(api));
+};
+
 describe('PreferredSource', () => {
   beforeEach(() => {
     vi.clearAllMocks();
@@ -51,10 +63,8 @@ describe('PreferredSource', () => {
 
     const init = vi.fn();
     const addPreferredSource = vi.fn();
-    // Stand in for the library draining the queue on load.
-    globalThis.PREFERRED_SOURCE?.forEach((callback) =>
-      callback({ init, addPreferredSource })
-    );
+
+    loadLibrary({ init, addPreferredSource });
 
     expect(init).toHaveBeenCalledWith({ theme: 'light' });
 
