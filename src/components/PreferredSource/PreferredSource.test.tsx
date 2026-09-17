@@ -11,15 +11,10 @@ vi.mock('next/script', () => ({
   default: () => null,
 }));
 
-/** Registration happens once per module load, so each test gets a fresh one. */
-const loadButton = async () => {
-  vi.resetModules();
-
-  return (await import('./PreferredSource')).default;
-};
-
+// Registration happens once per module load, so each test gets a fresh one.
 const renderButton = async () => {
-  const PreferredSource = await loadButton();
+  vi.resetModules();
+  const { default: PreferredSource } = await import('./PreferredSource');
 
   render(<PreferredSource />);
 };
@@ -35,17 +30,13 @@ describe('PreferredSource', () => {
     delete globalThis.PREFERRED_SOURCE;
   });
 
-  it('links to the source preferences deeplink for this site', async () => {
+  it('follows the deeplink while the library has not loaded', async () => {
     await renderButton();
 
     expect(link()).toHaveAttribute(
       'href',
       'https://www.google.com/preferences/source?q=mikebifulco.com'
     );
-  });
-
-  it('follows the deeplink while the library has not loaded', async () => {
-    await renderButton();
 
     const notPrevented = fireEvent.click(link());
 
@@ -76,8 +67,9 @@ describe('PreferredSource', () => {
     });
   });
 
-  it('queues one callback no matter how many times it mounts', async () => {
-    const PreferredSource = await loadButton();
+  it('queues one callback however many times it mounts', async () => {
+    vi.resetModules();
+    const { default: PreferredSource } = await import('./PreferredSource');
 
     render(<PreferredSource />).unmount();
     render(<PreferredSource />);

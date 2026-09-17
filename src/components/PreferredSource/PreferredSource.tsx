@@ -1,6 +1,5 @@
 'use client';
 
-import { useEffect } from 'react';
 import Script from 'next/script';
 import posthog from 'posthog-js';
 
@@ -22,25 +21,19 @@ declare global {
 const SITE_DOMAIN = new URL(BASE_SITE_URL).hostname;
 const DEEPLINK = `https://www.google.com/preferences/source?q=${SITE_DOMAIN}`;
 
-// One library instance per page load, so registration is module state rather
-// than component state — a remount must not queue a second callback.
 let api: PreferredSourceApi | null = null;
-let registered = false;
 
-const register = () => {
-  if (registered) return;
-  registered = true;
-
+// Queued once per page load rather than per mount. The queue is a browser
+// global, so the server, which renders this component too, stays out of it.
+if (typeof window !== 'undefined') {
   (globalThis.PREFERRED_SOURCE ??= []).push((preferredSource) => {
     preferredSource.init({ theme: 'light' });
     api = preferredSource;
   });
-};
+}
 
 /** @see https://developers.google.com/search/docs/appearance/preferred-sources */
 const PreferredSource = () => {
-  useEffect(register, []);
-
   const handleClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
     posthog.capture('preferred_source_clicked', {
       in_page_flow: Boolean(api),
