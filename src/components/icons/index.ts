@@ -4,6 +4,7 @@ export type Icon = React.FC<IconProps>;
 
 export { default as BlueskyIcon } from './BlueskyIcon';
 export { default as GitHubIcon } from './GitHubIcon';
+export { default as GoogleIcon } from './GoogleIcon';
 export { default as MastodonIcon } from './MastodonIcon';
 export { default as PatreonIcon } from './PatreonIcon';
 export { default as RssIcon } from './RssIcon';
