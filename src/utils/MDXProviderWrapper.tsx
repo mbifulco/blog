@@ -12,6 +12,7 @@ import Script from 'next/script';
 import { MDXProvider } from '@mdx-js/react';
 import { Highlight, themes } from 'prism-react-renderer';
 
+import { CopyCodeButton } from '@components/CodeBlock';
 import { FAQ, FAQItem } from '@components/FAQ';
 import Link from '@components/Link';
 import { PullQuote } from '@components/PullQuote';
@@ -173,23 +174,34 @@ const Pre: React.FC<PreProps> = ({ children }) => {
 
   const classNames = firstChildProps.className!;
   const matches = /language-(?<lang>.*)/.exec(classNames);
+  const language = matches?.groups?.lang ?? '';
+
+  const source = firstChildProps?.children as string;
+  // Trimmed for the clipboard only. `Highlight` needs the trailing newline the
+  // renderer below discards - trimming it here eats a real line of code.
+  const copyableSource = String(source ?? '').replace(/\n+$/, '');
 
   return (
     <div
-      className="-mx-2 my-6 max-w-[calc(100vw_-_36px)] rounded-sm md:mx-0"
+      className="group relative -mx-2 my-6 max-w-[calc(100vw_-_36px)] rounded-sm md:mx-0"
       style={{
         background: themes.nightOwl.plain.backgroundColor,
       }}
     >
-      <Highlight
-        theme={themes.nightOwl}
-        code={firstChildProps?.children as string}
-        language={matches?.groups?.lang ?? ''}
-      >
+      {/* Zero-height so the button overlays the block without adding to its
+          height, and transparent to clicks so it can't hijack text selection. */}
+      <div className="pointer-events-none sticky top-2 z-10 flex h-0 justify-end pr-2 pt-2">
+        <CopyCodeButton
+          code={copyableSource}
+          language={language}
+          className="pointer-events-auto"
+        />
+      </div>
+      <Highlight theme={themes.nightOwl} code={source} language={language}>
         {({ className, style, tokens, getLineProps, getTokenProps }) => (
           <pre className={className} style={{ ...style, overflowX: 'auto' }}>
             {tokens.map((line, i) => {
-              // TODO: why is this needed though?
+              // The last token line is MDX's trailing newline, not code.
               if (i === tokens.length - 1) return null;
               return (
                 <div style={{ display: 'table-row' }} key={`code-line-${i}`}>
