@@ -1,4 +1,5 @@
 import Link from '@components/Link';
+import { PreferredSource } from '@components/PreferredSource';
 import config from '../config';
 import RelatedContentLinksByTag from './RelatedContent/RelatedContentLinksByTag';
 import { SocialLinks } from './SocialLinks';
@@ -23,6 +24,7 @@ const Footer = () => {
             <span>© 2019-{new Date().getFullYear()} Mike Bifulco</span>
 
             <SponsorCTA />
+            <PreferredSource />
             <SocialLinks />
           </div>
 
