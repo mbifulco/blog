@@ -71,8 +71,9 @@ const webhookHandler = async (req: NextApiRequest, res: NextApiResponse) => {
     const headers = req.headers as IncomingMessage['headers'] &
       WebhookRequiredHeaders;
 
-    // Verify the webhook signature and extract the event
-    const event = webhook.verify(payload, headers) as WebhookEvent;
+    // verify() throws on a bad signature but doesn't return the parsed event
+    webhook.verify(payload, headers);
+    const event = JSON.parse(payload) as WebhookEvent;
 
     if (isEmailEvent(event)) {
       const id = Array.isArray(event.data.to)
