@@ -64,6 +64,28 @@ export const getAllTopics = (): TopicDefinition[] => {
   return TOPIC_DEFINITIONS;
 };
 
+// One shared tag is too weak a signal: a post tagged only `typescript` among
+// AI tags is not a React post. Better no topic than a misleading one.
+const MIN_SHARED_TAGS = 2;
+
+/** The topic sharing the most tags with a post, or null when none shares at least two. */
+export const getTopicForTags = (
+  tags: string[] = []
+): Pick<TopicDefinition, 'slug' | 'name'> | null => {
+  let best: TopicDefinition | null = null;
+  let bestCount = 0;
+  for (const topic of TOPIC_DEFINITIONS) {
+    const count = topic.tags.filter((tag) => tags.includes(tag)).length;
+    if (count > bestCount) {
+      best = topic;
+      bestCount = count;
+    }
+  }
+  return best && bestCount >= MIN_SHARED_TAGS
+    ? { slug: best.slug, name: best.name }
+    : null;
+};
+
 /**
  * Get a topic definition by slug
  */
