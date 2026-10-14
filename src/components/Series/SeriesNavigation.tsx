@@ -47,7 +47,7 @@ export const SeriesNavigation: React.FC<SeriesNavigationProps> = ({
   };
 
   return (
-    <div className="mt-6 rounded-lg border border-gray-200 bg-white p-4">
+    <div className="border-riso-blue bg-stock-raised mt-6 border-2 p-4">
       <Heading as="h3" className="text-s mb-3 text-sm font-semibold capitalize">
         <Link href={`/series/${series.slug}`}>
           {series.name} ({orderedContent.length} Part Series)

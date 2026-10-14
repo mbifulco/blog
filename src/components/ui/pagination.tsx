@@ -59,6 +59,9 @@ function PaginationLink({
           variant: isActive ? 'outline' : 'ghost',
           size,
         }),
+        'text-riso-blue hover:bg-tint-blue hover:text-riso-blue rounded-none font-futura font-bold tabular-nums no-underline hover:no-underline',
+        isActive &&
+          'border-blue-fill bg-blue-fill text-on-fill hover:bg-blue-fill hover:text-on-fill border-2',
         className
       )}
       {...props}

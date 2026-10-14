@@ -8,7 +8,7 @@ const TagsSummary: React.FC<TagsSummaryProps> = ({ tags }) => {
   if (!tags || tags.length <= 0) return null;
 
   return (
-    <div className="flex flex-row flex-wrap text-balance text-sm">
+    <div className="flex flex-row flex-wrap gap-x-1 gap-y-1">
       {tags.map((tag, id) => {
         if (!tag) return null;
         return (

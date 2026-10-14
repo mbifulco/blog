@@ -33,11 +33,11 @@ const NewsletterModal = () => {
   return (
     <>
       <Dialog open={isOpen} onOpenChange={handleOpenChange}>
-        <DialogContent className="w-[calc(100%-2rem)] rounded-lg max-sm:top-6 max-sm:translate-y-0 sm:max-w-[425px]">
+        <DialogContent className="border-riso-blue bg-stock w-[calc(100%-2rem)] rounded-none border-2 max-sm:top-6 max-sm:translate-y-0 sm:max-w-[425px]">
           <DialogHeader>
-            <DialogTitle className="text-balance text-center text-2xl font-bold">
+            <DialogTitle className="text-ink text-balance text-center font-futura text-2xl font-bold">
               Join{' '}
-              <span className="text-pink-600">
+              <span className="text-riso-pink">
                 <SubscriberCount />
               </span>{' '}
               founders & engineers building better products
@@ -53,7 +53,7 @@ const NewsletterModal = () => {
               buttonText="Join the Inner Circle"
             />
           </div>
-          <p className="text-center text-xs text-gray-500">
+          <p className="text-ink-muted text-center text-xs">
             No spam. Unsubscribe anytime.
           </p>
         </DialogContent>
@@ -65,7 +65,7 @@ const NewsletterModal = () => {
             open('fab');
             posthog?.capture('newsletter_fab_clicked');
           }}
-          className="fixed bottom-4 right-4 z-50 flex h-12 w-12 items-center justify-center rounded-full border-2 border-pink-500 bg-white shadow-xl transition-transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-pink-200 focus:ring-offset-2 sm:bottom-6 sm:right-6 sm:h-14 sm:w-14"
+          className="border-riso-pink bg-stock fixed bottom-4 right-4 z-50 flex h-12 w-12 items-center justify-center rounded-full border-2 shadow-[0_6px_16px_-6px_rgb(0_0_0/0.35)] transition-transform hover:scale-110 sm:bottom-6 sm:right-6 sm:h-14 sm:w-14"
           aria-label="Subscribe to newsletter"
         >
           <span className="animate-wiggle-interval text-xl sm:text-2xl">
