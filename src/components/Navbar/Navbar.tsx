@@ -8,16 +8,9 @@ import {
 } from '@headlessui/react';
 import { Menu, Search, X } from 'lucide-react';
 
+import { GooseNeck } from '@components/GooseMark';
 import Link from '@components/Link';
 import { useSearch } from '@components/Search/SearchContext';
-import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-} from '@components/ui/navigation-menu';
 import {
   Tooltip,
   TooltipContent,
@@ -30,26 +23,18 @@ const topics = [
   {
     title: 'React & JavaScript',
     href: '/topics/react-development',
-    description: 'Tutorials on React, Next.js, TypeScript, and modern JS',
-    icon: '⚛️',
   },
   {
     title: 'Startups & Founders',
     href: '/topics/startup-building',
-    description: 'Lessons from founding startups and Y Combinator',
-    icon: '🚀',
   },
   {
     title: 'Design & UX',
     href: '/topics/design-ux',
-    description: 'Design systems, user experience, and cognitive science',
-    icon: '🎨',
   },
   {
     title: 'Developer Tools',
     href: '/topics/developer-productivity',
-    description: 'Tools and workflows for developer productivity',
-    icon: '🛠️',
   },
 ];
 
@@ -57,270 +42,190 @@ const browseLinks = [
   {
     title: '💌 Tiny Improvements',
     href: '/newsletter',
-    description: 'My weekly newsletter for product builders',
   },
   {
     title: 'All Articles',
     href: '/',
-    description: 'Technical posts and tutorials',
   },
-  { title: 'Browse by Tag', href: '/tags', description: 'Find posts by tag' },
+  { title: 'Browse by Tag', href: '/tags' },
 ];
 
 const Navbar = () => {
   const router = useRouter();
   const { setOpen } = useSearch();
+  const isHome = router.pathname === '/';
+
+  const itemClass = clsxm(
+    'group inline-flex h-9 w-max items-center justify-center gap-1.5 bg-transparent px-3 py-2',
+    'font-futura text-[0.8rem] font-bold uppercase tracking-[0.1em] text-riso-blue no-underline transition-colors',
+    'hover:bg-transparent hover:text-riso-pink hover:no-underline focus:bg-transparent data-[state=open]:bg-transparent data-[state=open]:text-riso-pink'
+  );
+  const mobileLinkClass =
+    'block px-3 py-2 font-futura text-base font-bold text-riso-blue no-underline hover:bg-tint-pink hover:text-riso-blue';
 
   return (
-    <Disclosure as="nav" className="w-full bg-white">
+    <Disclosure as="nav" className="w-full px-4">
       {({ open }) => (
-        <>
-          <div className="flex w-full flex-row gap-3 sm:mx-auto sm:flex-col">
-            <Link href="/" prefetch={true} className="hover:no-underline">
-              <div
+        <div className="mx-auto w-full max-w-6xl">
+          <div className="border-riso-blue flex w-full items-center justify-between gap-4 border-b-2 pb-3">
+            <div className="flex min-w-0 items-center gap-3 self-stretch">
+              {/* Pulled into the bottom padding so the neck rises from behind the rule;
+                  the right margin makes room for the burst spilling off the bill */}
+              <Link
+                href="/"
+                prefetch={true}
+                aria-label="Mike Bifulco, home"
+                className="group -mb-3 mr-1 shrink-0 self-end no-underline hover:no-underline sm:mr-5"
+              >
+                <GooseNeck className="h-14 w-auto sm:h-16 md:h-[4.5rem]" />
+              </Link>
+              {/* The home page masthead is the wordmark there */}
+              {isHome ? (
+                <Link
+                  href="/newsletter"
+                  prefetch={true}
+                  className="text-riso-pink hover:text-riso-blue text-balance font-futura text-xs font-bold uppercase leading-tight tracking-[0.12em] no-underline hover:no-underline sm:text-sm"
+                >
+                  Build products that matter
+                </Link>
+              ) : (
+                <Link
+                  href="/"
+                  prefetch={true}
+                  className="text-riso-pink hover:text-riso-blue font-dumpling text-xl uppercase leading-none no-underline hover:no-underline md:text-2xl"
+                >
+                  Mike Bifulco
+                </Link>
+              )}
+            </div>
+
+            <div className="hidden items-center md:flex">
+              <Link
+                href="/newsletter"
+                prefetch={true}
                 className={clsxm(
-                  'text-center text-4xl uppercase text-gray-800 transition-all duration-500 ease-in-out hover:text-gray-700',
-                  '-my-2 font-dumpling text-lg md:text-4xl'
+                  itemClass,
+                  router.pathname.startsWith('/newsletter') && 'text-riso-pink'
                 )}
               >
-                Mike Bifulco
-              </div>
-            </Link>
+                Newsletter
+              </Link>
+              <Link
+                href="/about"
+                prefetch={true}
+                className={clsxm(
+                  itemClass,
+                  router.pathname === '/about' && 'text-riso-pink'
+                )}
+              >
+                About
+              </Link>
+              <button
+                onClick={() => setOpen(true)}
+                className={itemClass}
+                aria-label="Search"
+              >
+                <Search className="h-4 w-4" />
+                <span className="hidden lg:inline">Search</span>
+                <kbd className="border-riso-blue/40 hidden border px-1 py-0.5 font-mono text-[0.7rem] tracking-normal lg:inline">
+                  ⌘K
+                </kbd>
+              </button>
+              <TooltipProvider delayDuration={200}>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Link
+                      href="/subscribe"
+                      prefetch={true}
+                      className={clsxm(
+                        'ml-2 inline-flex h-9 w-max items-center justify-center px-4 py-2 font-futura text-[0.8rem] font-bold uppercase tracking-[0.08em] transition-colors',
+                        'bg-pink-fill text-on-fill hover:bg-blue-fill hover:text-on-fill no-underline hover:no-underline'
+                      )}
+                    >
+                      💌 Subscribe
+                    </Link>
+                  </TooltipTrigger>
+                  <TooltipContent side="bottom">
+                    <p>
+                      Tiny Improvements, my weekly newsletter for product
+                      builders
+                    </p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            </div>
 
-            {/* Desktop Navigation */}
-            <div className="ml-auto sm:ml-0 sm:justify-center">
-              <div className="hidden items-center justify-center sm:flex">
-                <NavigationMenu>
-                  <NavigationMenuList>
-                    {/* Topics Dropdown */}
-                    <NavigationMenuItem>
-                      <NavigationMenuTrigger className="bg-transparent text-sm font-semibold uppercase text-gray-700 hover:bg-gray-100">
-                        Topics
-                      </NavigationMenuTrigger>
-                      <NavigationMenuContent>
-                        <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2">
-                          {topics.map((topic) => (
-                            <li key={topic.href}>
-                              <NavigationMenuLink asChild>
-                                <Link
-                                  href={topic.href}
-                                  className={clsxm(
-                                    'block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors',
-                                    'hover:bg-pink-50 hover:text-pink-900 focus:bg-pink-50'
-                                  )}
-                                >
-                                  <div className="flex items-center gap-2 text-sm font-medium leading-none text-gray-900">
-                                    <span>{topic.icon}</span>
-                                    <span>{topic.title}</span>
-                                  </div>
-                                  <p className="line-clamp-2 text-sm leading-snug text-gray-500">
-                                    {topic.description}
-                                  </p>
-                                </Link>
-                              </NavigationMenuLink>
-                            </li>
-                          ))}
-                          <li className="col-span-2 border-t pt-2">
-                            <NavigationMenuLink asChild>
-                              <Link
-                                href="/topics"
-                                className="block text-center text-sm font-medium text-pink-600 hover:underline"
-                              >
-                                View all topics →
-                              </Link>
-                            </NavigationMenuLink>
-                          </li>
-                        </ul>
-                      </NavigationMenuContent>
-                    </NavigationMenuItem>
-
-                    {/* Browse Dropdown */}
-                    <NavigationMenuItem>
-                      <NavigationMenuTrigger className="bg-transparent text-sm font-semibold uppercase text-gray-700 hover:bg-gray-100">
-                        Browse
-                      </NavigationMenuTrigger>
-                      <NavigationMenuContent>
-                        <ul className="grid w-[300px] gap-2 p-4">
-                          {browseLinks.map((link) => (
-                            <li key={link.href}>
-                              <NavigationMenuLink asChild>
-                                <Link
-                                  href={link.href}
-                                  className={clsxm(
-                                    'block select-none rounded-md p-3 leading-none no-underline outline-none transition-colors',
-                                    'hover:bg-pink-50 hover:text-pink-900 focus:bg-pink-50'
-                                  )}
-                                >
-                                  <div className="text-sm font-medium leading-none text-gray-900">
-                                    {link.title}
-                                  </div>
-                                  <p className="mt-1 text-sm leading-snug text-gray-500">
-                                    {link.description}
-                                  </p>
-                                </Link>
-                              </NavigationMenuLink>
-                            </li>
-                          ))}
-                        </ul>
-                      </NavigationMenuContent>
-                    </NavigationMenuItem>
-
-                    {/* Podcast - Simple Link */}
-                    <NavigationMenuItem>
-                      <NavigationMenuLink asChild>
-                        <Link
-                          href="/podcast"
-                          prefetch={true}
-                          className={clsxm(
-                            'group inline-flex h-9 w-max items-center justify-center rounded-md bg-transparent px-4 py-2 text-sm font-semibold uppercase text-gray-700 transition-colors hover:bg-gray-100'
-                          )}
-                        >
-                          Podcast
-                        </Link>
-                      </NavigationMenuLink>
-                    </NavigationMenuItem>
-
-                    {/* About - Simple Link */}
-                    <NavigationMenuItem>
-                      <NavigationMenuLink asChild>
-                        <Link
-                          href="/about"
-                          prefetch={true}
-                          className={clsxm(
-                            'group inline-flex h-9 w-max items-center justify-center rounded-md bg-transparent px-4 py-2 text-sm font-semibold uppercase text-gray-700 transition-colors hover:bg-gray-100'
-                          )}
-                        >
-                          About
-                        </Link>
-                      </NavigationMenuLink>
-                    </NavigationMenuItem>
-
-                    {/* Search trigger */}
-                    <NavigationMenuItem>
-                      <button
-                        onClick={() => setOpen(true)}
-                        className={clsxm(
-                          'group inline-flex h-9 w-max items-center justify-center gap-1.5 rounded-md',
-                          'bg-transparent px-4 py-2 text-sm font-semibold uppercase text-gray-700',
-                          'transition-colors hover:bg-gray-100'
-                        )}
-                        aria-label="Search"
-                      >
-                        <Search className="h-4 w-4" />
-                        <span className="hidden lg:inline">Search</span>
-                        <kbd className="hidden rounded border border-gray-200 bg-gray-100 px-1 py-0.5 text-xs text-gray-500 lg:inline">
-                          ⌘K
-                        </kbd>
-                      </button>
-                    </NavigationMenuItem>
-
-                    {/* Newsletter CTA */}
-                    <NavigationMenuItem>
-                      <TooltipProvider delayDuration={200}>
-                        <Tooltip>
-                          <TooltipTrigger asChild>
-                            <Link
-                              href="/newsletter"
-                              prefetch={true}
-                              className={clsxm(
-                                'inline-flex h-9 w-max items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-colors',
-                                'bg-pink-500 text-white no-underline hover:bg-pink-600 hover:text-white hover:no-underline'
-                              )}
-                            >
-                              💌 Tiny Improvements
-                            </Link>
-                          </TooltipTrigger>
-                          <TooltipContent side="bottom">
-                            <p>My weekly newsletter for builders & creators</p>
-                          </TooltipContent>
-                        </Tooltip>
-                      </TooltipProvider>
-                    </NavigationMenuItem>
-                  </NavigationMenuList>
-                </NavigationMenu>
-              </div>
-
-              {/* Mobile menu button */}
-              <div className="-mr-2 flex items-center sm:hidden">
-                <DisclosureButton className="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-pink-500">
-                  <span className="absolute -inset-0.5" />
-                  <span className="sr-only">Open main menu</span>
-                  {open ? (
-                    <X className="block h-6 w-6" aria-hidden="true" />
-                  ) : (
-                    <Menu className="block h-6 w-6" aria-hidden="true" />
-                  )}
-                </DisclosureButton>
-              </div>
+            <div className="-mr-2 flex items-center md:hidden">
+              <DisclosureButton className="text-riso-blue hover:bg-tint-blue focus-visible:ring-riso-pink relative inline-flex items-center justify-center p-2 focus:outline-none focus-visible:ring-2">
+                <span className="absolute -inset-0.5" />
+                <span className="sr-only">Open main menu</span>
+                {open ? (
+                  <X className="block h-6 w-6" aria-hidden="true" />
+                ) : (
+                  <Menu className="block h-6 w-6" aria-hidden="true" />
+                )}
+              </DisclosureButton>
             </div>
           </div>
 
-          {/* Mobile Navigation */}
-          <DisclosurePanel className="sm:hidden">
+          <DisclosurePanel className="border-riso-blue border-b-2 md:hidden">
             <div className="space-y-1 pb-3 pt-2">
-              {/* Search trigger */}
-              <div className="border-b border-gray-200 pb-2">
+              <div className="border-border border-b pb-2">
                 <DisclosureButton
                   as="button"
                   onClick={() => setOpen(true)}
-                  className="flex w-full items-center gap-2 px-3 py-2 text-base font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+                  className={clsxm(
+                    mobileLinkClass,
+                    'flex w-full items-center gap-2'
+                  )}
                 >
                   <Search className="h-4 w-4" />
                   Search
                 </DisclosureButton>
               </div>
 
-              {/* Topics Section */}
-              <div className="border-b border-gray-200 pb-2">
-                <p className="px-3 py-1 text-xs font-semibold uppercase tracking-wider text-gray-500">
-                  Topics
-                </p>
+              <div className="border-border border-b pb-2">
+                <p className="riso-kicker px-3 py-1">Topics</p>
                 {topics.map((topic) => (
                   <DisclosureButton
                     as={Link}
                     href={topic.href}
                     key={topic.href}
-                    className="block py-2 pl-6 pr-4 text-base font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+                    className={mobileLinkClass}
                   >
-                    <span className="mr-2">{topic.icon}</span>
                     {topic.title}
                   </DisclosureButton>
                 ))}
                 <DisclosureButton
                   as={Link}
                   href="/topics"
-                  className="block py-2 pl-6 pr-4 text-sm font-medium text-pink-600 hover:bg-pink-50"
+                  className="text-riso-pink block px-3 py-2 font-futura text-sm font-bold no-underline"
                 >
                   View all topics →
                 </DisclosureButton>
               </div>
 
-              {/* Browse Section */}
-              <div className="border-b border-gray-200 pb-2">
-                <p className="px-3 py-1 text-xs font-semibold uppercase tracking-wider text-gray-500">
-                  Browse
-                </p>
+              <div className="border-border border-b pb-2">
+                <p className="riso-kicker px-3 py-1">Browse</p>
                 {browseLinks.map((link) => (
                   <DisclosureButton
                     as={Link}
                     href={link.href}
                     key={link.href}
-                    className="block py-2 pl-6 pr-4 text-base font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+                    className={mobileLinkClass}
                   >
                     {link.title}
                   </DisclosureButton>
                 ))}
               </div>
 
-              {/* Other Links */}
               <DisclosureButton
                 as={Link}
                 href="/podcast"
                 prefetch={true}
                 className={clsxm(
-                  'block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700',
-                  router.pathname === '/podcast' &&
-                    'border-pink-500 bg-pink-50 text-pink-700'
+                  mobileLinkClass,
+                  router.pathname === '/podcast' && 'text-riso-pink'
                 )}
               >
                 Podcast
@@ -331,28 +236,26 @@ const Navbar = () => {
                 href="/about"
                 prefetch={true}
                 className={clsxm(
-                  'block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700',
-                  router.pathname === '/about' &&
-                    'border-pink-500 bg-pink-50 text-pink-700'
+                  mobileLinkClass,
+                  router.pathname === '/about' && 'text-riso-pink'
                 )}
               >
                 About
               </DisclosureButton>
 
-              {/* Newsletter CTA */}
               <div className="px-3 pt-2">
                 <DisclosureButton
                   as={Link}
-                  href="/newsletter"
+                  href="/subscribe"
                   prefetch={true}
-                  className="block w-full rounded-md bg-pink-500 px-4 py-2 text-center font-medium text-white hover:bg-pink-600"
+                  className="bg-pink-fill text-on-fill hover:bg-blue-fill hover:text-on-fill block w-full px-4 py-3 text-center font-futura font-bold uppercase tracking-[0.08em] no-underline"
                 >
-                  💌 Subscribe to Newsletter
+                  💌 Subscribe to Tiny Improvements
                 </DisclosureButton>
               </div>
             </div>
           </DisclosurePanel>
-        </>
+        </div>
       )}
     </Disclosure>
   );
