@@ -2,7 +2,7 @@ import type {
   TurnstileInstance,
   TurnstileProps,
 } from '@marsidev/react-turnstile';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import posthog from 'posthog-js';
 
 import { env } from '@utils/env';
@@ -27,6 +27,14 @@ export const useTurnstileGate = (source?: string) => {
   const waitTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [token, setToken] = useState<string | null>(null);
   const [status, setStatus] = useState<TurnstileGateStatus>('idle');
+
+  useEffect(
+    () => () => {
+      if (waitTimerRef.current) clearTimeout(waitTimerRef.current);
+      pendingSendRef.current = null;
+    },
+    []
+  );
 
   const stopWaitTimer = () => {
     if (waitTimerRef.current) clearTimeout(waitTimerRef.current);

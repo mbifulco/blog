@@ -528,6 +528,25 @@ describe('SubscriptionForm - Spam Detection', () => {
       vi.useRealTimers();
     });
 
+    it('should drop a held signup when the form unmounts', () => {
+      vi.useFakeTimers();
+      turnstileShouldEmitToken = false;
+      const { unmount } = render(<SubscriptionForm />);
+
+      fireEvent.change(screen.getByPlaceholderText('Email Address'), {
+        target: { value: 'alice@example.com' },
+      });
+      fireEvent.click(screen.getByRole('button', { name: /subscribe/i }));
+      unmount();
+      act(() => vi.advanceTimersByTime(8000));
+
+      expect(posthog.capture).not.toHaveBeenCalledWith(
+        'newsletter/turnstile_error',
+        expect.anything()
+      );
+      vi.useRealTimers();
+    });
+
     it('should submit without a first name', async () => {
       const user = userEvent.setup();
       render(<SubscriptionForm />);
