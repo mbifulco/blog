@@ -91,7 +91,7 @@ const Blockquote: React.FC<HTMLAttributes<HTMLQuoteElement>> = ({
   children,
 }) => {
   return (
-    <blockquote className="text-pretty border-l-4 border-pink-400 bg-gray-100 p-3">
+    <blockquote className="my-10 border-0 pl-0 text-gray-900 [&>p:first-of-type]:before:text-pink-500 [&>p:first-of-type]:before:content-[open-quote] sm:[&>p:first-of-type]:before:absolute sm:[&>p:first-of-type]:before:-translate-x-full sm:[&>p:first-of-type]:before:pr-1 [&>p:last-child]:mb-0 [&>p:last-of-type]:after:text-pink-500 [&>p:last-of-type]:after:content-[close-quote] [&_p]:text-balance [&_p]:text-2xl [&_p]:leading-snug">
       {children}
     </blockquote>
   );
