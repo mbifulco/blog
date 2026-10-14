@@ -1,0 +1,103 @@
+---
+title: "The Operator Problem: What Startups Face After the MVP"
+date: 2026-10-13
+excerpt: "Every tutorial teaches you to get started. Almost none teach you what to do once your startup depends on what you built - like the day a hidden Twilio limit silently cut off our busiest support rep."
+series: The Operator Problem
+tags: [startup, founder, product]
+coverImagePublicId: newsletters/operator-problem-after-mvp/cover
+published: true
+slug: operator-problem-after-mvp
+---
+
+## The Big Idea
+
+Every tutorial teaches you how to get started. Almost none of them teach you what to do after the MVP, once your company depends on the thing you built. That gap is what I've been calling The Operator Problem - and if you're running into it, congratulations. It usually means you did something right.
+
+Last time, I wrote about [rebuilding Craftwork's first product without stopping the business](https://mikebifulco.com/newsletter/stangler-fig-pattern). This is the problem hiding underneath that story.
+
+## When our Twilio integration quietly broke
+
+When we first set up texting at [Craftwork](https://craftwork.com), we did everything by the book. We followed Twilio's docs to the letter: create the account, install the SDK, send a test message.
+
+A few seconds later, an engineer's phone buzzed. _Hello, World!_
+
+If you've built software, you know that feeling - the little jolt of joy you feel the first time something you cobbled together actually works.
+
+Today, our Twilio integration is one of the most important things we've built. Every call and text with a customer flows through our own internal tools, so anyone on our team can open a project and see the whole conversation, whether it started as a phone call, a text, or an email. When a homeowner texts Craftwork at 7am to say their door codes have changed, that message needs to land in front of the right person, right away.
+
+For a long time, it did. Then one day, one of our most important customer service teammates suddenly couldn't send messages.
+
+Not to one customer - to anyone. Texts he wrote went nowhere, while everyone else on the team kept texting customers like nothing was wrong. There was no outage, and no obvious culprit. Outbound messages from one person simply started failing.
+
+The cause turned out to be success. That teammate was the heaviest user of our entire account - the person who talked to more customers than anyone else at Craftwork. And [Twilio Conversations](https://www.twilio.com/docs/conversations/conversations-limits), it turns out, caps any individual user at 1,000 conversations. Once you hit that ceiling, nothing new goes out until you archive old conversations to make room.
+
+We didn't know the limit existed. It was documented, technically, but it took real digging to find - and nothing about the failure mode pointed us toward it. From where we sat, a critical person on our team had gone quiet, and we had no idea why. (If you landed here searching for it: Twilio's name for this one is error 50214, "User conversation limit exceeded.")
+
+The getting-started docs we'd followed so carefully on day one were still excellent at explaining how to send a message. They had very little to say about what happens when your best people send _too many_.
+
+(This isn't a knock on Twilio, by the way. We've had some version of this experience with nearly every service we depend on. Twilio just happens to be the one I have the best story about.)
+
+## Day 100: the questions change after launch
+
+Here's what nobody tells you as a founder: **the questions you ask change after the first hundred days.**
+
+On day one, you're asking whether the thing works. On day 100 - after thousands of conversations, projects, and customers have passed through it - you're not looking for "getting started" docs anymore. Your team has leveled up.
+
+Why is this failing for one teammate, but nobody else? How would we even know if messages stopped going out? Who on the team understands this well enough to fix it at 7am on a Saturday? And what happens six months from now, when someone asks why it works this way and the person who built it has moved on?
+
+There's very little _day-100_ documentation in the world, and there's a reason for that. Getting-started guides are easy to write and satisfying to read: install the package, copy the code, see the success message. Operator knowledge is the opposite. It's specific to your company, tangled up in years of decisions, and mostly learned the hard way. It's also nearly impossible to market.
+
+Nobody writes articles about the outage that didn't happen.
+
+Most tutorials help you create a dependency. Very few help you live with one.
+
+## Builder mode vs. operator mode
+
+Builder mode asks:
+
+> Can we make this work?
+
+Operator mode asks:
+
+> How do we keep this working?
+
+Nearly all the startup advice you'll ever read is about the first question: validate the idea, [ship the MVP](https://mikebifulco.com/newsletter/your-mvp-is-too-damn-big), find your first customers. That makes sense - most startups never get far enough to worry about the second one.
+
+But the two questions reward very different instincts. When you're still finding out whether an idea works, hardcoding a value or handling an edge case by hand isn't sloppy - it's good judgment. There's no sense building something sturdy until you know it should exist. Operating is different. An operator needs to know what happened, who it happened to, whether it's still happening, and how to keep it from happening again. The happy path becomes table stakes. The real job is understanding all the other paths.
+
+## The moment you become an operator
+
+The strangest part of becoming an operator is that it doesn't feel like a moment at all. You don't wake up one day and say, "I am now an operator." You just notice that the questions you ask have changed.
+
+Nothing changes in the code when an experiment becomes a workflow, or when that workflow becomes something the business can't run without. What changes is what happens when it breaks. A scrappy prototype is perfectly reasonable when three people are kicking the tires. The very same code becomes dangerous once dozens of people need it to do their jobs.
+
+It's easy to miss, because from the inside, success mostly looks like _more_: more customers, more data, more teammates, more integrations, more edge cases. Underneath all that _more_, the nature of the work has quietly changed - and the habits that got you here keep running on autopilot.
+
+## A receipt for success
+
+Here's where it gets counterintuitive.
+
+The problems that keep operators up at night - the flaky integration, the failure nobody can explain, the system only one person understands - feel like evidence that you did something wrong. Sometimes they are. More often, they're evidence that you did something right.
+
+Nobody hits a 1,000-conversation limit in their first month. You only run into that wall after your team has talked to an awful lot of customers. You don't worry about institutional memory until your systems have more history than any one person can hold in their head. A system can't become critical until it has succeeded at something first. Most startups never get to have these problems at all; they run out of money, customers, or momentum long before.
+
+Operator problems aren't a punishment for building badly. They're a receipt for building something that survived.
+
+## Signs your startup is in operator mode
+
+You might be in operator mode if:
+
+- a failure affects real customers or teammates, not just you
+- fixing one thing breaks something that seems unrelated
+- debugging requires knowing _why_ something was built the way it was
+- the person who built a system is no longer the only one maintaining it
+- a third-party API has quietly become a business dependency
+- reliability work competes with feature work for the same people
+
+The clearest signal is the simplest one: people rely on this now. Once that's true, the definition of "working" has changed - whether or not anyone announced it.
+
+## What's next
+
+You made it past the tutorial. Now you have to keep the lights on.
+
+There's a twist, though. Startups don't flip from builder to operator all at once. One of your systems might be critical infrastructure while another is an experiment that may not survive the month - and they might share the same codebase, the same database, and the same engineers. Next, I'll dig into how to tell which mode each system actually needs.
