@@ -29,7 +29,7 @@ For a long time, it did. Then one day, one of our most important customer servic
 
 Not to one customer - to anyone. Texts he wrote went nowhere, while everyone else on the team kept texting customers like nothing was wrong. There was no outage, and no obvious culprit. Outbound messages from one person simply started failing.
 
-The cause turned out to be success. That teammate was the heaviest user of our entire account - the person who talked to more customers than anyone else at Craftwork. And [Twilio Conversations](https://www.twilio.com/docs/conversations/conversations-limits), it turns out, caps any individual user at 1,000 conversations. Once you hit that ceiling, nothing new goes out until you archive old conversations to make room.
+The cause turned out to be success. That teammate was the heaviest user of our entire account - the person who talked to more customers than anyone else at Craftwork. And [Twilio Conversations](https://www.twilio.com/docs/conversations/conversations-limits), it turns out, caps any individual user at 1,000 conversations. Once you hit that ceiling, nothing new goes out until you close old conversations or remove the user from them to make room.
 
 We didn't know the limit existed. It was documented, technically, but it took real digging to find - and nothing about the failure mode pointed us toward it. From where we sat, a critical person on our team had gone quiet, and we had no idea why. (If you landed here searching for it: Twilio's name for this one is error 50214, "User conversation limit exceeded.")
 
