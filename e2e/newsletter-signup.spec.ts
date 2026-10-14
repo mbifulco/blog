@@ -91,15 +91,14 @@ test.describe('Newsletter Signup Page', () => {
     await expect(page.getByTestId('unsubscribe-text')).toBeVisible();
   });
 
-  test('should show validation errors for empty form submission', async ({
+  test('should require only the email on empty form submission', async ({
     page,
   }) => {
     const submitButton = page.getByTestId('submit-button');
     await submitButton.click();
 
-    // Check validation error messages appear
-    await expect(page.getByText('First name is required')).toBeVisible();
     await expect(page.getByText('Email is required')).toBeVisible();
+    await expect(page.getByText('First name is required')).not.toBeVisible();
   });
 
   test('should show validation error for invalid email', async ({ page }) => {

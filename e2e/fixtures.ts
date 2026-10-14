@@ -7,7 +7,7 @@ const MODAL_SHOWN_KEY = 'newsletter_modal_shown';
  * The base Playwright `test` with the newsletter modal kept shut.
  *
  * `useNewsletterModalTrigger` opens the modal once a visitor passes 50% scroll
- * depth (or sits on a page for 30 seconds). Playwright scrolls elements into
+ * depth. Playwright scrolls elements into
  * view before clicking them, so reaching anything near the bottom of a page —
  * the pagination controls, say — trips that trigger, and the modal's overlay
  * then swallows the click. Whether the click or the modal wins is a race, which
