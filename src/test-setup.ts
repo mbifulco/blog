@@ -1,5 +1,5 @@
 // Set up Jest DOM syntax in Vitest
-import '@testing-library/jest-dom';
+import '@testing-library/jest-dom/vitest';
 
 import { resolve } from 'path';
 // Load test environment variables
