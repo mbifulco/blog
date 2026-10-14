@@ -1,5 +1,11 @@
 import React from 'react';
-import { render, screen, waitFor } from '@testing-library/react';
+import {
+  act,
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import posthog from 'posthog-js';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
@@ -8,10 +14,13 @@ import SubscriptionForm from './SubscriptionForm';
 
 // Controls whether the Turnstile mock auto-emits a token. Flip to false in tests that need no token.
 let turnstileShouldEmitToken = true;
+// The rendered widget's latest onSuccess, for tests that issue a token late.
+let emitTurnstileToken: (t: string) => void = () => {};
 
 // Mock the Turnstile widget — auto-emits a token on mount so the form is submittable in tests
 vi.mock('@marsidev/react-turnstile', () => ({
   Turnstile: ({ onSuccess }: { onSuccess: (t: string) => void }) => {
+    emitTurnstileToken = onSuccess;
     React.useEffect(() => {
       if (turnstileShouldEmitToken) {
         onSuccess('test-turnstile-token');
@@ -49,12 +58,14 @@ vi.mock('@hooks/useNewsletterStats', () => ({
   }),
 }));
 
+const { mockMutate } = vi.hoisted(() => ({ mockMutate: vi.fn() }));
+
 vi.mock('@utils/trpc', () => ({
   trpc: {
     mailingList: {
       subscribe: {
         useMutation: () => ({
-          mutate: vi.fn(),
+          mutate: mockMutate,
           isPending: false,
           isSuccess: false,
         }),
@@ -87,7 +98,9 @@ describe('SubscriptionForm - Spam Detection', () => {
       const user = userEvent.setup();
       render(<SubscriptionForm source="test-source" />);
 
-      const firstNameInput = screen.getByPlaceholderText('First Name');
+      const firstNameInput = screen.getByPlaceholderText(
+        'First name (optional)'
+      );
       const emailInput = screen.getByPlaceholderText('Email Address');
       const honeypotInput = screen.getByLabelText('Website');
       const submitButton = screen.getByRole('button', { name: /subscribe/i });
@@ -118,7 +131,9 @@ describe('SubscriptionForm - Spam Detection', () => {
       const user = userEvent.setup();
       render(<SubscriptionForm source="test-source" />);
 
-      const firstNameInput = screen.getByPlaceholderText('First Name');
+      const firstNameInput = screen.getByPlaceholderText(
+        'First name (optional)'
+      );
       const emailInput = screen.getByPlaceholderText('Email Address');
       const submitButton = screen.getByRole('button', { name: /subscribe/i });
 
@@ -144,7 +159,9 @@ describe('SubscriptionForm - Spam Detection', () => {
       const user = userEvent.setup();
       render(<SubscriptionForm source="test-source" />);
 
-      const firstNameInput = screen.getByPlaceholderText('First Name');
+      const firstNameInput = screen.getByPlaceholderText(
+        'First name (optional)'
+      );
       const emailInput = screen.getByPlaceholderText('Email Address');
       const submitButton = screen.getByRole('button', { name: /subscribe/i });
 
@@ -167,7 +184,9 @@ describe('SubscriptionForm - Spam Detection', () => {
       const user = userEvent.setup();
       render(<SubscriptionForm source="test-source" />);
 
-      const firstNameInput = screen.getByPlaceholderText('First Name');
+      const firstNameInput = screen.getByPlaceholderText(
+        'First name (optional)'
+      );
       const emailInput = screen.getByPlaceholderText('Email Address');
       const submitButton = screen.getByRole('button', { name: /subscribe/i });
 
@@ -190,7 +209,9 @@ describe('SubscriptionForm - Spam Detection', () => {
       const user = userEvent.setup();
       render(<SubscriptionForm source="test-source" />);
 
-      const firstNameInput = screen.getByPlaceholderText('First Name');
+      const firstNameInput = screen.getByPlaceholderText(
+        'First name (optional)'
+      );
       const emailInput = screen.getByPlaceholderText('Email Address');
       const submitButton = screen.getByRole('button', { name: /subscribe/i });
 
@@ -213,7 +234,9 @@ describe('SubscriptionForm - Spam Detection', () => {
       const user = userEvent.setup();
       render(<SubscriptionForm source="test-source" />);
 
-      const firstNameInput = screen.getByPlaceholderText('First Name');
+      const firstNameInput = screen.getByPlaceholderText(
+        'First name (optional)'
+      );
       const emailInput = screen.getByPlaceholderText('Email Address');
       const submitButton = screen.getByRole('button', { name: /subscribe/i });
 
@@ -236,7 +259,9 @@ describe('SubscriptionForm - Spam Detection', () => {
       const user = userEvent.setup();
       render(<SubscriptionForm source="test-source" />);
 
-      const firstNameInput = screen.getByPlaceholderText('First Name');
+      const firstNameInput = screen.getByPlaceholderText(
+        'First name (optional)'
+      );
       const emailInput = screen.getByPlaceholderText('Email Address');
 
       // Test McDonald - has mixed case but normal vowel ratio
@@ -255,7 +280,9 @@ describe('SubscriptionForm - Spam Detection', () => {
       const user = userEvent.setup();
       render(<SubscriptionForm source="test-source" />);
 
-      const firstNameInput = screen.getByPlaceholderText('First Name');
+      const firstNameInput = screen.getByPlaceholderText(
+        'First name (optional)'
+      );
       const emailInput = screen.getByPlaceholderText('Email Address');
 
       const validNames = ['John', 'Sarah', 'Michael', 'Emma', 'David'];
@@ -277,7 +304,9 @@ describe('SubscriptionForm - Spam Detection', () => {
       const user = userEvent.setup();
       render(<SubscriptionForm source="test-source" />);
 
-      const firstNameInput = screen.getByPlaceholderText('First Name');
+      const firstNameInput = screen.getByPlaceholderText(
+        'First name (optional)'
+      );
       const emailInput = screen.getByPlaceholderText('Email Address');
 
       // Names with 3-4 consonants in a row are normal (e.g., "Christopher", "Andrew")
@@ -296,7 +325,9 @@ describe('SubscriptionForm - Spam Detection', () => {
       const user = userEvent.setup();
       render(<SubscriptionForm />);
 
-      const firstNameInput = screen.getByPlaceholderText('First Name');
+      const firstNameInput = screen.getByPlaceholderText(
+        'First name (optional)'
+      );
       const emailInput = screen.getByPlaceholderText('Email Address');
       const submitButton = screen.getByRole('button', { name: /subscribe/i });
 
@@ -324,7 +355,9 @@ describe('SubscriptionForm - Spam Detection', () => {
 
       render(<SubscriptionForm />);
 
-      const firstNameInput = screen.getByPlaceholderText('First Name');
+      const firstNameInput = screen.getByPlaceholderText(
+        'First name (optional)'
+      );
       const emailInput = screen.getByPlaceholderText('Email Address');
       const submitButton = screen.getByRole('button', { name: /subscribe/i });
 
@@ -349,7 +382,9 @@ describe('SubscriptionForm - Spam Detection', () => {
       const user = userEvent.setup();
       render(<SubscriptionForm source="test-source" />);
 
-      const firstNameInput = screen.getByPlaceholderText('First Name');
+      const firstNameInput = screen.getByPlaceholderText(
+        'First name (optional)'
+      );
       const emailInput = screen.getByPlaceholderText('Email Address');
       const submitButton = screen.getByRole('button', { name: /subscribe/i });
 
@@ -373,7 +408,9 @@ describe('SubscriptionForm - Spam Detection', () => {
       const user = userEvent.setup();
       render(<SubscriptionForm source="test-source" />);
 
-      const firstNameInput = screen.getByPlaceholderText('First Name');
+      const firstNameInput = screen.getByPlaceholderText(
+        'First name (optional)'
+      );
       const emailInput = screen.getByPlaceholderText('Email Address');
       const submitButton = screen.getByRole('button', { name: /subscribe/i });
 
@@ -405,7 +442,9 @@ describe('SubscriptionForm - Spam Detection', () => {
       const user = userEvent.setup();
       render(<SubscriptionForm source="test-source" />);
 
-      const firstNameInput = screen.getByPlaceholderText('First Name');
+      const firstNameInput = screen.getByPlaceholderText(
+        'First name (optional)'
+      );
       const emailInput = screen.getByPlaceholderText('Email Address');
       const submitButton = screen.getByRole('button', { name: /subscribe/i });
 
@@ -430,27 +469,78 @@ describe('SubscriptionForm - Spam Detection', () => {
       });
     });
 
-    it('should disable submit button when Turnstile has not yet emitted a token', () => {
-      // Suppress token emission to simulate widget not yet solved
+    it('should keep submit clickable before Turnstile has issued a token', () => {
       turnstileShouldEmitToken = false;
 
       render(<SubscriptionForm />);
-      const submitButton = screen.getByRole('button', { name: /subscribe/i });
 
-      // With no token emitted, the submit button should remain disabled
-      expect(submitButton).toBeDisabled();
-      // (beforeEach resets turnstileShouldEmitToken for the next test)
+      expect(
+        screen.getByRole('button', { name: /subscribe/i })
+      ).not.toBeDisabled();
     });
 
-    it('should enable submit button once Turnstile emits a token', async () => {
+    it('should hold an early submission until Turnstile issues a token', async () => {
+      turnstileShouldEmitToken = false;
+      const user = userEvent.setup();
+      render(<SubscriptionForm source="test-source" />);
+
+      await user.type(
+        screen.getByPlaceholderText('Email Address'),
+        'alice@example.com'
+      );
+      await user.click(screen.getByRole('button', { name: /subscribe/i }));
+
+      expect(mockMutate).not.toHaveBeenCalled();
+      expect(screen.getByRole('status')).toHaveTextContent(
+        /checking that you’re a person/i
+      );
+      expect(screen.getByRole('button', { name: /verifying/i })).toBeDisabled();
+
+      act(() => emitTurnstileToken('late-token'));
+
+      expect(mockMutate).toHaveBeenCalledWith(
+        expect.objectContaining({
+          email: 'alice@example.com',
+          turnstileToken: 'late-token',
+        })
+      );
+    });
+
+    it('should offer a retry when Turnstile never issues a token', () => {
+      vi.useFakeTimers();
+      turnstileShouldEmitToken = false;
       render(<SubscriptionForm />);
 
-      const submitButton = screen.getByRole('button', { name: /subscribe/i });
-
-      // After mount, the mocked Turnstile fires onSuccess via useEffect
-      await waitFor(() => {
-        expect(submitButton).not.toBeDisabled();
+      fireEvent.change(screen.getByPlaceholderText('Email Address'), {
+        target: { value: 'alice@example.com' },
       });
+      fireEvent.click(screen.getByRole('button', { name: /subscribe/i }));
+      act(() => vi.advanceTimersByTime(8000));
+
+      expect(screen.getByRole('status')).toHaveTextContent(
+        /couldn’t confirm you’re a person/i
+      );
+      expect(screen.getByRole('button', { name: /try again/i })).toBeVisible();
+      expect(posthog.capture).toHaveBeenCalledWith(
+        'newsletter/turnstile_error',
+        expect.objectContaining({ reason: 'token_wait_limit' })
+      );
+      vi.useRealTimers();
+    });
+
+    it('should submit without a first name', async () => {
+      const user = userEvent.setup();
+      render(<SubscriptionForm />);
+
+      await user.type(
+        screen.getByPlaceholderText('Email Address'),
+        'alice@example.com'
+      );
+      await user.click(screen.getByRole('button', { name: /subscribe/i }));
+
+      expect(mockMutate).toHaveBeenCalledWith(
+        expect.objectContaining({ email: 'alice@example.com' })
+      );
     });
   });
 });

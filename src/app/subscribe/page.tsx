@@ -1,21 +1,21 @@
 'use client';
 
-import type { TurnstileInstance } from '@marsidev/react-turnstile';
 import type { SubscribeMutationResponse } from '@server/routers/mailingList';
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useTurnstileGate } from '@hooks/useTurnstileGate';
 import { Turnstile } from '@marsidev/react-turnstile';
 import posthog from 'posthog-js';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 
 import SubscriberCount from '@components/NewsletterSignup/SubscriberCount';
+import TurnstileStatus from '@components/SubscriptionForm/TurnstileStatus';
 import { Button } from '@ui/button';
 import { Card, CardContent, CardHeader } from '@ui/card';
 import { Input } from '@ui/input';
 import { Label } from '@ui/label';
-import { env } from '@utils/env';
 import { trpc } from '@utils/trpc';
 import { PostHogPageview } from '../posthog-provider';
 
@@ -26,8 +26,7 @@ type FormData = {
 
 export default function NewsletterSignupPage() {
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
-  const turnstileRef = useRef<TurnstileInstance>(null);
+  const turnstile = useTurnstileGate('subscribe-page');
   const {
     register,
     handleSubmit,
@@ -66,9 +65,7 @@ export default function NewsletterSignupPage() {
       reset();
     },
     onError: (error) => {
-      // Reset Turnstile so the user gets a fresh single-use token to retry with.
-      turnstileRef.current?.reset();
-      setTurnstileToken(null);
+      turnstile.resetToken();
 
       toast.error('Subscription failed', {
         description:
@@ -94,11 +91,13 @@ export default function NewsletterSignupPage() {
       firstName: data.firstName,
     });
 
-    addSubscriberMutation.mutate({
-      email: data.email,
-      firstName: data.firstName,
-      turnstileToken: turnstileToken ?? undefined,
-    });
+    turnstile.submitWhenVerified((turnstileToken) =>
+      addSubscriberMutation.mutate({
+        email: data.email,
+        firstName: data.firstName,
+        turnstileToken,
+      })
+    );
   };
 
   if (isSubmitted) {
@@ -176,22 +175,15 @@ export default function NewsletterSignupPage() {
               <fieldset className="flex flex-col gap-2">
                 <div>
                   <Label htmlFor="firstName" className="sr-only">
-                    First Name
+                    First name (optional)
                   </Label>
                   <Input
                     id="firstName"
                     type="text"
-                    placeholder="First Name"
+                    placeholder="First name (optional)"
                     data-testid="first-name-input"
-                    {...register('firstName', {
-                      required: 'First name is required',
-                    })}
+                    {...register('firstName')}
                   />
-                  {errors.firstName && (
-                    <p className="mt-1 text-sm text-red-600">
-                      {errors.firstName.message}
-                    </p>
-                  )}
                 </div>
 
                 <div>
@@ -215,18 +207,7 @@ export default function NewsletterSignupPage() {
                 </div>
               </fieldset>
 
-              <Turnstile
-                ref={turnstileRef}
-                siteKey={env.NEXT_PUBLIC_TURNSTILE_SITE_KEY}
-                onSuccess={setTurnstileToken}
-                onExpire={() => setTurnstileToken(null)}
-                onError={() => setTurnstileToken(null)}
-                options={{
-                  appearance: 'interaction-only',
-                  size: 'flexible',
-                  theme: 'auto',
-                }}
-              />
+              <Turnstile {...turnstile.widgetProps} />
 
               <Button
                 type="submit"
@@ -236,13 +217,19 @@ export default function NewsletterSignupPage() {
                 disabled={
                   isSubmitting ||
                   addSubscriberMutation.isPending ||
-                  !turnstileToken
+                  turnstile.status === 'waiting'
                 }
               >
                 {isSubmitting || addSubscriberMutation.isPending
                   ? 'Subscribing...'
-                  : '💌 Get the newsletter'}
+                  : turnstile.status === 'waiting'
+                    ? 'Verifying…'
+                    : '💌 Get the newsletter'}
               </Button>
+              <TurnstileStatus
+                status={turnstile.status}
+                onRetry={turnstile.retry}
+              />
             </form>
             <div className="mt-4 flex flex-row justify-start gap-4 rounded-sm bg-gray-100 p-4">
               <Image

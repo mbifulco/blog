@@ -14,28 +14,26 @@ import SubscriberCount from './SubscriberCount';
 
 const NewsletterModal = () => {
   const posthog = usePostHog();
-  const { isOpen, setIsOpen, dismiss } = useNewsletterModalTrigger();
+  const { isOpen, openedBy, open, dismiss } = useNewsletterModalTrigger();
 
   useEffect(() => {
-    if (isOpen) {
+    if (openedBy) {
       if (process.env.NODE_ENV === 'development')
-        console.log('newsletter_modal_viewed');
-      posthog?.capture('newsletter_modal_viewed');
+        console.log('newsletter_modal_viewed', openedBy);
+      posthog?.capture('newsletter_modal_viewed', { trigger: openedBy });
     }
-  }, [isOpen, posthog]);
+  }, [openedBy, posthog]);
 
-  const handleOpenChange = (open: boolean) => {
-    setIsOpen(open);
-    if (!open) {
-      dismiss();
-      posthog?.capture('newsletter_modal_dismissed');
-    }
+  const handleOpenChange = (nextOpen: boolean) => {
+    if (nextOpen) return;
+    posthog?.capture('newsletter_modal_dismissed', { trigger: openedBy });
+    dismiss();
   };
 
   return (
     <>
       <Dialog open={isOpen} onOpenChange={handleOpenChange}>
-        <DialogContent className="sm:max-w-[425px]">
+        <DialogContent className="w-[calc(100%-2rem)] rounded-lg max-sm:top-6 max-sm:translate-y-0 sm:max-w-[425px]">
           <DialogHeader>
             <DialogTitle className="text-balance text-center text-2xl font-bold">
               Join{' '}
@@ -64,13 +62,15 @@ const NewsletterModal = () => {
       {!isOpen && (
         <button
           onClick={() => {
-            setIsOpen(true);
+            open('fab');
             posthog?.capture('newsletter_fab_clicked');
           }}
-          className="fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full border-2 border-pink-500 bg-white shadow-xl transition-transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-pink-200 focus:ring-offset-2"
+          className="fixed bottom-4 right-4 z-50 flex h-12 w-12 items-center justify-center rounded-full border-2 border-pink-500 bg-white shadow-xl transition-transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-pink-200 focus:ring-offset-2 sm:bottom-6 sm:right-6 sm:h-14 sm:w-14"
           aria-label="Subscribe to newsletter"
         >
-          <span className="animate-wiggle-interval text-2xl">💌</span>
+          <span className="animate-wiggle-interval text-xl sm:text-2xl">
+            💌
+          </span>
         </button>
       )}
     </>
