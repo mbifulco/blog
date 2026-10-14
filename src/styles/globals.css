@@ -1,120 +1,136 @@
 @import 'tailwindcss';
-/*
-  ---break---
-*/
 @plugin 'tailwindcss-animate';
+
 /*
-  ---break---
+  Dark mode is driven by remapping the palette below rather than by `dark:`
+  utilities, so this variant stays inert; components written with `dark:`
+  classes would otherwise flip twice.
 */
 @custom-variant dark (&:is(.dark *));
 
 @config '../../tailwind.config.js';
 
 /*
-  The default border color has changed to `currentColor` in Tailwind CSS v4,
-  so we've added these compatibility styles to make sure everything still
-  looks the same as it did with Tailwind CSS v3.
-
-  If we ever want to remove these styles, we need to add an explicit border
-  color utility to any element that depends on these defaults.
+  Riso Press: two inks (fluorescent pink, federal blue) printed on stock.
+  Light mode is white stock; dark mode prints the same inks on black stock.
 */
-@layer base {
-  *,
-  ::after,
-  ::before,
-  ::backdrop,
-  ::file-selector-button {
-    border-color: var(--color-gray-200, currentColor);
-  }
+:root {
+  --stock: #f5f7fb;
+  --stock-raised: #ffffff;
+  --ink: #17182a;
+  --ink-muted: #55576c;
+  --riso-pink: #d4197a;
+  --riso-pink-bright: #ff48b0;
+  --riso-blue: #2340b0;
+  --tint-pink: #ffe0ef;
+  --tint-blue: #dde3f8;
+  --riso-blend: multiply;
 
+  /* Solid fills for bands and buttons stay deep in both themes and carry white text */
+  --pink-fill: #d4197a;
+  --blue-fill: #2340b0;
+  --on-fill: #ffffff;
+
+  --radius: 0.25rem;
+  --background: var(--stock);
+  --foreground: var(--ink);
+  --card: var(--stock-raised);
+  --card-foreground: var(--ink);
+  --popover: var(--stock-raised);
+  --popover-foreground: var(--ink);
+  --primary: var(--riso-blue);
+  --primary-foreground: var(--stock);
+  --secondary: var(--tint-blue);
+  --secondary-foreground: var(--ink);
+  --muted: var(--tint-blue);
+  --muted-foreground: var(--ink-muted);
+  --accent: var(--tint-pink);
+  --accent-foreground: var(--ink);
+  --destructive: #c42b1c;
+  --destructive-foreground: #ffffff;
+  --border: color-mix(in oklab, var(--riso-blue) 22%, transparent);
+  --input: color-mix(in oklab, var(--riso-blue) 40%, transparent);
+  --ring: var(--riso-pink);
+}
+
+@media (prefers-color-scheme: dark) {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-    --primary: 340 82% 52%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 210 40% 96%;
-    --secondary-foreground: 222.2 84% 4.9%;
-    --muted: 210 40% 96%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 210 40% 96%;
-    --accent-foreground: 222.2 84% 4.9%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 340 82% 52%;
-    --radius: 0.5rem;
-  }
+    color-scheme: dark;
 
-  .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 340 82% 52%;
-    --primary-foreground: 222.2 84% 4.9%;
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 340 82% 52%;
+    --stock: #121318;
+    --stock-raised: #1a1b22;
+    --ink: #eceaf3;
+    --ink-muted: #a3a5b8;
+    --riso-pink: #ff5cb0;
+    --riso-pink-bright: #ff48b0;
+    --riso-blue: #8399ff;
+    --tint-pink: #221820;
+    --tint-blue: #181a23;
+    --riso-blend: screen;
+    --destructive: #ff6b5c;
+    --destructive-foreground: #121318;
+
+    /*
+      The rest of the site is written against Tailwind's light palette, so the
+      neutrals and pinks are inverted here to print on black stock.
+    */
+    --color-white: #121318;
+    --color-black: #f6f5fa;
+    --color-gray-50: #1a1b21;
+    --color-gray-100: #202128;
+    --color-gray-200: #2c2d36;
+    --color-gray-300: #3d3f4b;
+    --color-gray-400: #7a7d90;
+    --color-gray-500: #9598ab;
+    --color-gray-600: #adafc0;
+    --color-gray-700: #c3c5d3;
+    --color-gray-800: #dcdde6;
+    --color-gray-900: #eceaf3;
+    --color-gray-950: #f6f5fa;
+    --color-slate-50: #1a1b21;
+    --color-slate-100: #202128;
+    --color-slate-200: #2c2d36;
+    --color-slate-300: #3d3f4b;
+    --color-slate-400: #7a7d90;
+    --color-slate-500: #9598ab;
+    --color-slate-600: #adafc0;
+    --color-slate-700: #c3c5d3;
+    --color-slate-800: #dcdde6;
+    --color-slate-900: #eceaf3;
+    --color-pink-50: #2a1222;
+    --color-pink-100: #3a1730;
+    --color-pink-200: #5a1f47;
+    --color-pink-300: #ff9fd0;
+    --color-pink-400: #ff7cc0;
+    --color-pink-500: #ff5cb0;
+    --color-pink-600: #ff5cb0;
+    --color-pink-700: #ff86c4;
+    --color-pink-800: #ffb3da;
+    --color-pink-900: #ffd1e8;
+    --color-pink-950: #ffe8f3;
   }
 }
-
-@layer components {
-  a {
-    @apply text-pink-600 hover:underline;
-  }
-  a:hover {
-    @apply text-pink-600;
-  }
-  /* Reset color for card-style links so utilities work */
-  a.no-underline {
-    color: unset;
-  }
-  a.no-underline:hover {
-    color: unset;
-  }
-}
-
-@keyframes wiggle-interval {
-  0% { transform: rotate(0deg); }
-  5% { transform: rotate(-10deg); }
-  10% { transform: rotate(10deg); }
-  15% { transform: rotate(-10deg); }
-  20% { transform: rotate(10deg); }
-  25% { transform: rotate(0deg); }
-  100% { transform: rotate(0deg); }
-}
-
-.animate-wiggle-interval {
-  animation: wiggle-interval 3s ease-in-out infinite;
-}
-
-/*
-  ---break---
-*/
 
 @theme inline {
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
+  /* var(--font-jost) resolves on the font-variable wrapper, which also carries font-sans */
+  --font-sans: Futura, var(--font-jost), 'Trebuchet MS', Arial, sans-serif;
+  --color-stock: var(--stock);
+  --color-stock-raised: var(--stock-raised);
+  --color-ink: var(--ink);
+  --color-ink-muted: var(--ink-muted);
+  --color-riso-pink: var(--riso-pink);
+  --color-riso-pink-bright: var(--riso-pink-bright);
+  --color-riso-blue: var(--riso-blue);
+  --color-tint-pink: var(--tint-pink);
+  --color-tint-blue: var(--tint-blue);
+  --color-pink-fill: var(--pink-fill);
+  --color-blue-fill: var(--blue-fill);
+  --color-on-fill: var(--on-fill);
+
+  --radius-sm: calc(var(--radius) - 2px);
+  --radius-md: var(--radius);
+  --radius-lg: calc(var(--radius) + 2px);
   --radius-xl: calc(var(--radius) + 4px);
-  --radius-2xl: calc(var(--radius) + 8px);
-  --radius-3xl: calc(var(--radius) + 12px);
-  --radius-4xl: calc(var(--radius) + 16px);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -130,110 +146,306 @@
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
   --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
-  --color-chart-1: var(--chart-1);
-  --color-chart-2: var(--chart-2);
-  --color-chart-3: var(--chart-3);
-  --color-chart-4: var(--chart-4);
-  --color-chart-5: var(--chart-5);
-  --color-sidebar: var(--sidebar);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-ring: var(--sidebar-ring);
 }
-
-/*
-  ---break---
-*/
-
-:root {
-  --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
-}
-
-/*
-  ---break---
-*/
-
-.dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
-}
-
-/*
-  ---break---
-*/
 
 @layer base {
-  * {
-    @apply border-border outline-ring/50;
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--border);
   }
+
+  html {
+    /* Portals render outside the font-variable wrapper, so this stack avoids var(--font-jost) */
+    font-family: Futura, 'Trebuchet MS', Arial, sans-serif;
+    background: var(--stock);
+    scrollbar-color: var(--riso-blue) var(--stock);
+    accent-color: var(--riso-pink);
+  }
+
   body {
-    @apply bg-background text-foreground;
+    background: var(--stock);
+    color: var(--ink);
+    caret-color: var(--riso-pink);
+  }
+
+  ::selection {
+    background: var(--riso-pink-bright);
+    color: #fff;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--riso-pink);
+    outline-offset: 3px;
+  }
+}
+
+/* Unlayered so it outranks the typography plugin, which ships its own colors */
+.prose {
+  --tw-prose-body: var(--ink);
+  --tw-prose-headings: var(--riso-blue);
+  --tw-prose-lead: var(--ink-muted);
+  --tw-prose-links: var(--riso-blue);
+  --tw-prose-bold: var(--ink);
+  --tw-prose-counters: var(--riso-pink);
+  --tw-prose-bullets: var(--riso-pink);
+  --tw-prose-hr: var(--border);
+  --tw-prose-quotes: var(--ink);
+  --tw-prose-quote-borders: var(--riso-pink);
+  --tw-prose-captions: var(--ink-muted);
+  --tw-prose-code: var(--riso-blue);
+  --tw-prose-th-borders: var(--riso-blue);
+  --tw-prose-td-borders: var(--border);
+}
+
+@layer components {
+  a {
+    color: var(--riso-blue);
+    text-decoration-color: var(--riso-pink);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 3px;
+  }
+  a:hover {
+    text-decoration-line: underline;
+  }
+  /* Card-style links reset color so their utilities apply */
+  a.no-underline,
+  a.no-underline:hover {
+    color: unset;
+    text-decoration-line: none;
+  }
+
+  /* Display type printed slightly out of register; needs a data-text copy of its content */
+  .riso-mis {
+    position: relative;
+    display: inline-block;
+    color: var(--riso-blue);
+  }
+  .riso-mis::before {
+    content: attr(data-text);
+    position: absolute;
+    inset: 0;
+    color: var(--riso-pink-bright);
+    transform: translate(0.045em, 0.03em);
+    mix-blend-mode: var(--riso-blend);
+    pointer-events: none;
+  }
+
+  /* An image laid on an offset blue ink plate */
+  .riso-plate {
+    position: relative;
+    isolation: isolate;
+    display: block;
+  }
+  .riso-plate::before {
+    content: '';
+    position: absolute;
+    inset: 0.75rem -0.75rem -0.75rem 0.75rem;
+    background: var(--riso-blue);
+    mix-blend-mode: var(--riso-blend);
+    z-index: -1;
+    transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .riso-plate:hover::before {
+    transform: translate(0.3rem, 0.3rem);
+  }
+
+  .riso-halftone {
+    background-image: radial-gradient(
+      circle,
+      var(--riso-pink-bright) 36%,
+      transparent 40%
+    );
+    background-size: 9px 9px;
+    mix-blend-mode: var(--riso-blend);
+  }
+
+  /* The burst is the honk: it only shows while the goose is hovered or focused */
+  .goose-neck-burst {
+    mix-blend-mode: var(--riso-blend);
+    transform-box: fill-box;
+    transform-origin: center;
+    opacity: 0;
+  }
+  .group:hover .goose-neck-burst,
+  .group:focus-visible .goose-neck-burst {
+    opacity: 1;
+  }
+  .goose-neck-bird {
+    transform-box: fill-box;
+  }
+
+  .riso-kicker {
+    font-family: Futura, var(--font-jost), 'Trebuchet MS', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--riso-pink);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .riso-plate::before {
+    transition: none;
+  }
+}
+
+@keyframes wiggle-interval {
+  0% {
+    transform: rotate(0deg);
+  }
+  5% {
+    transform: rotate(-10deg);
+  }
+  10% {
+    transform: rotate(10deg);
+  }
+  15% {
+    transform: rotate(-10deg);
+  }
+  20% {
+    transform: rotate(10deg);
+  }
+  25% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+.animate-wiggle-interval {
+  animation: wiggle-interval 3s ease-in-out infinite;
+}
+
+/* Footer goose: crosses the viewport, alternating walk frames (the step frame also drops its head) */
+.goose-walker {
+  transform: translateX(100vw);
+  animation: goose-walk 34s linear infinite;
+}
+.goose-frame-step {
+  visibility: hidden;
+}
+.goose-walker .goose-frame-stand {
+  animation: goose-frame 0.5s steps(1) infinite;
+}
+.goose-walker .goose-frame-step {
+  animation: goose-frame 0.5s steps(1) infinite reverse;
+}
+
+@keyframes goose-walk {
+  from {
+    transform: translateX(100vw);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes goose-frame {
+  0% {
+    visibility: visible;
+  }
+  50% {
+    visibility: hidden;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-wiggle-interval {
+    animation: none;
+  }
+  .goose-walker {
+    animation: none;
+    transform: none;
+    left: auto;
+    right: 2rem;
+  }
+  .goose-walker .goose-frame-stand {
+    animation: none;
+  }
+  .goose-walker .goose-frame-step {
+    animation: none;
+    visibility: hidden;
+  }
+}
+
+/* Load-in: each ink layer slides into register. Only decorative layers move,
+   so content and the LCP image are never hidden while it plays. */
+@media (prefers-reduced-motion: no-preference) {
+  .riso-mis::before {
+    animation: riso-register 0.75s cubic-bezier(0.16, 1, 0.3, 1) 0.1s backwards;
+  }
+  .riso-mis:nth-of-type(2)::before {
+    animation-delay: 0.18s;
+  }
+  .riso-plate::before {
+    animation: riso-plate-set 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.25s backwards;
+  }
+  .hero-halftone {
+    animation: halftone-in 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.15s backwards;
+  }
+  .hero-strap {
+    animation: rise-in 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.3s backwards;
+  }
+  .goose-neck-bird {
+    animation: goose-rise 0.5s cubic-bezier(0.34, 1.45, 0.64, 1) 0.15s backwards;
+  }
+  .goose-neck-bird {
+    transition: transform 0.2s steps(2, end);
+  }
+  .goose-neck-burst {
+    transform: scale(0.2) rotate(-30deg);
+    transition:
+      transform 0.28s steps(4, end),
+      opacity 0.28s steps(2, end);
+  }
+  .group:hover .goose-neck-bird,
+  .group:focus-visible .goose-neck-bird {
+    transform: translateY(-2px);
+  }
+  .group:hover .goose-neck-burst,
+  .group:focus-visible .goose-neck-burst {
+    transform: none;
+  }
+}
+
+@keyframes riso-register {
+  from {
+    opacity: 0;
+    transform: translate(0.3em, -0.16em);
+  }
+}
+
+@keyframes riso-plate-set {
+  from {
+    transform: translate(-0.75rem, -0.75rem);
+  }
+}
+
+@keyframes halftone-in {
+  from {
+    opacity: 0;
+    transform: scale(0.82) rotate(-8deg);
+  }
+}
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.5rem);
+  }
+}
+
+@keyframes goose-rise {
+  from {
+    transform: translateY(100%);
   }
 }

@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { Jost, Source_Serif_4 } from 'next/font/google';
 import localFont from 'next/font/local';
 import { Toaster } from 'sonner';
 
@@ -49,7 +50,21 @@ const dumpling = localFont({
   variable: '--font-dumpling',
 });
 
-const fontVariables = [quickdraw.variable, dumpling.variable].join(' ');
+// Futura is a system font on Apple platforms; Jost stands in everywhere else.
+const jost = Jost({ subsets: ['latin'], variable: '--font-jost' });
+
+const sourceSerif = Source_Serif_4({
+  subsets: ['latin'],
+  style: ['normal', 'italic'],
+  variable: '--font-source-serif',
+});
+
+const fontVariables = [
+  quickdraw.variable,
+  dumpling.variable,
+  jost.variable,
+  sourceSerif.variable,
+].join(' ');
 
 export default function RootLayout({
   children,
@@ -61,7 +76,7 @@ export default function RootLayout({
       <body>
         <TRPCProvider>
           <PostHogProvider>
-            <div className={fontVariables}>
+            <div className={`${fontVariables} font-sans`}>
               <FathomAnalytics siteId={env.NEXT_PUBLIC_FATHOM_ID} />
               {children}
               <Toaster
@@ -70,9 +85,10 @@ export default function RootLayout({
                 position="top-right"
                 toastOptions={{
                   style: {
-                    background: 'white',
-                    border: '1px solid #e5e5e5',
-                    color: '#333',
+                    background: 'var(--stock-raised)',
+                    border: '2px solid var(--riso-blue)',
+                    borderRadius: 0,
+                    color: 'var(--ink)',
                   },
                 }}
               />
