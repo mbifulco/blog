@@ -149,7 +149,7 @@ describe('NewsletterSignupPage', () => {
     turnstileShouldEmitToken = true;
   });
 
-  it('should disable submit until a Turnstile token is present', async () => {
+  it('keeps submit clickable before a Turnstile token is present', () => {
     turnstileShouldEmitToken = false;
 
     render(
@@ -158,10 +158,9 @@ describe('NewsletterSignupPage', () => {
       </TestWrapper>
     );
 
-    const submitButton = screen.getByRole('button', {
-      name: /💌 Get the newsletter/i,
-    });
-    expect(submitButton).toBeDisabled();
+    expect(
+      screen.getByRole('button', { name: /💌 Get the newsletter/i })
+    ).not.toBeDisabled();
   });
 
   it('sends the Turnstile token in the subscribe payload', async () => {
@@ -183,7 +182,10 @@ describe('NewsletterSignupPage', () => {
       </TestWrapper>
     );
 
-    await user.type(screen.getByPlaceholderText('First Name'), 'Ada');
+    await user.type(
+      screen.getByPlaceholderText('First name (optional)'),
+      'Ada'
+    );
     await user.type(
       screen.getByPlaceholderText('you@example.com'),
       'ada@example.com'
@@ -217,7 +219,9 @@ describe('NewsletterSignupPage', () => {
         'One sharp idea each week to help you ship smarter and faster.'
       )
     ).toBeInTheDocument();
-    expect(screen.getByPlaceholderText('First Name')).toBeInTheDocument();
+    expect(
+      screen.getByPlaceholderText('First name (optional)')
+    ).toBeInTheDocument();
     expect(screen.getByPlaceholderText('you@example.com')).toBeInTheDocument();
     expect(
       screen.getByRole('button', { name: /💌 Get the newsletter/i })
@@ -236,7 +240,7 @@ describe('NewsletterSignupPage', () => {
     expect(image).toHaveAttribute('src', '/images/mike-headshot-square.png');
   });
 
-  it('should show validation errors for empty required fields', async () => {
+  it('should require only the email address', async () => {
     const user = userEvent.setup();
 
     render(
@@ -251,9 +255,11 @@ describe('NewsletterSignupPage', () => {
     await user.click(submitButton);
 
     await waitFor(() => {
-      expect(screen.getByText('First name is required')).toBeInTheDocument();
       expect(screen.getByText('Email is required')).toBeInTheDocument();
     });
+    expect(
+      screen.queryByText('First name is required')
+    ).not.toBeInTheDocument();
   });
 
   it('should have email input with email type validation', async () => {
@@ -284,7 +290,7 @@ describe('NewsletterSignupPage', () => {
       </TestWrapper>
     );
 
-    const firstNameInput = screen.getByPlaceholderText('First Name');
+    const firstNameInput = screen.getByPlaceholderText('First name (optional)');
     const emailInput = screen.getByPlaceholderText('you@example.com');
 
     await user.type(firstNameInput, 'John');
@@ -338,7 +344,7 @@ describe('NewsletterSignupPage', () => {
       </TestWrapper>
     );
 
-    const firstNameInput = screen.getByPlaceholderText('First Name');
+    const firstNameInput = screen.getByPlaceholderText('First name (optional)');
     expect(firstNameInput).toHaveClass('border-input');
 
     const emailInput = screen.getByPlaceholderText('you@example.com');
@@ -382,7 +388,7 @@ describe('NewsletterSignupPage', () => {
       </TestWrapper>
     );
 
-    const firstNameInput = screen.getByPlaceholderText('First Name');
+    const firstNameInput = screen.getByPlaceholderText('First name (optional)');
     const emailInput = screen.getByPlaceholderText('you@example.com');
     const submitButton = screen.getByRole('button', {
       name: /💌 Get the newsletter/i,
@@ -414,7 +420,9 @@ describe('NewsletterSignupPage', () => {
 
     // Verify initial form state
     expect(screen.getByText('💌 Get the newsletter')).toBeInTheDocument();
-    expect(screen.getByPlaceholderText('First Name')).toBeInTheDocument();
+    expect(
+      screen.getByPlaceholderText('First name (optional)')
+    ).toBeInTheDocument();
     expect(screen.getByPlaceholderText('you@example.com')).toBeInTheDocument();
   });
 
@@ -428,7 +436,7 @@ describe('NewsletterSignupPage', () => {
       </TestWrapper>
     );
 
-    const firstNameInput = screen.getByPlaceholderText('First Name');
+    const firstNameInput = screen.getByPlaceholderText('First name (optional)');
     const emailInput = screen.getByPlaceholderText('you@example.com');
     const submitButton = screen.getByRole('button', {
       name: /💌 Get the newsletter/i,
@@ -487,7 +495,7 @@ describe('NewsletterSignupPage', () => {
     );
 
     // Fill and submit form
-    const firstNameInput = screen.getByPlaceholderText('First Name');
+    const firstNameInput = screen.getByPlaceholderText('First name (optional)');
     const emailInput = screen.getByPlaceholderText('you@example.com');
     const submitButton = screen.getByRole('button', {
       name: /💌 Get the newsletter/i,

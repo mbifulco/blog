@@ -2,94 +2,71 @@ import { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
 
 const MODAL_SHOWN_KEY = 'newsletter_modal_shown';
-const MODAL_DISMISSED_KEY = 'newsletter_modal_dismissed';
+const MODAL_DISMISSED_AT_KEY = 'newsletter_modal_dismissed_at';
+const DISMISSAL_TTL_MS = 30 * 24 * 60 * 60 * 1000;
+
+export type NewsletterModalTrigger = 'scroll' | 'fab';
 
 type UseNewsletterModalTriggerProps = {
-  timeOnPage?: number; // in milliseconds
   scrollDepth?: number; // percentage (0-100)
 };
 
 // Modal will not be shown on these paths
 const DO_NOT_SHOW_ON_PATHS = ['/subscribe', '/newsletter'];
 
+const wasDismissedRecently = () => {
+  try {
+    const dismissedAt = Number(localStorage.getItem(MODAL_DISMISSED_AT_KEY));
+    return Date.now() - dismissedAt < DISMISSAL_TTL_MS;
+  } catch {
+    return false;
+  }
+};
+
 /**
- * Hook to manage newsletter modal trigger logic based on time on page and scroll depth.
- * The modal will be shown once per session when either trigger condition is met.
+ * Opens the newsletter modal once per session when the reader scrolls past
+ * `scrollDepth`, and stays quiet for 30 days after they dismiss it.
  *
- * @param timeOnPage - Time in milliseconds before showing the modal (default: 30000ms30s)
- * @param scrollDepth - Scroll depth percentage (0-100) to trigger the modal (default: 50)
- * @returns { isOpen: boolean, setIsOpen: (isOpen: boolean) => void, dismiss: () => void }
+ * @param scrollDepth - Scroll depth percentage (0-100) that opens the modal (default: 50)
  */
 export const useNewsletterModalTrigger = ({
-  timeOnPage = 30000,
   scrollDepth = 50,
 }: UseNewsletterModalTriggerProps = {}) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [openedBy, setOpenedBy] = useState<NewsletterModalTrigger | null>(null);
   const pathname = usePathname();
 
   useEffect(() => {
     if (pathname && DO_NOT_SHOW_ON_PATHS.includes(pathname)) return;
+    if (sessionStorage.getItem(MODAL_SHOWN_KEY) || wasDismissedRecently())
+      return;
 
-    // Check if already shown or dismissed
-    const hasBeenShown = sessionStorage.getItem(MODAL_SHOWN_KEY);
-    const hasBeenDismissed = sessionStorage.getItem(MODAL_DISMISSED_KEY);
-
-    if (hasBeenShown || hasBeenDismissed) return;
-
-    let timeTimeout: NodeJS.Timeout;
-
-    // Scroll depth trigger
     const handleScroll = () => {
-      // Check if already shown (in case time trigger fired first)
-      const hasBeenShown = sessionStorage.getItem(MODAL_SHOWN_KEY);
-      if (hasBeenShown) {
-        window.removeEventListener('scroll', handleScroll);
-        return;
-      }
-
-      const scrollTop = window.scrollY;
-      const docHeight = document.documentElement.scrollHeight;
-      const winHeight = window.innerHeight;
-      const scrollableHeight = docHeight - winHeight;
-      if (scrollableHeight <= 0) return; // Page is not scrollable
-      const scrollPercent = (scrollTop / scrollableHeight) * 100;
+      const scrollableHeight =
+        document.documentElement.scrollHeight - window.innerHeight;
+      if (scrollableHeight <= 0) return;
+      const scrollPercent = (window.scrollY / scrollableHeight) * 100;
 
       if (scrollPercent > scrollDepth) {
-        setIsOpen(true);
+        setOpenedBy('scroll');
         sessionStorage.setItem(MODAL_SHOWN_KEY, 'true');
         window.removeEventListener('scroll', handleScroll);
-        if (timeTimeout) clearTimeout(timeTimeout);
       }
     };
 
-    // Add scroll listener first, before setting up the time trigger
-    // This ensures the listener is always registered before any attempt to remove it
-    if (scrollDepth > 0) {
-      window.addEventListener('scroll', handleScroll);
-    }
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [pathname, scrollDepth]);
 
-    // Time on page trigger
-    if (timeOnPage > 0) {
-      timeTimeout = setTimeout(() => {
-        setIsOpen(true);
-        sessionStorage.setItem(MODAL_SHOWN_KEY, 'true');
-        // Remove scroll listener since we're showing the modal now
-        window.removeEventListener('scroll', handleScroll);
-      }, timeOnPage);
-    }
-
-    return () => {
-      if (timeTimeout) clearTimeout(timeTimeout);
-      if (scrollDepth > 0) {
-        window.removeEventListener('scroll', handleScroll);
-      }
-    };
-  }, [pathname, timeOnPage, scrollDepth]);
+  const open = (trigger: NewsletterModalTrigger) => setOpenedBy(trigger);
 
   const dismiss = () => {
-    setIsOpen(false);
-    sessionStorage.setItem(MODAL_DISMISSED_KEY, 'true');
+    setOpenedBy(null);
+    try {
+      localStorage.setItem(MODAL_DISMISSED_AT_KEY, String(Date.now()));
+    } catch {
+      // Storage is blocked, so the modal may reappear next session.
+    }
   };
 
-  return { isOpen, setIsOpen, dismiss };
+  return { isOpen: openedBy !== null, openedBy, open, dismiss };
 };
