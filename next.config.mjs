@@ -159,6 +159,10 @@ export default withPostHogConfig(
     sourcemaps: {
       enabled: process.env.VERCEL_ENV === 'production',
       deleteAfterUpload: true,
+      // The default 'event' mode relies on Turbopack's native debug IDs and
+      // only uploads, but Next 16.4 leaves some server chunks without one,
+      // which aborts the build. 'symbol-set' injects the IDs before uploading.
+      releaseMode: 'symbol-set',
     },
   }
 );
