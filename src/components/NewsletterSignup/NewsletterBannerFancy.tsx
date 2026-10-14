@@ -1,7 +1,6 @@
 import config from '../../config';
 import { Heading } from '../Heading';
 import { Headshot } from '../Headshot';
-import SponsorCTA from '../SponsorCTA/SponsorCTA';
 import { SubscriptionForm } from '../SubscriptionForm';
 import SubscriberCount from './SubscriberCount';
 
@@ -33,8 +32,6 @@ const NewsletterSignup: React.FC = () => {
             </span>{' '}
             Unsubscribe anytime.
           </p>
-          <br />
-          <SponsorCTA />
         </section>
       </div>
     </div>

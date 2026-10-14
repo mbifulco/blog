@@ -20,7 +20,7 @@ type SubscriptionFormProps = {
 const SubscriptionForm: React.FC<SubscriptionFormProps> = ({
   tags: _,
   source,
-  buttonText = 'Subscribe',
+  buttonText = 'Get the newsletter',
 }) => {
   const [getHoneypottedNerd, setGetHoneypottedNerd] = useState<boolean>(false);
   const [alreadySubscribed, setAlreadySubscribed] = useState<boolean>(false);
