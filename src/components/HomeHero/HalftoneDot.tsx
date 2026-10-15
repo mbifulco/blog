@@ -292,7 +292,7 @@ const HalftoneDot: React.FC<HalftoneDotProps> = ({ zoneRef, className }) => {
       }
       ctx.restore();
 
-      return moving || (pointer !== null && !still);
+      return moving;
     };
 
     const tick = (now: number) => {

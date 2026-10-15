@@ -137,7 +137,7 @@ export const TextPrettyDemo = () => {
         <div
           aria-hidden={!panelVisible}
           inert={!panelVisible}
-          className={`fixed bottom-0 left-0 right-0 z-50 border-t border-slate-200 bg-white/90 px-4 py-3 backdrop-blur-sm transition-transform duration-200 ${panelVisible ? 'translate-y-0' : 'translate-y-full'}`}
+          className={`bg-stock-raised/90 fixed bottom-0 left-0 right-0 z-50 border-t border-slate-200 px-4 py-3 backdrop-blur-sm transition-transform duration-200 ${panelVisible ? 'translate-y-0' : 'translate-y-full'}`}
         >
           <div className="flex flex-col gap-2">
             <div className="flex items-center gap-3">

@@ -66,7 +66,7 @@ export const CopyCodeButton: React.FC<CopyCodeButtonProps> = ({
       className={cn(
         // Pinned light-on-dark rather than themed: the block behind this is
         // always the Night Owl background.
-        'backdrop-blur-xs size-7 border border-white/15 bg-white/10 text-slate-300',
+        'backdrop-blur-xs size-7 border border-white/15 bg-white/10 text-[#cbd5e1]',
         'hover:bg-white/20 hover:text-white',
         'focus-visible:ring-white/40',
         // Dimmed, never hidden: a hover-only reveal is invisible on touch.

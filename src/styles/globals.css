@@ -233,6 +233,8 @@
   }
   .riso-mis::before {
     content: attr(data-text);
+    /* Decorative: the empty alternative keeps screen readers from reading titles twice */
+    content: attr(data-text) / '';
     position: absolute;
     inset: 0;
     color: var(--riso-pink-bright);
