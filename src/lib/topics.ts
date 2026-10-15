@@ -9,7 +9,6 @@ export type TopicDefinition = {
   name: string;
   description: string;
   tags: string[];
-  icon?: string;
 };
 
 export type Topic = TopicDefinition & {
@@ -29,7 +28,6 @@ export const TOPIC_DEFINITIONS: TopicDefinition[] = [
     description:
       'Tutorials, best practices, and insights on React, Next.js, TypeScript, and modern JavaScript development. From component patterns to performance optimization.',
     tags: ['react', 'javascript', 'nextjs', 'typescript'],
-    icon: '⚛️',
   },
   {
     slug: 'startup-building',
@@ -37,7 +35,6 @@ export const TOPIC_DEFINITIONS: TopicDefinition[] = [
     description:
       'Lessons learned from founding startups, going through Y Combinator, and building products. Practical advice for founders and aspiring entrepreneurs.',
     tags: ['startup', 'founder', 'product'],
-    icon: '🚀',
   },
   {
     slug: 'design-ux',
@@ -45,7 +42,6 @@ export const TOPIC_DEFINITIONS: TopicDefinition[] = [
     description:
       'Thoughts on design systems, user experience, and creating products people love. Bridging the gap between design and development.',
     tags: ['design', 'ux'],
-    icon: '🎨',
   },
   {
     slug: 'developer-productivity',
@@ -53,7 +49,6 @@ export const TOPIC_DEFINITIONS: TopicDefinition[] = [
     description:
       'Tools, workflows, and techniques to work more effectively as a developer. From CLI tools to productivity systems.',
     tags: ['dev', 'tools', 'productivity'],
-    icon: '🛠️',
   },
 ];
 
