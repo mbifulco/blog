@@ -29,6 +29,12 @@ type FullPostProps = {
   topic?: Pick<TopicDefinition, 'slug' | 'name'> | null;
 };
 
+// Display titles are huge and uppercase, so identifiers like
+// "Array.filter(Boolean)" need break points that aren't mid-word. The pink
+// misregistered copy reads the same string, so both layers wrap together.
+const withBreakPoints = (title: string) =>
+  title.replace(/([./])/g, '$1\u200B').replace(/\(/g, '\u200B(');
+
 const typeLabel = (contentType: 'post' | 'newsletter') =>
   contentType === 'newsletter' ? '💌 Tiny Improvements' : 'Article';
 
@@ -50,6 +56,7 @@ const FullPost: React.FC<FullPostProps> = ({
     title,
     youTubeId,
   } = frontmatter;
+  const breakableTitle = withBreakPoints(title);
 
   // Build breadcrumb trail
   const breadcrumbs =
@@ -111,11 +118,11 @@ const FullPost: React.FC<FullPostProps> = ({
           <Breadcrumbs crumbs={breadcrumbs} className="mb-8" />
           <Heading
             as="h1"
-            className="m-0 max-w-[18ch] p-0 text-[clamp(2.25rem,6vw,4.5rem)] leading-[0.98] tracking-[-0.02em] md:text-[clamp(2.25rem,6vw,4.5rem)]"
+            className="m-0 max-w-[18ch] p-0 text-[clamp(2.25rem,6vw,4.5rem)] leading-[0.98] tracking-[-0.02em] [overflow-wrap:anywhere] md:text-[clamp(2.25rem,6vw,4.5rem)]"
             data-pagefind-meta="title"
           >
-            <span className="riso-mis" data-text={title}>
-              {title}
+            <span className="riso-mis" data-text={breakableTitle}>
+              {breakableTitle}
             </span>
           </Heading>
           {series && (

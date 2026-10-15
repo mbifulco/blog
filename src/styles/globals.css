@@ -213,6 +213,11 @@
   a:hover {
     text-decoration-line: underline;
   }
+  /* A bare URL or long identifier in a post breaks rather than widening the page */
+  .prose a,
+  .prose code {
+    overflow-wrap: anywhere;
+  }
   /* Card-style links reset color so their utilities apply */
   a.no-underline,
   a.no-underline:hover {
