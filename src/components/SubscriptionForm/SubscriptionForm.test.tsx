@@ -107,7 +107,10 @@ describe('SubscriptionForm - Spam Detection', () => {
 
       await user.type(firstNameInput, 'John');
       await user.type(emailInput, 'john@example.com');
-      await user.type(honeypotInput, 'http://spam-site.com');
+      // Bots set the hidden field's value directly; a display:none input can't take focus, so user.type can't fill it
+      fireEvent.change(honeypotInput, {
+        target: { value: 'http://spam-site.com' },
+      });
       await user.click(submitButton);
 
       await waitFor(() => {
