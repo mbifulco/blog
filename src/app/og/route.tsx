@@ -472,7 +472,9 @@ const CARD_GROUNDS = { newsletter: TINT_PINK, podcast: TINT_BLUE } as const;
 export async function GET(request: Request) {
   const params = new URL(request.url).searchParams;
   const card = params.get('card');
-  const cardName = card && card in CARDS ? (card as keyof typeof CARDS) : null;
+  // Own keys only: `in` would also match inherited names like `__proto__`.
+  const cardName =
+    card && Object.hasOwn(CARDS, card) ? (card as keyof typeof CARDS) : null;
   const Special = cardName ? CARDS[cardName] : null;
   const title = params.get('title')?.trim().slice(0, 90);
   const kicker = params.get('kicker')?.trim().slice(0, 40) || undefined;
