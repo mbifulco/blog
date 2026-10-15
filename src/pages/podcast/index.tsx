@@ -27,7 +27,7 @@ const Eponymous = () => {
         <p className="mt-2 text-sm">
           That&apos;s right, my newsletter is also called{' '}
           <em>Tiny Improvements</em>. Sound interesting? Check it out{' '}
-          <Link href="/newsletter" className="text-pink-600 hover:underline">
+          <Link href="/newsletter" className="text-riso-pink hover:underline">
             here
           </Link>
           .
@@ -68,7 +68,7 @@ const PodcastPage = () => {
         Occasionally, {"I'll"} write something I like <em>so much</em> that I
         record it as a podcast. Think of them as short-form audio essays,
         published under the same title as my <Eponymous />{' '}
-        <Link className="text-pink-600 hover:underline" href="/newsletter">
+        <Link className="text-riso-pink hover:underline" href="/newsletter">
           newsletter
         </Link>
         .

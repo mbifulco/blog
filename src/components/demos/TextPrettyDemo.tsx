@@ -67,7 +67,7 @@ export const TextPrettyDemo = () => {
           style={{ width: isDesktop ? `${width}%` : '100%' }}
         >
           <div className="bg-stock-raised rounded-sm border border-slate-200 p-4">
-            <p className="mb-3 text-xs font-bold uppercase tracking-widest text-slate-400">
+            <p className="mb-3 text-xs font-bold uppercase tracking-widest text-slate-600">
               Default
             </p>
             {paragraphs.map((text, i) => (
@@ -83,7 +83,7 @@ export const TextPrettyDemo = () => {
           </div>
 
           <div className="rounded-sm border border-pink-200 bg-pink-50 p-4">
-            <p className="mb-3 text-xs font-bold uppercase tracking-widest text-pink-400">
+            <p className="text-riso-pink mb-3 text-xs font-bold uppercase tracking-widest">
               text-wrap: pretty
             </p>
             {paragraphs.map((text, i) => (
@@ -116,7 +116,7 @@ export const TextPrettyDemo = () => {
         >
           <p
             className={`mb-3 text-xs font-bold uppercase tracking-widest ${
-              prettyEnabled ? 'text-pink-400' : 'text-slate-400'
+              prettyEnabled ? 'text-riso-pink' : 'text-slate-600'
             }`}
           >
             {prettyEnabled ? 'text-wrap: pretty' : 'Default'}
