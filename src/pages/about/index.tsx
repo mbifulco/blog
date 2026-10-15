@@ -68,7 +68,7 @@ const AboutPage: NextPage<AboutPageProps> = ({ mdxSource, error }) => {
   return (
     <>
       <SEO
-        image={ogImageUrl({ title: 'About me', kicker: 'Mike Bifulco' })}
+        image={ogImageUrl('about')}
         title="About Mike Bifulco | CTO, Y Combinator Alum & Developer Advocate"
         description="Mike Bifulco is a startup CTO, Y Combinator alum, and developer advocate. Former Stripe, Google, and Microsoft. Creator of Tiny Improvements newsletter. Expert in React, Next.js, and API design."
       />

@@ -94,10 +94,7 @@ const TagPage: React.FC<TagPageProps> = ({
   return (
     <div className="mx-auto flex max-w-4xl flex-col gap-4">
       <SEO
-        image={ogImageUrl({
-          title: `#${tag}`,
-          kicker: `${all.length} posts tagged`,
-        })}
+        image={ogImageUrl(`tags/${tag}`)}
         title={`#${tag}: ${all.length} posts, articles, and videos`}
         description={`Posts, articles, and videos tagged with ${tag} for designers and developers building great things on the web.`}
       />

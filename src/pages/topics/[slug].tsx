@@ -83,10 +83,7 @@ const TopicPage: NextPage<TopicPageProps> = ({ topic }) => {
   return (
     <>
       <SEO
-        image={ogImageUrl({
-          title: topic.name,
-          kicker: `Topic · ${topic.totalCount} articles`,
-        })}
+        image={ogImageUrl(`topics/${topic.slug}`)}
         title={pageTitle}
         description={topic.description}
         ogType="article"

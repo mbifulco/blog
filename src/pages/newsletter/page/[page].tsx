@@ -85,7 +85,7 @@ const NewsletterPage: React.FC<NewsletterPageProps> = ({
       <SEO
         title="💌 Tiny Improvements: a newsletter for startup founders, indiehackers, and product builders"
         description={config.newsletter.shortDescription}
-        image={ogImageUrl({ card: 'newsletter' })}
+        image={ogImageUrl('newsletter')}
       />
 
       <div className="flex flex-col gap-4">

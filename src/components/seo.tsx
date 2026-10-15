@@ -78,7 +78,7 @@ const SEO: React.FC<SEOProps> = ({
     return fullUrl;
   };
 
-  const ogImage = image ?? ogImageUrl({ title });
+  const ogImage = image ?? ogImageUrl();
 
   return (
     <Head>

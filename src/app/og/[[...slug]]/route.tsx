@@ -1,8 +1,10 @@
 import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
+import type { OgCard } from '@lib/og-cards';
 import { ImageResponse } from 'next/og';
 
 import { GOOSE_NECK_BOUNDS, GOOSE_NECK_PATHS } from '@components/GooseMark';
+import { getOgCards } from '@lib/og-cards';
 
 const WIDTH = 1200;
 const HEIGHT = 630;
@@ -461,23 +463,46 @@ const PodcastCard: React.FC = () => (
   </>
 );
 
-const CARDS = { newsletter: NewsletterCard, podcast: PodcastCard } as const;
-const CARD_GROUNDS = { newsletter: TINT_PINK, podcast: TINT_BLUE } as const;
+const GROUNDS: Record<OgCard['kind'], string> = {
+  home: STOCK,
+  page: STOCK,
+  newsletter: TINT_PINK,
+  podcast: TINT_BLUE,
+};
 
-/**
- * Open Graph card in the site's riso style. `card=newsletter` or
- * `card=podcast` draws that fixed card; otherwise no `title` draws the home card, and a `title`
- * draws a page card with an optional `kicker` line.
- */
-export async function GET(request: Request) {
-  const params = new URL(request.url).searchParams;
-  const card = params.get('card');
-  // Own keys only: `in` would also match inherited names like `__proto__`.
-  const cardName =
-    card && Object.hasOwn(CARDS, card) ? (card as keyof typeof CARDS) : null;
-  const Special = cardName ? CARDS[cardName] : null;
-  const title = params.get('title')?.trim().slice(0, 90);
-  const kicker = params.get('kicker')?.trim().slice(0, 40) || undefined;
+const CardArt: React.FC<{ card: OgCard }> = ({ card }) => {
+  switch (card.kind) {
+    case 'home':
+      return <HomeCard />;
+    case 'newsletter':
+      return <NewsletterCard />;
+    case 'podcast':
+      return <PodcastCard />;
+    case 'page':
+      return <PageCard title={card.title} kicker={card.kicker} />;
+  }
+};
+
+// Only the cards in getOgCards exist; any other path is a 404 rather than an
+// image of whatever text the URL asks for.
+export const dynamicParams = false;
+export const dynamic = 'force-static';
+
+export async function generateStaticParams() {
+  const cards = await getOgCards();
+  return [...cards.keys()].map((key) => ({
+    slug: key ? key.split('/') : [],
+  }));
+}
+
+/** A riso Open Graph card, prerendered for each path in getOgCards. */
+export async function GET(
+  _request: Request,
+  { params }: { params: Promise<{ slug?: string[] }> }
+) {
+  const { slug = [] } = await params;
+  const card = (await getOgCards()).get(slug.map(decodeURIComponent).join('/'));
+  if (!card) return new Response('Not found', { status: 404 });
 
   return new ImageResponse(
     <div
@@ -486,17 +511,11 @@ export async function GET(request: Request) {
         height: HEIGHT,
         display: 'flex',
         position: 'relative',
-        background: cardName ? CARD_GROUNDS[cardName] : STOCK,
+        background: GROUNDS[card.kind],
         fontFamily: 'Dumpling',
       }}
     >
-      {Special ? (
-        <Special />
-      ) : title ? (
-        <PageCard title={title} kicker={kicker} />
-      ) : (
-        <HomeCard />
-      )}
+      <CardArt card={card} />
     </div>,
     {
       width: WIDTH,

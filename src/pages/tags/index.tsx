@@ -26,7 +26,7 @@ const TagsPage: NextPage<TagsPageProps> = ({ tags }) => {
     <>
       <main className="mx-auto flex max-w-5xl flex-col gap-8">
         <SEO
-          image={ogImageUrl({ title: 'All tags', kicker: 'Browse' })}
+          image={ogImageUrl('tags')}
           title="Browse all tags used on articles"
           description="Browse all tags used on articles, newsletters, and podcasts across the site"
         />

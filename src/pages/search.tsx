@@ -47,7 +47,7 @@ const SearchPage = () => {
   return (
     <>
       <SEO
-        image={ogImageUrl({ title: 'Search' })}
+        image={ogImageUrl('search')}
         title="Search"
         meta={[{ name: 'robots', content: 'noindex' }]}
       />

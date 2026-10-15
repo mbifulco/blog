@@ -56,7 +56,7 @@ const PodcastPage = () => {
       <SEO
         title="Tiny Improvements, the Podcast"
         description={config.podcast.description}
-        image={ogImageUrl({ card: 'podcast' })}
+        image={ogImageUrl('podcast')}
       />
 
       <header className="space-y-2">

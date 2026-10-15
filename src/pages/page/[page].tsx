@@ -91,10 +91,7 @@ const PaginatedPage: NextPage<PaginatedPageProps> = ({
       <SEO
         title={`Articles - Page ${pagination.currentPage}`}
         description={`Page ${pagination.currentPage} of articles on React, design, and startup building from Mike Bifulco.`}
-        image={ogImageUrl({
-          title: 'Articles',
-          kicker: `Page ${pagination.currentPage}`,
-        })}
+        image={ogImageUrl('articles')}
         pagination={{
           currentPage: pagination.currentPage,
           totalPages: pagination.totalPages,

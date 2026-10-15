@@ -82,10 +82,7 @@ const SeriesPage: NextPage<SeriesPageProps> = ({ series }) => {
     <>
       <div className="mx-auto flex max-w-6xl flex-col gap-4">
         <SEO
-          image={ogImageUrl({
-            title: series?.name,
-            kicker: `A series in ${series?.length} parts`,
-          })}
+          image={ogImageUrl(`series/${series?.slug}`)}
           canonical={router.asPath}
           title={pageTitle}
           ogType="article"

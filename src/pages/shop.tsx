@@ -21,10 +21,7 @@ const Shop: NextPage = () => {
   return (
     <>
       <SEO
-        image={ogImageUrl({
-          title: 'Shop',
-          kicker: 'Stickers and other things I made',
-        })}
+        image={ogImageUrl('shop')}
         title="Shop - stickers, design files, digital downloads, and other stuff I've made"
         description="I occasionally design and sell things in small runs - stickers, design files, whitepapers, digital downloads, and other stuff I've made."
       />

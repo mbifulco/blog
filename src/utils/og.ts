@@ -1,18 +1,8 @@
 import config from '../config';
 
-type OgCard = {
-  /** A fixed design instead of a titled page card. */
-  card?: 'newsletter' | 'podcast';
-  title?: string;
-  kicker?: string;
-};
-
-/** Absolute URL of a generated riso Open Graph card; no title draws the home card. */
-export const ogImageUrl = ({ card, title, kicker }: OgCard = {}) => {
-  const params = new URLSearchParams();
-  if (card) params.set('card', card);
-  if (title) params.set('title', title);
-  if (kicker) params.set('kicker', kicker);
-  const query = params.toString();
-  return `${config.siteUrl}/og${query ? `?${query}` : ''}`;
-};
+/**
+ * Absolute URL of a prerendered riso Open Graph card. `path` is a key from
+ * getOgCards, such as 'newsletter' or 'tags/react'; '' is the home card.
+ */
+export const ogImageUrl = (path = '') =>
+  `${config.siteUrl}/og${path ? `/${path.split('/').map(encodeURIComponent).join('/')}` : ''}`;

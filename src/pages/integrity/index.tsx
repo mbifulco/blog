@@ -11,10 +11,7 @@ import { ogImageUrl } from '@utils/og';
 const Shop: NextPage = () => (
   <>
     <SEO
-      image={ogImageUrl({
-        title: 'Editorial integrity',
-        kicker: 'Reviews and sponsorships',
-      })}
+      image={ogImageUrl('integrity')}
       title="Editorial Integrity, Paid Reviews, and Sponsorship policy"
       description="My policy on editorial integrity, paid reviews, and sponsorships."
     />

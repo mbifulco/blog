@@ -37,7 +37,7 @@ const WorkPage: NextPage<WorkPageProps> = ({ articles }) => {
   return (
     <>
       <SEO
-        image={ogImageUrl({ title: 'My work around the web', kicker: 'Work' })}
+        image={ogImageUrl('work')}
         title="My work from around the web"
         canonical="/work"
         description="Some samples of my work online"
