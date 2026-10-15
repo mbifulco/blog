@@ -88,7 +88,7 @@ export const CopyAsMarkdown: React.FC<CopyAsMarkdownProps> = ({
         size="sm"
         onClick={copyMarkdown}
         aria-label="Copy as Markdown"
-        className="flex-1 justify-center text-xs sm:flex-none"
+        className="border-riso-blue text-riso-blue hover:bg-tint-blue hover:text-riso-blue flex-1 justify-center rounded-none border-2 bg-transparent font-futura text-xs font-bold shadow-none sm:flex-none"
       >
         {state === 'copied' ? (
           <Check className="size-3.5" aria-hidden />
@@ -107,7 +107,7 @@ export const CopyAsMarkdown: React.FC<CopyAsMarkdownProps> = ({
             variant="outline"
             size="sm"
             aria-label="More Markdown options"
-            className="shrink-0 text-xs"
+            className="border-riso-blue text-riso-blue hover:bg-tint-blue hover:text-riso-blue shrink-0 rounded-none border-2 border-l-0 bg-transparent text-xs shadow-none"
           >
             <ChevronDown className="size-3.5" aria-hidden />
           </Button>

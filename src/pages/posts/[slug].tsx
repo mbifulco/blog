@@ -1,6 +1,7 @@
 import type { GetStaticProps, NextPage } from 'next';
 import type { RelatedContent, RelatedPostsManifest } from '@lib/related-posts';
 import type { Series } from '@lib/series';
+import type { TopicDefinition } from '@lib/topics';
 import type { BlogPost } from '../../data/content-types';
 import { useRef } from 'react';
 import { useRouter } from 'next/router';
@@ -12,6 +13,7 @@ import atprotoData from '@data/atproto-documents.json';
 import relatedPostsData from '@data/generated/relatedPosts.json';
 import { markdownUrlFor } from '@lib/markdown-export/urls';
 import { getSeries } from '@lib/series';
+import { getTopicForTags } from '@lib/topics';
 import { Colophon } from '../../components/Colophon';
 import { BlogPost as Post } from '../../components/Post';
 import SEO from '../../components/seo';
@@ -27,6 +29,7 @@ type PostPageParams = {
 type PostPageProps = {
   post: BlogPost;
   series?: Series | null;
+  topic: Pick<TopicDefinition, 'slug' | 'name'> | null;
   relatedContent: RelatedContent[];
   standardSiteDocumentUri?: string;
   standardSitePublicationUri?: string;
@@ -62,6 +65,7 @@ export const getStaticProps: GetStaticProps<
     props: {
       post,
       series: series ?? null,
+      topic: getTopicForTags(post.frontmatter.tags),
       relatedContent,
       ...(standardSiteDocumentUri ? { standardSiteDocumentUri } : {}),
       ...(standardSitePublicationUri ? { standardSitePublicationUri } : {}),
@@ -85,6 +89,7 @@ export async function getStaticPaths() {
 const PostPage: NextPage<PostPageProps> = ({
   post,
   series,
+  topic,
   relatedContent,
   standardSiteDocumentUri,
   standardSitePublicationUri,
@@ -124,7 +129,7 @@ const PostPage: NextPage<PostPageProps> = ({
   return (
     <>
       <div
-        className="mx-auto w-full px-4 md:px-0"
+        className="mx-auto flex w-full flex-col gap-16"
         onMouseEnter={handlePostReadStarted}
       >
         <SEO
@@ -146,7 +151,7 @@ const PostPage: NextPage<PostPageProps> = ({
           </div>
         )}
 
-        <Post post={post} series={series} />
+        <Post post={post} series={series} topic={topic} />
         <WebmentionMetadata
           coverImageUrl={coverImageUrl}
           summary={excerpt}
@@ -156,10 +161,12 @@ const PostPage: NextPage<PostPageProps> = ({
         />
         <Colophon />
       </div>
-      {relatedContent && relatedContent.length > 0 && (
-        <RelatedPosts relatedContent={relatedContent} currentTitle={title} />
-      )}
-      <NewsletterSignup />
+      <div className="mt-20 flex flex-col gap-20">
+        {relatedContent && relatedContent.length > 0 && (
+          <RelatedPosts relatedContent={relatedContent} currentTitle={title} />
+        )}
+        <NewsletterSignup />
+      </div>
     </>
   );
 };
