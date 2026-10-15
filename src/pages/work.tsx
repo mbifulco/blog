@@ -1,11 +1,12 @@
 import type { GetStaticProps, NextPage } from 'next';
-import type { Article } from '../data/content-types';
+import type { Article, DocumentSummary } from '../data/content-types';
 import { useRef } from 'react';
 import posthog from 'posthog-js';
 
 import { ogImageUrl } from '@utils/og';
 import { ExternalWorkItem } from '../components/ExternalWork';
 import SEO from '../components/seo';
+import { toSummary } from '../data/content-types';
 import { getAllExternalReferences } from '../lib/external-references';
 
 export const getStaticProps: GetStaticProps = async () => {
@@ -13,13 +14,13 @@ export const getStaticProps: GetStaticProps = async () => {
 
   return {
     props: {
-      articles,
+      articles: articles.map(toSummary),
     },
   };
 };
 
 type WorkPageProps = {
-  articles: Article[];
+  articles: DocumentSummary<Article>[];
 };
 
 const WorkPage: NextPage<WorkPageProps> = ({ articles }) => {

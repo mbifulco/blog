@@ -3,13 +3,13 @@
 import type { SubscribeMutationResponse } from '@server/routers/mailingList';
 import { useState } from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
 import { useTurnstileGate } from '@hooks/useTurnstileGate';
 import { Turnstile } from '@marsidev/react-turnstile';
 import posthog from 'posthog-js';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 
+import Link from '@components/Link';
 import SubscriberCount from '@components/NewsletterSignup/SubscriberCount';
 import TurnstileStatus from '@components/SubscriptionForm/TurnstileStatus';
 import { Button } from '@ui/button';
@@ -158,7 +158,7 @@ export default function NewsletterSignupPage() {
                 devs &amp; founders building better.
               </h1>
               <p
-                className="mb-2 text-lg text-muted-foreground"
+                className="text-muted-foreground mb-2 text-lg"
                 data-testid="newsletter-description"
               >
                 One sharp idea each week to help you ship smarter and faster.
@@ -240,11 +240,11 @@ export default function NewsletterSignupPage() {
                 className="rounded-full"
               />
               <div className="flex flex-col">
-                <p className="text-sm text-foreground">💌 Tiny Improvements</p>
-                <p className="text-sm font-medium text-muted-foreground">
+                <p className="text-foreground text-sm">💌 Tiny Improvements</p>
+                <p className="text-muted-foreground text-sm font-medium">
                   <span className="font-normal">by</span> Mike Bifulco
                 </p>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-muted-foreground text-sm">
                   YC founder. Ex-Stripe, Google, Microsoft.
                 </p>
               </div>

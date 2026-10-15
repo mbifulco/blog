@@ -1,4 +1,8 @@
-import type { BlogPost, Newsletter } from '@data/content-types';
+import type {
+  BlogPost,
+  DocumentSummary,
+  Newsletter,
+} from '@data/content-types';
 import type { Series } from '@lib/series';
 import type { Topic } from '@lib/topics';
 import type { UnifiedFeedItem } from '@lib/unified-feed';
@@ -28,20 +32,24 @@ const PUBLISHER_DATA: Organization = {
   },
 };
 
+// Structured data only reads frontmatter, so it accepts summaries as well as
+// full documents.
+type PostLike = DocumentSummary<BlogPost> | DocumentSummary<Newsletter>;
+
 // Helper to determine if content is a Newsletter (has specific metadata pattern)
-const isNewsletter = (post: BlogPost | Newsletter): post is Newsletter => {
+const isNewsletter = (post: PostLike): post is DocumentSummary<Newsletter> => {
   // Newsletters don't have the 'content' field in frontmatter that BlogPosts have
   return !('content' in post.frontmatter && post.frontmatter.content);
 };
 
 // Helper to generate the correct URL path for content
-const getContentUrl = (post: BlogPost | Newsletter): string => {
+const getContentUrl = (post: PostLike): string => {
   const pathPrefix = isNewsletter(post) ? 'newsletter' : 'posts';
   return `${BASE_SITE_URL}/${pathPrefix}/${post.frontmatter.slug}`;
 };
 
 // Helper to generate Cloudinary image URL
-const getImageUrl = (post: BlogPost | Newsletter): string => {
+const getImageUrl = (post: PostLike): string => {
   const prefix = isNewsletter(post) ? 'newsletters' : 'posts';
   const publicId =
     post.frontmatter.coverImagePublicId ||
@@ -86,7 +94,7 @@ const AUTHOR_DATA: Person = {
  * @param post - The post or newsletter to generate structured data for
  * @returns The structured data for the video
  */
-export const generateVideoStructuredData = (post: BlogPost | Newsletter) => {
+export const generateVideoStructuredData = (post: PostLike) => {
   if (!post.frontmatter.youTubeId) {
     return undefined;
   }
@@ -108,7 +116,7 @@ export const generateVideoStructuredData = (post: BlogPost | Newsletter) => {
 
 type GeneratePostStructuredDataProps = {
   series?: Series | null;
-  post: BlogPost | Newsletter;
+  post: PostLike;
 };
 
 export type StructuredDataWithType = WithContext<Thing> & { '@type': string };

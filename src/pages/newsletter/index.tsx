@@ -1,5 +1,5 @@
 import type { GetStaticProps } from 'next';
-import type { Newsletter } from '@data/content-types';
+import type { DocumentSummary, Newsletter } from '@data/content-types';
 import { useRef } from 'react';
 import posthog from 'posthog-js';
 
@@ -13,6 +13,7 @@ import SponsorCTA from '@components/SponsorCTA/SponsorCTA';
 import StructuredData from '@components/StructuredData/StructuredData';
 import { SubscriptionForm } from '@components/SubscriptionForm';
 import { Subtitle } from '@components/Subtitle';
+import { toSummary } from '@data/content-types';
 import { getPaginatedNewsletters } from '@lib/newsletters';
 import { tinyImprovementsBlogStructuredData } from '@utils/newsletterStructuredData';
 import { ogImageUrl } from '@utils/og';
@@ -23,7 +24,7 @@ export const getStaticProps: GetStaticProps<NewsletterPageProps> = async () => {
 
   return {
     props: {
-      newsletters: paginatedNewsletters.items,
+      newsletters: paginatedNewsletters.items.map(toSummary),
       pagination: {
         currentPage: paginatedNewsletters.currentPage,
         totalPages: paginatedNewsletters.totalPages,
@@ -35,7 +36,7 @@ export const getStaticProps: GetStaticProps<NewsletterPageProps> = async () => {
 };
 
 type NewsletterPageProps = {
-  newsletters: Newsletter[];
+  newsletters: DocumentSummary<Newsletter>[];
   pagination: {
     currentPage: number;
     totalPages: number;

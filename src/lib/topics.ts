@@ -1,5 +1,10 @@
-import type { BlogPost, Newsletter } from '@data/content-types';
+import type {
+  BlogPost,
+  DocumentSummary,
+  Newsletter,
+} from '@data/content-types';
 
+import { toSummary } from '@data/content-types';
 import { getPostBySlug } from './blog';
 import { getNewsletterBySlug } from './newsletters';
 import { getContentForTag } from './tags';
@@ -12,8 +17,8 @@ export type TopicDefinition = {
 };
 
 export type Topic = TopicDefinition & {
-  posts: BlogPost[];
-  newsletters: Newsletter[];
+  posts: DocumentSummary<BlogPost>[];
+  newsletters: DocumentSummary<Newsletter>[];
   totalCount: number;
 };
 
@@ -132,8 +137,9 @@ export const getTopicContent = async (slug: string): Promise<Topic | null> => {
 
   return {
     ...topicDef,
-    posts: sortedPosts,
-    newsletters: sortedNewsletters,
+    // Summaries: topic pages render these as cards, not full articles.
+    posts: sortedPosts.map(toSummary),
+    newsletters: sortedNewsletters.map(toSummary),
     totalCount: sortedPosts.length + sortedNewsletters.length,
   };
 };

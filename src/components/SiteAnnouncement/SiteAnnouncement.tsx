@@ -1,5 +1,4 @@
-import Link from 'next/link';
-
+import Link from '@components/Link';
 import SubscriberCount from '@components/NewsletterSignup/SubscriberCount';
 import clsxm from '@utils/clsxm';
 

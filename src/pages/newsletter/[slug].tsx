@@ -1,5 +1,5 @@
 import type { GetStaticProps } from 'next';
-import type { Newsletter } from '@data/content-types';
+import type { Newsletter, RenderedDocument } from '@data/content-types';
 import type { RelatedContent, RelatedPostsManifest } from '@lib/related-posts';
 import type { Series } from '@lib/series';
 import type { TopicDefinition } from '@lib/topics';
@@ -13,6 +13,7 @@ import SEO from '@components/seo';
 import StructuredData from '@components/StructuredData/StructuredData';
 import WebmentionMetadata from '@components/webmentionMetadata';
 import atprotoData from '@data/atproto-documents.json';
+import { toRendered } from '@data/content-types';
 import relatedPostsData from '@data/generated/relatedPosts.json';
 import { markdownUrlFor } from '@lib/markdown-export/urls';
 import { getAllNewsletters, getNewsletterBySlug } from '@lib/newsletters';
@@ -58,7 +59,7 @@ export const getStaticProps: GetStaticProps<
   return {
     props: {
       newsletter: {
-        ...newsletter,
+        ...toRendered(newsletter),
         source: mdxSource,
       },
       series: series ?? null,
@@ -84,7 +85,7 @@ export async function getStaticPaths() {
 }
 
 type NewsletterPageProps = {
-  newsletter: Newsletter;
+  newsletter: RenderedDocument<Newsletter>;
   series?: Series | null;
   topic: Pick<TopicDefinition, 'slug' | 'name'> | null;
   relatedContent: RelatedContent[];
