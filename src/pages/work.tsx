@@ -40,8 +40,13 @@ const WorkPage: NextPage<WorkPageProps> = ({ articles }) => {
         canonical="/work"
         description="Some samples of my work online"
       />
-      <div className="flex flex-row gap-4" onMouseEnter={handlePageViewed}>
-        <h1 className="text-4xl font-bold">Some samples of my work online</h1>
+      <div
+        className="mx-auto flex w-full max-w-3xl flex-col gap-6"
+        onMouseEnter={handlePageViewed}
+      >
+        <h1 className="text-riso-blue m-0 text-balance font-futura text-4xl font-bold">
+          Some samples of my work online
+        </h1>
         <div>
           <p className="mb-8">
             This page contains articles, videos, and other references to my work
