@@ -232,12 +232,9 @@ const Pre: React.FC<PreProps> = ({ children }) => {
                     {i + 1}
                   </span>
                   <span style={{ display: 'table-cell' }}>
-                    <div {...getLineProps({ line, key: i })}>
+                    <div {...getLineProps({ line })}>
                       {line.map((token, lineKey) => (
-                        <span
-                          key={lineKey}
-                          {...getTokenProps({ token, key: lineKey })}
-                        />
+                        <span key={lineKey} {...getTokenProps({ token })} />
                       ))}
                     </div>
                   </span>
