@@ -17,7 +17,7 @@ const Eponymous = () => {
       >
         eponymous
       </Popover.Button>
-      <Popover.Panel className="absolute left-3 z-10 max-w-md rounded-lg border border-gray-200 bg-white p-4 shadow-lg">
+      <Popover.Panel className="bg-stock-raised absolute left-3 z-10 max-w-md rounded-lg border border-gray-200 p-4 shadow-lg">
         <dl>
           <dt className="font-semibold">e·pon·y·mous</dt>
           <dd className="text-sm">

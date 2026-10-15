@@ -19,7 +19,7 @@
   --stock-raised: #ffffff;
   --ink: #17182a;
   --ink-muted: #55576c;
-  --riso-pink: #d4197a;
+  --riso-pink: #c21469;
   --riso-pink-bright: #ff48b0;
   --riso-blue: #2340b0;
   --tint-pink: #ffe0ef;
@@ -72,10 +72,9 @@
 
     /*
       The rest of the site is written against Tailwind's light palette, so the
-      neutrals and pinks are inverted here to print on black stock.
+      grays, slates, and pinks are inverted here to print on black stock.
+      White and black stay literal: white text on a colored fill must stay white.
     */
-    --color-white: #121318;
-    --color-black: #f6f5fa;
     --color-gray-50: #1a1b21;
     --color-gray-100: #202128;
     --color-gray-200: #2c2d36;

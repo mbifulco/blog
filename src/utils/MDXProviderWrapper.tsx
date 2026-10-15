@@ -160,6 +160,16 @@ const InlineCode: React.FC<HTMLAttributes<HTMLElement>> = ({ ...props }) => {
 // for legibility, only its ground and gutter are replaced.
 const CODE_INK = '#141a3d';
 const CODE_GUTTER = '#ff48b0';
+// Night Owl's comment gray is 3.6:1 on the code ink; this lifts it past 4.5:1.
+const CODE_COMMENT = '#8a9a9a';
+const CODE_THEME = {
+  ...themes.nightOwl,
+  styles: themes.nightOwl.styles.map((style) =>
+    style.types.includes('comment')
+      ? { ...style, style: { ...style.style, color: CODE_COMMENT } }
+      : style
+  ),
+};
 
 type PreProps = {
   children?: React.ReactNode;
@@ -200,7 +210,7 @@ const Pre: React.FC<PreProps> = ({ children }) => {
           className="pointer-events-auto"
         />
       </div>
-      <Highlight theme={themes.nightOwl} code={source} language={language}>
+      <Highlight theme={CODE_THEME} code={source} language={language}>
         {({ className, style, tokens, getLineProps, getTokenProps }) => (
           <pre
             className={className}

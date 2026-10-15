@@ -84,7 +84,7 @@ const MentionsSummary: React.FC<MentionsSummaryProps> = () => {
                 <div className="flex flex-col gap-4">
                   <span style={{ width: '100%' }}>
                     <a
-                      className="font-bold text-pink-600 hover:underline"
+                      className="text-riso-pink font-bold hover:underline"
                       href={author?.url}
                     >
                       {author.name}

@@ -2,7 +2,7 @@
 name: Mike Bifulco
 description: A two-ink risograph zine for founders and product builders, printed weekly.
 colors:
-  riso-pink: "#d4197a"
+  riso-pink: "#c21469"
   riso-pink-bright: "#ff48b0"
   riso-blue: "#2340b0"
   stock: "#f5f7fb"

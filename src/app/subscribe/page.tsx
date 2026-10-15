@@ -105,8 +105,8 @@ export default function NewsletterSignupPage() {
       <>
         <PostHogPageview />
         <div className="flex min-h-screen items-center justify-center p-4">
-          <Card className="w-full max-w-md bg-white">
-            <CardContent className="bg-white pt-6">
+          <Card className="bg-stock-raised w-full max-w-md">
+            <CardContent className="bg-stock-raised pt-6">
               <div className="flex flex-col gap-4">
                 <h1
                   className="text-2xl font-bold text-gray-900"
@@ -115,7 +115,7 @@ export default function NewsletterSignupPage() {
                   🪩 Success! You&apos;re in!
                 </h1>
                 <p
-                  className="bg-white text-gray-600"
+                  className="bg-stock-raised text-ink-muted"
                   data-testid="success-message"
                 >
                   Thanks so much for subscribing. Don&apos;t forget to check
@@ -144,7 +144,7 @@ export default function NewsletterSignupPage() {
     <>
       <PostHogPageview />
       <div className="flex min-h-screen items-center justify-center p-4">
-        <Card className="w-full max-w-md bg-white">
+        <Card className="bg-stock-raised w-full max-w-md">
           <CardHeader className="pb-4 text-left">
             <header className="flex flex-col gap-1 text-left">
               <h1

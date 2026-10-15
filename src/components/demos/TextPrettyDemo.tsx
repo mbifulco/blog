@@ -66,7 +66,7 @@ export const TextPrettyDemo = () => {
           className="grid grid-cols-2 gap-4"
           style={{ width: isDesktop ? `${width}%` : '100%' }}
         >
-          <div className="rounded-sm border border-slate-200 bg-white p-4">
+          <div className="bg-stock-raised rounded-sm border border-slate-200 p-4">
             <p className="mb-3 text-xs font-bold uppercase tracking-widest text-slate-400">
               Default
             </p>
@@ -107,7 +107,7 @@ export const TextPrettyDemo = () => {
           className={`rounded-sm border pb-24 pt-4 transition-all ${
             prettyEnabled
               ? 'border-pink-200 bg-pink-50'
-              : 'border-slate-200 bg-white'
+              : 'bg-stock-raised border-slate-200'
           }`}
           style={{
             paddingLeft: `${(100 - width) / 2}%`,

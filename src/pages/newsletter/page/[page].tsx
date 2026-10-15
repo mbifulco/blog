@@ -116,18 +116,14 @@ const NewsletterPage: React.FC<NewsletterPageProps> = ({
 
       {pagination.currentPage === 1 && (
         <>
-          <Heading
-            as="h2"
-            className="mb-4 mt-10 text-xl text-black"
-            id="latest"
-          >
+          <Heading as="h2" className="text-ink mb-4 mt-10 text-xl" id="latest">
             💌 Read the latest dispatch
           </Heading>
           <NewsletterItem newsletter={latestNewsletter} />
         </>
       )}
 
-      <Heading as="h2" className="mb-4 mt-4 text-xl text-black" id="past">
+      <Heading as="h2" className="text-ink mb-4 mt-4 text-xl" id="past">
         Read past dispatches
       </Heading>
       <div className="grid grid-cols-auto-fit-min-300 gap-5">
