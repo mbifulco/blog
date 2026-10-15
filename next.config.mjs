@@ -53,6 +53,10 @@ const postRedirects = oldPostPaths.map((path) => ({
  **/
 const config = {
   reactCompiler: true,
+  // The OG image route reads the Dumpling wordmark from disk at request time.
+  outputFileTracingIncludes: {
+    '/og': ['./public/fonts/TAYDumpling.woff'],
+  },
   pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md', 'mdx'],
   images: {
     remotePatterns: [
