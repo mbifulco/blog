@@ -8,6 +8,7 @@ import SEO from '@components/seo';
 import SponsorCTA from '@components/SponsorCTA/SponsorCTA';
 import { SubscriptionForm } from '@components/SubscriptionForm';
 import { Subtitle } from '@components/Subtitle';
+import { ogImageUrl } from '@utils/og';
 import PaginationWrapper from '../../../components/Pagination';
 import config from '../../../config';
 import { getPaginatedNewsletters } from '../../../lib/newsletters';
@@ -84,9 +85,7 @@ const NewsletterPage: React.FC<NewsletterPageProps> = ({
       <SEO
         title="💌 Tiny Improvements: a newsletter for startup founders, indiehackers, and product builders"
         description={config.newsletter.shortDescription}
-        image={
-          'https://res.cloudinary.com/mikebifulco-com/image/upload/v1662476730/newsletters/cover.png'
-        }
+        image={ogImageUrl('newsletter')}
       />
 
       <div className="flex flex-col gap-4">

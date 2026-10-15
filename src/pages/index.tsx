@@ -22,8 +22,8 @@ import {
   HOME_PAGE_LIMIT,
 } from '@lib/unified-feed';
 import { generateFeedItemListStructuredData } from '@utils/generateStructuredData';
-import { getCloudinaryImageUrl } from '@utils/images';
 import { personStructuredData } from '@utils/mikePersonStructuredData';
+import { ogImageUrl } from '@utils/og';
 import { generateRSSFeed } from '@utils/rss';
 
 export async function getStaticProps() {
@@ -53,9 +53,6 @@ export async function getStaticProps() {
   };
 }
 
-const headshotPublicId = 'mike-headshot-square';
-const headshotPublicUrl = getCloudinaryImageUrl(headshotPublicId);
-
 type HomePageProps = {
   feedItems: UnifiedFeedItem[];
   topics: TopicDefinition[];
@@ -77,7 +74,7 @@ const HomePage: NextPage<HomePageProps> = ({
       <SEO
         title="Mike Bifulco | Developer Advocate & Startup Founder"
         description="Articles on React, Next.js, startup building, and developer advocacy from Mike Bifulco - CTO, Y Combinator alum, and creator of Tiny Improvements newsletter."
-        image={headshotPublicUrl}
+        image={ogImageUrl()}
         pagination={{
           currentPage: pagination.currentPage,
           totalPages: pagination.totalPages,

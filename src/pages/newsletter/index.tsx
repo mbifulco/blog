@@ -15,6 +15,7 @@ import { SubscriptionForm } from '@components/SubscriptionForm';
 import { Subtitle } from '@components/Subtitle';
 import { getPaginatedNewsletters } from '@lib/newsletters';
 import { tinyImprovementsBlogStructuredData } from '@utils/newsletterStructuredData';
+import { ogImageUrl } from '@utils/og';
 import config from '@/config';
 
 export const getStaticProps: GetStaticProps<NewsletterPageProps> = async () => {
@@ -70,9 +71,7 @@ const NewsletterPage: React.FC<NewsletterPageProps> = ({
       <SEO
         title={`${config.newsletter.title}: a newsletter for startup founders, indiehackers, and product builders`}
         description={config.newsletter.shortDescription}
-        image={
-          'https://res.cloudinary.com/mikebifulco-com/image/upload/v1662476730/newsletters/cover.png'
-        }
+        image={ogImageUrl('newsletter')}
       />
       <StructuredData structuredData={tinyImprovementsBlogStructuredData} />
 

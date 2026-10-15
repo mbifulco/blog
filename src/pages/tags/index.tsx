@@ -6,6 +6,7 @@ import NewsletterSignup from '@components/NewsletterSignup/NewsletterBannerFancy
 import SEO from '@components/seo';
 import Tag from '@components/tag';
 import { getAllTags } from '@lib/tags';
+import { ogImageUrl } from '@utils/og';
 
 export const getStaticProps: GetStaticProps = async () => {
   const tags = await getAllTags();
@@ -25,6 +26,7 @@ const TagsPage: NextPage<TagsPageProps> = ({ tags }) => {
     <>
       <main className="mx-auto flex max-w-5xl flex-col gap-8">
         <SEO
+          image={ogImageUrl('tags')}
           title="Browse all tags used on articles"
           description="Browse all tags used on articles, newsletters, and podcasts across the site"
         />

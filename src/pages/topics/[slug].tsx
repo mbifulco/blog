@@ -13,6 +13,7 @@ import SEO from '@components/seo';
 import { StructuredData } from '@components/StructuredData';
 import { getAllTopics, getTopicContent } from '@lib/topics';
 import { generateTopicStructuredData } from '@utils/generateStructuredData';
+import { ogImageUrl } from '@utils/og';
 
 type TopicPageParams = {
   slug: string;
@@ -81,7 +82,12 @@ const TopicPage: NextPage<TopicPageProps> = ({ topic }) => {
 
   return (
     <>
-      <SEO title={pageTitle} description={topic.description} ogType="article" />
+      <SEO
+        image={ogImageUrl(`topics/${topic.slug}`)}
+        title={pageTitle}
+        description={topic.description}
+        ogType="article"
+      />
       <StructuredData structuredData={structuredData} />
 
       <div className="mx-auto flex max-w-6xl flex-col gap-6">

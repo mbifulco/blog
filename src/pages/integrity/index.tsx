@@ -6,10 +6,12 @@ import { Image } from '@components/Image';
 import TableOfContents from '@components/Post/TableOfContents';
 import SEO from '@components/seo';
 import SponsorCTA from '@components/SponsorCTA/SponsorCTA';
+import { ogImageUrl } from '@utils/og';
 
 const Shop: NextPage = () => (
   <>
     <SEO
+      image={ogImageUrl('integrity')}
       title="Editorial Integrity, Paid Reviews, and Sponsorship policy"
       description="My policy on editorial integrity, paid reviews, and sponsorships."
     />

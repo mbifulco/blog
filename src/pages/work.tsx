@@ -3,6 +3,7 @@ import type { Article } from '../data/content-types';
 import { useRef } from 'react';
 import posthog from 'posthog-js';
 
+import { ogImageUrl } from '@utils/og';
 import { ExternalWorkItem } from '../components/ExternalWork';
 import SEO from '../components/seo';
 import { getAllExternalReferences } from '../lib/external-references';
@@ -36,6 +37,7 @@ const WorkPage: NextPage<WorkPageProps> = ({ articles }) => {
   return (
     <>
       <SEO
+        image={ogImageUrl('work')}
         title="My work from around the web"
         canonical="/work"
         description="Some samples of my work online"
