@@ -10,6 +10,7 @@ import { NewsletterSignup } from '@components/NewsletterSignup';
 import { StructuredData } from '@components/StructuredData';
 import { getAllSeries, getSeries } from '@lib/series';
 import { generateSeriesStructuredData } from '@utils/generateStructuredData';
+import { ogImageUrl } from '@utils/og';
 import { BlogPost as Post } from '../../components/Post';
 import SEO from '../../components/seo';
 import WebmentionMetadata from '../../components/webmentionMetadata';
@@ -80,7 +81,15 @@ const SeriesPage: NextPage<SeriesPageProps> = ({ series }) => {
   return (
     <>
       <div className="mx-auto flex max-w-6xl flex-col gap-4">
-        <SEO canonical={router.asPath} title={pageTitle} ogType="article" />
+        <SEO
+          image={ogImageUrl({
+            title: series?.name,
+            kicker: `A series in ${series?.length} parts`,
+          })}
+          canonical={router.asPath}
+          title={pageTitle}
+          ogType="article"
+        />
 
         <header className="mb-6 w-fit max-w-[75ch]">
           <Badge>Post Series</Badge>

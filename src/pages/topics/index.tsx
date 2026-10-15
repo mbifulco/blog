@@ -5,6 +5,7 @@ import Link from '@components/Link';
 import NewsletterSignup from '@components/NewsletterSignup/NewsletterBannerFancy';
 import SEO from '@components/seo';
 import { getAllTopicsWithCounts } from '@lib/topics';
+import { ogImageUrl } from '@utils/og';
 
 type TopicsPageProps = {
   topics: (TopicDefinition & { totalCount: number })[];
@@ -25,6 +26,7 @@ const TopicsPage: NextPage<TopicsPageProps> = ({ topics }) => {
     <>
       <main className="mx-auto flex max-w-5xl flex-col gap-8">
         <SEO
+          image={ogImageUrl({ title: 'Topics', kicker: 'Deep dives' })}
           title="Topics - Deep Dives into React, Startups, Design & Developer Tools"
           description="Explore curated collections of articles on React development, startup building, design & UX, and developer productivity. Learn from real-world experience."
         />

@@ -3,6 +3,7 @@ import { Popover } from '@headlessui/react';
 import posthog from 'posthog-js';
 
 import Link from '@components/Link';
+import { ogImageUrl } from '@utils/og';
 import config from '@/config';
 import NewsletterSignup from '../../components/NewsletterSignup';
 import SEO from '../../components/seo';
@@ -55,9 +56,7 @@ const PodcastPage = () => {
       <SEO
         title="Tiny Improvements, the Podcast"
         description={config.podcast.description}
-        image={
-          'https://res.cloudinary.com/mikebifulco-com/image/upload/v1662476730/newsletters/cover.png'
-        }
+        image={ogImageUrl({ card: 'podcast' })}
       />
 
       <header className="space-y-2">

@@ -2,6 +2,7 @@ import type { NextPage } from 'next';
 import { useRef } from 'react';
 import posthog from 'posthog-js';
 
+import { ogImageUrl } from '@utils/og';
 import { Heading } from '../components/Heading';
 import { Image } from '../components/Image';
 import SEO from '../components/seo';
@@ -20,6 +21,10 @@ const Shop: NextPage = () => {
   return (
     <>
       <SEO
+        image={ogImageUrl({
+          title: 'Shop',
+          kicker: 'Stickers and other things I made',
+        })}
         title="Shop - stickers, design files, digital downloads, and other stuff I've made"
         description="I occasionally design and sell things in small runs - stickers, design files, whitepapers, digital downloads, and other stuff I've made."
       />
