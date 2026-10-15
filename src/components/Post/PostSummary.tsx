@@ -1,4 +1,4 @@
-import type { BlogPost } from '../../data/content-types';
+import type { BlogPost, DocumentSummary } from '../../data/content-types';
 import React from 'react';
 import posthog from 'posthog-js';
 
@@ -8,7 +8,7 @@ import { Image } from '../Image';
 import { PublishDate } from '../PublishDate';
 
 type PostSummaryProps = {
-  post: BlogPost;
+  post: DocumentSummary<BlogPost>;
   eager?: boolean;
 };
 

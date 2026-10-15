@@ -1,10 +1,10 @@
-import type { Article } from '../../data/content-types';
+import type { Article, DocumentSummary } from '../../data/content-types';
 
 import { Heading } from '../Heading';
 import { PublishDate } from '../PublishDate';
 
 type ExternalWorkItemProps = {
-  article: Article;
+  article: DocumentSummary<Article>;
 };
 
 const ExternalWorkItem: React.FC<ExternalWorkItemProps> = ({ article }) => {

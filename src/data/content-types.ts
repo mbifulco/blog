@@ -1,6 +1,8 @@
 import type { Series } from '@lib/series';
 import type { MDXRemoteSerializeResult } from 'next-mdx-remote';
 
+import { readingMinutes } from '@utils/readingTime';
+
 /**
  * Represents a heading in MDX content with its hierarchy level,
  * display text, and URL-safe slug
@@ -62,6 +64,38 @@ export type MarkdownDocument = {
 };
 
 /**
+ * A document as a card or list entry shows it: frontmatter and slug, no body.
+ *
+ * Everything a page returns from getStaticProps is written into its HTML and
+ * its `_next/data` JSON, and Vercel bills ISR reads per 8KB served. A page that
+ * lists other documents must pass summaries, or it ships the markdown and
+ * compiled MDX of every document it links to.
+ */
+export type DocumentSummary<T extends MarkdownDocument = MarkdownDocument> =
+  Pick<T, 'frontmatter' | 'slug'>;
+
+export const toSummary = <T extends MarkdownDocument>({
+  frontmatter,
+  slug,
+}: T): DocumentSummary<T> => ({ frontmatter, slug });
+
+/**
+ * A document as its own page renders it: the compiled `source`, without the raw
+ * markdown, which would ship a second copy of the article in the page's props.
+ * The reading time is the only thing the page needed the markdown for.
+ */
+export type RenderedDocument<T extends MarkdownDocument = MarkdownDocument> =
+  Omit<T, 'content'> & { readingMinutes: number };
+
+export const toRendered = <T extends MarkdownDocument>({
+  content,
+  ...document
+}: T): RenderedDocument<T> => ({
+  ...document,
+  readingMinutes: readingMinutes(content),
+});
+
+/**
  * Newsletter-specific metadata requirements
  */
 export type NewsletterMetadata = BaseFrontmatter & {
@@ -77,7 +111,7 @@ export type Newsletter = MarkdownDocument & {
 };
 
 export type NewsletterItemProps = {
-  newsletter: Newsletter;
+  newsletter: DocumentSummary<Newsletter>;
   series?: Series;
 };
 

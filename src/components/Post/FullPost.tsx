@@ -1,4 +1,8 @@
-import type { BlogPost, Newsletter } from '@data/content-types';
+import type {
+  BlogPost,
+  Newsletter,
+  RenderedDocument,
+} from '@data/content-types';
 import type { Series } from '@lib/series';
 import type { TopicDefinition } from '@lib/topics';
 import { MDXRemote } from 'next-mdx-remote';
@@ -12,7 +16,6 @@ import { TLDR } from '@components/TLDR';
 import { markdownPathFor } from '@lib/markdown-export/urls';
 import { generatePostStructuredData } from '@utils/generateStructuredData';
 import { components } from '@utils/MDXProviderWrapper';
-import { readingMinutes } from '@utils/readingTime';
 import { CarbonAd } from '../CarbonAd';
 import { Heading } from '../Heading';
 import { Image } from '../Image';
@@ -23,7 +26,7 @@ import MentionsSummary from './mentionsSummary';
 import TableOfContents from './TableOfContents';
 
 type FullPostProps = {
-  post: BlogPost | Newsletter;
+  post: RenderedDocument<BlogPost> | RenderedDocument<Newsletter>;
   series?: Series | null;
   contentType?: 'post' | 'newsletter';
   topic?: Pick<TopicDefinition, 'slug' | 'name'> | null;
@@ -144,7 +147,7 @@ const FullPost: React.FC<FullPostProps> = ({
               <p className="text-ink-muted m-0 flex flex-wrap items-baseline gap-x-2 gap-y-1 font-futura text-sm font-bold">
                 <PublishDate date={date} className="font-mono text-xs" />
                 <span aria-hidden>·</span>
-                <span>{readingMinutes(post.content)} min read</span>
+                <span>{post.readingMinutes} min read</span>
                 {topic && (
                   <>
                     <span aria-hidden>·</span>
