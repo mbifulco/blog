@@ -5,11 +5,11 @@ import { startOfToday } from 'date-fns';
 
 import { Colophon } from '@components/Colophon';
 import { HomeHero } from '@components/HomeHero';
+import { NewsletterSignup } from '@components/NewsletterSignup';
 import PaginationWrapper from '@components/Pagination';
 import { PodcastSidebar } from '@components/PodcastSidebar';
 import SEO from '@components/seo';
 import StructuredData from '@components/StructuredData/StructuredData';
-import { Subtitle } from '@components/Subtitle';
 import { TopicLinks } from '@components/TopicLinks';
 import { UnifiedContentFeed } from '@components/UnifiedContentFeed';
 import WebmentionMetadata from '@components/webmentionMetadata';
@@ -73,7 +73,7 @@ const HomePage: NextPage<HomePageProps> = ({
   pagination,
 }) => {
   return (
-    <div className="mx-auto mb-10 flex max-w-4xl flex-col gap-12 px-4">
+    <div className="mx-auto mb-10 flex w-full max-w-6xl flex-col gap-16 md:gap-20">
       <SEO
         title="Mike Bifulco | Developer Advocate & Startup Founder"
         description="Articles on React, Next.js, startup building, and developer advocacy from Mike Bifulco - CTO, Y Combinator alum, and creator of Tiny Improvements newsletter."
@@ -91,21 +91,11 @@ const HomePage: NextPage<HomePageProps> = ({
 
       <HomeHero priorityImage />
 
-      {/* Podcast: accordion on mobile/tablet */}
-      <PodcastSidebar />
+      <UnifiedContentFeed
+        items={feedItems}
+        leadAside={<NewsletterSignup variant="band" source="home-lead" />}
+      />
 
-      {/* Unified content feed */}
-      <div>
-        <Subtitle>LATEST</Subtitle>
-        <div className="mt-4">
-          <UnifiedContentFeed items={feedItems} />
-        </div>
-      </div>
-
-      {/* Topic discovery */}
-      <TopicLinks topics={topics} />
-
-      {/* Pagination */}
       <PaginationWrapper
         currentPage={pagination.currentPage}
         totalPages={pagination.totalPages}
@@ -113,6 +103,10 @@ const HomePage: NextPage<HomePageProps> = ({
         hasPreviousPage={pagination.hasPreviousPage}
         basePath=""
       />
+
+      <PodcastSidebar />
+
+      <TopicLinks topics={topics} />
 
       <WebmentionMetadata
         summary="mikebifulco.com - articles on design, development, and making the world a better place."

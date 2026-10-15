@@ -9,7 +9,6 @@ export type TopicDefinition = {
   name: string;
   description: string;
   tags: string[];
-  icon?: string;
 };
 
 export type Topic = TopicDefinition & {
@@ -29,7 +28,6 @@ export const TOPIC_DEFINITIONS: TopicDefinition[] = [
     description:
       'Tutorials, best practices, and insights on React, Next.js, TypeScript, and modern JavaScript development. From component patterns to performance optimization.',
     tags: ['react', 'javascript', 'nextjs', 'typescript'],
-    icon: '⚛️',
   },
   {
     slug: 'startup-building',
@@ -37,7 +35,6 @@ export const TOPIC_DEFINITIONS: TopicDefinition[] = [
     description:
       'Lessons learned from founding startups, going through Y Combinator, and building products. Practical advice for founders and aspiring entrepreneurs.',
     tags: ['startup', 'founder', 'product'],
-    icon: '🚀',
   },
   {
     slug: 'design-ux',
@@ -45,7 +42,6 @@ export const TOPIC_DEFINITIONS: TopicDefinition[] = [
     description:
       'Thoughts on design systems, user experience, and creating products people love. Bridging the gap between design and development.',
     tags: ['design', 'ux'],
-    icon: '🎨',
   },
   {
     slug: 'developer-productivity',
@@ -53,7 +49,6 @@ export const TOPIC_DEFINITIONS: TopicDefinition[] = [
     description:
       'Tools, workflows, and techniques to work more effectively as a developer. From CLI tools to productivity systems.',
     tags: ['dev', 'tools', 'productivity'],
-    icon: '🛠️',
   },
 ];
 
@@ -62,6 +57,28 @@ export const TOPIC_DEFINITIONS: TopicDefinition[] = [
  */
 export const getAllTopics = (): TopicDefinition[] => {
   return TOPIC_DEFINITIONS;
+};
+
+// One shared tag is too weak a signal: a post tagged only `typescript` among
+// AI tags is not a React post. Better no topic than a misleading one.
+const MIN_SHARED_TAGS = 2;
+
+/** The topic sharing the most tags with a post, or null when none shares at least two. */
+export const getTopicForTags = (
+  tags: string[] = []
+): Pick<TopicDefinition, 'slug' | 'name'> | null => {
+  let best: TopicDefinition | null = null;
+  let bestCount = 0;
+  for (const topic of TOPIC_DEFINITIONS) {
+    const count = topic.tags.filter((tag) => tags.includes(tag)).length;
+    if (count > bestCount) {
+      best = topic;
+      bestCount = count;
+    }
+  }
+  return best && bestCount >= MIN_SHARED_TAGS
+    ? { slug: best.slug, name: best.name }
+    : null;
 };
 
 /**

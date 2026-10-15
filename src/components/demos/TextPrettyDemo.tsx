@@ -66,8 +66,8 @@ export const TextPrettyDemo = () => {
           className="grid grid-cols-2 gap-4"
           style={{ width: isDesktop ? `${width}%` : '100%' }}
         >
-          <div className="rounded-sm border border-slate-200 bg-white p-4">
-            <p className="mb-3 text-xs font-bold uppercase tracking-widest text-slate-400">
+          <div className="bg-stock-raised rounded-sm border border-slate-200 p-4">
+            <p className="mb-3 text-xs font-bold uppercase tracking-widest text-slate-600">
               Default
             </p>
             {paragraphs.map((text, i) => (
@@ -83,7 +83,7 @@ export const TextPrettyDemo = () => {
           </div>
 
           <div className="rounded-sm border border-pink-200 bg-pink-50 p-4">
-            <p className="mb-3 text-xs font-bold uppercase tracking-widest text-pink-400">
+            <p className="text-riso-pink mb-3 text-xs font-bold uppercase tracking-widest">
               text-wrap: pretty
             </p>
             {paragraphs.map((text, i) => (
@@ -107,7 +107,7 @@ export const TextPrettyDemo = () => {
           className={`rounded-sm border pb-24 pt-4 transition-all ${
             prettyEnabled
               ? 'border-pink-200 bg-pink-50'
-              : 'border-slate-200 bg-white'
+              : 'bg-stock-raised border-slate-200'
           }`}
           style={{
             paddingLeft: `${(100 - width) / 2}%`,
@@ -116,7 +116,7 @@ export const TextPrettyDemo = () => {
         >
           <p
             className={`mb-3 text-xs font-bold uppercase tracking-widest ${
-              prettyEnabled ? 'text-pink-400' : 'text-slate-400'
+              prettyEnabled ? 'text-riso-pink' : 'text-slate-600'
             }`}
           >
             {prettyEnabled ? 'text-wrap: pretty' : 'Default'}
@@ -137,7 +137,7 @@ export const TextPrettyDemo = () => {
         <div
           aria-hidden={!panelVisible}
           inert={!panelVisible}
-          className={`fixed bottom-0 left-0 right-0 z-50 border-t border-slate-200 bg-white/90 px-4 py-3 backdrop-blur-sm transition-transform duration-200 ${panelVisible ? 'translate-y-0' : 'translate-y-full'}`}
+          className={`bg-stock-raised/90 fixed bottom-0 left-0 right-0 z-50 border-t border-slate-200 px-4 py-3 backdrop-blur-sm transition-transform duration-200 ${panelVisible ? 'translate-y-0' : 'translate-y-full'}`}
         >
           <div className="flex flex-col gap-2">
             <div className="flex items-center gap-3">

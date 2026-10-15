@@ -34,7 +34,7 @@ const ErrorPage: React.FC<ErrorPageProps> = ({
 
   return (
     <div
-      className="flex min-h-screen flex-col items-center justify-center bg-white"
+      className="bg-stock flex min-h-screen flex-col items-center justify-center"
       onMouseEnter={handleErrorPageViewed}
     >
       <h1 className="text-6xl font-bold text-gray-800">

@@ -7,7 +7,6 @@ import { Colophon } from '@components/Colophon';
 import PaginationWrapper from '@components/Pagination';
 import SEO from '@components/seo';
 import StructuredData from '@components/StructuredData/StructuredData';
-import { Subtitle } from '@components/Subtitle';
 import { TopicLinks } from '@components/TopicLinks';
 import { UnifiedContentFeed } from '@components/UnifiedContentFeed';
 import WebmentionMetadata from '@components/webmentionMetadata';
@@ -110,7 +109,12 @@ const PaginatedPage: NextPage<PaginatedPageProps> = ({
       />
 
       <div>
-        <Subtitle>ARTICLES</Subtitle>
+        <h1 className="border-riso-blue text-riso-blue m-0 border-b-2 pb-3 font-futura text-3xl font-bold tracking-[-0.01em]">
+          Articles{' '}
+          <span className="text-ink-muted">
+            · Page {pagination.currentPage}
+          </span>
+        </h1>
         <div className="mt-4">
           <UnifiedContentFeed items={feedItems} layout="grid" />
         </div>

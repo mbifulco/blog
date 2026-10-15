@@ -135,7 +135,7 @@ const Slider = (
             state.getThumbMaxValue(0) === 0 && 'opacity-0',
             isFocusVisible || state.isThumbDragging(0)
               ? 'bg-pink-100 text-slate-900'
-              : 'text-slate-500'
+              : 'text-ink-muted'
           )}
         >
           {state.getThumbValue(0)}
@@ -145,7 +145,7 @@ const Slider = (
         </span>
         <span
           className={clsx(
-            'hidden rounded-md px-1 py-0.5 font-mono text-sm leading-6 text-slate-500 md:block',
+            'text-ink-muted hidden rounded-md px-1 py-0.5 font-mono text-sm leading-6 md:block',
             state.getThumbMaxValue(0) === 0 && 'opacity-0'
           )}
         >

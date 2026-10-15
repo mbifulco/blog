@@ -4,7 +4,6 @@ import type { TopicDefinition } from '@lib/topics';
 import Link from '@components/Link';
 import NewsletterSignup from '@components/NewsletterSignup/NewsletterBannerFancy';
 import SEO from '@components/seo';
-import { Subtitle } from '@components/Subtitle';
 import { getAllTopicsWithCounts } from '@lib/topics';
 
 type TopicsPageProps = {
@@ -30,8 +29,10 @@ const TopicsPage: NextPage<TopicsPageProps> = ({ topics }) => {
           description="Explore curated collections of articles on React development, startup building, design & UX, and developer productivity. Learn from real-world experience."
         />
         <header>
-          <Subtitle>Topics</Subtitle>
-          <p className="mt-2 max-w-2xl text-lg text-gray-600">
+          <h1 className="border-riso-blue text-riso-blue m-0 border-b-2 pb-3 font-futura text-3xl font-bold tracking-[-0.01em]">
+            Topics
+          </h1>
+          <p className="text-ink-muted mt-4 max-w-2xl font-serif text-lg">
             Deep dives into the subjects I write about most. Each topic brings
             together related articles, tutorials, and insights.
           </p>
@@ -44,33 +45,22 @@ const TopicsPage: NextPage<TopicsPageProps> = ({ topics }) => {
               href={`/topics/${topic.slug}`}
               className="group no-underline"
             >
-              <div className="mb-2 flex items-center gap-3">
-                {topic.icon && (
-                  <span className="text-3xl" aria-hidden="true">
-                    {topic.icon}
-                  </span>
-                )}
-                <h2 className="m-0 font-futura text-xl font-bold text-gray-900 group-hover:text-pink-600">
-                  {topic.name}
-                </h2>
-              </div>
-              <p className="mb-3 text-gray-600">{topic.description}</p>
-              <div className="flex items-center gap-2 text-sm text-gray-500">
-                <span className="font-medium text-pink-600">
+              <h2 className="text-riso-blue group-hover:text-riso-pink m-0 mb-2 text-balance font-futura text-xl font-bold">
+                {topic.name}
+              </h2>
+              <p className="text-ink-muted mb-3 font-serif text-lg leading-snug">
+                {topic.description}
+              </p>
+              <p className="text-ink-muted m-0 flex flex-wrap items-baseline gap-x-2 gap-y-1 font-futura text-sm font-bold">
+                <span className="text-riso-pink">
                   {topic.totalCount} articles
                 </span>
-                <span>•</span>
-                <span className="flex flex-wrap gap-1">
-                  {topic.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="rounded bg-gray-100 px-2 py-0.5 text-xs"
-                    >
-                      #{tag}
-                    </span>
-                  ))}
-                </span>
-              </div>
+                {topic.tags.map((tag) => (
+                  <span key={tag} className="font-mono text-xs font-normal">
+                    #{tag}
+                  </span>
+                ))}
+              </p>
             </Link>
           ))}
         </div>

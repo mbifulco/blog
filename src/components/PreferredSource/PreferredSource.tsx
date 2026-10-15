@@ -68,7 +68,7 @@ const PreferredSource = () => {
         target="_blank"
         rel="noopener noreferrer"
         onClick={handleClick}
-        className="inline-flex w-fit items-center gap-2 rounded-full border border-pink-200 bg-white px-3 py-1.5 text-sm text-black shadow-sm transition-all duration-200 hover:scale-105 hover:border-pink-600 hover:text-pink-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pink-400"
+        className="border-riso-blue bg-stock text-ink hover:border-riso-pink hover:text-riso-pink inline-flex w-fit items-center gap-2 border-2 px-3 py-1.5 text-sm no-underline transition-colors duration-200"
       >
         <GoogleIcon />
         <span>

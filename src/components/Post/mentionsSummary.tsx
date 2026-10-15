@@ -70,7 +70,7 @@ const MentionsSummary: React.FC<MentionsSummaryProps> = () => {
 
             return (
               <div
-                className="mb-3 flex flex-row gap-3 bg-white/40 p-3"
+                className="bg-stock-raised mb-3 flex flex-row gap-3 p-3"
                 key={`someone-mentioned-author-${idx}-${author.name}`}
               >
                 <a href={author?.url}>
@@ -81,10 +81,10 @@ const MentionsSummary: React.FC<MentionsSummaryProps> = () => {
                     variant="xl"
                   />
                 </a>
-                <div className="flex flex-col gap-4">
+                <div className="flex min-w-0 flex-col gap-4 [overflow-wrap:anywhere]">
                   <span style={{ width: '100%' }}>
                     <a
-                      className="font-bold text-pink-600 hover:underline"
+                      className="text-riso-pink font-bold hover:underline"
                       href={author?.url}
                     >
                       {author.name}

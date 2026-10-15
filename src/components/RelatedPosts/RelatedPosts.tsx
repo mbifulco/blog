@@ -1,8 +1,6 @@
 import type { RelatedContent } from '@lib/related-posts';
 import posthog from 'posthog-js';
 
-import { Badge } from '@components/Badge';
-import { Heading } from '@components/Heading';
 import { Image } from '@components/Image';
 import Link from '@components/Link';
 import { PublishDate } from '@components/PublishDate';
@@ -31,12 +29,15 @@ const RelatedPosts: React.FC<RelatedPostsProps> = ({
   };
 
   return (
-    <div className="w-full py-12">
-      <div className="mx-auto max-w-5xl px-4">
-        <Heading as="h2" className="mb-6 text-2xl font-bold">
-          Related Reading
-        </Heading>
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+    <section className="w-full" aria-labelledby="related-heading">
+      <div className="mx-auto max-w-6xl">
+        <h2
+          id="related-heading"
+          className="border-riso-blue text-riso-blue m-0 mb-10 border-b-2 pb-3 font-futura text-3xl font-bold tracking-[-0.01em]"
+        >
+          Keep reading
+        </h2>
+        <div className="grid gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
           {relatedContent.map((item) => {
             const path =
               item.type === 'newsletter'
@@ -51,51 +52,58 @@ const RelatedPosts: React.FC<RelatedPostsProps> = ({
                 <Link
                   href={path}
                   onClick={() => handleRelatedClick(item)}
-                  className="overflow-hidden rounded-lg"
+                  className="riso-plate mb-3 mr-3"
+                  aria-hidden
+                  tabIndex={-1}
                 >
                   <Image
-                    className="aspect-video w-full object-cover transition-opacity duration-200 group-hover:opacity-90"
+                    bare
+                    className="aspect-video w-full object-cover"
                     publicId={
                       item.coverImagePublicId ||
                       (item.type === 'newsletter'
                         ? `newsletters/${item.slug}/cover`
                         : `posts/${item.slug}/cover`)
                     }
-                    alt={item.title}
+                    alt=""
                     height={315}
                     width={600}
                     loading="lazy"
                   />
                 </Link>
-                <div className="flex items-center gap-2">
-                  <Badge>
-                    {item.type === 'newsletter' ? '💌 Newsletter' : 'Article'}
-                  </Badge>
-                  <PublishDate
-                    date={item.date}
-                    className="text-xs text-gray-500"
-                  />
-                </div>
-                <Heading as="h3" className="m-0 text-lg font-semibold">
+                <h3 className="m-0 text-balance font-futura text-lg font-bold leading-tight">
                   <Link
                     href={path}
                     onClick={() => handleRelatedClick(item)}
-                    className="text-pink-600 no-underline hover:underline"
+                    className="text-riso-blue hover:text-riso-pink hover:no-underline"
                   >
                     {item.title}
                   </Link>
-                </Heading>
+                </h3>
                 {item.excerpt && (
-                  <p className="line-clamp-2 text-sm text-gray-600 dark:text-gray-400">
+                  <p className="text-ink-muted m-0 line-clamp-2 font-serif text-[0.95rem] leading-snug">
                     {item.excerpt}
                   </p>
                 )}
+                <p className="text-ink-muted m-0 flex flex-wrap items-baseline gap-x-2 font-futura text-sm font-bold">
+                  <PublishDate date={item.date} className="font-mono text-xs" />
+                  <span aria-hidden>·</span>
+                  <span
+                    className={
+                      item.type === 'newsletter' ? 'text-riso-pink' : undefined
+                    }
+                  >
+                    {item.type === 'newsletter'
+                      ? '💌 Tiny Improvements'
+                      : 'Article'}
+                  </span>
+                </p>
               </article>
             );
           })}
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

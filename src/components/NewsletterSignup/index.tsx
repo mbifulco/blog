@@ -2,8 +2,10 @@ import React from 'react';
 
 import Fancy from './NewsletterBannerFancy';
 
-export const NewsletterSignup: React.FC = () => {
-  return <Fancy />;
+type NewsletterSignupProps = React.ComponentProps<typeof Fancy>;
+
+export const NewsletterSignup: React.FC<NewsletterSignupProps> = (props) => {
+  return <Fancy {...props} />;
 };
 
 export default NewsletterSignup;

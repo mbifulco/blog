@@ -11,12 +11,9 @@ const SponsorCTA = () => {
 
   return (
     <p>
-      <span role="img" aria-hidden>
-        🎟️
-      </span>{' '}
       Get in touch to &rarr;{' '}
       <Link
-        className="inline font-bold text-pink-600"
+        className="text-riso-pink inline font-bold"
         href="/sponsor"
         target="_blank"
         rel="noopener noreferrer"

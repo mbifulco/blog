@@ -35,7 +35,7 @@ const SponsoredSection: React.FC<SponsoredSectionProps> = ({
       </div>
 
       <Link
-        className="thank-you block px-4 pb-1 text-xs uppercase italic text-gray-400 no-underline"
+        className="thank-you text-ink-muted block px-4 pb-1 text-xs uppercase italic no-underline"
         href="/sponsor"
         target="_blank"
         // see: https://developers.google.com/search/docs/essentials/spam-policies#link-spam

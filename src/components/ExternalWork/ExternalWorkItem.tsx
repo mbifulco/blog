@@ -13,14 +13,17 @@ const ExternalWorkItem: React.FC<ExternalWorkItemProps> = ({ article }) => {
   } = article;
 
   return (
-    <article className="max-w-[100vw]">
+    <article className="min-w-0 max-w-full">
       <div className="relative">
         <header className="flex flex-col gap-1">
           <Heading as="h2" className="m-0 p-0 text-xl md:text-xl">
-            <span className="text-xl text-pink-600">{title}</span>
+            <span className="text-riso-blue text-xl">{title}</span>
           </Heading>
           <p>
-            <PublishDate date={date} className="text-sm text-gray-500" />
+            <PublishDate
+              date={date}
+              className="text-ink-muted font-mono text-xs"
+            />
           </p>
         </header>
 

@@ -1,4 +1,5 @@
 import type { AppProps } from 'next/app';
+import { Jost, Source_Serif_4 } from 'next/font/google';
 import localFont from 'next/font/local';
 import { NuqsAdapter } from 'nuqs/adapters/next/pages';
 import posthog from 'posthog-js';
@@ -30,7 +31,26 @@ const dumpling = localFont({
   display: 'swap',
 });
 
-const fontVariables = [quickdraw.variable, dumpling.variable].join(' ');
+// Futura is a system font on Apple platforms; Jost stands in everywhere else.
+const jost = Jost({
+  subsets: ['latin'],
+  variable: '--font-jost',
+  display: 'swap',
+});
+
+const sourceSerif = Source_Serif_4({
+  subsets: ['latin'],
+  style: ['normal', 'italic'],
+  variable: '--font-source-serif',
+  display: 'swap',
+});
+
+const fontVariables = [
+  quickdraw.variable,
+  dumpling.variable,
+  jost.variable,
+  sourceSerif.variable,
+].join(' ');
 
 // Check that PostHog is client-side (used to handle Next.js SSR)
 if (typeof window !== 'undefined') {
@@ -58,7 +78,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       <SearchProvider>
         <PostHogProvider client={posthog}>
           <StructuredData structuredData={siteStructuredData} />
-          <div className={fontVariables}>
+          <div className={`${fontVariables} font-sans`}>
             <DefaultLayout>
               <FathomAnalytics siteId={env.NEXT_PUBLIC_FATHOM_ID} />
               <Component {...pageProps} />
@@ -68,9 +88,10 @@ function MyApp({ Component, pageProps }: AppProps) {
                 position="top-right"
                 toastOptions={{
                   style: {
-                    background: 'white',
-                    border: '1px solid #e5e5e5',
-                    color: '#333',
+                    background: 'var(--stock-raised)',
+                    border: '2px solid var(--riso-blue)',
+                    borderRadius: 0,
+                    color: 'var(--ink)',
                   },
                 }}
               />

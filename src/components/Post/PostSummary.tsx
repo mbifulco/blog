@@ -3,7 +3,6 @@ import React from 'react';
 import posthog from 'posthog-js';
 
 import Link from '@components/Link';
-import clsxm from '@utils/clsxm';
 import { Heading } from '../Heading';
 import { Image } from '../Image';
 import { PublishDate } from '../PublishDate';
@@ -29,11 +28,14 @@ const PostSummary: React.FC<PostSummaryProps> = ({ post, eager = false }) => {
   };
 
   const coverContainer = (
-    <Link href={postPath} onClick={handlePostSummaryClick}>
+    <Link
+      href={postPath}
+      onClick={handlePostSummaryClick}
+      className="riso-plate mb-6 mr-3"
+    >
       <Image
-        className={clsxm(
-          '-mx-2 mb-4 object-cover object-center shadow-sm sm:mx-0 sm:rounded-lg'
-        )}
+        bare
+        className="w-full object-cover object-center"
         publicId={coverImagePublicId || `posts/${slug}/cover`}
         alt={excerpt || title}
         height={630}
@@ -44,13 +46,13 @@ const PostSummary: React.FC<PostSummaryProps> = ({ post, eager = false }) => {
   );
 
   return (
-    <article className="max-w-[100vw]">
+    <article className="min-w-0 max-w-full">
       <div className="relative">
         <header className="flex flex-col gap-1">
           {coverContainer}
           <Heading as={'h2'} className="m-0 p-0 text-xl md:text-xl">
             <Link
-              className="text-xl text-pink-600 no-underline hover:underline"
+              className="text-riso-blue hover:text-riso-pink text-xl hover:no-underline"
               href={postPath}
               onClick={handlePostSummaryClick}
             >
@@ -58,11 +60,16 @@ const PostSummary: React.FC<PostSummaryProps> = ({ post, eager = false }) => {
             </Link>
           </Heading>
           <p>
-            <PublishDate date={date} className="text-sm text-gray-500" />
+            <PublishDate
+              date={date}
+              className="text-ink-muted font-mono text-xs"
+            />
           </p>
         </header>
 
-        <p className="text-md text-balance">{excerpt}</p>
+        <p className="text-ink-muted text-pretty font-serif text-lg">
+          {excerpt}
+        </p>
       </div>
     </article>
   );

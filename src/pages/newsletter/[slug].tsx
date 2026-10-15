@@ -2,6 +2,7 @@ import type { GetStaticProps } from 'next';
 import type { Newsletter } from '@data/content-types';
 import type { RelatedContent, RelatedPostsManifest } from '@lib/related-posts';
 import type { Series } from '@lib/series';
+import type { TopicDefinition } from '@lib/topics';
 import { useRouter } from 'next/router';
 
 import { Colophon } from '@components/Colophon';
@@ -16,6 +17,7 @@ import relatedPostsData from '@data/generated/relatedPosts.json';
 import { markdownUrlFor } from '@lib/markdown-export/urls';
 import { getAllNewsletters, getNewsletterBySlug } from '@lib/newsletters';
 import { getSeries } from '@lib/series';
+import { getTopicForTags } from '@lib/topics';
 import { getDocumentUri } from '@utils/atproto';
 import { generatePostStructuredData } from '@utils/generateStructuredData';
 import { getCloudinaryImageUrl } from '@utils/images';
@@ -60,6 +62,7 @@ export const getStaticProps: GetStaticProps<
         source: mdxSource,
       },
       series: series ?? null,
+      topic: getTopicForTags(newsletter.frontmatter.tags),
       relatedContent,
       ...(standardSiteDocumentUri ? { standardSiteDocumentUri } : {}),
       ...(standardSitePublicationUri ? { standardSitePublicationUri } : {}),
@@ -83,6 +86,7 @@ export async function getStaticPaths() {
 type NewsletterPageProps = {
   newsletter: Newsletter;
   series?: Series | null;
+  topic: Pick<TopicDefinition, 'slug' | 'name'> | null;
   relatedContent: RelatedContent[];
   standardSiteDocumentUri?: string;
   standardSitePublicationUri?: string;
@@ -91,6 +95,7 @@ type NewsletterPageProps = {
 const NewsletterPage: React.FC<NewsletterPageProps> = ({
   newsletter,
   series,
+  topic,
   relatedContent,
   standardSiteDocumentUri,
   standardSitePublicationUri,
@@ -108,7 +113,7 @@ const NewsletterPage: React.FC<NewsletterPageProps> = ({
 
   return (
     <>
-      <div className="mx-auto flex max-w-full flex-col">
+      <div className="mx-auto flex w-full flex-col gap-16">
         <SEO
           canonical={router.asPath}
           title={`${title}`}
@@ -126,7 +131,12 @@ const NewsletterPage: React.FC<NewsletterPageProps> = ({
         />
         <StructuredData structuredData={structuredData} />
 
-        <FullPost post={newsletter} series={series} contentType="newsletter" />
+        <FullPost
+          post={newsletter}
+          series={series}
+          topic={topic}
+          contentType="newsletter"
+        />
         <Colophon />
       </div>
       <WebmentionMetadata
@@ -136,10 +146,12 @@ const NewsletterPage: React.FC<NewsletterPageProps> = ({
         tags={tags}
         title={title}
       />
-      {relatedContent && relatedContent.length > 0 && (
-        <RelatedPosts relatedContent={relatedContent} currentTitle={title} />
-      )}
-      <NewsletterSignup />
+      <div className="mt-20 flex flex-col gap-20">
+        {relatedContent && relatedContent.length > 0 && (
+          <RelatedPosts relatedContent={relatedContent} currentTitle={title} />
+        )}
+        <NewsletterSignup />
+      </div>
     </>
   );
 };

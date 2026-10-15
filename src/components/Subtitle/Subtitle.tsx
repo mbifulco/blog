@@ -4,7 +4,7 @@ type SubtitleProps = {
 
 const Subtitle: React.FC<SubtitleProps> = ({ children }) => {
   return (
-    <span className="tagline font-sm inline-block rounded-md py-[-0.25ch] font-bold uppercase text-gray-700">
+    <span className="tagline riso-kicker inline-block text-[0.8rem] tracking-[0.18em]">
       {children}
     </span>
   );

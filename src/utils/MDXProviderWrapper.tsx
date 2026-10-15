@@ -40,7 +40,7 @@ const CustomHeading: React.FC<HeadingProps> = ({
           as={as}
           className={clsxm(
             'inline tracking-normal no-underline',
-            "hover:before:relative hover:before:-ml-[1.2ch] hover:before:inline hover:before:border-b-0 hover:before:pr-[0.2ch] hover:before:text-pink-700 hover:before:no-underline hover:before:content-['#']",
+            "hover:before:text-riso-pink hover:before:relative hover:before:-ml-[1.2ch] hover:before:inline hover:before:border-b-0 hover:before:pr-[0.2ch] hover:before:no-underline hover:before:content-['#']",
             'scroll-mt-2'
           )}
           id={id}
@@ -84,14 +84,14 @@ const H6: React.FC<HeadingProps> = (props) => (
 );
 
 const P: React.FC<HTMLAttributes<HTMLParagraphElement>> = (props) => (
-  <p className="text-pretty font-serif text-xl" {...props} />
+  <p className="text-pretty font-serif text-xl leading-relaxed" {...props} />
 );
 
 const Blockquote: React.FC<HTMLAttributes<HTMLQuoteElement>> = ({
   children,
 }) => {
   return (
-    <blockquote className="my-10 border-0 pl-0 text-gray-900 [&>p:first-of-type]:before:text-pink-500 [&>p:first-of-type]:before:content-[open-quote] sm:[&>p:first-of-type]:before:absolute sm:[&>p:first-of-type]:before:-translate-x-full sm:[&>p:first-of-type]:before:pr-1 [&>p:last-child]:mb-0 [&>p:last-of-type]:after:text-pink-500 [&>p:last-of-type]:after:content-[close-quote] [&_p]:text-balance [&_p]:text-2xl [&_p]:leading-snug">
+    <blockquote className="text-riso-blue [&>p:first-of-type]:before:text-riso-pink [&>p:last-of-type]:after:text-riso-pink my-10 border-0 pl-0 font-normal not-italic [&>p:first-of-type]:before:content-[open-quote] sm:[&>p:first-of-type]:before:absolute sm:[&>p:first-of-type]:before:-translate-x-full sm:[&>p:first-of-type]:before:pr-1 [&>p:last-child]:mb-0 [&>p:last-of-type]:after:content-[close-quote] [&_p]:text-balance [&_p]:text-2xl [&_p]:leading-snug">
       {children}
     </blockquote>
   );
@@ -106,7 +106,7 @@ const CustomLink: React.FC<CustomLinkProps> = ({ children, ...props }) => {
 const Colophon = () => {
   return (
     <div
-      className="mb-6 mt-12 flex flex-row gap-2 font-bold text-pink-400"
+      className="text-riso-pink mb-6 mt-12 flex flex-row gap-2 font-bold"
       aria-hidden
     >
       <div className="flex flex-row gap-5">
@@ -125,12 +125,12 @@ const Aside: React.FC<AsideProps> = ({ type = 'default', ...props }) => {
   return (
     <aside
       className={clsxm(
-        'my-8 -ml-8 text-pretty border-l-8 border-solid px-8 py-4',
-        type === 'default' && 'border-pink-400 bg-pink-50 text-pink-900',
-        type === 'info' && 'border-yellow-400 bg-yellow-50 text-yellow-900',
-        type === 'note' && 'border-green-400 bg-green-50 text-green-900',
-        type === 'error' && 'border-red-400 bg-red-50 text-red-900',
-        type === 'warning' && 'border-red-400 bg-red-50 text-red-900'
+        'text-ink my-8 text-pretty border-y-2 border-solid px-5 py-4 [&_p:last-child]:mb-0',
+        type === 'default' && 'border-riso-pink bg-tint-pink',
+        type === 'info' && 'border-riso-blue bg-tint-blue',
+        type === 'note' && 'border-riso-blue bg-tint-blue',
+        (type === 'error' || type === 'warning') &&
+          'border-destructive bg-destructive/10'
       )}
       {...props}
     />
@@ -140,7 +140,7 @@ const Aside: React.FC<AsideProps> = ({ type = 'default', ...props }) => {
 const TextHighlight = ({ key: _, ...rest }: HTMLProps<HTMLElement>) => (
   <mark
     className={clsxm(
-      'xs inline rounded-sm bg-pink-600 px-[0.5ch] leading-tight text-white',
+      'xs bg-tint-pink text-ink inline px-[0.5ch] leading-tight',
       rest.className
     )}
     {...rest}
@@ -151,9 +151,24 @@ const InlineCode: React.FC<HTMLAttributes<HTMLElement>> = ({ ...props }) => {
   return (
     <code
       {...props}
-      className="inline rounded-sm border border-slate-200 bg-slate-100 px-[0.5ch] py-[0.1ch] font-mono text-sm text-slate-700"
+      className="bg-tint-blue text-riso-blue inline px-[0.5ch] py-[0.1ch] font-mono text-[0.85em]"
     />
   );
+};
+
+// Code prints on federal-blue ink in both themes; Night Owl's token colors stay
+// for legibility, only its ground and gutter are replaced.
+const CODE_INK = '#141a3d';
+const CODE_GUTTER = '#ff48b0';
+// Night Owl's comment gray is 3.6:1 on the code ink; this lifts it past 4.5:1.
+const CODE_COMMENT = '#8a9a9a';
+const CODE_THEME = {
+  ...themes.nightOwl,
+  styles: themes.nightOwl.styles.map((style) =>
+    style.types.includes('comment')
+      ? { ...style, style: { ...style.style, color: CODE_COMMENT } }
+      : style
+  ),
 };
 
 type PreProps = {
@@ -183,10 +198,8 @@ const Pre: React.FC<PreProps> = ({ children }) => {
 
   return (
     <div
-      className="group relative -mx-2 my-6 max-w-[calc(100vw_-_36px)] rounded-sm md:mx-0"
-      style={{
-        background: themes.nightOwl.plain.backgroundColor,
-      }}
+      className="group relative -mx-4 my-8 max-w-[100vw] sm:mx-0 sm:max-w-full"
+      style={{ background: CODE_INK }}
     >
       {/* Zero-height so the button overlays the block without adding to its
           height, and transparent to clicks so it can't hijack text selection. */}
@@ -197,9 +210,12 @@ const Pre: React.FC<PreProps> = ({ children }) => {
           className="pointer-events-auto"
         />
       </div>
-      <Highlight theme={themes.nightOwl} code={source} language={language}>
+      <Highlight theme={CODE_THEME} code={source} language={language}>
         {({ className, style, tokens, getLineProps, getTokenProps }) => (
-          <pre className={className} style={{ ...style, overflowX: 'auto' }}>
+          <pre
+            className={className}
+            style={{ ...style, background: 'transparent', overflowX: 'auto' }}
+          >
             {tokens.map((line, i) => {
               // The last token line is MDX's trailing newline, not code.
               if (i === tokens.length - 1) return null;
@@ -207,20 +223,18 @@ const Pre: React.FC<PreProps> = ({ children }) => {
                 <div style={{ display: 'table-row' }} key={`code-line-${i}`}>
                   <span
                     style={{
-                      opacity: 0.5,
-                      paddingRight: '1ch',
+                      color: CODE_GUTTER,
+                      paddingRight: '1.5ch',
+                      userSelect: 'none',
                       display: 'table-cell',
                     }}
                   >
                     {i + 1}
                   </span>
                   <span style={{ display: 'table-cell' }}>
-                    <div {...getLineProps({ line, key: i })}>
+                    <div {...getLineProps({ line })}>
                       {line.map((token, lineKey) => (
-                        <span
-                          key={lineKey}
-                          {...getTokenProps({ token, key: lineKey })}
-                        />
+                        <span key={lineKey} {...getTokenProps({ token })} />
                       ))}
                     </div>
                   </span>
@@ -269,7 +283,10 @@ const ListItemComponent: React.FC<HTMLAttributes<HTMLLIElement>> = ({
 
 const HorizontalRule = () => {
   return (
-    <div className="mx-auto mb-8 mt-12 w-[50%] max-w-[50%] rounded-sm border-b-[5px] border-solid border-pink-400" />
+    <div aria-hidden className="mx-auto mb-10 mt-12 flex w-1/2 flex-col gap-1">
+      <div className="bg-pink-fill h-0.5" />
+      <div className="bg-blue-fill ml-2 h-0.5" />
+    </div>
   );
 };
 
@@ -293,7 +310,7 @@ const Button: React.FC<HTMLProps<HTMLButtonElement>> = ({
   return (
     <button
       className={clsxm(
-        'rounded-xs bg-pink-400 px-4 py-2 text-white shadow-md hover:bg-pink-500',
+        'bg-pink-fill text-on-fill hover:bg-blue-fill px-4 py-2 font-futura font-bold',
         className
       )}
       type={

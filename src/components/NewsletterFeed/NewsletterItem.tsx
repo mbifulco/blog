@@ -12,13 +12,13 @@ const NewsletterItem: React.FC<NewsletterItemProps> = ({ newsletter }) => {
     newsletter.frontmatter;
 
   return (
-    <div className="w-full overflow-hidden bg-white">
+    <div className="bg-stock-raised w-full overflow-hidden">
       <Link
         href={`/newsletter/${slug}`}
         className="aspect-1200/630 m-0 block max-w-full"
       >
         <div
-          className="aspect-1200/630 m-0 h-full min-h-[205px] bg-cover object-cover p-0"
+          className="aspect-1200/630 m-0 w-full bg-cover bg-center p-0"
           style={{
             backgroundImage: `url('${getCloudinaryImageUrl(
               coverImagePublicId
@@ -27,13 +27,13 @@ const NewsletterItem: React.FC<NewsletterItemProps> = ({ newsletter }) => {
         />
       </Link>
       <div className="mt-4 flex flex-col">
-        <Heading as="h3" className="text-xl text-pink-600">
+        <Heading as="h3" className="text-riso-pink text-xl">
           <Link href={`/newsletter/${slug}`}>{title}</Link>
         </Heading>
-        <p className="hidden text-sm uppercase text-gray-500 lg:visible">
+        <p className="text-ink-muted hidden text-sm uppercase lg:visible">
           {formatDate(date)}
         </p>
-        <p className="line-clamp-3 overflow-y-hidden text-ellipsis text-gray-600">
+        <p className="text-ink-muted line-clamp-3 overflow-y-hidden text-ellipsis font-serif">
           {excerpt}
         </p>
       </div>

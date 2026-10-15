@@ -1,4 +1,4 @@
-import { formatRelative } from 'date-fns';
+import { format } from 'date-fns';
 
 import clsxm from '@utils/clsxm';
 
@@ -17,7 +17,7 @@ const PublishDate: React.FC<PublishDateProps> = ({ date, className }) => {
       className={clsxm('text-lg', className)}
       dateTime={formattedDate.toUTCString()}
     >
-      {formatRelative(date, new Date())}
+      {format(formattedDate, 'MMM d, yyyy')}
     </time>
   );
 };
