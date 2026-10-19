@@ -39,4 +39,32 @@ describe('getHeadings', () => {
 
     expect(getHeadings(source).map((h) => h.text)).toEqual(['Before', 'After']);
   });
+
+  it('keeps headings after a SponsoredSection written on one line', () => {
+    const source = [
+      '## Before',
+      '',
+      '<SponsoredSection sponsorName="Acme" CTAtext="Go" href="https://example.com">Ad copy.</SponsoredSection>',
+      '',
+      '## After',
+    ].join('\n');
+
+    expect(getHeadings(source).map((h) => h.text)).toEqual(['Before', 'After']);
+  });
+
+  it('numbers slugs the same way the page does when an ad repeats a heading', () => {
+    const source = [
+      '<SponsoredSection sponsorName="Acme" CTAtext="Go" href="https://example.com">',
+      '',
+      '### Overview',
+      '',
+      '</SponsoredSection>',
+      '',
+      '## Overview',
+    ].join('\n');
+
+    expect(getHeadings(source)).toEqual([
+      { level: 2, text: 'Overview', slug: 'overview-1' },
+    ]);
+  });
 });
