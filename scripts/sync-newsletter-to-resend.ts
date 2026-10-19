@@ -106,6 +106,12 @@ function convertImagesToMarkdown(content: string): string {
   });
 }
 
+// Mirrors the site's SponsoredSection band: white type on the fixed deep blue fill
+const SPONSOR_BAND_BLUE = '#2340b0';
+const SPONSOR_BUTTON_PINK = '#d4197a';
+const SPONSOR_LINK_PINK = '#ff48b0';
+const SPONSOR_FONT = "Futura, Jost, 'Trebuchet MS', Arial, sans-serif";
+
 /**
  * Converts basic markdown to HTML for sponsored section content.
  * Handles headings, bold, italic, links, and paragraphs.
@@ -116,15 +122,15 @@ function convertMarkdownToHtml(markdown: string): string {
   // Convert headings (###, ##, #)
   html = html.replace(
     /^### (.+)$/gm,
-    '<h3 style="font-weight: 500; font-size: 1.5rem; margin: 16px 0 8px 0; color: #1f2937;">$1</h3>'
+    `<h3 style="font-family: ${SPONSOR_FONT}; font-weight: 700; font-size: 22px; line-height: 1.25; margin: 0 0 8px 0; color: #ffffff;">$1</h3>`
   );
   html = html.replace(
     /^## (.+)$/gm,
-    '<h2 style="font-weight: 500; font-size: 1.75rem; margin: 20px 0 12px 0; color: #1f2937;">$1</h2>'
+    `<h2 style="font-family: ${SPONSOR_FONT}; font-weight: 700; font-size: 24px; line-height: 1.25; margin: 0 0 8px 0; color: #ffffff;">$1</h2>`
   );
   html = html.replace(
     /^# (.+)$/gm,
-    '<h1 style="font-weight: 500; font-size: 2rem; margin: 24px 0 16px 0; color: #1f2937;">$1</h1>'
+    `<h1 style="font-family: ${SPONSOR_FONT}; font-weight: 700; font-size: 26px; line-height: 1.25; margin: 0 0 8px 0; color: #ffffff;">$1</h1>`
   );
 
   // Convert bold (**text** or __text__)
@@ -138,7 +144,7 @@ function convertMarkdownToHtml(markdown: string): string {
   // Convert links [text](url)
   html = html.replace(
     /\[([^\]]+)\]\(([^)]+)\)/g,
-    '<a href="$2" style="color: #2563eb; text-decoration: underline;">$1</a>'
+    `<a href="$2" style="color: #ffffff; text-decoration: underline; text-decoration-color: ${SPONSOR_LINK_PINK};">$1</a>`
   );
 
   // Convert paragraphs (lines separated by blank lines)
@@ -150,7 +156,7 @@ function convertMarkdownToHtml(markdown: string): string {
       if (trimmed.startsWith('<')) {
         return trimmed;
       }
-      return `<p style="margin: 8px 0; line-height: 1.5;">${trimmed}</p>`;
+      return `<p style="margin: 12px 0 0 0; font-size: 17px; line-height: 1.6; color: #ffffff;">${trimmed}</p>`;
     })
     .join('\n');
 
@@ -169,43 +175,36 @@ function convertSponsoredSectionsToHtml(content: string): string {
     // Extract attributes
     const imagePublicId =
       attributes.match(/imagePublicId="([^"]+)"/)?.[1] || '';
+    const logoPublicId = attributes.match(/logoPublicId="([^"]+)"/)?.[1] || '';
     const sponsorName = attributes.match(/sponsorName="([^"]+)"/)?.[1] || '';
     const CTAtext = attributes.match(/CTAtext="([^"]+)"/)?.[1] || '';
-    const brandColor =
-      attributes.match(/brandColor="([^"]+)"/)?.[1] || '#db2777';
     const href = attributes.match(/href="([^"]+)"/)?.[1] || '';
 
     // Convert markdown children to HTML
     const htmlContent = convertMarkdownToHtml(children.trim());
 
-    // Build email-safe HTML
-    let html =
-      '\n\n<div style="padding: 20px 0; border-top: 1px solid #e5e7eb; border-bottom: 1px solid #e5e7eb; margin: 20px 0;">\n';
+    const brand = logoPublicId
+      ? `<a href="${href}" style="display: inline-block;"><img src="https://res.cloudinary.com/mikebifulco-com/image/upload/f_png,h_80/${logoPublicId}" alt="${sponsorName}" height="32" style="display: block; height: 32px; width: auto; border: 0;" /></a>`
+      : `<span style="font-family: ${SPONSOR_FONT}; font-weight: 700; font-size: 18px; color: #ffffff;">${sponsorName}</span>`;
 
-    // Top separator
-    html +=
-      '<div style="text-align: center; color: #d1d5db; font-size: 32px; margin-bottom: 10px;">* * *</div>\n';
+    // Tables keep the logo and label on one row in clients without flexbox
+    let html = `\n\n<div style="background-color: ${SPONSOR_BAND_BLUE}; color: #ffffff; padding: 24px; margin: 32px 0;">\n`;
 
-    // Sponsor attribution
-    html += `<p style="font-size: 12px; font-style: italic; color: #9ca3af; text-transform: uppercase;">Thanks to <strong>${sponsorName}</strong> for sponsoring</p>\n`;
+    html += `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
+  <td style="vertical-align: middle;">${brand}</td>
+  <td style="vertical-align: middle; text-align: right;"><a href="https://mikebifulco.com/sponsor" style="font-family: ${SPONSOR_FONT}; font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #ffffff; text-decoration: none; opacity: 0.75;">Sponsor</a></td>
+</tr></table>\n`;
 
-    // Sponsor image if provided
     if (imagePublicId) {
       const imageUrl = getCloudinaryImageUrl(imagePublicId);
-      html += `<a href="${href}" style="display: block; margin: 10px 0;"><img src="${imageUrl}" alt="Sponsored by ${sponsorName}" style="width: 100%; max-width: 100%; height: auto; border-radius: 6px;" /></a>\n`;
+      html += `<a href="${href}" style="display: block; margin: 20px 0 0 0;"><img src="${imageUrl}" alt="Sponsored by ${sponsorName}" style="display: block; width: 100%; max-width: 100%; height: auto; border: 0;" /></a>\n`;
     }
 
-    // Content (converted from markdown to HTML)
-    html += `<div style="margin: 16px 0;">\n${htmlContent}\n</div>\n`;
+    html += `<div style="margin: 20px 0 0 0;">\n${htmlContent}\n</div>\n`;
 
-    // CTA button
-    html += `<div style="text-align: center; margin: 20px 0;">
-  <a href="${href}" style="display: inline-block; background-color: ${brandColor}; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: 500; font-size: 14px;">${CTAtext}</a>
+    html += `<div style="margin: 24px 0 0 0;">
+  <a href="${href}" style="display: inline-block; background-color: ${SPONSOR_BUTTON_PINK}; color: #ffffff; padding: 12px 20px; text-decoration: none; font-family: ${SPONSOR_FONT}; font-weight: 700; font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase;">${CTAtext}</a>
 </div>\n`;
-
-    // Bottom separator
-    html +=
-      '<div style="text-align: center; color: #d1d5db; font-size: 32px; margin-top: 10px;">* * *</div>\n';
 
     html += '</div>\n\n';
 

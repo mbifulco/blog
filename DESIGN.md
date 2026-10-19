@@ -275,6 +275,13 @@ Solid ink, square, and loud.
 - **Internal Padding:** 16px by 20px for asides; the TL;DR has no ground, just its rules and a pink label.
 - **Newsletter box:** solid pink tint ground. Halftone is confined to a 12px printed strip (6px dots) along the top edge; copy never sits on dots. A Futura title in ink, then a serif pitch that ends "Join N other builders" with the live count in pink Futura bold, then the form and serif fine print. The **full** variant stacks everything with a 72px headshot and the sponsor line (max 48rem wide). The **band** variant, used under the home lead story, is full width: pitch on the left and form on the right (`1fr / 1.1fr` from md up, 32px padding), with no headshot or sponsor line.
 
+### Sponsor band
+- A tipped-in insert in the reading column: the fixed deep blue fill with white type in both themes, square, with a 12px bright pink halftone strip (6px dots, normal blend) along the top edge. No asterisk colophons around it.
+- **Header row:** the sponsor's logo (a version made for dark grounds, 32px tall) at left and a "Sponsor" label at right in white at 75%, linking to `/sponsor`. The disclosure lives here, never as a line above the heading.
+- **Body:** Futura bold title at 1.5rem in white, serif copy at 1.125rem in white at 90%, max 60ch. Links are white with a bright pink underline.
+- **CTA:** the primary button, left aligned under the copy. On the blue ground its hover inverts to a white fill with blue text, and its focus ring is white.
+- Sponsor brand colors are not used; the sponsor's identity comes from its logo. The email version in `scripts/sync-newsletter-to-resend.ts` mirrors this band and must change with it.
+
 ### Inputs / Fields
 - **Style:** raised stock ground, 2px solid blue border, square, 44px tall, `1ch 2ch` padding, faded-ink placeholder, no shadow. Stacked fields share a border (the upper field drops its bottom border).
 - **Focus:** the global pink outline.
