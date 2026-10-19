@@ -8,6 +8,7 @@ import remarkGfm from 'remark-gfm';
 export const getHeadings = (source: string): Heading[] => {
   const lines = source.split('\n');
   let inCodeBlock = false;
+  let inSponsoredSection = false;
   const headings: Heading[] = [];
   const slugger = new GithubSlugger();
 
@@ -20,6 +21,14 @@ export const getHeadings = (source: string): Heading[] => {
 
     // Skip processing if inside a code block
     if (inCodeBlock) return;
+
+    // Sponsor copy is an ad, not part of the post's outline
+    if (line.trim().startsWith('<SponsoredSection')) inSponsoredSection = true;
+    if (line.trim().startsWith('</SponsoredSection>')) {
+      inSponsoredSection = false;
+      return;
+    }
+    if (inSponsoredSection) return;
 
     // Process headings outside of code blocks
     const headingMatch = /^(#{1,6}) (.+)/.exec(line);
