@@ -1,0 +1,108 @@
+---
+title: "The MVP Event Horizon: How to Tell When Your Prototype Became Critical"
+date: 2026-10-20
+series: The Operator Problem
+excerpt: "Every MVP has an event horizon: the point where people start depending on it. You won't feel yourself cross it - you'll find out when you try to back out."
+tags: [startup, founder, product]
+coverImagePublicId: newsletters/mvp-event-horizon/cover
+published: false
+slug: mvp-event-horizon
+---
+
+## The Big Idea
+
+Your startup is never in just one mode. Right now, some of what you've built is a throwaway experiment, and some of it is holding up the business. The hard part isn't building either kind. It's knowing which is which - because nobody will tell you when something crosses the line.
+
+## The prototype in the subheader
+
+When we scope a project at [Craftwork](https://craftwork.com), one question is always the same: how many people, for how many days?
+
+It sounds like a calendar question. It's really a money question. A job that needs 12 shifts of work could be 2 people for 6 days, or 4 people for 3. Both fill the calendar. They don't cost us the same, and every project needs to make money.
+
+So a while back, I built a small tool to help. It took a project, split it into people-and-days options, and showed what each one would cost us. Nothing fancy. I tucked it into a subheader, mostly to see if anyone would bother using it.
+
+They did. Then they kept using it. The team took it under their wing, and it quietly became part of how projects get handed off from sales to scheduling.
+
+I didn't know any of that. I found out kinetically: I made a change to it without asking the right people, and had to roll it back almost immediately.
+
+Nobody told me the tool was load-bearing. Nobody thought they had to. _We_ knew it was an MVP. _They_ didn't - and they had no reason to. To the people relying on it, a tool on the screen is just _a tool on the screen_. Don't expect them to learn your dev team's process. Work with their mental model, not yours.
+
+
+<SponsoredSection
+  sponsorName="Bright Data"
+  logoPublicId="sponsors/bright-data/logo-on-blue"
+  CTAtext="Start free →"
+  href="https://brightdata.com/products/web-scraper/studio?utm_source=brand&utm_campaign=brnd-mkt_newsletter_TinyImprovements&promo=entail"
+>
+
+### Stop babysitting scrapers: turn any website into a data API
+
+Scraper Studio builds self-healing scrapers that patch themselves when sites change. Proxies and unblocking included, plus 5,000 free credits a month.
+
+</SponsoredSection>
+
+
+## Builder mode and operator mode, at the same time
+
+[Last time](https://mikebifulco.com/newsletter/operator-problem-after-mvp), I split the work into builder mode (_can we make this work?_) and operator mode (_how do we keep this working?_). It's tempting to treat those as chapters: first you build, then you operate. That's not how it works.
+
+This week at Craftwork, our next-market mapping tool is a two-person experiment. Meanwhile, payments, SMS, and voice can't go down for even an hour. (Yes, that's the same SMS system that [quietly cut off our busiest support rep](https://mikebifulco.com/newsletter/operator-problem-after-mvp).)
+
+Same repo. Same database. Same engineers. Completely different standards.
+
+**Your product may not be in one mode. Growing products are in all of them, all the time.**
+
+## The operator map: four stages every system moves through
+
+Every system moves through roughly four stages. Each one asks a different question.
+
+1. **Experiment** - _Is this idea useful?_ The goal is learning. That's the people-and-days tool, hiding in a subheader.
+2. **Emerging workflow** - _Can people use this repeatedly?_ The goal is repeatability. The team starts reaching for the tool on every project.
+3. **Operational dependency** - _Can the business rely on this?_ The goal is dependability. Sales hands off to scheduling through it, and my rollback proved it.
+4. **Critical infrastructure** - _How do we keep this healthy over time?_ The goal is resilience. Half a dozen versions later, the tool feeds our reporting. (More on that below.)
+
+Systems move along this map at their own pace, and the moves are silent. The one that matters most is the jump from stage two to stage three: the MVP event horizon. Like the real thing, you don't feel yourself cross it. Nothing changes in the code. You only find out afterward, when you try to back out and can't. I found out my tool was past it the moment I had to roll back my change. That's normal. The trick is noticing sooner.
+
+## How to tell when an MVP has become critical
+
+A gut feeling isn't enough. Turn it into signals.
+
+**Instrument before you launch.** Usage data tells you whether something is succeeding and whether to invest or keep iterating. Later, it tells you whether it's safe to retire. Plumb it in on day one - retrofitting it means guessing about the stretch that matters most.
+
+**Watch for signs a system is moving up the map:**
+
+- Usage ticks up.
+- Feature requests and bug reports start arriving. Feedback is a gift: people are using the thing, and see potential.
+- People work around its limits instead of asking you to fix them. This one is the sneakiest. A workaround is a dependency in disguise.
+
+**Ask people _how_ they use it.** Not "do you want this?" or "should we keep this?" Yes/no questions get you a yes. Try "walk me through the last time you used it." The answer will tell you whether it's load-bearing faster than any dashboard.
+
+## Invest, label, or kill: every system needs a decision
+
+Once you know where a system sits, decide what to do about it - on purpose. There are three answers.
+
+**Invest.** It's graduating, so make it sturdy. That usually costs you new features, and sometimes it means a rebuild (here's [how we rebuilt Craftwork's first product without stopping the business](https://mikebifulco.com/newsletter/stangler-fig-pattern)). After the rollback, we started running changes to the people-and-days tool past the people who depend on it. It's still not perfect, but it now has a crowd of invested users who give great feedback every time it evolves.
+
+While you're at it, ask what else it could do. Put those ideas in your backlog, tagged with the name of the person who asked. When one ships, tell them. It feels great on both sides.
+
+**Keep it an experiment - out loud.** Label it, tell the people using it what to expect, and give it an expiration date. The goal isn't to eliminate shortcuts. It's to know which shortcuts you're taking, and when they expire.
+
+**Kill it.** Sometimes the idea didn't earn its keep. That's still a win: you tried something and learned from it, so look at the data and decide what to try next. The same goes for a mature system nobody needs anymore - retiring it frees the people who were keeping it alive. Past the event horizon, you can still shut something down. You just can't pretend it's a prototype anymore.
+
+The worst answer is no answer. An experiment nobody chose to keep becomes accidental infrastructure - which is exactly how my tool snuck up on me.
+
+## Celebrate the graduations, not just the launches
+
+When something you built becomes critical to someone's work, you have a product people find valuable. That deserves a party, too.
+
+The people-and-days tool is that story. Today, we might estimate a project at 100 shifts, scheduling plans it at 98, and it takes 115 to finish. Lining those numbers up against profitability across projects shows us where things go well and where they go sideways - and steers an algorithm that makes recommendations for the next job. A subheader experiment now teaches us how our business actually works.
+
+If only launches get celebrated, operator work becomes invisible labor squeezed between feature deadlines. Make it visible.
+
+## What's next: stop building the same button twice
+
+One of the clearest signs a system is maturing is that the requests start to repeat.
+
+Someone needs one button. Then a slightly different button. Then another.
+
+Eventually you realize they don't need another feature. They need a capability. That's where we'll pick up next time.
