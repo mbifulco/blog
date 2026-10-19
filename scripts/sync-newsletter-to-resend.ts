@@ -110,6 +110,8 @@ function convertImagesToMarkdown(content: string): string {
 const SPONSOR_BAND_BLUE = '#2340b0';
 const SPONSOR_BUTTON_PINK = '#d4197a';
 const SPONSOR_LINK_PINK = '#ff48b0';
+// White at 75% over the band blue, as a solid color because many clients drop opacity
+const SPONSOR_LABEL_WHITE = '#c8cfeb';
 const SPONSOR_FONT = "Futura, Jost, 'Trebuchet MS', Arial, sans-serif";
 
 /**
@@ -183,16 +185,20 @@ function convertSponsoredSectionsToHtml(content: string): string {
     // Convert markdown children to HTML
     const htmlContent = convertMarkdownToHtml(children.trim());
 
+    // Padding every logo into the same 176x40 box (2x for retina) lets the img
+    // carry fixed width and height attributes, which Outlook needs to size it
     const brand = logoPublicId
-      ? `<a href="${href}" style="display: inline-block;"><img src="https://res.cloudinary.com/mikebifulco-com/image/upload/f_png,h_80/${logoPublicId}" alt="${sponsorName}" height="32" style="display: block; height: 32px; width: auto; border: 0;" /></a>`
+      ? `<a href="${href}" style="display: inline-block;"><img src="https://res.cloudinary.com/mikebifulco-com/image/upload/f_png,c_pad,g_west,w_352,h_80,b_transparent/${logoPublicId}" alt="${sponsorName}" width="176" height="40" style="display: block; width: 176px; height: 40px; border: 0;" /></a>`
       : `<span style="font-family: ${SPONSOR_FONT}; font-weight: 700; font-size: 18px; color: #ffffff;">${sponsorName}</span>`;
 
-    // Tables keep the logo and label on one row in clients without flexbox
-    let html = `\n\n<div style="background-color: ${SPONSOR_BAND_BLUE}; color: #ffffff; padding: 24px; margin: 32px 0;">\n`;
+    // Outlook's Word renderer ignores backgrounds on divs and links, so the band
+    // and the button take their fills from table cells. The block must contain
+    // no blank lines, or Markdown ends the HTML block early.
+    let html = `\n\n<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="${SPONSOR_BAND_BLUE}" style="background-color: ${SPONSOR_BAND_BLUE}; margin: 32px 0;"><tr><td class="sponsor-band" style="padding: 24px; color: #ffffff;">\n`;
 
     html += `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
   <td style="vertical-align: middle;">${brand}</td>
-  <td style="vertical-align: middle; text-align: right;"><a href="https://mikebifulco.com/sponsor" style="font-family: ${SPONSOR_FONT}; font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #ffffff; text-decoration: none; opacity: 0.75;">Sponsor</a></td>
+  <td style="vertical-align: middle; text-align: right;"><a href="https://mikebifulco.com/sponsor" style="font-family: ${SPONSOR_FONT}; font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: ${SPONSOR_LABEL_WHITE}; text-decoration: none;">Sponsor</a></td>
 </tr></table>\n`;
 
     if (imagePublicId) {
@@ -202,11 +208,11 @@ function convertSponsoredSectionsToHtml(content: string): string {
 
     html += `<div style="margin: 20px 0 0 0;">\n${htmlContent}\n</div>\n`;
 
-    html += `<div style="margin: 24px 0 0 0;">
-  <a href="${href}" style="display: inline-block; background-color: ${SPONSOR_BUTTON_PINK}; color: #ffffff; padding: 12px 20px; text-decoration: none; font-family: ${SPONSOR_FONT}; font-weight: 700; font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase;">${CTAtext}</a>
-</div>\n`;
+    html += `<table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin: 24px 0 0 0;"><tr>
+  <td bgcolor="${SPONSOR_BUTTON_PINK}" style="background-color: ${SPONSOR_BUTTON_PINK};"><a href="${href}" style="display: inline-block; padding: 14px 20px; color: #ffffff; text-decoration: none; font-family: ${SPONSOR_FONT}; font-weight: 700; font-size: 14px; letter-spacing: 0.1em; text-transform: uppercase;">${CTAtext}</a></td>
+</tr></table>\n`;
 
-    html += '</div>\n\n';
+    html += '</td></tr></table>\n\n';
 
     return html;
   });
