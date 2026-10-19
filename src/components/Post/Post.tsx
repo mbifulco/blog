@@ -1,27 +1,30 @@
 import type { Series } from '@lib/series';
 import type { TopicDefinition } from '@lib/topics';
-import type { BlogPost } from '../../data/content-types';
+import type {
+  BlogPost,
+  DocumentSummary,
+  RenderedDocument,
+} from '../../data/content-types';
 
 import FullPost from './FullPost';
 import PostSummary from './PostSummary';
 
 type PostProps = {
-  summary?: boolean;
-  post: BlogPost;
   eager?: boolean;
   series?: Series | null;
   topic?: Pick<TopicDefinition, 'slug' | 'name'> | null;
-};
+} & (
+  | { summary: true; post: DocumentSummary<BlogPost> }
+  | { summary?: false; post: RenderedDocument<BlogPost> }
+);
 
-const BlogPostRenderer: React.FC<PostProps> = ({
-  summary,
-  post,
-  eager,
-  series,
-  topic,
-}) => {
-  if (summary) return <PostSummary post={post} eager={eager} />;
-  return <FullPost post={post} series={series} topic={topic} />;
+const BlogPostRenderer: React.FC<PostProps> = (props) => {
+  if (props.summary) {
+    return <PostSummary post={props.post} eager={props.eager} />;
+  }
+  return (
+    <FullPost post={props.post} series={props.series} topic={props.topic} />
+  );
 };
 
 export default BlogPostRenderer;

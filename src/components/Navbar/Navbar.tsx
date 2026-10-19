@@ -73,7 +73,6 @@ const Navbar = () => {
                   the right margin makes room for the burst spilling off the bill */}
               <Link
                 href="/"
-                prefetch={true}
                 aria-label="Mike Bifulco, home"
                 className="group -mb-3 mr-1 shrink-0 self-end no-underline hover:no-underline sm:mr-5"
               >
@@ -83,7 +82,6 @@ const Navbar = () => {
               {isHome ? (
                 <Link
                   href="/newsletter"
-                  prefetch={true}
                   className="text-riso-pink hover:text-riso-blue text-balance font-futura text-xs font-bold uppercase leading-tight tracking-[0.12em] no-underline hover:no-underline sm:text-sm"
                 >
                   Build products that matter
@@ -91,7 +89,6 @@ const Navbar = () => {
               ) : (
                 <Link
                   href="/"
-                  prefetch={true}
                   className="text-riso-pink hover:text-riso-blue font-dumpling text-xl uppercase leading-none no-underline hover:no-underline md:text-2xl"
                 >
                   Mike Bifulco
@@ -102,7 +99,6 @@ const Navbar = () => {
             <div className="hidden items-center md:flex">
               <Link
                 href="/newsletter"
-                prefetch={true}
                 className={clsxm(
                   itemClass,
                   router.pathname.startsWith('/newsletter') && 'text-riso-pink'
@@ -112,7 +108,6 @@ const Navbar = () => {
               </Link>
               <Link
                 href="/about"
-                prefetch={true}
                 className={clsxm(
                   itemClass,
                   router.pathname === '/about' && 'text-riso-pink'
@@ -136,7 +131,6 @@ const Navbar = () => {
                   <TooltipTrigger asChild>
                     <Link
                       href="/subscribe"
-                      prefetch={true}
                       className={clsxm(
                         'ml-2 inline-flex h-9 w-max items-center justify-center px-4 py-2 font-futura text-[0.8rem] font-bold uppercase tracking-[0.08em] transition-colors',
                         'bg-pink-fill text-on-fill hover:bg-blue-fill hover:text-on-fill no-underline hover:no-underline'
@@ -222,7 +216,6 @@ const Navbar = () => {
               <DisclosureButton
                 as={Link}
                 href="/podcast"
-                prefetch={true}
                 className={clsxm(
                   mobileLinkClass,
                   router.pathname === '/podcast' && 'text-riso-pink'
@@ -234,7 +227,6 @@ const Navbar = () => {
               <DisclosureButton
                 as={Link}
                 href="/about"
-                prefetch={true}
                 className={clsxm(
                   mobileLinkClass,
                   router.pathname === '/about' && 'text-riso-pink'
@@ -247,7 +239,6 @@ const Navbar = () => {
                 <DisclosureButton
                   as={Link}
                   href="/subscribe"
-                  prefetch={true}
                   className="bg-pink-fill text-on-fill hover:bg-blue-fill hover:text-on-fill block w-full px-4 py-3 text-center font-futura font-bold uppercase tracking-[0.08em] no-underline"
                 >
                   💌 Subscribe to Tiny Improvements

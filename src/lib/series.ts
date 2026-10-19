@@ -1,8 +1,13 @@
 // get metadata about post series
-import type { BlogPost, Newsletter } from '@data/content-types';
+import type {
+  BlogPost,
+  DocumentSummary,
+  Newsletter,
+} from '@data/content-types';
 import { compareAsc } from 'date-fns';
 import slugify from 'slugify';
 
+import { toSummary } from '@data/content-types';
 import { getAllPosts } from './blog';
 import { getAllNewsletters } from './newsletters';
 
@@ -56,8 +61,10 @@ export const getAllSeries = async (): Promise<Series[]> => {
     return {
       name: seriesName,
       slug,
-      posts: posts,
-      newsletters: newsletters,
+      // Summaries: a series is rendered as navigation, and every page in the
+      // series carries it in its props.
+      posts: posts.map(toSummary),
+      newsletters: newsletters.map(toSummary),
       length: posts.length + newsletters.length,
     };
   });
@@ -73,8 +80,8 @@ export const getAllSeries = async (): Promise<Series[]> => {
 export type Series = {
   name: string;
   slug: string;
-  posts: BlogPost[];
-  newsletters: Newsletter[];
+  posts: DocumentSummary<BlogPost>[];
+  newsletters: DocumentSummary<Newsletter>[];
   length: number;
 };
 

@@ -1,4 +1,4 @@
-import type { Newsletter } from '../../../data/content-types';
+import type { DocumentSummary, Newsletter } from '../../../data/content-types';
 
 import { Heading } from '@components/Heading';
 import NewsletterItem from '@components/NewsletterFeed/NewsletterItem';
@@ -11,6 +11,7 @@ import { Subtitle } from '@components/Subtitle';
 import { ogImageUrl } from '@utils/og';
 import PaginationWrapper from '../../../components/Pagination';
 import config from '../../../config';
+import { toSummary } from '../../../data/content-types';
 import { getPaginatedNewsletters } from '../../../lib/newsletters';
 import {
   generatePaginatedPaths,
@@ -32,7 +33,7 @@ export async function getStaticProps({ params }: { params: { page: string } }) {
     return { totalPages };
   };
   return handlePaginatedStaticProps<{
-    newsletters: Newsletter[];
+    newsletters: DocumentSummary<Newsletter>[];
     pagination: {
       currentPage: number;
       totalPages: number;
@@ -51,7 +52,7 @@ export async function getStaticProps({ params }: { params: { page: string } }) {
       });
       return {
         props: {
-          newsletters: paginatedNewsletters.items,
+          newsletters: paginatedNewsletters.items.map(toSummary),
           pagination: {
             currentPage: paginatedNewsletters.currentPage,
             totalPages: paginatedNewsletters.totalPages,
@@ -65,7 +66,7 @@ export async function getStaticProps({ params }: { params: { page: string } }) {
 }
 
 type NewsletterPageProps = {
-  newsletters: Newsletter[];
+  newsletters: DocumentSummary<Newsletter>[];
   pagination: {
     currentPage: number;
     totalPages: number;
