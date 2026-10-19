@@ -1,5 +1,9 @@
+import posthog from 'posthog-js';
+
 import Link from '@components/Link';
 import { Image } from '../Image';
+
+type SponsorPlacement = 'logo' | 'image' | 'cta';
 
 type SponsoredSectionProps = {
   CTAtext: string;
@@ -19,6 +23,14 @@ const SponsoredSection: React.FC<SponsoredSectionProps> = ({
   imagePublicId,
   logoPublicId,
 }) => {
+  const trackClick = (placement: SponsorPlacement) => () => {
+    posthog.capture('sponsor_link_clicked', {
+      sponsor: sponsorName,
+      href,
+      placement,
+    });
+  };
+
   return (
     <aside
       aria-label={`Sponsored by ${sponsorName}`}
@@ -37,6 +49,7 @@ const SponsoredSection: React.FC<SponsoredSectionProps> = ({
               href={href}
               target="_blank"
               rel="sponsored"
+              onClick={trackClick('logo')}
             >
               <Image
                 bare
@@ -64,7 +77,13 @@ const SponsoredSection: React.FC<SponsoredSectionProps> = ({
         </div>
 
         {imagePublicId && (
-          <Link className="block" href={href} target="_blank" rel="sponsored">
+          <Link
+            className="block"
+            href={href}
+            target="_blank"
+            rel="sponsored"
+            onClick={trackClick('image')}
+          >
             <Image
               bare
               publicId={imagePublicId}
@@ -83,6 +102,7 @@ const SponsoredSection: React.FC<SponsoredSectionProps> = ({
           className="bg-pink-fill border-pink-fill text-on-fill hover:bg-on-fill hover:border-on-fill hover:text-blue-fill focus-visible:outline-on-fill inline-flex min-h-11 w-fit items-center border-2 px-4 py-2 font-sans text-[0.8rem] font-bold uppercase tracking-[0.1em] no-underline transition-colors hover:no-underline"
           href={href}
           rel="sponsored"
+          onClick={trackClick('cta')}
         >
           {CTAtext}
         </Link>
