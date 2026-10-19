@@ -2,7 +2,7 @@ import type { GetStaticProps, NextPage } from 'next';
 import type { RelatedContent, RelatedPostsManifest } from '@lib/related-posts';
 import type { Series } from '@lib/series';
 import type { TopicDefinition } from '@lib/topics';
-import type { BlogPost } from '../../data/content-types';
+import type { BlogPost, RenderedDocument } from '../../data/content-types';
 import { useRef } from 'react';
 import { useRouter } from 'next/router';
 import posthog from 'posthog-js';
@@ -18,6 +18,7 @@ import { Colophon } from '../../components/Colophon';
 import { BlogPost as Post } from '../../components/Post';
 import SEO from '../../components/seo';
 import WebmentionMetadata from '../../components/webmentionMetadata';
+import { toRendered } from '../../data/content-types';
 import { getAllPosts, getPostBySlug } from '../../lib/blog';
 import { getDocumentUri } from '../../utils/atproto';
 import { getCloudinaryImageUrl } from '../../utils/images';
@@ -27,7 +28,7 @@ type PostPageParams = {
 };
 
 type PostPageProps = {
-  post: BlogPost;
+  post: RenderedDocument<BlogPost>;
   series?: Series | null;
   topic: Pick<TopicDefinition, 'slug' | 'name'> | null;
   relatedContent: RelatedContent[];
@@ -63,7 +64,7 @@ export const getStaticProps: GetStaticProps<
 
   return {
     props: {
-      post,
+      post: toRendered(post),
       series: series ?? null,
       topic: getTopicForTags(post.frontmatter.tags),
       relatedContent,

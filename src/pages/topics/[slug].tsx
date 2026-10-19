@@ -1,5 +1,9 @@
 import type { GetStaticPaths, GetStaticProps, NextPage } from 'next';
-import type { BlogPost, Newsletter } from '@data/content-types';
+import type {
+  BlogPost,
+  DocumentSummary,
+  Newsletter,
+} from '@data/content-types';
 import type { Topic } from '@lib/topics';
 import { compareDesc } from 'date-fns';
 
@@ -130,14 +134,14 @@ const TopicPage: NextPage<TopicPageProps> = ({ topic }) => {
                 return (
                   <NewsletterItem
                     key={`newsletter-${content.frontmatter.slug}`}
-                    newsletter={content as Newsletter}
+                    newsletter={content as DocumentSummary<Newsletter>}
                   />
                 );
               case 'post':
                 return (
                   <Post
                     key={`post-${content.frontmatter.slug}`}
-                    post={content as BlogPost}
+                    post={content as DocumentSummary<BlogPost>}
                     summary
                   />
                 );
