@@ -8,6 +8,7 @@ import remarkGfm from 'remark-gfm';
 export const getHeadings = (source: string): Heading[] => {
   const lines = source.split('\n');
   let inCodeBlock = false;
+  let inSponsoredSection = false;
   const headings: Heading[] = [];
   const slugger = new GithubSlugger();
 
@@ -21,16 +22,22 @@ export const getHeadings = (source: string): Heading[] => {
     // Skip processing if inside a code block
     if (inCodeBlock) return;
 
+    if (line.trim().startsWith('<SponsoredSection')) inSponsoredSection = true;
+    if (inSponsoredSection && line.includes('</SponsoredSection>')) {
+      inSponsoredSection = false;
+      return;
+    }
+
     // Process headings outside of code blocks
     const headingMatch = /^(#{1,6}) (.+)/.exec(line);
     if (headingMatch) {
       const level = headingMatch[1].length;
       const text = headingMatch[2].trim();
-      headings.push({
-        level,
-        text,
-        slug: slugger.slug(text),
-      });
+      // Sponsor headings still take a slug, because rehypeSlug numbers
+      // duplicate IDs across the whole page, ads included
+      const slug = slugger.slug(text);
+      // Sponsor copy is an ad, not part of the post's outline
+      if (!inSponsoredSection) headings.push({ level, text, slug });
     }
   });
 

@@ -266,3 +266,6 @@ public/pagefind/
 
 # impeccable design-tool working files
 .impeccable/
+
+# Project MCP servers; holds API keys
+.mcp.json
