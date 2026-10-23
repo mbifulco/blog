@@ -69,7 +69,7 @@
     "gray-matter": "^4.0.3",
     "lucide-react": "^1.56.0",
     "micro": "^10.0.1",
-    "next": "16.4.0",
+    "next": "16.4.1",
     "next-cloudinary": "^6.19.3",
     "next-mdx-remote": "6.0.0",
     "nuqs": "^2.10.2",
