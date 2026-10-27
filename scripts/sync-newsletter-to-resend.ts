@@ -10,6 +10,10 @@
  *
  * Usage:
  *   pnpm tsx scripts/sync-newsletter-to-resend.ts
+ *   pnpm tsx --env-file=.env scripts/sync-newsletter-to-resend.ts <slug> [...slugs]
+ *
+ * With slugs, syncs those newsletters instead of the PR diff - for issues
+ * that reached main without a PR.
  *
  * Environment Variables Required:
  *   RESEND_API_KEY - Resend API key
@@ -253,7 +257,9 @@ async function main() {
   console.log('🚀 Starting newsletter sync to Resend...\n');
 
   // Get changed newsletters
-  const changedSlugs = getChangedNewsletters();
+  const slugArgs = process.argv.slice(2);
+  const changedSlugs =
+    slugArgs.length > 0 ? slugArgs : getChangedNewsletters();
 
   if (changedSlugs.length === 0) {
     console.log('✅ No newsletter changes detected. Nothing to sync.');
