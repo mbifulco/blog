@@ -97,4 +97,16 @@ describe('SEO', () => {
       expect(link).toBeNull();
     });
   });
+  describe('canonical link', () => {
+    it('drops the query string and hash from a relative canonical', () => {
+      const { container } = render(
+        <SEO title="Test Post" canonical="/posts/test-post?utm_source=x#intro" />
+      );
+
+      const link =
+        container.querySelector('link[rel="canonical"]') ??
+        document.querySelector('link[rel="canonical"]');
+      expect(link?.getAttribute('href')).toMatch(/\/posts\/test-post$/);
+    });
+  });
 });
