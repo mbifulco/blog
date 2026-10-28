@@ -10,14 +10,15 @@ const DefaultLayout: React.FC<{ children?: React.ReactNode }> = ({
 }) => {
   return (
     <main>
-      <div className="z-100 absolute top-[-5px] h-6 w-full bg-pink-400" />
       <SiteAnnouncement />
-      <div className="w-full pt-8 md:pt-14">
-        <div className="mx-auto my-0 flex w-full flex-col gap-8 px-2 py-0 sm:px-4 lg:p-0">
+      <div className="w-full pt-4 md:pt-6">
+        <div className="mx-auto my-0 flex w-full flex-col gap-8 py-0">
           <Navbar />
 
           <div className="flex flex-col">
-            <MDXProviderWrapper>{children}</MDXProviderWrapper>
+            <div className="px-4">
+              <MDXProviderWrapper>{children}</MDXProviderWrapper>
+            </div>
             <Footer />
           </div>
         </div>

@@ -3,13 +3,13 @@
 import type { SubscribeMutationResponse } from '@server/routers/mailingList';
 import { useState } from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
 import { useTurnstileGate } from '@hooks/useTurnstileGate';
 import { Turnstile } from '@marsidev/react-turnstile';
 import posthog from 'posthog-js';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 
+import Link from '@components/Link';
 import SubscriberCount from '@components/NewsletterSignup/SubscriberCount';
 import TurnstileStatus from '@components/SubscriptionForm/TurnstileStatus';
 import { Button } from '@ui/button';
@@ -105,8 +105,8 @@ export default function NewsletterSignupPage() {
       <>
         <PostHogPageview />
         <div className="flex min-h-screen items-center justify-center p-4">
-          <Card className="w-full max-w-md bg-white">
-            <CardContent className="bg-white pt-6">
+          <Card className="bg-stock-raised w-full max-w-md">
+            <CardContent className="bg-stock-raised pt-6">
               <div className="flex flex-col gap-4">
                 <h1
                   className="text-2xl font-bold text-gray-900"
@@ -115,7 +115,7 @@ export default function NewsletterSignupPage() {
                   🪩 Success! You&apos;re in!
                 </h1>
                 <p
-                  className="bg-white text-gray-600"
+                  className="bg-stock-raised text-ink-muted"
                   data-testid="success-message"
                 >
                   Thanks so much for subscribing. Don&apos;t forget to check
@@ -144,7 +144,7 @@ export default function NewsletterSignupPage() {
     <>
       <PostHogPageview />
       <div className="flex min-h-screen items-center justify-center p-4">
-        <Card className="w-full max-w-md bg-white">
+        <Card className="bg-stock-raised w-full max-w-md">
           <CardHeader className="pb-4 text-left">
             <header className="flex flex-col gap-1 text-left">
               <h1
@@ -158,7 +158,7 @@ export default function NewsletterSignupPage() {
                 devs &amp; founders building better.
               </h1>
               <p
-                className="mb-2 text-lg text-muted-foreground"
+                className="text-muted-foreground mb-2 text-lg"
                 data-testid="newsletter-description"
               >
                 One sharp idea each week to help you ship smarter and faster.
@@ -240,11 +240,11 @@ export default function NewsletterSignupPage() {
                 className="rounded-full"
               />
               <div className="flex flex-col">
-                <p className="text-sm text-foreground">💌 Tiny Improvements</p>
-                <p className="text-sm font-medium text-muted-foreground">
+                <p className="text-foreground text-sm">💌 Tiny Improvements</p>
+                <p className="text-muted-foreground text-sm font-medium">
                   <span className="font-normal">by</span> Mike Bifulco
                 </p>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-muted-foreground text-sm">
                   YC founder. Ex-Stripe, Google, Microsoft.
                 </p>
               </div>

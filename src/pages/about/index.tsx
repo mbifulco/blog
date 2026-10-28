@@ -6,6 +6,7 @@ import posthog from 'posthog-js';
 
 import NewsletterSignup from '@components/NewsletterSignup/NewsletterBannerFancy';
 import StructuredData from '@components/StructuredData/StructuredData';
+import { ogImageUrl } from '@utils/og';
 import SEO from '../../components/seo';
 import { serialize } from '../../utils/mdx';
 import { components } from '../../utils/MDXProviderWrapper';
@@ -67,6 +68,7 @@ const AboutPage: NextPage<AboutPageProps> = ({ mdxSource, error }) => {
   return (
     <>
       <SEO
+        image={ogImageUrl('about')}
         title="About Mike Bifulco | CTO, Y Combinator Alum & Developer Advocate"
         description="Mike Bifulco is a startup CTO, Y Combinator alum, and developer advocate. Former Stripe, Google, and Microsoft. Creator of Tiny Improvements newsletter. Expert in React, Next.js, and API design."
       />

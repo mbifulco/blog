@@ -53,6 +53,10 @@ const postRedirects = oldPostPaths.map((path) => ({
  **/
 const config = {
   reactCompiler: true,
+  // The OG card route reads the Dumpling wordmark from disk when it renders.
+  outputFileTracingIncludes: {
+    '/og/[[...slug]]': ['./public/fonts/TAYDumpling.woff'],
+  },
   pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md', 'mdx'],
   images: {
     remotePatterns: [
@@ -159,6 +163,10 @@ export default withPostHogConfig(
     sourcemaps: {
       enabled: process.env.VERCEL_ENV === 'production',
       deleteAfterUpload: true,
+      // The default 'event' mode relies on Turbopack's native debug IDs and
+      // only uploads, but Next 16.4 leaves some server chunks without one,
+      // which aborts the build. 'symbol-set' injects the IDs before uploading.
+      releaseMode: 'symbol-set',
     },
   }
 );

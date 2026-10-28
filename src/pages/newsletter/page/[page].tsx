@@ -1,4 +1,4 @@
-import type { Newsletter } from '../../../data/content-types';
+import type { DocumentSummary, Newsletter } from '../../../data/content-types';
 
 import { Heading } from '@components/Heading';
 import NewsletterItem from '@components/NewsletterFeed/NewsletterItem';
@@ -8,8 +8,10 @@ import SEO from '@components/seo';
 import SponsorCTA from '@components/SponsorCTA/SponsorCTA';
 import { SubscriptionForm } from '@components/SubscriptionForm';
 import { Subtitle } from '@components/Subtitle';
+import { ogImageUrl } from '@utils/og';
 import PaginationWrapper from '../../../components/Pagination';
 import config from '../../../config';
+import { toSummary } from '../../../data/content-types';
 import { getPaginatedNewsletters } from '../../../lib/newsletters';
 import {
   generatePaginatedPaths,
@@ -31,7 +33,7 @@ export async function getStaticProps({ params }: { params: { page: string } }) {
     return { totalPages };
   };
   return handlePaginatedStaticProps<{
-    newsletters: Newsletter[];
+    newsletters: DocumentSummary<Newsletter>[];
     pagination: {
       currentPage: number;
       totalPages: number;
@@ -50,7 +52,7 @@ export async function getStaticProps({ params }: { params: { page: string } }) {
       });
       return {
         props: {
-          newsletters: paginatedNewsletters.items,
+          newsletters: paginatedNewsletters.items.map(toSummary),
           pagination: {
             currentPage: paginatedNewsletters.currentPage,
             totalPages: paginatedNewsletters.totalPages,
@@ -64,7 +66,7 @@ export async function getStaticProps({ params }: { params: { page: string } }) {
 }
 
 type NewsletterPageProps = {
-  newsletters: Newsletter[];
+  newsletters: DocumentSummary<Newsletter>[];
   pagination: {
     currentPage: number;
     totalPages: number;
@@ -84,9 +86,7 @@ const NewsletterPage: React.FC<NewsletterPageProps> = ({
       <SEO
         title="💌 Tiny Improvements: a newsletter for startup founders, indiehackers, and product builders"
         description={config.newsletter.shortDescription}
-        image={
-          'https://res.cloudinary.com/mikebifulco-com/image/upload/v1662476730/newsletters/cover.png'
-        }
+        image={ogImageUrl('newsletter')}
       />
 
       <div className="flex flex-col gap-4">
@@ -116,18 +116,14 @@ const NewsletterPage: React.FC<NewsletterPageProps> = ({
 
       {pagination.currentPage === 1 && (
         <>
-          <Heading
-            as="h2"
-            className="mb-4 mt-10 text-xl text-black"
-            id="latest"
-          >
+          <Heading as="h2" className="text-ink mb-4 mt-10 text-xl" id="latest">
             💌 Read the latest dispatch
           </Heading>
           <NewsletterItem newsletter={latestNewsletter} />
         </>
       )}
 
-      <Heading as="h2" className="mb-4 mt-4 text-xl text-black" id="past">
+      <Heading as="h2" className="text-ink mb-4 mt-4 text-xl" id="past">
         Read past dispatches
       </Heading>
       <div className="grid grid-cols-auto-fit-min-300 gap-5">

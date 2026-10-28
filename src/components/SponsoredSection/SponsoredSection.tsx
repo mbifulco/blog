@@ -1,13 +1,17 @@
+import posthog from 'posthog-js';
+
 import Link from '@components/Link';
-import clsxm from '@utils/clsxm';
 import { Image } from '../Image';
+
+type SponsorPlacement = 'logo' | 'image' | 'cta';
 
 type SponsoredSectionProps = {
   CTAtext: string;
   sponsorName: string;
   href: string;
   imagePublicId?: string;
-  brandColor?: string;
+  /** Printed on the deep blue band, so it must be a version made for dark grounds */
+  logoPublicId?: string;
   children: React.ReactNode;
 };
 
@@ -17,92 +21,93 @@ const SponsoredSection: React.FC<SponsoredSectionProps> = ({
   sponsorName,
   href,
   imagePublicId,
-  brandColor = '#db2777', // pink-600 default
+  logoPublicId,
 }) => {
+  const trackClick = (placement: SponsorPlacement) => () => {
+    posthog.capture('sponsor_link_clicked', {
+      sponsor: sponsorName,
+      href,
+      placement,
+    });
+  };
+
   return (
-    <div className="overflow-x-hidden pb-4 md:overflow-x-visible">
-      {/* Top colophon */}
-      <div className="grid grid-cols-3">
-        <span />
-        <div className="flex flex-col items-center gap-2">
-          <div className="flex flex-row items-center justify-evenly gap-4 text-4xl text-gray-300">
-            <span>*</span>
-            <span>*</span>
-            <span>*</span>
-          </div>
-        </div>
-        <span />
-      </div>
+    <aside
+      aria-label={`Sponsored by ${sponsorName}`}
+      className="not-prose bg-blue-fill text-on-fill relative my-12 overflow-hidden"
+    >
+      <div
+        aria-hidden
+        className="riso-halftone absolute inset-x-0 top-0 h-3 mix-blend-normal [background-size:6px_6px]"
+      />
 
-      <Link
-        className="thank-you block px-4 pb-1 text-xs uppercase italic text-gray-400 no-underline"
-        href="/sponsor"
-        target="_blank"
-        // see: https://developers.google.com/search/docs/essentials/spam-policies#link-spam
-      >
-        Thanks to <span className="text-bold">{sponsorName}</span> for
-        sponsoring
-      </Link>
-
-      <section className={clsxm('sponsored-section mx-4 flex flex-col')}>
-        {imagePublicId && (
-          <div className="not-prose overflow-hidden rounded-md">
-            <Link href={href} target="_blank" rel="sponsored">
+      <div className="flex flex-col gap-5 px-5 pb-7 pt-8 sm:px-8">
+        <div className="flex items-center justify-between gap-4">
+          {logoPublicId ? (
+            <Link
+              className="block w-fit no-underline"
+              href={href}
+              target="_blank"
+              rel="sponsored"
+              onClick={trackClick('logo')}
+            >
               <Image
                 bare
-                publicId={imagePublicId}
-                alt={`Sponsored by ${sponsorName}`}
-                className="my-0 inline-block h-auto w-full"
+                publicId={logoPublicId}
+                alt={sponsorName}
+                width={176}
+                height={40}
                 objectFit="contain"
+                sizes="176px"
+                className="my-0 h-8 w-auto"
               />
             </Link>
-          </div>
+          ) : (
+            <span className="font-sans text-lg font-bold">{sponsorName}</span>
+          )}
+
+          <Link
+            className="text-on-fill/75 hover:text-on-fill font-sans text-xs font-bold uppercase tracking-[0.12em] no-underline hover:underline"
+            href="/sponsor"
+            target="_blank"
+            // see: https://developers.google.com/search/docs/essentials/spam-policies#link-spam
+          >
+            Sponsor
+          </Link>
+        </div>
+
+        {imagePublicId && (
+          <Link
+            className="block"
+            href={href}
+            target="_blank"
+            rel="sponsored"
+            onClick={trackClick('image')}
+          >
+            <Image
+              bare
+              publicId={imagePublicId}
+              alt={`Sponsored by ${sponsorName}`}
+              className="my-0 block h-auto w-full"
+              objectFit="contain"
+            />
+          </Link>
         )}
 
-        <div
-          className={clsxm(
-            'prose block py-4 prose-headings:mb-1 prose-headings:mt-0 prose-p:my-2',
-            imagePublicId ? 'prose-xs' : 'prose-sm',
-            '[&_h3]:text-[var(--brand-color)] [&_h4]:text-[var(--brand-color)] [&_h5]:text-[var(--brand-color)]'
-          )}
-          style={
-            {
-              '--brand-color': brandColor,
-            } as React.CSSProperties
-          }
-        >
+        <div className="[&_a]:text-on-fill [&_a]:decoration-riso-pink-bright [&_h3]:text-on-fill [&_p]:text-on-fill/90 [&_h3]:m-0 [&_h3]:text-balance [&_h3]:font-sans [&_h3]:text-2xl [&_h3]:font-bold [&_h3]:leading-tight [&_h3]:tracking-[-0.01em] [&_p]:mb-0 [&_p]:mt-3 [&_p]:max-w-[60ch] [&_p]:text-lg">
           {children}
-
-          <div className="flex flex-col content-center gap-4">
-            <Link
-              className="self-center rounded-md px-6 py-2.5 text-sm font-medium text-white no-underline transition-all hover:text-white hover:no-underline hover:opacity-90 focus:opacity-90"
-              style={{
-                backgroundColor: brandColor,
-                borderColor: brandColor,
-                border: '1px solid',
-              }}
-              href={href}
-              rel="sponsored"
-            >
-              {CTAtext}
-            </Link>
-          </div>
         </div>
-      </section>
 
-      {/* Bottom colophon */}
-      <div className="grid grid-cols-3">
-        <span />
-        <div className="flex flex-col items-center gap-2">
-          <div className="flex flex-row items-center justify-evenly gap-4 text-4xl text-gray-300">
-            <span>*</span>
-            <span>*</span>
-            <span>*</span>
-          </div>
-        </div>
-        <span />
+        <Link
+          className="bg-pink-fill border-pink-fill text-on-fill hover:bg-on-fill hover:border-on-fill hover:text-blue-fill focus-visible:outline-on-fill inline-flex min-h-11 w-fit items-center border-2 px-4 py-2 font-sans text-[0.8rem] font-bold uppercase tracking-[0.1em] no-underline transition-colors hover:no-underline"
+          href={href}
+          rel="sponsored"
+          onClick={trackClick('cta')}
+        >
+          {CTAtext}
+        </Link>
       </div>
-    </div>
+    </aside>
   );
 };
 

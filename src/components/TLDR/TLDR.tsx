@@ -14,7 +14,7 @@ const TldrParagraph: React.FC<HTMLAttributes<HTMLParagraphElement>> = ({
 }) => (
   <p
     className={clsxm(
-      'm-0 text-pretty text-lg leading-snug text-gray-800 dark:text-gray-200',
+      'text-ink m-0 text-pretty font-serif text-lg leading-snug',
       className
     )}
     {...props}
@@ -38,13 +38,11 @@ export const TLDR: React.FC<TLDRProps> = ({ source, className }) => (
     aria-label="Summary"
     data-pagefind-ignore
     className={clsxm(
-      'not-prose mb-8 rounded-lg border-l-8 border-pink-400 bg-pink-50 px-6 py-4 dark:bg-pink-950/20',
+      'not-prose border-riso-pink mb-10 border-y-2 py-5',
       className
     )}
   >
-    <p className="m-0 mb-1 text-xs font-bold uppercase tracking-wide text-pink-700 dark:text-pink-300">
-      TL;DR
-    </p>
+    <p className="riso-kicker m-0 mb-2">TL;DR</p>
     <MDXRemote {...source} components={tldrComponents} />
   </aside>
 );

@@ -1,5 +1,4 @@
-import Link from 'next/link';
-
+import Link from '@components/Link';
 import SubscriberCount from '@components/NewsletterSignup/SubscriberCount';
 import clsxm from '@utils/clsxm';
 
@@ -10,30 +9,26 @@ const SiteAnnouncement: React.FC<SiteAnnouncementProps> = ({ className }) => {
   return (
     <div
       className={clsxm(
-        'relative flex w-screen max-w-full items-center justify-center bg-pink-400',
-        'mt:10 z-100 py-1 opacity-90 md:sticky md:top-0',
+        'z-100 bg-pink-fill text-on-fill relative w-full md:sticky md:top-0',
         className
       )}
-      style={{
-        backgroundImage: `url(/images/wiggle.svg)`,
-        backgroundBlendMode: 'color-burn',
-      }}
     >
       <Link
         href="/newsletter"
         className={clsxm(
-          'text-md group mx-auto flex flex-row gap-4 bg-white/90 px-2 py-1 text-black md:rounded-sm',
-          'hover:bg-pink-50 hover:no-underline hover:ring-1 hover:ring-pink-600'
+          'text-on-fill mx-auto flex max-w-6xl items-center justify-center gap-2 px-4 py-2 text-center text-sm font-medium no-underline',
+          'hover:text-on-fill hover:decoration-on-fill hover:underline'
         )}
       >
         <span>
-          Join
-          <span className="font-bold text-pink-600">
-            {' '}
-            <SubscriberCount /> other builders{' '}
+          Join{' '}
+          <span className="font-futura font-bold">
+            <SubscriberCount /> other builders
+          </span>{' '}
+          getting tips from a YC startup founder &amp; ex-Googler.{' '}
+          <span className="whitespace-nowrap font-futura font-bold">
+            Subscribe to 💌 Tiny Improvements →
           </span>
-          &mdash; Get tips from a YC startup founder & ex-Googler. Subscribe to
-          💌 Tiny Improvements
         </span>
       </Link>
     </div>

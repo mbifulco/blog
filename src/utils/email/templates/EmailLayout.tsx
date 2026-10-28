@@ -66,6 +66,11 @@ export const EmailLayout = ({
             width: auto !important;
             margin: 0 !important;
           }
+          /* Sponsor band from scripts/sync-newsletter-to-resend.ts: white type on deep blue */
+          .sponsor-band h1, .sponsor-band h2, .sponsor-band h3 {
+            color: #ffffff !important;
+            margin-top: 0 !important;
+          }
 
           @media only screen and (max-width: 600px) {
             body {

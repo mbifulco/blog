@@ -17,8 +17,8 @@ const Tag: React.FC<TagProps> = ({ children, url }) => {
 
   let tag = (
     <div className="mr-2 flex gap-0">
-      <span className="text-gray-400">#</span>
-      <span className="text-gray-700">{children}</span>
+      <span className="text-riso-pink">#</span>
+      <span className="text-ink-muted">{children}</span>
     </div>
   );
 
@@ -26,7 +26,7 @@ const Tag: React.FC<TagProps> = ({ children, url }) => {
     tag = (
       <Link
         href={url}
-        className="text-gray text-md cursor-pointer hover:underline"
+        className="cursor-pointer font-futura text-xs font-bold no-underline hover:underline"
         onClick={handleTagClick}
       >
         {tag}

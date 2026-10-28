@@ -1,9 +1,12 @@
 import type { GetStaticPaths, GetStaticProps, NextPage } from 'next';
-import type { BlogPost, Newsletter } from '@data/content-types';
+import type {
+  BlogPost,
+  DocumentSummary,
+  Newsletter,
+} from '@data/content-types';
 import type { Topic } from '@lib/topics';
 import { compareDesc } from 'date-fns';
 
-import { Badge } from '@components/Badge';
 import Breadcrumbs from '@components/Breadcrumbs/Breadcrumbs';
 import { Heading } from '@components/Heading';
 import Link from '@components/Link';
@@ -14,6 +17,7 @@ import SEO from '@components/seo';
 import { StructuredData } from '@components/StructuredData';
 import { getAllTopics, getTopicContent } from '@lib/topics';
 import { generateTopicStructuredData } from '@utils/generateStructuredData';
+import { ogImageUrl } from '@utils/og';
 
 type TopicPageParams = {
   slug: string;
@@ -82,31 +86,33 @@ const TopicPage: NextPage<TopicPageProps> = ({ topic }) => {
 
   return (
     <>
-      <SEO title={pageTitle} description={topic.description} ogType="article" />
+      <SEO
+        image={ogImageUrl(`topics/${topic.slug}`)}
+        title={pageTitle}
+        description={topic.description}
+        ogType="article"
+      />
       <StructuredData structuredData={structuredData} />
 
       <div className="mx-auto flex max-w-6xl flex-col gap-6">
         <Breadcrumbs crumbs={breadcrumbs} />
 
         <header className="mb-4 max-w-3xl">
-          <div className="mb-2 flex items-center gap-3">
-            {topic.icon && (
-              <span className="text-4xl" aria-hidden="true">
-                {topic.icon}
-              </span>
-            )}
-            <Badge>Topic</Badge>
-          </div>
-          <Heading as="h1" className="mb-3 text-4xl">
+          <Heading
+            as="h1"
+            className="mb-3 text-balance text-3xl [overflow-wrap:anywhere] sm:text-4xl"
+          >
             {topic.name}
           </Heading>
-          <p className="text-lg text-gray-600">{topic.description}</p>
-          <div className="mt-4 flex flex-wrap gap-2">
+          <p className="text-ink-muted font-serif text-lg">
+            {topic.description}
+          </p>
+          <div className="mt-4 flex flex-wrap gap-x-3 gap-y-1">
             {topic.tags.map((tag) => (
               <Link
                 key={tag}
                 href={`/tags/${tag}`}
-                className="rounded-full bg-gray-100 px-3 py-1 text-sm text-gray-700 transition-colors hover:bg-pink-100 hover:text-pink-700"
+                className="text-ink-muted hover:text-riso-pink font-futura text-sm font-bold no-underline"
               >
                 #{tag}
               </Link>
@@ -114,9 +120,9 @@ const TopicPage: NextPage<TopicPageProps> = ({ topic }) => {
           </div>
         </header>
 
-        <div className="flex items-center justify-between border-b border-gray-200 pb-4">
-          <span className="text-gray-600">
-            <strong className="text-gray-900">{topic.totalCount}</strong>{' '}
+        <div className="border-riso-blue flex items-center justify-between border-b-2 pb-4">
+          <span className="text-ink-muted font-futura font-bold">
+            <strong className="text-riso-blue">{topic.totalCount}</strong>{' '}
             articles in this topic
           </span>
         </div>
@@ -128,14 +134,14 @@ const TopicPage: NextPage<TopicPageProps> = ({ topic }) => {
                 return (
                   <NewsletterItem
                     key={`newsletter-${content.frontmatter.slug}`}
-                    newsletter={content as Newsletter}
+                    newsletter={content as DocumentSummary<Newsletter>}
                   />
                 );
               case 'post':
                 return (
                   <Post
                     key={`post-${content.frontmatter.slug}`}
-                    post={content as BlogPost}
+                    post={content as DocumentSummary<BlogPost>}
                     summary
                   />
                 );

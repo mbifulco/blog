@@ -1,5 +1,5 @@
 import type { GetStaticProps } from 'next';
-import type { Newsletter } from '@data/content-types';
+import type { DocumentSummary, Newsletter } from '@data/content-types';
 import { useRef } from 'react';
 import posthog from 'posthog-js';
 
@@ -13,8 +13,10 @@ import SponsorCTA from '@components/SponsorCTA/SponsorCTA';
 import StructuredData from '@components/StructuredData/StructuredData';
 import { SubscriptionForm } from '@components/SubscriptionForm';
 import { Subtitle } from '@components/Subtitle';
+import { toSummary } from '@data/content-types';
 import { getPaginatedNewsletters } from '@lib/newsletters';
 import { tinyImprovementsBlogStructuredData } from '@utils/newsletterStructuredData';
+import { ogImageUrl } from '@utils/og';
 import config from '@/config';
 
 export const getStaticProps: GetStaticProps<NewsletterPageProps> = async () => {
@@ -22,7 +24,7 @@ export const getStaticProps: GetStaticProps<NewsletterPageProps> = async () => {
 
   return {
     props: {
-      newsletters: paginatedNewsletters.items,
+      newsletters: paginatedNewsletters.items.map(toSummary),
       pagination: {
         currentPage: paginatedNewsletters.currentPage,
         totalPages: paginatedNewsletters.totalPages,
@@ -34,7 +36,7 @@ export const getStaticProps: GetStaticProps<NewsletterPageProps> = async () => {
 };
 
 type NewsletterPageProps = {
-  newsletters: Newsletter[];
+  newsletters: DocumentSummary<Newsletter>[];
   pagination: {
     currentPage: number;
     totalPages: number;
@@ -70,9 +72,7 @@ const NewsletterPage: React.FC<NewsletterPageProps> = ({
       <SEO
         title={`${config.newsletter.title}: a newsletter for startup founders, indiehackers, and product builders`}
         description={config.newsletter.shortDescription}
-        image={
-          'https://res.cloudinary.com/mikebifulco-com/image/upload/v1662476730/newsletters/cover.png'
-        }
+        image={ogImageUrl('newsletter')}
       />
       <StructuredData structuredData={tinyImprovementsBlogStructuredData} />
 
@@ -96,12 +96,12 @@ const NewsletterPage: React.FC<NewsletterPageProps> = ({
         <SponsorCTA />
       </div>
 
-      <Heading as="h2" className="mb-4 mt-10 text-xl text-black" id="latest">
+      <Heading as="h2" className="text-ink mb-4 mt-10 text-xl" id="latest">
         💌 Read the latest dispatch
       </Heading>
       <NewsletterItem newsletter={latestNewsletter} />
 
-      <Heading as="h2" className="mb-4 mt-4 text-xl text-black" id="past">
+      <Heading as="h2" className="text-ink mb-4 mt-4 text-xl" id="past">
         Read past dispaches
       </Heading>
       <div className="grid grid-cols-auto-fit-min-300 gap-5">

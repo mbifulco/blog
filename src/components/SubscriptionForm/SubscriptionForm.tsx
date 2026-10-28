@@ -238,7 +238,7 @@ const SubscriptionForm: React.FC<SubscriptionFormProps> = ({
         <p className="text-xl font-semibold text-inherit">
           🪩 Success! Thanks so much for subscribing. Don&apos;t forget to check
           your spam folder for emails from{' '}
-          <span className="text-pink-600">hello@mikebifulco.com.</span>
+          <span className="text-riso-pink">hello@mikebifulco.com.</span>
         </p>
       </div>
     );
@@ -248,6 +248,7 @@ const SubscriptionForm: React.FC<SubscriptionFormProps> = ({
     <div className="flex flex-col gap-2">
       <form ref={formRef} className="w-full" onSubmit={handleSubmission}>
         <fieldset
+          className="min-w-0"
           disabled={
             addSubscriberMutation.isPending || addSubscriberMutation.isSuccess
           }
@@ -273,7 +274,7 @@ const SubscriptionForm: React.FC<SubscriptionFormProps> = ({
                 autoComplete="off"
               />
               <Input
-                className="h-10 w-full grow rounded-b-none rounded-t border border-b-0 border-solid border-pink-600 bg-white px-[2ch] py-[1ch] font-normal text-gray-950"
+                className="border-riso-blue bg-stock-raised text-ink placeholder:text-ink-muted h-11 w-full grow rounded-none border-2 border-b-0 border-solid px-[2ch] py-[1ch] text-base font-normal shadow-none"
                 aria-label="First name (optional)"
                 name="fields[first_name]"
                 placeholder="First name (optional)"
@@ -281,7 +282,7 @@ const SubscriptionForm: React.FC<SubscriptionFormProps> = ({
                 ref={firstNameRef}
               />
               <Input
-                className="h-10 w-full grow rounded-none border border-b-0 border-solid border-pink-600 bg-white px-[2ch] py-[1ch] font-normal text-gray-950"
+                className="border-riso-blue bg-stock-raised text-ink placeholder:text-ink-muted h-11 w-full grow rounded-none border-2 border-solid px-[2ch] py-[1ch] text-base font-normal shadow-none"
                 name="email_address"
                 aria-label="Email Address"
                 placeholder="Email Address"
@@ -295,7 +296,7 @@ const SubscriptionForm: React.FC<SubscriptionFormProps> = ({
               <Button
                 type="submit"
                 data-element="submit"
-                className="formkit-submit formkit-submit padding-[1ch 2ch] h-10 grow rounded-b rounded-t-none font-normal"
+                className="formkit-submit h-11 w-full grow"
                 disabled={
                   addSubscriberMutation.isPending ||
                   turnstile.status === 'waiting'

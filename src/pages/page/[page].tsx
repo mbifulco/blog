@@ -7,7 +7,6 @@ import { Colophon } from '@components/Colophon';
 import PaginationWrapper from '@components/Pagination';
 import SEO from '@components/seo';
 import StructuredData from '@components/StructuredData/StructuredData';
-import { Subtitle } from '@components/Subtitle';
 import { TopicLinks } from '@components/TopicLinks';
 import { UnifiedContentFeed } from '@components/UnifiedContentFeed';
 import WebmentionMetadata from '@components/webmentionMetadata';
@@ -21,7 +20,7 @@ import {
   PAGE_LIMIT,
 } from '@lib/unified-feed';
 import { generateFeedItemListStructuredData } from '@utils/generateStructuredData';
-import { getCloudinaryImageUrl } from '@utils/images';
+import { ogImageUrl } from '@utils/og';
 
 export async function getStaticPaths() {
   const allPosts = await getAllPosts();
@@ -71,9 +70,6 @@ export async function getStaticProps({ params }: { params: { page: string } }) {
   };
 }
 
-const headshotPublicId = 'mike-headshot-square';
-const headshotPublicUrl = getCloudinaryImageUrl(headshotPublicId);
-
 type PaginatedPageProps = {
   feedItems: UnifiedFeedItem[];
   topics: TopicDefinition[];
@@ -95,7 +91,7 @@ const PaginatedPage: NextPage<PaginatedPageProps> = ({
       <SEO
         title={`Articles - Page ${pagination.currentPage}`}
         description={`Page ${pagination.currentPage} of articles on React, design, and startup building from Mike Bifulco.`}
-        image={headshotPublicUrl}
+        image={ogImageUrl('articles')}
         pagination={{
           currentPage: pagination.currentPage,
           totalPages: pagination.totalPages,
@@ -110,7 +106,12 @@ const PaginatedPage: NextPage<PaginatedPageProps> = ({
       />
 
       <div>
-        <Subtitle>ARTICLES</Subtitle>
+        <h1 className="border-riso-blue text-riso-blue m-0 border-b-2 pb-3 font-futura text-3xl font-bold tracking-[-0.01em]">
+          Articles{' '}
+          <span className="text-ink-muted">
+            · Page {pagination.currentPage}
+          </span>
+        </h1>
         <div className="mt-4">
           <UnifiedContentFeed items={feedItems} layout="grid" />
         </div>

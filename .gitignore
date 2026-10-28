@@ -263,3 +263,9 @@ public/pagefind/
 
 # Playwright MCP session artifacts
 .playwright-mcp/
+
+# impeccable design-tool working files
+.impeccable/
+
+# Project MCP servers; holds API keys
+.mcp.json

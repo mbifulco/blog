@@ -1,10 +1,12 @@
 import type { GetStaticProps, NextPage } from 'next';
-import type { Article } from '../data/content-types';
+import type { Article, DocumentSummary } from '../data/content-types';
 import { useRef } from 'react';
 import posthog from 'posthog-js';
 
+import { ogImageUrl } from '@utils/og';
 import { ExternalWorkItem } from '../components/ExternalWork';
 import SEO from '../components/seo';
+import { toSummary } from '../data/content-types';
 import { getAllExternalReferences } from '../lib/external-references';
 
 export const getStaticProps: GetStaticProps = async () => {
@@ -12,13 +14,13 @@ export const getStaticProps: GetStaticProps = async () => {
 
   return {
     props: {
-      articles,
+      articles: articles.map(toSummary),
     },
   };
 };
 
 type WorkPageProps = {
-  articles: Article[];
+  articles: DocumentSummary<Article>[];
 };
 
 const WorkPage: NextPage<WorkPageProps> = ({ articles }) => {
@@ -36,12 +38,18 @@ const WorkPage: NextPage<WorkPageProps> = ({ articles }) => {
   return (
     <>
       <SEO
+        image={ogImageUrl('work')}
         title="My work from around the web"
         canonical="/work"
         description="Some samples of my work online"
       />
-      <div className="flex flex-row gap-4" onMouseEnter={handlePageViewed}>
-        <h1 className="text-4xl font-bold">Some samples of my work online</h1>
+      <div
+        className="mx-auto flex w-full max-w-3xl flex-col gap-6"
+        onMouseEnter={handlePageViewed}
+      >
+        <h1 className="text-riso-blue m-0 text-balance font-futura text-4xl font-bold">
+          Some samples of my work online
+        </h1>
         <div>
           <p className="mb-8">
             This page contains articles, videos, and other references to my work

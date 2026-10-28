@@ -33,7 +33,7 @@ export const Heading: React.FC<HeadingProps> = ({
     <Component
       {...props}
       className={clsxm(
-        'font-futura font-bold text-pink-600',
+        'text-riso-blue font-futura font-bold',
         'text-balance', // oh yes, my babies 🧘
         headingClasses,
         className

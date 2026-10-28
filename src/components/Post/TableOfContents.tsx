@@ -1,8 +1,6 @@
 import type { Heading } from '@data/content-types';
 import { useEffect, useRef, useState } from 'react';
 
-import { Heading as HtmlHeading } from '@components/Heading';
-import Link from '@components/Link';
 import clsxm from '@utils/clsxm';
 
 type TableOfContentsProps = {
@@ -44,18 +42,20 @@ const ToCLink: React.FC<{ heading: Heading }> = ({ heading }) => {
   return (
     <li
       key={heading.slug}
-      className={clsxm('rounded-r py-1 pr-1 text-gray-600')}
+      className="py-1 pr-1"
       style={{ paddingLeft: `${Math.max(heading.level - 2, 0)}ch` }}
     >
-      <Link
+      {/* next/link resolves a bare #hash against asPath, which differs between prerender and client */}
+      <a
         href={`#${heading.slug}`}
         className={clsxm(
-          'font-medium text-gray-700',
-          isHighlighted && 'text-pink-600 underline hover:italic'
+          'text-ink-muted hover:text-riso-blue no-underline',
+          isHighlighted &&
+            'text-riso-blue decoration-riso-pink font-bold underline decoration-[3px] underline-offset-4'
         )}
       >
         {heading.text}
-      </Link>
+      </a>
     </li>
   );
 };
@@ -68,9 +68,12 @@ const TableOfContents: React.FC<TableOfContentsProps> = ({
   if (!headings?.length) return null;
 
   return (
-    <nav className="hidden flex-col gap-2.5 text-sm md:visible md:flex">
-      <HtmlHeading as="h3">{title}</HtmlHeading>
-      <ol>
+    <nav
+      aria-label={title}
+      className="hidden flex-col gap-2 text-sm leading-snug md:flex"
+    >
+      <p className="text-ink m-0 font-futura text-sm font-bold">{title}</p>
+      <ol className="m-0 list-none p-0">
         {headings?.map((heading) => (
           <ToCLink heading={heading} key={heading.slug} />
         ))}

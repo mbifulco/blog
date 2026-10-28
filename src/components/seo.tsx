@@ -2,7 +2,7 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 
 import config from '../config';
-import { getCloudinaryImageUrl } from '../utils/images';
+import { ogImageUrl } from '../utils/og';
 
 const baseUrl = config.siteUrl;
 const siteName = 'mikebifulco.com';
@@ -68,8 +68,11 @@ const SEO: React.FC<SEOProps> = ({
   const metaDescription = description ?? siteDescription;
 
   const fullCanonical = () => {
-    const link = canonical ?? router.asPath;
+    let link = canonical ?? router.asPath;
     if (!link) return baseUrl;
+
+    // Pages pass asPath, which carries tracking ?query and #hash on the client
+    if (link.startsWith('/')) link = link.split(/[?#]/)[0];
 
     const slashLink = link.startsWith('/') ? link : `/${link}`;
 
@@ -78,8 +81,7 @@ const SEO: React.FC<SEOProps> = ({
     return fullUrl;
   };
 
-  // fall back to a nice headshot of my domepiece if there's no OG image associated with this page
-  const ogImageUrl = image ?? getCloudinaryImageUrl('mike-headshot-square');
+  const ogImage = image ?? ogImageUrl();
 
   return (
     <Head>
@@ -153,10 +155,7 @@ const SEO: React.FC<SEOProps> = ({
         <meta name="keywords" content={keywords.join(', ')} />
       )}
       {/* Twitter Card meta tags */}
-      <meta
-        name="twitter:card"
-        content={ogImageUrl ? `summary_large_image` : `summary`}
-      />
+      <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:site" content={social.twitter} />
       <meta name="twitter:title" content={metaTitle} />
       <meta name="twitter:creator" content={social.twitter} />
@@ -172,8 +171,8 @@ const SEO: React.FC<SEOProps> = ({
       <meta property="og:description" content={metaDescription} />
       <meta property="og:type" content={ogType ?? `website`} />
       <meta property="og:url" content={fullCanonical()} />
-      <meta property="og:image" content={ogImageUrl} />
-      <meta property="og:image:url" content={ogImageUrl} />
+      <meta property="og:image" content={ogImage} />
+      <meta property="og:image:url" content={ogImage} />
 
       {/* Article-specific meta tags */}
       {ogType === 'article' && (

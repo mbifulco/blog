@@ -43,16 +43,18 @@ const getDefaultTags = (): string[] => {
 
 const RelatedContentLinksByTag = ({ tags = getDefaultTags() }) => {
   return (
-    <div className="pb-20 pt-8">
-      <p className="font-bold">Explore by topic</p>
-      <div className="grid grid-cols-1 text-lg sm:grid-cols-2">
+    <div className="pb-12">
+      <h2 className="text-ink m-0 mb-3 font-futura text-xl font-bold">
+        Explore by topic
+      </h2>
+      <div className="grid grid-cols-1 gap-y-1 font-futura text-lg font-bold sm:grid-cols-2">
         {tags.map((tag) => {
           const tagInformation = getTagInformation(tag);
           if (!tagInformation) return null;
 
           return (
             <Link
-              className="underline hover:no-underline"
+              className="text-riso-blue hover:text-riso-pink"
               href={`/tags/${tag}`}
               key={`related-content-${tag}`}
             >
@@ -60,7 +62,7 @@ const RelatedContentLinksByTag = ({ tags = getDefaultTags() }) => {
             </Link>
           );
         })}
-        <Link className="text-pink underline hover:no-underline" href={`/tags`}>
+        <Link className="text-riso-pink" href={`/tags`}>
           Browse all topics &rarr;
         </Link>
       </div>

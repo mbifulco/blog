@@ -10,6 +10,10 @@
  *
  * Usage:
  *   pnpm tsx scripts/sync-newsletter-to-resend.ts
+ *   pnpm tsx --env-file=.env scripts/sync-newsletter-to-resend.ts <slug> [...slugs]
+ *
+ * With slugs, syncs those newsletters instead of the PR diff - for issues
+ * that reached main without a PR.
  *
  * Environment Variables Required:
  *   RESEND_API_KEY - Resend API key
@@ -106,6 +110,14 @@ function convertImagesToMarkdown(content: string): string {
   });
 }
 
+// Mirrors the site's SponsoredSection band: white type on the fixed deep blue fill
+const SPONSOR_BAND_BLUE = '#2340b0';
+const SPONSOR_BUTTON_PINK = '#d4197a';
+const SPONSOR_LINK_PINK = '#ff48b0';
+// White at 75% over the band blue, as a solid color because many clients drop opacity
+const SPONSOR_LABEL_WHITE = '#c8cfeb';
+const SPONSOR_FONT = "Futura, Jost, 'Trebuchet MS', Arial, sans-serif";
+
 /**
  * Converts basic markdown to HTML for sponsored section content.
  * Handles headings, bold, italic, links, and paragraphs.
@@ -116,15 +128,15 @@ function convertMarkdownToHtml(markdown: string): string {
   // Convert headings (###, ##, #)
   html = html.replace(
     /^### (.+)$/gm,
-    '<h3 style="font-weight: 500; font-size: 1.5rem; margin: 16px 0 8px 0; color: #1f2937;">$1</h3>'
+    `<h3 style="font-family: ${SPONSOR_FONT}; font-weight: 700; font-size: 22px; line-height: 1.25; margin: 0 0 8px 0; color: #ffffff;">$1</h3>`
   );
   html = html.replace(
     /^## (.+)$/gm,
-    '<h2 style="font-weight: 500; font-size: 1.75rem; margin: 20px 0 12px 0; color: #1f2937;">$1</h2>'
+    `<h2 style="font-family: ${SPONSOR_FONT}; font-weight: 700; font-size: 24px; line-height: 1.25; margin: 0 0 8px 0; color: #ffffff;">$1</h2>`
   );
   html = html.replace(
     /^# (.+)$/gm,
-    '<h1 style="font-weight: 500; font-size: 2rem; margin: 24px 0 16px 0; color: #1f2937;">$1</h1>'
+    `<h1 style="font-family: ${SPONSOR_FONT}; font-weight: 700; font-size: 26px; line-height: 1.25; margin: 0 0 8px 0; color: #ffffff;">$1</h1>`
   );
 
   // Convert bold (**text** or __text__)
@@ -138,7 +150,7 @@ function convertMarkdownToHtml(markdown: string): string {
   // Convert links [text](url)
   html = html.replace(
     /\[([^\]]+)\]\(([^)]+)\)/g,
-    '<a href="$2" style="color: #2563eb; text-decoration: underline;">$1</a>'
+    `<a href="$2" style="color: #ffffff; text-decoration: underline; text-decoration-color: ${SPONSOR_LINK_PINK};">$1</a>`
   );
 
   // Convert paragraphs (lines separated by blank lines)
@@ -150,7 +162,7 @@ function convertMarkdownToHtml(markdown: string): string {
       if (trimmed.startsWith('<')) {
         return trimmed;
       }
-      return `<p style="margin: 8px 0; line-height: 1.5;">${trimmed}</p>`;
+      return `<p style="margin: 12px 0 0 0; font-size: 17px; line-height: 1.6; color: #ffffff;">${trimmed}</p>`;
     })
     .join('\n');
 
@@ -169,45 +181,42 @@ function convertSponsoredSectionsToHtml(content: string): string {
     // Extract attributes
     const imagePublicId =
       attributes.match(/imagePublicId="([^"]+)"/)?.[1] || '';
+    const logoPublicId = attributes.match(/logoPublicId="([^"]+)"/)?.[1] || '';
     const sponsorName = attributes.match(/sponsorName="([^"]+)"/)?.[1] || '';
     const CTAtext = attributes.match(/CTAtext="([^"]+)"/)?.[1] || '';
-    const brandColor =
-      attributes.match(/brandColor="([^"]+)"/)?.[1] || '#db2777';
     const href = attributes.match(/href="([^"]+)"/)?.[1] || '';
 
     // Convert markdown children to HTML
     const htmlContent = convertMarkdownToHtml(children.trim());
 
-    // Build email-safe HTML
-    let html =
-      '\n\n<div style="padding: 20px 0; border-top: 1px solid #e5e7eb; border-bottom: 1px solid #e5e7eb; margin: 20px 0;">\n';
+    // Padding every logo into the same 176x40 box (2x for retina) lets the img
+    // carry fixed width and height attributes, which Outlook needs to size it
+    const brand = logoPublicId
+      ? `<a href="${href}" style="display: inline-block;"><img src="https://res.cloudinary.com/mikebifulco-com/image/upload/f_png,c_pad,g_west,w_352,h_80,b_transparent/${logoPublicId}" alt="${sponsorName}" width="176" height="40" style="display: block; width: 176px; height: 40px; border: 0;" /></a>`
+      : `<span style="font-family: ${SPONSOR_FONT}; font-weight: 700; font-size: 18px; color: #ffffff;">${sponsorName}</span>`;
 
-    // Top separator
-    html +=
-      '<div style="text-align: center; color: #d1d5db; font-size: 32px; margin-bottom: 10px;">* * *</div>\n';
+    // Outlook's Word renderer ignores backgrounds on divs and links, so the band
+    // and the button take their fills from table cells. The block must contain
+    // no blank lines, or Markdown ends the HTML block early.
+    let html = `\n\n<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="${SPONSOR_BAND_BLUE}" style="background-color: ${SPONSOR_BAND_BLUE}; margin: 32px 0;"><tr><td class="sponsor-band" style="padding: 24px; color: #ffffff;">\n`;
 
-    // Sponsor attribution
-    html += `<p style="font-size: 12px; font-style: italic; color: #9ca3af; text-transform: uppercase;">Thanks to <strong>${sponsorName}</strong> for sponsoring</p>\n`;
+    html += `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
+  <td style="vertical-align: middle;">${brand}</td>
+  <td style="vertical-align: middle; text-align: right;"><a href="https://mikebifulco.com/sponsor" style="font-family: ${SPONSOR_FONT}; font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: ${SPONSOR_LABEL_WHITE}; text-decoration: none;">Sponsor</a></td>
+</tr></table>\n`;
 
-    // Sponsor image if provided
     if (imagePublicId) {
       const imageUrl = getCloudinaryImageUrl(imagePublicId);
-      html += `<a href="${href}" style="display: block; margin: 10px 0;"><img src="${imageUrl}" alt="Sponsored by ${sponsorName}" style="width: 100%; max-width: 100%; height: auto; border-radius: 6px;" /></a>\n`;
+      html += `<a href="${href}" style="display: block; margin: 20px 0 0 0;"><img src="${imageUrl}" alt="Sponsored by ${sponsorName}" style="display: block; width: 100%; max-width: 100%; height: auto; border: 0;" /></a>\n`;
     }
 
-    // Content (converted from markdown to HTML)
-    html += `<div style="margin: 16px 0;">\n${htmlContent}\n</div>\n`;
+    html += `<div style="margin: 20px 0 0 0;">\n${htmlContent}\n</div>\n`;
 
-    // CTA button
-    html += `<div style="text-align: center; margin: 20px 0;">
-  <a href="${href}" style="display: inline-block; background-color: ${brandColor}; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: 500; font-size: 14px;">${CTAtext}</a>
-</div>\n`;
+    html += `<table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin: 24px 0 0 0;"><tr>
+  <td bgcolor="${SPONSOR_BUTTON_PINK}" style="background-color: ${SPONSOR_BUTTON_PINK};"><a href="${href}" style="display: inline-block; padding: 14px 20px; color: #ffffff; text-decoration: none; font-family: ${SPONSOR_FONT}; font-weight: 700; font-size: 14px; letter-spacing: 0.1em; text-transform: uppercase;">${CTAtext}</a></td>
+</tr></table>\n`;
 
-    // Bottom separator
-    html +=
-      '<div style="text-align: center; color: #d1d5db; font-size: 32px; margin-top: 10px;">* * *</div>\n';
-
-    html += '</div>\n\n';
+    html += '</td></tr></table>\n\n';
 
     return html;
   });
@@ -248,7 +257,9 @@ async function main() {
   console.log('🚀 Starting newsletter sync to Resend...\n');
 
   // Get changed newsletters
-  const changedSlugs = getChangedNewsletters();
+  const slugArgs = process.argv.slice(2);
+  const changedSlugs =
+    slugArgs.length > 0 ? slugArgs : getChangedNewsletters();
 
   if (changedSlugs.length === 0) {
     console.log('✅ No newsletter changes detected. Nothing to sync.');

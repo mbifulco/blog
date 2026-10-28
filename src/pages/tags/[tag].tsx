@@ -1,14 +1,21 @@
 import type { GetStaticPaths, GetStaticProps } from 'next';
-import type { Article, BlogPost, Newsletter } from '../../data/content-types';
+import type {
+  Article,
+  BlogPost,
+  DocumentSummary,
+  Newsletter,
+} from '../../data/content-types';
 
 import { getPostBySlug } from '@lib/blog';
 import { getNewsletterBySlug } from '@lib/newsletters';
 import { getAllTags, getContentForTag } from '@lib/tags';
+import { ogImageUrl } from '@utils/og';
 import { ExternalWorkItem } from '../../components/ExternalWork';
 import { Heading } from '../../components/Heading';
 import NewsletterItem from '../../components/NewsletterFeed/NewsletterItem';
 import { BlogPost as Post } from '../../components/Post';
 import SEO from '../../components/seo';
+import { toSummary } from '../../data/content-types';
 import { getExternalReferenceBySlug as getArticleBySlug } from '../../lib/external-references';
 
 type TagPageParams = {
@@ -17,9 +24,9 @@ type TagPageParams = {
 
 type TagPageProps = {
   tag: string;
-  posts: BlogPost[];
-  articles: Article[];
-  newsletters: Newsletter[];
+  posts: DocumentSummary<BlogPost>[];
+  articles: DocumentSummary<Article>[];
+  newsletters: DocumentSummary<Newsletter>[];
 };
 
 export const getStaticProps: GetStaticProps<
@@ -44,9 +51,9 @@ export const getStaticProps: GetStaticProps<
     return {
       props: {
         tag,
-        posts,
-        articles,
-        newsletters,
+        posts: posts.map(toSummary),
+        articles: articles.map(toSummary),
+        newsletters: newsletters.map(toSummary),
       },
     };
   } catch (error) {
@@ -93,6 +100,7 @@ const TagPage: React.FC<TagPageProps> = ({
   return (
     <div className="mx-auto flex max-w-4xl flex-col gap-4">
       <SEO
+        image={ogImageUrl(`tags/${tag}`)}
         title={`#${tag}: ${all.length} posts, articles, and videos`}
         description={`Posts, articles, and videos tagged with ${tag} for designers and developers building great things on the web.`}
       />
@@ -108,14 +116,14 @@ const TagPage: React.FC<TagPageProps> = ({
               return (
                 <NewsletterItem
                   key={`newsletter-${content.frontmatter.slug as string}`}
-                  newsletter={content as Newsletter}
+                  newsletter={content as DocumentSummary<Newsletter>}
                 />
               );
             }
             case 'post':
               return (
                 <Post
-                  post={content as BlogPost}
+                  post={content as DocumentSummary<BlogPost>}
                   key={`post-${content.frontmatter.slug as string}`}
                   summary
                 />
@@ -123,7 +131,7 @@ const TagPage: React.FC<TagPageProps> = ({
             case 'article':
               return (
                 <ExternalWorkItem
-                  article={content as Article}
+                  article={content as DocumentSummary<Article>}
                   key={`article-${content.frontmatter.title}`}
                 />
               );

@@ -4,13 +4,14 @@ import posthog from 'posthog-js';
 
 import { Image } from '@components/Image';
 import Link from '@components/Link';
-import NewsletterSignup from '@components/NewsletterSignup';
 import { getImagePublicId, getItemPath } from '@lib/unified-feed';
 
 type UnifiedContentFeedProps = {
   items: UnifiedFeedItem[];
-  /** "tiered" = featured + 2x2 + CTA + 3-col (home page). "grid" = uniform grid (paginated pages). */
+  /** "tiered" = lead story + contents list (home page). "grid" = uniform grid (paginated pages). */
   layout?: 'tiered' | 'grid';
+  /** Rendered directly below the lead story in the tiered layout. */
+  leadAside?: React.ReactNode;
 };
 
 const handleItemClick = (item: UnifiedFeedItem) => {
@@ -24,151 +25,176 @@ const handleItemClick = (item: UnifiedFeedItem) => {
 const formatDate = (date: string | number | Date) =>
   format(new Date(date), 'MMM d, yyyy');
 
-/** Large featured card for the most recent item */
-const FeaturedCard: React.FC<{ item: UnifiedFeedItem }> = ({ item }) => {
+const typeLabel = (item: UnifiedFeedItem) =>
+  item.type === 'newsletter' ? '💌 Tiny Improvements' : 'Article';
+
+const ItemMeta: React.FC<{ item: UnifiedFeedItem }> = ({ item }) => (
+  <p className="text-ink-muted m-0 flex flex-wrap items-baseline gap-x-2 font-futura text-sm font-bold">
+    <time
+      dateTime={new Date(item.date).toISOString()}
+      className="font-mono text-xs"
+    >
+      {formatDate(item.date)}
+    </time>
+    <span aria-hidden>·</span>
+    <span className={item.type === 'newsletter' ? 'text-riso-pink' : undefined}>
+      {typeLabel(item)}
+    </span>
+  </p>
+);
+
+const LeadStory: React.FC<{ item: UnifiedFeedItem }> = ({ item }) => {
   const path = getItemPath(item);
   return (
-    <article className="group">
-      <Link href={path} onClick={() => handleItemClick(item)}>
+    <article className="grid items-center gap-x-12 gap-y-8 md:grid-cols-[1.35fr_1fr]">
+      <Link
+        href={path}
+        onClick={() => handleItemClick(item)}
+        className="riso-plate mb-3 mr-3"
+        aria-hidden
+        tabIndex={-1}
+      >
         <Image
-          className="mb-4 w-full shadow-sm sm:rounded-lg"
+          bare
+          className="w-full"
           publicId={getImagePublicId(item)}
-          alt={item.title}
+          alt=""
           height={600}
           width={1200}
           loading="eager"
+          priority
+          sizes="(max-width: 768px) 100vw, 640px"
         />
       </Link>
-      <h3 className="m-0 p-0 text-xl font-semibold md:text-2xl">
-        <Link
-          className="text-pink-600 no-underline hover:underline"
-          href={path}
-          onClick={() => handleItemClick(item)}
-        >
-          {item.title}
-        </Link>
-      </h3>
-      <p className="mt-1 text-balance text-base text-gray-600">
-        <time
-          dateTime={new Date(item.date).toISOString()}
-          className="font-mono font-medium text-gray-500"
-        >
-          {formatDate(item.date)}
-        </time>
-        {item.excerpt && <> {item.excerpt}</>}
-      </p>
+      <div className="flex flex-col gap-3">
+        <h2 className="text-riso-blue m-0 text-balance font-futura text-3xl font-bold leading-[1.05] tracking-[-0.02em] lg:text-4xl">
+          <Link
+            href={path}
+            onClick={() => handleItemClick(item)}
+            className="text-riso-blue hover:text-riso-pink hover:no-underline"
+          >
+            {item.title}
+          </Link>
+        </h2>
+        {item.excerpt && (
+          <p className="m-0 text-pretty font-serif text-lg leading-relaxed">
+            {item.excerpt}
+          </p>
+        )}
+        <ItemMeta item={item} />
+      </div>
     </article>
   );
 };
 
-/** Medium card for the 2x2 grid */
-const MediumCard: React.FC<{ item: UnifiedFeedItem }> = ({ item }) => {
+const GridCard: React.FC<{ item: UnifiedFeedItem; size?: 'lg' | 'md' }> = ({
+  item,
+  size = 'md',
+}) => {
   const path = getItemPath(item);
+  const large = size === 'lg';
   return (
-    <article className="group flex flex-col">
-      <Link href={path} onClick={() => handleItemClick(item)}>
+    <article className="group flex min-w-0 flex-col gap-2">
+      <Link
+        href={path}
+        onClick={() => handleItemClick(item)}
+        className="riso-plate mb-5 mr-3"
+        aria-hidden
+        tabIndex={-1}
+      >
         <Image
-          className="mb-3 w-full shadow-sm sm:rounded-lg"
+          bare
+          className="w-full"
           publicId={getImagePublicId(item)}
-          alt={item.title}
+          alt=""
           height={630}
           width={1200}
           loading="lazy"
+          sizes={
+            large
+              ? '(max-width: 640px) 100vw, 540px'
+              : '(max-width: 640px) 100vw, 360px'
+          }
         />
       </Link>
-      <h3 className="m-0 text-balance p-0 text-lg font-semibold">
+      <h3
+        className={
+          large
+            ? 'm-0 text-balance font-futura text-2xl font-bold leading-tight tracking-[-0.01em]'
+            : 'm-0 text-balance font-futura text-lg font-bold leading-tight'
+        }
+      >
         <Link
-          className="text-pink-600 no-underline hover:underline"
           href={path}
           onClick={() => handleItemClick(item)}
+          className="text-riso-blue hover:text-riso-pink hover:no-underline"
         >
           {item.title}
         </Link>
       </h3>
-      <p className="mt-1 line-clamp-2 text-sm text-gray-600">
-        <time
-          dateTime={new Date(item.date).toISOString()}
-          className="font-semibold text-gray-500"
+      {item.excerpt && (
+        <p
+          className={
+            large
+              ? 'text-ink-muted m-0 line-clamp-3 text-pretty font-serif text-lg leading-snug'
+              : 'text-ink-muted m-0 line-clamp-2 font-serif text-[0.95rem] leading-snug'
+          }
         >
-          {formatDate(item.date)}
-        </time>
-        {item.excerpt && <> {item.excerpt}</>}
-      </p>
-    </article>
-  );
-};
-
-/** Compact card for the 3-column grid */
-const CompactCard: React.FC<{ item: UnifiedFeedItem }> = ({ item }) => {
-  const path = getItemPath(item);
-  return (
-    <article className="group flex flex-col">
-      <Link href={path} onClick={() => handleItemClick(item)}>
-        <Image
-          className="mb-2 w-full shadow-sm sm:rounded-lg"
-          publicId={getImagePublicId(item)}
-          alt={item.title}
-          height={630}
-          width={1200}
-          loading="lazy"
-        />
-      </Link>
-      <h3 className="m-0 text-balance p-0 text-sm font-semibold">
-        <Link
-          className="text-pink-600 no-underline hover:underline"
-          href={path}
-          onClick={() => handleItemClick(item)}
-        >
-          {item.title}
-        </Link>
-      </h3>
-      <p className="mt-1 line-clamp-2 text-xs text-gray-600">
-        <time
-          dateTime={new Date(item.date).toISOString()}
-          className="font-semibold text-gray-500"
-        >
-          {formatDate(item.date)}
-        </time>
-        {item.excerpt && <> {item.excerpt}</>}
-      </p>
-    </article>
-  );
-};
-
-const TieredLayout: React.FC<{ items: UnifiedFeedItem[] }> = ({ items }) => {
-  const featured = items[0];
-  const gridItems = items.slice(1, 5);
-  const remainingItems = items.slice(5);
-
-  return (
-    <div className="flex flex-col gap-12">
-      {featured && <FeaturedCard item={featured} />}
-
-      {gridItems.length > 0 && (
-        <div className="grid gap-8 sm:grid-cols-2">
-          {gridItems.map((item) => (
-            <MediumCard key={`${item.type}-${item.slug}`} item={item} />
-          ))}
-        </div>
+          {item.excerpt}
+        </p>
       )}
+      <ItemMeta item={item} />
+    </article>
+  );
+};
 
-      {remainingItems.length > 0 && <NewsletterSignup />}
+const TieredLayout: React.FC<{
+  items: UnifiedFeedItem[];
+  leadAside?: React.ReactNode;
+}> = ({ items, leadAside }) => {
+  const [lead, ...rest] = items;
+  const featured = rest.slice(0, 4);
+  const more = rest.slice(4);
 
-      {remainingItems.length > 0 && (
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {remainingItems.map((item) => (
-            <CompactCard key={`${item.type}-${item.slug}`} item={item} />
-          ))}
-        </div>
+  return (
+    <div className="flex flex-col gap-16 md:gap-20">
+      {lead && <LeadStory item={lead} />}
+      {leadAside}
+
+      {rest.length > 0 && (
+        <section aria-labelledby="contents-heading">
+          <h2
+            id="contents-heading"
+            className="border-riso-blue text-riso-blue m-0 border-b-2 pb-3 font-futura text-3xl font-bold tracking-[-0.01em]"
+          >
+            Lately
+          </h2>
+          <div className="mt-10 grid gap-x-12 gap-y-16 sm:grid-cols-2">
+            {featured.map((item) => (
+              <GridCard
+                key={`${item.type}-${item.slug}`}
+                item={item}
+                size="lg"
+              />
+            ))}
+          </div>
+          {more.length > 0 && (
+            <div className="border-riso-blue/30 mt-16 grid gap-x-8 gap-y-12 border-t pt-12 sm:grid-cols-2 lg:grid-cols-3">
+              {more.map((item) => (
+                <GridCard key={`${item.type}-${item.slug}`} item={item} />
+              ))}
+            </div>
+          )}
+        </section>
       )}
     </div>
   );
 };
 
 const GridLayout: React.FC<{ items: UnifiedFeedItem[] }> = ({ items }) => (
-  <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+  <div className="grid gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
     {items.map((item) => (
-      <MediumCard key={`${item.type}-${item.slug}`} item={item} />
+      <GridCard key={`${item.type}-${item.slug}`} item={item} />
     ))}
   </div>
 );
@@ -176,13 +202,14 @@ const GridLayout: React.FC<{ items: UnifiedFeedItem[] }> = ({ items }) => (
 const UnifiedContentFeed: React.FC<UnifiedContentFeedProps> = ({
   items,
   layout = 'tiered',
+  leadAside,
 }) => {
   if (!items || items.length === 0) return null;
 
   return layout === 'grid' ? (
     <GridLayout items={items} />
   ) : (
-    <TieredLayout items={items} />
+    <TieredLayout items={items} leadAside={leadAside} />
   );
 };
 

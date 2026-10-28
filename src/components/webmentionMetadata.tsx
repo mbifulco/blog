@@ -19,7 +19,8 @@ const WebmentionMetadata: React.FC<WebmentionMetadataProps> = ({
   title,
 }) => {
   const router = useRouter();
-  const location = router.asPath;
+  // The static prerender's asPath has no ?query or #hash, but the client's does
+  const location = router.asPath.split(/[?#]/)[0];
 
   const publishDate = publishedAt ? new Date(publishedAt) : new Date();
 
