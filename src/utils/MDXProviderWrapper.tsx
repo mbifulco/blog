@@ -35,7 +35,8 @@ const CustomHeading: React.FC<HeadingProps> = ({
   if (id) {
     // if we have an ID, render a "#" character before the heading on hover
     return (
-      <Link href={`#${id}`} className="block no-underline hover:no-underline">
+      // next/link resolves a bare #hash against asPath, which differs between prerender and client
+      <a href={`#${id}`} className="block no-underline hover:no-underline">
         <Heading
           as={as}
           className={clsxm(
@@ -48,7 +49,7 @@ const CustomHeading: React.FC<HeadingProps> = ({
         >
           {children}
         </Heading>
-      </Link>
+      </a>
     );
   }
   return (

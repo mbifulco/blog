@@ -68,8 +68,11 @@ const SEO: React.FC<SEOProps> = ({
   const metaDescription = description ?? siteDescription;
 
   const fullCanonical = () => {
-    const link = canonical ?? router.asPath;
+    let link = canonical ?? router.asPath;
     if (!link) return baseUrl;
+
+    // Pages pass asPath, which carries tracking ?query and #hash on the client
+    if (link.startsWith('/')) link = link.split(/[?#]/)[0];
 
     const slashLink = link.startsWith('/') ? link : `/${link}`;
 

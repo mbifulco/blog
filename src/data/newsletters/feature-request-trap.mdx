@@ -1,0 +1,129 @@
+---
+title: "The Feature Request Trap: When to Build a Capability"
+date: 2026-10-27
+series: The Operator Problem
+excerpt: "A teammate asked for one highlight on a map. I built something else - and skipped the nine-year detour Apple took with Do Not Disturb. Here's how to spot the capability hiding in a feature request."
+tags: [startup, founder, product]
+coverImagePublicId: newsletters/feature-request-trap/cover
+slug: feature-request-trap
+---
+
+## The Big Idea
+
+A feature answers the request in front of you. A capability answers the requests you haven't gotten yet. Knowing which to build is a skill - and most of us learn it the hard way.
+
+## The feature request that was really a capability
+
+At [Craftwork](https://craftwork.com), we visit some sales leads in person before we quote their project.
+
+I'd just built a map view of our leads, and the team was using it. Then a request came in: could the map highlight leads with on-site visits _this week_?
+
+Clear, specific, and worth building. But I could already hear the next request: _this week and next?_ Then: _on-sites, plus good candidates for next week?_
+
+The request wasn't wrong. People describe the pain in front of them. Designing the system underneath is my team's role.
+
+## When your endpoint name reads like a sentence
+
+Building exactly what was asked would have looked like this:
+
+```ts
+const leads = api
+  .v1
+  .leads
+  .highlight
+  .scheduledOnSiteVisitsThisWeek();
+```
+
+You probably winced. When a name reads like a sentence, the parameters are baked in. Every variation is a new endpoint, a new ticket, a new deploy.
+
+So... we built something else. Our list views already had filters: give them rules, get matching leads. We added a `highlight` endpoint that uses the same set of rules, and returns highlights instead:
+
+```ts
+const highlights = api.v1.leads.highlight({
+  status: 'scheduled',
+  visitType: 'on-site',
+  when: 'this-week',
+});
+```
+
+The team pushed back - generic _sounds_ slower. It wasn't. We'd already invested in filtering when we built the list endpoint, so reusing it was faster and cheaper than building a new, specific endpoint.
+
+**Capabilities compound. Each one makes the next one cheaper.**
+
+## Ship the feature request, then show what else it can do
+
+Once highlighting was ready to ship, I wanted to show the team what it could do.
+
+I used a little [reverse devrel](https://mikebifulco.com/newsletter/reverse-devrel-as-core-engineering-skill), and shared a short video showing how to highlight this week's on-site visits. Then, _by the way_ - the same menu highlights every exterior project. Or everything assigned to a specific account manager. Or everything priced over $10,000.
+
+It looked just like the filters the team already used, so there was nothing to learn.
+
+Lead with the request, then show the permutations.
+
+## Do Not Disturb: nine years of special cases
+
+If you're a long-time iPhone user, you got to live through this with Do Not Disturb for iOS:
+
+- **2012:** iOS 6 introduces Do Not Disturb.
+- **2017:** iOS 11 adds Do Not Disturb While Driving.
+- **2018:** iOS 12 adds Bedtime mode.
+- **2021:** iOS 15 replaces them all with Focus: build your own modes, with your own rules. Do Not Disturb, Driving, and Sleep become presets.
+
+<Image
+  publicId="newsletters/feature-request-trap/apple-dnd"
+  alt="Four iOS screenshots: Do Not Disturb in 2012, Do Not Disturb While Driving in 2017, Bedtime mode in 2018, and Focus in 2021, with an arrow leading from the first three into Focus"
+/>
+
+Each special case was reasonable. Together, they were a capability waiting to happen - and Apple had the time and money to go back and build it.
+
+## Most features don't get a Focus. They get the Homer.
+
+Most teams don't get that rebuild. In a classic episode of _The Simpsons_, Homer's long-lost brother Herb lets him design a car for the average American. Homer asks for everything: a bubble dome for the kids, tail fins, three horns that all play "La Cucaracha." Every idea makes sense to the guy asking.
+
+The Homer bankrupts Herb's company.
+
+<Image
+  publicId="newsletters/feature-request-trap/the-homer"
+  alt="A list of the Homer's bolt-on features - bubble dome for the kids, three horns, tail fins, giant cupholders, shag carpet - with an arrow pointing to Homer Simpson's lopsided green car on stage, as Herb looks on in dismay"
+/>
+
+
+That's the feature request trap. Every bolt-on is reasonable, nobody has time to step back, and the whole ends up worse than the sum of its parts.
+
+## How to spot a capability hiding in a feature request
+
+How did I know the map request would creep? Scar tissue.
+
+I've built the specific version before, then found ten more versions waiting behind it, each requiring engineering time to implement. Do that enough, and it becomes an immune response.
+
+No scars yet? Look for two tells:
+
+- **High specificity.** `scheduledOnSiteVisitsThisWeek()` bakes in three decisions: a status, a visit type, and a time range. A change in any of these would become a future request.
+- **You can't finish the list.** Sales statuses: new, investigating, waiting for feedback, verbal offer, sold... Are you _sure_ that's all? If you can't write the complete list, don't hardcode it. Build the thing that holds the list.
+
+You don't have to build the whole generic system on day one. You just have to see what it would look like - and not paint yourself into a corner.
+
+## When the simple version is the right call
+
+This practice is in tension with something I believe just as strongly: [build just enough](https://mikebifulco.com/newsletter/just-enough-is-an-ongoing-practice). The tiebreaker isn't _will this change?_ It's _what will the change cost?_
+
+- **When growth is additive, start small.** My personal health app started with weight and BMI. Resting heart rate and VO2 max snapped in later. Nothing got rebuilt.
+- **When you're the only user, keep it simple.** This newsletter goes out through Resend Broadcasts. Instead of building an editor, a CI action drafts the broadcast from markdown, and I send it from Resend. Sometimes the best capability is one someone else built.
+- **When it feels stapled together, stop stapling.** If maintaining a feature means working around how it was bolted together, the simple version has run its course. That's your cue to build the capability.
+
+## What the operator problem asks of you
+
+When a capability is good, people use it constantly without noticing. Nobody files a ticket. Nobody pings an engineer. That's the point - and why it's easy to forget to [celebrate](https://mikebifulco.com/newsletter/mvp-event-horizon).
+
+We're still building this muscle at Craftwork. You build it through repetition, and by looking back at what you shipped and asking what it should have been.
+
+The operator problem starts the moment people depend on something you built. This series covered four shifts:
+
+1. [Rebuild without stopping the business](https://mikebifulco.com/newsletter/stangler-fig-pattern). When your prototype becomes the product, you can't just start over.
+2. [After the MVP, the work changes](https://mikebifulco.com/newsletter/operator-problem-after-mvp). Builder and operator are different jobs.
+3. [Every MVP has an event horizon](https://mikebifulco.com/newsletter/mvp-event-horizon). Know which mode each system needs.
+4. Features become capabilities. Stop building the same button twice.
+
+This week, go find one function whose name reads like a sentence.
+
+Operator problems are good problems. They mean something you built mattered. And when the system handles the variations, your engineers finally get their own Focus mode.

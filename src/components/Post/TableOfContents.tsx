@@ -1,7 +1,6 @@
 import type { Heading } from '@data/content-types';
 import { useEffect, useRef, useState } from 'react';
 
-import Link from '@components/Link';
 import clsxm from '@utils/clsxm';
 
 type TableOfContentsProps = {
@@ -46,7 +45,8 @@ const ToCLink: React.FC<{ heading: Heading }> = ({ heading }) => {
       className="py-1 pr-1"
       style={{ paddingLeft: `${Math.max(heading.level - 2, 0)}ch` }}
     >
-      <Link
+      {/* next/link resolves a bare #hash against asPath, which differs between prerender and client */}
+      <a
         href={`#${heading.slug}`}
         className={clsxm(
           'text-ink-muted hover:text-riso-blue no-underline',
@@ -55,7 +55,7 @@ const ToCLink: React.FC<{ heading: Heading }> = ({ heading }) => {
         )}
       >
         {heading.text}
-      </Link>
+      </a>
     </li>
   );
 };

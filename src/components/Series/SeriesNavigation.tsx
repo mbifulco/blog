@@ -14,6 +14,8 @@ export const SeriesNavigation: React.FC<SeriesNavigationProps> = ({
   series,
 }) => {
   const router = useRouter();
+  // The static prerender's asPath has no ?query or #hash, but the client's does
+  const currentPath = router.asPath.split(/[?#]/)[0];
 
   const orderedContent = [
     ...(series.posts ?? []).map((post) => ({
@@ -60,7 +62,7 @@ export const SeriesNavigation: React.FC<SeriesNavigationProps> = ({
               ? `/newsletter/${item.frontmatter.slug}`
               : `/posts/${item.frontmatter.slug}`
             : '';
-          const isActivePage = router.asPath.endsWith(itemPath);
+          const isActivePage = currentPath.endsWith(itemPath);
 
           const content = (
             <>
