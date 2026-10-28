@@ -103,7 +103,9 @@ describe('SubscriptionForm - Spam Detection', () => {
       );
       const emailInput = screen.getByPlaceholderText('Email Address');
       const honeypotInput = screen.getByLabelText('Website');
-      const submitButton = screen.getByRole('button', { name: /subscribe/i });
+      const submitButton = screen.getByRole('button', {
+        name: /get the newsletter/i,
+      });
 
       await user.type(firstNameInput, 'John');
       await user.type(emailInput, 'john@example.com');
@@ -138,7 +140,9 @@ describe('SubscriptionForm - Spam Detection', () => {
         'First name (optional)'
       );
       const emailInput = screen.getByPlaceholderText('Email Address');
-      const submitButton = screen.getByRole('button', { name: /subscribe/i });
+      const submitButton = screen.getByRole('button', {
+        name: /get the newsletter/i,
+      });
 
       await user.type(firstNameInput, 'VKvNcRvi');
       await user.type(emailInput, 'spam@example.com');
@@ -166,7 +170,9 @@ describe('SubscriptionForm - Spam Detection', () => {
         'First name (optional)'
       );
       const emailInput = screen.getByPlaceholderText('Email Address');
-      const submitButton = screen.getByRole('button', { name: /subscribe/i });
+      const submitButton = screen.getByRole('button', {
+        name: /get the newsletter/i,
+      });
 
       await user.type(firstNameInput, 'mtpDQVeZaqb');
       await user.type(emailInput, 'spam@example.com');
@@ -191,7 +197,9 @@ describe('SubscriptionForm - Spam Detection', () => {
         'First name (optional)'
       );
       const emailInput = screen.getByPlaceholderText('Email Address');
-      const submitButton = screen.getByRole('button', { name: /subscribe/i });
+      const submitButton = screen.getByRole('button', {
+        name: /get the newsletter/i,
+      });
 
       await user.type(firstNameInput, 'gVSnxvUzDY');
       await user.type(emailInput, 'spam@example.com');
@@ -216,7 +224,9 @@ describe('SubscriptionForm - Spam Detection', () => {
         'First name (optional)'
       );
       const emailInput = screen.getByPlaceholderText('Email Address');
-      const submitButton = screen.getByRole('button', { name: /subscribe/i });
+      const submitButton = screen.getByRole('button', {
+        name: /get the newsletter/i,
+      });
 
       await user.type(firstNameInput, 'EUWwTGxGAX');
       await user.type(emailInput, 'spam@example.com');
@@ -241,7 +251,9 @@ describe('SubscriptionForm - Spam Detection', () => {
         'First name (optional)'
       );
       const emailInput = screen.getByPlaceholderText('Email Address');
-      const submitButton = screen.getByRole('button', { name: /subscribe/i });
+      const submitButton = screen.getByRole('button', {
+        name: /get the newsletter/i,
+      });
 
       await user.type(firstNameInput, 'DGgPsflyGSa');
       await user.type(emailInput, 'spam@example.com');
@@ -332,7 +344,9 @@ describe('SubscriptionForm - Spam Detection', () => {
         'First name (optional)'
       );
       const emailInput = screen.getByPlaceholderText('Email Address');
-      const submitButton = screen.getByRole('button', { name: /subscribe/i });
+      const submitButton = screen.getByRole('button', {
+        name: /get the newsletter/i,
+      });
 
       await user.type(firstNameInput, 'VKvNcRvi');
       await user.type(emailInput, 'spam@example.com');
@@ -362,7 +376,9 @@ describe('SubscriptionForm - Spam Detection', () => {
         'First name (optional)'
       );
       const emailInput = screen.getByPlaceholderText('Email Address');
-      const submitButton = screen.getByRole('button', { name: /subscribe/i });
+      const submitButton = screen.getByRole('button', {
+        name: /get the newsletter/i,
+      });
 
       await user.type(firstNameInput, 'VKvNcRvi');
       await user.type(emailInput, 'spam@example.com');
@@ -389,7 +405,9 @@ describe('SubscriptionForm - Spam Detection', () => {
         'First name (optional)'
       );
       const emailInput = screen.getByPlaceholderText('Email Address');
-      const submitButton = screen.getByRole('button', { name: /subscribe/i });
+      const submitButton = screen.getByRole('button', {
+        name: /get the newsletter/i,
+      });
 
       await user.type(firstNameInput, 'Alice');
       await user.type(emailInput, 'alice@example.com');
@@ -415,7 +433,9 @@ describe('SubscriptionForm - Spam Detection', () => {
         'First name (optional)'
       );
       const emailInput = screen.getByPlaceholderText('Email Address');
-      const submitButton = screen.getByRole('button', { name: /subscribe/i });
+      const submitButton = screen.getByRole('button', {
+        name: /get the newsletter/i,
+      });
 
       await user.type(firstNameInput, 'Bob');
       await user.type(emailInput, 'bob@example.com');
@@ -449,7 +469,9 @@ describe('SubscriptionForm - Spam Detection', () => {
         'First name (optional)'
       );
       const emailInput = screen.getByPlaceholderText('Email Address');
-      const submitButton = screen.getByRole('button', { name: /subscribe/i });
+      const submitButton = screen.getByRole('button', {
+        name: /get the newsletter/i,
+      });
 
       // Turnstile mock emits token via useEffect; wait for button to be enabled
       await waitFor(() => {
@@ -478,7 +500,7 @@ describe('SubscriptionForm - Spam Detection', () => {
       render(<SubscriptionForm />);
 
       expect(
-        screen.getByRole('button', { name: /subscribe/i })
+        screen.getByRole('button', { name: /get the newsletter/i })
       ).not.toBeDisabled();
     });
 
@@ -491,7 +513,9 @@ describe('SubscriptionForm - Spam Detection', () => {
         screen.getByPlaceholderText('Email Address'),
         'alice@example.com'
       );
-      await user.click(screen.getByRole('button', { name: /subscribe/i }));
+      await user.click(
+        screen.getByRole('button', { name: /get the newsletter/i })
+      );
 
       expect(mockMutate).not.toHaveBeenCalled();
       expect(screen.getByRole('status')).toHaveTextContent(
@@ -517,7 +541,9 @@ describe('SubscriptionForm - Spam Detection', () => {
       fireEvent.change(screen.getByPlaceholderText('Email Address'), {
         target: { value: 'alice@example.com' },
       });
-      fireEvent.click(screen.getByRole('button', { name: /subscribe/i }));
+      fireEvent.click(
+        screen.getByRole('button', { name: /get the newsletter/i })
+      );
       act(() => vi.advanceTimersByTime(8000));
 
       expect(screen.getByRole('status')).toHaveTextContent(
@@ -539,7 +565,9 @@ describe('SubscriptionForm - Spam Detection', () => {
       fireEvent.change(screen.getByPlaceholderText('Email Address'), {
         target: { value: 'alice@example.com' },
       });
-      fireEvent.click(screen.getByRole('button', { name: /subscribe/i }));
+      fireEvent.click(
+        screen.getByRole('button', { name: /get the newsletter/i })
+      );
       unmount();
       act(() => vi.advanceTimersByTime(8000));
 
@@ -558,7 +586,9 @@ describe('SubscriptionForm - Spam Detection', () => {
         screen.getByPlaceholderText('Email Address'),
         'alice@example.com'
       );
-      await user.click(screen.getByRole('button', { name: /subscribe/i }));
+      await user.click(
+        screen.getByRole('button', { name: /get the newsletter/i })
+      );
 
       expect(mockMutate).toHaveBeenCalledWith(
         expect.objectContaining({ email: 'alice@example.com' })

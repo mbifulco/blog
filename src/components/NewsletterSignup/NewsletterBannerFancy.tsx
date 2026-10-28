@@ -1,12 +1,11 @@
 import clsxm from '@utils/clsxm';
 import config from '../../config';
 import { Headshot } from '../Headshot';
-import SponsorCTA from '../SponsorCTA/SponsorCTA';
 import { SubscriptionForm } from '../SubscriptionForm';
 import SubscriberCount from './SubscriberCount';
 
 type NewsletterBannerFancyProps = {
-  /** "band" lays the pitch and form side by side and drops the headshot and sponsor line. */
+  /** "band" lays the pitch and form side by side and drops the headshot. */
   variant?: 'full' | 'band';
   source?: string;
 };
@@ -65,7 +64,6 @@ const NewsletterBannerFancy: React.FC<NewsletterBannerFancyProps> = ({
             </span>{' '}
             Unsubscribe anytime.
           </p>
-          {!band && <SponsorCTA />}
         </div>
       </div>
     </section>

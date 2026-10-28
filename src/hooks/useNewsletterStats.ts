@@ -1,30 +1,23 @@
 import { trpc } from '@utils/trpc';
 
+// Shown as "1,200+" until the live count loads, so it must stay at or below
+// the real subscriber count.
+const SUBSCRIBER_COUNT_FLOOR = 1200;
+
 const useNewsletterStats = () => {
   const subscriberCountQuery = trpc.mailingList.stats.useQuery(undefined, {
     staleTime: 30 * 1000, // 30 seconds
   });
 
-  const { data: subscriberCount } = subscriberCountQuery;
-
-  const randomMax = 1300;
-  const randomMin = 1112;
-  const COUNT_TO_SHOW_WHILE_LOADING = getRandomNumberBetween(
-    randomMin,
-    randomMax
-  );
+  const liveCount = subscriberCountQuery.data?.subscribers;
 
   return {
-    subscriberCount:
-      subscriberCount?.subscribers ?? COUNT_TO_SHOW_WHILE_LOADING,
+    subscriberCount: liveCount ?? SUBSCRIBER_COUNT_FLOOR,
+    isCountLoaded: liveCount !== undefined,
     refreshStats: () => {
       void subscriberCountQuery.refetch();
     },
   };
-};
-
-const getRandomNumberBetween = (min: number, max: number) => {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 
 export default useNewsletterStats;

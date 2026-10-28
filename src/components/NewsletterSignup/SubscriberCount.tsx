@@ -6,14 +6,13 @@ type SubscriberCountProps = {
 };
 
 const SubscriberCount: React.FC<SubscriberCountProps> = ({ label }) => {
-  const { subscriberCount } = useNewsletterStats();
+  const { subscriberCount, isCountLoaded } = useNewsletterStats();
   return (
     <NumberFlow
       value={subscriberCount}
-      suffix={label}
+      suffix={isCountLoaded ? label : `+${label ?? ''}`}
       format={{
         notation: 'standard', // set to 'compact' for "1.1K" style
-        useGrouping: false, // don't display commas
       }}
       className="tabular-nums"
     />
