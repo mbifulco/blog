@@ -3,6 +3,7 @@ import { Column, Img, Link, Markdown, Row, Text } from 'react-email';
 import { EmailLayout } from './EmailLayout';
 
 type NewsletterEmailProps = {
+  title: string;
   content: string;
   excerpt: string;
   coverImage?: string;
@@ -17,6 +18,7 @@ type NewsletterEmailProps = {
  * The content can include inline HTML for custom components like SponsoredSection.
  */
 export const NewsletterEmail = ({
+  title = 'Sample newsletter title',
   content = 'lorem ipsum dolor sit amet this is just sample content for email preview',
   excerpt = 'Preview text for email clients',
   coverImage = 'https://picsum.photos/1200/630',
@@ -32,7 +34,7 @@ export const NewsletterEmail = ({
           <Column>
             <Img
               src={coverImage}
-              alt="Newsletter cover image"
+              alt={title}
               className="mt-2 w-full rounded"
               style={{
                 maxWidth: '100%',
@@ -63,13 +65,16 @@ export const NewsletterEmail = ({
       <Row>
         <Column>
           <Text className="italic text-gray-500">
-            Thanks for reading 💌 Tiny Improvements. If you found this helpful,
-            I&apos;d love it if you{' '}
+            Thanks for reading 💌 Tiny Improvements. Got a thought, a question,
+            or a story of your own? Hit reply. It comes straight to me.
+          </Text>
+          <Text className="italic text-gray-500">
+            If this was useful, forward it to a friend, or send them to{' '}
             <Link
-              href="https://mikebifulco.com/newsletter"
+              href="https://mikebifulco.com/subscribe"
               className="text-pink-600"
             >
-              share it with a friend
+              mikebifulco.com/subscribe
             </Link>
             . It helps me out a great deal!
           </Text>
