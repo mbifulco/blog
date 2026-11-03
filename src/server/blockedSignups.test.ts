@@ -10,7 +10,7 @@ import { redis } from './redis';
 
 vi.mock('./redis', () => ({
   redis: {
-    hset: vi.fn(),
+    hsetnx: vi.fn(),
     expire: vi.fn(),
     hgetall: vi.fn(),
     hlen: vi.fn(),
@@ -22,6 +22,7 @@ describe('blockedSignups', () => {
   beforeEach(() => {
     vi.clearAllMocks();
     vi.mocked(redis.hlen).mockResolvedValue(0);
+    vi.mocked(redis.hsetnx).mockResolvedValue(1);
   });
 
   const entry = {
@@ -36,15 +37,24 @@ describe('blockedSignups', () => {
     vi.mocked(redis.hexists).mockResolvedValue(0);
 
     expect(await recordBlockedSignup(entry)).toBe(false);
-    expect(redis.hset).not.toHaveBeenCalled();
+    expect(redis.hsetnx).not.toHaveBeenCalled();
   });
 
-  it('still updates an existing email when the day is full', async () => {
+  it('accepts an existing email when the day is full', async () => {
     vi.mocked(redis.hlen).mockResolvedValue(MAX_BLOCKED_SIGNUPS_PER_DAY);
     vi.mocked(redis.hexists).mockResolvedValue(1);
+    vi.mocked(redis.hsetnx).mockResolvedValue(0);
 
     expect(await recordBlockedSignup(entry)).toBe(true);
-    expect(redis.hset).toHaveBeenCalled();
+  });
+
+  it('does not overwrite the first report for an email', async () => {
+    vi.mocked(redis.hsetnx).mockResolvedValue(0);
+
+    expect(await recordBlockedSignup({ ...entry, reason: 'second' })).toBe(
+      true
+    );
+    expect(redis.hsetnx).toHaveBeenCalledTimes(1);
   });
 
   it('builds the key from the US Eastern date', () => {
@@ -61,9 +71,11 @@ describe('blockedSignups', () => {
       at: '2026-11-03T12:00:00Z',
     });
 
-    expect(redis.hset).toHaveBeenCalledWith('blocked-signups:2026-11-03', {
-      'ann@example.com': expect.any(String),
-    });
+    expect(redis.hsetnx).toHaveBeenCalledWith(
+      'blocked-signups:2026-11-03',
+      'ann@example.com',
+      expect.any(String)
+    );
     expect(redis.expire).toHaveBeenCalledWith(
       'blocked-signups:2026-11-03',
       604800

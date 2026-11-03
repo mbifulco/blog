@@ -24,8 +24,9 @@ export function easternDateKey(date: Date): string {
 }
 
 /**
- * Stores one report per lowercased email per Eastern day. Returns false
- * without storing when the day already holds the maximum and the email is new.
+ * Stores one report per lowercased email per Eastern day; the first report wins.
+ * Returns false without storing when the day already holds the maximum and the
+ * email is new.
  */
 export async function recordBlockedSignup(
   entry: BlockedSignup
@@ -37,7 +38,7 @@ export async function recordBlockedSignup(
     if (!(await redis.hexists(key, field))) return false;
   }
 
-  await redis.hset(key, { [field]: JSON.stringify(entry) });
+  await redis.hsetnx(key, field, JSON.stringify(entry));
   await redis.expire(key, RETENTION_SECONDS);
   return true;
 }
