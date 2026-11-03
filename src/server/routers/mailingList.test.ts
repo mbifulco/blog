@@ -3,7 +3,9 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { subscribe } from '@utils/resend';
 import { verifyTurnstileToken } from '@utils/turnstile';
+import { recordBlockedSignup } from '../blockedSignups';
 import { createContextInner } from '../context';
+import { captureServerEvent } from '../posthog';
 import { mailingListRouter } from './mailingList';
 
 // Avoid t3-env throwing when the real resend module reads env vars on import.
@@ -50,6 +52,11 @@ vi.mock('@utils/resend', async (importOriginal) => {
   };
 });
 
+// Storage is a no-op in tests.
+vi.mock('../blockedSignups', () => ({
+  recordBlockedSignup: vi.fn(),
+}));
+
 // Rate limiter always passes in these tests.
 vi.mock('../rateLimit', () => ({
   checkSubscribeRateLimit: vi.fn().mockResolvedValue({
@@ -62,6 +69,8 @@ vi.mock('../rateLimit', () => ({
 
 const verifyTurnstileTokenMock = vi.mocked(verifyTurnstileToken);
 const subscribeMock = vi.mocked(subscribe);
+const recordBlockedSignupMock = vi.mocked(recordBlockedSignup);
+const captureServerEventMock = vi.mocked(captureServerEvent);
 
 type CtxOverrides = {
   clientIp?: string | null;
@@ -165,5 +174,106 @@ describe('mailingListRouter.subscribe', () => {
     expect(result).toEqual({ data: { id: 'fake-success' }, error: null });
     expect(verifyTurnstileTokenMock).not.toHaveBeenCalled();
     expect(subscribeMock).not.toHaveBeenCalled();
+  });
+});
+
+describe('mailingListRouter.reportBlockedSignup', () => {
+  const report = {
+    email: 'human@example.com',
+    firstName: 'Real',
+    source: 'footer',
+    path: '/posts/x',
+    reason: '300010',
+  };
+
+  beforeEach(() => {
+    vi.clearAllMocks();
+    recordBlockedSignupMock.mockResolvedValue(undefined);
+  });
+
+  const expectDropped = (reason: string) => {
+    expect(recordBlockedSignupMock).not.toHaveBeenCalled();
+    expect(captureServerEventMock).toHaveBeenCalledWith(
+      expect.objectContaining({
+        event: 'newsletter/spam_detected',
+        properties: expect.objectContaining({
+          reason,
+          source: 'newsletter-blocked-report',
+        }),
+      })
+    );
+  };
+
+  it('stores a clean report and records blocked_signup_reported', async () => {
+    const result = await makeCaller().reportBlockedSignup(report);
+
+    expect(result).toEqual({ ok: true });
+    expect(recordBlockedSignupMock).toHaveBeenCalledTimes(1);
+    expect(recordBlockedSignupMock).toHaveBeenCalledWith(
+      expect.objectContaining({
+        ...report,
+        at: expect.any(String),
+      })
+    );
+    expect(captureServerEventMock).toHaveBeenCalledWith(
+      expect.objectContaining({
+        event: 'newsletter/blocked_signup_reported',
+      })
+    );
+  });
+
+  it('drops a report with a filled honeypot', async () => {
+    const result = await makeCaller().reportBlockedSignup({
+      ...report,
+      honeypot: 'gotcha',
+    });
+
+    expect(result).toEqual({ ok: true });
+    expectDropped('honeypot');
+  });
+
+  it('drops a report from a disallowed origin', async () => {
+    const result = await makeCaller({
+      requestOrigin: 'https://evil.com',
+      requestHost: 'mikebifulco.com',
+    }).reportBlockedSignup(report);
+
+    expect(result).toEqual({ ok: true });
+    expectDropped('bad_origin');
+  });
+
+  it('drops a report submitted too fast', async () => {
+    const result = await makeCaller().reportBlockedSignup({
+      ...report,
+      formLoadedAt: Date.now(),
+    });
+
+    expect(result).toEqual({ ok: true });
+    expectDropped('form_too_fast');
+  });
+
+  it('drops a report with a junk first name', async () => {
+    const result = await makeCaller().reportBlockedSignup({
+      ...report,
+      firstName: 'VKvNcRvi',
+    });
+
+    expect(result).toEqual({ ok: true });
+    expectDropped('suspicious_first_name');
+  });
+
+  it('returns ok when storage throws', async () => {
+    vi.spyOn(console, 'error').mockImplementation(() => {});
+    recordBlockedSignupMock.mockRejectedValue(new Error('redis down'));
+
+    await expect(makeCaller().reportBlockedSignup(report)).resolves.toEqual({
+      ok: true,
+    });
+  });
+
+  it('never calls Turnstile verification', async () => {
+    await makeCaller().reportBlockedSignup(report);
+
+    expect(verifyTurnstileTokenMock).not.toHaveBeenCalled();
   });
 });
