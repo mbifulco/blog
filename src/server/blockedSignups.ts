@@ -10,7 +10,7 @@ export type BlockedSignup = {
   at: string;
 };
 
-export const MAX_BLOCKED_SIGNUPS_PER_DAY = 100;
+export const MAX_BLOCKED_SIGNUPS_PER_DAY = 50;
 
 const RETENTION_SECONDS = 7 * 24 * 60 * 60;
 
@@ -23,6 +23,16 @@ export function easternDateKey(date: Date): string {
   return `blocked-signups:${easternDateFormat.format(date)}`;
 }
 
+// Runs as one Lua script so concurrent reports can't push a day past the cap.
+// Returns 1 when stored, 0 for a duplicate email, and -1 when the day is full.
+const RECORD_SCRIPT = `
+if redis.call('HEXISTS', KEYS[1], ARGV[1]) == 1 then return 0 end
+if redis.call('HLEN', KEYS[1]) >= tonumber(ARGV[3]) then return -1 end
+redis.call('HSET', KEYS[1], ARGV[1], ARGV[2])
+redis.call('EXPIRE', KEYS[1], ARGV[4])
+return 1
+`;
+
 /**
  * Stores one report per lowercased email per Eastern day; the first report wins.
  * Returns 'full' without storing when the day already holds the maximum and the
@@ -31,16 +41,18 @@ export function easternDateKey(date: Date): string {
 export async function recordBlockedSignup(
   entry: BlockedSignup
 ): Promise<'stored' | 'duplicate' | 'full'> {
-  const key = easternDateKey(new Date(entry.at));
-  const field = entry.email.toLowerCase();
-
-  if ((await redis.hlen(key)) >= MAX_BLOCKED_SIGNUPS_PER_DAY) {
-    if (!(await redis.hexists(key, field))) return 'full';
-  }
-
-  const added = await redis.hsetnx(key, field, JSON.stringify(entry));
-  await redis.expire(key, RETENTION_SECONDS);
-  return added ? 'stored' : 'duplicate';
+  const result = await redis.eval<[string, string, number, number], number>(
+    RECORD_SCRIPT,
+    [easternDateKey(new Date(entry.at))],
+    [
+      entry.email.toLowerCase(),
+      JSON.stringify(entry),
+      MAX_BLOCKED_SIGNUPS_PER_DAY,
+      RETENTION_SECONDS,
+    ]
+  );
+  if (result === 1) return 'stored';
+  return result === -1 ? 'full' : 'duplicate';
 }
 
 export async function listBlockedSignups(

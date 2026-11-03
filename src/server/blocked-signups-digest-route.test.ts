@@ -86,7 +86,7 @@ describe('blocked-signups-digest cron', () => {
     expect(res.status).toHaveBeenCalledWith(200);
   });
 
-  it('allows up to 120 seconds for the paced lookups', () => {
-    expect(config.maxDuration).toBe(120);
+  it('stays within the Vercel Hobby limit of 60 seconds', () => {
+    expect(config.maxDuration).toBeLessThanOrEqual(60);
   });
 });

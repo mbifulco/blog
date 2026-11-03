@@ -4,8 +4,9 @@ import { easternDateKey } from '@server/blockedSignups';
 import { sendBlockedSignupsDigest } from '@utils/email/sendBlockedSignupsDigest';
 import { env } from '@utils/env';
 
-// Paced contact lookups for a full day of entries take about a minute.
-export const config = { maxDuration: 120 };
+// Vercel Hobby caps functions at 60 seconds; paced lookups for a full day of
+// entries (MAX_BLOCKED_SIGNUPS_PER_DAY) take about 30.
+export const config = { maxDuration: 60 };
 
 export default async function handler(
   req: NextApiRequest,

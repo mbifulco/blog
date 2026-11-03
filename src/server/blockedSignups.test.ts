@@ -10,19 +10,15 @@ import { redis } from './redis';
 
 vi.mock('./redis', () => ({
   redis: {
-    hsetnx: vi.fn(),
-    expire: vi.fn(),
+    eval: vi.fn(),
     hgetall: vi.fn(),
-    hlen: vi.fn(),
-    hexists: vi.fn(),
   },
 }));
 
 describe('blockedSignups', () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    vi.mocked(redis.hlen).mockResolvedValue(0);
-    vi.mocked(redis.hsetnx).mockResolvedValue(1);
+    vi.mocked(redis.eval).mockResolvedValue(1);
   });
 
   const entry = {
@@ -32,42 +28,17 @@ describe('blockedSignups', () => {
     at: '2026-11-03T12:00:00Z',
   };
 
-  it('refuses a new email once the day is full', async () => {
-    vi.mocked(redis.hlen).mockResolvedValue(MAX_BLOCKED_SIGNUPS_PER_DAY);
-    vi.mocked(redis.hexists).mockResolvedValue(0);
+  it.each([
+    [1, 'stored'],
+    [0, 'duplicate'],
+    [-1, 'full'],
+  ])('maps script result %s to %s', async (result, outcome) => {
+    vi.mocked(redis.eval).mockResolvedValue(result);
 
-    expect(await recordBlockedSignup(entry)).toBe('full');
-    expect(redis.hsetnx).not.toHaveBeenCalled();
+    expect(await recordBlockedSignup(entry)).toBe(outcome);
   });
 
-  it('accepts an existing email when the day is full', async () => {
-    vi.mocked(redis.hlen).mockResolvedValue(MAX_BLOCKED_SIGNUPS_PER_DAY);
-    vi.mocked(redis.hexists).mockResolvedValue(1);
-    vi.mocked(redis.hsetnx).mockResolvedValue(0);
-
-    expect(await recordBlockedSignup(entry)).toBe('duplicate');
-  });
-
-  it('does not overwrite the first report for an email', async () => {
-    vi.mocked(redis.hsetnx).mockResolvedValue(0);
-
-    expect(await recordBlockedSignup({ ...entry, reason: 'second' })).toBe(
-      'duplicate'
-    );
-    expect(redis.hsetnx).toHaveBeenCalledTimes(1);
-  });
-
-  it('reports stored for a new entry', async () => {
-    expect(await recordBlockedSignup(entry)).toBe('stored');
-  });
-
-  it('builds the key from the US Eastern date', () => {
-    expect(easternDateKey(new Date('2026-11-04T03:30:00Z'))).toBe(
-      'blocked-signups:2026-11-03'
-    );
-  });
-
-  it('dedupes by lowercased email and sets a 7-day expiry', async () => {
+  it('checks, stores, and expires in a single script call', async () => {
     await recordBlockedSignup({
       email: 'Ann@Example.com',
       path: '/posts/x',
@@ -75,14 +46,25 @@ describe('blockedSignups', () => {
       at: '2026-11-03T12:00:00Z',
     });
 
-    expect(redis.hsetnx).toHaveBeenCalledWith(
-      'blocked-signups:2026-11-03',
+    expect(redis.eval).toHaveBeenCalledTimes(1);
+    const [script, keys, args] = vi.mocked(redis.eval).mock.calls[0]!;
+    expect(script).toMatch(/HEXISTS[\s\S]*HLEN[\s\S]*HSET[\s\S]*EXPIRE/);
+    expect(keys).toEqual(['blocked-signups:2026-11-03']);
+    expect(args).toEqual([
       'ann@example.com',
-      expect.any(String)
-    );
-    expect(redis.expire).toHaveBeenCalledWith(
-      'blocked-signups:2026-11-03',
-      604800
+      expect.any(String),
+      MAX_BLOCKED_SIGNUPS_PER_DAY,
+      604800,
+    ]);
+    expect(JSON.parse(args[1] as string)).toMatchObject({
+      email: 'Ann@Example.com',
+      reason: '300010',
+    });
+  });
+
+  it('builds the key from the US Eastern date', () => {
+    expect(easternDateKey(new Date('2026-11-04T03:30:00Z'))).toBe(
+      'blocked-signups:2026-11-03'
     );
   });
 

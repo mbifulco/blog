@@ -43,6 +43,7 @@ const PostSignoff: React.FC<PostSignoffProps> = ({
   return (
     <section
       ref={ref}
+      data-pagefind-ignore
       aria-label="Subscribe to Tiny Improvements"
       className="border-riso-pink mt-12 flex flex-col gap-4 border-t-2 pt-8"
     >
