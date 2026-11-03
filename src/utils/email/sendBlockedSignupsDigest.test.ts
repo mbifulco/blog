@@ -3,10 +3,13 @@ import {
   MAX_BLOCKED_SIGNUPS_PER_DAY,
 } from '@server/blockedSignups';
 import { captureServerEvent } from '@server/posthog';
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { getSubscriptionStatus, resend } from '../resend';
-import { sendBlockedSignupsDigest } from './sendBlockedSignupsDigest';
+import {
+  LOOKUP_DELAY_MS,
+  sendBlockedSignupsDigest,
+} from './sendBlockedSignupsDigest';
 import { EmailTags } from './tags';
 
 vi.mock('../resend', () => ({
@@ -29,11 +32,22 @@ const entry = (email: string) => ({
   at: '2026-11-03T15:00:00Z',
 });
 
+const run = async () => {
+  const pending = sendBlockedSignupsDigest(KEY);
+  await vi.runAllTimersAsync();
+  return pending;
+};
+
 const sentHtml = () =>
   vi.mocked(resend.emails.send).mock.calls[0][0].html as string;
 
 describe('sendBlockedSignupsDigest', () => {
+  afterEach(() => {
+    vi.useRealTimers();
+  });
+
   beforeEach(() => {
+    vi.useFakeTimers();
     vi.clearAllMocks();
     vi.mocked(getSubscriptionStatus).mockResolvedValue('not_subscribed');
     vi.mocked(resend.emails.send).mockResolvedValue({
@@ -45,7 +59,7 @@ describe('sendBlockedSignupsDigest', () => {
   it('sends nothing when there are no entries', async () => {
     vi.mocked(listBlockedSignups).mockResolvedValue([]);
 
-    expect(await sendBlockedSignupsDigest(KEY)).toEqual({
+    expect(await run()).toEqual({
       sent: false,
       count: 0,
     });
@@ -58,7 +72,7 @@ describe('sendBlockedSignupsDigest', () => {
       entry('b@example.com'),
     ]);
 
-    expect(await sendBlockedSignupsDigest(KEY)).toEqual({
+    expect(await run()).toEqual({
       sent: true,
       count: 2,
     });
@@ -81,7 +95,7 @@ describe('sendBlockedSignupsDigest', () => {
     vi.mocked(listBlockedSignups).mockResolvedValue([entry('a@example.com')]);
     vi.mocked(getSubscriptionStatus).mockResolvedValue('subscribed');
 
-    await sendBlockedSignupsDigest(KEY);
+    await run();
 
     expect(sentHtml()).toContain('already subscribed');
   });
@@ -90,7 +104,7 @@ describe('sendBlockedSignupsDigest', () => {
     vi.mocked(listBlockedSignups).mockResolvedValue([entry('a@example.com')]);
     vi.mocked(getSubscriptionStatus).mockRejectedValue(new Error('boom'));
 
-    expect(await sendBlockedSignupsDigest(KEY)).toEqual({
+    expect(await run()).toEqual({
       sent: true,
       count: 1,
     });
@@ -104,8 +118,38 @@ describe('sendBlockedSignupsDigest', () => {
       )
     );
 
-    await sendBlockedSignupsDigest(KEY);
+    await run();
 
     expect(sentHtml()).toContain('daily cap of 100');
+  });
+
+  it('looks up contacts one at a time, spaced by the delay', async () => {
+    vi.mocked(listBlockedSignups).mockResolvedValue([
+      entry('a@example.com'),
+      entry('b@example.com'),
+    ]);
+
+    const pending = sendBlockedSignupsDigest(KEY);
+    await vi.advanceTimersByTimeAsync(0);
+    expect(getSubscriptionStatus).toHaveBeenCalledTimes(1);
+
+    await vi.advanceTimersByTimeAsync(LOOKUP_DELAY_MS - 1);
+    expect(getSubscriptionStatus).toHaveBeenCalledTimes(1);
+
+    await vi.advanceTimersByTimeAsync(1);
+    expect(getSubscriptionStatus).toHaveBeenCalledTimes(2);
+    await pending;
+  });
+
+  it('reports not sent and captures no event when the send fails', async () => {
+    vi.mocked(listBlockedSignups).mockResolvedValue([entry('a@example.com')]);
+    vi.mocked(resend.emails.send).mockResolvedValue({
+      data: null,
+      error: { name: 'rate_limit_exceeded', message: 'slow down' },
+    } as never);
+    vi.spyOn(console, 'error').mockImplementation(() => {});
+
+    expect(await run()).toEqual({ sent: false, count: 1 });
+    expect(captureServerEvent).not.toHaveBeenCalled();
   });
 });

@@ -1,3 +1,4 @@
+import type { DigestEntry } from './templates/BlockedSignupsDigest';
 import { render } from '@react-email/render';
 import {
   listBlockedSignups,
@@ -9,6 +10,11 @@ import { getSubscriptionStatus, resend } from '../resend';
 import { EmailTags } from './tags';
 import { BlockedSignupsDigest } from './templates/BlockedSignupsDigest';
 
+// Resend rate-limits per team to a few requests per second; this keeps lookups plus the send under 2/s.
+export const LOOKUP_DELAY_MS = 600;
+
+const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
 /** `dateKey` is a `blocked-signups:YYYY-MM-DD` key from `easternDateKey`. */
 export async function sendBlockedSignupsDigest(
   dateKey: string
@@ -16,14 +22,16 @@ export async function sendBlockedSignupsDigest(
   const signups = await listBlockedSignups(dateKey);
   if (signups.length === 0) return { sent: false, count: 0 };
 
-  const entries = await Promise.all(
-    signups.map(async (signup) => ({
+  const entries: DigestEntry[] = [];
+  for (const [index, signup] of signups.entries()) {
+    if (index > 0) await sleep(LOOKUP_DELAY_MS);
+    entries.push({
       ...signup,
       status: await getSubscriptionStatus(signup.email).catch(
         () => 'unknown' as const
       ),
-    }))
-  );
+    });
+  }
 
   const date = dateKey.replace('blocked-signups:', '');
   const html = await render(

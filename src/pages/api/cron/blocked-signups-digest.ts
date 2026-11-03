@@ -20,6 +20,9 @@ export default async function handler(
 
   try {
     const result = await sendBlockedSignupsDigest(dateKey);
+    if (result.count > 0 && !result.sent) {
+      return res.status(502).json(result);
+    }
     return res.status(200).json(result);
   } catch (error) {
     console.error('Error sending blocked signups digest:', error);

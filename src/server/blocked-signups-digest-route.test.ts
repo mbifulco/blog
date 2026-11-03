@@ -63,4 +63,26 @@ describe('blocked-signups-digest cron', () => {
     expect(res.status).toHaveBeenCalledWith(200);
     expect(res.json).toHaveBeenCalledWith({ sent: true, count: 3 });
   });
+
+  it('responds 502 when entries existed but the digest was not sent', async () => {
+    vi.mocked(sendBlockedSignupsDigest).mockResolvedValue({
+      sent: false,
+      count: 3,
+    });
+
+    const res = await call('Bearer secret');
+
+    expect(res.status).toHaveBeenCalledWith(502);
+  });
+
+  it('responds 200 when there were no entries', async () => {
+    vi.mocked(sendBlockedSignupsDigest).mockResolvedValue({
+      sent: false,
+      count: 0,
+    });
+
+    const res = await call('Bearer secret');
+
+    expect(res.status).toHaveBeenCalledWith(200);
+  });
 });
