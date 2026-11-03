@@ -40,7 +40,10 @@ export const reportBlockedSignupSchema = z.object({
   email: z.string().email().max(254),
   firstName: z.string().max(100).optional(),
   source: z.string().max(64).optional(),
-  path: z.string().max(300).regex(/^\/[^\s]*$/),
+  path: z
+    .string()
+    .max(300)
+    .regex(/^\/[^\s]*$/),
   reason: z.string().regex(/^[\w-]{1,64}$/),
   honeypot: z.string().max(200).optional(),
   formLoadedAt: z.number().optional(),

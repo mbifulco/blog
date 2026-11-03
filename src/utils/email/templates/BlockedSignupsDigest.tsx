@@ -57,13 +57,19 @@ export const BlockedSignupsDigest = ({
       >
         <thead>
           <tr>
-            {['Email', 'Name', 'Source', 'Page', 'Reason', 'Time (ET)', 'Status'].map(
-              (heading) => (
-                <th key={heading} style={cell}>
-                  {heading}
-                </th>
-              )
-            )}
+            {[
+              'Email',
+              'Name',
+              'Source',
+              'Page',
+              'Reason',
+              'Time (ET)',
+              'Status',
+            ].map((heading) => (
+              <th key={heading} style={cell}>
+                {heading}
+              </th>
+            ))}
           </tr>
         </thead>
         <tbody>
