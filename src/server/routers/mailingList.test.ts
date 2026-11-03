@@ -185,11 +185,12 @@ describe('mailingListRouter.reportBlockedSignup', () => {
     source: 'footer',
     path: '/posts/x',
     reason: '300010',
+    formLoadedAt: Date.now() - 60_000,
   };
 
   beforeEach(() => {
     vi.clearAllMocks();
-    recordBlockedSignupMock.mockResolvedValue(true);
+    recordBlockedSignupMock.mockResolvedValue('stored');
   });
 
   const expectDropped = (reason: string, attempted = false) => {
@@ -210,9 +211,10 @@ describe('mailingListRouter.reportBlockedSignup', () => {
 
     expect(result).toEqual({ ok: true });
     expect(recordBlockedSignupMock).toHaveBeenCalledTimes(1);
+    const { formLoadedAt: _formLoadedAt, ...stored } = report;
     expect(recordBlockedSignupMock).toHaveBeenCalledWith(
       expect.objectContaining({
-        ...report,
+        ...stored,
         at: expect.any(String),
       })
     );
@@ -253,6 +255,68 @@ describe('mailingListRouter.reportBlockedSignup', () => {
     expectDropped('form_too_fast');
   });
 
+  it.each([
+    ['missing', undefined],
+    ['zero', 0],
+  ])('drops a report with %s form timing', async (_label, formLoadedAt) => {
+    const result = await makeCaller().reportBlockedSignup({
+      ...report,
+      formLoadedAt,
+    });
+
+    expect(result).toEqual({ ok: true });
+    expectDropped('missing_form_timing');
+  });
+
+  it.each([
+    ['in the future', () => Date.now() + 5 * 60_000],
+    ['older than a day', () => Date.now() - 25 * 60 * 60_000],
+  ])('drops a report with form timing %s', async (_label, at) => {
+    const result = await makeCaller().reportBlockedSignup({
+      ...report,
+      formLoadedAt: at(),
+    });
+
+    expect(result).toEqual({ ok: true });
+    expectDropped('implausible_form_timing');
+  });
+
+  it('drops a report with a bad email', async () => {
+    const result = await makeCaller().reportBlockedSignup({
+      ...report,
+      email: '12345@example.com',
+    });
+
+    expect(result).toEqual({ ok: true });
+    expectDropped('bad_email');
+  });
+
+  it('stays silent and emits no event for a duplicate report', async () => {
+    recordBlockedSignupMock.mockResolvedValue('duplicate');
+
+    const result = await makeCaller().reportBlockedSignup(report);
+
+    expect(result).toEqual({ ok: true });
+    expect(captureServerEventMock).not.toHaveBeenCalled();
+  });
+
+  it('rejects a path that is not site-relative', async () => {
+    await expect(
+      makeCaller().reportBlockedSignup({
+        ...report,
+        path: 'https://evil.example',
+      })
+    ).rejects.toMatchObject({ code: 'BAD_REQUEST' });
+    expect(recordBlockedSignupMock).not.toHaveBeenCalled();
+  });
+
+  it('rejects a reason with spaces', async () => {
+    await expect(
+      makeCaller().reportBlockedSignup({ ...report, reason: 'click here now' })
+    ).rejects.toMatchObject({ code: 'BAD_REQUEST' });
+    expect(recordBlockedSignupMock).not.toHaveBeenCalled();
+  });
+
   it('drops a report with a junk first name', async () => {
     const result = await makeCaller().reportBlockedSignup({
       ...report,
@@ -288,7 +352,7 @@ describe('mailingListRouter.reportBlockedSignup', () => {
   });
 
   it('drops a new report once the day is full', async () => {
-    recordBlockedSignupMock.mockResolvedValue(false);
+    recordBlockedSignupMock.mockResolvedValue('full');
 
     const result = await makeCaller().reportBlockedSignup(report);
 

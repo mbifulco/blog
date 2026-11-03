@@ -2,6 +2,7 @@ import { TRPCError } from '@trpc/server';
 import { z } from 'zod';
 
 import {
+  emailIsBad,
   getSubscriberCount,
   isFormSubmittedTooFast,
   isHoneypotFilled,
@@ -39,11 +40,14 @@ export const reportBlockedSignupSchema = z.object({
   email: z.string().email().max(254),
   firstName: z.string().max(100).optional(),
   source: z.string().max(64).optional(),
-  path: z.string().max(300),
-  reason: z.string().max(64),
+  path: z.string().max(300).regex(/^\/[^\s]*$/),
+  reason: z.string().regex(/^[\w-]{1,64}$/),
   honeypot: z.string().max(200).optional(),
   formLoadedAt: z.number().optional(),
 });
+
+const MAX_FORM_CLOCK_SKEW_MS = 60 * 1000;
+const MAX_FORM_AGE_MS = 24 * 60 * 60 * 1000;
 
 // Record a spam rejection: a dev-only console log plus a server-side
 // PostHog event. The server event matters because attacks that POST
@@ -251,14 +255,28 @@ export const mailingListRouter = router({
 
       if (isHoneypotFilled(honeypot)) return drop('honeypot');
 
+      // The real form always sends formLoadedAt; bots POSTing straight to the
+      // API do not.
+      if (!formLoadedAt) return drop('missing_form_timing');
+
+      const now = Date.now();
+      if (
+        formLoadedAt > now + MAX_FORM_CLOCK_SKEW_MS ||
+        formLoadedAt < now - MAX_FORM_AGE_MS
+      ) {
+        return drop('implausible_form_timing', { formLoadedAt });
+      }
+
       if (isFormSubmittedTooFast(formLoadedAt)) {
         return drop('form_too_fast', { formLoadedAt });
       }
 
       if (isSpamFirstName(firstName)) return drop('suspicious_first_name');
 
+      if (emailIsBad(email)) return drop('bad_email');
+
       try {
-        const stored = await recordBlockedSignup({
+        const outcome = await recordBlockedSignup({
           email,
           firstName,
           source,
@@ -266,12 +284,14 @@ export const mailingListRouter = router({
           reason,
           at: new Date().toISOString(),
         });
-        if (!stored) return drop('daily_cap');
-        await captureServerEvent({
-          distinctId: email,
-          event: 'newsletter/blocked_signup_reported',
-          properties: { reason, source, path },
-        });
+        if (outcome === 'full') return drop('daily_cap');
+        if (outcome === 'stored') {
+          await captureServerEvent({
+            distinctId: email,
+            event: 'newsletter/blocked_signup_reported',
+            properties: { reason, source, path },
+          });
+        }
       } catch (e) {
         console.error('Error storing blocked signup:', e);
       }

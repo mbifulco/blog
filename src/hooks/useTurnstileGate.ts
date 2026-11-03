@@ -34,6 +34,7 @@ export const useTurnstileGate = (
   const widgetReadyRef = useRef(false);
   const submittedRef = useRef(false);
   const failedBeforeSubmitRef = useRef(false);
+  const preSubmitReasonRef = useRef<string | null>(null);
   const inErrorRef = useRef(false);
   const interactiveRef = useRef(false);
   const loggedRef = useRef({ before: false, after: false });
@@ -67,7 +68,10 @@ export const useTurnstileGate = (
     interactiveRef.current = false;
     setToken(null);
     const afterSubmit = submittedRef.current;
-    if (!afterSubmit) failedBeforeSubmitRef.current = true;
+    if (!afterSubmit) {
+      failedBeforeSubmitRef.current = true;
+      preSubmitReasonRef.current = reason;
+    }
     const logKey = afterSubmit ? 'after' : 'before';
     if (!loggedRef.current[logKey]) {
       loggedRef.current[logKey] = true;
@@ -80,7 +84,13 @@ export const useTurnstileGate = (
     if (!afterSubmit || inErrorRef.current) return;
     inErrorRef.current = true;
     setStatus('error');
-    onSubmitFailedRef.current?.(reason);
+    // The wait limit is only a symptom when a pre-submit failure already
+    // explains why no token arrived.
+    onSubmitFailedRef.current?.(
+      reason === 'token_wait_limit' && preSubmitReasonRef.current
+        ? preSubmitReasonRef.current
+        : reason
+    );
   };
 
   const startWaitTimer = () => {
@@ -140,6 +150,7 @@ export const useTurnstileGate = (
       interactiveRef.current = false;
       inErrorRef.current = false;
       failedBeforeSubmitRef.current = false;
+      preSubmitReasonRef.current = null;
       setToken(newToken);
       setStatus('idle');
       const send = pendingSendRef.current;

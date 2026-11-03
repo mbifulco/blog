@@ -836,6 +836,22 @@ describe('SubscriptionForm - Spam Detection', () => {
       vi.useRealTimers();
     });
 
+    it('reports the earlier pre-submit failure instead of the wait limit', () => {
+      vi.useFakeTimers();
+      turnstileShouldEmitToken = false;
+      render(<SubscriptionForm source="test" />);
+      fireEvent.focus(screen.getByLabelText('Email Address'));
+      act(() => turnstileOnError('script_load_failed'));
+      fillForm();
+      submit();
+      act(() => vi.advanceTimersByTime(8000));
+      expect(mockReport).toHaveBeenCalledTimes(1);
+      expect(mockReport).toHaveBeenCalledWith(
+        expect.objectContaining({ reason: 'script_load_failed' })
+      );
+      vi.useRealTimers();
+    });
+
     it('reports a blocked signup only once per form', () => {
       turnstileShouldEmitToken = false;
       render(<SubscriptionForm source="test" />);

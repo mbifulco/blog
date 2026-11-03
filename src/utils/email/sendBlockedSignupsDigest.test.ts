@@ -111,6 +111,26 @@ describe('sendBlockedSignupsDigest', () => {
     expect(sentHtml()).toContain('unknown');
   });
 
+  it('labels the entries as unverified and shows the source', async () => {
+    vi.mocked(listBlockedSignups).mockResolvedValue([
+      { ...entry('a@example.com'), source: 'footer-form' },
+    ]);
+
+    await run();
+
+    expect(sentHtml()).toContain('did not pass the spam check');
+    expect(sentHtml()).toContain('never add them in bulk');
+    expect(sentHtml()).toContain('footer-form');
+  });
+
+  it('uses the singular in the preview for one signup', async () => {
+    vi.mocked(listBlockedSignups).mockResolvedValue([entry('a@example.com')]);
+
+    await run();
+
+    expect(sentHtml()).toContain('1 signup blocked by Turnstile');
+  });
+
   it('notes when the daily cap was reached', async () => {
     vi.mocked(listBlockedSignups).mockResolvedValue(
       Array.from({ length: MAX_BLOCKED_SIGNUPS_PER_DAY }, (_, i) =>
@@ -138,6 +158,12 @@ describe('sendBlockedSignupsDigest', () => {
 
     await vi.advanceTimersByTimeAsync(1);
     expect(getSubscriptionStatus).toHaveBeenCalledTimes(2);
+
+    await vi.advanceTimersByTimeAsync(LOOKUP_DELAY_MS - 1);
+    expect(resend.emails.send).not.toHaveBeenCalled();
+
+    await vi.advanceTimersByTimeAsync(1);
+    expect(resend.emails.send).toHaveBeenCalledTimes(1);
     await pending;
   });
 

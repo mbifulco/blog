@@ -36,7 +36,7 @@ describe('blockedSignups', () => {
     vi.mocked(redis.hlen).mockResolvedValue(MAX_BLOCKED_SIGNUPS_PER_DAY);
     vi.mocked(redis.hexists).mockResolvedValue(0);
 
-    expect(await recordBlockedSignup(entry)).toBe(false);
+    expect(await recordBlockedSignup(entry)).toBe('full');
     expect(redis.hsetnx).not.toHaveBeenCalled();
   });
 
@@ -45,16 +45,20 @@ describe('blockedSignups', () => {
     vi.mocked(redis.hexists).mockResolvedValue(1);
     vi.mocked(redis.hsetnx).mockResolvedValue(0);
 
-    expect(await recordBlockedSignup(entry)).toBe(true);
+    expect(await recordBlockedSignup(entry)).toBe('duplicate');
   });
 
   it('does not overwrite the first report for an email', async () => {
     vi.mocked(redis.hsetnx).mockResolvedValue(0);
 
     expect(await recordBlockedSignup({ ...entry, reason: 'second' })).toBe(
-      true
+      'duplicate'
     );
     expect(redis.hsetnx).toHaveBeenCalledTimes(1);
+  });
+
+  it('reports stored for a new entry', async () => {
+    expect(await recordBlockedSignup(entry)).toBe('stored');
   });
 
   it('builds the key from the US Eastern date', () => {

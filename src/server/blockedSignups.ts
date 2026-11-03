@@ -25,22 +25,22 @@ export function easternDateKey(date: Date): string {
 
 /**
  * Stores one report per lowercased email per Eastern day; the first report wins.
- * Returns false without storing when the day already holds the maximum and the
- * email is new.
+ * Returns 'full' without storing when the day already holds the maximum and the
+ * email is new, and 'duplicate' when the email was already reported.
  */
 export async function recordBlockedSignup(
   entry: BlockedSignup
-): Promise<boolean> {
+): Promise<'stored' | 'duplicate' | 'full'> {
   const key = easternDateKey(new Date(entry.at));
   const field = entry.email.toLowerCase();
 
   if ((await redis.hlen(key)) >= MAX_BLOCKED_SIGNUPS_PER_DAY) {
-    if (!(await redis.hexists(key, field))) return false;
+    if (!(await redis.hexists(key, field))) return 'full';
   }
 
-  await redis.hsetnx(key, field, JSON.stringify(entry));
+  const added = await redis.hsetnx(key, field, JSON.stringify(entry));
   await redis.expire(key, RETENTION_SECONDS);
-  return true;
+  return added ? 'stored' : 'duplicate';
 }
 
 export async function listBlockedSignups(

@@ -33,6 +33,8 @@ export async function sendBlockedSignupsDigest(
     });
   }
 
+  if (entries.length > 0) await sleep(LOOKUP_DELAY_MS);
+
   const date = dateKey.replace('blocked-signups:', '');
   const html = await render(
     <BlockedSignupsDigest

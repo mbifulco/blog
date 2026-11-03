@@ -34,12 +34,17 @@ export const BlockedSignupsDigest = ({
   maxPerDay,
 }: BlockedSignupsDigestProps) => (
   <EmailLayout
-    preview={`${entries.length} signups blocked by Turnstile on ${date}`}
+    preview={`${entries.length} ${entries.length === 1 ? 'signup' : 'signups'} blocked by Turnstile on ${date}`}
     firstName={false}
   >
     <Text style={paragraph}>
       {entries.length} {entries.length === 1 ? 'person' : 'people'} submitted
-      the signup form on {date} but failed Turnstile. Add the real ones by hand.
+      the signup form on {date} but failed Turnstile.
+    </Text>
+    <Text style={paragraph}>
+      These signups did not pass the spam check, and some may be bots using real
+      people&apos;s addresses. Check each one before adding it to the list, and
+      never add them in bulk.
     </Text>
     {capReached && (
       <Text style={paragraph}>
@@ -52,7 +57,7 @@ export const BlockedSignupsDigest = ({
       >
         <thead>
           <tr>
-            {['Email', 'Name', 'Page', 'Reason', 'Time (ET)', 'Status'].map(
+            {['Email', 'Name', 'Source', 'Page', 'Reason', 'Time (ET)', 'Status'].map(
               (heading) => (
                 <th key={heading} style={cell}>
                   {heading}
@@ -66,6 +71,7 @@ export const BlockedSignupsDigest = ({
             <tr key={entry.email}>
               <td style={cell}>{entry.email}</td>
               <td style={cell}>{entry.firstName ?? ''}</td>
+              <td style={cell}>{entry.source ?? ''}</td>
               <td style={cell}>{entry.path}</td>
               <td style={cell}>{entry.reason}</td>
               <td style={cell}>{timeFormat.format(new Date(entry.at))}</td>
