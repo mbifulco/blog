@@ -37,6 +37,8 @@ export const useTurnstileGate = (
   const inErrorRef = useRef(false);
   const interactiveRef = useRef(false);
   const loggedRef = useRef({ before: false, after: false });
+  const onSubmitFailedRef = useRef(options?.onSubmitFailed);
+  onSubmitFailedRef.current = options?.onSubmitFailed;
   const [token, setToken] = useState<string | null>(null);
   const [status, setStatus] = useState<TurnstileGateStatus>('idle');
 
@@ -78,7 +80,7 @@ export const useTurnstileGate = (
     if (!afterSubmit || inErrorRef.current) return;
     inErrorRef.current = true;
     setStatus('error');
-    options?.onSubmitFailed?.(reason);
+    onSubmitFailedRef.current?.(reason);
   };
 
   const startWaitTimer = () => {

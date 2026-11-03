@@ -102,7 +102,10 @@ vi.mock('@hooks/useNewsletterStats', () => ({
   }),
 }));
 
-const { mockMutate } = vi.hoisted(() => ({ mockMutate: vi.fn() }));
+const { mockMutate, mockReport } = vi.hoisted(() => ({
+  mockMutate: vi.fn(),
+  mockReport: vi.fn(),
+}));
 
 vi.mock('@utils/trpc', () => ({
   trpc: {
@@ -113,6 +116,9 @@ vi.mock('@utils/trpc', () => ({
           isPending: false,
           isSuccess: false,
         }),
+      },
+      reportBlockedSignup: {
+        useMutation: () => ({ mutate: mockReport }),
       },
     },
   },
@@ -778,6 +784,74 @@ describe('SubscriptionForm - Spam Detection', () => {
       expect(mockMutate).toHaveBeenCalledWith(
         expect.objectContaining({ turnstileToken: 'test-turnstile-token' })
       );
+    });
+  });
+
+  describe('Blocked signup report', () => {
+    const fillForm = () => {
+      fireEvent.change(screen.getByLabelText('First name (optional)'), {
+        target: { value: 'Ann' },
+      });
+      fireEvent.change(screen.getByLabelText('Email Address'), {
+        target: { value: 'ann@example.com' },
+      });
+    };
+    const submit = () =>
+      fireEvent.click(
+        screen.getByRole('button', { name: /get the newsletter/i })
+      );
+
+    it('reports a blocked signup after a post-submit failure', () => {
+      turnstileShouldEmitToken = false;
+      render(<SubscriptionForm source="test" />);
+      fillForm();
+      submit();
+      act(() => turnstileOnError('600010'));
+      expect(mockReport).toHaveBeenCalledWith(
+        expect.objectContaining({
+          email: 'ann@example.com',
+          firstName: 'Ann',
+          source: 'test',
+          reason: '600010',
+          path: window.location.pathname,
+          formLoadedAt: expect.any(Number),
+        })
+      );
+    });
+
+    it('reports the wait-limit failure once', () => {
+      vi.useFakeTimers();
+      turnstileShouldEmitToken = false;
+      render(<SubscriptionForm source="test" />);
+      fillForm();
+      submit();
+      act(() => vi.advanceTimersByTime(8000));
+      expect(mockReport).toHaveBeenCalledTimes(1);
+      expect(mockReport).toHaveBeenCalledWith(
+        expect.objectContaining({
+          email: 'ann@example.com',
+          reason: 'token_wait_limit',
+        })
+      );
+      vi.useRealTimers();
+    });
+
+    it('reports a blocked signup only once per form', () => {
+      turnstileShouldEmitToken = false;
+      render(<SubscriptionForm source="test" />);
+      fillForm();
+      submit();
+      act(() => turnstileOnError('600010'));
+      fireEvent.click(screen.getByRole('button', { name: 'Try again' }));
+      act(() => turnstileOnError('600010'));
+      expect(mockReport).toHaveBeenCalledTimes(1);
+    });
+
+    it('does not report a pre-submit failure', () => {
+      render(<SubscriptionForm source="test" />);
+      fireEvent.focus(screen.getByLabelText('Email Address'));
+      act(() => turnstileOnError('300010'));
+      expect(mockReport).not.toHaveBeenCalled();
     });
   });
 });

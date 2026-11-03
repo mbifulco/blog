@@ -25,7 +25,25 @@ const SubscriptionForm: React.FC<SubscriptionFormProps> = ({
   const [getHoneypottedNerd, setGetHoneypottedNerd] = useState<boolean>(false);
   const [alreadySubscribed, setAlreadySubscribed] = useState<boolean>(false);
   const [formLoadedAt, setFormLoadedAt] = useState<number | null>(null);
-  const turnstile = useTurnstileGate(source);
+  const hasReportedRef = useRef(false);
+  const reportBlockedSignup =
+    trpc.mailingList.reportBlockedSignup.useMutation();
+  const turnstile = useTurnstileGate(source, {
+    onSubmitFailed: (reason) => {
+      const email = emailRef.current?.value;
+      if (hasReportedRef.current || !email) return;
+      hasReportedRef.current = true;
+      reportBlockedSignup.mutate({
+        email,
+        firstName: firstNameRef.current?.value || undefined,
+        source,
+        path: window.location.pathname,
+        reason,
+        honeypot: honeypotRef.current?.value || undefined,
+        formLoadedAt: formLoadedAt ?? undefined,
+      });
+    },
+  });
 
   // Record when the form loads - bots submit instantly, humans take time
   useEffect(() => {
