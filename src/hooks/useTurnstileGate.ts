@@ -31,6 +31,7 @@ export const useTurnstileGate = (
   const pendingSendRef = useRef<((token: string) => void) | null>(null);
   const waitTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const startedRef = useRef(false);
+  const widgetReadyRef = useRef(false);
   const submittedRef = useRef(false);
   const failedBeforeSubmitRef = useRef(false);
   const inErrorRef = useRef(false);
@@ -55,7 +56,8 @@ export const useTurnstileGate = (
   const start = () => {
     if (startedRef.current) return;
     startedRef.current = true;
-    turnstileRef.current?.execute();
+    // execute() is a no-op until the widget renders; onWidgetLoad picks it up.
+    if (widgetReadyRef.current) turnstileRef.current?.execute();
   };
 
   const fail = (reason: string) => {
@@ -103,9 +105,9 @@ export const useTurnstileGate = (
     } else if (inErrorRef.current) {
       return;
     }
-    start();
     setStatus('waiting');
     startWaitTimer();
+    start();
   };
 
   const retry = () => {
@@ -116,9 +118,9 @@ export const useTurnstileGate = (
       setStatus('idle');
       return;
     }
-    start();
     setStatus('waiting');
     startWaitTimer();
+    start();
   };
 
   // Tokens are single-use, so a rejected submission needs a fresh one.
@@ -141,6 +143,10 @@ export const useTurnstileGate = (
       const send = pendingSendRef.current;
       pendingSendRef.current = null;
       send?.(newToken);
+    },
+    onWidgetLoad: () => {
+      widgetReadyRef.current = true;
+      if (startedRef.current) turnstileRef.current?.execute();
     },
     onExpire: () => {
       setToken(null);

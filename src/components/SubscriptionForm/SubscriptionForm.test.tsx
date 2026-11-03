@@ -20,6 +20,10 @@ let turnstileOnTimeout: () => void = () => {};
 let turnstileOnExpire: () => void = () => {};
 let turnstileOnBeforeInteractive: () => void = () => {};
 let turnstileOnAfterInteractive: () => void = () => {};
+// Mirrors the real widget: execute() does nothing until the widget has loaded.
+let turnstileAutoLoad = true;
+let turnstileWidgetLoaded = false;
+let loadTurnstileWidget: () => void = () => {};
 
 const { turnstileExecute, turnstileReset } = vi.hoisted(() => ({
   turnstileExecute: vi.fn(),
@@ -36,6 +40,7 @@ vi.mock('@marsidev/react-turnstile', async () => {
     onExpire: () => void;
     onBeforeInteractive: () => void;
     onAfterInteractive: () => void;
+    onWidgetLoad: (id: string) => void;
   };
   return {
     Turnstile: React.forwardRef<unknown, Props>(function Turnstile(props, ref) {
@@ -45,8 +50,16 @@ vi.mock('@marsidev/react-turnstile', async () => {
       turnstileOnExpire = props.onExpire;
       turnstileOnBeforeInteractive = props.onBeforeInteractive;
       turnstileOnAfterInteractive = props.onAfterInteractive;
+      loadTurnstileWidget = () => {
+        turnstileWidgetLoaded = true;
+        props.onWidgetLoad('widget-id');
+      };
+      React.useEffect(() => {
+        if (turnstileAutoLoad) loadTurnstileWidget();
+      }, []);
       React.useImperativeHandle(ref, () => ({
         execute: () => {
+          if (!turnstileWidgetLoaded) return;
           turnstileExecute();
           if (turnstileShouldEmitToken) {
             props.onSuccess('test-turnstile-token');
@@ -111,6 +124,8 @@ describe('SubscriptionForm - Spam Detection', () => {
     // Reset to a known state so a test that suppresses the token can't leak
     // into later tests (which would cause order-dependent failures).
     turnstileShouldEmitToken = true;
+    turnstileAutoLoad = true;
+    turnstileWidgetLoaded = false;
   });
 
   describe('Honeypot field', () => {
@@ -638,6 +653,19 @@ describe('SubscriptionForm - Spam Detection', () => {
       fireEvent.focus(screen.getByLabelText('Email Address'));
       fireEvent.focus(screen.getByLabelText('First name (optional)'));
       expect(turnstileExecute).toHaveBeenCalledTimes(1);
+    });
+
+    it('runs a challenge requested before the widget loaded once it loads', () => {
+      turnstileAutoLoad = false;
+      render(<SubscriptionForm source="test" />);
+      fireEvent.focus(screen.getByLabelText('Email Address'));
+      expect(turnstileExecute).not.toHaveBeenCalled();
+      fillEmail();
+      submit();
+      expect(turnstileExecute).not.toHaveBeenCalled();
+      act(() => loadTurnstileWidget());
+      expect(turnstileExecute).toHaveBeenCalledTimes(1);
+      expect(mockMutate).toHaveBeenCalledTimes(1);
     });
 
     it('starts the challenge on submit if no field was focused', () => {
