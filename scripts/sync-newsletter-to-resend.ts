@@ -321,7 +321,7 @@ async function main() {
       const html = await render(
         React.createElement(NewsletterEmail, {
           content: cleanContent,
-          excerpt: frontmatter.excerpt,
+          excerpt: frontmatter.previewText ?? frontmatter.excerpt,
           coverImage: frontmatter.coverImagePublicId
             ? getCloudinaryImageUrl(frontmatter.coverImagePublicId)
             : undefined,
@@ -331,7 +331,7 @@ async function main() {
       // Upsert broadcast
       const result = await upsertBroadcast({
         slug,
-        subject: frontmatter.title,
+        subject: frontmatter.subject ?? frontmatter.title,
         html,
         from: FROM_ADDRESS,
         disableClickTracking: hasSponsor,

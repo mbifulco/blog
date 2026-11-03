@@ -101,6 +101,10 @@ export const toRendered = <T extends MarkdownDocument>({
 export type NewsletterMetadata = BaseFrontmatter & {
   coverImagePublicId: string;
   excerpt: string;
+  // Email subject line. `title` stays the search/page title; falls back to it when absent.
+  subject?: string;
+  // Email client preview text. Falls back to `excerpt` when absent.
+  previewText?: string;
 };
 
 /**
