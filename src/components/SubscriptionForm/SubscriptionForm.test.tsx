@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   act,
   fireEvent,
@@ -16,19 +15,51 @@ import SubscriptionForm from './SubscriptionForm';
 let turnstileShouldEmitToken = true;
 // The rendered widget's latest onSuccess, for tests that issue a token late.
 let emitTurnstileToken: (t: string) => void = () => {};
+let turnstileOnError: (code: string) => void = () => {};
+let turnstileOnTimeout: () => void = () => {};
+let turnstileOnExpire: () => void = () => {};
+let turnstileOnBeforeInteractive: () => void = () => {};
+let turnstileOnAfterInteractive: () => void = () => {};
 
-// Mock the Turnstile widget — auto-emits a token on mount so the form is submittable in tests
-vi.mock('@marsidev/react-turnstile', () => ({
-  Turnstile: ({ onSuccess }: { onSuccess: (t: string) => void }) => {
-    emitTurnstileToken = onSuccess;
-    React.useEffect(() => {
-      if (turnstileShouldEmitToken) {
-        onSuccess('test-turnstile-token');
-      }
-    }, [onSuccess]);
-    return <div data-testid="turnstile-widget" />;
-  },
+const { turnstileExecute, turnstileReset } = vi.hoisted(() => ({
+  turnstileExecute: vi.fn(),
+  turnstileReset: vi.fn(),
 }));
+
+// Mock the Turnstile widget. The token is issued by execute(), as with execution: 'execute'.
+vi.mock('@marsidev/react-turnstile', async () => {
+  const React = await import('react');
+  type Props = {
+    onSuccess: (t: string) => void;
+    onError: (code: string) => void;
+    onTimeout: () => void;
+    onExpire: () => void;
+    onBeforeInteractive: () => void;
+    onAfterInteractive: () => void;
+  };
+  return {
+    Turnstile: React.forwardRef<unknown, Props>(function Turnstile(props, ref) {
+      emitTurnstileToken = props.onSuccess;
+      turnstileOnError = props.onError;
+      turnstileOnTimeout = props.onTimeout;
+      turnstileOnExpire = props.onExpire;
+      turnstileOnBeforeInteractive = props.onBeforeInteractive;
+      turnstileOnAfterInteractive = props.onAfterInteractive;
+      React.useImperativeHandle(ref, () => ({
+        execute: () => {
+          turnstileExecute();
+          if (turnstileShouldEmitToken) {
+            props.onSuccess('test-turnstile-token');
+          }
+        },
+        reset: turnstileReset,
+        remove: vi.fn(),
+        getResponse: vi.fn(),
+      }));
+      return <div data-testid="turnstile-widget" />;
+    }),
+  };
+});
 
 // Mock the env module so tests don't need real env vars
 vi.mock('@utils/env', () => ({
@@ -473,11 +504,6 @@ describe('SubscriptionForm - Spam Detection', () => {
         name: /get the newsletter/i,
       });
 
-      // Turnstile mock emits token via useEffect; wait for button to be enabled
-      await waitFor(() => {
-        expect(submitButton).not.toBeDisabled();
-      });
-
       await user.type(firstNameInput, 'Alice');
       await user.type(emailInput, 'alice@example.com');
       await user.click(submitButton);
@@ -547,7 +573,7 @@ describe('SubscriptionForm - Spam Detection', () => {
       act(() => vi.advanceTimersByTime(8000));
 
       expect(screen.getByRole('status')).toHaveTextContent(
-        /couldn’t confirm you’re a person/i
+        /couldn’t finish our spam check/i
       );
       expect(screen.getByRole('button', { name: /try again/i })).toBeVisible();
       expect(posthog.capture).toHaveBeenCalledWith(
@@ -592,6 +618,137 @@ describe('SubscriptionForm - Spam Detection', () => {
 
       expect(mockMutate).toHaveBeenCalledWith(
         expect.objectContaining({ email: 'alice@example.com' })
+      );
+    });
+  });
+
+  describe('Turnstile gate timing', () => {
+    const fillEmail = () =>
+      fireEvent.change(screen.getByLabelText('Email Address'), {
+        target: { value: 'alice@example.com' },
+      });
+    const submit = () =>
+      fireEvent.click(
+        screen.getByRole('button', { name: /get the newsletter/i })
+      );
+
+    it('does not start the challenge until a field is focused', () => {
+      render(<SubscriptionForm source="test" />);
+      expect(turnstileExecute).not.toHaveBeenCalled();
+      fireEvent.focus(screen.getByLabelText('Email Address'));
+      fireEvent.focus(screen.getByLabelText('First name (optional)'));
+      expect(turnstileExecute).toHaveBeenCalledTimes(1);
+    });
+
+    it('starts the challenge on submit if no field was focused', () => {
+      render(<SubscriptionForm source="test" />);
+      fillEmail();
+      submit();
+      expect(turnstileExecute).toHaveBeenCalledTimes(1);
+    });
+
+    it('hides a pre-submit failure until the reader submits', () => {
+      render(<SubscriptionForm source="test" />);
+      fireEvent.focus(screen.getByLabelText('Email Address'));
+      act(() => turnstileOnError('300010'));
+      expect(screen.queryByText(/couldn’t finish our spam check/i)).toBeNull();
+      expect(posthog.capture).toHaveBeenCalledWith(
+        'newsletter/turnstile_error',
+        { source: 'test', reason: '300010', after_submit: false }
+      );
+    });
+
+    it('logs a repeated pre-submit failure only once', () => {
+      render(<SubscriptionForm source="test" />);
+      fireEvent.focus(screen.getByLabelText('Email Address'));
+      act(() => turnstileOnTimeout());
+      act(() => turnstileOnTimeout());
+      act(() => turnstileOnTimeout());
+      const errorCalls = vi
+        .mocked(posthog.capture)
+        .mock.calls.filter(([name]) => name === 'newsletter/turnstile_error');
+      expect(errorCalls).toHaveLength(1);
+    });
+
+    it('retries once on submit after a pre-submit failure', () => {
+      turnstileShouldEmitToken = false;
+      render(<SubscriptionForm source="test" />);
+      fireEvent.focus(screen.getByLabelText('Email Address'));
+      act(() => turnstileOnError('300010'));
+      fillEmail();
+      submit();
+      expect(turnstileReset).toHaveBeenCalledTimes(1);
+      expect(turnstileExecute).toHaveBeenCalledTimes(2);
+      act(() => emitTurnstileToken('fresh-token'));
+      expect(mockMutate).toHaveBeenCalledTimes(1);
+    });
+
+    it('shows the error after a post-submit failure', () => {
+      turnstileShouldEmitToken = false;
+      render(<SubscriptionForm source="test" />);
+      fireEvent.focus(screen.getByLabelText('Email Address'));
+      fillEmail();
+      submit();
+      act(() => turnstileOnError('600010'));
+      expect(
+        screen.getByText(/couldn’t finish our spam check/i)
+      ).toBeInTheDocument();
+      expect(
+        screen.getByRole('button', { name: 'Try again' })
+      ).toBeInTheDocument();
+      expect(posthog.capture).toHaveBeenCalledWith(
+        'newsletter/turnstile_error',
+        { source: 'test', reason: '600010', after_submit: true }
+      );
+    });
+
+    it('treats the wait limit as a failure after submit', () => {
+      vi.useFakeTimers();
+      turnstileShouldEmitToken = false;
+      render(<SubscriptionForm source="test" />);
+      fillEmail();
+      submit();
+      act(() => vi.advanceTimersByTime(8000));
+      expect(
+        screen.getByText(/couldn’t finish our spam check/i)
+      ).toBeInTheDocument();
+      expect(posthog.capture).toHaveBeenCalledWith(
+        'newsletter/turnstile_error',
+        expect.objectContaining({
+          reason: 'token_wait_limit',
+          after_submit: true,
+        })
+      );
+      vi.useRealTimers();
+    });
+
+    it('pauses the wait limit during an interactive challenge', () => {
+      vi.useFakeTimers();
+      turnstileShouldEmitToken = false;
+      render(<SubscriptionForm source="test" />);
+      fillEmail();
+      submit();
+      act(() => turnstileOnBeforeInteractive());
+      act(() => vi.advanceTimersByTime(20000));
+      expect(screen.queryByText(/couldn’t finish our spam check/i)).toBeNull();
+      act(() => turnstileOnAfterInteractive());
+      act(() => vi.advanceTimersByTime(8000));
+      expect(
+        screen.getByText(/couldn’t finish our spam check/i)
+      ).toBeInTheDocument();
+      vi.useRealTimers();
+    });
+
+    it('gets a fresh token on submit after the token expired', () => {
+      render(<SubscriptionForm source="test" />);
+      fireEvent.focus(screen.getByLabelText('Email Address'));
+      act(() => turnstileOnExpire());
+      fillEmail();
+      submit();
+      expect(turnstileExecute).toHaveBeenCalledTimes(2);
+      expect(mockMutate).toHaveBeenCalledTimes(1);
+      expect(mockMutate).toHaveBeenCalledWith(
+        expect.objectContaining({ turnstileToken: 'test-turnstile-token' })
       );
     });
   });

@@ -280,6 +280,7 @@ const SubscriptionForm: React.FC<SubscriptionFormProps> = ({
                 placeholder="First name (optional)"
                 type="text"
                 ref={firstNameRef}
+                onFocus={turnstile.start}
               />
               <Input
                 className="border-riso-blue bg-stock-raised text-ink placeholder:text-ink-muted h-11 w-full grow rounded-none border-2 border-solid px-[2ch] py-[1ch] text-base font-normal shadow-none"
@@ -289,6 +290,7 @@ const SubscriptionForm: React.FC<SubscriptionFormProps> = ({
                 required
                 type="email"
                 ref={emailRef}
+                onFocus={turnstile.start}
               />
               <div className="mt-2">
                 <Turnstile {...turnstile.widgetProps} />
