@@ -128,7 +128,7 @@ export const EmailLayout = ({
               <Text style={{ marginBottom: '10px' }} className="my-0 text-sm">
                 © {new Date().getFullYear()} &bull; 💌 Tiny Improvements &bull;{' '}
                 <Link
-                  href="https://mikebifulco.com/newsletter"
+                  href="https://mikebifulco.com"
                   className="text-pink-600"
                 >
                   mikebifulco.com

@@ -317,9 +317,12 @@ async function main() {
         );
       }
 
+      const subject = frontmatter.subject ?? frontmatter.title;
+
       // Render to HTML
       const html = await render(
         React.createElement(NewsletterEmail, {
+          title: subject,
           content: cleanContent,
           excerpt: frontmatter.previewText ?? frontmatter.excerpt,
           coverImage: frontmatter.coverImagePublicId
@@ -331,7 +334,7 @@ async function main() {
       // Upsert broadcast
       const result = await upsertBroadcast({
         slug,
-        subject: frontmatter.subject ?? frontmatter.title,
+        subject,
         html,
         from: FROM_ADDRESS,
         disableClickTracking: hasSponsor,
