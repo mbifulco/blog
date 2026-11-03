@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { sendBlockedSignupsDigest } from '@utils/email/sendBlockedSignupsDigest';
-import handler from '../pages/api/cron/blocked-signups-digest';
+import handler, { config } from '../pages/api/cron/blocked-signups-digest';
 
 vi.mock('@utils/email/sendBlockedSignupsDigest', () => ({
   sendBlockedSignupsDigest: vi.fn(),
@@ -84,5 +84,9 @@ describe('blocked-signups-digest cron', () => {
     const res = await call('Bearer secret');
 
     expect(res.status).toHaveBeenCalledWith(200);
+  });
+
+  it('allows up to 120 seconds for the paced lookups', () => {
+    expect(config.maxDuration).toBe(120);
   });
 });

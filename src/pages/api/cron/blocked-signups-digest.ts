@@ -4,6 +4,9 @@ import { easternDateKey } from '@server/blockedSignups';
 import { sendBlockedSignupsDigest } from '@utils/email/sendBlockedSignupsDigest';
 import { env } from '@utils/env';
 
+// Paced contact lookups for a full day of entries take about a minute.
+export const config = { maxDuration: 120 };
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
