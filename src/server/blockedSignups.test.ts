@@ -3,6 +3,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 import {
   easternDateKey,
   listBlockedSignups,
+  MAX_BLOCKED_SIGNUPS_PER_DAY,
   recordBlockedSignup,
 } from './blockedSignups';
 import { redis } from './redis';
@@ -12,12 +13,38 @@ vi.mock('./redis', () => ({
     hset: vi.fn(),
     expire: vi.fn(),
     hgetall: vi.fn(),
+    hlen: vi.fn(),
+    hexists: vi.fn(),
   },
 }));
 
 describe('blockedSignups', () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    vi.mocked(redis.hlen).mockResolvedValue(0);
+  });
+
+  const entry = {
+    email: 'new@example.com',
+    path: '/a',
+    reason: 'x',
+    at: '2026-11-03T12:00:00Z',
+  };
+
+  it('refuses a new email once the day is full', async () => {
+    vi.mocked(redis.hlen).mockResolvedValue(MAX_BLOCKED_SIGNUPS_PER_DAY);
+    vi.mocked(redis.hexists).mockResolvedValue(0);
+
+    expect(await recordBlockedSignup(entry)).toBe(false);
+    expect(redis.hset).not.toHaveBeenCalled();
+  });
+
+  it('still updates an existing email when the day is full', async () => {
+    vi.mocked(redis.hlen).mockResolvedValue(MAX_BLOCKED_SIGNUPS_PER_DAY);
+    vi.mocked(redis.hexists).mockResolvedValue(1);
+
+    expect(await recordBlockedSignup(entry)).toBe(true);
+    expect(redis.hset).toHaveBeenCalled();
   });
 
   it('builds the key from the US Eastern date', () => {

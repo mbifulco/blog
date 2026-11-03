@@ -10,6 +10,8 @@ export type BlockedSignup = {
   at: string;
 };
 
+export const MAX_BLOCKED_SIGNUPS_PER_DAY = 100;
+
 const RETENTION_SECONDS = 7 * 24 * 60 * 60;
 
 const easternDateFormat = new Intl.DateTimeFormat('en-CA', {
@@ -21,11 +23,23 @@ export function easternDateKey(date: Date): string {
   return `blocked-signups:${easternDateFormat.format(date)}`;
 }
 
-/** Stores one report per lowercased email per Eastern day. */
-export async function recordBlockedSignup(entry: BlockedSignup): Promise<void> {
+/**
+ * Stores one report per lowercased email per Eastern day. Returns false
+ * without storing when the day already holds the maximum and the email is new.
+ */
+export async function recordBlockedSignup(
+  entry: BlockedSignup
+): Promise<boolean> {
   const key = easternDateKey(new Date(entry.at));
-  await redis.hset(key, { [entry.email.toLowerCase()]: JSON.stringify(entry) });
+  const field = entry.email.toLowerCase();
+
+  if ((await redis.hlen(key)) >= MAX_BLOCKED_SIGNUPS_PER_DAY) {
+    if (!(await redis.hexists(key, field))) return false;
+  }
+
+  await redis.hset(key, { [field]: JSON.stringify(entry) });
   await redis.expire(key, RETENTION_SECONDS);
+  return true;
 }
 
 export async function listBlockedSignups(

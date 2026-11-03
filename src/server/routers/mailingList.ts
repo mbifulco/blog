@@ -36,12 +36,12 @@ const subscribeResponseSchema = z.union([
 export type SubscribeMutationResponse = z.infer<typeof subscribeResponseSchema>;
 
 export const reportBlockedSignupSchema = z.object({
-  email: z.string().email(),
-  firstName: z.string().optional(),
-  source: z.string().optional(),
+  email: z.string().email().max(254),
+  firstName: z.string().max(100).optional(),
+  source: z.string().max(64).optional(),
   path: z.string().max(300),
   reason: z.string().max(64),
-  honeypot: z.string().optional(),
+  honeypot: z.string().max(200).optional(),
   formLoadedAt: z.number().optional(),
 });
 
@@ -229,15 +229,17 @@ export const mailingListRouter = router({
         return { ok: true };
       };
 
-      if (ctx.clientIp) {
-        const rateLimitResult = await checkSubscribeRateLimit(ctx.clientIp);
-        if (!rateLimitResult.success) {
-          await drop('rate_limited');
-          throw new TRPCError({
-            message: 'Too many subscription attempts. Please try again later.',
-            code: 'TOO_MANY_REQUESTS',
-          });
-        }
+      // Without an IP there is nothing to rate limit on, and every stored
+      // report becomes an email to the owner.
+      if (!ctx.clientIp) return drop('missing_ip');
+
+      const rateLimitResult = await checkSubscribeRateLimit(ctx.clientIp);
+      if (!rateLimitResult.success) {
+        await drop('rate_limited');
+        throw new TRPCError({
+          message: 'Too many subscription attempts. Please try again later.',
+          code: 'TOO_MANY_REQUESTS',
+        });
       }
 
       if (!isRequestOriginAllowed(ctx.requestOrigin, ctx.requestHost)) {
@@ -256,7 +258,7 @@ export const mailingListRouter = router({
       if (isSpamFirstName(firstName)) return drop('suspicious_first_name');
 
       try {
-        await recordBlockedSignup({
+        const stored = await recordBlockedSignup({
           email,
           firstName,
           source,
@@ -264,6 +266,7 @@ export const mailingListRouter = router({
           reason,
           at: new Date().toISOString(),
         });
+        if (!stored) return drop('daily_cap');
         await captureServerEvent({
           distinctId: email,
           event: 'newsletter/blocked_signup_reported',

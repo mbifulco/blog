@@ -6,6 +6,7 @@ import { verifyTurnstileToken } from '@utils/turnstile';
 import { recordBlockedSignup } from '../blockedSignups';
 import { createContextInner } from '../context';
 import { captureServerEvent } from '../posthog';
+import { checkSubscribeRateLimit } from '../rateLimit';
 import { mailingListRouter } from './mailingList';
 
 // Avoid t3-env throwing when the real resend module reads env vars on import.
@@ -80,7 +81,7 @@ type CtxOverrides = {
 
 const makeCaller = (overrides: CtxOverrides = {}) => {
   const ctx = createContextInner({
-    clientIp: overrides.clientIp ?? '1.2.3.4',
+    clientIp: overrides.clientIp === undefined ? '1.2.3.4' : overrides.clientIp,
     requestOrigin:
       overrides.requestOrigin === undefined ? null : overrides.requestOrigin,
     requestHost:
@@ -188,11 +189,11 @@ describe('mailingListRouter.reportBlockedSignup', () => {
 
   beforeEach(() => {
     vi.clearAllMocks();
-    recordBlockedSignupMock.mockResolvedValue(undefined);
+    recordBlockedSignupMock.mockResolvedValue(true);
   });
 
-  const expectDropped = (reason: string) => {
-    expect(recordBlockedSignupMock).not.toHaveBeenCalled();
+  const expectDropped = (reason: string, attempted = false) => {
+    if (!attempted) expect(recordBlockedSignupMock).not.toHaveBeenCalled();
     expect(captureServerEventMock).toHaveBeenCalledWith(
       expect.objectContaining({
         event: 'newsletter/spam_detected',
@@ -275,5 +276,47 @@ describe('mailingListRouter.reportBlockedSignup', () => {
     await makeCaller().reportBlockedSignup(report);
 
     expect(verifyTurnstileTokenMock).not.toHaveBeenCalled();
+  });
+
+  it('drops a report when the client IP is missing', async () => {
+    const result = await makeCaller({ clientIp: null }).reportBlockedSignup(
+      report
+    );
+
+    expect(result).toEqual({ ok: true });
+    expectDropped('missing_ip');
+  });
+
+  it('drops a new report once the day is full', async () => {
+    recordBlockedSignupMock.mockResolvedValue(false);
+
+    const result = await makeCaller().reportBlockedSignup(report);
+
+    expect(result).toEqual({ ok: true });
+    expectDropped('daily_cap', true);
+  });
+
+  it('rejects an over-length first name at the schema', async () => {
+    await expect(
+      makeCaller().reportBlockedSignup({
+        ...report,
+        firstName: 'a'.repeat(101),
+      })
+    ).rejects.toMatchObject({ code: 'BAD_REQUEST' });
+    expect(recordBlockedSignupMock).not.toHaveBeenCalled();
+  });
+
+  it('throws TOO_MANY_REQUESTS and stores nothing when rate limited', async () => {
+    vi.mocked(checkSubscribeRateLimit).mockResolvedValueOnce({
+      success: false,
+      limit: 5,
+      remaining: 0,
+      reset: 0,
+    });
+
+    await expect(
+      makeCaller().reportBlockedSignup(report)
+    ).rejects.toMatchObject({ code: 'TOO_MANY_REQUESTS' });
+    expect(recordBlockedSignupMock).not.toHaveBeenCalled();
   });
 });
