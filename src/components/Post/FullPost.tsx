@@ -30,6 +30,7 @@ type FullPostProps = {
   series?: Series | null;
   contentType?: 'post' | 'newsletter';
   topic?: Pick<TopicDefinition, 'slug' | 'name'> | null;
+  signoff?: React.ReactNode;
 };
 
 // Display titles are huge and uppercase, so identifiers like
@@ -46,6 +47,7 @@ const FullPost: React.FC<FullPostProps> = ({
   series,
   contentType = 'post',
   topic,
+  signoff,
 }) => {
   const { frontmatter } = post;
 
@@ -188,6 +190,7 @@ const FullPost: React.FC<FullPostProps> = ({
               {post.tldrSource && <TLDR source={post.tldrSource} />}
               <MDXRemote {...post.source} components={components} />
             </div>
+            {signoff}
             <MentionsSummary />
           </div>
           <aside className="hidden h-max flex-col gap-6 md:sticky md:top-16 md:flex">

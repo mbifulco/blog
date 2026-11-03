@@ -854,4 +854,12 @@ describe('SubscriptionForm - Spam Detection', () => {
       expect(mockReport).not.toHaveBeenCalled();
     });
   });
+
+  it('hides the first name field when showFirstName is false', () => {
+    render(<SubscriptionForm source="test" showFirstName={false} />);
+    expect(
+      screen.queryByLabelText('First name (optional)')
+    ).not.toBeInTheDocument();
+    expect(screen.getByLabelText('Email Address')).toBeInTheDocument();
+  });
 });

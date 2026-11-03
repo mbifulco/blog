@@ -6,7 +6,7 @@ import type { TopicDefinition } from '@lib/topics';
 import { useRouter } from 'next/router';
 
 import { Colophon } from '@components/Colophon';
-import { NewsletterSignup } from '@components/NewsletterSignup';
+import PostSignoff from '@components/NewsletterSignup/PostSignoff';
 import FullPost from '@components/Post/FullPost';
 import { RelatedPosts } from '@components/RelatedPosts';
 import SEO from '@components/seo';
@@ -16,7 +16,11 @@ import atprotoData from '@data/atproto-documents.json';
 import { toRendered } from '@data/content-types';
 import relatedPostsData from '@data/generated/relatedPosts.json';
 import { markdownUrlFor } from '@lib/markdown-export/urls';
-import { getAllNewsletters, getNewsletterBySlug } from '@lib/newsletters';
+import {
+  getAllNewsletters,
+  getLatestNewsletter,
+  getNewsletterBySlug,
+} from '@lib/newsletters';
 import { getSeries } from '@lib/series';
 import { getTopicForTags } from '@lib/topics';
 import { getDocumentUri } from '@utils/atproto';
@@ -48,6 +52,12 @@ export const getStaticProps: GetStaticProps<
     (relatedPostsData as RelatedPostsManifest).relatedContent[params.slug] ??
     [];
 
+  const latest = await getLatestNewsletter();
+  const latestIssue =
+    latest && latest.frontmatter.slug !== params.slug
+      ? { slug: latest.frontmatter.slug, title: latest.frontmatter.title }
+      : null;
+
   const standardSiteDocumentUri = getDocumentUri(
     (atprotoData as { documents: Record<string, string> }).documents,
     params.slug
@@ -65,6 +75,7 @@ export const getStaticProps: GetStaticProps<
       series: series ?? null,
       topic: getTopicForTags(newsletter.frontmatter.tags),
       relatedContent,
+      latestIssue,
       ...(standardSiteDocumentUri ? { standardSiteDocumentUri } : {}),
       ...(standardSitePublicationUri ? { standardSitePublicationUri } : {}),
     },
@@ -89,6 +100,7 @@ type NewsletterPageProps = {
   series?: Series | null;
   topic: Pick<TopicDefinition, 'slug' | 'name'> | null;
   relatedContent: RelatedContent[];
+  latestIssue: { slug: string; title: string } | null;
   standardSiteDocumentUri?: string;
   standardSitePublicationUri?: string;
 };
@@ -98,6 +110,7 @@ const NewsletterPage: React.FC<NewsletterPageProps> = ({
   series,
   topic,
   relatedContent,
+  latestIssue,
   standardSiteDocumentUri,
   standardSitePublicationUri,
 }) => {
@@ -137,7 +150,17 @@ const NewsletterPage: React.FC<NewsletterPageProps> = ({
           series={series}
           topic={topic}
           contentType="newsletter"
+          signoff={
+            <PostSignoff
+              source="newsletter-signoff"
+              slug={slug}
+              latestIssue={latestIssue}
+            />
+          }
         />
+        {relatedContent && relatedContent.length > 0 && (
+          <RelatedPosts relatedContent={relatedContent} currentTitle={title} />
+        )}
         <Colophon />
       </div>
       <WebmentionMetadata
@@ -147,12 +170,6 @@ const NewsletterPage: React.FC<NewsletterPageProps> = ({
         tags={tags}
         title={title}
       />
-      <div className="mt-20 flex flex-col gap-20">
-        {relatedContent && relatedContent.length > 0 && (
-          <RelatedPosts relatedContent={relatedContent} currentTitle={title} />
-        )}
-        <NewsletterSignup />
-      </div>
     </>
   );
 };

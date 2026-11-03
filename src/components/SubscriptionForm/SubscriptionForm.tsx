@@ -15,12 +15,14 @@ type SubscriptionFormProps = {
   tags?: string[];
   source?: string;
   buttonText?: string;
+  showFirstName?: boolean;
 };
 
 const SubscriptionForm: React.FC<SubscriptionFormProps> = ({
   tags: _,
   source,
   buttonText = 'Get the newsletter',
+  showFirstName = true,
 }) => {
   const [getHoneypottedNerd, setGetHoneypottedNerd] = useState<boolean>(false);
   const [alreadySubscribed, setAlreadySubscribed] = useState<boolean>(false);
@@ -291,15 +293,17 @@ const SubscriptionForm: React.FC<SubscriptionFormProps> = ({
                 tabIndex={-1}
                 autoComplete="off"
               />
-              <Input
-                className="border-riso-blue bg-stock-raised text-ink placeholder:text-ink-muted h-11 w-full grow rounded-none border-2 border-b-0 border-solid px-[2ch] py-[1ch] text-base font-normal shadow-none"
-                aria-label="First name (optional)"
-                name="fields[first_name]"
-                placeholder="First name (optional)"
-                type="text"
-                ref={firstNameRef}
-                onFocus={turnstile.start}
-              />
+              {showFirstName && (
+                <Input
+                  className="border-riso-blue bg-stock-raised text-ink placeholder:text-ink-muted h-11 w-full grow rounded-none border-2 border-b-0 border-solid px-[2ch] py-[1ch] text-base font-normal shadow-none"
+                  aria-label="First name (optional)"
+                  name="fields[first_name]"
+                  placeholder="First name (optional)"
+                  type="text"
+                  ref={firstNameRef}
+                  onFocus={turnstile.start}
+                />
+              )}
               <Input
                 className="border-riso-blue bg-stock-raised text-ink placeholder:text-ink-muted h-11 w-full grow rounded-none border-2 border-solid px-[2ch] py-[1ch] text-base font-normal shadow-none"
                 name="email_address"

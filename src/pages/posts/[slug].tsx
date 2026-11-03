@@ -7,11 +7,12 @@ import { useRef } from 'react';
 import { useRouter } from 'next/router';
 import posthog from 'posthog-js';
 
-import { NewsletterSignup } from '@components/NewsletterSignup';
+import PostSignoff from '@components/NewsletterSignup/PostSignoff';
 import { RelatedPosts } from '@components/RelatedPosts';
 import atprotoData from '@data/atproto-documents.json';
 import relatedPostsData from '@data/generated/relatedPosts.json';
 import { markdownUrlFor } from '@lib/markdown-export/urls';
+import { getLatestNewsletter } from '@lib/newsletters';
 import { getSeries } from '@lib/series';
 import { getTopicForTags } from '@lib/topics';
 import { Colophon } from '../../components/Colophon';
@@ -32,6 +33,7 @@ type PostPageProps = {
   series?: Series | null;
   topic: Pick<TopicDefinition, 'slug' | 'name'> | null;
   relatedContent: RelatedContent[];
+  latestIssue: { slug: string; title: string } | null;
   standardSiteDocumentUri?: string;
   standardSitePublicationUri?: string;
 };
@@ -54,6 +56,8 @@ export const getStaticProps: GetStaticProps<
     (relatedPostsData as RelatedPostsManifest).relatedContent[params.slug] ??
     [];
 
+  const latest = await getLatestNewsletter();
+
   const standardSiteDocumentUri = getDocumentUri(
     (atprotoData as { documents: Record<string, string> }).documents,
     params.slug
@@ -68,6 +72,9 @@ export const getStaticProps: GetStaticProps<
       series: series ?? null,
       topic: getTopicForTags(post.frontmatter.tags),
       relatedContent,
+      latestIssue: latest
+        ? { slug: latest.frontmatter.slug, title: latest.frontmatter.title }
+        : null,
       ...(standardSiteDocumentUri ? { standardSiteDocumentUri } : {}),
       ...(standardSitePublicationUri ? { standardSitePublicationUri } : {}),
     },
@@ -92,6 +99,7 @@ const PostPage: NextPage<PostPageProps> = ({
   series,
   topic,
   relatedContent,
+  latestIssue,
   standardSiteDocumentUri,
   standardSitePublicationUri,
 }) => {
@@ -152,7 +160,18 @@ const PostPage: NextPage<PostPageProps> = ({
           </div>
         )}
 
-        <Post post={post} series={series} topic={topic} />
+        <Post
+          post={post}
+          series={series}
+          topic={topic}
+          signoff={
+            <PostSignoff
+              source="post-signoff"
+              slug={slug}
+              latestIssue={latestIssue}
+            />
+          }
+        />
         <WebmentionMetadata
           coverImageUrl={coverImageUrl}
           summary={excerpt}
@@ -160,13 +179,10 @@ const PostPage: NextPage<PostPageProps> = ({
           tags={tags}
           title={title}
         />
-        <Colophon />
-      </div>
-      <div className="mt-20 flex flex-col gap-20">
         {relatedContent && relatedContent.length > 0 && (
           <RelatedPosts relatedContent={relatedContent} currentTitle={title} />
         )}
-        <NewsletterSignup />
+        <Colophon />
       </div>
     </>
   );
