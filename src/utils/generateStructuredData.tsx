@@ -9,7 +9,6 @@ import type { UnifiedFeedItem } from '@lib/unified-feed';
 import type {
   BlogPosting,
   CollectionPage,
-  CreativeWorkSeries,
   ItemList,
   Organization,
   Person,
@@ -19,7 +18,9 @@ import type {
   WithContext,
 } from 'schema-dts';
 
+import { getSlugForSeries } from '@lib/series-slug';
 import { getItemPath } from '@lib/unified-feed';
+import { ogImageUrl } from '@utils/og';
 import config, { BASE_SITE_URL } from '@/config';
 
 const PUBLISHER_DATA: Organization = {
@@ -121,20 +122,21 @@ type GeneratePostStructuredDataProps = {
 
 export type StructuredDataWithType = WithContext<Thing> & { '@type': string };
 
-export const generatePostStructuredData = ({
-  post,
-}: GeneratePostStructuredDataProps) => {
-  const structuredData: StructuredDataWithType[] = [];
+const getSeriesUrl = (seriesName: string): string =>
+  `${BASE_SITE_URL}/series/${getSlugForSeries(seriesName)}`;
 
+/**
+ * Build the BlogPosting entity for a post or newsletter, without `@context`
+ * so it can be used standalone or nested inside another entity.
+ */
+const buildBlogPosting = (post: PostLike): BlogPosting => {
   const contentUrl = getContentUrl(post);
-  const imageUrl = getImageUrl(post);
   const publishDate = new Date(post.frontmatter.date).toISOString();
   const modifiedDate = post.frontmatter.updated
     ? new Date(post.frontmatter.updated).toISOString()
     : publishDate;
 
-  const postStructuredData: WithContext<BlogPosting> | undefined = {
-    '@context': 'https://schema.org',
+  return {
     '@type': 'BlogPosting',
     headline: post.frontmatter.title,
     description: post.frontmatter.excerpt,
@@ -152,18 +154,29 @@ export const generatePostStructuredData = ({
     },
     image: {
       '@type': 'ImageObject',
-      url: imageUrl,
+      url: getImageUrl(post),
     },
     keywords: post.frontmatter.tags?.join(', '),
+  };
+};
+
+export const generatePostStructuredData = ({
+  post,
+}: GeneratePostStructuredDataProps) => {
+  const structuredData: StructuredDataWithType[] = [];
+
+  const postStructuredData: WithContext<BlogPosting> = {
+    '@context': 'https://schema.org',
+    ...buildBlogPosting(post),
     isPartOf: post.frontmatter.series
       ? {
           '@type': 'CreativeWorkSeries',
           name: post.frontmatter.series,
-          url: `${BASE_SITE_URL}/series/${post.frontmatter.series}`,
+          url: getSeriesUrl(post.frontmatter.series),
         }
       : undefined,
-  };
-  structuredData.push(postStructuredData);
+  } as WithContext<BlogPosting>;
+  structuredData.push(postStructuredData as StructuredDataWithType);
 
   const videoStructuredData = generateVideoStructuredData(post);
   if (videoStructuredData) {
@@ -173,15 +186,72 @@ export const generatePostStructuredData = ({
   return structuredData;
 };
 
-export const generateSeriesStructuredData = (series: Series) => {
-  const structuredData: WithContext<CreativeWorkSeries> = {
-    '@context': 'https://schema.org',
-    '@type': 'CreativeWorkSeries',
-    name: series.name,
-    url: `${BASE_SITE_URL}/series/${series.name}`,
-  };
+/**
+ * Generate structured data for a series landing page.
+ *
+ * The page is a collection of the series' parts, so it is described as a
+ * CollectionPage whose main entity is the CreativeWorkSeries. Each part is
+ * included as a BlogPosting (an Article subtype) in `hasPart`, so crawlers that
+ * classify the page as article-like find Article schema describing the
+ * articles it lists.
+ */
+export const generateSeriesStructuredData = (
+  series: Series
+): WithContext<CollectionPage> => {
+  const seriesUrl = `${BASE_SITE_URL}/series/${series.slug}`;
 
-  return structuredData;
+  const parts: PostLike[] = [...series.posts, ...series.newsletters].sort(
+    (a, b) =>
+      new Date(a.frontmatter.date).getTime() -
+      new Date(b.frontmatter.date).getTime()
+  );
+
+  const firstPublished = parts[0]
+    ? new Date(parts[0].frontmatter.date).toISOString()
+    : undefined;
+  const lastPart = parts[parts.length - 1];
+  const lastModified = lastPart
+    ? new Date(
+        lastPart.frontmatter.updated ?? lastPart.frontmatter.date
+      ).toISOString()
+    : undefined;
+
+  const tags = [
+    ...new Set(parts.flatMap((part) => part.frontmatter.tags ?? [])),
+  ];
+
+  const description = `${series.name}: a ${series.length}-part series by ${AUTHOR_DATA.name}.`;
+
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    '@id': seriesUrl,
+    url: seriesUrl,
+    name: `${series.name} series`,
+    description,
+    author: AUTHOR_DATA,
+    publisher: PUBLISHER_DATA,
+    inLanguage: 'en-US',
+    ...(firstPublished ? { datePublished: firstPublished } : {}),
+    ...(lastModified ? { dateModified: lastModified } : {}),
+    ...(tags.length ? { keywords: tags.join(', ') } : {}),
+    image: {
+      '@type': 'ImageObject',
+      url: ogImageUrl(`series/${series.slug}`),
+    },
+    mainEntity: {
+      '@type': 'CreativeWorkSeries',
+      name: series.name,
+      url: seriesUrl,
+      description,
+      author: AUTHOR_DATA,
+      publisher: PUBLISHER_DATA,
+      hasPart: parts.map((part, index) => ({
+        ...buildBlogPosting(part),
+        position: index + 1,
+      })),
+    },
+  };
 };
 
 /**
