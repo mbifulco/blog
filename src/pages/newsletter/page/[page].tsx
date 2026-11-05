@@ -110,7 +110,7 @@ const NewsletterPage: React.FC<NewsletterPageProps> = ({
         </p>
       </div>
       <div className="mx-auto flex max-w-2xl flex-col gap-2">
-        <SubscriptionForm />
+        <SubscriptionForm source="newsletter-archive" />
         <SponsorCTA />
       </div>
 

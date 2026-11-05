@@ -81,3 +81,16 @@ export const getPaginatedNewsletters = async (
   const allNewsletters = await getAllNewsletters();
   return paginate(allNewsletters, options);
 };
+
+export const getLatestNewsletter = async (): Promise<Newsletter | null> => {
+  const newsletters = await getAllNewsletters();
+  const published = newsletters.filter(
+    (newsletter) => newsletter.frontmatter.published !== false
+  );
+  published.sort(
+    (a, b) =>
+      new Date(b.frontmatter.date).getTime() -
+      new Date(a.frontmatter.date).getTime()
+  );
+  return published[0] ?? null;
+};
