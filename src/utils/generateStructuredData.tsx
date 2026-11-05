@@ -37,11 +37,9 @@ const PUBLISHER_DATA: Organization = {
 // full documents.
 type PostLike = DocumentSummary<BlogPost> | DocumentSummary<Newsletter>;
 
-// Helper to determine if content is a Newsletter (has specific metadata pattern)
-const isNewsletter = (post: PostLike): post is DocumentSummary<Newsletter> => {
-  // Newsletters don't have the 'content' field in frontmatter that BlogPosts have
-  return !('content' in post.frontmatter && post.frontmatter.content);
-};
+// The content loaders stamp every document's frontmatter with its type.
+const isNewsletter = (post: PostLike): post is DocumentSummary<Newsletter> =>
+  post.frontmatter.type === 'newsletter';
 
 // Helper to generate the correct URL path for content
 const getContentUrl = (post: PostLike): string => {
@@ -209,11 +207,15 @@ export const generateSeriesStructuredData = (
   const firstPublished = parts[0]
     ? new Date(parts[0].frontmatter.date).toISOString()
     : undefined;
-  const lastPart = parts[parts.length - 1];
-  const lastModified = lastPart
-    ? new Date(
-        lastPart.frontmatter.updated ?? lastPart.frontmatter.date
-      ).toISOString()
+  // Parts are ordered by publish date, but an older part may have been updated
+  // more recently than the newest one was published.
+  const lastModifiedTime = Math.max(
+    ...parts.map((part) =>
+      new Date(part.frontmatter.updated ?? part.frontmatter.date).getTime()
+    )
+  );
+  const lastModified = parts.length
+    ? new Date(lastModifiedTime).toISOString()
     : undefined;
 
   const tags = [

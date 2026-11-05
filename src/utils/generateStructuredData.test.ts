@@ -187,6 +187,34 @@ describe('generatePostStructuredData', () => {
     });
   });
 
+  describe('content type detection', () => {
+    // Shaped like the content loaders' output: `content` lives on the
+    // document, not in frontmatter, and frontmatter carries `type`.
+    const loaderShapedPost = {
+      slug: 'loader-post',
+      frontmatter: {
+        type: 'post',
+        title: 'Loader Post',
+        slug: 'loader-post',
+        date: '2024-01-15',
+        tags: ['react'],
+        excerpt: 'A post as the loader produces it.',
+      },
+    } as unknown as BlogPost;
+
+    it('should use /posts/ URLs for loader-shaped blog posts', () => {
+      const blogPosting = getBlogPosting(
+        generatePostStructuredData({ post: loaderShapedPost })
+      );
+
+      expect(blogPosting.url).toBe('https://mikebifulco.com/posts/loader-post');
+      expect(blogPosting.mainEntityOfPage['@id']).toBe(
+        'https://mikebifulco.com/posts/loader-post'
+      );
+      expect(blogPosting.image.url).toContain('posts/loader-post/cover');
+    });
+  });
+
   describe('series handling', () => {
     it('should include isPartOf when post has a series', () => {
       const postWithSeries = {
@@ -422,6 +450,21 @@ describe('generateSeriesStructuredData', () => {
     expect(parts[1].url).toBe(
       'https://mikebifulco.com/newsletter/test-newsletter'
     );
+  });
+
+  it('should use the most recent update across all parts as dateModified', () => {
+    const updatedEarlyPost = {
+      ...mockBlogPost,
+      frontmatter: { ...mockBlogPost.frontmatter, updated: '2024-04-10' },
+    } as unknown as BlogPost;
+    const seriesWithUpdate = {
+      ...mockSeries,
+      posts: [laterPost, updatedEarlyPost],
+    } as unknown as Series;
+
+    const withUpdate = generateSeriesStructuredData(seriesWithUpdate) as Json;
+
+    expect(withUpdate.dateModified).toBe(new Date('2024-04-10').toISOString());
   });
 
   it('should collect keywords from all parts without duplicates', () => {
