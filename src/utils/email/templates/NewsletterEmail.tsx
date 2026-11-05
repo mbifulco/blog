@@ -50,6 +50,15 @@ export const NewsletterEmail = ({
             markdownContainerStyles={{ fontSize: 20, lineHeight: 1.6 }}
             markdownCustomStyles={{
               p: { fontSize: '20px', lineHeight: '1.6', color: '#222' },
+              ol: { margin: '0 0 20px 0', paddingLeft: '1.25em' },
+              ul: { margin: '0 0 20px 0', paddingLeft: '1.25em' },
+              li: { marginBottom: '8px' },
+              blockQuote: {
+                margin: '40px 0',
+                padding: 0,
+                background: 'none',
+                borderLeft: 'none',
+              },
             }}
           >
             {content}
