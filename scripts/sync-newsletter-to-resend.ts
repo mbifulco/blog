@@ -27,6 +27,7 @@ import { render } from '@react-email/render';
 import { isAfter, isSameDay, parseISO } from 'date-fns';
 import matter from 'gray-matter';
 
+import { styleBlockquotes } from '../src/utils/email/styleBlockquotes';
 import { NewsletterEmail } from '../src/utils/email/templates/NewsletterEmail';
 import { upsertBroadcast } from '../src/utils/resend/broadcasts';
 
@@ -258,8 +259,7 @@ async function main() {
 
   // Get changed newsletters
   const slugArgs = process.argv.slice(2);
-  const changedSlugs =
-    slugArgs.length > 0 ? slugArgs : getChangedNewsletters();
+  const changedSlugs = slugArgs.length > 0 ? slugArgs : getChangedNewsletters();
 
   if (changedSlugs.length === 0) {
     console.log('✅ No newsletter changes detected. Nothing to sync.');
@@ -320,15 +320,17 @@ async function main() {
       const subject = frontmatter.subject ?? frontmatter.title;
 
       // Render to HTML
-      const html = await render(
-        React.createElement(NewsletterEmail, {
-          title: subject,
-          content: cleanContent,
-          excerpt: frontmatter.previewText ?? frontmatter.excerpt,
-          coverImage: frontmatter.coverImagePublicId
-            ? getCloudinaryImageUrl(frontmatter.coverImagePublicId)
-            : undefined,
-        })
+      const html = styleBlockquotes(
+        await render(
+          React.createElement(NewsletterEmail, {
+            title: subject,
+            content: cleanContent,
+            excerpt: frontmatter.previewText ?? frontmatter.excerpt,
+            coverImage: frontmatter.coverImagePublicId
+              ? getCloudinaryImageUrl(frontmatter.coverImagePublicId)
+              : undefined,
+          })
+        )
       );
 
       // Upsert broadcast

@@ -33,6 +33,7 @@ export const EmailLayout = ({
   return (
     <Html lang="en">
       <Head>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
         <style>{`
           body {
             -webkit-text-size-adjust: 100%;
@@ -115,6 +116,9 @@ export const EmailLayout = ({
                 className="mx-auto max-w-full"
                 width={620}
                 height={92}
+                // The width attribute is for Outlook; elsewhere a percentage width
+                // keeps it from forcing the layout wider than a phone screen
+                style={{ width: '100%', maxWidth: '620px', height: 'auto' }}
                 src="https://res.cloudinary.com/mikebifulco-com/image/upload/v1723993697/email/footerimg.png"
                 alt=""
               />
@@ -127,10 +131,7 @@ export const EmailLayout = ({
             >
               <Text style={{ marginBottom: '10px' }} className="my-0 text-sm">
                 © {new Date().getFullYear()} &bull; 💌 Tiny Improvements &bull;{' '}
-                <Link
-                  href="https://mikebifulco.com"
-                  className="text-pink-600"
-                >
+                <Link href="https://mikebifulco.com" className="text-pink-600">
                   mikebifulco.com
                 </Link>
               </Text>
