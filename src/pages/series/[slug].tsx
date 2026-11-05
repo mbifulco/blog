@@ -85,7 +85,6 @@ const SeriesPage: NextPage<SeriesPageProps> = ({ series }) => {
           image={ogImageUrl(`series/${series?.slug}`)}
           canonical={router.asPath}
           title={pageTitle}
-          ogType="article"
         />
 
         <header className="mb-6 w-fit max-w-[75ch]">
