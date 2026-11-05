@@ -215,19 +215,31 @@ const Pre: React.FC<PreProps> = ({ children }) => {
         {({ className, style, tokens, getLineProps, getTokenProps }) => (
           <pre
             className={className}
-            style={{ ...style, background: 'transparent', overflowX: 'auto' }}
+            style={{
+              ...style,
+              background: 'transparent',
+              overflowX: 'auto',
+              paddingLeft: 0,
+            }}
           >
             {tokens.map((line, i) => {
               // The last token line is MDX's trailing newline, not code.
               if (i === tokens.length - 1) return null;
               return (
                 <div style={{ display: 'table-row' }} key={`code-line-${i}`}>
+                  {/* Sticky so line numbers stay visible while long lines
+                      scroll; the opaque ink hides code passing underneath. */}
                   <span
                     style={{
                       color: CODE_GUTTER,
+                      paddingLeft: '1rem',
                       paddingRight: '1.5ch',
                       userSelect: 'none',
                       display: 'table-cell',
+                      position: 'sticky',
+                      left: 0,
+                      zIndex: 1,
+                      background: CODE_INK,
                     }}
                   >
                     {i + 1}

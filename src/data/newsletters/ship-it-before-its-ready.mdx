@@ -1,0 +1,114 @@
+---
+title: "Ship It Before It's Ready: How to Beat Perfectionism"
+date: 2026-11-10
+excerpt: "The best builders ship before it's ready. The real work is the settling time after launch - the days when real usage shows you what to fix."
+subject: "I've given up on trying to be perfect"
+previewText: "One of the best live performers I've ever seen said it between songs."
+tags: [startup, product, engineering]
+coverImagePublicId: newsletters/ship-it-before-its-ready/cover
+published: true
+slug: ship-it-before-its-ready
+---
+
+## The Big Idea
+
+Last month I saw The Tallest Man On Earth play in Asheville. He's one of the best live performers I've ever seen.
+
+In between songs, he paused, looked out into the crowd, and said:
+
+> I've given up on trying to be perfect
+
+Coming from someone that good, it landed hard.
+
+The best builders I know have made the same peace. Everything ships before it's perfect. The skill is what you do in the days after - and that starts with deciding, before you ship, what "working" looks like.
+
+## Nothing we ship is perfect
+
+We expect perfection from ourselves, so we hold things back until they're _ready_. Polished. Done.
+
+But everything we ship goes live before it feels perfect. Every single thing. Shipping a feature with zero bugs after launch is beyond rare.
+
+That isn't a failure of process. It _is_ the process. Getting comfortable with that feeling is part of the job, and I'm not sure it ever fully goes away. (I wrote about a version of this years ago: [imperfection is part of the brand](https://mikebifulco.com/newsletter/how-to-know-when-to-publish-your-work).)
+
+Imperfect isn't the same as reckless, though. Billing, auth, anything that can lose someone's data - those get the slow treatment. A big part of being a good engineer is knowing where risk is acceptable, and [not mistaking confidence for competence](https://mikebifulco.com/newsletter/dunning-kruger-for-vibe-coders). Everything else ships rough.
+
+## Settling time
+
+There's an idea from control theory I keep coming back to: **settling time**.
+
+When you apply a sudden change to a system, the output doesn't jump cleanly to its new value. It overshoots, swings back, wobbles a few times, and eventually settles into a narrow band around where it's going to stay. Settling time is how long that takes.
+
+<Image
+  publicId="newsletters/ship-it-before-its-ready/settling-time"
+  alt="Adoption of a feature over time: it spikes after you ship as everyone tries it, dips as the novelty wears off, wobbles through the settling window, then levels off at fully settled growth"
+/>
+
+Shipping a new feature works the same way.
+
+The first things you hear are mostly signs that people are using it: a burst of curiosity, a flurry of bug reports, a few people who love it, and a few who are loudly confused. That's the overshoot.
+
+Then things settle, and you get to see how people _actually_ fit the thing into their work.
+
+For us, that usually takes a few days, maybe a week, for something people use regularly. The more users you have, the shorter it gets.
+
+That window is your best shot at getting people attached to what you built. It's when you respond fast, and fix the bugs people actually hit - not the ones you imagined.
+
+If you wait for perfect before you ship, you skip all of it.
+
+## How to listen during the wobble
+
+Here's how we find out what's really going on while a feature settles:
+
+1. **Watch people use it, and ask them about it.** Session replays, observability telemetry, or straight-up user interviews. People will use your thing in ways you never expected. When you talk to them, ask "how did you handle this last week?" instead of "would you use this?" Leading yes/no questions just _confirm_ what you already think, instead of teaching you what you don't know.
+2. **Measure people using it.** Log events, and build dashboards around the conversions that actually matter - [not just click counts](https://mikebifulco.com/newsletter/beyond-click-counts-good-signals-for-design-success).
+3. **Watch your error reports.** They're a sign people are using your new feature, and a sign someone just had a bad time with it. Respond _fast_ - that's how you keep early adopters happy.
+
+## Tools that give you a real-time view of usage
+
+- **[PostHog](https://posthog.com/mikebifulco) for dashboards and session replays.** Dashboards tell me _what_ people are doing. Replays show me _why_. (Full disclosure: PostHog has sponsored my work in the past.)
+- **[Fathom](https://mikebifulco.com/posts/why-fathom-analytics) for a live visitor count.** I keep it in my Mac's menu bar with Raycast. On launch day, it's the fastest way to see whether anyone showed up at all.
+
+## Get an objective read
+
+When I ship something, I hand this prompt to [Claude Code](https://www.claude.com/product/claude-code) (connected to [PostHog's MCP server](https://posthog.com/mikebifulco)) or [PostHog AI](https://posthog.com/ai?utm_source=influencer&utm_medium=web&utm_campaign=mikebifulco). It forces me to state what success looks like up front, and asks for an honest answer instead of a pat on the back.
+
+Swap anything in `[BRACKETS]` for your own details. Lines marked _(optional)_ can be deleted if they don't apply.
+
+```text
+I shipped [FEATURE NAME] on [SHIP DATE]. It's meant to help
+[WHO IT'S FOR] [DO WHAT].
+
+Before I shipped, I decided it would be a success if
+[SUCCESS METRIC, e.g. "20% of weekly active users try it within two weeks"].
+
+The events that track it are [EVENT NAMES].
+
+Using our product analytics, give me an objective read:
+
+1. How many people have used it, and how does that compare to the
+   [NUMBER] weeks before launch?
+2. Has usage settled, or is it still in the post-launch spike?
+   Show me the daily trend.
+3. Who uses it most, and who doesn't? Break it down by
+   [SEGMENT, e.g. plan, team size, new vs. returning users].
+4. Where do people drop off or get stuck? Point me to
+   [NUMBER] session replays worth watching.
+5. What errors have shown up since launch that touch this feature?
+6. (optional) I'm also worried about [SPECIFIC CONCERN].
+
+Don't tell me what I want to hear. If the data doesn't support my
+success metric, say so. Tell me what you'd look at next, and what
+I'm not measuring that I should be.
+```
+
+## Perfect isn't the job
+
+The same loop works for people. Nobody is a perfect teammate, and the ones worth working with know it.
+
+When someone gives you feedback you're skeptical of, test it like a feature: if I changed based on this, how would I know it worked? What's the cost of _not_ changing?
+
+Leading works the same way. Handing your team the answer is like shipping a feature and never looking at how people use it. The best leaders I know ask more than they tell, watch closely, and follow the breadcrumbs.
+
+This week, ship one thing before it feels ready. Before you do, write down how you'll know whether it worked.
+
+Your next deploy can survive a few rough edges. Ship it, then go find out what's real.

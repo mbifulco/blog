@@ -47,9 +47,41 @@ export const NewsletterEmail = ({
       <Row>
         <Column>
           <Markdown
-            markdownContainerStyles={{ fontSize: 20, lineHeight: 1.6 }}
+            markdownContainerStyles={{
+              fontSize: 20,
+              lineHeight: 1.6,
+              // Lets long URLs wrap instead of widening the email on phones
+              wordBreak: 'break-word',
+              overflowWrap: 'anywhere',
+            }}
             markdownCustomStyles={{
               p: { fontSize: '20px', lineHeight: '1.6', color: '#222' },
+              ol: { margin: '0 0 20px 0', paddingLeft: '1.25em' },
+              ul: { margin: '0 0 20px 0', paddingLeft: '1.25em' },
+              li: { marginBottom: '8px' },
+              // A <pre> doesn't wrap by default, so one long line widens the whole
+              // email and phone clients shrink every line of text to fit it
+              codeBlock: {
+                display: 'block',
+                margin: '0 0 20px 0',
+                padding: '12px',
+                background: '#f8f8f8',
+                color: '#212529',
+                fontFamily: 'SFMono-Regular,Menlo,Monaco,Consolas,monospace',
+                fontSize: '15px',
+                lineHeight: '1.5',
+                whiteSpace: 'pre-wrap',
+                wordBreak: 'break-word',
+                overflowWrap: 'anywhere',
+              },
+              // Inline, because some clients strip the <style> block's img rule
+              image: { maxWidth: '100%', height: 'auto' },
+              blockQuote: {
+                margin: '40px 0',
+                padding: 0,
+                background: 'none',
+                borderLeft: 'none',
+              },
             }}
           >
             {content}
