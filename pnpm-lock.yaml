@@ -5,7 +5,6 @@ settings:
   excludeLinksFromLockfile: false
 
 overrides:
-  next: 16.4.4
   tailwindcss: ^4.3.1
   minimatch@3>brace-expansion: 1.1.21
   gray-matter>js-yaml: 3.15.2
@@ -51,7 +50,7 @@ importers:
         version: 3.1.1(@opentelemetry/api@1.10.0)
       '@posthog/nextjs-config':
         specifier: ^1.12.1
-        version: 1.12.1(next@16.4.4(@babel/core@7.29.7(supports-color@8.1.1))(@opentelemetry/api@1.10.0)(@playwright/test@1.65.0)(@types/node@26.6.6)(babel-plugin-react-compiler@1.0.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(sass@1.108.2))(posthog-js@1.447.10(@types/react@19.3.0)(react@19.3.1))(webpack@5.108.4(esbuild@0.28.2)(lightningcss@1.33.0)(postcss@8.5.32))
+        version: 1.12.1(next@16.4.6(@babel/core@7.29.7(supports-color@8.1.1))(@opentelemetry/api@1.10.0)(@playwright/test@1.65.0)(@types/node@26.6.6)(babel-plugin-react-compiler@1.0.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(sass@1.108.2))(posthog-js@1.447.10(@types/react@19.3.0)(react@19.3.1))(webpack@5.108.4(esbuild@0.28.2)(lightningcss@1.33.0)(postcss@8.5.32))
       '@radix-ui/react-dialog':
         specifier: ^1.2.0
         version: 1.3.1(@types/react-dom@19.0.4(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
@@ -78,16 +77,16 @@ importers:
         version: 5.107.1(@types/react@19.3.0)(react@19.3.1)
       '@trpc/client':
         specifier: 11.28.0
-        version: 11.28.0(@trpc/server@11.28.0(@types/ws@8.18.2)(next@16.4.4(@babel/core@7.29.7(supports-color@8.1.1))(@opentelemetry/api@1.10.0)(@playwright/test@1.65.0)(@types/node@26.6.6)(babel-plugin-react-compiler@1.0.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(sass@1.108.2))(typescript@6.0.3))(typescript@6.0.3)
+        version: 11.28.0(@trpc/server@11.28.0(@types/ws@8.18.2)(next@16.4.6(@babel/core@7.29.7(supports-color@8.1.1))(@opentelemetry/api@1.10.0)(@playwright/test@1.65.0)(@types/node@26.6.6)(babel-plugin-react-compiler@1.0.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(sass@1.108.2))(typescript@6.0.3))(typescript@6.0.3)
       '@trpc/next':
         specifier: 11.28.0
-        version: 11.28.0(b3b62ba4c5baede8c9a15278b9f0e825)
+        version: 11.28.0(8e3a1668bc8d2fc06cd51ed9bff51b8b)
       '@trpc/react-query':
         specifier: 11.28.0
-        version: 11.28.0(@tanstack/react-query@5.107.1(@types/react@19.3.0)(react@19.3.1))(@trpc/client@11.28.0(@trpc/server@11.28.0(@types/ws@8.18.2)(next@16.4.4(@babel/core@7.29.7(supports-color@8.1.1))(@opentelemetry/api@1.10.0)(@playwright/test@1.65.0)(@types/node@26.6.6)(babel-plugin-react-compiler@1.0.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(sass@1.108.2))(typescript@6.0.3))(typescript@6.0.3))(@trpc/server@11.28.0(@types/ws@8.18.2)(next@16.4.4(@babel/core@7.29.7(supports-color@8.1.1))(@opentelemetry/api@1.10.0)(@playwright/test@1.65.0)(@types/node@26.6.6)(babel-plugin-react-compiler@1.0.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(sass@1.108.2))(typescript@6.0.3))(react@19.3.1)(typescript@6.0.3)
+        version: 11.28.0(@tanstack/react-query@5.107.1(@types/react@19.3.0)(react@19.3.1))(@trpc/client@11.28.0(@trpc/server@11.28.0(@types/ws@8.18.2)(next@16.4.6(@babel/core@7.29.7(supports-color@8.1.1))(@opentelemetry/api@1.10.0)(@playwright/test@1.65.0)(@types/node@26.6.6)(babel-plugin-react-compiler@1.0.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(sass@1.108.2))(typescript@6.0.3))(typescript@6.0.3))(@trpc/server@11.28.0(@types/ws@8.18.2)(next@16.4.6(@babel/core@7.29.7(supports-color@8.1.1))(@opentelemetry/api@1.10.0)(@playwright/test@1.65.0)(@types/node@26.6.6)(babel-plugin-react-compiler@1.0.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(sass@1.108.2))(typescript@6.0.3))(react@19.3.1)(typescript@6.0.3)
       '@trpc/server':
         specifier: 11.28.0
-        version: 11.28.0(@types/ws@8.18.2)(next@16.4.4(@babel/core@7.29.7(supports-color@8.1.1))(@opentelemetry/api@1.10.0)(@playwright/test@1.65.0)(@types/node@26.6.6)(babel-plugin-react-compiler@1.0.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(sass@1.108.2))(typescript@6.0.3)
+        version: 11.28.0(@types/ws@8.18.2)(next@16.4.6(@babel/core@7.29.7(supports-color@8.1.1))(@opentelemetry/api@1.10.0)(@playwright/test@1.65.0)(@types/node@26.6.6)(babel-plugin-react-compiler@1.0.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(sass@1.108.2))(typescript@6.0.3)
       '@types/mdx':
         specifier: ^2.0.14
         version: 2.0.14
@@ -125,17 +124,17 @@ importers:
         specifier: ^10.0.1
         version: 10.0.1
       next:
-        specifier: 16.4.4
-        version: 16.4.4(@babel/core@7.29.7(supports-color@8.1.1))(@opentelemetry/api@1.10.0)(@playwright/test@1.65.0)(@types/node@26.6.6)(babel-plugin-react-compiler@1.0.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(sass@1.108.2)
+        specifier: 16.4.6
+        version: 16.4.6(@babel/core@7.29.7(supports-color@8.1.1))(@opentelemetry/api@1.10.0)(@playwright/test@1.65.0)(@types/node@26.6.6)(babel-plugin-react-compiler@1.0.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(sass@1.108.2)
       next-cloudinary:
         specifier: ^7.0.0
-        version: 7.0.0(next@16.4.4(@babel/core@7.29.7(supports-color@8.1.1))(@opentelemetry/api@1.10.0)(@playwright/test@1.65.0)(@types/node@26.6.6)(babel-plugin-react-compiler@1.0.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(sass@1.108.2))(react@19.3.1)
+        version: 7.0.0(next@16.4.6(@babel/core@7.29.7(supports-color@8.1.1))(@opentelemetry/api@1.10.0)(@playwright/test@1.65.0)(@types/node@26.6.6)(babel-plugin-react-compiler@1.0.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(sass@1.108.2))(react@19.3.1)
       next-mdx-remote:
         specifier: 6.0.0
         version: 6.0.0(@types/react@19.3.0)(react@19.3.1)(supports-color@8.1.1)
       nuqs:
         specifier: ^2.10.3
-        version: 2.10.3(next@16.4.4(@babel/core@7.29.7(supports-color@8.1.1))(@opentelemetry/api@1.10.0)(@playwright/test@1.65.0)(@types/node@26.6.6)(babel-plugin-react-compiler@1.0.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(sass@1.108.2))(react@19.3.1)
+        version: 2.10.3(next@16.4.6(@babel/core@7.29.7(supports-color@8.1.1))(@opentelemetry/api@1.10.0)(@playwright/test@1.65.0)(@types/node@26.6.6)(babel-plugin-react-compiler@1.0.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(sass@1.108.2))(react@19.3.1)
       pluralize:
         specifier: ^8.0.0
         version: 8.0.0
@@ -1108,60 +1107,60 @@ packages:
   '@next/bundle-analyzer@16.4.6':
     resolution: {integrity: sha512-Evp2ETZoDcqpg5LZPeJNG51o1Bc5vH+LPSP+BmSkdjeykMCh1fMB/shs3bJVbTOxYp7wC3Ed3HLo0jgX1BdxNA==}
 
-  '@next/env@16.4.4':
-    resolution: {integrity: sha512-6/3ZuELR0tPLgNigvv8d/LAmfLIo1IpNfvrI/AHCAl9w9D0DNVGQGvo+OLPzAWR+WMW3vVyO7HaW0kfL97huBg==}
+  '@next/env@16.4.6':
+    resolution: {integrity: sha512-SunBjJ6t+oBtecS3dTjdVuMhUogP5wD/vrGL5EVuQYM1iS4O5ilL51HkiJ3sPjMzRHiCChvr4dbaSJbR7F3lxA==}
 
   '@next/eslint-plugin-next@16.4.6':
     resolution: {integrity: sha512-HdqERVOafOD8JaUSAkwf9aSu/1rsHlkN8C5GcXYBH3C/z1MxBhZFxB5rz/xqMMRiIj7r9tIv8OCLQ9JWUxCvWA==}
 
-  '@next/swc-darwin-arm64@16.4.4':
-    resolution: {integrity: sha512-1KlZ5IJ7zcLBZvqG1q7nuRWm2LAAN4C3iBqqoBCRRl1UEv0A4k6Rek+x3j23UiWf8Gz+VsN+M/LylAWkxpm2mg==}
+  '@next/swc-darwin-arm64@16.4.6':
+    resolution: {integrity: sha512-kJ4VVZkley17xKaJx72QN2IBqjrj7zenCQZaUF0l9ShS/1Mt2kW4+Z5KGG6vgr3L/J562xTOizVyM1iA/u5nlg==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [darwin]
 
-  '@next/swc-darwin-x64@16.4.4':
-    resolution: {integrity: sha512-Tb7efFdhbS/ph74RS7wob84gXGM58qxoO/WrkiMsTmy/JZktKOKBeiM45W0E/b8JfBzZJdexQqSmvedBwDK0PA==}
+  '@next/swc-darwin-x64@16.4.6':
+    resolution: {integrity: sha512-eIPGZIqC+8JKaeZmvnCANJQF4xWkkHqSnAAajtFxgwDMAOnCgxNvP52SeWZ41PyVwoe+Le/NQuZSaQ8j7YshSA==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [darwin]
 
-  '@next/swc-linux-arm64-gnu@16.4.4':
-    resolution: {integrity: sha512-wojSfLnH8RRImhtbcn3Dlx9JICh6aQHgDA33XDr+EPua2tt7Q/yjDn0FTAbqfNlLrBmOASAGhLh6NvBk9L3gzw==}
+  '@next/swc-linux-arm64-gnu@16.4.6':
+    resolution: {integrity: sha512-9nI6O8vvczH2D9ZNdMGqb/3NuT15T9ksOZnAmx9/gjF2cOi74+xxyf1Hk96uIMfm14c9y6wHeBq6SH8g6udvcA==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [linux]
     libc: [glibc]
 
-  '@next/swc-linux-arm64-musl@16.4.4':
-    resolution: {integrity: sha512-zgxpGOZaR+2O6dOk5ZAUkKgH92ZtqNg3ohzyg2HmWc2N+AZH4dEpTwdpB0e5MR9YRVdVDUkEM5g6c3TWWn8g1g==}
+  '@next/swc-linux-arm64-musl@16.4.6':
+    resolution: {integrity: sha512-7/qPhTxDp2ScluOJOhLuhWmlA17o1yZ0SIgpISBCpBxXgtnK4+KGywBpFkfLPiU1rnSM1faFGzYkH6i7JdTrqA==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [linux]
     libc: [musl]
 
-  '@next/swc-linux-x64-gnu@16.4.4':
-    resolution: {integrity: sha512-fg3Wr030Y3BDkCXi6HGsPz0BUPTGZJS8TZSrCO0tS3O/KBsCyx4eP6aeaizCpGmcUKhtb4l7JoMc88QO2qBl2g==}
+  '@next/swc-linux-x64-gnu@16.4.6':
+    resolution: {integrity: sha512-oOpbNa8XOW1qCGd9VvzC4fbkkRxEls7/WI6tz+YHC0xRA7KpV1U7DrAnCPjzVyOk/karzWEepCOcTIDmwK8FwQ==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [linux]
     libc: [glibc]
 
-  '@next/swc-linux-x64-musl@16.4.4':
-    resolution: {integrity: sha512-40cr71PSdCV9zU2g0B1XG27af10tYU+9g8F+FtF3qSguQg0jSZDoxn0NrAvgFQ0cy9s0ZBA/00P9g/XL1O43xg==}
+  '@next/swc-linux-x64-musl@16.4.6':
+    resolution: {integrity: sha512-aM8CZ+OR2EwXaAYw7KGkW2GDmNDsLBIRe1MMRZCJPTdw/xhTD0IMUVO4sf3KqrzuRouGzwwLZn34+gFeVXiUQA==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [linux]
     libc: [musl]
 
-  '@next/swc-win32-arm64-msvc@16.4.4':
-    resolution: {integrity: sha512-vFMiEbRZ+LYNeswslf4LuGuoPHE8JbtqV0GnmzbpnGNMs0uWaR2q98hu8M/UWGycNJERBXIUss+BGd3PIJ8VZg==}
+  '@next/swc-win32-arm64-msvc@16.4.6':
+    resolution: {integrity: sha512-U0p7/tEtqvHX2crhd841CDwKtp5CFkKXVjOhmfccR3Pvp64sj8KBwRqsvltqLOwVBbj0NtkxwXSDpEHYGbxeXQ==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [win32]
 
-  '@next/swc-win32-x64-msvc@16.4.4':
-    resolution: {integrity: sha512-jy2P4V8BDZ+CFCzYABHYRZ1CmyFhfmYe22i8KA4uEafdYPrUjJ3Ot+lx265mLWLHiZRIfBzCn3V1F17m0vzl9Q==}
+  '@next/swc-win32-x64-msvc@16.4.6':
+    resolution: {integrity: sha512-3ZG15/5WIdlTQsIEvc9sPTTSL5XFrlLklIKmfF4fwsDnoAhu6NcBDXsk3mbGxNyo6aVLEGex+fHCv2MahY7a9g==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [win32]
@@ -1608,7 +1607,7 @@ packages:
     resolution: {integrity: sha512-5hBbYe1Q5U/Gh+pwJmy2SeR9HUIk6fl2BSlL5O30+x/DduWQ7jp3SQv3W9WWC2DFPVdq0P+XpYgSbxQAeGfyfA==}
     engines: {node: ^20.20.0 || >=22.22.0}
     peerDependencies:
-      next: 16.4.4
+      next: '>12.1.0'
       posthog-js: '>=1.438.5'
 
   '@posthog/plugin-utils@2.0.1':
@@ -2318,7 +2317,7 @@ packages:
       '@trpc/client': 11.28.0
       '@trpc/react-query': 11.28.0
       '@trpc/server': 11.28.0
-      next: 16.4.4
+      next: '*'
       react: '>=16.8.0'
       react-dom: '>=16.8.0'
       typescript: '>=5.7.2'
@@ -2344,7 +2343,7 @@ packages:
       '@types/express': '*'
       '@types/ws': '*'
       fastify: '*'
-      next: 16.4.4
+      next: '*'
       typescript: '>=5.7.2'
     peerDependenciesMeta:
       '@types/aws-lambda':
@@ -4269,7 +4268,7 @@ packages:
     resolution: {integrity: sha512-+u+kbUU11wiiLuGtT50/UrBHjsMJ5SXUX20I/QEI0QO0aJZb72jJFoWf/rDY9jb7o+VMItcEuoPQJJbIkUxilA==}
     engines: {node: '>=22'}
     peerDependencies:
-      next: 16.4.4
+      next: ^16
       react: ^18.2.0 || ^19
 
   next-mdx-remote@6.0.0:
@@ -4278,8 +4277,8 @@ packages:
     peerDependencies:
       react: '>=16'
 
-  next@16.4.4:
-    resolution: {integrity: sha512-Hu4pOw2x0RQ0TQabNWbpsNg/3+SZf+rLQwvfhBLnptv98GS4dcIVMlfEyn9jb2/ZJDSahhnUKEs0YrfarjGX3A==}
+  next@16.4.6:
+    resolution: {integrity: sha512-QZJiYhaZLJMo2KpkQGQIwvmd79WVsAWeYIU554a8d7zArS3si/IRy3lBNV/rtYhE70oLwdLYhPAXLPx8HwcwtA==}
     engines: {node: '>=20.9.0'}
     hasBin: true
     peerDependencies:
@@ -4314,7 +4313,7 @@ packages:
     peerDependencies:
       '@remix-run/react': '>=2'
       '@tanstack/react-router': ^1
-      next: 16.4.4
+      next: '>=14.2.0'
       react: '>=18.2.0 || ^19.0.0-0'
       react-router: ^5 || ^6 || ^7 || ^8
       react-router-dom: ^5 || ^6 || ^7
@@ -6286,7 +6285,7 @@ snapshots:
       - bufferutil
       - utf-8-validate
 
-  '@next/env@16.4.4': {}
+  '@next/env@16.4.6': {}
 
   '@next/eslint-plugin-next@16.4.6(eslint@10.14.0(jiti@2.7.0)(supports-color@8.1.1))':
     dependencies:
@@ -6295,28 +6294,28 @@ snapshots:
     transitivePeerDependencies:
       - eslint
 
-  '@next/swc-darwin-arm64@16.4.4':
+  '@next/swc-darwin-arm64@16.4.6':
     optional: true
 
-  '@next/swc-darwin-x64@16.4.4':
+  '@next/swc-darwin-x64@16.4.6':
     optional: true
 
-  '@next/swc-linux-arm64-gnu@16.4.4':
+  '@next/swc-linux-arm64-gnu@16.4.6':
     optional: true
 
-  '@next/swc-linux-arm64-musl@16.4.4':
+  '@next/swc-linux-arm64-musl@16.4.6':
     optional: true
 
-  '@next/swc-linux-x64-gnu@16.4.4':
+  '@next/swc-linux-x64-gnu@16.4.6':
     optional: true
 
-  '@next/swc-linux-x64-musl@16.4.4':
+  '@next/swc-linux-x64-musl@16.4.6':
     optional: true
 
-  '@next/swc-win32-arm64-msvc@16.4.4':
+  '@next/swc-win32-arm64-msvc@16.4.6':
     optional: true
 
-  '@next/swc-win32-x64-msvc@16.4.4':
+  '@next/swc-win32-x64-msvc@16.4.6':
     optional: true
 
   '@nodelib/fs.scandir@2.1.5':
@@ -6616,12 +6615,12 @@ snapshots:
     dependencies:
       '@posthog/types': 1.423.0
 
-  '@posthog/nextjs-config@1.12.1(next@16.4.4(@babel/core@7.29.7(supports-color@8.1.1))(@opentelemetry/api@1.10.0)(@playwright/test@1.65.0)(@types/node@26.6.6)(babel-plugin-react-compiler@1.0.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(sass@1.108.2))(posthog-js@1.447.10(@types/react@19.3.0)(react@19.3.1))(webpack@5.108.4(esbuild@0.28.2)(lightningcss@1.33.0)(postcss@8.5.32))':
+  '@posthog/nextjs-config@1.12.1(next@16.4.6(@babel/core@7.29.7(supports-color@8.1.1))(@opentelemetry/api@1.10.0)(@playwright/test@1.65.0)(@types/node@26.6.6)(babel-plugin-react-compiler@1.0.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(sass@1.108.2))(posthog-js@1.447.10(@types/react@19.3.0)(react@19.3.1))(webpack@5.108.4(esbuild@0.28.2)(lightningcss@1.33.0)(postcss@8.5.32))':
     dependencies:
       '@posthog/cli': 0.18.12
       '@posthog/plugin-utils': 2.0.1
       '@posthog/webpack-plugin': 1.8.0(webpack@5.108.4(esbuild@0.28.2)(lightningcss@1.33.0)(postcss@8.5.32))
-      next: 16.4.4(@babel/core@7.29.7(supports-color@8.1.1))(@opentelemetry/api@1.10.0)(@playwright/test@1.65.0)(@types/node@26.6.6)(babel-plugin-react-compiler@1.0.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(sass@1.108.2)
+      next: 16.4.6(@babel/core@7.29.7(supports-color@8.1.1))(@opentelemetry/api@1.10.0)(@playwright/test@1.65.0)(@types/node@26.6.6)(babel-plugin-react-compiler@1.0.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(sass@1.108.2)
       posthog-js: 1.447.10(@types/react@19.3.0)(react@19.3.1)
       semver: 7.8.6
     transitivePeerDependencies:
@@ -7205,37 +7204,37 @@ snapshots:
     dependencies:
       '@testing-library/dom': 10.4.1
 
-  '@trpc/client@11.28.0(@trpc/server@11.28.0(@types/ws@8.18.2)(next@16.4.4(@babel/core@7.29.7(supports-color@8.1.1))(@opentelemetry/api@1.10.0)(@playwright/test@1.65.0)(@types/node@26.6.6)(babel-plugin-react-compiler@1.0.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(sass@1.108.2))(typescript@6.0.3))(typescript@6.0.3)':
+  '@trpc/client@11.28.0(@trpc/server@11.28.0(@types/ws@8.18.2)(next@16.4.6(@babel/core@7.29.7(supports-color@8.1.1))(@opentelemetry/api@1.10.0)(@playwright/test@1.65.0)(@types/node@26.6.6)(babel-plugin-react-compiler@1.0.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(sass@1.108.2))(typescript@6.0.3))(typescript@6.0.3)':
     dependencies:
-      '@trpc/server': 11.28.0(@types/ws@8.18.2)(next@16.4.4(@babel/core@7.29.7(supports-color@8.1.1))(@opentelemetry/api@1.10.0)(@playwright/test@1.65.0)(@types/node@26.6.6)(babel-plugin-react-compiler@1.0.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(sass@1.108.2))(typescript@6.0.3)
+      '@trpc/server': 11.28.0(@types/ws@8.18.2)(next@16.4.6(@babel/core@7.29.7(supports-color@8.1.1))(@opentelemetry/api@1.10.0)(@playwright/test@1.65.0)(@types/node@26.6.6)(babel-plugin-react-compiler@1.0.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(sass@1.108.2))(typescript@6.0.3)
       typescript: 6.0.3
 
-  '@trpc/next@11.28.0(b3b62ba4c5baede8c9a15278b9f0e825)':
+  '@trpc/next@11.28.0(8e3a1668bc8d2fc06cd51ed9bff51b8b)':
     dependencies:
-      '@trpc/client': 11.28.0(@trpc/server@11.28.0(@types/ws@8.18.2)(next@16.4.4(@babel/core@7.29.7(supports-color@8.1.1))(@opentelemetry/api@1.10.0)(@playwright/test@1.65.0)(@types/node@26.6.6)(babel-plugin-react-compiler@1.0.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(sass@1.108.2))(typescript@6.0.3))(typescript@6.0.3)
-      '@trpc/server': 11.28.0(@types/ws@8.18.2)(next@16.4.4(@babel/core@7.29.7(supports-color@8.1.1))(@opentelemetry/api@1.10.0)(@playwright/test@1.65.0)(@types/node@26.6.6)(babel-plugin-react-compiler@1.0.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(sass@1.108.2))(typescript@6.0.3)
-      next: 16.4.4(@babel/core@7.29.7(supports-color@8.1.1))(@opentelemetry/api@1.10.0)(@playwright/test@1.65.0)(@types/node@26.6.6)(babel-plugin-react-compiler@1.0.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(sass@1.108.2)
+      '@trpc/client': 11.28.0(@trpc/server@11.28.0(@types/ws@8.18.2)(next@16.4.6(@babel/core@7.29.7(supports-color@8.1.1))(@opentelemetry/api@1.10.0)(@playwright/test@1.65.0)(@types/node@26.6.6)(babel-plugin-react-compiler@1.0.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(sass@1.108.2))(typescript@6.0.3))(typescript@6.0.3)
+      '@trpc/server': 11.28.0(@types/ws@8.18.2)(next@16.4.6(@babel/core@7.29.7(supports-color@8.1.1))(@opentelemetry/api@1.10.0)(@playwright/test@1.65.0)(@types/node@26.6.6)(babel-plugin-react-compiler@1.0.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(sass@1.108.2))(typescript@6.0.3)
+      next: 16.4.6(@babel/core@7.29.7(supports-color@8.1.1))(@opentelemetry/api@1.10.0)(@playwright/test@1.65.0)(@types/node@26.6.6)(babel-plugin-react-compiler@1.0.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(sass@1.108.2)
       react: 19.3.1
       react-dom: 19.3.1(react@19.3.1)
       typescript: 6.0.3
     optionalDependencies:
       '@tanstack/react-query': 5.107.1(@types/react@19.3.0)(react@19.3.1)
-      '@trpc/react-query': 11.28.0(@tanstack/react-query@5.107.1(@types/react@19.3.0)(react@19.3.1))(@trpc/client@11.28.0(@trpc/server@11.28.0(@types/ws@8.18.2)(next@16.4.4(@babel/core@7.29.7(supports-color@8.1.1))(@opentelemetry/api@1.10.0)(@playwright/test@1.65.0)(@types/node@26.6.6)(babel-plugin-react-compiler@1.0.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(sass@1.108.2))(typescript@6.0.3))(typescript@6.0.3))(@trpc/server@11.28.0(@types/ws@8.18.2)(next@16.4.4(@babel/core@7.29.7(supports-color@8.1.1))(@opentelemetry/api@1.10.0)(@playwright/test@1.65.0)(@types/node@26.6.6)(babel-plugin-react-compiler@1.0.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(sass@1.108.2))(typescript@6.0.3))(react@19.3.1)(typescript@6.0.3)
+      '@trpc/react-query': 11.28.0(@tanstack/react-query@5.107.1(@types/react@19.3.0)(react@19.3.1))(@trpc/client@11.28.0(@trpc/server@11.28.0(@types/ws@8.18.2)(next@16.4.6(@babel/core@7.29.7(supports-color@8.1.1))(@opentelemetry/api@1.10.0)(@playwright/test@1.65.0)(@types/node@26.6.6)(babel-plugin-react-compiler@1.0.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(sass@1.108.2))(typescript@6.0.3))(typescript@6.0.3))(@trpc/server@11.28.0(@types/ws@8.18.2)(next@16.4.6(@babel/core@7.29.7(supports-color@8.1.1))(@opentelemetry/api@1.10.0)(@playwright/test@1.65.0)(@types/node@26.6.6)(babel-plugin-react-compiler@1.0.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(sass@1.108.2))(typescript@6.0.3))(react@19.3.1)(typescript@6.0.3)
 
-  '@trpc/react-query@11.28.0(@tanstack/react-query@5.107.1(@types/react@19.3.0)(react@19.3.1))(@trpc/client@11.28.0(@trpc/server@11.28.0(@types/ws@8.18.2)(next@16.4.4(@babel/core@7.29.7(supports-color@8.1.1))(@opentelemetry/api@1.10.0)(@playwright/test@1.65.0)(@types/node@26.6.6)(babel-plugin-react-compiler@1.0.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(sass@1.108.2))(typescript@6.0.3))(typescript@6.0.3))(@trpc/server@11.28.0(@types/ws@8.18.2)(next@16.4.4(@babel/core@7.29.7(supports-color@8.1.1))(@opentelemetry/api@1.10.0)(@playwright/test@1.65.0)(@types/node@26.6.6)(babel-plugin-react-compiler@1.0.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(sass@1.108.2))(typescript@6.0.3))(react@19.3.1)(typescript@6.0.3)':
+  '@trpc/react-query@11.28.0(@tanstack/react-query@5.107.1(@types/react@19.3.0)(react@19.3.1))(@trpc/client@11.28.0(@trpc/server@11.28.0(@types/ws@8.18.2)(next@16.4.6(@babel/core@7.29.7(supports-color@8.1.1))(@opentelemetry/api@1.10.0)(@playwright/test@1.65.0)(@types/node@26.6.6)(babel-plugin-react-compiler@1.0.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(sass@1.108.2))(typescript@6.0.3))(typescript@6.0.3))(@trpc/server@11.28.0(@types/ws@8.18.2)(next@16.4.6(@babel/core@7.29.7(supports-color@8.1.1))(@opentelemetry/api@1.10.0)(@playwright/test@1.65.0)(@types/node@26.6.6)(babel-plugin-react-compiler@1.0.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(sass@1.108.2))(typescript@6.0.3))(react@19.3.1)(typescript@6.0.3)':
     dependencies:
       '@tanstack/react-query': 5.107.1(@types/react@19.3.0)(react@19.3.1)
-      '@trpc/client': 11.28.0(@trpc/server@11.28.0(@types/ws@8.18.2)(next@16.4.4(@babel/core@7.29.7(supports-color@8.1.1))(@opentelemetry/api@1.10.0)(@playwright/test@1.65.0)(@types/node@26.6.6)(babel-plugin-react-compiler@1.0.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(sass@1.108.2))(typescript@6.0.3))(typescript@6.0.3)
-      '@trpc/server': 11.28.0(@types/ws@8.18.2)(next@16.4.4(@babel/core@7.29.7(supports-color@8.1.1))(@opentelemetry/api@1.10.0)(@playwright/test@1.65.0)(@types/node@26.6.6)(babel-plugin-react-compiler@1.0.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(sass@1.108.2))(typescript@6.0.3)
+      '@trpc/client': 11.28.0(@trpc/server@11.28.0(@types/ws@8.18.2)(next@16.4.6(@babel/core@7.29.7(supports-color@8.1.1))(@opentelemetry/api@1.10.0)(@playwright/test@1.65.0)(@types/node@26.6.6)(babel-plugin-react-compiler@1.0.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(sass@1.108.2))(typescript@6.0.3))(typescript@6.0.3)
+      '@trpc/server': 11.28.0(@types/ws@8.18.2)(next@16.4.6(@babel/core@7.29.7(supports-color@8.1.1))(@opentelemetry/api@1.10.0)(@playwright/test@1.65.0)(@types/node@26.6.6)(babel-plugin-react-compiler@1.0.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(sass@1.108.2))(typescript@6.0.3)
       react: 19.3.1
       typescript: 6.0.3
 
-  '@trpc/server@11.28.0(@types/ws@8.18.2)(next@16.4.4(@babel/core@7.29.7(supports-color@8.1.1))(@opentelemetry/api@1.10.0)(@playwright/test@1.65.0)(@types/node@26.6.6)(babel-plugin-react-compiler@1.0.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(sass@1.108.2))(typescript@6.0.3)':
+  '@trpc/server@11.28.0(@types/ws@8.18.2)(next@16.4.6(@babel/core@7.29.7(supports-color@8.1.1))(@opentelemetry/api@1.10.0)(@playwright/test@1.65.0)(@types/node@26.6.6)(babel-plugin-react-compiler@1.0.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(sass@1.108.2))(typescript@6.0.3)':
     dependencies:
       typescript: 6.0.3
     optionalDependencies:
       '@types/ws': 8.18.2
-      next: 16.4.4(@babel/core@7.29.7(supports-color@8.1.1))(@opentelemetry/api@1.10.0)(@playwright/test@1.65.0)(@types/node@26.6.6)(babel-plugin-react-compiler@1.0.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(sass@1.108.2)
+      next: 16.4.6(@babel/core@7.29.7(supports-color@8.1.1))(@opentelemetry/api@1.10.0)(@playwright/test@1.65.0)(@types/node@26.6.6)(babel-plugin-react-compiler@1.0.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(sass@1.108.2)
 
   '@tybys/wasm-util@0.10.4':
     dependencies:
@@ -9603,12 +9602,12 @@ snapshots:
 
   neo-async@2.6.2: {}
 
-  next-cloudinary@7.0.0(next@16.4.4(@babel/core@7.29.7(supports-color@8.1.1))(@opentelemetry/api@1.10.0)(@playwright/test@1.65.0)(@types/node@26.6.6)(babel-plugin-react-compiler@1.0.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(sass@1.108.2))(react@19.3.1):
+  next-cloudinary@7.0.0(next@16.4.6(@babel/core@7.29.7(supports-color@8.1.1))(@opentelemetry/api@1.10.0)(@playwright/test@1.65.0)(@types/node@26.6.6)(babel-plugin-react-compiler@1.0.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(sass@1.108.2))(react@19.3.1):
     dependencies:
       '@cloudinary-util/types': 1.7.0
       '@cloudinary-util/url-loader': 6.3.2
       '@cloudinary-util/util': 4.3.0
-      next: 16.4.4(@babel/core@7.29.7(supports-color@8.1.1))(@opentelemetry/api@1.10.0)(@playwright/test@1.65.0)(@types/node@26.6.6)(babel-plugin-react-compiler@1.0.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(sass@1.108.2)
+      next: 16.4.6(@babel/core@7.29.7(supports-color@8.1.1))(@opentelemetry/api@1.10.0)(@playwright/test@1.65.0)(@types/node@26.6.6)(babel-plugin-react-compiler@1.0.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(sass@1.108.2)
       react: 19.3.1
 
   next-mdx-remote@6.0.0(@types/react@19.3.0)(react@19.3.1)(supports-color@8.1.1):
@@ -9625,9 +9624,9 @@ snapshots:
       - '@types/react'
       - supports-color
 
-  next@16.4.4(@babel/core@7.29.7(supports-color@8.1.1))(@opentelemetry/api@1.10.0)(@playwright/test@1.65.0)(@types/node@26.6.6)(babel-plugin-react-compiler@1.0.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(sass@1.108.2):
+  next@16.4.6(@babel/core@7.29.7(supports-color@8.1.1))(@opentelemetry/api@1.10.0)(@playwright/test@1.65.0)(@types/node@26.6.6)(babel-plugin-react-compiler@1.0.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(sass@1.108.2):
     dependencies:
-      '@next/env': 16.4.4
+      '@next/env': 16.4.6
       '@swc/helpers': 0.5.23
       baseline-browser-mapping: 2.11.35
       caniuse-lite: 1.0.30001823
@@ -9636,14 +9635,14 @@ snapshots:
       react-dom: 19.3.1(react@19.3.1)
       styled-jsx: 5.1.6(@babel/core@7.29.7(supports-color@8.1.1))(react@19.3.1)
     optionalDependencies:
-      '@next/swc-darwin-arm64': 16.4.4
-      '@next/swc-darwin-x64': 16.4.4
-      '@next/swc-linux-arm64-gnu': 16.4.4
-      '@next/swc-linux-arm64-musl': 16.4.4
-      '@next/swc-linux-x64-gnu': 16.4.4
-      '@next/swc-linux-x64-musl': 16.4.4
-      '@next/swc-win32-arm64-msvc': 16.4.4
-      '@next/swc-win32-x64-msvc': 16.4.4
+      '@next/swc-darwin-arm64': 16.4.6
+      '@next/swc-darwin-x64': 16.4.6
+      '@next/swc-linux-arm64-gnu': 16.4.6
+      '@next/swc-linux-arm64-musl': 16.4.6
+      '@next/swc-linux-x64-gnu': 16.4.6
+      '@next/swc-linux-x64-musl': 16.4.6
+      '@next/swc-win32-arm64-msvc': 16.4.6
+      '@next/swc-win32-x64-msvc': 16.4.6
       '@opentelemetry/api': 1.10.0
       '@playwright/test': 1.65.0
       babel-plugin-react-compiler: 1.0.0
@@ -9663,12 +9662,12 @@ snapshots:
     dependencies:
       esm-env: 1.2.2
 
-  nuqs@2.10.3(next@16.4.4(@babel/core@7.29.7(supports-color@8.1.1))(@opentelemetry/api@1.10.0)(@playwright/test@1.65.0)(@types/node@26.6.6)(babel-plugin-react-compiler@1.0.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(sass@1.108.2))(react@19.3.1):
+  nuqs@2.10.3(next@16.4.6(@babel/core@7.29.7(supports-color@8.1.1))(@opentelemetry/api@1.10.0)(@playwright/test@1.65.0)(@types/node@26.6.6)(babel-plugin-react-compiler@1.0.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(sass@1.108.2))(react@19.3.1):
     dependencies:
       '@standard-schema/spec': 1.1.0
       react: 19.3.1
     optionalDependencies:
-      next: 16.4.4(@babel/core@7.29.7(supports-color@8.1.1))(@opentelemetry/api@1.10.0)(@playwright/test@1.65.0)(@types/node@26.6.6)(babel-plugin-react-compiler@1.0.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(sass@1.108.2)
+      next: 16.4.6(@babel/core@7.29.7(supports-color@8.1.1))(@opentelemetry/api@1.10.0)(@playwright/test@1.65.0)(@types/node@26.6.6)(babel-plugin-react-compiler@1.0.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(sass@1.108.2)
 
   nypm@0.6.6:
     dependencies:
