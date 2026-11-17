@@ -11,6 +11,7 @@ import PostSummary from './PostSummary';
 
 type PostProps = {
   eager?: boolean;
+  signoff?: React.ReactNode;
   series?: Series | null;
   topic?: Pick<TopicDefinition, 'slug' | 'name'> | null;
 } & (
@@ -23,7 +24,12 @@ const BlogPostRenderer: React.FC<PostProps> = (props) => {
     return <PostSummary post={props.post} eager={props.eager} />;
   }
   return (
-    <FullPost post={props.post} series={props.series} topic={props.topic} />
+    <FullPost
+      post={props.post}
+      series={props.series}
+      topic={props.topic}
+      signoff={props.signoff}
+    />
   );
 };
 

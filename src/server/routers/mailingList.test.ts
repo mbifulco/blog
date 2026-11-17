@@ -3,7 +3,10 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { subscribe } from '@utils/resend';
 import { verifyTurnstileToken } from '@utils/turnstile';
+import { recordBlockedSignup } from '../blockedSignups';
 import { createContextInner } from '../context';
+import { captureServerEvent } from '../posthog';
+import { checkSubscribeRateLimit } from '../rateLimit';
 import { mailingListRouter } from './mailingList';
 
 // Avoid t3-env throwing when the real resend module reads env vars on import.
@@ -50,6 +53,11 @@ vi.mock('@utils/resend', async (importOriginal) => {
   };
 });
 
+// Storage is a no-op in tests.
+vi.mock('../blockedSignups', () => ({
+  recordBlockedSignup: vi.fn(),
+}));
+
 // Rate limiter always passes in these tests.
 vi.mock('../rateLimit', () => ({
   checkSubscribeRateLimit: vi.fn().mockResolvedValue({
@@ -62,6 +70,8 @@ vi.mock('../rateLimit', () => ({
 
 const verifyTurnstileTokenMock = vi.mocked(verifyTurnstileToken);
 const subscribeMock = vi.mocked(subscribe);
+const recordBlockedSignupMock = vi.mocked(recordBlockedSignup);
+const captureServerEventMock = vi.mocked(captureServerEvent);
 
 type CtxOverrides = {
   clientIp?: string | null;
@@ -71,7 +81,7 @@ type CtxOverrides = {
 
 const makeCaller = (overrides: CtxOverrides = {}) => {
   const ctx = createContextInner({
-    clientIp: overrides.clientIp ?? '1.2.3.4',
+    clientIp: overrides.clientIp === undefined ? '1.2.3.4' : overrides.clientIp,
     requestOrigin:
       overrides.requestOrigin === undefined ? null : overrides.requestOrigin,
     requestHost:
@@ -165,5 +175,212 @@ describe('mailingListRouter.subscribe', () => {
     expect(result).toEqual({ data: { id: 'fake-success' }, error: null });
     expect(verifyTurnstileTokenMock).not.toHaveBeenCalled();
     expect(subscribeMock).not.toHaveBeenCalled();
+  });
+});
+
+describe('mailingListRouter.reportBlockedSignup', () => {
+  const report = {
+    email: 'human@example.com',
+    firstName: 'Real',
+    source: 'footer',
+    path: '/posts/x',
+    reason: '300010',
+    formLoadedAt: Date.now() - 60_000,
+  };
+
+  beforeEach(() => {
+    vi.clearAllMocks();
+    recordBlockedSignupMock.mockResolvedValue('stored');
+  });
+
+  const expectDropped = (reason: string, attempted = false) => {
+    if (!attempted) expect(recordBlockedSignupMock).not.toHaveBeenCalled();
+    expect(captureServerEventMock).toHaveBeenCalledWith(
+      expect.objectContaining({
+        event: 'newsletter/spam_detected',
+        properties: expect.objectContaining({
+          reason,
+          source: 'newsletter-blocked-report',
+        }),
+      })
+    );
+  };
+
+  it('stores a clean report and records blocked_signup_reported', async () => {
+    const result = await makeCaller().reportBlockedSignup(report);
+
+    expect(result).toEqual({ ok: true });
+    expect(recordBlockedSignupMock).toHaveBeenCalledTimes(1);
+    const { formLoadedAt: _formLoadedAt, ...stored } = report;
+    expect(recordBlockedSignupMock).toHaveBeenCalledWith(
+      expect.objectContaining({
+        ...stored,
+        at: expect.any(String),
+      })
+    );
+    expect(captureServerEventMock).toHaveBeenCalledWith(
+      expect.objectContaining({
+        event: 'newsletter/blocked_signup_reported',
+      })
+    );
+  });
+
+  it('drops a report with a filled honeypot', async () => {
+    const result = await makeCaller().reportBlockedSignup({
+      ...report,
+      honeypot: 'gotcha',
+    });
+
+    expect(result).toEqual({ ok: true });
+    expectDropped('honeypot');
+  });
+
+  it('drops a report from a disallowed origin', async () => {
+    const result = await makeCaller({
+      requestOrigin: 'https://evil.com',
+      requestHost: 'mikebifulco.com',
+    }).reportBlockedSignup(report);
+
+    expect(result).toEqual({ ok: true });
+    expectDropped('bad_origin');
+  });
+
+  it('drops a report submitted too fast', async () => {
+    const result = await makeCaller().reportBlockedSignup({
+      ...report,
+      formLoadedAt: Date.now(),
+    });
+
+    expect(result).toEqual({ ok: true });
+    expectDropped('form_too_fast');
+  });
+
+  it.each([
+    ['missing', undefined],
+    ['zero', 0],
+  ])('drops a report with %s form timing', async (_label, formLoadedAt) => {
+    const result = await makeCaller().reportBlockedSignup({
+      ...report,
+      formLoadedAt,
+    });
+
+    expect(result).toEqual({ ok: true });
+    expectDropped('missing_form_timing');
+  });
+
+  it.each([
+    ['in the future', () => Date.now() + 5 * 60_000],
+    ['older than a day', () => Date.now() - 25 * 60 * 60_000],
+  ])('drops a report with form timing %s', async (_label, at) => {
+    const result = await makeCaller().reportBlockedSignup({
+      ...report,
+      formLoadedAt: at(),
+    });
+
+    expect(result).toEqual({ ok: true });
+    expectDropped('implausible_form_timing');
+  });
+
+  it('drops a report with a bad email', async () => {
+    const result = await makeCaller().reportBlockedSignup({
+      ...report,
+      email: '12345@example.com',
+    });
+
+    expect(result).toEqual({ ok: true });
+    expectDropped('bad_email');
+  });
+
+  it('stays silent and emits no event for a duplicate report', async () => {
+    recordBlockedSignupMock.mockResolvedValue('duplicate');
+
+    const result = await makeCaller().reportBlockedSignup(report);
+
+    expect(result).toEqual({ ok: true });
+    expect(captureServerEventMock).not.toHaveBeenCalled();
+  });
+
+  it('rejects a path that is not site-relative', async () => {
+    await expect(
+      makeCaller().reportBlockedSignup({
+        ...report,
+        path: 'https://evil.example',
+      })
+    ).rejects.toMatchObject({ code: 'BAD_REQUEST' });
+    expect(recordBlockedSignupMock).not.toHaveBeenCalled();
+  });
+
+  it('rejects a reason with spaces', async () => {
+    await expect(
+      makeCaller().reportBlockedSignup({ ...report, reason: 'click here now' })
+    ).rejects.toMatchObject({ code: 'BAD_REQUEST' });
+    expect(recordBlockedSignupMock).not.toHaveBeenCalled();
+  });
+
+  it('drops a report with a junk first name', async () => {
+    const result = await makeCaller().reportBlockedSignup({
+      ...report,
+      firstName: 'VKvNcRvi',
+    });
+
+    expect(result).toEqual({ ok: true });
+    expectDropped('suspicious_first_name');
+  });
+
+  it('returns ok when storage throws', async () => {
+    vi.spyOn(console, 'error').mockImplementation(() => {});
+    recordBlockedSignupMock.mockRejectedValue(new Error('redis down'));
+
+    await expect(makeCaller().reportBlockedSignup(report)).resolves.toEqual({
+      ok: true,
+    });
+  });
+
+  it('never calls Turnstile verification', async () => {
+    await makeCaller().reportBlockedSignup(report);
+
+    expect(verifyTurnstileTokenMock).not.toHaveBeenCalled();
+  });
+
+  it('drops a report when the client IP is missing', async () => {
+    const result = await makeCaller({ clientIp: null }).reportBlockedSignup(
+      report
+    );
+
+    expect(result).toEqual({ ok: true });
+    expectDropped('missing_ip');
+  });
+
+  it('drops a new report once the day is full', async () => {
+    recordBlockedSignupMock.mockResolvedValue('full');
+
+    const result = await makeCaller().reportBlockedSignup(report);
+
+    expect(result).toEqual({ ok: true });
+    expectDropped('daily_cap', true);
+  });
+
+  it('rejects an over-length first name at the schema', async () => {
+    await expect(
+      makeCaller().reportBlockedSignup({
+        ...report,
+        firstName: 'a'.repeat(101),
+      })
+    ).rejects.toMatchObject({ code: 'BAD_REQUEST' });
+    expect(recordBlockedSignupMock).not.toHaveBeenCalled();
+  });
+
+  it('throws TOO_MANY_REQUESTS and stores nothing when rate limited', async () => {
+    vi.mocked(checkSubscribeRateLimit).mockResolvedValueOnce({
+      success: false,
+      limit: 5,
+      remaining: 0,
+      reset: 0,
+    });
+
+    await expect(
+      makeCaller().reportBlockedSignup(report)
+    ).rejects.toMatchObject({ code: 'TOO_MANY_REQUESTS' });
+    expect(recordBlockedSignupMock).not.toHaveBeenCalled();
   });
 });

@@ -32,6 +32,10 @@ export const env = createEnv({
     TURNSTILE_SECRET_KEY: isVercelProduction
       ? z.string().min(1)
       : z.string().default(TURNSTILE_TEST_SECRET_KEY),
+    // Bearer token Vercel Cron sends to /api/cron/* routes.
+    CRON_SECRET: isVercelProduction
+      ? z.string().min(1)
+      : z.string().min(1).optional(),
     // Server-side analytics for files with no client-side JS (markdown twins,
     // llms.txt) — see src/server/analytics/track-content-request.ts.
     // 'auto' limits it to production so previews and dev do not skew the data.

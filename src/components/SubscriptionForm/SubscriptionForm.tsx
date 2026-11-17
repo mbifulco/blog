@@ -15,17 +15,37 @@ type SubscriptionFormProps = {
   tags?: string[];
   source?: string;
   buttonText?: string;
+  showFirstName?: boolean;
 };
 
 const SubscriptionForm: React.FC<SubscriptionFormProps> = ({
   tags: _,
   source,
   buttonText = 'Get the newsletter',
+  showFirstName = true,
 }) => {
   const [getHoneypottedNerd, setGetHoneypottedNerd] = useState<boolean>(false);
   const [alreadySubscribed, setAlreadySubscribed] = useState<boolean>(false);
   const [formLoadedAt, setFormLoadedAt] = useState<number | null>(null);
-  const turnstile = useTurnstileGate(source);
+  const hasReportedRef = useRef(false);
+  const reportBlockedSignup =
+    trpc.mailingList.reportBlockedSignup.useMutation();
+  const turnstile = useTurnstileGate(source, {
+    onSubmitFailed: (reason) => {
+      const email = emailRef.current?.value;
+      if (hasReportedRef.current || !email) return;
+      hasReportedRef.current = true;
+      reportBlockedSignup.mutate({
+        email,
+        firstName: firstNameRef.current?.value || undefined,
+        source,
+        path: window.location.pathname,
+        reason,
+        honeypot: honeypotRef.current?.value || undefined,
+        formLoadedAt: formLoadedAt ?? undefined,
+      });
+    },
+  });
 
   // Record when the form loads - bots submit instantly, humans take time
   useEffect(() => {
@@ -273,14 +293,17 @@ const SubscriptionForm: React.FC<SubscriptionFormProps> = ({
                 tabIndex={-1}
                 autoComplete="off"
               />
-              <Input
-                className="border-riso-blue bg-stock-raised text-ink placeholder:text-ink-muted h-11 w-full grow rounded-none border-2 border-b-0 border-solid px-[2ch] py-[1ch] text-base font-normal shadow-none"
-                aria-label="First name (optional)"
-                name="fields[first_name]"
-                placeholder="First name (optional)"
-                type="text"
-                ref={firstNameRef}
-              />
+              {showFirstName && (
+                <Input
+                  className="border-riso-blue bg-stock-raised text-ink placeholder:text-ink-muted h-11 w-full grow rounded-none border-2 border-b-0 border-solid px-[2ch] py-[1ch] text-base font-normal shadow-none"
+                  aria-label="First name (optional)"
+                  name="fields[first_name]"
+                  placeholder="First name (optional)"
+                  type="text"
+                  ref={firstNameRef}
+                  onFocus={turnstile.start}
+                />
+              )}
               <Input
                 className="border-riso-blue bg-stock-raised text-ink placeholder:text-ink-muted h-11 w-full grow rounded-none border-2 border-solid px-[2ch] py-[1ch] text-base font-normal shadow-none"
                 name="email_address"
@@ -289,6 +312,7 @@ const SubscriptionForm: React.FC<SubscriptionFormProps> = ({
                 required
                 type="email"
                 ref={emailRef}
+                onFocus={turnstile.start}
               />
               <div className="mt-2">
                 <Turnstile {...turnstile.widgetProps} />

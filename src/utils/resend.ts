@@ -241,6 +241,28 @@ export async function deleteContactByEmail(email: string): Promise<void> {
   }
 }
 
+export type SubscriptionStatus = 'subscribed' | 'not_subscribed' | 'unknown';
+
+export async function getSubscriptionStatus(
+  email: string
+): Promise<SubscriptionStatus> {
+  try {
+    const response = await resend.contacts.get({
+      email,
+      audienceId: env.RESEND_NEWSLETTER_AUDIENCE_ID,
+    });
+
+    if (response.error) {
+      return response.error.name === 'not_found' ? 'not_subscribed' : 'unknown';
+    }
+    return response.data && !response.data.unsubscribed
+      ? 'subscribed'
+      : 'not_subscribed';
+  } catch {
+    return 'unknown';
+  }
+}
+
 export const getSubscriberCount = async () => {
   try {
     const response = await resend.contacts.list({

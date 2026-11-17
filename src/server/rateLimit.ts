@@ -1,13 +1,6 @@
 import { Ratelimit } from '@upstash/ratelimit';
-import { Redis } from '@upstash/redis';
 
-import { env } from '@utils/env';
-
-// Initialize Redis client
-const redis = new Redis({
-  url: env.UPSTASH_REDIS_REST_URL,
-  token: env.UPSTASH_REDIS_REST_TOKEN,
-});
+import { redis } from './redis';
 
 // Newsletter subscribe rate limiter: 5 requests per 10 minutes per IP
 export const subscribeRateLimiter = new Ratelimit({

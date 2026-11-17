@@ -14,8 +14,8 @@ const TurnstileStatus: React.FC<TurnstileStatusProps> = ({
       'Checking that you’re a person. Your signup will go through in a moment.'}
     {status === 'error' && (
       <>
-        We couldn’t confirm you’re a person. A content blocker is the usual
-        cause.{' '}
+        We couldn’t finish our spam check. A content blocker or privacy setting
+        is the usual cause. Allow challenges.cloudflare.com and try again.{' '}
         <button
           type="button"
           onClick={onRetry}
