@@ -5,11 +5,11 @@ import type {
   Newsletter,
 } from '@data/content-types';
 import { compareAsc } from 'date-fns';
-import slugify from 'slugify';
 
 import { toSummary } from '@data/content-types';
 import { getAllPosts } from './blog';
 import { getAllNewsletters } from './newsletters';
+import { getSlugForSeries } from './series-slug';
 
 export const getAllSeries = async (): Promise<Series[]> => {
   const allPosts = await getAllPosts();
@@ -102,8 +102,4 @@ export const getSeries = async (
   );
 
   return postsInSeries;
-};
-
-export const getSlugForSeries = (seriesName: string) => {
-  return slugify(seriesName.toLowerCase());
 };

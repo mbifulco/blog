@@ -1,9 +1,11 @@
 import type { BlogPost, Newsletter } from '@data/content-types';
+import type { Series } from '@lib/series';
 import { describe, expect, it } from 'vitest';
 
 import {
   generateOrganizationStructuredData,
   generatePostStructuredData,
+  generateSeriesStructuredData,
   generateSiteStructuredData,
   generateWebSiteStructuredData,
 } from './generateStructuredData';
@@ -185,6 +187,34 @@ describe('generatePostStructuredData', () => {
     });
   });
 
+  describe('content type detection', () => {
+    // Shaped like the content loaders' output: `content` lives on the
+    // document, not in frontmatter, and frontmatter carries `type`.
+    const loaderShapedPost = {
+      slug: 'loader-post',
+      frontmatter: {
+        type: 'post',
+        title: 'Loader Post',
+        slug: 'loader-post',
+        date: '2024-01-15',
+        tags: ['react'],
+        excerpt: 'A post as the loader produces it.',
+      },
+    } as unknown as BlogPost;
+
+    it('should use /posts/ URLs for loader-shaped blog posts', () => {
+      const blogPosting = getBlogPosting(
+        generatePostStructuredData({ post: loaderShapedPost })
+      );
+
+      expect(blogPosting.url).toBe('https://mikebifulco.com/posts/loader-post');
+      expect(blogPosting.mainEntityOfPage['@id']).toBe(
+        'https://mikebifulco.com/posts/loader-post'
+      );
+      expect(blogPosting.image.url).toContain('posts/loader-post/cover');
+    });
+  });
+
   describe('series handling', () => {
     it('should include isPartOf when post has a series', () => {
       const postWithSeries = {
@@ -198,6 +228,23 @@ describe('generatePostStructuredData', () => {
       expect(blogPosting.isPartOf?.['@type']).toBe('CreativeWorkSeries');
       expect(blogPosting.isPartOf?.name).toBe('react-tips');
       expect(blogPosting.isPartOf?.url).toContain('/series/react-tips');
+    });
+
+    it('should slugify the series name in the isPartOf url', () => {
+      const postWithSeries = {
+        ...mockBlogPost,
+        frontmatter: {
+          ...mockBlogPost.frontmatter,
+          series: 'My Product Engineer Tech Stack',
+        },
+      };
+      const result = generatePostStructuredData({ post: postWithSeries });
+      const blogPosting = getBlogPosting(result);
+
+      expect(blogPosting.isPartOf?.name).toBe('My Product Engineer Tech Stack');
+      expect(blogPosting.isPartOf?.url).toBe(
+        'https://mikebifulco.com/series/my-product-engineer-tech-stack'
+      );
     });
 
     it('should not include isPartOf when post has no series', () => {
@@ -337,5 +384,92 @@ describe('generateSiteStructuredData', () => {
     const result = generateSiteStructuredData();
 
     expect(result[1]['@type']).toBe('WebSite');
+  });
+});
+
+describe('generateSeriesStructuredData', () => {
+  const laterPost = {
+    ...mockBlogPost,
+    slug: 'later-post',
+    frontmatter: {
+      ...mockBlogPost.frontmatter,
+      title: 'Later Post',
+      slug: 'later-post',
+      date: '2024-03-01',
+      tags: ['react', 'nextjs'],
+    },
+  } as unknown as BlogPost;
+
+  const mockSeries = {
+    name: 'React Tips',
+    slug: 'react-tips',
+    posts: [laterPost, mockBlogPost],
+    newsletters: [mockNewsletter],
+    length: 3,
+  } as unknown as Series;
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  type Json = Record<string, any>;
+  const result = generateSeriesStructuredData(mockSeries) as Json;
+
+  it('should describe the page as a CollectionPage for the series', () => {
+    expect(result['@context']).toBe('https://schema.org');
+    expect(result['@type']).toBe('CollectionPage');
+    expect(result.url).toBe('https://mikebifulco.com/series/react-tips');
+    expect(result.author?.['@type']).toBe('Person');
+    expect(result.publisher?.['@type']).toBe('Organization');
+    expect(result.datePublished).toBe(new Date('2024-01-15').toISOString());
+    expect(result.dateModified).toBe(new Date('2024-03-01').toISOString());
+  });
+
+  it('should use the series as the main entity', () => {
+    expect(result.mainEntity['@type']).toBe('CreativeWorkSeries');
+    expect(result.mainEntity.name).toBe('React Tips');
+    expect(result.mainEntity.url).toBe(
+      'https://mikebifulco.com/series/react-tips'
+    );
+  });
+
+  it('should include every part as a BlogPosting in date order', () => {
+    const parts = result.mainEntity.hasPart;
+
+    expect(parts).toHaveLength(3);
+    parts.forEach((part: Json, index: number) => {
+      expect(part['@type']).toBe('BlogPosting');
+      expect(part['@context']).toBeUndefined();
+      expect(part.position).toBe(index + 1);
+      expect(part.author?.['@type']).toBe('Person');
+      expect(part.datePublished).toBeDefined();
+    });
+    expect(parts.map((part: Json) => part.headline)).toEqual([
+      'Test Blog Post',
+      'Test Newsletter',
+      'Later Post',
+    ]);
+    expect(parts[0].url).toBe('https://mikebifulco.com/posts/test-blog-post');
+    expect(parts[1].url).toBe(
+      'https://mikebifulco.com/newsletter/test-newsletter'
+    );
+  });
+
+  it('should use the most recent update across all parts as dateModified', () => {
+    const updatedEarlyPost = {
+      ...mockBlogPost,
+      frontmatter: { ...mockBlogPost.frontmatter, updated: '2024-04-10' },
+    } as unknown as BlogPost;
+    const seriesWithUpdate = {
+      ...mockSeries,
+      posts: [laterPost, updatedEarlyPost],
+    } as unknown as Series;
+
+    const withUpdate = generateSeriesStructuredData(seriesWithUpdate) as Json;
+
+    expect(withUpdate.dateModified).toBe(new Date('2024-04-10').toISOString());
+  });
+
+  it('should collect keywords from all parts without duplicates', () => {
+    expect(result.keywords).toBe(
+      'react, typescript, newsletter, updates, nextjs'
+    );
   });
 });

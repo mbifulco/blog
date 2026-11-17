@@ -5,6 +5,11 @@ import { after } from 'next/server';
 import { flushLogs } from '@server/logging/otel-logs';
 import { ATPROTO_DID, BASE_SITE_URL } from '@/config';
 
+// Prerender at build time, like llms-full.txt and the .md twins. Rendering on
+// demand re-read and re-parsed every MDX file on each request inside a
+// serverless function. Request tracking is unaffected: it happens in the proxy.
+export const dynamic = 'force-static';
+
 export async function GET() {
   const posts = await getAllPosts();
   const newsletters = await getAllNewsletters();
