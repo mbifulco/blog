@@ -82,7 +82,23 @@ export const getPaginatedNewsletters = async (
   return paginate(allNewsletters, options);
 };
 
-export const getLatestNewsletter = async (): Promise<Newsletter | null> => {
+let latestNewsletterPromise: Promise<Newsletter | null> | undefined;
+
+/**
+ * In production the result is computed once per process, since every post and
+ * newsletter page asks for it during the static build.
+ */
+export const getLatestNewsletter = (): Promise<Newsletter | null> => {
+  if (process.env.NODE_ENV !== 'production') return findLatestNewsletter();
+
+  latestNewsletterPromise ??= findLatestNewsletter().catch((error) => {
+    latestNewsletterPromise = undefined;
+    throw error;
+  });
+  return latestNewsletterPromise;
+};
+
+const findLatestNewsletter = async (): Promise<Newsletter | null> => {
   const newsletters = await getAllNewsletters();
   const published = newsletters.filter(
     (newsletter) => newsletter.frontmatter.published !== false
