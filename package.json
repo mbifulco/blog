@@ -76,7 +76,7 @@
     "pluralize": "^8.0.0",
     "postcss": "^8.5.32",
     "posthog-js": "^1.447.10",
-    "posthog-node": "^5.68.2",
+    "posthog-node": "^6.0.2",
     "prism-react-renderer": "^2.4.1",
     "react": "19.3.1",
     "react-aria": "^3.52.1",
